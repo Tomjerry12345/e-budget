@@ -1,0 +1,31 @@
+$grey: fafafa;
+
+.titleMenu {
+  margin-left: 12px;
+  margin-top: 50px;
+}
+
+.menuNav {
+  padding: 8px;
+  background-color: $grey;
+  min-height: 100vh;
+  overflow: hidden;
+
+  .menuItem {
+    border-radius: 10px;
+    margin-top: 30px;
+    // background-color: green;
+
+    &.selected {
+      background-color: green;
+    }
+
+    &.notSelected {
+      background-color: grey;
+    }
+  }
+}
+
+.colorIcon {
+  color: white;
+}
