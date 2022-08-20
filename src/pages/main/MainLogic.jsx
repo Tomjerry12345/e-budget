@@ -15,7 +15,7 @@ const MainLogic = () => {
   const allItem = [
     [],
     [],
-    [],
+    [], 
     [],
     [],
     [],
