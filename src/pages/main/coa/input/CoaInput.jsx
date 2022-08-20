@@ -1,7 +1,17 @@
-import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout } from "antd";
+import {
+  Table,
+  Form,
+  Input,
+  Popconfirm,
+  Breadcrumb,
+  Row,
+  Col,
+  Typography,
+  Card,
+  Layout,
+} from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-// import { grey, white } from "../../../../values/Colors";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -18,7 +28,15 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -130,7 +148,10 @@ const CoaInput = () => {
       fixed: "right",
       render: (_, record) =>
         dataSource.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => handleDelete(record.key)}
+          >
             <a>Delete</a>
           </Popconfirm>
         ) : null,
@@ -211,7 +232,7 @@ const CoaInput = () => {
             }
           }
         >
-          <p>Card content</p>
+          {/* Form Field */}
           <Form layout="vertical">
             <Row>
               <Col span={5}>

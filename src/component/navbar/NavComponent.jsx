@@ -1,4 +1,4 @@
-import { Layout, Menu, Segmented, Typography } from "antd";
+import { Image, Layout, Menu, Modal, Segmented, Typography } from "antd";
 
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined";
@@ -9,137 +9,132 @@ import ContentPasteOutlinedIcon from "@mui/icons-material/ContentPasteOutlined";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 
+import logo from "../../assets/img/logo.png";
+
 import "./NavStyles.scss";
 
 const { Sider } = Layout;
 const { Text } = Typography;
 
 const NavComponent = ({ func, value }) => {
+  const isClickedMenu = (index) => {
+    const iMenu = value.isListMenuActivated[index];
+    if (iMenu === 0) return "notSelected";
+    else if (iMenu === 1) return "selected";
+    else return "open";
+  };
+
   return (
-    <Sider collapsed={true}>
+    <Sider collapsed={true} collapsedWidth={84}>
       <Menu
+        style={{
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+        }}
         className="menuNav"
         triggerSubMenuAction="click"
-        subMenuOpenDelay={1}
-        subMenuCloseDelay={1}
         onClick={({ _, key }) => {
-          console.log(`key => ${key}`);
-
-          func.onClickedMenu(key);
+          func.onClickedMenu(key, "menu");
         }}
       >
-        <h1 className="titleMenu">Logo</h1>
-        <h1 className="titleMenu">Menu</h1>
+        <img
+          src={logo}
+          style={{
+            width: "61px",
+            margin: "20px 0px 16px",
+          }}
+          key={100}
+        />
+        <h1 className="titleMenu" key={200}>
+          Menu
+        </h1>
+        {/* 0 */}
         <Menu.Item
           key={0}
-          className={`menuItem ${value.isListMenuActivated[0] ? "selected" : "notSelected"}`}
-          style={{
-            marginTop: 50,
-          }}
-          icon={<GridViewRoundedIcon className="colorIcon" />}
+          className={`menuItem ${isClickedMenu(0)}`}
+          icon={
+            <GridViewRoundedIcon className={`colorIcon ${isClickedMenu(0)}`} />
+          }
         >
           Dashboard
         </Menu.Item>
-        <Menu.SubMenu key={1} className={`menuItem ${value.isListMenuActivated[1] ? "selected" : "notSelected"}`} icon={<InsertChartOutlinedIcon className="colorIcon" />}>
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-          <Menu.Item disabled={true}>
-            <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              defaultValue="Input"
+        {/* 1 */}
+        <Menu.Item
+          key={1}
+          className={`menuItem ${isClickedMenu(1)}`}
+          icon={
+            <InsertChartOutlinedIcon
+              className={`colorIcon ${isClickedMenu(1)}`}
             />
-          </Menu.Item>
-          <Menu.Item>Menu 2</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key={2} className={`menuItem ${value.isListMenuActivated[2] ? "selected" : "notSelected"}`} icon={<AssignmentTurnedInOutlinedIcon className="colorIcon" />}>
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-          <Menu.Item disabled={true}>
-            <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              defaultValue="Input"
+          }
+        />
+        {/* 2 */}
+        <Menu.Item
+          key={2}
+          className={`menuItem ${isClickedMenu(2)}`}
+          icon={
+            <AssignmentTurnedInOutlinedIcon
+              className={`colorIcon ${isClickedMenu(2)}`}
             />
-          </Menu.Item>
-          <Menu.Item>Menu 2</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key={3} className={`menuItem ${value.isListMenuActivated[3] ? "selected" : "notSelected"}`} icon={<ArchiveOutlinedIcon className="colorIcon" />}>
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-          <Menu.Item disabled={true}>
-            <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              defaultValue="Input"
+          }
+        />
+        {/* 3 */}
+        <Menu.Item
+          key={3}
+          className={`menuItem ${isClickedMenu(3)}`}
+          icon={
+            <ArchiveOutlinedIcon className={`colorIcon ${isClickedMenu(3)}`} />
+          }
+        />
+        {/* 4 */}
+        <Menu.Item
+          key={4}
+          className={`menuItem ${isClickedMenu(4)}`}
+          icon={
+            <SupervisedUserCircleOutlinedIcon
+              className={`colorIcon ${isClickedMenu(4)}`}
             />
-          </Menu.Item>
-          <Menu.Item>Menu 2</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key={4} className={`menuItem ${value.isListMenuActivated[4] ? "selected" : "notSelected"}`} icon={<SupervisedUserCircleOutlinedIcon className="colorIcon" />}>
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-          <Menu.Item disabled={true}>
-            <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              defaultValue="Input"
+          }
+        />
+        {/* 5 */}
+        <Menu.Item
+          key={5}
+          className={`menuItem ${isClickedMenu(5)}`}
+          icon={
+            <ContentPasteOutlinedIcon
+              className={`colorIcon ${isClickedMenu(5)}`}
             />
-          </Menu.Item>
-          <Menu.Item>Menu 2</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key={5} className={`menuItem ${value.isListMenuActivated[5] ? "selected" : "notSelected"}`} icon={<ContentPasteOutlinedIcon className="colorIcon" />}>
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-          <Menu.Item disabled={true}>
-            <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              defaultValue="Input"
-            />
-          </Menu.Item>
-          <Menu.Item>Menu 2</Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu
+          }
+        />
+        {/* 6 */}
+        <Menu.Item
           key={6}
-          className={`menuItem ${value.isListMenuActivated[6] ? "selected" : "notSelected"}`}
-          icon={<SummarizeOutlinedIcon className="colorIcon" />}
-          style={{
-            overflow: "hidden",
-          }}
+          className={`menuItem ${isClickedMenu(6)}`}
+          icon={
+            <SummarizeOutlinedIcon
+              className={`colorIcon ${isClickedMenu(6)}`}
+            />
+          }
+        />
+        {/* 7 */}
+        <Menu.Item
+          key={7}
+          className={`menuItem ${isClickedMenu(7)}`}
+          icon={
+            <Inventory2OutlinedIcon
+              className={`colorIcon ${isClickedMenu(7)}`}
+            />
+          }
+          // onClick={func.onClickedMenu}
+        />
+        {/* <Menu.SubMenu
+          key={7}
+          className={`menuItem ${
+            value.isListMenuActivated[7] ? "selected" : "notSelected"
+          } margin30`}
+          icon={<Inventory2OutlinedIcon className="colorIcon" />}
         >
-          <Menu.Item disabled={true}>
-            <Text type="success" strong>
-              Opex
-            </Text>
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu key={7} className={`menuItem ${value.isListMenuActivated[7] ? "selected" : "notSelected"} margin30`} icon={<Inventory2OutlinedIcon className="colorIcon" />}>
           <Menu.Item disabled={true}>
             <Text type="success" strong>
               Opex
@@ -159,7 +154,7 @@ const NavComponent = ({ func, value }) => {
             <Menu.Item key={`7_${value}`}>{value}</Menu.Item>
           ))}
           ;
-        </Menu.SubMenu>
+        </Menu.SubMenu> */}
         '
       </Menu>
     </Sider>

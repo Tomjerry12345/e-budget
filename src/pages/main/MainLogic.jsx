@@ -1,33 +1,84 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MainLogic = () => {
   const navigate = useNavigate();
-  const [namePage, setNamePage] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
+  const [keyMenu, setKeyMenu] = useState(0);
+  const [iEMenu, setiEmenu] = useState(0);
+  const [item, setItem] = useState(0);
 
-  const [isListMenuActivated, setListMenuActivated] = useState([true, false, false, false, false, false, false, false]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
-  const itemCoa = ["Kode perusahaan", "Kode produk", "Kode Lokasi", "Kode Departemen", "Kode Akun", "Kode Projek", "Kode ICP", "Kode ICP 1", "Kode ICP 2", "Kode ICP 3", "Kode ICP 4"];
+  const allItem = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "Kode perusahaan",
+      "Kode produk",
+      "Kode Lokasi",
+      "Kode Departemen",
+      "Kode Akun",
+      "Kode Projek",
+      "Kode ICP",
+    ],
+    [],
+  ];
 
-  const onClickedMenu = (key) => {
-    let isActivated = [false, false, false, false, false, false, false, false];
-
-    const listKey = key.split("_");
-
-    const index = parseInt(listKey[0]);
-    const nameMenu = listKey[1];
-
-    isActivated[index] = true;
+  const handleCancel = () => {
+    const isActivated = [...isListMenuActivated];
+    isActivated[keyMenu] = 0;
     setListMenuActivated(isActivated);
-    if (index === 0) {
-      console.log("Dashboard");
-      navigate(`/`);
-    } else if (index === 7) {
-      console.log("COA");
-      navigate(`/coa/input/${nameMenu}`);
+    setShowMenu(false);
+  };
+
+  const isShowMenu = () => {
+    if (showMenu === true) {
+      setShowMenu(false);
+      setTimeout(() => {
+        setShowMenu(true);
+      }, 100);
     } else {
-      console.log("not selected");
+      setShowMenu(true);
     }
+  };
+
+  const onClickedMenu = (key, item) => {
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    const index = parseInt(key);
+
+    setKeyMenu(index);
+
+    if (item === "menu") {
+      isActivated[iEMenu] = 2;
+      isActivated[index] = 1;
+      setItem(allItem[index]);
+      isShowMenu();
+    } else {
+      setiEmenu(keyMenu);
+      isActivated[index] = 2;
+      setItem([]);
+      setShowMenu(false);
+    }
+
+    setListMenuActivated(isActivated);
+
+    // if (index === 0) {
+    //   console.log("Dashboard");
+    //   navigate(`/`);
+    // } else if (index === 7) {
+    //   console.log("COA");
+    //   navigate(`/coa/input/${nameMenu}`);
+    // } else {
+    //   console.log("not selected");
+    // }
   };
 
   const onChangeSegmented = (value) => {
@@ -38,11 +89,13 @@ const MainLogic = () => {
     func: {
       onClickedMenu,
       onChangeSegmented,
+      handleCancel,
     },
     value: {
-      namePage,
-      itemCoa,
+      item,
       isListMenuActivated,
+      showMenu,
+      keyMenu,
     },
   };
 };

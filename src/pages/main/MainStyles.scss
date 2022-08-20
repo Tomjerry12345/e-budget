@@ -1,0 +1,48 @@
+.ant-modal-wrap {
+  margin-left: 82px;
+}
+.modal-menu {
+  top: 8px;
+  // left: 92px;
+  left: 8px;
+  max-width: 280px;
+  margin: 0px;
+  padding-bottom: 0;
+  height: calc(100vh - 16px);
+  border-radius: 8px;
+  .ant-modal-content {
+    border-radius: 8px;
+    .ant-modal-header {
+      border-radius: 8px 8px 0px 0px;
+      border-bottom: 0px;
+      .ant-modal-title {
+        .ant-typography {
+          color: green;
+          font-weight: 600;
+        }
+      }
+    }
+    .ant-modal-body {
+      padding: 8px 24px;
+      .ant-list-item {
+        border-bottom: 0px;
+        padding: 8px 0px;
+        .ant-btn-block {
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
+.segmented-style {
+  display: flex;
+  margin-top: 20px;
+  border-radius: 8px;
+  .ant-segmented-group {
+    justify-content: space-between;
+    label {
+      width: 110px;
+    }
+  }
+}

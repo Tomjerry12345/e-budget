@@ -1,31 +1,53 @@
 $grey: fafafa;
 
 .titleMenu {
-  margin-left: 12px;
-  margin-top: 50px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #717171;
+  line-height: 22px;
+  margin-bottom: 0px;
 }
 
 .menuNav {
-  padding: 8px;
+  // padding: 8px;
   background-color: $grey;
   min-height: 100vh;
   overflow: hidden;
 
   .menuItem {
     border-radius: 10px;
-    margin-top: 30px;
+    margin-top: 20px !important;
+    margin-bottom: 0px !important;
+    height: 36px;
+    width: 36px;
+    padding: 0 10px !important;
     // background-color: green;
 
     &.selected {
-      background-color: green;
+      background-color: #f4f4f4;
     }
 
     &.notSelected {
       background-color: grey;
     }
+
+    &.open {
+      background-color: green;
+    }
   }
 }
 
 .colorIcon {
-  color: white;
+  // color: white;
+  &.selected {
+    color: green;
+  }
+
+  &.notSelected {
+    color: white;
+  }
+
+  &.open {
+    color: white;
+  }
 }
