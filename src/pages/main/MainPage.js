@@ -51,11 +51,7 @@ const MainPage = () => {
           dataSource={value.item}
           renderItem={(item, i) => (
             <List.Item>
-              <Button
-                type="text"
-                block
-                onClick={() => func.onClickedMenu(value.keyMenu, "submenu")}
-              >
+              <Button type="text" block onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
                 {item}
               </Button>
             </List.Item>

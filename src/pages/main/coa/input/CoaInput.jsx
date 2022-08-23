@@ -1,15 +1,4 @@
-import {
-  Table,
-  Form,
-  Input,
-  Popconfirm,
-  Breadcrumb,
-  Row,
-  Col,
-  Typography,
-  Card,
-  Layout,
-} from "antd";
+import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
@@ -28,15 +17,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -142,20 +123,17 @@ const CoaInput = () => {
       title: "Description",
       dataIndex: "description",
     },
-    {
-      title: "operation",
-      dataIndex: "operation",
-      fixed: "right",
-      render: (_, record) =>
-        dataSource.length >= 1 ? (
-          <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => handleDelete(record.key)}
-          >
-            <a>Delete</a>
-          </Popconfirm>
-        ) : null,
-    },
+    // {
+    //   title: "operation",
+    //   dataIndex: "operation",
+    //   fixed: "right",
+    //   render: (_, record) =>
+    //     dataSource.length >= 1 ? (
+    //       <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+    //         <a>Delete</a>
+    //       </Popconfirm>
+    //     ) : null,
+    // },
   ];
 
   const handleAdd = () => {
@@ -213,7 +191,8 @@ const CoaInput = () => {
         style={{
           padding: 20,
           backgroundColor: "#fafafa",
-          minHeight: 300,
+          // minHeight: 300,
+          minHeight: 100,
         }}
       >
         <Breadcrumb
@@ -225,14 +204,7 @@ const CoaInput = () => {
           <Breadcrumb.Item>{params.item}</Breadcrumb.Item>
         </Breadcrumb>
         <Text strong>Summary {params.item}</Text>
-        <Card
-          style={
-            {
-              // width: 300,
-            }
-          }
-        >
-          {/* Form Field */}
+        {/* <Card>
           <Form layout="vertical">
             <Row>
               <Col span={5}>
@@ -262,7 +234,7 @@ const CoaInput = () => {
               </Col>
             </Row>
           </Form>
-        </Card>
+        </Card> */}
       </Header>
       <Content
         style={{
