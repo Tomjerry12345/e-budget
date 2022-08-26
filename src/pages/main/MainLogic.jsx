@@ -11,7 +11,7 @@ const MainLogic = () => {
 
   const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
 
-  const allItem = [[], [], [], [], [], [], ["Kode perusahaan", "Kode produk", "Kode Lokasi", "Kode Departemen", "Kode Akun", "Kode Projek", "Kode ICP"], []];
+  const allItem = [[], [], [], [], [], [], ["Kode perusahaan", "Kode produk", "Kode lokasi", "Kode departemen", "Kode akun", "Kode projek", "Kode ICP"], []];
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
