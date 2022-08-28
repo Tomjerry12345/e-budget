@@ -23,14 +23,23 @@
       }
     }
     .ant-modal-body {
-      padding: 8px 24px;
-      .ant-list-item {
-        border-bottom: 0px;
-        padding: 8px 0px;
-        .ant-btn-block {
-          display: flex;
+      padding: 6px 16px;
+      ul {
+        .ant-list-item {
+          border-bottom: 0px;
+          padding: 0px;
+
+          .ant-btn {
+            height: 34px;
+            padding: 6px 10px;
+          }
+
+          .ant-btn-block {
+            display: flex;
+          }
         }
       }
+      
     }
   }
 }

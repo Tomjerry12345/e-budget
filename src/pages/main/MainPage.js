@@ -37,6 +37,7 @@ const MainPage = () => {
             />
           </div>,
         ]}
+        // bodyStyle={{ overflowY: "scroll" }}
         visible={value.showMenu}
         className="modal-menu"
         closable={false}
@@ -44,19 +45,35 @@ const MainPage = () => {
         mask={false}
         footer={null}
       >
-        <List
-          size="large"
-          header={null}
-          footer={null}
-          dataSource={value.item}
-          renderItem={(item, i) => (
-            <List.Item>
-              <Button type="text" block onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
-                {item}
-              </Button>
-            </List.Item>
-          )}
-        />
+        <div
+          id="scrollableDiv"
+          style={{
+            height: 490,
+            overflow: "auto",
+            // padding: "0 16px",
+            // border: "1px solid rgba(140, 140, 140, 0.35)",
+          }}
+        >
+          <List
+            size="large"
+            header={null}
+            footer={null}
+            dataSource={value.item}
+            renderItem={(item, i) => (
+              <List.Item>
+                <Button
+                  type="text"
+                  block
+                  onClick={() =>
+                    func.onClickedMenu(value.keyMenu, "submenu", item)
+                  }
+                >
+                  {item}
+                </Button>
+              </List.Item>
+            )}
+          />
+        </div>
       </Modal>
 
       <Layout>
@@ -69,13 +86,13 @@ const MainPage = () => {
             <Outlet />
           </div>
         </Content>
-        <Footer
+        {/* <Footer
           style={{
             textAlign: "center",
           }}
         >
           Ant Design ©2018 Created by Ant UED
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   );

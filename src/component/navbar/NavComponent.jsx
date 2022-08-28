@@ -68,7 +68,9 @@ const NavComponent = ({ func, value }) => {
               className={`colorIcon ${isClickedMenu(1)}`}
             />
           }
-        />
+        >
+          Revenue & COGS
+        </Menu.Item>
         {/* 2 */}
         <Menu.Item
           key={2}
@@ -78,7 +80,9 @@ const NavComponent = ({ func, value }) => {
               className={`colorIcon ${isClickedMenu(2)}`}
             />
           }
-        />
+        >
+          Opex
+        </Menu.Item>
         {/* 3 */}
         <Menu.Item
           key={3}
@@ -86,7 +90,9 @@ const NavComponent = ({ func, value }) => {
           icon={
             <ArchiveOutlinedIcon className={`colorIcon ${isClickedMenu(3)}`} />
           }
-        />
+        >
+          Capex
+        </Menu.Item>
         {/* 4 */}
         <Menu.Item
           key={4}
@@ -96,7 +102,9 @@ const NavComponent = ({ func, value }) => {
               className={`colorIcon ${isClickedMenu(4)}`}
             />
           }
-        />
+        >
+          MPP
+        </Menu.Item>
         {/* 5 */}
         <Menu.Item
           key={5}
@@ -106,7 +114,9 @@ const NavComponent = ({ func, value }) => {
               className={`colorIcon ${isClickedMenu(5)}`}
             />
           }
-        />
+        >
+          Others
+        </Menu.Item>
         {/* 6 */}
         <Menu.Item
           key={6}
@@ -116,7 +126,9 @@ const NavComponent = ({ func, value }) => {
               className={`colorIcon ${isClickedMenu(6)}`}
             />
           }
-        />
+        >
+          Report
+        </Menu.Item>
         {/* 7 */}
         <Menu.Item
           key={7}
@@ -127,7 +139,9 @@ const NavComponent = ({ func, value }) => {
             />
           }
           // onClick={func.onClickedMenu}
-        />
+        >
+          Master COA
+        </Menu.Item>
         {/* <Menu.SubMenu
           key={7}
           className={`menuItem ${
