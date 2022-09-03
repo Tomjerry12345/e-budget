@@ -5,8 +5,7 @@ import NavComponent from "../../component/navbar/NavComponent";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 
-const { TabPane } = Tabs;
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 // const data = ["Kode produk", "Kode company"];
 
@@ -61,13 +60,7 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item>
-                <Button
-                  type="text"
-                  block
-                  onClick={() =>
-                    func.onClickedMenu(value.keyMenu, "submenu", item)
-                  }
-                >
+                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
                   {item}
                 </Button>
               </List.Item>
