@@ -1,4 +1,5 @@
 @import "~antd/dist/antd.css";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap");
 
 body {
   margin: 0;
@@ -9,4 +10,9 @@ body {
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.ant-typography,
+.ant-form-item-label > label {
+  font-family: Poppins, sans-serif;
 }
