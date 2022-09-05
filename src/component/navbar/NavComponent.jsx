@@ -50,94 +50,38 @@ const NavComponent = ({ func, value }) => {
           Menu
         </h1>
         {/* 0 */}
-        <Menu.Item
-          key={0}
-          className={`menuItem ${isClickedMenu(0)}`}
-          icon={
-            <GridViewRoundedIcon className={`colorIcon ${isClickedMenu(0)}`} />
-          }
-        >
+        <Menu.Item key={0} className={`menuItem ${isClickedMenu(0)}`} icon={<GridViewRoundedIcon className={`colorIcon ${isClickedMenu(0)}`} />} title="dashboard">
           Dashboard
         </Menu.Item>
         {/* 1 */}
-        <Menu.Item
-          key={1}
-          className={`menuItem ${isClickedMenu(1)}`}
-          icon={
-            <InsertChartOutlinedIcon
-              className={`colorIcon ${isClickedMenu(1)}`}
-            />
-          }
-        >
+        <Menu.Item key={1} className={`menuItem ${isClickedMenu(1)}`} icon={<InsertChartOutlinedIcon className={`colorIcon ${isClickedMenu(1)}`} />}>
           Revenue & COGS
         </Menu.Item>
         {/* 2 */}
-        <Menu.Item
-          key={2}
-          className={`menuItem ${isClickedMenu(2)}`}
-          icon={
-            <AssignmentTurnedInOutlinedIcon
-              className={`colorIcon ${isClickedMenu(2)}`}
-            />
-          }
-        >
+        <Menu.Item key={2} className={`menuItem ${isClickedMenu(2)}`} icon={<AssignmentTurnedInOutlinedIcon className={`colorIcon ${isClickedMenu(2)}`} />}>
           Opex
         </Menu.Item>
         {/* 3 */}
-        <Menu.Item
-          key={3}
-          className={`menuItem ${isClickedMenu(3)}`}
-          icon={
-            <ArchiveOutlinedIcon className={`colorIcon ${isClickedMenu(3)}`} />
-          }
-        >
+        <Menu.Item key={3} className={`menuItem ${isClickedMenu(3)}`} icon={<ArchiveOutlinedIcon className={`colorIcon ${isClickedMenu(3)}`} />}>
           Capex
         </Menu.Item>
         {/* 4 */}
-        <Menu.Item
-          key={4}
-          className={`menuItem ${isClickedMenu(4)}`}
-          icon={
-            <SupervisedUserCircleOutlinedIcon
-              className={`colorIcon ${isClickedMenu(4)}`}
-            />
-          }
-        >
+        <Menu.Item key={4} className={`menuItem ${isClickedMenu(4)}`} icon={<SupervisedUserCircleOutlinedIcon className={`colorIcon ${isClickedMenu(4)}`} />}>
           MPP
         </Menu.Item>
         {/* 5 */}
-        <Menu.Item
-          key={5}
-          className={`menuItem ${isClickedMenu(5)}`}
-          icon={
-            <ContentPasteOutlinedIcon
-              className={`colorIcon ${isClickedMenu(5)}`}
-            />
-          }
-        >
+        <Menu.Item key={5} className={`menuItem ${isClickedMenu(5)}`} icon={<ContentPasteOutlinedIcon className={`colorIcon ${isClickedMenu(5)}`} />}>
           Others
         </Menu.Item>
         {/* 6 */}
-        <Menu.Item
-          key={6}
-          className={`menuItem ${isClickedMenu(6)}`}
-          icon={
-            <SummarizeOutlinedIcon
-              className={`colorIcon ${isClickedMenu(6)}`}
-            />
-          }
-        >
+        <Menu.Item key={6} className={`menuItem ${isClickedMenu(6)}`} icon={<SummarizeOutlinedIcon className={`colorIcon ${isClickedMenu(6)}`} />}>
           Report
         </Menu.Item>
         {/* 7 */}
         <Menu.Item
           key={7}
           className={`menuItem ${isClickedMenu(7)}`}
-          icon={
-            <Inventory2OutlinedIcon
-              className={`colorIcon ${isClickedMenu(7)}`}
-            />
-          }
+          icon={<Inventory2OutlinedIcon className={`colorIcon ${isClickedMenu(7)}`} />}
           // onClick={func.onClickedMenu}
         >
           Master COA

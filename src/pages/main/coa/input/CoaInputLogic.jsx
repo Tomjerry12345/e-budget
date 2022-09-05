@@ -1,6 +1,7 @@
 import { Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { log } from "../../../../values/Utilitas";
 import { constantDataTable } from "./ConstantInput";
 
 const CoaInputLogic = () => {
@@ -298,6 +299,110 @@ const CoaInputLogic = () => {
           ) : null,
       },
     ],
+    "Kode departemen": [
+      {
+        title: "Kode Dept",
+        dataIndex: "kode_dept",
+        width: "30%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        editable: true,
+      },
+    ],
+    "Kode akun": [
+      {
+        title: "Type Akun",
+        dataIndex: "type_akun",
+        width: "30%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "Kode Akun",
+        dataIndex: "kode_akun",
+        editable: true,
+      },
+      {
+        title: "Akun Induk",
+        dataIndex: "akun_induk",
+        editable: true,
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        editable: true,
+      },
+    ],
+    "Kode projek": [
+      {
+        title: "Kode Project",
+        dataIndex: "kode_project",
+        width: "20%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "Kode Parent",
+        dataIndex: "kode_parent",
+        width: "5%",
+        editable: true,
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        width: "20%",
+        editable: true,
+      },
+      {
+        title: "BJU",
+        dataIndex: "bju",
+        editable: true,
+      },
+      {
+        title: "BSB",
+        dataIndex: "bsb",
+        editable: true,
+      },
+      {
+        title: "KIK",
+        dataIndex: "kik",
+        editable: true,
+      },
+      {
+        title: "BARUGA",
+        dataIndex: "baruga",
+        editable: true,
+      },
+      {
+        title: "operation",
+        dataIndex: "operation",
+        fixed: "right",
+        //   render: (_, record) =>
+        //     dataSource.length >= 1 ? (
+        //       <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+        //         <a>Delete</a>
+        //       </Popconfirm>
+        //     ) : null,
+      },
+    ],
+    "Kode ICP": [
+      {
+        title: "Kode ICP",
+        dataIndex: "kode_icp",
+        width: "30%",
+        editable: true,
+        fixed: "left",
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        editable: true,
+      },
+    ],
   };
 
   const handleDelete = (key) => {
@@ -329,6 +434,7 @@ const CoaInputLogic = () => {
 
   useEffect(() => {
     const itemPage = params.item;
+    log(`params => ${itemPage}`);
     const columns = constantTableColums[itemPage].map((col) => {
       if (!col.editable) {
         return col;

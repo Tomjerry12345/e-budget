@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { allItemInputSubMenu, allItemSummarySubMenu, disabledItemInputMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import { getLocal, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   const navigate = useNavigate();
+  let params = useParams();
   const [showMenu, setShowMenu] = useState(false);
   const [keyMenu, setKeyMenu] = useState(0);
   const [iEMenu, setiEmenu] = useState(0);
@@ -12,6 +14,17 @@ const MainLogic = () => {
   const [segmentedValue, setSegmentedValue] = useState("Input");
 
   const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
+
+  useEffect(() => {
+    if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
+      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+      console.info("This page is reloaded");
+      const index = getLocal("index-menu");
+      isActivated[index] = 2;
+      setiEmenu(index);
+      setListMenuActivated(isActivated);
+    }
+  }, []);
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
@@ -37,10 +50,15 @@ const MainLogic = () => {
     const index = parseInt(key);
 
     setKeyMenu(index);
+    log(`iEmenu => ${iEMenu}`);
 
     if (item === "menu") {
+      setSegmentedValue("Input");
+
+      log("menu clicked");
       if (index === 0) {
         isActivated[index] = 2;
+        setLocal("index-menu", index);
         navigate(`/`);
       } else {
         isActivated[iEMenu] = 2;
@@ -49,6 +67,7 @@ const MainLogic = () => {
         isShowMenu();
       }
     } else {
+      setLocal("index-menu", index);
       setiEmenu(keyMenu);
       isActivated[index] = 2;
       setItem([]);
@@ -87,6 +106,7 @@ const MainLogic = () => {
       showMenu,
       keyMenu,
       itemDisabledMenu,
+      segmentedValue,
     },
   };
 };

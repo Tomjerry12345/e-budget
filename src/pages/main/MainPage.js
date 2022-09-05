@@ -32,6 +32,7 @@ const MainPage = () => {
               ]}
               className="segmented-style"
               defaultValue="Input"
+              value={value.segmentedValue}
               onChange={func.onChangeSegmented}
             />
           </div>,
@@ -49,8 +50,6 @@ const MainPage = () => {
           style={{
             height: 490,
             overflow: "auto",
-            // padding: "0 16px",
-            // border: "1px solid rgba(140, 140, 140, 0.35)",
           }}
         >
           <List
