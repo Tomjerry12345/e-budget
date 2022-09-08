@@ -80,6 +80,10 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
+const setXColumn = (params) => {
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+};
+
 const CoaInputPage = () => {
   const { value } = CoaInputLogic();
 
@@ -156,7 +160,7 @@ const CoaInputPage = () => {
           columns={value.tableColumn}
           pagination={false}
           scroll={{
-            x: 1600,
+            x: setXColumn(value.params.item),
             y: 300,
           }}
         />

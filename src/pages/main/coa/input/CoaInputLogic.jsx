@@ -312,6 +312,17 @@ const CoaInputLogic = () => {
         dataIndex: "description",
         editable: true,
       },
+      {
+        title: "operation",
+        dataIndex: "operation",
+        fixed: "right",
+        render: (_, record) =>
+          dataSource.length >= 1 ? (
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+              <a>Delete</a>
+            </Popconfirm>
+          ) : null,
+      },
     ],
     "Kode akun": [
       {
@@ -341,14 +352,14 @@ const CoaInputLogic = () => {
       {
         title: "Kode Project",
         dataIndex: "kode_project",
-        width: "20%",
+        // width: "20%",
         editable: true,
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "kode_parent",
-        width: "5%",
+        // width: "5%",
         editable: true,
       },
       {
@@ -401,6 +412,17 @@ const CoaInputLogic = () => {
         title: "Description",
         dataIndex: "description",
         editable: true,
+      },
+      {
+        title: "operation",
+        dataIndex: "operation",
+        fixed: "right",
+        //   render: (_, record) =>
+        //     dataSource.length >= 1 ? (
+        //       <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
+        //         <a>Delete</a>
+        //       </Popconfirm>
+        //     ) : null,
       },
     ],
   };
