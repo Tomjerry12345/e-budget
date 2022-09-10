@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { allItemInputSubMenu, allItemSummarySubMenu, disabledItemInputMenu, disabledItemSummaryMenu } from "../../values/Constant";
-import { getLocal, log, setLocal } from "../../values/Utilitas";
+import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   const navigate = useNavigate();
-  let params = useParams();
   const [showMenu, setShowMenu] = useState(false);
   const [keyMenu, setKeyMenu] = useState(0);
   const [iEMenu, setiEmenu] = useState(0);
@@ -50,12 +49,10 @@ const MainLogic = () => {
     const index = parseInt(key);
 
     setKeyMenu(index);
-    log(`iEmenu => ${iEMenu}`);
 
     if (item === "menu") {
       setSegmentedValue("Input");
 
-      log("menu clicked");
       if (index === 0) {
         isActivated[index] = 2;
         setLocal("index-menu", index);
@@ -72,14 +69,18 @@ const MainLogic = () => {
       isActivated[index] = 2;
       setItem([]);
       setShowMenu(false);
-      navigate(`/coa/${segmentedValue}/${nameMenu}`);
+
+      if (index === 2) {
+        navigate(`/opex/${segmentedValue}/${nameMenu}`);
+      } else if (index === 7) {
+        navigate(`/coa/${segmentedValue}/${nameMenu}`);
+      }
     }
 
     setListMenuActivated(isActivated);
   };
 
   const onChangeSegmented = (value) => {
-    console.log(`segmented value => ${value}`);
     setSegmentedValue(value);
     getSubmenu(keyMenu, value);
   };

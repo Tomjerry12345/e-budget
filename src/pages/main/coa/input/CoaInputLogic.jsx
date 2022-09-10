@@ -1,37 +1,34 @@
-import { Popconfirm } from "antd";
+import { Button, Dropdown, Menu, Popconfirm } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { log } from "../../../../values/Utilitas";
 import { constantDataTable } from "./ConstantInput";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+const menu = (
+  <Menu
+    items={[
+      {
+        key: "1",
+        label: "edit",
+      },
+      {
+        key: "2",
+        label: "hapus",
+      },
+    ]}
+  />
+);
 
 const CoaInputLogic = () => {
   let params = useParams();
-
-  const [dataSource, setDataSource] = useState([
-    {
-      key: "0",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
-    },
-    {
-      key: "1",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
-    },
-    {
-      key: "2",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
-    },
-  ]);
+  const itemPage = params.item;
 
   const [count, setCount] = useState(2);
 
   const [tableColumn, setTableColumn] = useState([]);
-  const [dataColumn, setDataColumn] = useState([]);
+
+  const dataTable = constantDataTable[itemPage];
+  const [dataColumn, setDataColumn] = useState(dataTable);
 
   const constantTableColums = {
     "Kode perusahaan": [
@@ -53,15 +50,14 @@ const CoaInputLogic = () => {
         dataIndex: "description",
       },
       {
-        title: "operation",
         dataIndex: "operation",
         fixed: "right",
-        width: "10%",
+        width: "5%",
         render: (_, record) =>
-          dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
           ) : null,
       },
     ],
@@ -170,15 +166,14 @@ const CoaInputLogic = () => {
         editable: true,
       },
       {
-        title: "operation",
         dataIndex: "operation",
-        width: "10%",
         fixed: "right",
+        width: "5%",
         render: (_, record) =>
-          constantTableColums[params.item].length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
           ) : null,
       },
     ],
@@ -287,15 +282,14 @@ const CoaInputLogic = () => {
         editable: true,
       },
       {
-        title: "operation",
         dataIndex: "operation",
-        width: "10%",
         fixed: "right",
+        width: "5%",
         render: (_, record) =>
-          constantTableColums[params.item].length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
           ) : null,
       },
     ],
@@ -313,14 +307,14 @@ const CoaInputLogic = () => {
         editable: true,
       },
       {
-        title: "operation",
         dataIndex: "operation",
         fixed: "right",
+        width: "5%",
         render: (_, record) =>
-          dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-              <a>Delete</a>
-            </Popconfirm>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
           ) : null,
       },
     ],
@@ -346,6 +340,17 @@ const CoaInputLogic = () => {
         title: "Description",
         dataIndex: "description",
         editable: true,
+      },
+      {
+        dataIndex: "operation",
+        fixed: "right",
+        width: "5%",
+        render: (_, record) =>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
+          ) : null,
       },
     ],
     "Kode projek": [
@@ -389,15 +394,15 @@ const CoaInputLogic = () => {
         editable: true,
       },
       {
-        title: "operation",
         dataIndex: "operation",
         fixed: "right",
-        //   render: (_, record) =>
-        //     dataSource.length >= 1 ? (
-        //       <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-        //         <a>Delete</a>
-        //       </Popconfirm>
-        //     ) : null,
+        width: "5%",
+        render: (_, record) =>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
+          ) : null,
       },
     ],
     "Kode ICP": [
@@ -414,49 +419,20 @@ const CoaInputLogic = () => {
         editable: true,
       },
       {
-        title: "operation",
         dataIndex: "operation",
         fixed: "right",
-        //   render: (_, record) =>
-        //     dataSource.length >= 1 ? (
-        //       <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
-        //         <a>Delete</a>
-        //       </Popconfirm>
-        //     ) : null,
+        width: "5%",
+        render: (_, record) =>
+          dataColumn.length >= 1 ? (
+            <Dropdown overlay={menu} placement="bottom">
+              <Button icon={<MoreVertIcon />}></Button>
+            </Dropdown>
+          ) : null,
       },
     ],
   };
 
-  const handleDelete = (key) => {
-    const newData = dataSource.filter((item) => item.key !== key);
-    setDataSource(newData);
-  };
-
-  const handleAdd = () => {
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: "32",
-      address: `London, Park Lane no. ${count}`,
-    };
-    setDataSource([...dataSource, newData]);
-    setCount(count + 1);
-  };
-
-  const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-
-    console.log(`item => ${JSON.stringify(item)}`);
-    console.log(`key => ${row.key}`);
-    newData.splice(index, 1, { ...item, ...row });
-    setDataSource(newData);
-  };
-
   useEffect(() => {
-    const itemPage = params.item;
-    log(`params => ${itemPage}`);
     const columns = constantTableColums[itemPage].map((col) => {
       if (!col.editable) {
         return col;
@@ -474,11 +450,33 @@ const CoaInputLogic = () => {
       };
     });
 
-    const dataTable = constantDataTable[itemPage];
-
-    setDataColumn(dataTable);
     setTableColumn(columns);
+    setDataColumn(dataTable);
   }, [params.item]);
+
+  const handleDelete = (key) => {
+    const newData = dataColumn.filter((item) => item.key !== key);
+    setDataColumn(newData);
+  };
+
+  const handleAdd = () => {
+    const newData = {
+      key: count,
+      name: `Edward King ${count}`,
+      age: "32",
+      address: `London, Park Lane no. ${count}`,
+    };
+    setDataColumn([...dataColumn, newData]);
+    setCount(count + 1);
+  };
+
+  const handleSave = (row) => {
+    const newData = [...dataColumn];
+    const index = newData.findIndex((item) => row.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, { ...item, ...row });
+    setDataColumn(newData);
+  };
 
   return {
     value: {

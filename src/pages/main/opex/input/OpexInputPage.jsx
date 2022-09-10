@@ -1,7 +1,9 @@
-import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout } from "antd";
+import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout, InputNumber, Select } from "antd";
+import { Option } from "antd/lib/mentions";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import CoaInputLogic from "./CoaInputLogic";
+import { log } from "../../../../values/Utilitas";
+import OpexInputLogic from "./OpexInputLogic";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -19,10 +21,36 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCellModel1 = ({ editing, dataIndex, title, inputType, record, children, ...restProps }) => {
+  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+          rules={[
+            {
+              required: true,
+              message: `Please Input ${title}!`,
+            },
+          ]}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  );
+};
+
+const EditableCellModel2 = ({ title, editable, children, dataIndex, record, handleSave, form, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
-  const form = useContext(EditableContext);
+  // const form = useContext(EditableContext);
   useEffect(() => {
     if (editing) {
       inputRef.current.focus();
@@ -76,21 +104,29 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
       </div>
     );
   }
-
   return <td {...restProps}>{childNode}</td>;
 };
 
-const setXColumn = (params) => {
-  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+const EditableCell1 = ({ editable, editing, dataIndex, title, inputType, record, handleSave, children, mode, form, ...restProps }) => {
+  return mode === 1 ? (
+    <EditableCellModel1 editing={editing} dataIndex={dataIndex} title={title} inputType={inputType} record={record} children={children} {...restProps} />
+  ) : (
+    <EditableCellModel2 title={title} editable={editable} children={children} dataIndex={dataIndex} record={record} handleSave={handleSave} form={form} {...restProps} />
+  );
 };
 
-const CoaInputPage = () => {
-  const { value } = CoaInputLogic();
+const setXColumn = (params) => {
+  return params === "Opex Direct" ? null : 1600;
+};
+
+const OpexInputPage = () => {
+  const { value, func } = OpexInputLogic();
 
   const components = {
     body: {
-      row: EditableRow,
-      cell: EditableCell,
+      // row: EditableRow,
+      // cell: EditableCell,
+      cell: EditableCell1,
     },
   };
 
@@ -102,7 +138,7 @@ const CoaInputPage = () => {
           padding: 20,
           backgroundColor: "#fafafa",
           // minHeight: 300,
-          minHeight: 100,
+          minHeight: 150,
         }}
       >
         <Breadcrumb
@@ -110,10 +146,17 @@ const CoaInputPage = () => {
         //   margin: "16px 0",
         // }}
         >
-          <Breadcrumb.Item>COA</Breadcrumb.Item>
+          <Breadcrumb.Item>Opex</Breadcrumb.Item>
           <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
         </Breadcrumb>
-        <Text strong>Input {value.params.item}</Text>
+        <Text strong>Summary {value.params.item}</Text>
+        <div>
+          <Select value={value.mode} onChange={(e) => func.onChangeMode(e)}>
+            <Option value="mode 1">mode 1</Option>
+            <Option value="mode 2">mode 2</Option>
+          </Select>
+        </div>
+
         {/* <Card>
           <Form layout="vertical">
             <Row>
@@ -152,21 +195,23 @@ const CoaInputPage = () => {
           backgroundColor: "white",
         }}
       >
-        <Table
-          components={components}
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          pagination={false}
-          scroll={{
-            x: setXColumn(value.params.item),
-            y: 300,
-          }}
-        />
+        <Form form={value.form} component={false}>
+          <Table
+            components={components}
+            rowClassName={() => "editable-row"}
+            bordered
+            dataSource={value.dataColumn}
+            columns={value.tableColumn}
+            pagination={false}
+            scroll={{
+              x: setXColumn(value.params.item),
+              y: 300,
+            }}
+          />
+        </Form>
       </Content>
     </Layout>
   );
 };
 
-export default CoaInputPage;
+export default OpexInputPage;

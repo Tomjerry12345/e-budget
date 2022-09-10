@@ -54,7 +54,7 @@ export const allItemInputSubMenu = [
 export const disabledItemInputMenu = [
   [],
   [true, true, true, true, true, true, true, true, true, true, true, true, true, true],
-  [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true],
+  [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false],
   [true, true, true, true, true, true, true, true, true, true, true],
   [true, true, true, true, true, true, true, true, true, true, true],
   [true, true, true, true],
