@@ -1,7 +1,22 @@
-import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout } from "antd";
+import {
+  Table,
+  Form,
+  Input,
+  Popconfirm,
+  Breadcrumb,
+  Row,
+  Col,
+  Typography,
+  Card,
+  Layout,
+  Button,
+} from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaInputLogic";
+import "./CoaInput.scss";
+import UploadModal from "../../../../component/modal/UploadModal";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -19,7 +34,15 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -81,11 +104,16 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+  return params === "Kode perusahaan" ||
+    params === "Kode departemen" ||
+    params === "Kode akun" ||
+    params === "Kode ICP"
+    ? null
+    : 1600;
 };
 
 const CoaInputPage = () => {
-  const { value } = CoaInputLogic();
+  const { value, func } = CoaInputLogic();
 
   const components = {
     body: {
@@ -101,8 +129,8 @@ const CoaInputPage = () => {
         style={{
           padding: 20,
           backgroundColor: "#fafafa",
-          // minHeight: 300,
           minHeight: 100,
+          // minHeight: 300,
         }}
       >
         <Breadcrumb
@@ -114,6 +142,7 @@ const CoaInputPage = () => {
           <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
         </Breadcrumb>
         <Text strong>Input {value.params.item}</Text>
+
         {/* <Card>
           <Form layout="vertical">
             <Row>
@@ -152,6 +181,32 @@ const CoaInputPage = () => {
           backgroundColor: "white",
         }}
       >
+        <div className="top-content">
+          <Form className="form-cari" layout="vertical">
+            <Form.Item>
+              <Input placeholder="Cari data di sini..." />
+            </Form.Item>
+            <Button className="btn-cari" type="primary">
+              Cari
+            </Button>
+          </Form>
+
+          <div className="layout-btn-action">
+            <Button className="btn-clear" type="ghost" disabled>
+              Clear Data
+            </Button>
+
+            <Button
+              className="btn-update"
+              type="primary"
+              icon={<UploadOutlined className="custom-icon" />}
+              onClick={func.onOpenUploadModal}
+            >
+              Update
+            </Button>
+          </div>
+        </div>
+
         <Table
           components={components}
           rowClassName={() => "editable-row"}
@@ -165,6 +220,11 @@ const CoaInputPage = () => {
           }}
         />
       </Content>
+
+      <UploadModal
+        open={value.openUploadModal}
+        onCancel={func.onCloseUploadModal}
+      />
     </Layout>
   );
 };

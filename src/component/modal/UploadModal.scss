@@ -1,0 +1,114 @@
+.ant-modal-wrap {
+  margin: 0;
+}
+
+.custom-upload-modal {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: 20px;
+
+  .ant-modal-content {
+    width: 700px;
+    height: 480px;
+    border-radius: 8px;
+  }
+
+  .root-content-upload {
+    width: 652px;
+    height: 327px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+
+    .title-upload {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0.2px;
+      color: rgba(18, 18, 18, 0.7);
+    }
+
+    .layout-upload-file {
+      width: 604px;
+      height: 155px;
+      background: #f8f8f8;
+      border-radius: 8px;
+      margin-top: 8px;
+      padding: 24px;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+
+      .anticon {
+        svg {
+          width: 30px;
+          height: 30px;
+          color: #34a853;
+        }
+      }
+
+      .txt-drag {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 21px;
+        letter-spacing: 0.2px;
+        color: #121212;
+        margin-top: 10px;
+      }
+
+      .txt {
+        margin-top: 4px;
+      }
+
+      .txt-browse {
+        color: #008041;
+        font-weight: 600;
+      }
+    }
+
+    .layout-download-template {
+      display: flex;
+      flex-direction: column;
+      .txt-accepted {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+      .txt-belum-mempunyai-template {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        letter-spacing: 0.2px;
+        color: #121212;
+        margin-top: 16px;
+      }
+
+      .btn-download-template {
+        margin-top: 8px;
+        width: 183px;
+        border-radius: 8px;
+        border: 1px solid #008041;
+        background-color: #f5f7f9;
+        color: black;
+        .anticon {
+          color: #008041;
+        }
+      }
+    }
+  }
+
+  .ant-modal-footer {
+    .btn-cancel {
+      width: 120px;
+      height: 41px;
+      color: #888888;
+    }
+    .btn-upload {
+      background-color: #008041;
+      border-radius: 8px;
+      width: 120px;
+      height: 41px;
+      border: none;
+    }
+  }
+}

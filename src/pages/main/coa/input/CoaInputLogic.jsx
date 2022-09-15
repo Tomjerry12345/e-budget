@@ -25,6 +25,8 @@ const CoaInputLogic = () => {
 
   const [count, setCount] = useState(2);
 
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+
   const [tableColumn, setTableColumn] = useState([]);
 
   const dataTable = constantDataTable[itemPage];
@@ -43,7 +45,7 @@ const CoaInputLogic = () => {
         title: "Kode Parent",
         dataIndex: "kode_parent",
         editable: true,
-        width: "20%",
+        width: "10%",
       },
       {
         title: "Description",
@@ -478,11 +480,24 @@ const CoaInputLogic = () => {
     setDataColumn(newData);
   };
 
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+  };
+
   return {
     value: {
       dataColumn,
       tableColumn,
       params,
+      openUploadModal,
+    },
+    func: {
+      onCloseUploadModal,
+      onOpenUploadModal,
     },
   };
 };
