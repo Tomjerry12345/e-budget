@@ -4,11 +4,11 @@ import Layout from "antd/lib/layout/layout";
 import React from "react";
 import "./LoginStyle.scss";
 import logo from "../../../assets/img/logo.png";
-// import LoginLogic from "./LoginLogic";
+import LoginLogic from "./LoginLogic";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 const LoginPage = () => {
-  //   const { value, func } = LoginLogic();
+  const { value, func } = LoginLogic();
   return (
     <Layout className="custom-layout-root">
       <Row gutter={16} className="custom-row">
@@ -66,7 +66,12 @@ const LoginPage = () => {
                   <Input placeholder="Masukkan NIK disini..." />
                 </Form.Item>
                 <Form.Item label="Masukkan Password" required>
-                  <Input.Password placeholder="input password" iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+                  <Input.Password
+                    placeholder="input password"
+                    iconRender={(visible) =>
+                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                    }
+                  />
                 </Form.Item>
                 <Form.Item>
                   <Button

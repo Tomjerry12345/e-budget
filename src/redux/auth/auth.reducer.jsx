@@ -2,25 +2,27 @@ import actionTypes from "../response/response.actionType";
 
 const initialState = {
   isLoading: false,
-  users: null,
+  response: null,
   errorMessage: null,
 };
 
-const usersReducer = (state = initialState, { type, payload }) => {
+const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actionTypes.LOAD_START:
+    case actionTypes.LOAD_START: {
+      console.log(`LOAD_START => ${type}`);
       return {
         ...state,
         isLoading: true,
-        users: null,
+        response: null,
         errorMessage: null,
       };
+    }
 
     case actionTypes.LOAD_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        users: payload,
+        response: payload,
       };
 
     case actionTypes.LOAD_ERROR:
@@ -35,4 +37,4 @@ const usersReducer = (state = initialState, { type, payload }) => {
   }
 };
 
-export default usersReducer;
+export default authReducer;
