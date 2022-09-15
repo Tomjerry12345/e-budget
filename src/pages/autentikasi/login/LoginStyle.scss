@@ -1,0 +1,73 @@
+.custom-layout-root {
+  background: white;
+}
+.custom-row {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+}
+.custom-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: absolute;
+  left: 80px;
+  background: transparent;
+  left: -43px;
+
+  .ant-card-body {
+    padding: 32px;
+  }
+}
+.custom-card {
+  width: 430px !important;
+  height: 410px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+}
+
+.custom-layout-image {
+  display: flex;
+  justify-content: center;
+}
+
+.custom-form {
+  .ant-form-item-label > label {
+    letter-spacing: 0.005em;
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    color: #121212;
+  }
+  .ant-form-item-control-input-content {
+    .ant-input {
+      border-radius: 8px;
+    }
+  }
+
+  .ant-form-item-control-input-content {
+    .ant-input-password {
+      border-radius: 8px;
+      .ant-input {
+        border-radius: 0px;
+      }
+    }
+  }
+
+  .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+    margin-right: 0px;
+    content: "";
+  }
+
+  .ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::after {
+    display: inline-block;
+    margin-right: 0px;
+    margin-left: 4px;
+    color: #ff4d4f;
+    font-size: 14px;
+    font-family: SimSun, sans-serif;
+    line-height: 1;
+    content: "*";
+  }
+}
