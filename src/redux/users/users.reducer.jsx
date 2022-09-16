@@ -2,7 +2,7 @@ import actionTypes from "../response/response.actionType";
 
 const initialState = {
   isLoading: false,
-  users: null,
+  response: null,
   errorMessage: null,
 };
 
@@ -12,7 +12,7 @@ const usersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: true,
-        users: null,
+        response: null,
         errorMessage: null,
       };
 
@@ -20,7 +20,7 @@ const usersReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         isLoading: false,
-        users: payload,
+        response: payload,
       };
 
     case actionTypes.LOAD_ERROR:
