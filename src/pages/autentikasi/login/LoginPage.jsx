@@ -9,7 +9,6 @@ import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import ModalComponent from "../../../component/modal/ModalComponent";
 
 const LoginPage = () => {
-  // test
   const { value, func } = LoginLogic();
   return (
     <Layout className="custom-layout-root">
@@ -94,7 +93,7 @@ const LoginPage = () => {
         </Col>
       </Row>
 
-      <ModalComponent open={true} />
+      <ModalComponent open={false} />
     </Layout>
   );
 };
