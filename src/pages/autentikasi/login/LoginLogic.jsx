@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import loginAsync from "../../../redux/auth/auth.thunks";
+import loadUsersAsync from "../../../redux/users/users.thunks";
 
 const LoginLogic = () => {
   const dispatch = useDispatch();

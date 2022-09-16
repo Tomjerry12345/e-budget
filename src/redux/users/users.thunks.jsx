@@ -1,12 +1,12 @@
 import UsersServices from "../../services/UsersServices";
-import { usersLoadStart, usersLoadSuccess, usersLoadError } from "./users.actions";
+import { loadError, loadStart, loadSuccess } from "../response/response";
 
 const loadUsersAsync = () => (dispatch) => {
-  dispatch(usersLoadStart());
+  dispatch(loadStart());
 
   UsersServices.getAllUsers()
-    .then((response) => dispatch(usersLoadSuccess(response.data)))
-    .catch((error) => dispatch(usersLoadError(error.message)));
+    .then((response) => dispatch(loadSuccess(response.data)))
+    .catch((error) => dispatch(loadError(error.message)));
 };
 
 export default loadUsersAsync;

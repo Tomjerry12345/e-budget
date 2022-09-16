@@ -5,7 +5,7 @@ const apiClient = () => {
   const apiUrl = "https://apikalla.binaries.id/";
 
   const axiosInstance = axios.create({
-    baseURL: apiUrl,
+    // baseURL: apiUrl,
     responseType: "json",
   });
 
