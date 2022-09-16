@@ -2,21 +2,21 @@ export const constantDataTable = {
   "Kode perusahaan": [
     {
       key: "0",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
+      kode_company: "0022",
+      kode_parent: "0044",
+      description: "Edward King 0",
     },
     {
       key: "1",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
+      kode_company: "0022",
+      kode_parent: "0044",
+      description: "Edward King 0",
     },
     {
       key: "2",
-      kode_company: "Edward King 0",
-      kode_parent: "32",
-      description: "32",
+      kode_company: "0022",
+      kode_parent: "0044",
+      description: "Edward King 0",
     },
   ],
   "Kode produk": [

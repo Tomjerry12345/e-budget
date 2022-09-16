@@ -6,6 +6,7 @@ import "./LoginStyle.scss";
 import logo from "../../../assets/img/logo.png";
 import LoginLogic from "./LoginLogic";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import ModalComponent from "../../../component/modal/ModalComponent";
 
 const LoginPage = () => {
   const { value, func } = LoginLogic();
@@ -91,6 +92,8 @@ const LoginPage = () => {
           </Layout>
         </Col>
       </Row>
+
+      <ModalComponent open={false} />
     </Layout>
   );
 };
