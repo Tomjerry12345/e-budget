@@ -2,9 +2,7 @@ import axios from "axios";
 
 const apiClient = () => {
   // const apiUrl = "https://jsonplaceholder.typicode.com/";
-  // const apiUrl =
-  //   "https://cors-anywhere.herokuapp.com/https://apikalla.binaries.id";
-  const apiUrl = "https://apikalla.binaries.id";
+  const apiUrl = "https://apikalla.binaries.id/";
 
   const axiosInstance = axios.create({
     // baseURL: apiUrl,
