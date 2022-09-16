@@ -224,6 +224,7 @@ const CoaInputPage = () => {
       <UploadModal
         open={value.openUploadModal}
         onCancel={func.onCloseUploadModal}
+        value={value}
       />
     </Layout>
   );

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { constantDataTable } from "./ConstantInput";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { useDropzone } from "react-dropzone";
 
 const menu = (
   <Menu
@@ -21,6 +22,7 @@ const menu = (
 
 const CoaInputLogic = () => {
   let params = useParams();
+
   const itemPage = params.item;
 
   const [count, setCount] = useState(2);
@@ -30,6 +32,7 @@ const CoaInputLogic = () => {
   const [tableColumn, setTableColumn] = useState([]);
 
   const dataTable = constantDataTable[itemPage];
+
   const [dataColumn, setDataColumn] = useState(dataTable);
 
   const constantTableColums = {
@@ -434,6 +437,14 @@ const CoaInputLogic = () => {
     ],
   };
 
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
+    },
+  });
+
   useEffect(() => {
     const columns = constantTableColums[itemPage].map((col) => {
       if (!col.editable) {
@@ -494,6 +505,9 @@ const CoaInputLogic = () => {
       tableColumn,
       params,
       openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
     },
     func: {
       onCloseUploadModal,

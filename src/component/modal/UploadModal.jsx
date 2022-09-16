@@ -16,7 +16,7 @@ const CustomFooterModal = () => (
   </>
 );
 
-const UploadModal = ({ open, onCancel }) => {
+const UploadModal = ({ open, onCancel, value }) => {
   return (
     <Modal
       open={open}
@@ -25,17 +25,22 @@ const UploadModal = ({ open, onCancel }) => {
       onCancel={onCancel}
     >
       <Title level={4}>Upload Template</Title>
-      <div className="root-content-upload">
+      <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>
-
         <div className="layout-upload-file">
+          <input {...value.getInputProps()} />
           <CloudUploadOutlined />
           <Text className="txt-drag">Drag And Drop File</Text>
           <Text className="txt">or</Text>
           <Text className="txt-browse">Browse files</Text>
+
+          {value.acceptedFiles.map((file) => (
+            <Text className="txt-file">{file.path}</Text>
+          ))}
         </div>
+
         <div className="layout-download-template">
-          <Text className="txt-accepted">Accepted File Type .xls</Text>
+          <Text className="txt-accepted">Accepted File Type .xlsx</Text>
           <Text className="txt-belum-mempunyai-template">
             Anda Belum Mempunyai Template ?
           </Text>
