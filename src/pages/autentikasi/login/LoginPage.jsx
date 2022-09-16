@@ -93,7 +93,7 @@ const LoginPage = () => {
         </Col>
       </Row>
 
-      <ModalComponent open={true} />
+      <ModalComponent open={false} />
     </Layout>
   );
 };
