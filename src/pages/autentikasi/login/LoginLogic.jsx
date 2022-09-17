@@ -18,6 +18,7 @@ const LoginLogic = () => {
   useEffect(() => {
     setLocal("auth", false);
     setLocal("index-menu", null);
+    setLocal("move-page", null);
     if (response !== null) {
       const { responseCode, responseDescription } = response;
       if (responseCode === "200") {
