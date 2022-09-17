@@ -1,9 +1,15 @@
-import { Button, Dropdown, Menu, Popconfirm } from "antd";
+import { Button, Dropdown, Menu } from "antd";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { constantDataTable } from "./ConstantInput";
+import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCoaAsync,
+  uploadCoaAsync,
+} from "../../../../redux/main/main.thunks";
+import { constantGetCoa, constantUploadCoa } from "./ConstantCoa";
+import { setLocal } from "../../../../values/Utilitas";
 
 const menu = (
   <Menu
@@ -23,30 +29,35 @@ const menu = (
 const CoaInputLogic = () => {
   let params = useParams();
 
-  const itemPage = params.item;
+  const dispatch = useDispatch();
 
-  const [count, setCount] = useState(2);
+  const navigate = useNavigate();
+
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
+
+  const itemPage = params.item;
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [tableColumn, setTableColumn] = useState([]);
 
-  const dataTable = constantDataTable[itemPage];
-
-  const [dataColumn, setDataColumn] = useState(dataTable);
+  // const [dataColumn, setDataColumn] = useState(dataTable);
+  const [dataColumn, setDataColumn] = useState([]);
 
   const constantTableColums = {
     "Kode perusahaan": [
       {
         title: "Kode Company",
-        dataIndex: "kode_company",
+        dataIndex: "code_company",
         editable: true,
         width: "10%",
         fixed: "left",
       },
       {
         title: "Kode Parent",
-        dataIndex: "kode_parent",
+        dataIndex: "code_parent",
         editable: true,
         width: "10%",
       },
@@ -69,14 +80,14 @@ const CoaInputLogic = () => {
     "Kode produk": [
       {
         title: "Kode Produk",
-        dataIndex: "kode_produk",
+        dataIndex: "code_product",
         width: "20%",
         editable: true,
         fixed: "left",
       },
       {
         title: "Kode Parent",
-        dataIndex: "kode_parent",
+        dataIndex: "code_parent",
         width: "10%",
         editable: true,
       },
@@ -88,85 +99,85 @@ const CoaInputLogic = () => {
       },
       {
         title: "HSI",
-        dataIndex: "hsi",
+        dataIndex: "HSI",
         width: "5%",
         editable: true,
       },
       {
         title: "HK",
-        dataIndex: "hk",
+        dataIndex: "HK",
         width: "5%",
         editable: true,
       },
       {
         title: "BSU",
-        dataIndex: "bsu",
+        dataIndex: "BSU",
         width: "5%",
         editable: true,
       },
       {
         title: "KIA",
-        dataIndex: "kia",
+        dataIndex: "KIA",
         width: "5%",
         editable: true,
       },
       {
         title: "BLT",
-        dataIndex: "blt",
+        dataIndex: "BLT",
         width: "5%",
         editable: true,
       },
       {
         title: "BJU",
-        dataIndex: "bju",
+        dataIndex: "BJU",
         width: "5%",
         editable: true,
       },
       {
         title: "BSB",
-        dataIndex: "bsb",
+        dataIndex: "BSB",
         width: "5%",
         editable: true,
       },
       {
-        title: "BAD",
-        dataIndex: "bad",
+        title: "BSD",
+        dataIndex: "BSD",
         width: "5%",
         editable: true,
       },
       {
         title: "KIK",
-        dataIndex: "kik",
+        dataIndex: "KIK",
         width: "5%",
         editable: true,
       },
       {
         title: "KKI",
-        dataIndex: "kki",
+        dataIndex: "KKI",
         width: "5%",
         editable: true,
       },
       {
         title: "BLU",
-        dataIndex: "blu",
+        dataIndex: "BLU",
         width: "5%",
         editable: true,
       },
       {
         title: "IKP",
-        dataIndex: "ikp",
+        dataIndex: "IKP",
         width: "5%",
         editable: true,
       },
       {
         title: "BK",
-        dataIndex: "bk",
+        dataIndex: "BK",
         width: "5%",
         editable: true,
       },
       {
         title: "BBU",
-        dataIndex: "bbu",
+        dataIndex: "BBU",
         width: "5%",
         editable: true,
       },
@@ -184,15 +195,15 @@ const CoaInputLogic = () => {
     ],
     "Kode lokasi": [
       {
-        title: "Kode Produk",
-        dataIndex: "kode_produk",
+        title: "Kode Lokasi",
+        dataIndex: "code_location",
         width: "20%",
         editable: true,
         fixed: "left",
       },
       {
         title: "Kode Parent",
-        dataIndex: "kode_parent",
+        dataIndex: "code_parent",
         width: "10%",
         editable: true,
       },
@@ -204,85 +215,85 @@ const CoaInputLogic = () => {
       },
       {
         title: "HSI",
-        dataIndex: "hsi",
+        dataIndex: "HSI",
         width: "5%",
         editable: true,
       },
       {
         title: "HK",
-        dataIndex: "hk",
+        dataIndex: "HK",
         width: "5%",
         editable: true,
       },
       {
         title: "BSU",
-        dataIndex: "bsu",
+        dataIndex: "BSU",
         width: "5%",
         editable: true,
       },
       {
         title: "KIA",
-        dataIndex: "kia",
+        dataIndex: "KIA",
         width: "5%",
         editable: true,
       },
       {
         title: "BLT",
-        dataIndex: "blt",
+        dataIndex: "BLT",
         width: "5%",
         editable: true,
       },
       {
         title: "BJU",
-        dataIndex: "bju",
+        dataIndex: "BJU",
         width: "5%",
         editable: true,
       },
       {
         title: "BSB",
-        dataIndex: "bsb",
+        dataIndex: "BSB",
         width: "5%",
         editable: true,
       },
       {
-        title: "BAD",
-        dataIndex: "bad",
+        title: "BSD",
+        dataIndex: "BSD",
         width: "5%",
         editable: true,
       },
       {
         title: "KIK",
-        dataIndex: "kik",
+        dataIndex: "KIK",
         width: "5%",
         editable: true,
       },
       {
         title: "KKI",
-        dataIndex: "kki",
+        dataIndex: "KKI",
         width: "5%",
         editable: true,
       },
       {
         title: "BLU",
-        dataIndex: "blu",
+        dataIndex: "BLU",
         width: "5%",
         editable: true,
       },
       {
         title: "IKP",
-        dataIndex: "ikp",
+        dataIndex: "IKP",
         width: "5%",
         editable: true,
       },
       {
         title: "BK",
-        dataIndex: "bk",
+        dataIndex: "BK",
         width: "5%",
         editable: true,
       },
       {
         title: "BBU",
-        dataIndex: "bbu",
+        dataIndex: "BBU",
         width: "5%",
         editable: true,
       },
@@ -301,7 +312,7 @@ const CoaInputLogic = () => {
     "Kode departemen": [
       {
         title: "Kode Dept",
-        dataIndex: "kode_dept",
+        dataIndex: "code_dept",
         width: "30%",
         editable: true,
         fixed: "left",
@@ -326,19 +337,19 @@ const CoaInputLogic = () => {
     "Kode akun": [
       {
         title: "Type Akun",
-        dataIndex: "type_akun",
+        dataIndex: "type_account",
         width: "30%",
         editable: true,
         fixed: "left",
       },
       {
         title: "Kode Akun",
-        dataIndex: "kode_akun",
+        dataIndex: "code_account",
         editable: true,
       },
       {
         title: "Akun Induk",
-        dataIndex: "akun_induk",
+        dataIndex: "code_parent",
         editable: true,
       },
       {
@@ -413,7 +424,7 @@ const CoaInputLogic = () => {
     "Kode ICP": [
       {
         title: "Kode ICP",
-        dataIndex: "kode_icp",
+        dataIndex: "code_icp",
         width: "30%",
         editable: true,
         fixed: "left",
@@ -437,6 +448,16 @@ const CoaInputLogic = () => {
     ],
   };
 
+  const endPoint = {
+    "Kode perusahaan": "company",
+    "Kode produk": "product",
+    "Kode lokasi": "location",
+    "Kode departemen": "dept",
+    "Kode akun": "account",
+    "Kode projek": "Project",
+    "Kode ICP": "icp",
+  };
+
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
@@ -446,6 +467,30 @@ const CoaInputLogic = () => {
   });
 
   useEffect(() => {
+    onSetColumn();
+    onSetDataTable();
+  }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (response !== null) {
+      if (nameReducer === constantGetCoa) {
+        const { data } = response;
+
+        setDataColumn(data.data);
+      } else if (nameReducer === constantUploadCoa) {
+        const { responseCode } = response;
+        if (responseCode === "200") {
+          setLocal("move-page", `/main/coa/input/${params.item}`);
+          navigate("/");
+        }
+        console.log(`reponse => ${JSON.stringify(response)}`);
+      }
+    } else {
+      console.log(`error ${errorMessage}`);
+    }
+  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onSetColumn = () => {
     const columns = constantTableColums[itemPage].map((col) => {
       if (!col.editable) {
         return col;
@@ -464,24 +509,27 @@ const CoaInputLogic = () => {
     });
 
     setTableColumn(columns);
-    setDataColumn(dataTable);
-  }, [params.item]);
-
-  const handleDelete = (key) => {
-    const newData = dataColumn.filter((item) => item.key !== key);
-    setDataColumn(newData);
   };
 
-  const handleAdd = () => {
-    const newData = {
-      key: count,
-      name: `Edward King ${count}`,
-      age: "32",
-      address: `London, Park Lane no. ${count}`,
-    };
-    setDataColumn([...dataColumn, newData]);
-    setCount(count + 1);
+  const onSetDataTable = () => {
+    dispatch(getCoaAsync(endPoint[itemPage]));
   };
+
+  // const handleDelete = (key) => {
+  //   const newData = dataColumn.filter((item) => item.key !== key);
+  //   setDataColumn(newData);
+  // };
+
+  // const handleAdd = () => {
+  //   const newData = {
+  //     key: count,
+  //     name: `Edward King ${count}`,
+  //     age: "32",
+  //     address: `London, Park Lane no. ${count}`,
+  //   };
+  //   setDataColumn([...dataColumn, newData]);
+  //   setCount(count + 1);
+  // };
 
   const handleSave = (row) => {
     const newData = [...dataColumn];
@@ -499,6 +547,16 @@ const CoaInputLogic = () => {
     setOpenUploadModal(false);
   };
 
+  const onUploadFile = () => {
+    let file1;
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+    let formData = new FormData();
+    formData.append("file", file1);
+    dispatch(uploadCoaAsync(endPoint[itemPage], formData));
+  };
+
   return {
     value: {
       dataColumn,
@@ -512,6 +570,7 @@ const CoaInputLogic = () => {
     func: {
       onCloseUploadModal,
       onOpenUploadModal,
+      onUploadFile,
     },
   };
 };

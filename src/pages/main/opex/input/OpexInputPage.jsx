@@ -1,27 +1,41 @@
-import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout, InputNumber, Select } from "antd";
-import { Option } from "antd/lib/mentions";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { log } from "../../../../values/Utilitas";
+import {
+  Table,
+  Form,
+  Input,
+  Breadcrumb,
+  Typography,
+  Layout,
+  InputNumber,
+  Select,
+} from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import OpexInputLogic from "./OpexInputLogic";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 const { Text } = Typography;
 
-const EditableContext = React.createContext(null);
+// const EditableContext = React.createContext(null);
 
-const EditableRow = ({ index, ...props }) => {
-  const [form] = Form.useForm();
-  return (
-    <Form form={form} component={false}>
-      <EditableContext.Provider value={form}>
-        <tr {...props} />
-      </EditableContext.Provider>
-    </Form>
-  );
-};
+// const EditableRow = ({ index, ...props }) => {
+//   const [form] = Form.useForm();
+//   return (
+//     <Form form={form} component={false}>
+//       <EditableContext.Provider value={form}>
+//         <tr {...props} />
+//       </EditableContext.Provider>
+//     </Form>
+//   );
+// };
 
-const EditableCellModel1 = ({ editing, dataIndex, title, inputType, record, children, ...restProps }) => {
+const EditableCellModel1 = ({
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  children,
+  ...restProps
+}) => {
   const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
@@ -47,7 +61,16 @@ const EditableCellModel1 = ({ editing, dataIndex, title, inputType, record, chil
   );
 };
 
-const EditableCellModel2 = ({ title, editable, children, dataIndex, record, handleSave, form, ...restProps }) => {
+const EditableCellModel2 = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  form,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   // const form = useContext(EditableContext);
@@ -107,11 +130,40 @@ const EditableCellModel2 = ({ title, editable, children, dataIndex, record, hand
   return <td {...restProps}>{childNode}</td>;
 };
 
-const EditableCell1 = ({ editable, editing, dataIndex, title, inputType, record, handleSave, children, mode, form, ...restProps }) => {
+const EditableCell1 = ({
+  editable,
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  handleSave,
+  children,
+  mode,
+  form,
+  ...restProps
+}) => {
   return mode === 1 ? (
-    <EditableCellModel1 editing={editing} dataIndex={dataIndex} title={title} inputType={inputType} record={record} children={children} {...restProps} />
+    <EditableCellModel1
+      editing={editing}
+      dataIndex={dataIndex}
+      title={title}
+      inputType={inputType}
+      record={record}
+      children={children}
+      {...restProps}
+    />
   ) : (
-    <EditableCellModel2 title={title} editable={editable} children={children} dataIndex={dataIndex} record={record} handleSave={handleSave} form={form} {...restProps} />
+    <EditableCellModel2
+      title={title}
+      editable={editable}
+      children={children}
+      dataIndex={dataIndex}
+      record={record}
+      handleSave={handleSave}
+      form={form}
+      {...restProps}
+    />
   );
 };
 
@@ -151,10 +203,20 @@ const OpexInputPage = () => {
         </Breadcrumb>
         <Text strong>Summary {value.params.item}</Text>
         <div>
-          <Select value={value.mode} onChange={(e) => func.onChangeMode(e)}>
-            <Option value="mode 1">mode 1</Option>
-            <Option value="mode 2">mode 2</Option>
-          </Select>
+          <Select
+            value={value.mode}
+            onChange={(e) => func.onChangeMode(e)}
+            options={[
+              {
+                label: "mode 1",
+                value: "mode 1",
+              },
+              {
+                label: "mode 2",
+                value: "mode 2",
+              },
+            ]}
+          />
         </div>
 
         {/* <Card>
