@@ -1,7 +1,8 @@
 import actionTypes from "./response.actionType";
 
-const loadStart = () => ({
+const loadStart = (name) => ({
   type: actionTypes.LOAD_START,
+  payload: name,
 });
 
 const loadSuccess = (data) => ({

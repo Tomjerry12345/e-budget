@@ -10,6 +10,9 @@ import ModalComponent from "../../../component/modal/ModalComponent";
 
 const LoginPage = () => {
   const { value, func } = LoginLogic();
+  const { ref } = value;
+  const { onFinish } = func;
+
   return (
     <Layout className="custom-layout-root">
       <Row gutter={16} className="custom-row">
@@ -29,6 +32,7 @@ const LoginPage = () => {
                   style={{
                     width: "91px",
                   }}
+                  alt=""
                 />
               </div>
 
@@ -43,6 +47,7 @@ const LoginPage = () => {
               >
                 Masuk Akun
               </Typography.Text>
+
               <Typography.Text
                 style={{
                   lineHeight: "20px",
@@ -55,18 +60,32 @@ const LoginPage = () => {
               </Typography.Text>
 
               <Form
-                onSubmit={() => {}}
+                ref={ref}
                 layout="vertical"
                 style={{
                   marginTop: "16px",
                 }}
                 className="custom-form"
                 autoComplete="off"
+                onFinish={onFinish}
               >
-                <Form.Item label="Masukkan username" required>
-                  <Input placeholder="Masukkan NIK disini..." />
+                <Form.Item
+                  label="Masukkan username"
+                  name="username"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                >
+                  <Input placeholder="Masukkan username disini..." />
                 </Form.Item>
-                <Form.Item label="Masukkan Password" required>
+
+                <Form.Item
+                  name="password"
+                  label="Masukkan Password"
+                  rules={[
+                    { required: true, message: "Please input your username!" },
+                  ]}
+                >
                   <Input.Password
                     placeholder="input password"
                     iconRender={(visible) =>
@@ -74,6 +93,7 @@ const LoginPage = () => {
                     }
                   />
                 </Form.Item>
+
                 <Form.Item>
                   <Button
                     style={{
@@ -83,6 +103,7 @@ const LoginPage = () => {
                       borderRadius: "8px",
                       height: "40px",
                     }}
+                    htmlType="submit"
                   >
                     Masuk
                   </Button>

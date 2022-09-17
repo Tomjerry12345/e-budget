@@ -1,24 +1,8 @@
-import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
+import { Button, Form, Popconfirm, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { log } from "../../../../values/Utilitas";
 import { constantDataTable } from "./ConstantInput";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-
-const menu = (
-  <Menu
-    items={[
-      {
-        key: "1",
-        label: "edit",
-      },
-      {
-        key: "2",
-        label: "hapus",
-      },
-    ]}
-  />
-);
 
 const OpexInputLogic = () => {
   let params = useParams();
@@ -34,64 +18,86 @@ const OpexInputLogic = () => {
 
   const isEditing = (record) => record.key === editingKey;
 
-  useEffect(() => {
-    const constantTableColums = {
-      "Opex Direct": [
-        {
-          title: "Kode Company",
-          dataIndex: "kode_company",
-          editable: true,
-          width: "10%",
-          fixed: "left",
-        },
-        {
-          title: "Kode Parent",
-          dataIndex: "kode_parent",
-          editable: true,
-          width: "20%",
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          editable: true,
-        },
-        {
-          dataIndex: "operation",
-          fixed: "right",
-          width: "10%",
-          render: (_, record) => {
-            if (dataColumn.length >= 1) {
-              if (mode === "mode 1") {
-                const editable = isEditing(record);
-                return editable ? (
-                  <span>
+  const constantTableColums = {
+    "Opex Direct": [
+      {
+        title: "Kode Company",
+        dataIndex: "kode_company",
+        editable: true,
+        width: "10%",
+        fixed: "left",
+      },
+      {
+        title: "Kode Parent",
+        dataIndex: "kode_parent",
+        editable: true,
+        width: "20%",
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        editable: true,
+      },
+      {
+        dataIndex: "operation",
+        fixed: "right",
+        width: "10%",
+        render: (_, record) => {
+          if (dataColumn.length >= 1) {
+            if (mode === "mode 1") {
+              const editable = isEditing(record);
+              return editable ? (
+                <span>
+                  <Typography.Link
+                    onClick={() => save(record.key)}
+                    style={{
+                      marginRight: 8,
+                      color: "black",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Save
+                  </Typography.Link>
+                  <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
                     <Typography.Link
-                      onClick={() => save(record.key)}
                       style={{
-                        marginRight: 8,
+                        color: "black",
+                        fontSize: "14px",
+                        fontWeight: "600",
                       }}
                     >
-                      Save
+                      Cancel
                     </Typography.Link>
-                    <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                      <a>Cancel</a>
-                    </Popconfirm>
-                  </span>
-                ) : (
-                  <Typography.Link disabled={editingKey !== ""} onClick={() => edit(record)}>
-                    Edit
-                  </Typography.Link>
-                );
-              } else {
-                return null;
-              }
+                  </Popconfirm>
+                </span>
+              ) : (
+                <Button
+                  type="primary"
+                  disabled={editingKey !== ""}
+                  onClick={() => edit(record)}
+                >
+                  Edit
+                </Button>
+                // <Typography.Link
+                //   disabled={editingKey !== ""}
+                //   onClick={() => edit(record)}
+                // >
+                //   Edit
+                // </Typography.Link>
+              );
             } else {
               return null;
             }
-          },
+          } else {
+            return null;
+          }
         },
-      ],
-    };
+      },
+    ],
+  };
+
+  useEffect(() => {
     const columns = constantTableColums[itemPage].map((col) => {
       if (!col.editable) {
         return col;
@@ -114,7 +120,7 @@ const OpexInputLogic = () => {
       };
     });
     setTableColumn(columns);
-  }, [editingKey, mode]);
+  }, [editingKey, mode]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -152,10 +158,10 @@ const OpexInputLogic = () => {
     }
   };
 
-  const handleDelete = (key) => {
-    const newData = dataColumn.filter((item) => item.key !== key);
-    setDataColumn(newData);
-  };
+  // const handleDelete = (key) => {
+  //   const newData = dataColumn.filter((item) => item.key !== key);
+  //   setDataColumn(newData);
+  // };
 
   // const handleAdd = () => {
   //   const newData = {

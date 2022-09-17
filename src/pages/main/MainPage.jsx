@@ -1,4 +1,4 @@
-import { Button, Layout, List, Modal, Segmented, Tabs, Typography } from "antd";
+import { Button, Layout, List, Modal, Segmented, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
@@ -22,7 +22,7 @@ const MainPage = () => {
 
       <Modal
         title={[
-          <div>
+          <div key="test">
             <Typography.Text>Opex</Typography.Text>
 
             <Segmented
@@ -38,7 +38,7 @@ const MainPage = () => {
           </div>,
         ]}
         // bodyStyle={{ overflowY: "scroll" }}
-        visible={value.showMenu}
+        open={value.showMenu}
         className="modal-menu"
         closable={false}
         onCancel={func.handleCancel}
@@ -58,8 +58,15 @@ const MainPage = () => {
             footer={null}
             dataSource={value.item}
             renderItem={(item, i) => (
-              <List.Item>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
+              <List.Item key={i}>
+                <Button
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onClick={() =>
+                    func.onClickedMenu(value.keyMenu, "submenu", item)
+                  }
+                >
                   {item}
                 </Button>
               </List.Item>

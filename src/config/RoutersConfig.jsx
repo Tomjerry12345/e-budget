@@ -6,13 +6,15 @@ import CoaSummary from "../pages/main/coa/summary/CoaSummary";
 import CoaInputPage from "../pages/main/coa/input/CoaInputPage";
 import OpexInputPage from "../pages/main/opex/input/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/OpexSummary";
+import App from "../pages/App";
 
 const RoutersConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<App />}></Route>
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<MainPage />}>
+        <Route path="/main" element={<MainPage />}>
           <Route index element={<DashboardPage />} />
           <Route path="opex">
             <Route path="input/:item" element={<OpexInputPage />} />

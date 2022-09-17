@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { allItemInputSubMenu, allItemSummarySubMenu, disabledItemInputMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import {
+  allItemInputSubMenu,
+  allItemSummarySubMenu,
+  disabledItemInputMenu,
+  disabledItemSummaryMenu,
+} from "../../values/Constant";
 import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -12,9 +17,16 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   useEffect(() => {
+    const movePage = getLocal("move-page");
+    if (movePage !== "null") {
+      navigate(movePage);
+    }
+
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
       let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
@@ -23,7 +35,8 @@ const MainLogic = () => {
       setiEmenu(index);
       setListMenuActivated(isActivated);
     }
-  }, []);
+    setLocal("move-page", null);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
@@ -71,9 +84,9 @@ const MainLogic = () => {
       setShowMenu(false);
 
       if (index === 2) {
-        navigate(`/opex/${segmentedValue}/${nameMenu}`);
+        navigate(`/main/opex/${segmentedValue}/${nameMenu}`);
       } else if (index === 7) {
-        navigate(`/coa/${segmentedValue}/${nameMenu}`);
+        navigate(`/main/coa/${segmentedValue}/${nameMenu}`);
       }
     }
 

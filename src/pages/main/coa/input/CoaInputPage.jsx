@@ -2,23 +2,18 @@ import {
   Table,
   Form,
   Input,
-  Popconfirm,
   Breadcrumb,
-  Row,
-  Col,
   Typography,
-  Card,
   Layout,
   Button,
 } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaInputLogic";
 import "./CoaInput.scss";
 import UploadModal from "../../../../component/modal/UploadModal";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 const { Text } = Typography;
 
 const EditableContext = React.createContext(null);
@@ -218,6 +213,7 @@ const CoaInputPage = () => {
             x: setXColumn(value.params.item),
             y: 300,
           }}
+          rowKey="id"
         />
       </Content>
 
@@ -225,6 +221,7 @@ const CoaInputPage = () => {
         open={value.openUploadModal}
         onCancel={func.onCloseUploadModal}
         value={value}
+        onOk={func.onUploadFile}
       />
     </Layout>
   );
