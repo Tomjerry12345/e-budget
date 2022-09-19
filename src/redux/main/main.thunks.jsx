@@ -1,7 +1,4 @@
-import {
-  constantGetCoa,
-  constantUploadCoa,
-} from "../../pages/main/coa/input/ConstantCoa";
+import { constantGetCoa, constantUploadCoa } from "../../pages/main/coa/ConstantCoa";
 import MainServices from "../../services/MainServices";
 import { loadStart, loadSuccess, loadError } from "../response/response";
 

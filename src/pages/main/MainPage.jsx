@@ -1,4 +1,4 @@
-import { Button, Layout, List, Modal, Segmented, Typography } from "antd";
+import { Button, Layout, List, Modal, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
@@ -25,7 +25,7 @@ const MainPage = () => {
           <div key="test">
             <Typography.Text>Opex</Typography.Text>
 
-            <Segmented
+            {/* <Segmented
               options={[
                 { value: "Input", label: "Input" },
                 { value: "Summary", label: "Summary" },
@@ -34,7 +34,7 @@ const MainPage = () => {
               defaultValue="Input"
               value={value.segmentedValue}
               onChange={func.onChangeSegmented}
-            />
+            /> */}
           </div>,
         ]}
         // bodyStyle={{ overflowY: "scroll" }}
@@ -59,14 +59,7 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button
-                  type="text"
-                  block
-                  disabled={value.itemDisabledMenu[i]}
-                  onClick={() =>
-                    func.onClickedMenu(value.keyMenu, "submenu", item)
-                  }
-                >
+                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
                   {item}
                 </Button>
               </List.Item>

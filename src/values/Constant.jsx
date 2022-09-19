@@ -111,7 +111,6 @@ export const allItemSummarySubMenu = [
   ["Rate", "Gaji", "Tunjangan", "Lembur", "THR & Bonus", "BPJS", "Kesejahteraan Karyawan", "PPH 21", "DPLK", "Pendidikan Dan Pelatihan", "MPP Direct"],
   ["Pendapatan Non Operasional", "Biaya Non Operasional", "Direct All", "Asumsi"],
   [],
-  ["Kode perusahaan", "Kode produk", "Kode lokasi", "Kode departemen", "Kode akun", "Kode projek", "Kode ICP"],
 ];
 
 export const disabledItemSummaryMenu = [
@@ -122,5 +121,4 @@ export const disabledItemSummaryMenu = [
   [true, true, true, true, true, true, true, true, true, true, true],
   [true, true, true, true],
   [],
-  [false, false, false, true, true, true, true],
 ];

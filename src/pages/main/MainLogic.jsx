@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  allItemInputSubMenu,
-  allItemSummarySubMenu,
-  disabledItemInputMenu,
-  disabledItemSummaryMenu,
-} from "../../values/Constant";
+import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
 import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -15,11 +10,9 @@ const MainLogic = () => {
   const [iEMenu, setiEmenu] = useState(0);
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
-  const [segmentedValue, setSegmentedValue] = useState("Input");
+  // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -64,7 +57,7 @@ const MainLogic = () => {
     setKeyMenu(index);
 
     if (item === "menu") {
-      setSegmentedValue("Input");
+      // setSegmentedValue("Input");
 
       if (index === 0) {
         isActivated[index] = 2;
@@ -73,7 +66,7 @@ const MainLogic = () => {
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
-        getSubmenu(index, segmentedValue);
+        getSubmenu(index);
         isShowMenu();
       }
     } else {
@@ -84,34 +77,29 @@ const MainLogic = () => {
       setShowMenu(false);
 
       if (index === 2) {
-        navigate(`/main/opex/${segmentedValue}/${nameMenu}`);
+        navigate(`/main/opex/summary/${nameMenu}`);
       } else if (index === 7) {
-        navigate(`/main/coa/${segmentedValue}/${nameMenu}`);
+        navigate(`/main/coa/${nameMenu}`);
       }
     }
 
     setListMenuActivated(isActivated);
   };
 
-  const onChangeSegmented = (value) => {
-    setSegmentedValue(value);
-    getSubmenu(keyMenu, value);
-  };
+  // const onChangeSegmented = (value) => {
+  //   setSegmentedValue(value);
+  //   getSubmenu(keyMenu, value);
+  // };
 
-  const getSubmenu = (index, value) => {
-    if (value === "Input") {
-      setItem(allItemInputSubMenu[index]);
-      setitemDisabledMenu(disabledItemInputMenu[index]);
-    } else {
-      setItem(allItemSummarySubMenu[index]);
-      setitemDisabledMenu(disabledItemSummaryMenu[index]);
-    }
+  const getSubmenu = (index) => {
+    setItem(allItemInputSubMenu[index]);
+    setitemDisabledMenu(disabledItemInputMenu[index]);
   };
 
   return {
     func: {
       onClickedMenu,
-      onChangeSegmented,
+      // onChangeSegmented,
       handleCancel,
     },
     value: {
@@ -120,7 +108,7 @@ const MainLogic = () => {
       showMenu,
       keyMenu,
       itemDisabledMenu,
-      segmentedValue,
+      // segmentedValue,
     },
   };
 };

@@ -2,8 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/autentikasi/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
 import DashboardPage from "../pages/main/dashboard/DashboardPage";
-import CoaSummary from "../pages/main/coa/summary/CoaSummary";
-import CoaInputPage from "../pages/main/coa/input/CoaInputPage";
+import CoaPage from "../pages/main/coa/CoaPage";
 import OpexInputPage from "../pages/main/opex/input/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/OpexSummary";
 import App from "../pages/App";
@@ -21,8 +20,7 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<OpexSummary />} />
           </Route>
           <Route path="coa">
-            <Route path="input/:item" element={<CoaInputPage />} />
-            <Route path="summary/:item" element={<CoaSummary />} />
+            <Route path=":item" element={<CoaPage />} />
           </Route>
         </Route>
       </Routes>
