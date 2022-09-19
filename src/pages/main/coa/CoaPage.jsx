@@ -1,17 +1,9 @@
-import {
-  Table,
-  Form,
-  Input,
-  Breadcrumb,
-  Typography,
-  Layout,
-  Button,
-} from "antd";
+import { Table, Form, Input, Breadcrumb, Typography, Layout, Button } from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import CoaInputLogic from "./CoaInputLogic";
-import "./CoaInput.scss";
-import UploadModal from "../../../../component/modal/UploadModal";
+import CoaInputLogic from "./CoaLogic";
+import "./CoaStyle.scss";
+import UploadModal from "../../../component/modal/UploadModal";
 
 const { Header, Content } = Layout;
 const { Text } = Typography;
@@ -29,15 +21,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -99,15 +83,10 @@ const EditableCell = ({
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" ||
-    params === "Kode departemen" ||
-    params === "Kode akun" ||
-    params === "Kode ICP"
-    ? null
-    : 1600;
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
 
-const CoaInputPage = () => {
+const CoaPage = () => {
   const { value, func } = CoaInputLogic();
 
   const components = {
@@ -191,12 +170,7 @@ const CoaInputPage = () => {
               Clear Data
             </Button>
 
-            <Button
-              className="btn-update"
-              type="primary"
-              icon={<UploadOutlined className="custom-icon" />}
-              onClick={func.onOpenUploadModal}
-            >
+            <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
               Update
             </Button>
           </div>
@@ -217,14 +191,9 @@ const CoaInputPage = () => {
         />
       </Content>
 
-      <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-      />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
     </Layout>
   );
 };
 
-export default CoaInputPage;
+export default CoaPage;

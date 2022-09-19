@@ -4,12 +4,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCoaAsync,
-  uploadCoaAsync,
-} from "../../../../redux/main/main.thunks";
+import { getCoaAsync, uploadCoaAsync } from "../../../redux/main/main.thunks";
 import { constantGetCoa, constantUploadCoa } from "./ConstantCoa";
-import { setLocal } from "../../../../values/Utilitas";
+import { setLocal } from "../../../values/Utilitas";
 
 const menu = (
   <Menu
@@ -26,6 +23,16 @@ const menu = (
   />
 );
 
+const endPoint = {
+  "Kode perusahaan": "company",
+  "Kode produk": "product",
+  "Kode lokasi": "location",
+  "Kode departemen": "dept",
+  "Kode akun": "account",
+  "Kode projek": "Project",
+  "Kode ICP": "icp",
+};
+
 const CoaInputLogic = () => {
   let params = useParams();
 
@@ -33,9 +40,7 @@ const CoaInputLogic = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const itemPage = params.item;
 
@@ -448,21 +453,11 @@ const CoaInputLogic = () => {
     ],
   };
 
-  const endPoint = {
-    "Kode perusahaan": "company",
-    "Kode produk": "product",
-    "Kode lokasi": "location",
-    "Kode departemen": "dept",
-    "Kode akun": "account",
-    "Kode projek": "Project",
-    "Kode ICP": "icp",
-  };
+  
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 

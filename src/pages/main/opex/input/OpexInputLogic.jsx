@@ -44,51 +44,37 @@ const OpexInputLogic = () => {
         width: "10%",
         render: (_, record) => {
           if (dataColumn.length >= 1) {
-            if (mode === "mode 1") {
-              const editable = isEditing(record);
-              return editable ? (
-                <span>
+            const editable = isEditing(record);
+            return editable ? (
+              <span>
+                <Typography.Link
+                  onClick={() => save(record.key)}
+                  style={{
+                    marginRight: 8,
+                    color: "black",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                  }}
+                >
+                  Save
+                </Typography.Link>
+                <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
                   <Typography.Link
-                    onClick={() => save(record.key)}
                     style={{
-                      marginRight: 8,
                       color: "black",
                       fontSize: "14px",
                       fontWeight: "600",
                     }}
                   >
-                    Save
+                    Cancel
                   </Typography.Link>
-                  <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                    <Typography.Link
-                      style={{
-                        color: "black",
-                        fontSize: "14px",
-                        fontWeight: "600",
-                      }}
-                    >
-                      Cancel
-                    </Typography.Link>
-                  </Popconfirm>
-                </span>
-              ) : (
-                <Button
-                  type="primary"
-                  disabled={editingKey !== ""}
-                  onClick={() => edit(record)}
-                >
-                  Edit
-                </Button>
-                // <Typography.Link
-                //   disabled={editingKey !== ""}
-                //   onClick={() => edit(record)}
-                // >
-                //   Edit
-                // </Typography.Link>
-              );
-            } else {
-              return null;
-            }
+                </Popconfirm>
+              </span>
+            ) : (
+              <Button type="primary" disabled={editingKey !== ""} onClick={() => edit(record)}>
+                Edit
+              </Button>
+            );
           } else {
             return null;
           }

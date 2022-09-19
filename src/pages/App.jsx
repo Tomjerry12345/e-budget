@@ -13,7 +13,7 @@ const App = () => {
     } else {
       navigate("/login");
     }
-  }, [auth]);
+  }, [auth]); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export default App;

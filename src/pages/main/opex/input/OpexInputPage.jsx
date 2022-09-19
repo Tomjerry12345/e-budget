@@ -1,41 +1,12 @@
-import {
-  Table,
-  Form,
-  Input,
-  Breadcrumb,
-  Typography,
-  Layout,
-  InputNumber,
-  Select,
-} from "antd";
-import React, { useEffect, useRef, useState } from "react";
+import { Card } from "@mui/material";
+import { Table, Form, Input, Breadcrumb, Typography, Layout, InputNumber, Row, Col } from "antd";
+import React from "react";
 import OpexInputLogic from "./OpexInputLogic";
 
 const { Header, Content } = Layout;
 const { Text } = Typography;
 
-// const EditableContext = React.createContext(null);
-
-// const EditableRow = ({ index, ...props }) => {
-//   const [form] = Form.useForm();
-//   return (
-//     <Form form={form} component={false}>
-//       <EditableContext.Provider value={form}>
-//         <tr {...props} />
-//       </EditableContext.Provider>
-//     </Form>
-//   );
-// };
-
-const EditableCellModel1 = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  children,
-  ...restProps
-}) => {
+const EditableCellModel1 = ({ editing, dataIndex, title, inputType, record, children, ...restProps }) => {
   const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
   return (
     <td {...restProps}>
@@ -61,123 +32,19 @@ const EditableCellModel1 = ({
   );
 };
 
-const EditableCellModel2 = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  form,
-  ...restProps
-}) => {
-  const [editing, setEditing] = useState(false);
-  const inputRef = useRef(null);
-  // const form = useContext(EditableContext);
-  useEffect(() => {
-    if (editing) {
-      inputRef.current.focus();
-    }
-  }, [editing]);
-
-  const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
-  };
-
-  const save = async () => {
-    try {
-      const values = await form.validateFields();
-      toggleEdit();
-      handleSave({ ...record, ...values });
-    } catch (errInfo) {
-      console.log("Save failed:", errInfo);
-    }
-  };
-
-  let childNode = children;
-
-  if (editable) {
-    childNode = editing ? (
-      <Form.Item
-        style={{
-          margin: 0,
-        }}
-        name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ]}
-      >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{
-          paddingRight: 24,
-        }}
-        onClick={toggleEdit}
-      >
-        {children}
-      </div>
-    );
-  }
-  return <td {...restProps}>{childNode}</td>;
-};
-
-const EditableCell1 = ({
-  editable,
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  handleSave,
-  children,
-  mode,
-  form,
-  ...restProps
-}) => {
-  return mode === 1 ? (
-    <EditableCellModel1
-      editing={editing}
-      dataIndex={dataIndex}
-      title={title}
-      inputType={inputType}
-      record={record}
-      children={children}
-      {...restProps}
-    />
-  ) : (
-    <EditableCellModel2
-      title={title}
-      editable={editable}
-      children={children}
-      dataIndex={dataIndex}
-      record={record}
-      handleSave={handleSave}
-      form={form}
-      {...restProps}
-    />
-  );
-};
+const EditableCell1 = ({ editable, editing, dataIndex, title, inputType, record, handleSave, children, mode, form, ...restProps }) => (
+  <EditableCellModel1 editing={editing} dataIndex={dataIndex} title={title} inputType={inputType} record={record} children={children} {...restProps} />
+);
 
 const setXColumn = (params) => {
   return params === "Opex Direct" ? null : 1600;
 };
 
 const OpexInputPage = () => {
-  const { value, func } = OpexInputLogic();
+  const { value } = OpexInputLogic();
 
   const components = {
     body: {
-      // row: EditableRow,
-      // cell: EditableCell,
       cell: EditableCell1,
     },
   };
@@ -190,7 +57,7 @@ const OpexInputPage = () => {
           padding: 20,
           backgroundColor: "#fafafa",
           // minHeight: 300,
-          minHeight: 150,
+          minHeight: 250,
         }}
       >
         <Breadcrumb
@@ -203,7 +70,7 @@ const OpexInputPage = () => {
         </Breadcrumb>
         <Text strong>Summary {value.params.item}</Text>
         <div>
-          <Select
+          {/* <Select
             value={value.mode}
             onChange={(e) => func.onChangeMode(e)}
             options={[
@@ -216,10 +83,10 @@ const OpexInputPage = () => {
                 value: "mode 2",
               },
             ]}
-          />
+          /> */}
         </div>
 
-        {/* <Card>
+        <Card style={{ padding: "18px" }}>
           <Form layout="vertical">
             <Row>
               <Col span={5}>
@@ -249,7 +116,7 @@ const OpexInputPage = () => {
               </Col>
             </Row>
           </Form>
-        </Card> */}
+        </Card>
       </Header>
       <Content
         style={{
