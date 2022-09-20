@@ -95,79 +95,22 @@ const OpexSummary = () => {
   };
 
   return (
-    <Layout>
-      <Header
-        className="site-layout-background"
-        style={{
-          padding: 20,
-          backgroundColor: "#fafafa",
-          minHeight: 100,
-          // minHeight: 300,
+    <div className="custom-root-layout">
+      <Table
+        className="table-custom-opex"
+        components={components}
+        rowClassName={() => "editable-row"}
+        bordered
+        dataSource={value.dataColumn}
+        columns={value.tableColumn}
+        pagination={false}
+        scroll={{
+          x: setXColumn(value.params.item),
+          y: value.size.y - 200,
         }}
-      >
-        <Breadcrumb
-        // style={{
-        //   margin: "16px 0",
-        // }}
-        >
-          <Breadcrumb.Item>Opex</Breadcrumb.Item>
-          <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-        </Breadcrumb>
-        <Text strong>Input {value.params.item}</Text>
-
-        {/* <Card>
-          <Form layout="vertical">
-            <Row>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Card> */}
-      </Header>
-      <Content
-        style={{
-          padding: 24,
-          backgroundColor: "white",
-        }}
-      >
-        <Table
-          components={components}
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          pagination={false}
-          scroll={{
-            x: setXColumn(value.params.item),
-            y: 300,
-          }}
-          rowKey="id"
-        />
-      </Content>
-    </Layout>
+        rowKey="id"
+      />
+    </div>
   );
 };
 

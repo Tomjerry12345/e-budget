@@ -6,7 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { getCoaAsync, uploadCoaAsync } from "../../../redux/main/main.thunks";
 import { constantGetCoa, constantUploadCoa } from "./ConstantCoa";
-import { setLocal } from "../../../values/Utilitas";
+import { getSizeScreen, setLocal } from "../../../values/Utilitas";
 
 const menu = (
   <Menu
@@ -50,6 +50,11 @@ const CoaInputLogic = () => {
 
   // const [dataColumn, setDataColumn] = useState(dataTable);
   const [dataColumn, setDataColumn] = useState([]);
+
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
 
   const constantTableColums = {
     "Kode perusahaan": [
@@ -453,8 +458,6 @@ const CoaInputLogic = () => {
     ],
   };
 
-  
-
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
@@ -462,6 +465,7 @@ const CoaInputLogic = () => {
   });
 
   useEffect(() => {
+    window.onresize = getSizeScreen(setSize);
     onSetColumn();
     onSetDataTable();
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -561,6 +565,7 @@ const CoaInputLogic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
+      size,
     },
     func: {
       onCloseUploadModal,

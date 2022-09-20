@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getSizeScreen } from "../../../../values/Utilitas";
 
 // const endPoint = {
 //   "Opex Direct": "",
@@ -19,6 +20,60 @@ const constantDataTable = {
       code_parent: "32",
       description: "lorem ipsum 1",
     },
+    {
+      key: 2,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 3,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 4,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 5,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 6,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 7,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 8,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 9,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
+    {
+      key: 10,
+      code_company: "002",
+      code_parent: "32",
+      description: "lorem ipsum 1",
+    },
   ],
 };
 
@@ -30,6 +85,17 @@ const OpexSummaryLogic = () => {
   const [tableColumn, setTableColumn] = useState([]);
 
   const [dataColumn, setDataColumn] = useState([]);
+
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
+
+  // const updateSize = () =>
+  //   setSize({
+  //     x: window.innerWidth,
+  //     y: window.innerHeight,
+  //   });
 
   const constantTableColums = {
     "Opex Direct": [
@@ -66,6 +132,7 @@ const OpexSummaryLogic = () => {
 
   useEffect(() => {
     console.log(`paramsItem => ${itemPage}`);
+    window.onresize = getSizeScreen(setSize);
     onSetColumn();
     onSetDataTable();
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -108,6 +175,7 @@ const OpexSummaryLogic = () => {
       dataColumn,
       tableColumn,
       params,
+      size,
     },
     func: {},
   };
