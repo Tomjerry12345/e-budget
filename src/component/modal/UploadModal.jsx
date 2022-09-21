@@ -5,37 +5,39 @@ import "./UploadModal.scss";
 
 const { Title, Text } = Typography;
 
-const CustomFooterModal = () => (
+const CustomFooterModal = ({ onOk, onCancel }) => (
   <>
-    <Button className="btn-cancel" type="text">
+    <Button className="btn-cancel" type="text" onClick={onCancel}>
       Cancel
     </Button>
-    <Button className="btn-upload" type="primary">
+    <Button className="btn-upload" type="primary" onClick={onOk}>
       Upload
     </Button>
   </>
 );
 
-const UploadModal = ({ open, onCancel, value }) => {
+const UploadModal = ({ open, onCancel, value, onOk }) => {
   return (
     <Modal
       open={open}
       className="custom-upload-modal"
-      footer={<CustomFooterModal />}
+      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
       onCancel={onCancel}
     >
       <Title level={4}>Upload Template</Title>
       <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>
         <div className="layout-upload-file">
-          <input {...value.getInputProps()} />
+          <input key="1011" {...value.getInputProps()} />
           <CloudUploadOutlined />
           <Text className="txt-drag">Drag And Drop File</Text>
           <Text className="txt">or</Text>
           <Text className="txt-browse">Browse files</Text>
 
           {value.acceptedFiles.map((file) => (
-            <Text className="txt-file">{file.path}</Text>
+            <Text key="1000" className="txt-file">
+              {file.path}
+            </Text>
           ))}
         </div>
 

@@ -1,9 +1,9 @@
 .ant-modal-wrap {
-  margin-left: 82px;
+  margin-left: 82px !important;
 }
 .modal-menu {
   top: 8px;
-  // left: 92px;
+  bottom: 8px;
   left: 8px;
   max-width: 280px;
   margin: 0px;
@@ -12,6 +12,7 @@
   border-radius: 8px;
   .ant-modal-content {
     border-radius: 8px;
+    height: 100%;
     .ant-modal-header {
       border-radius: 8px 8px 0px 0px;
       border-bottom: 0px;
@@ -24,6 +25,10 @@
     }
     .ant-modal-body {
       padding: 6px 16px;
+      .scrollableDiv {
+        height: 85vh;
+        overflow: auto;
+      }
       ul {
         .ant-list-item {
           border-bottom: 0px;
@@ -39,7 +44,6 @@
           }
         }
       }
-      
     }
   }
 }
@@ -54,4 +58,8 @@
       width: 110px;
     }
   }
+}
+
+.custom-root-layout {
+  padding: 24px;
 }

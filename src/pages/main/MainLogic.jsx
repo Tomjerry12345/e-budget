@@ -1,20 +1,28 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { allItemInputSubMenu, allItemSummarySubMenu, disabledItemInputMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import { useNavigate, useParams } from "react-router-dom";
+import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
 import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
+  let params = useParams();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [keyMenu, setKeyMenu] = useState(0);
   const [iEMenu, setiEmenu] = useState(0);
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
-  const [segmentedValue, setSegmentedValue] = useState("Input");
+  const [titleMenu, setTitleMenu] = useState();
+  const [titleHeader, setTitleHeader] = useState();
+  // const [segmentedValue, setSegmentedValue] = useState("Input");
 
   const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
+    const movePage = getLocal("move-page");
+    if (movePage !== "null") {
+      navigate(movePage);
+    }
+
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
       let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
@@ -23,7 +31,8 @@ const MainLogic = () => {
       setiEmenu(index);
       setListMenuActivated(isActivated);
     }
-  }, []);
+    setLocal("move-page", null);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
@@ -43,24 +52,30 @@ const MainLogic = () => {
     }
   };
 
-  const onClickedMenu = (key, item, nameMenu) => {
+  const onClickedMenu = (key, item, nameMenu, title) => {
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    let pageNavigation = "";
+
+    setTitleMenu(title);
 
     const index = parseInt(key);
 
     setKeyMenu(index);
 
     if (item === "menu") {
-      setSegmentedValue("Input");
+      // setSegmentedValue("Input");
 
       if (index === 0) {
         isActivated[index] = 2;
         setLocal("index-menu", index);
-        navigate(`/`);
+        pageNavigation = "/";
+        navigate(pageNavigation);
+        setLocal("move-page", pageNavigation);
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
-        getSubmenu(index, segmentedValue);
+        getSubmenu(index);
         isShowMenu();
       }
     } else {
@@ -69,36 +84,36 @@ const MainLogic = () => {
       isActivated[index] = 2;
       setItem([]);
       setShowMenu(false);
+      // setTitleHeader(title);
 
       if (index === 2) {
-        navigate(`/opex/${segmentedValue}/${nameMenu}`);
+        pageNavigation = `/main/opex/summary/${nameMenu}`;
       } else if (index === 7) {
-        navigate(`/coa/${segmentedValue}/${nameMenu}`);
+        pageNavigation = `/main/coa/${nameMenu}`;
       }
+
+      navigate(pageNavigation);
+
+      setLocal("move-page", pageNavigation);
     }
 
     setListMenuActivated(isActivated);
   };
 
-  const onChangeSegmented = (value) => {
-    setSegmentedValue(value);
-    getSubmenu(keyMenu, value);
-  };
+  // const onChangeSegmented = (value) => {
+  //   setSegmentedValue(value);
+  //   getSubmenu(keyMenu, value);
+  // };
 
-  const getSubmenu = (index, value) => {
-    if (value === "Input") {
-      setItem(allItemInputSubMenu[index]);
-      setitemDisabledMenu(disabledItemInputMenu[index]);
-    } else {
-      setItem(allItemSummarySubMenu[index]);
-      setitemDisabledMenu(disabledItemSummaryMenu[index]);
-    }
+  const getSubmenu = (index) => {
+    setItem(allItemInputSubMenu[index]);
+    setitemDisabledMenu(disabledItemInputMenu[index]);
   };
 
   return {
     func: {
       onClickedMenu,
-      onChangeSegmented,
+      // onChangeSegmented,
       handleCancel,
     },
     value: {
@@ -107,7 +122,9 @@ const MainLogic = () => {
       showMenu,
       keyMenu,
       itemDisabledMenu,
-      segmentedValue,
+      titleMenu,
+      params,
+      // segmentedValue,
     },
   };
 };

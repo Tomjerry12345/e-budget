@@ -1,14 +1,89 @@
-import { Table, Form, Input, Popconfirm, Breadcrumb, Row, Col, Typography, Card, Layout, InputNumber, Select } from "antd";
+import { Card } from "@mui/material";
+import {
+  Table,
+  Form,
+  Input,
+  Breadcrumb,
+  Typography,
+  Layout,
+  InputNumber,
+  Row,
+  Col,
+  Select,
+  Button,
+} from "antd";
 import { Option } from "antd/lib/mentions";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { log } from "../../../../values/Utilitas";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import OpexInputLogic from "./OpexInputLogic";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
 const { Text } = Typography;
 
-const EditableContext = React.createContext(null);
+const EditableContext = createContext(null);
+
+// const EditableCellModel1 = ({
+//   editing,
+//   dataIndex,
+//   title,
+//   inputType,
+//   record,
+//   children,
+//   ...restProps
+// }) => {
+//   const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+//   return (
+//     <td {...restProps}>
+//       {editing ? (
+//         <Form.Item
+//           name={dataIndex}
+//           style={{
+//             margin: 0,
+//           }}
+//           rules={[
+//             {
+//               required: true,
+//               message: `Please Input ${title}!`,
+//             },
+//           ]}
+//         >
+//           {inputNode}
+//         </Form.Item>
+//       ) : (
+//         children
+//       )}
+//     </td>
+//   );
+// };
+
+// const EditableCell1 = ({
+//   editable,
+//   editing,
+//   dataIndex,
+//   title,
+//   inputType,
+//   record,
+//   handleSave,
+//   children,
+//   mode,
+//   form,
+//   ...restProps
+// }) => (
+//   <EditableCellModel1
+//     editing={editing}
+//     dataIndex={dataIndex}
+//     title={title}
+//     inputType={inputType}
+//     record={record}
+//     children={children}
+//     {...restProps}
+//   />
+// );
 
 const EditableRow = ({ index, ...props }) => {
   const [form] = Form.useForm();
@@ -21,36 +96,18 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCellModel1 = ({ editing, dataIndex, title, inputType, record, children, ...restProps }) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
-
-const EditableCellModel2 = ({ title, editable, children, dataIndex, record, handleSave, form, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
-  // const form = useContext(EditableContext);
+  const form = useContext(EditableContext);
   useEffect(() => {
     if (editing) {
       inputRef.current.focus();
@@ -104,15 +161,8 @@ const EditableCellModel2 = ({ title, editable, children, dataIndex, record, hand
       </div>
     );
   }
-  return <td {...restProps}>{childNode}</td>;
-};
 
-const EditableCell1 = ({ editable, editing, dataIndex, title, inputType, record, handleSave, children, mode, form, ...restProps }) => {
-  return mode === 1 ? (
-    <EditableCellModel1 editing={editing} dataIndex={dataIndex} title={title} inputType={inputType} record={record} children={children} {...restProps} />
-  ) : (
-    <EditableCellModel2 title={title} editable={editable} children={children} dataIndex={dataIndex} record={record} handleSave={handleSave} form={form} {...restProps} />
-  );
+  return <td {...restProps}>{childNode}</td>;
 };
 
 const setXColumn = (params) => {
@@ -124,93 +174,129 @@ const OpexInputPage = () => {
 
   const components = {
     body: {
-      // row: EditableRow,
-      // cell: EditableCell,
-      cell: EditableCell1,
+      cell: EditableCell,
+      row: EditableRow,
     },
   };
 
   return (
-    <Layout>
-      <Header
-        className="site-layout-background"
-        style={{
-          padding: 20,
-          backgroundColor: "#fafafa",
-          // minHeight: 300,
-          minHeight: 150,
-        }}
-      >
-        <Breadcrumb
-        // style={{
-        //   margin: "16px 0",
-        // }}
+    <div className="custom-root-layout">
+      <Card style={{ marginBottom: 16, height: 120 }}>
+        <Form
+          className="form-filter-opex"
+          layout="vertical"
+          ref={value.ref}
+          onFinish={func.onFinish}
         >
-          <Breadcrumb.Item>Opex</Breadcrumb.Item>
-          <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-        </Breadcrumb>
-        <Text strong>Summary {value.params.item}</Text>
-        <div>
-          <Select value={value.mode} onChange={(e) => func.onChangeMode(e)}>
-            <Option value="mode 1">mode 1</Option>
-            <Option value="mode 2">mode 2</Option>
-          </Select>
-        </div>
+          <Form.Item
+            label="Kode Perusahaan"
+            name="code_company"
+            rules={[
+              {
+                required: true,
+                message: "tidak boleh kosong!",
+              },
+            ]}
+          >
+            <Select
+              // initialValues="211"
+              style={{
+                width: 130,
+              }}
+              // onChange={handleChange}
+            >
+              <Option value="211">211</Option>
+            </Select>
+          </Form.Item>
 
-        {/* <Card>
-          <Form layout="vertical">
-            <Row>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Card> */}
-      </Header>
-      <Content
-        style={{
-          padding: 24,
-          backgroundColor: "white",
-        }}
-      >
-        <Form form={value.form} component={false}>
-          <Table
-            components={components}
-            rowClassName={() => "editable-row"}
-            bordered
-            dataSource={value.dataColumn}
-            columns={value.tableColumn}
-            pagination={false}
-            scroll={{
-              x: setXColumn(value.params.item),
-              y: 300,
-            }}
-          />
+          <Form.Item
+            label="Kode Produk"
+            name="code_product"
+            rules={[
+              {
+                required: true,
+                message: "tidak boleh kosong!",
+              },
+            ]}
+          >
+            <Select
+              style={{
+                width: 130,
+              }}
+              // onChange={handleChange}
+            >
+              <Option value="107">107</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Kode Lokasi"
+            name="code_location"
+            rules={[
+              {
+                required: true,
+                message: "tidak boleh kosong!",
+              },
+            ]}
+          >
+            <Select
+            // onChange={handleChange}
+            >
+              <Option value="110117">110117</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Kode Dept"
+            name="code_dept"
+            rules={[
+              {
+                required: true,
+                message: "tidak boleh kosong!",
+              },
+            ]}
+          >
+            <Select
+
+            // onChange={handleChange}
+            >
+              <Option value="116">116</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              style={{
+                width: "100%",
+                backgroundColor: "#008041",
+                color: "white",
+                borderRadius: "8px",
+                marginTop: "24px",
+                height: "40px",
+              }}
+              htmlType="submit"
+            >
+              Set
+            </Button>
+          </Form.Item>
         </Form>
-      </Content>
-    </Layout>
+      </Card>
+
+      <Form form={value.form} component={false}>
+        <Table
+          components={components}
+          rowClassName={() => "editable-row"}
+          bordered
+          dataSource={value.dataColumn}
+          columns={value.tableColumn}
+          pagination={false}
+          scroll={{
+            x: 1800,
+            y: 300,
+          }}
+        />
+      </Form>
+    </div>
   );
 };
 
