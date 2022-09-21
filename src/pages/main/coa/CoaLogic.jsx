@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { getCoaAsync, uploadCoaAsync } from "../../../redux/main/main.thunks";
+import { getAsync, postAsync } from "../../../redux/main/main.thunks";
 import { constantGetCoa, constantUploadCoa } from "./ConstantCoa";
 import { getSizeScreen, setLocal } from "../../../values/Utilitas";
 
@@ -40,7 +40,9 @@ const CoaInputLogic = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const itemPage = params.item;
 
@@ -61,14 +63,14 @@ const CoaInputLogic = () => {
       {
         title: "Kode Company",
         dataIndex: "code_company",
-        editable: true,
+
         width: "10%",
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "code_parent",
-        editable: true,
+
         width: "10%",
       },
       {
@@ -92,104 +94,88 @@ const CoaInputLogic = () => {
         title: "Kode Produk",
         dataIndex: "code_product",
         width: "20%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "code_parent",
         width: "10%",
-        editable: true,
       },
       {
         title: "Description",
         dataIndex: "description",
         width: "20%",
-        editable: true,
       },
       {
         title: "HSI",
         dataIndex: "HSI",
         width: "5%",
-        editable: true,
       },
       {
         title: "HK",
         dataIndex: "HK",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSU",
         dataIndex: "BSU",
         width: "5%",
-        editable: true,
       },
       {
         title: "KIA",
         dataIndex: "KIA",
         width: "5%",
-        editable: true,
       },
       {
         title: "BLT",
         dataIndex: "BLT",
         width: "5%",
-        editable: true,
       },
       {
         title: "BJU",
         dataIndex: "BJU",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSB",
         dataIndex: "BSB",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSD",
         dataIndex: "BSD",
         width: "5%",
-        editable: true,
       },
       {
         title: "KIK",
         dataIndex: "KIK",
         width: "5%",
-        editable: true,
       },
       {
         title: "KKI",
         dataIndex: "KKI",
         width: "5%",
-        editable: true,
       },
       {
         title: "BLU",
         dataIndex: "BLU",
         width: "5%",
-        editable: true,
       },
       {
         title: "IKP",
         dataIndex: "IKP",
         width: "5%",
-        editable: true,
       },
       {
         title: "BK",
         dataIndex: "BK",
         width: "5%",
-        editable: true,
       },
       {
         title: "BBU",
         dataIndex: "BBU",
         width: "5%",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -208,104 +194,88 @@ const CoaInputLogic = () => {
         title: "Kode Lokasi",
         dataIndex: "code_location",
         width: "20%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "code_parent",
         width: "10%",
-        editable: true,
       },
       {
         title: "Description",
         dataIndex: "description",
         width: "20%",
-        editable: true,
       },
       {
         title: "HSI",
         dataIndex: "HSI",
         width: "5%",
-        editable: true,
       },
       {
         title: "HK",
         dataIndex: "HK",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSU",
         dataIndex: "BSU",
         width: "5%",
-        editable: true,
       },
       {
         title: "KIA",
         dataIndex: "KIA",
         width: "5%",
-        editable: true,
       },
       {
         title: "BLT",
         dataIndex: "BLT",
         width: "5%",
-        editable: true,
       },
       {
         title: "BJU",
         dataIndex: "BJU",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSB",
         dataIndex: "BSB",
         width: "5%",
-        editable: true,
       },
       {
         title: "BSD",
         dataIndex: "BSD",
         width: "5%",
-        editable: true,
       },
       {
         title: "KIK",
         dataIndex: "KIK",
         width: "5%",
-        editable: true,
       },
       {
         title: "KKI",
         dataIndex: "KKI",
         width: "5%",
-        editable: true,
       },
       {
         title: "BLU",
         dataIndex: "BLU",
         width: "5%",
-        editable: true,
       },
       {
         title: "IKP",
         dataIndex: "IKP",
         width: "5%",
-        editable: true,
       },
       {
         title: "BK",
         dataIndex: "BK",
         width: "5%",
-        editable: true,
       },
       {
         title: "BBU",
         dataIndex: "BBU",
         width: "5%",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -324,13 +294,12 @@ const CoaInputLogic = () => {
         title: "Kode Dept",
         dataIndex: "code_dept",
         width: "30%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Description",
         dataIndex: "description",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -349,23 +318,20 @@ const CoaInputLogic = () => {
         title: "Type Akun",
         dataIndex: "type_account",
         width: "30%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Kode Akun",
         dataIndex: "code_account",
-        editable: true,
       },
       {
         title: "Akun Induk",
         dataIndex: "code_parent",
-        editable: true,
       },
       {
         title: "Description",
         dataIndex: "description",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -384,40 +350,34 @@ const CoaInputLogic = () => {
         title: "Kode Project",
         dataIndex: "kode_project",
         // width: "20%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "kode_parent",
         // width: "5%",
-        editable: true,
       },
       {
         title: "Description",
         dataIndex: "description",
         width: "20%",
-        editable: true,
       },
       {
         title: "BJU",
         dataIndex: "bju",
-        editable: true,
       },
       {
         title: "BSB",
         dataIndex: "bsb",
-        editable: true,
       },
       {
         title: "KIK",
         dataIndex: "kik",
-        editable: true,
       },
       {
         title: "BARUGA",
         dataIndex: "baruga",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -436,13 +396,12 @@ const CoaInputLogic = () => {
         title: "Kode ICP",
         dataIndex: "code_icp",
         width: "30%",
-        editable: true,
+
         fixed: "left",
       },
       {
         title: "Description",
         dataIndex: "description",
-        editable: true,
       },
       {
         dataIndex: "operation",
@@ -460,7 +419,9 @@ const CoaInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -475,11 +436,13 @@ const CoaInputLogic = () => {
       if (nameReducer === constantGetCoa) {
         const { data } = response;
 
-        setDataColumn(data.data);
+        console.log(`response => ${JSON.stringify(data)}`);
+
+        setDataColumn(data);
       } else if (nameReducer === constantUploadCoa) {
         const { responseCode } = response;
         if (responseCode === "200") {
-          setLocal("move-page", `/main/coa/input/${params.item}`);
+          setLocal("move-page", `/main/coa/${params.item}`);
           navigate("/");
         }
         console.log(`reponse => ${JSON.stringify(response)}`);
@@ -511,7 +474,7 @@ const CoaInputLogic = () => {
   };
 
   const onSetDataTable = () => {
-    dispatch(getCoaAsync(endPoint[itemPage]));
+    dispatch(getAsync(`${endPoint[itemPage]}/list`, constantGetCoa));
   };
 
   // const handleDelete = (key) => {
@@ -553,7 +516,9 @@ const CoaInputLogic = () => {
     });
     let formData = new FormData();
     formData.append("file", file1);
-    dispatch(uploadCoaAsync(endPoint[itemPage], formData));
+    dispatch(
+      postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa)
+    );
   };
 
   return {

@@ -1,4 +1,12 @@
-import { Table, Form, Input, Breadcrumb, Typography, Layout, Button } from "antd";
+import {
+  Table,
+  Form,
+  Input,
+  Breadcrumb,
+  Typography,
+  Layout,
+  Button,
+} from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaLogic";
@@ -21,7 +29,15 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -83,7 +99,12 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+  return params === "Kode perusahaan" ||
+    params === "Kode departemen" ||
+    params === "Kode akun" ||
+    params === "Kode ICP"
+    ? null
+    : 1600;
 };
 
 const CoaPage = () => {
@@ -113,7 +134,12 @@ const CoaPage = () => {
             Clear Data
           </Button>
 
-          <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
+          <Button
+            className="btn-update"
+            type="primary"
+            icon={<UploadOutlined className="custom-icon" />}
+            onClick={func.onOpenUploadModal}
+          >
             Update
           </Button>
         </div>
@@ -121,7 +147,7 @@ const CoaPage = () => {
 
       <Table
         className="table-custom-root"
-        components={components}
+        // components={components}
         rowClassName={() => "editable-row"}
         bordered
         dataSource={value.dataColumn}
@@ -135,7 +161,12 @@ const CoaPage = () => {
       />
       {/* </Content> */}
 
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
+      <UploadModal
+        open={value.openUploadModal}
+        onCancel={func.onCloseUploadModal}
+        value={value}
+        onOk={func.onUploadFile}
+      />
     </div>
   );
 };
