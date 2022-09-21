@@ -11,7 +11,16 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA"];
+const title = [
+  "Dashboard",
+  "Revenue & COGS",
+  "Opex",
+  "Capex",
+  "MPP",
+  "Others",
+  "Report",
+  "Master COA",
+];
 
 const MainPage = () => {
   const { func, value } = MainLogic();
@@ -57,7 +66,19 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
+                <Button
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onClick={() =>
+                    func.onClickedMenu(
+                      value.keyMenu,
+                      "submenu",
+                      item,
+                      value.titleMenu
+                    )
+                  }
+                >
                   {item}
                 </Button>
               </List.Item>
@@ -88,7 +109,9 @@ const MainPage = () => {
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
             <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
           </Breadcrumb>
-          <Text strong>Summary {value.params.item}</Text>
+          {title[getLocal("index-menu")] !== "Dashboard" ? (
+            <Text strong>Summary {value.params.item}</Text>
+          ) : null}
 
           {/* <Card>
           <Form layout="vertical">

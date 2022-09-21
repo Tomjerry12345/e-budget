@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
+import { loadStart } from "../../redux/response/response";
+import {
+  allItemInputSubMenu,
+  disabledItemInputMenu,
+} from "../../values/Constant";
 import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -13,9 +18,12 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
   const [titleHeader, setTitleHeader] = useState();
+  const dispatch = useDispatch();
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -53,6 +61,7 @@ const MainLogic = () => {
   };
 
   const onClickedMenu = (key, item, nameMenu, title) => {
+    dispatch(loadStart());
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
 
     let pageNavigation = "";

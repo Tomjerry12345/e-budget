@@ -1,7 +1,9 @@
+import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAsync } from "../../../../redux/main/main.thunks";
+import { loadStart } from "../../../../redux/response/response";
 import { getSizeScreen } from "../../../../values/Utilitas";
 
 // const endPoint = {
@@ -84,6 +86,8 @@ const OpexSummaryLogic = () => {
 
   const ref = createRef();
 
+  const [form] = Form.useForm();
+
   const dispatch = useDispatch();
 
   const { isLoading, response, errorMessage, nameReducer } = useSelector(
@@ -134,7 +138,7 @@ const OpexSummaryLogic = () => {
       let year_1 = "";
       let year_2 = "";
 
-      data.list.map((val) => {
+      data.list?.map((val) => {
         year_1 = val.detail[0].year;
         year_2 = val.detail[1].year;
         list.push({
@@ -149,7 +153,7 @@ const OpexSummaryLogic = () => {
     } else {
       console.log(`error ${errorMessage}`);
     }
-  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetColumn = (year_1, year_2) => {
     console.log(`year_1 => ${year_1}`);
@@ -216,6 +220,7 @@ const OpexSummaryLogic = () => {
   };
 
   const onTambahData = () => {
+    dispatch(loadStart());
     navigate(`/main/opex/Input/${itemPage}`);
   };
 
@@ -234,6 +239,7 @@ const OpexSummaryLogic = () => {
       params,
       size,
       ref,
+      form,
     },
     func: {
       onTambahData,

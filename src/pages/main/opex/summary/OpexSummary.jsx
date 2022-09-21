@@ -128,6 +128,7 @@ const OpexSummary = () => {
           layout="vertical"
           ref={value.ref}
           onFinish={func.onFinish}
+          form={value.form}
         >
           <Form.Item
             label="Kode Perusahaan"
@@ -227,22 +228,20 @@ const OpexSummary = () => {
         Tambah Data
       </Button>
 
-      {value.tableColumn !== null ? (
-        <Table
-          className="table-custom-opex"
-          // components={components}
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          pagination={false}
-          scroll={{
-            x: setXColumn(value.params.item),
-            y: value.size.y - 200,
-          }}
-          rowKey="id"
-        />
-      ) : null}
+      <Table
+        className="table-custom-opex"
+        // components={components}
+        rowClassName={() => "editable-row"}
+        bordered
+        dataSource={value.dataColumn}
+        columns={value.tableColumn}
+        pagination={false}
+        scroll={{
+          x: setXColumn(value.params.item),
+          y: value.size.y - 200,
+        }}
+        rowKey="id"
+      />
     </div>
   );
 };

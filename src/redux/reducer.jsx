@@ -5,6 +5,7 @@ const initialState = {
   response: null,
   errorMessage: null,
   nameReducer: null,
+  start: false,
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -15,7 +16,8 @@ const reducer = (state = initialState, { type, payload }) => {
         isLoading: true,
         response: null,
         errorMessage: null,
-        nameReducer: payload,
+        nameReducer: payload.nameReducer,
+        start: payload.start,
       };
     }
 

@@ -12,7 +12,6 @@ import {
   Select,
   Button,
 } from "antd";
-import { Option } from "antd/lib/mentions";
 import React, {
   createContext,
   useContext,
@@ -108,6 +107,7 @@ const EditableCell = ({
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
+
   useEffect(() => {
     if (editing) {
       inputRef.current.focus();
@@ -125,7 +125,12 @@ const EditableCell = ({
     try {
       const values = await form.validateFields();
       toggleEdit();
-      handleSave({ ...record, ...values });
+      const keysEdit = Object.keys(values);
+      const valuesEdit = values[keysEdit];
+      console.log(`values => ${JSON.stringify(values)}`);
+      console.log(`values => ${keysEdit}`);
+      // console.log(`record => ${JSON.stringify(record)}`);
+      handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
     }
@@ -205,7 +210,7 @@ const OpexInputPage = () => {
               }}
               // onChange={handleChange}
             >
-              <Option value="211">211</Option>
+              <Select.Option value="211">211</Select.Option>
             </Select>
           </Form.Item>
 
@@ -225,7 +230,7 @@ const OpexInputPage = () => {
               }}
               // onChange={handleChange}
             >
-              <Option value="107">107</Option>
+              <Select.Option value="107">107</Select.Option>
             </Select>
           </Form.Item>
 
@@ -242,7 +247,7 @@ const OpexInputPage = () => {
             <Select
             // onChange={handleChange}
             >
-              <Option value="110117">110117</Option>
+              <Select.Option value="110117">110117</Select.Option>
             </Select>
           </Form.Item>
 
@@ -260,7 +265,7 @@ const OpexInputPage = () => {
 
             // onChange={handleChange}
             >
-              <Option value="116">116</Option>
+              <Select.Option value="116">116</Select.Option>
             </Select>
           </Form.Item>
 
@@ -287,12 +292,12 @@ const OpexInputPage = () => {
           components={components}
           rowClassName={() => "editable-row"}
           bordered
-          dataSource={value.dataColumn}
+          dataSource={value.dataColumnInput}
           columns={value.tableColumn}
           pagination={false}
           scroll={{
-            x: 1800,
-            y: 300,
+            x: 2800,
+            y: value.size.y - 200,
           }}
         />
       </Form>
