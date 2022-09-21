@@ -1,13 +1,26 @@
-import { Button, Layout, List, Modal, Typography } from "antd";
+import { Breadcrumb, Button, Layout, List, Modal, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
+import { getLocal } from "../../values/Utilitas";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 
-const { Content } = Layout;
+const { Header, Content } = Layout;
+const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
+
+const title = [
+  "Dashboard",
+  "Revenue & COGS",
+  "Opex",
+  "Capex",
+  "MPP",
+  "Others",
+  "Report",
+  "Master COA",
+];
 
 const MainPage = () => {
   const { func, value } = MainLogic();
@@ -23,7 +36,7 @@ const MainPage = () => {
       <Modal
         title={[
           <div key="test">
-            <Typography.Text>Opex</Typography.Text>
+            <Typography.Text>{value.titleMenu}</Typography.Text>
 
             {/* <Segmented
               options={[
@@ -45,13 +58,7 @@ const MainPage = () => {
         mask={false}
         footer={null}
       >
-        <div
-          id="scrollableDiv"
-          style={{
-            height: 490,
-            overflow: "auto",
-          }}
-        >
+        <div className="scrollableDiv">
           <List
             size="large"
             header={null}
@@ -59,7 +66,19 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item)}>
+                <Button
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onClick={() =>
+                    func.onClickedMenu(
+                      value.keyMenu,
+                      "submenu",
+                      item,
+                      value.titleMenu
+                    )
+                  }
+                >
                   {item}
                 </Button>
               </List.Item>
@@ -68,16 +87,68 @@ const MainPage = () => {
         </div>
       </Modal>
 
-      <Layout>
-        <Content
+      <Layout
+        style={{
+          backgroundColor: "white",
+        }}
+      >
+        <Header
+          className="site-layout-background"
           style={{
-            backgroundColor: "white",
+            padding: 20,
+            backgroundColor: "#fafafa",
+            minHeight: 100,
+            // minHeight: 300,
           }}
         >
-          <div>
-            <Outlet />
-          </div>
+          <Breadcrumb
+          // style={{
+          //   margin: "16px 0",
+          // }}
+          >
+            <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
+            <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
+          </Breadcrumb>
+          {title[getLocal("index-menu")] !== "Dashboard" ? (
+            <Text strong>Summary {value.params.item}</Text>
+          ) : null}
+
+          {/* <Card>
+          <Form layout="vertical">
+            <Row>
+              <Col span={5}>
+                <Form.Item label="Field A">
+                  <Input placeholder="input placeholder" />
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item label="Field A">
+                  <Input placeholder="input placeholder" />
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item label="Field A">
+                  <Input placeholder="input placeholder" />
+                </Form.Item>
+              </Col>
+              <Col span={5}>
+                <Form.Item label="Field A">
+                  <Input placeholder="input placeholder" />
+                </Form.Item>
+              </Col>
+              <Col span={4}>
+                <Form.Item label="Field A">
+                  <Input placeholder="input placeholder" />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        </Card> */}
+        </Header>
+        <Content>
+          <Outlet />
         </Content>
+
         {/* <Footer
           style={{
             textAlign: "center",

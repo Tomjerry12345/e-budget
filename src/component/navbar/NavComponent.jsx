@@ -63,7 +63,8 @@ const NavComponent = ({ func, value }) => {
         className="menuNav"
         triggerSubMenuAction="click"
         onClick={({ _, key }) => {
-          func.onClickedMenu(key, "menu");
+          let split = key.split("-");
+          func.onClickedMenu(parseInt(split[0]), "menu", "", split[1]);
         }}
       >
         <Menu.Item key={100} disabled>
@@ -98,7 +99,7 @@ const NavComponent = ({ func, value }) => {
           Dashboard
         </Menu.Item>
         <Menu.Item
-          key={1}
+          key={"1-Revenue & COGS"}
           className={`menuItem ${isClickedMenu(1)}`}
           icon={
             <InsertChartOutlinedIcon
@@ -109,7 +110,7 @@ const NavComponent = ({ func, value }) => {
           Revenue & COGS
         </Menu.Item>
         <Menu.Item
-          key={2}
+          key={"2-Opex"}
           className={`menuItem ${isClickedMenu(2)}`}
           icon={
             <AssignmentTurnedInOutlinedIcon
@@ -120,7 +121,7 @@ const NavComponent = ({ func, value }) => {
           Opex
         </Menu.Item>
         <Menu.Item
-          key={3}
+          key={"3-Capex"}
           className={`menuItem ${isClickedMenu(3)}`}
           icon={
             <ArchiveOutlinedIcon className={`colorIcon ${isClickedMenu(3)}`} />
@@ -129,7 +130,7 @@ const NavComponent = ({ func, value }) => {
           Capex
         </Menu.Item>
         <Menu.Item
-          key={4}
+          key={"4-MPP"}
           className={`menuItem ${isClickedMenu(4)}`}
           icon={
             <SupervisedUserCircleOutlinedIcon
@@ -140,7 +141,7 @@ const NavComponent = ({ func, value }) => {
           MPP
         </Menu.Item>
         <Menu.Item
-          key={5}
+          key={"5-Others"}
           className={`menuItem ${isClickedMenu(5)}`}
           icon={
             <ContentPasteOutlinedIcon
@@ -151,7 +152,7 @@ const NavComponent = ({ func, value }) => {
           Others
         </Menu.Item>
         <Menu.Item
-          key={6}
+          key={"6-Report"}
           className={`menuItem ${isClickedMenu(6)}`}
           icon={
             <SummarizeOutlinedIcon
@@ -162,7 +163,7 @@ const NavComponent = ({ func, value }) => {
           Report
         </Menu.Item>
         <Menu.Item
-          key={7}
+          key={"7-Master COA"}
           className={`menuItem ${isClickedMenu(7)}`}
           icon={
             <Inventory2OutlinedIcon

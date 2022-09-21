@@ -1,18 +1,29 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { loadStart } from "../../redux/response/response";
+import {
+  allItemInputSubMenu,
+  disabledItemInputMenu,
+} from "../../values/Constant";
 import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
+  let params = useParams();
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
   const [keyMenu, setKeyMenu] = useState(0);
   const [iEMenu, setiEmenu] = useState(0);
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
+  const [titleMenu, setTitleMenu] = useState();
+  const [titleHeader, setTitleHeader] = useState();
+  const dispatch = useDispatch();
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -49,8 +60,13 @@ const MainLogic = () => {
     }
   };
 
-  const onClickedMenu = (key, item, nameMenu) => {
+  const onClickedMenu = (key, item, nameMenu, title) => {
+    dispatch(loadStart());
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+
+    let pageNavigation = "";
+
+    setTitleMenu(title);
 
     const index = parseInt(key);
 
@@ -62,7 +78,9 @@ const MainLogic = () => {
       if (index === 0) {
         isActivated[index] = 2;
         setLocal("index-menu", index);
-        navigate(`/`);
+        pageNavigation = "/";
+        navigate(pageNavigation);
+        setLocal("move-page", pageNavigation);
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
@@ -75,12 +93,17 @@ const MainLogic = () => {
       isActivated[index] = 2;
       setItem([]);
       setShowMenu(false);
+      // setTitleHeader(title);
 
       if (index === 2) {
-        navigate(`/main/opex/summary/${nameMenu}`);
+        pageNavigation = `/main/opex/summary/${nameMenu}`;
       } else if (index === 7) {
-        navigate(`/main/coa/${nameMenu}`);
+        pageNavigation = `/main/coa/${nameMenu}`;
       }
+
+      navigate(pageNavigation);
+
+      setLocal("move-page", pageNavigation);
     }
 
     setListMenuActivated(isActivated);
@@ -108,6 +131,8 @@ const MainLogic = () => {
       showMenu,
       keyMenu,
       itemDisabledMenu,
+      titleMenu,
+      params,
       // segmentedValue,
     },
   };

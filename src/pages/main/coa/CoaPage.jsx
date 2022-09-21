@@ -1,9 +1,20 @@
-import { Table, Form, Input, Breadcrumb, Typography, Layout, Button } from "antd";
+import {
+  Table,
+  Form,
+  Input,
+  Breadcrumb,
+  Typography,
+  Layout,
+  Button,
+} from "antd";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaLogic";
 import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
+import ResizeObserver from "rc-resize-observer";
+import { VariableSizeGrid as Grid } from "react-window";
+import classNames from "classnames";
 
 const { Header, Content } = Layout;
 const { Text } = Typography;
@@ -21,7 +32,15 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -83,8 +102,152 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+  return params === "Kode perusahaan" ||
+    params === "Kode departemen" ||
+    params === "Kode akun" ||
+    params === "Kode ICP"
+    ? null
+    : 1600;
 };
+
+const VirtualTable = (props) => {
+  const { columns, scroll } = props;
+  const [tableWidth, setTableWidth] = useState(0);
+  const widthColumnCount = columns.filter(({ width }) => !width).length;
+  const mergedColumns = columns.map((column) => {
+    if (column.width) {
+      return column;
+    }
+
+    return { ...column, width: Math.floor(tableWidth / widthColumnCount) };
+  });
+  const gridRef = useRef();
+  const [connectObject] = useState(() => {
+    const obj = {};
+    Object.defineProperty(obj, "scrollLeft", {
+      get: () => {
+        if (gridRef.current) {
+          return gridRef.current?.state?.scrollLeft;
+        }
+
+        return null;
+      },
+      set: (scrollLeft) => {
+        if (gridRef.current) {
+          gridRef.current.scrollTo({
+            scrollLeft,
+          });
+        }
+      },
+    });
+    return obj;
+  });
+
+  const resetVirtualGrid = () => {
+    gridRef.current?.resetAfterIndices({
+      columnIndex: 0,
+      shouldForceUpdate: true,
+    });
+  };
+
+  useEffect(() => resetVirtualGrid, [tableWidth]);
+
+  const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
+    ref.current = connectObject;
+    const totalHeight = rawData.length * 54;
+    return (
+      <Grid
+        ref={gridRef}
+        className="virtual-grid"
+        style={{ margin: 20 }}
+        columnCount={mergedColumns.length}
+        columnWidth={(index) => {
+          const { width } = mergedColumns[index];
+          return totalHeight > scroll.y && index === mergedColumns.length - 1
+            ? width - scrollbarSize - 1
+            : width;
+        }}
+        height={scroll.y}
+        rowCount={rawData.length}
+        rowHeight={() => 54}
+        width={tableWidth}
+        onScroll={({ scrollLeft }) => {
+          onScroll({
+            scrollLeft,
+          });
+        }}
+      >
+        {({ columnIndex, rowIndex, style }) => (
+          <div
+            className={classNames("virtual-table-cell", {
+              "virtual-table-cell-last":
+                columnIndex === mergedColumns.length - 1,
+            })}
+            style={style}
+          >
+            {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
+          </div>
+        )}
+      </Grid>
+    );
+  };
+
+  return (
+    <ResizeObserver
+      onResize={({ width }) => {
+        setTableWidth(width);
+      }}
+    >
+      <Table
+        {...props}
+        className="virtual-table"
+        columns={mergedColumns}
+        pagination={false}
+        components={{
+          body: renderVirtualList,
+        }}
+      />
+    </ResizeObserver>
+  );
+}; // Usage
+
+const columns = [
+  {
+    title: "A",
+    dataIndex: "key",
+    width: 150,
+  },
+  {
+    title: "B",
+    dataIndex: "key",
+  },
+  {
+    title: "C",
+    dataIndex: "key",
+  },
+  {
+    title: "D",
+    dataIndex: "key",
+  },
+  {
+    title: "E",
+    dataIndex: "key",
+    width: 200,
+  },
+  {
+    title: "F",
+    dataIndex: "key",
+    width: 100,
+  },
+];
+const data = Array.from(
+  {
+    length: 100000,
+  },
+  (_, key) => ({
+    key,
+  })
+);
 
 const CoaPage = () => {
   const { value, func } = CoaInputLogic();
@@ -97,102 +260,68 @@ const CoaPage = () => {
   };
 
   return (
-    <Layout>
-      <Header
-        className="site-layout-background"
-        style={{
-          padding: 20,
-          backgroundColor: "#fafafa",
-          minHeight: 100,
-          // minHeight: 300,
-        }}
-      >
-        <Breadcrumb
-        // style={{
-        //   margin: "16px 0",
-        // }}
-        >
-          <Breadcrumb.Item>COA</Breadcrumb.Item>
-          <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-        </Breadcrumb>
-        <Text strong>Input {value.params.item}</Text>
+    <div className="custom-root-layout">
+      <div className="top-content">
+        <Form className="form-cari" layout="vertical">
+          <Form.Item>
+            <Input placeholder="Cari data di sini..." />
+          </Form.Item>
+          <Button className="btn-cari" type="primary">
+            Cari
+          </Button>
+        </Form>
 
-        {/* <Card>
-          <Form layout="vertical">
-            <Row>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Card> */}
-      </Header>
-      <Content
-        style={{
-          padding: 24,
-          backgroundColor: "white",
-        }}
-      >
-        <div className="top-content">
-          <Form className="form-cari" layout="vertical">
-            <Form.Item>
-              <Input placeholder="Cari data di sini..." />
-            </Form.Item>
-            <Button className="btn-cari" type="primary">
-              Cari
-            </Button>
-          </Form>
+        <div className="layout-btn-action">
+          <Button className="btn-clear" type="ghost" disabled>
+            Clear Data
+          </Button>
 
-          <div className="layout-btn-action">
-            <Button className="btn-clear" type="ghost" disabled>
-              Clear Data
-            </Button>
-
-            <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
-              Update
-            </Button>
-          </div>
+          <Button
+            className="btn-update"
+            type="primary"
+            icon={<UploadOutlined className="custom-icon" />}
+            onClick={func.onOpenUploadModal}
+          >
+            Update
+          </Button>
         </div>
+      </div>
 
-        <Table
-          components={components}
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          pagination={false}
-          scroll={{
-            x: setXColumn(value.params.item),
-            y: 300,
-          }}
-          rowKey="id"
-        />
-      </Content>
+      <Table
+        className="table-custom-root"
+        // components={components}
+        rowClassName={() => "editable-row"}
+        bordered
+        dataSource={value.dataColumn}
+        columns={value.tableColumn}
+        pagination={false}
+        scroll={{
+          x: setXColumn(value.params.item),
+          y: value.size.y - 200,
+        }}
+        rowKey="id"
+      />
 
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
-    </Layout>
+      {/* <VirtualTable
+        columns={value.tableColumn}
+        dataSource={value.dataColumn}
+        scroll={{
+          // y: 300,
+          y: value.size.y - 200,
+          // x: "100vw",
+          x: setXColumn(value.params.item),
+        }}
+      /> */}
+
+      {/* </Content> */}
+
+      <UploadModal
+        open={value.openUploadModal}
+        onCancel={func.onCloseUploadModal}
+        value={value}
+        onOk={func.onUploadFile}
+      />
+    </div>
   );
 };
 
