@@ -317,13 +317,14 @@ const CoaInputLogic = () => {
       {
         title: "Type Akun",
         dataIndex: "type_account",
-        width: "30%",
-
+        // width: "30%",
+        width: 150,
         fixed: "left",
       },
       {
         title: "Kode Akun",
         dataIndex: "code_account",
+        // width: 150
       },
       {
         title: "Akun Induk",
@@ -335,8 +336,9 @@ const CoaInputLogic = () => {
       },
       {
         dataIndex: "operation",
-        fixed: "right",
-        width: "5%",
+        // fixed: "right",
+        // width: "5%",
+        width: 150,
         render: (_, record) =>
           dataColumn.length >= 1 ? (
             <Dropdown overlay={menu} placement="bottom">
@@ -426,10 +428,13 @@ const CoaInputLogic = () => {
   });
 
   useEffect(() => {
+    setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetColumn();
     onSetDataTable();
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // console.log(`response => ${JSON.stringify(response.data)}`);
 
   useEffect(() => {
     if (response !== null) {
