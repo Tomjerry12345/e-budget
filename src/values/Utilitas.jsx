@@ -12,3 +12,23 @@ export const getSizeScreen = (set) => {
     y: window.innerHeight,
   });
 };
+
+export const areEqual = (array1, array2) => {
+  let isEqual = false;
+
+  if (typeof array1 != "undefined") {
+    try {
+      array1.forEach((e) => {
+        if (e === array2.key) {
+          isEqual = true;
+          const errorMessage = { status: "Break" };
+          throw errorMessage;
+        }
+      });
+    } catch (e) {
+      if (e.status !== "Break") throw e;
+    }
+  }
+
+  return isEqual;
+};

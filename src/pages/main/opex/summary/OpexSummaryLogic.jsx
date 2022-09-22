@@ -10,77 +10,6 @@ import { getSizeScreen } from "../../../../values/Utilitas";
 //   "Opex Direct": "",
 // };
 
-const constantDataTable = {
-  "Opex Direct": [
-    {
-      key: 0,
-      code_company: "001",
-      code_parent: "32",
-      description: "lorem ipsum 0",
-    },
-    {
-      key: 1,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 2,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 3,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 4,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 5,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 6,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 7,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 8,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 9,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-    {
-      key: 10,
-      code_company: "002",
-      code_parent: "32",
-      description: "lorem ipsum 1",
-    },
-  ],
-};
-
 const OpexSummaryLogic = () => {
   let params = useParams();
 
@@ -90,7 +19,7 @@ const OpexSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+  const { isLoading, response, errorMessage } = useSelector(
     (state) => state.reducer
   );
 
@@ -116,29 +45,20 @@ const OpexSummaryLogic = () => {
     y: window.innerHeight,
   });
 
-  // const updateSize = () =>
-  //   setSize({
-  //     x: window.innerWidth,
-  //     y: window.innerHeight,
-  //   });
-
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-
-    // onSetDataTable();
-  }, [params.item, dataColumn]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  console.log(`dataColumn => ${JSON.stringify(dataColumn)}`);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     // console.log(`response => ${JSON.stringify(response)}`);
+
     if (response !== null) {
       const { data } = response;
       let list = [];
       let year_1 = "";
       let year_2 = "";
 
-      data.list?.map((val) => {
+      data.list?.forEach((val) => {
         year_1 = val.detail[0].year;
         year_2 = val.detail[1].year;
         list.push({
@@ -211,14 +131,6 @@ const OpexSummaryLogic = () => {
     );
   };
 
-  const handleSave = (row) => {
-    const newData = [...dataColumn];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, { ...item, ...row });
-    setDataColumn(newData);
-  };
-
   const onTambahData = () => {
     dispatch(loadStart());
     navigate(`/main/opex/Input/${itemPage}`);
@@ -227,9 +139,6 @@ const OpexSummaryLogic = () => {
   const onFinish = (values) => {
     console.log("Success:", values);
     onSetDataTable(values);
-    // let formData = new FormData();
-    // formData.append("username", values.username);
-    // formData.append("password", values.password);
   };
 
   return {
