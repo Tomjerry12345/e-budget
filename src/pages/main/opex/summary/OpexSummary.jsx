@@ -19,7 +19,7 @@ const OpexSummary = () => {
 
   return (
     <div className="custom-root-layout">
-      <Card style={{ marginBottom: 16, height: 120 }}>
+      <Card className="card-style-opex">
         <Form
           className="form-filter-opex"
           layout="vertical"
@@ -104,18 +104,8 @@ const OpexSummary = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              style={{
-                width: "100%",
-                backgroundColor: "#008041",
-                color: "white",
-                borderRadius: "8px",
-                marginTop: "24px",
-                height: "40px",
-              }}
-              htmlType="submit"
-            >
-              Set
+            <Button className="btn-tampilkan" htmlType="submit">
+              Tampilkan
             </Button>
           </Form.Item>
         </Form>

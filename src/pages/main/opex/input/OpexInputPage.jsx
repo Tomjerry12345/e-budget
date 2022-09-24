@@ -93,10 +93,12 @@ const EditableCell = ({
     ) : (
       <div
         className="editable-cell-value-wrap"
-        style={{
-          paddingRight: 24,
-          // fontWeight: 600,
-        }}
+        style={
+          {
+            // paddingRight: 24,
+            // fontWeight: 600,
+          }
+        }
         onClick={toggleEdit}
       >
         {children}
@@ -119,7 +121,10 @@ const OpexInputPage = () => {
 
   return (
     <div className="custom-root-layout">
-      <Card style={{ marginBottom: 16, height: 120 }}>
+      <Card
+        className="card-style-opex"
+        // style={{ marginBottom: 16, height: 120 }}
+      >
         <Form
           className="form-filter-opex"
           layout="vertical"
@@ -203,18 +208,8 @@ const OpexInputPage = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              style={{
-                width: "100%",
-                backgroundColor: "#008041",
-                color: "white",
-                borderRadius: "8px",
-                marginTop: "24px",
-                height: "40px",
-              }}
-              htmlType="submit"
-            >
-              Set
+            <Button className="btn-tampilkan" htmlType="submit">
+              Tampilkan
             </Button>
           </Form.Item>
         </Form>
@@ -230,8 +225,9 @@ const OpexInputPage = () => {
           dataSource={value.dataColumnInput}
           columns={value.tableColumn}
           pagination={false}
+          size="small"
           scroll={{
-            x: 2800,
+            x: 2900,
             y: value.size.y - 200,
           }}
         />

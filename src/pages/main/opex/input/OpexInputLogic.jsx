@@ -80,14 +80,20 @@ const OpexInputLogic = () => {
       } else {
         const { data } = response;
         let list = [];
-        let year_1 = "";
-        let year_2 = "";
+        let year_1 = 0;
+        let year_2 = 0;
+        let year_total_1 = "";
+        let year_total_2 = "";
 
         let keyParent = [];
 
         data.list?.forEach((val, i) => {
           year_1 = val.detail[0].year;
           year_2 = val.detail[1].year;
+
+          year_total_1 = 0;
+          year_total_2 = 0;
+
           const account = val.account;
           const description = val.description;
           const listYear1 = [];
@@ -100,10 +106,12 @@ const OpexInputLogic = () => {
 
           val.detail[0].list_month?.forEach((month) => {
             listYear1.push(month);
+            year_total_1 += month.value;
           });
 
           val.detail[1].list_month?.forEach((month) => {
             listYear2.push(month);
+            year_total_2 += month.value;
           });
 
           list.push({
@@ -158,6 +166,7 @@ const OpexInputLogic = () => {
             des_1_uuid: listYear1[11]?.uuid,
             des_1_month: listYear1[11]?.month,
             des_1_year: year_1,
+            year_total_1: year_total_1,
             jan_2: listYear2[0]?.value,
             jan_2_uuid: listYear2[0]?.uuid,
             jan_2_month: listYear2[0]?.month,
@@ -206,13 +215,14 @@ const OpexInputLogic = () => {
             des_2_uuid: listYear2[11]?.uuid,
             des_2_month: listYear2[11]?.month,
             des_2_year: year_2,
+            year_total_2: year_total_2,
           });
         });
 
         log(`keyParent => ${JSON.stringify(keyParent)}`);
         setListKeyParent(keyParent);
         setDataColumnInput(list);
-        onSetColumn(year_1, year_2.at, keyParent);
+        onSetColumn(year_1, year_2, keyParent);
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -291,7 +301,7 @@ const OpexInputLogic = () => {
         {
           title: "Account",
           dataIndex: "account",
-          width: "12%",
+          width: "18%",
           fixed: "left",
         },
         {
@@ -305,73 +315,121 @@ const OpexInputLogic = () => {
           editable: true,
           children: [
             {
-              title: "Jan",
+              title: (
+                <span>
+                  Jan. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jan_1",
               editable: true,
             },
             {
-              title: "Feb",
+              title: (
+                <span>
+                  Feb. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "feb_1",
               editable: true,
             },
             {
-              title: "Mar",
+              title: (
+                <span>
+                  Mar. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "mar_1",
               editable: true,
             },
             {
-              title: "Apr",
+              title: (
+                <span>
+                  Apr. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "apr_1",
               editable: true,
             },
             {
-              title: "May",
-              width: 100,
+              title: (
+                <span>
+                  May. <span className="act-styles">Act</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "mei_1",
               editable: true,
             },
             {
-              title: "Jun",
+              title: (
+                <span>
+                  Jun. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jun_1",
               editable: true,
             },
             {
-              title: "Jul",
+              title: (
+                <span>
+                  Jul. <span className="act-styles">Act</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jul_1",
               editable: true,
             },
             {
-              title: "Aug",
-              width: 100,
+              title: (
+                <span>
+                  Aug. <span className="act-styles">Act</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "aug_1",
               editable: true,
             },
             {
-              title: "Sep",
+              title: (
+                <span>
+                  Sep. <span className="for-styles">For</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "sep_1",
               editable: true,
             },
             {
-              title: "Okt",
+              title: (
+                <span>
+                  Okt. <span className="for-styles">For</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "okt_1",
               editable: true,
             },
             {
-              title: "Nov",
+              title: (
+                <span>
+                  Nov. <span className="for-styles">For</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "nov_1",
               editable: true,
             },
             {
-              title: "Des",
+              title: (
+                <span>
+                  Des. <span className="for-styles">For</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "des_1",
               editable: true,
@@ -379,81 +437,139 @@ const OpexInputLogic = () => {
           ],
         },
         {
+          title: "Year total",
+          dataIndex: "year_total_1",
+          width: "14%",
+        },
+        {
           title: `Year ${year_2}`,
           children: [
             {
-              title: "Jan",
+              title: (
+                <span>
+                  Jan. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jan_2",
               editable: true,
             },
             {
-              title: "Feb",
+              title: (
+                <span>
+                  Feb. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "feb_2",
               editable: true,
             },
             {
-              title: "Mar",
-              width: 100,
+              title: (
+                <span>
+                  Mar. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "mar_2",
               editable: true,
             },
             {
-              title: "Apr",
+              title: (
+                <span>
+                  Apr. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "apr_2",
               editable: true,
             },
             {
-              title: "May",
-              width: 100,
+              title: (
+                <span>
+                  May. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "mei_2",
               editable: true,
             },
             {
-              title: "Jun",
+              title: (
+                <span>
+                  Jun. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jun_2",
               editable: true,
             },
             {
-              title: "Jul",
+              title: (
+                <span>
+                  Jul. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "jul_2",
               editable: true,
             },
             {
-              title: "Aug",
-              width: 100,
+              title: (
+                <span>
+                  Aug. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "aug_2",
               editable: true,
             },
             {
-              title: "Sep",
-              width: 100,
+              title: (
+                <span>
+                  Sep. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "sep_2",
               editable: true,
             },
             {
-              title: "Okt",
+              title: (
+                <span>
+                  Okt. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
               width: 100,
               dataIndex: "okt_2",
               editable: true,
             },
             {
-              title: "Nov",
-              width: 100,
+              title: (
+                <span>
+                  Nov. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "nov_2",
               editable: true,
             },
             {
-              title: "Des",
-              width: 100,
+              title: (
+                <span>
+                  Des. <span className="ebu-styles">Ebu</span>
+                </span>
+              ),
+              width: 110,
               dataIndex: "des_2",
               editable: true,
             },
           ],
+        },
+        {
+          title: "Year total",
+          dataIndex: "year_total_2",
+          width: "14%",
         },
         // {
         //   dataIndex: "operation",

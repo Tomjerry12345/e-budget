@@ -6,7 +6,7 @@ import {
   allItemInputSubMenu,
   disabledItemInputMenu,
 } from "../../values/Constant";
-import { getLocal, log, setLocal } from "../../values/Utilitas";
+import { getLocal, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -55,7 +55,7 @@ const MainLogic = () => {
   };
 
   const alertUser = (event) => {
-    setLocal("index-menu", null);
+    // setLocal("index-menu", null);
     setLocal("move-page", null);
   };
 

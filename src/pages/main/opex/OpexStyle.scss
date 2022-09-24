@@ -1,11 +1,38 @@
 .custom-root-layout {
+  .card-style-opex {
+    margin: 24px 40px 48px;
+  }
+
   .form-filter-opex {
     display: flex;
     justify-content: space-between;
-    padding: 18px;
+    padding: 16px;
 
-    .ant-col {
+    // .ant-col {
+    //   width: 174px;
+    // }
+
+    .ant-select {
+      width: 160px !important;
+    }
+
+    .ant-form-item-label > label {
+      color: black;
+      font-weight: 600;
+    }
+
+    .ant-select-selector {
+      border-radius: 8px;
+      background-color: #f5f7f9;
+      border-color: none;
+    }
+
+    .btn-tampilkan {
+      border: 1px solid #c6ced6;
       width: 150px;
+      border-radius: 8px;
+      align-items: center;
+      margin-top: 30px;
     }
   }
 }
