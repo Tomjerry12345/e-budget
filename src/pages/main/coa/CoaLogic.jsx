@@ -29,7 +29,7 @@ const endPoint = {
   "Kode lokasi": "location",
   "Kode departemen": "dept",
   "Kode akun": "account",
-  "Kode projek": "Project",
+  "Kode projek": "project",
   "Kode ICP": "icp",
 };
 
@@ -433,6 +433,7 @@ const CoaInputLogic = () => {
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    console.log(`response => ${response}`);
     if (response !== null) {
       if (nameReducer === constantGetCoa) {
         const { data } = response;
