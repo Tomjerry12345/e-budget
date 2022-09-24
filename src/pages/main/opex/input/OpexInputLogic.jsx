@@ -1,10 +1,9 @@
-import { Button, Form, Popconfirm, Typography } from "antd";
+import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
-import { constantDataTable } from "./ConstantInput";
 
 const OpexInputLogic = () => {
   let params = useParams();
@@ -61,24 +60,19 @@ const OpexInputLogic = () => {
 
   const [codeFilter, setCodeFilter] = useState();
 
+  const [listKeyParent, setListKeyParent] = useState();
+
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
   });
 
-  const [editingKey, setEditingKey] = useState("");
-
-  const [mode, setMode] = useState("mode 1");
-
-  const isEditing = (record) => record.key === editingKey;
-
   useEffect(() => {
-    // onSetColumn();
     window.onresize = getSizeScreen(setSize);
-  }, [editingKey, mode]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log(`response => ${JSON.stringify(response)}`);
+    log(`response => ${JSON.stringify(response)}`);
     if (response !== null) {
       if (nameReducer === "update-opex") {
         setDataColumnInput([]);
@@ -88,25 +82,29 @@ const OpexInputLogic = () => {
         let list = [];
         let year_1 = "";
         let year_2 = "";
-        let parent = false;
 
-        data.list?.map((val, i) => {
+        let keyParent = [];
+
+        data.list?.forEach((val, i) => {
           year_1 = val.detail[0].year;
           year_2 = val.detail[1].year;
           const account = val.account;
           const description = val.description;
           const listYear1 = [];
           const listYear2 = [];
+          let parent = val.detail[0].list_month[0].parent;
 
-          val.detail[0].list_month?.map((month) => {
+          if (parent) {
+            keyParent.push(i);
+          }
+
+          val.detail[0].list_month?.forEach((month) => {
             listYear1.push(month);
           });
 
-          val.detail[1].list_month?.map((month) => {
+          val.detail[1].list_month?.forEach((month) => {
             listYear2.push(month);
           });
-
-          // console.log(`listYear1 => ${JSON.stringify(listYear1)}`);
 
           list.push({
             key: i,
@@ -210,16 +208,18 @@ const OpexInputLogic = () => {
             des_2_year: year_2,
           });
         });
-        console.log(`list => ${JSON.stringify(list)}`);
+
+        log(`keyParent => ${JSON.stringify(keyParent)}`);
+        setListKeyParent(keyParent);
         setDataColumnInput(list);
-        onSetColumn(year_1, year_2, parent);
+        onSetColumn(year_1, year_2.at, keyParent);
       }
     } else {
       console.log(`error ${errorMessage}`);
     }
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onSetColumn = (year_1, year_2, parent) => {
+  const onSetColumn = (year_1, year_2, keyParent) => {
     // const constantTableColums = {
     //   "Opex Direct": [
     //     {
@@ -480,14 +480,9 @@ const OpexInputLogic = () => {
         onCell: (record) => ({
           record,
           editable: col.editable,
-          // editing: isEditing(record),
-          // inputType: col.dataIndex === "description" ? "text" : "number",
-          // inputType: "text",
           dataIndex: col.dataIndex,
           title: col.title,
-          // handleSave,
-          // form,
-          // mode: mode === "mode 1" ? 1 : 2,
+          keyNotEditTable: keyParent,
         }),
       };
 
@@ -497,15 +492,12 @@ const OpexInputLogic = () => {
             ...t,
             onCell: (record) => ({
               record,
+
               editable: t.editable,
-              // editing: isEditing(record),
-              // inputType: col.dataIndex === "description" ? "text" : "number",
-              // inputType: "text",
               dataIndex: t.dataIndex,
               title: t.title,
               handleSave,
-              // form,
-              // mode: mode === "mode 1" ? 1 : 2,
+              keyNotEditTable: keyParent,
             }),
           };
         });
@@ -518,7 +510,6 @@ const OpexInputLogic = () => {
   };
 
   const onSetDataTable = (values) => {
-    // setDataColumnInput(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
     setCodeFilter(values);
     dispatch(
@@ -535,58 +526,6 @@ const OpexInputLogic = () => {
     // formData.append("username", values.username);
     // formData.append("password", values.password);
   };
-
-  const edit = (record) => {
-    form.setFieldsValue({
-      kode_company: "",
-      kode_parent: "",
-      description: "",
-      ...record,
-    });
-    setEditingKey(record.key);
-  };
-
-  const cancel = () => {
-    setEditingKey("");
-  };
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      let newData = [...dataColumnInput];
-      const index = newData.findIndex((item) => key === item.key);
-
-      if (index > -1) {
-        const item = newData[index];
-        newData.splice(index, 1, { ...item, ...row });
-
-        setDataColumnInput(newData);
-        setEditingKey("");
-      } else {
-        newData.push(row);
-        setDataColumnInput(newData);
-        setEditingKey("");
-      }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
-  };
-
-  // const handleDelete = (key) => {
-  //   const newData = dataColumn.filter((item) => item.key !== key);
-  //   setDataColumnInput(newData);
-  // };
-
-  // const handleAdd = () => {
-  //   const newData = {
-  //     key: count,
-  //     name: `Edward King ${count}`,
-  //     age: "32",
-  //     address: `London, Park Lane no. ${count}`,
-  //   };
-  //   setDataColumnInput([...dataSource, newData]);
-  //   setCount(count + 1);
-  // };
 
   const handleSave = (row, keysEdit, valuesEdit) => {
     let formData = new FormData();
@@ -614,24 +553,17 @@ const OpexInputLogic = () => {
     // setDataColumnInput(newData);
   };
 
-  const onChangeMode = (e) => {
-    // const value = e.target.value;
-    log(`value => ${e}`);
-    setMode(e);
-  };
-
   return {
     value: {
       dataColumnInput,
       tableColumn,
       params,
       form,
-      mode,
       ref,
       size,
+      listKeyParent,
     },
     func: {
-      onChangeMode,
       onFinish,
     },
   };

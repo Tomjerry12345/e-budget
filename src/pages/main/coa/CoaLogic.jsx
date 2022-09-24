@@ -29,7 +29,7 @@ const endPoint = {
   "Kode lokasi": "location",
   "Kode departemen": "dept",
   "Kode akun": "account",
-  "Kode projek": "Project",
+  "Kode projek": "project",
   "Kode ICP": "icp",
 };
 
@@ -50,7 +50,6 @@ const CoaInputLogic = () => {
 
   const [tableColumn, setTableColumn] = useState([]);
 
-  // const [dataColumn, setDataColumn] = useState(dataTable);
   const [dataColumn, setDataColumn] = useState([]);
 
   const [size, setSize] = useState({
@@ -336,9 +335,8 @@ const CoaInputLogic = () => {
       },
       {
         dataIndex: "operation",
-        // fixed: "right",
-        // width: "5%",
-        width: 150,
+        fixed: "right",
+        width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
             <Dropdown overlay={menu} placement="bottom">
@@ -434,14 +432,13 @@ const CoaInputLogic = () => {
     onSetDataTable();
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // console.log(`response => ${JSON.stringify(response.data)}`);
-
   useEffect(() => {
+    console.log(`response => ${response}`);
     if (response !== null) {
       if (nameReducer === constantGetCoa) {
         const { data } = response;
 
-        console.log(`response => ${JSON.stringify(data)}`);
+        console.log(`data.length => ${data.length}`);
 
         setDataColumn(data);
       } else if (nameReducer === constantUploadCoa) {

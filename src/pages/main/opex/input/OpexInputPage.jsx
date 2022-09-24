@@ -1,17 +1,5 @@
 import { Card } from "@mui/material";
-import {
-  Table,
-  Form,
-  Input,
-  Breadcrumb,
-  Typography,
-  Layout,
-  InputNumber,
-  Row,
-  Col,
-  Select,
-  Button,
-} from "antd";
+import { Table, Form, Input, Select, Button } from "antd";
 import React, {
   createContext,
   useContext,
@@ -19,70 +7,11 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { areEqual, log } from "../../../../values/Utilitas";
 import OpexInputLogic from "./OpexInputLogic";
-
-const { Header, Content } = Layout;
-const { Text } = Typography;
+import "./OpexInputStyle.scss";
 
 const EditableContext = createContext(null);
-
-// const EditableCellModel1 = ({
-//   editing,
-//   dataIndex,
-//   title,
-//   inputType,
-//   record,
-//   children,
-//   ...restProps
-// }) => {
-//   const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-//   return (
-//     <td {...restProps}>
-//       {editing ? (
-//         <Form.Item
-//           name={dataIndex}
-//           style={{
-//             margin: 0,
-//           }}
-//           rules={[
-//             {
-//               required: true,
-//               message: `Please Input ${title}!`,
-//             },
-//           ]}
-//         >
-//           {inputNode}
-//         </Form.Item>
-//       ) : (
-//         children
-//       )}
-//     </td>
-//   );
-// };
-
-// const EditableCell1 = ({
-//   editable,
-//   editing,
-//   dataIndex,
-//   title,
-//   inputType,
-//   record,
-//   handleSave,
-//   children,
-//   mode,
-//   form,
-//   ...restProps
-// }) => (
-//   <EditableCellModel1
-//     editing={editing}
-//     dataIndex={dataIndex}
-//     title={title}
-//     inputType={inputType}
-//     record={record}
-//     children={children}
-//     {...restProps}
-//   />
-// );
 
 const EditableRow = ({ index, ...props }) => {
   const [form] = Form.useForm();
@@ -102,6 +31,7 @@ const EditableCell = ({
   dataIndex,
   record,
   handleSave,
+  keyNotEditTable,
   ...restProps
 }) => {
   const [editing, setEditing] = useState(false);
@@ -115,10 +45,16 @@ const EditableCell = ({
   }, [editing]);
 
   const toggleEdit = () => {
-    setEditing(!editing);
-    form.setFieldsValue({
-      [dataIndex]: record[dataIndex],
-    });
+    let notEditing = areEqual(keyNotEditTable, record);
+    log(`keyNotEditTable => ${notEditing}`);
+
+    if (!notEditing) {
+      setEditing(!editing);
+
+      form.setFieldsValue({
+        [dataIndex]: record[dataIndex],
+      });
+    }
   };
 
   const save = async () => {
@@ -152,13 +88,14 @@ const EditableCell = ({
           },
         ]}
       >
-        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+        <Input ref={inputRef} onPressEnter={save} />
       </Form.Item>
     ) : (
       <div
         className="editable-cell-value-wrap"
         style={{
           paddingRight: 24,
+          // fontWeight: 600,
         }}
         onClick={toggleEdit}
       >
@@ -168,10 +105,6 @@ const EditableCell = ({
   }
 
   return <td {...restProps}>{childNode}</td>;
-};
-
-const setXColumn = (params) => {
-  return params === "Opex Direct" ? null : 1600;
 };
 
 const OpexInputPage = () => {
@@ -290,7 +223,9 @@ const OpexInputPage = () => {
       <Form form={value.form} component={false}>
         <Table
           components={components}
-          rowClassName={() => "editable-row"}
+          rowClassName={(record, index) =>
+            areEqual(value.listKeyParent, record) ? "parent" : "child"
+          }
           bordered
           dataSource={value.dataColumnInput}
           columns={value.tableColumn}

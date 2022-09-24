@@ -6,7 +6,7 @@ import {
   allItemInputSubMenu,
   disabledItemInputMenu,
 } from "../../values/Constant";
-import { getLocal, setLocal } from "../../values/Utilitas";
+import { getLocal, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -17,7 +17,6 @@ const MainLogic = () => {
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const [titleHeader, setTitleHeader] = useState();
   const dispatch = useDispatch();
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
@@ -31,6 +30,13 @@ const MainLogic = () => {
       navigate(movePage);
     }
 
+    onRefreshBrowser();
+    onClosingTab();
+
+    setLocal("move-page", null);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
       let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
@@ -39,8 +45,19 @@ const MainLogic = () => {
       setiEmenu(index);
       setListMenuActivated(isActivated);
     }
+  };
+
+  const onClosingTab = () => {
+    window.addEventListener("beforeunload", alertUser);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+    };
+  };
+
+  const alertUser = (event) => {
+    setLocal("index-menu", null);
     setLocal("move-page", null);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
