@@ -282,7 +282,8 @@ const CoaPage = () => {
         bordered
         dataSource={value.dataColumn}
         columns={value.tableColumn}
-        pagination={true}
+        pagination={false}
+        size="small"
         rowClassName="editable-row"
         scroll={{
           x: setXColumn(value.params.item),

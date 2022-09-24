@@ -433,7 +433,7 @@ const CoaInputLogic = () => {
   }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    console.log(`response => ${response}`);
+    console.log(`response => ${JSON.stringify(response)}`);
     if (response !== null) {
       if (nameReducer === constantGetCoa) {
         const { data } = response;
