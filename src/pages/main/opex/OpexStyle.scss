@@ -1,16 +1,12 @@
 .custom-root-layout {
   .card-style-opex {
-    margin: 24px 40px 48px;
+    margin: 24px 24px 48px;
   }
 
   .form-filter-opex {
     display: flex;
     justify-content: space-between;
     padding: 16px;
-
-    // .ant-col {
-    //   width: 174px;
-    // }
 
     .ant-select {
       width: 160px !important;

@@ -141,14 +141,31 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-              // initialValues="211"
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
-            >
-              <Select.Option value="211">211</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_company.map((val, i) => (
+                <Select.Option key={i} value={val.code_company}>
+                  {val.code_company}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Kode Akun"
+            name="code_account"
+            rules={[
+              {
+                required: true,
+                message: "tidak boleh kosong!",
+              },
+            ]}
+          >
+            <Select>
+              {value.allCodeFilter.code_account.map((val, i) => (
+                <Select.Option key={i} value={val.code_account}>
+                  {val.code_account}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -162,13 +179,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
-            >
-              <Select.Option value="107">107</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_product.map((val, i) => (
+                <Select.Option key={i} value={val.code_product}>
+                  {val.code_product}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -182,10 +198,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-            // onChange={handleChange}
-            >
-              <Select.Option value="110117">110117</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_location.map((val, i) => (
+                <Select.Option key={i} value={val.code_location}>
+                  {val.code_location}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -199,11 +217,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-
-            // onChange={handleChange}
-            >
-              <Select.Option value="116">116</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_dept.map((val, i) => (
+                <Select.Option key={i} value={val.code_dept}>
+                  {val.code_dept}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
