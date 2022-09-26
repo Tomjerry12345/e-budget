@@ -151,25 +151,6 @@ const OpexInputPage = () => {
           </Form.Item>
 
           <Form.Item
-            label="Kode Akun"
-            name="code_account"
-            rules={[
-              {
-                required: true,
-                message: "tidak boleh kosong!",
-              },
-            ]}
-          >
-            <Select>
-              {value.allCodeFilter.code_account.map((val, i) => (
-                <Select.Option key={i} value={val.code_account}>
-                  {val.code_account}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
             label="Kode Produk"
             name="code_product"
             rules={[
@@ -247,7 +228,7 @@ const OpexInputPage = () => {
           size="small"
           scroll={{
             x: 2900,
-            y: value.size.y - 200,
+            y: value.size.y,
           }}
         />
       </Form>

@@ -81,10 +81,6 @@ const OpexInputLogic = () => {
       name: "code_product",
       endPoint: "product/list",
     },
-    {
-      name: "code_account",
-      endPoint: "account/list",
-    },
   ];
 
   const [urlIndex, setUrlIndex] = useState(0);
@@ -102,7 +98,7 @@ const OpexInputLogic = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // log(`response => ${response}`);
+    log(`response => ${JSON.stringify(response)}`);
 
     if (response !== null) {
       if (nameReducer === "update-opex") {
@@ -114,8 +110,6 @@ const OpexInputLogic = () => {
         getDataTable(response);
       } else {
         const { data } = response;
-        log(`data => ${JSON.stringify(data)}`);
-        log(`nameReducer => ${JSON.stringify(nameReducer)}`);
         setAllCodeFilter({
           ...allCodeFilter,
           [nameReducer]: data,
@@ -133,72 +127,6 @@ const OpexInputLogic = () => {
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetColumn = (year_1, year_2, keyParent) => {
-    // const constantTableColums = {
-    //   "Opex Direct": [
-    //     {
-    //       title: "Kode Company",
-    //       dataIndex: "kode_company",
-    //       width: "10%",
-    //       fixed: "left",
-    //     },
-    //     {
-    //       title: "Kode Parent",
-    //       dataIndex: "kode_parent",
-    //       width: "20%",
-    //     },
-    //     {
-    //       title: "Description",
-    //       dataIndex: "description",
-    //       editable: true,
-    //     },
-    //     // {
-    //     //   dataIndex: "operation",
-    //     //   fixed: "right",
-    //     //   width: "10%",
-    //     //   render: (_, record) => {
-    //     //     if (dataColumn.length >= 1) {
-    //     //       const editable = isEditing(record);
-    //     //       return editable ? (
-    //     //         <span>
-    //     //           <Typography.Link
-    //     //             onClick={() => save(record.key)}
-    //     //             style={{
-    //     //               marginRight: 8,
-    //     //               color: "black",
-    //     //               fontSize: "14px",
-    //     //               fontWeight: "600",
-    //     //             }}
-    //     //           >
-    //     //             Save
-    //     //           </Typography.Link>
-    //     //           <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-    //     //             <Typography.Link
-    //     //               style={{
-    //     //                 color: "black",
-    //     //                 fontSize: "14px",
-    //     //                 fontWeight: "600",
-    //     //               }}
-    //     //             >
-    //     //               Cancel
-    //     //             </Typography.Link>
-    //     //           </Popconfirm>
-    //     //         </span>
-    //     //       ) : (
-    //     //         <Button
-    //     //           type="primary"
-    //     //           disabled={editingKey !== ""}
-    //     //           onClick={() => edit(record)}
-    //     //         >
-    //     //           Edit
-    //     //         </Button>
-    //     //       );
-    //     //     } else {
-    //     //       return null;
-    //     //     }
-    //     //   },
-    //     // },
-    //   ],
-    // };
     const constantTableColums = {
       "Opex Direct": [
         {
@@ -534,7 +462,7 @@ const OpexInputLogic = () => {
       code_dept,
       code_location,
       code_product,
-      code_account,
+      // code_account,
     } = values;
     setCodeFilter(values);
     const path = `opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
@@ -553,7 +481,7 @@ const OpexInputLogic = () => {
 
     let keyParent = [];
 
-    data.list?.forEach((val, i) => {
+    data?.list?.forEach((val, i) => {
       year_1 = val.detail[0].year;
       year_2 = val.detail[1].year;
 
@@ -564,7 +492,7 @@ const OpexInputLogic = () => {
       const description = val.description;
       const listYear1 = [];
       const listYear2 = [];
-      let parent = val.detail[0].list_month[0].parent;
+      let parent = val.detail[0].list_month[0]?.parent;
 
       if (parent) {
         keyParent.push(i);

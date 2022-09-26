@@ -51,3 +51,16 @@ $grey: fafafa;
     color: white;
   }
 }
+
+.style-profile {
+  height: calc(100vh - 560px) !important;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 8px !important;
+  background-color: #fff;
+}
+
+.custom-dropdown {
+  left: 91px !important;
+  top: calc(100vh - 120px) !important;
+}

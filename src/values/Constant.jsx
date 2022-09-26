@@ -86,6 +86,7 @@ export const allItemInputSubMenu = [
     "Kode projek",
     "Kode ICP",
   ],
+  ["Profile", "Logout"],
 ];
 
 export const disabledItemInputMenu = [
@@ -139,6 +140,7 @@ export const disabledItemInputMenu = [
   [true, true, true, true],
   [],
   [false, false, false, false, false, false, false],
+  [false, false],
 ];
 
 export const allItemSummarySubMenu = [

@@ -21,7 +21,7 @@ const MainLogic = () => {
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
   const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0,
+    2, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const MainLogic = () => {
 
   const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
       const index = getLocal("index-menu");
       isActivated[index] = 2;
@@ -79,7 +79,7 @@ const MainLogic = () => {
 
   const onClickedMenu = (key, item, nameMenu, title) => {
     dispatch(loadStart());
-    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     let pageNavigation = "";
 

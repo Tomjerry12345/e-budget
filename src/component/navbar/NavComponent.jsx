@@ -1,4 +1,4 @@
-import { Layout, Menu } from "antd";
+import { Avatar, Button, Dropdown, Layout, Menu, Typography } from "antd";
 
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined";
@@ -12,6 +12,7 @@ import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import logo from "../../assets/img/logo.png";
 
 import "./NavStyles.scss";
+import { UserOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
@@ -22,6 +23,21 @@ const { Sider } = Layout;
 //     label,
 //   };
 // };
+
+const menu = (
+  <Menu
+    items={[
+      {
+        label: (
+          <Typography.Text style={{ fontWeight: "600" }}>
+            Logout
+          </Typography.Text>
+        ),
+        key: "0",
+      },
+    ]}
+  />
+);
 
 const NavComponent = ({ func, value }) => {
   const isClickedMenu = (index) => {
@@ -98,6 +114,7 @@ const NavComponent = ({ func, value }) => {
         >
           Dashboard
         </Menu.Item>
+
         <Menu.Item
           key={"1-Revenue & COGS"}
           className={`menuItem ${isClickedMenu(1)}`}
@@ -109,6 +126,7 @@ const NavComponent = ({ func, value }) => {
         >
           Revenue & COGS
         </Menu.Item>
+
         <Menu.Item
           key={"2-Opex"}
           className={`menuItem ${isClickedMenu(2)}`}
@@ -120,6 +138,7 @@ const NavComponent = ({ func, value }) => {
         >
           Opex
         </Menu.Item>
+
         <Menu.Item
           key={"3-Capex"}
           className={`menuItem ${isClickedMenu(3)}`}
@@ -129,6 +148,7 @@ const NavComponent = ({ func, value }) => {
         >
           Capex
         </Menu.Item>
+
         <Menu.Item
           key={"4-MPP"}
           className={`menuItem ${isClickedMenu(4)}`}
@@ -140,6 +160,7 @@ const NavComponent = ({ func, value }) => {
         >
           MPP
         </Menu.Item>
+
         <Menu.Item
           key={"5-Others"}
           className={`menuItem ${isClickedMenu(5)}`}
@@ -151,6 +172,7 @@ const NavComponent = ({ func, value }) => {
         >
           Others
         </Menu.Item>
+
         <Menu.Item
           key={"6-Report"}
           className={`menuItem ${isClickedMenu(6)}`}
@@ -162,6 +184,7 @@ const NavComponent = ({ func, value }) => {
         >
           Report
         </Menu.Item>
+
         <Menu.Item
           key={"7-Master COA"}
           className={`menuItem ${isClickedMenu(7)}`}
@@ -174,6 +197,30 @@ const NavComponent = ({ func, value }) => {
         >
           Master COA
         </Menu.Item>
+
+        <Menu.Item
+          key={"8-Akun"}
+          className={`menuItem ${isClickedMenu(8)}`}
+          icon={<UserOutlined className={`colorIcon ${isClickedMenu(8)}`} />}
+          // onClick={func.onClickedMenu}
+        >
+          Akun
+        </Menu.Item>
+
+        {/* <Menu.Item className="style-profile" title={null} disabled>
+          <Dropdown overlay={menu} overlayClassName="custom-dropdown">
+            <Button
+              type="primary"
+              shape="circle"
+              style={{
+                height: "40px",
+                width: "40px",
+              }}
+            >
+              A
+            </Button>
+          </Dropdown>
+        </Menu.Item> */}
       </Menu>
     </Sider>
   );

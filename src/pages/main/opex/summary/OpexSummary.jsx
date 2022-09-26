@@ -1,4 +1,4 @@
-import { Table, Form, Button, Select } from "antd";
+import { Table, Form, Button, Select, Row, Col } from "antd";
 import { Card } from "@mui/material";
 import { Option } from "antd/lib/mentions";
 import React from "react";
@@ -38,13 +38,15 @@ const OpexSummary = () => {
             ]}
           >
             <Select
-              // initialValues="211"
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
+            // initialValues="211"
+
+            // onChange={handleChange}
             >
-              <Option value="211">211</Option>
+              {value.allCodeFilter.code_company.map((val, i) => (
+                <Select.Option key={i} value={val.code_company}>
+                  {val.code_company}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -58,13 +60,12 @@ const OpexSummary = () => {
               },
             ]}
           >
-            <Select
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
-            >
-              <Option value="107">107</Option>
+            <Select>
+              {value.allCodeFilter.code_product.map((val, i) => (
+                <Select.Option key={i} value={val.code_product}>
+                  {val.code_product}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -78,10 +79,12 @@ const OpexSummary = () => {
               },
             ]}
           >
-            <Select
-            // onChange={handleChange}
-            >
-              <Option value="110117">110117</Option>
+            <Select>
+              {value.allCodeFilter.code_location.map((val, i) => (
+                <Select.Option key={i} value={val.code_location}>
+                  {val.code_location}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -95,11 +98,12 @@ const OpexSummary = () => {
               },
             ]}
           >
-            <Select
-
-            // onChange={handleChange}
-            >
-              <Option value="116">116</Option>
+            <Select>
+              {value.allCodeFilter.code_dept.map((val, i) => (
+                <Select.Option key={i} value={val.code_dept}>
+                  {val.code_dept}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -111,7 +115,7 @@ const OpexSummary = () => {
         </Form>
       </Card>
 
-      <Button style={{ marginBottom: 16 }} onClick={func.onTambahData}>
+      <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
         Tambah Data
       </Button>
 
@@ -124,7 +128,8 @@ const OpexSummary = () => {
         pagination={false}
         scroll={{
           x: setXColumn(value.params.item),
-          y: value.size.y - 200,
+          y: value.size.y - 410,
+          // y: 200,
         }}
         rowKey="id"
       />
