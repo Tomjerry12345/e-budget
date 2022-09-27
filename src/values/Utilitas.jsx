@@ -4,7 +4,7 @@ export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 export const getLocal = (key) => localStorage.getItem(key);
 
-export const log = (message) => console.log(message);
+export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${JSON.stringify(message)}`));
 
 export const getSizeScreen = (set) => {
   set({

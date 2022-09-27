@@ -1,17 +1,11 @@
-import { Table, Form, Button, Select, Row, Col } from "antd";
+import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
-import { Option } from "antd/lib/mentions";
 import React from "react";
 import OpexSummaryLogic from "./OpexSummaryLogic";
 import "../OpexStyle.scss";
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" ||
-    params === "Kode departemen" ||
-    params === "Kode akun" ||
-    params === "Kode ICP"
-    ? null
-    : 1600;
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
 
 const OpexSummary = () => {
@@ -20,13 +14,7 @@ const OpexSummary = () => {
   return (
     <div className="custom-root-layout">
       <Card className="card-style-opex">
-        <Form
-          className="form-filter-opex"
-          layout="vertical"
-          ref={value.ref}
-          onFinish={func.onFinish}
-          form={value.form}
-        >
+        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -126,6 +114,7 @@ const OpexSummary = () => {
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
+        loading={value.loading}
         scroll={{
           x: setXColumn(value.params.item),
           y: value.size.y - 410,

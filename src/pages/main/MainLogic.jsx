@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import {
-  allItemInputSubMenu,
-  disabledItemInputMenu,
-} from "../../values/Constant";
-import { getLocal, setLocal } from "../../values/Utilitas";
+import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
+import { getLocal, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -20,9 +17,7 @@ const MainLogic = () => {
   const dispatch = useDispatch();
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -116,6 +111,12 @@ const MainLogic = () => {
         pageNavigation = `/main/opex/summary/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
+      } else if (index === 8) {
+        log("nameMenu", nameMenu);
+
+        if (nameMenu === "Logout") {
+          pageNavigation = `/login`;
+        }
       }
 
       navigate(pageNavigation);

@@ -7,9 +7,7 @@ import { setLocal } from "../../../values/Utilitas";
 
 const LoginLogic = () => {
   const dispatch = useDispatch();
-  const { isLoading, response, errorMessage } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage } = useSelector((state) => state.reducer);
 
   const ref = createRef();
 
@@ -17,7 +15,7 @@ const LoginLogic = () => {
 
   useEffect(() => {
     setLocal("auth", false);
-    setLocal("index-menu", null);
+    setLocal("index-menu", 0);
     setLocal("move-page", null);
     if (response !== null) {
       const { responseCode, responseDescription } = response;
