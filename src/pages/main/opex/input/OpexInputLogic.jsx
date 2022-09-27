@@ -16,9 +16,7 @@ const OpexInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -87,6 +85,8 @@ const OpexInputLogic = () => {
 
   const [listKeyParent, setListKeyParent] = useState();
 
+  const [loading, setLoading] = useState(false);
+
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
@@ -98,16 +98,15 @@ const OpexInputLogic = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    log(`response => ${JSON.stringify(response)}`);
+    log("response", response);
 
     if (response !== null) {
       if (nameReducer === "update-opex") {
-        setDataColumnInput([]);
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
-        setDataColumnInput([]);
         getDataTable(response);
+        setLoading(false);
       } else {
         const { data } = response;
         setAllCodeFilter({
@@ -115,8 +114,8 @@ const OpexInputLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 3) {
-          dispatch(getAsync(url[urlIndex].endPoint, url[urlIndex].name));
+        if (urlIndex <= 2) {
+          dispatch(getAsync(url[urlIndex]?.endPoint, url[urlIndex]?.name));
         }
 
         setUrlIndex((current) => current + 1);
@@ -439,7 +438,6 @@ const OpexInputLogic = () => {
             ...t,
             onCell: (record) => ({
               record,
-
               editable: t.editable,
               dataIndex: t.dataIndex,
               title: t.title,
@@ -468,7 +466,6 @@ const OpexInputLogic = () => {
     const path = `opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     // const path = `opex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
-    log(`path => ${path}`);
   };
 
   const getDataTable = (response) => {
@@ -615,47 +612,42 @@ const OpexInputLogic = () => {
 
     setListKeyParent(keyParent);
     setDataColumnInput(list);
+
     onSetColumn(year_1, year_2, keyParent);
   };
 
   const onFinish = (values) => {
     console.log("Success:", values);
     onSetDataTable(values);
+    setLoading(true);
     // let formData = new FormData();
     // formData.append("username", values.username);
     // formData.append("password", values.password);
   };
 
   const handleSave = (row, keysEdit, valuesEdit) => {
+    setLoading(true);
     let formData = new FormData();
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_account,
-    } = codeFilter;
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
     const year = row[`${keysEdit}_year`];
     const month = row[`${keysEdit}_month`];
-    console.log(`row => ${year} => ${month}`);
-    console.log(`row => ${keysEdit} => ${valuesEdit}`);
+    const uuid = row[`${keysEdit}_uuid`];
 
-    formData.append("code", code_account);
-    formData.append("code_company", code_company);
-    formData.append("code_product", code_product);
-    formData.append("code_location", code_location);
-    formData.append("code_dept", code_dept);
-    formData.append("month", month);
-    formData.append("year", year);
+    if (uuid === null) {
+      formData.append("code", row.account);
+      formData.append("code_company", code_company);
+      formData.append("code_product", code_product);
+      formData.append("code_location", code_location);
+      formData.append("code_dept", code_dept);
+      formData.append("month", month);
+      formData.append("year", year);
+    } else {
+      formData.append("uuid", uuid);
+    }
+
     formData.append("value", valuesEdit);
 
     dispatch(postAsync(`opex/update`, formData, "update-opex"));
-    // console.log(`editValues => ${JSON.stringify(editValues)}`);
-    // const newData = [...dataColumn];
-    // const index = newData.findIndex((item) => row.key === item.key);
-    // const item = newData[index];
-    // newData.splice(index, 1, { ...item, ...row });
-    // setDataColumnInput(newData);
   };
 
   const onGetCodeFilter = () => {
@@ -672,6 +664,7 @@ const OpexInputLogic = () => {
       size,
       listKeyParent,
       allCodeFilter,
+      loading,
     },
     func: {
       onFinish,

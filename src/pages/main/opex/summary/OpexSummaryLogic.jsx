@@ -19,9 +19,7 @@ const OpexSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const navigate = useNavigate();
 
@@ -53,13 +51,7 @@ const OpexSummaryLogic = () => {
     code_account: [],
   });
 
-  const [codeFilter, setCodeFilter] = useState();
-
   const url = [
-    // {
-    //   name: "code_dept",
-    //   endPoint: "company/list",
-    // },
     {
       name: "code_dept",
       endPoint: "dept/list",
@@ -72,22 +64,21 @@ const OpexSummaryLogic = () => {
       name: "code_product",
       endPoint: "product/list",
     },
-    {
-      name: "code_account",
-      endPoint: "account/list",
-    },
   ];
 
   const [urlIndex, setUrlIndex] = useState(0);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    setLoading(true);
     dispatch(getAsync(`opex/summary`, "get-data"));
     // onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // console.log(`response => ${JSON.stringify(response)}`);
+    log("response", response);
 
     if (response !== null) {
       if (nameReducer === "get-data") {
@@ -109,6 +100,7 @@ const OpexSummaryLogic = () => {
         });
         setDataColumn(list);
         onSetColumn(year_1, year_2);
+        setLoading(false);
       } else {
         const { data } = response;
         setAllCodeFilter({
@@ -116,7 +108,7 @@ const OpexSummaryLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 3) {
+        if (urlIndex <= 2) {
           dispatch(getAsync(url[urlIndex].endPoint, url[urlIndex].name));
         }
 
@@ -175,13 +167,7 @@ const OpexSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    setCodeFilter(values);
-    dispatch(
-      getAsync(
-        `opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
-        "get-data"
-      )
-    );
+    dispatch(getAsync(`opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
   };
 
   const onTambahData = () => {
@@ -190,6 +176,7 @@ const OpexSummaryLogic = () => {
   };
 
   const onFinish = (values) => {
+    setLoading(true);
     console.log("Success:", JSON.stringify(values));
     onSetDataTable(values);
   };
@@ -207,6 +194,7 @@ const OpexSummaryLogic = () => {
       ref,
       form,
       allCodeFilter,
+      loading,
     },
     func: {
       onTambahData,
