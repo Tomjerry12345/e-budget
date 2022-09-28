@@ -1,10 +1,10 @@
 import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
-import OpexSummaryLogic from "./OpexSummaryLogic";
-import "../OpexStyle.scss";
-const OpexSummary = () => {
-  const { value, func } = OpexSummaryLogic();
+import MppSummaryLogic from "./MppSummaryLogic";
+import "../MppStyle.scss";
+const MppSummary = () => {
+  const { value, func } = MppSummaryLogic();
 
   return (
     <div className="custom-root-layout">
@@ -121,4 +121,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default MppSummary;

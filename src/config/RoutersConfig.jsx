@@ -6,6 +6,9 @@ import CoaPage from "../pages/main/coa/CoaPage";
 import OpexInputPage from "../pages/main/opex/input/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/OpexSummary";
 import App from "../pages/App";
+import CapexSummary from "../pages/main/capex/summary/CapexSummary";
+import RevenueCogsSummary from "../pages/main/revenueCogs/summary/RevenueCogsSummary";
+import MppSummary from "../pages/main/mpp/summary/MppSummary";
 
 const RoutersConfig = () => {
   return (
@@ -15,9 +18,21 @@ const RoutersConfig = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/main" element={<MainPage />}>
           <Route index element={<DashboardPage />} />
+          <Route path="revenue-cogs">
+            {/* <Route path="input/:item" element={<RevenueInputPage />} /> */}
+            <Route path="summary/:item" element={<RevenueCogsSummary />} />
+          </Route>
           <Route path="opex">
             <Route path="input/:item" element={<OpexInputPage />} />
             <Route path="summary/:item" element={<OpexSummary />} />
+          </Route>
+          <Route path="capex">
+            {/* <Route path="input/:item" element={<OpexInputPage />} /> */}
+            <Route path="summary/:item" element={<CapexSummary />} />
+          </Route>
+          <Route path="mpp">
+            {/* <Route path="input/:item" element={<OpexInputPage />} /> */}
+            <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="coa">
             <Route path=":item" element={<CoaPage />} />

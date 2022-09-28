@@ -4,7 +4,26 @@ export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 export const getLocal = (key) => localStorage.getItem(key);
 
-export const log = (message) => console.log(message);
+export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${simpleStringify(message)}`));
+
+function simpleStringify(object) {
+  // stringify an object, avoiding circular structures
+  // https://stackoverflow.com/a/31557814
+  var simpleObject = {};
+  for (var prop in object) {
+    if (!object.hasOwnProperty(prop)) {
+      continue;
+    }
+    if (typeof object[prop] == "object") {
+      continue;
+    }
+    if (typeof object[prop] == "function") {
+      continue;
+    }
+    simpleObject[prop] = object[prop];
+  }
+  return JSON.stringify(simpleObject); // returns cleaned up JSON
+}
 
 export const getSizeScreen = (set) => {
   set({

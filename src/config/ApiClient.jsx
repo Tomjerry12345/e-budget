@@ -2,8 +2,10 @@ import axios from "axios";
 
 const apiClient = () => {
   const headers = {
-    // "Content-Type": "application/x-www-form-urlencoded",
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "application/x-www-form-urlencoded",
+
+    // "Access-Control-Allow-Origin": "*",
+    // "Content-Type": "multipart/form-data",
   };
 
   const axiosInstance = axios.create({

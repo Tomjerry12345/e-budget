@@ -11,16 +11,7 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-];
+const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
 
 const getPath = (pathName, item) => {
   const spliter = pathName?.split("/");
@@ -60,20 +51,8 @@ const MainPage = () => {
         title={[
           <div key="test">
             <Typography.Text>{value.titleMenu}</Typography.Text>
-
-            {/* <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              className="segmented-style"
-              defaultValue="Input"
-              value={value.segmentedValue}
-              onChange={func.onChangeSegmented}
-            /> */}
           </div>,
         ]}
-        // bodyStyle={{ overflowY: "scroll" }}
         open={value.showMenu}
         className="modal-menu"
         closable={false}
@@ -89,19 +68,7 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button
-                  type="text"
-                  block
-                  disabled={value.itemDisabledMenu[i]}
-                  onClick={() =>
-                    func.onClickedMenu(
-                      value.keyMenu,
-                      "submenu",
-                      item,
-                      value.titleMenu
-                    )
-                  }
-                >
+                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
                   {item}
                 </Button>
               </List.Item>
@@ -115,73 +82,20 @@ const MainPage = () => {
           backgroundColor: "white",
         }}
       >
-        <Header
-          className="site-layout-background"
-          style={{
-            padding: 20,
-            backgroundColor: "#fafafa",
-            minHeight: 100,
-            // minHeight: 300,
-          }}
-        >
-          <Breadcrumb
-          // style={{
-          //   margin: "16px 0",
-          // }}
-          >
+        <Header className="custom-header">
+          <Breadcrumb className="custom-breadcrumb">
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
             <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-            {/* <Breadcrumb.Item>{getPath()}</Breadcrumb.Item> */}
           </Breadcrumb>
-
-          {/* {title[getLocal("index-menu")] !== "Dashboard" ? (
-            <Text strong>{path}</Text>
-          ) : null} */}
-          {value.params.item !== "" ? <Text strong>{path}</Text> : null}
-
-          {/* <Card>
-          <Form layout="vertical">
-            <Row>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={5}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-              <Col span={4}>
-                <Form.Item label="Field A">
-                  <Input placeholder="input placeholder" />
-                </Form.Item>
-              </Col>
-            </Row>
-          </Form>
-        </Card> */}
+          {value.params.item !== "" ? (
+            <Text strong style={{ fontSize: "24px" }}>
+              {path}
+            </Text>
+          ) : null}
         </Header>
         <Content>
           <Outlet />
         </Content>
-
-        {/* <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          Ant Design ©2018 Created by Ant UED
-        </Footer> */}
       </Layout>
     </Layout>
   );

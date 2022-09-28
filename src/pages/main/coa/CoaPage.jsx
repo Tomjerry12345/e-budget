@@ -1,9 +1,10 @@
-import { Table, Form, Input, Button } from "antd";
+import { Table, Form, Input, Button, Modal, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaLogic";
 import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { log } from "../../../values/Utilitas";
 // import ResizeObserver from "rc-resize-observer";
 // import { VariableSizeGrid as Grid } from "react-window";
 // import classNames from "classnames";
@@ -21,15 +22,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -91,13 +84,15 @@ const EditableCell = ({
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" ||
-    params === "Kode departemen" ||
-    params === "Kode akun" ||
-    params === "Kode ICP"
-    ? null
-    : 1600;
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
+
+const CustomFooter = ({ status, onOk, onCancel }) => (
+  <div>
+    <Button onClick={onCancel}>Batal</Button>
+    {status === "edit" ? <Button onClick={onOk}>Ubah</Button> : <Button onClick={onOk}>Hapus</Button>}
+  </div>
+);
 
 // const VirtualTable = (props) => {
 //   const { columns, scroll } = props;
@@ -265,12 +260,7 @@ const CoaPage = () => {
             Clear Data
           </Button>
 
-          <Button
-            className="btn-update"
-            type="primary"
-            icon={<UploadOutlined className="custom-icon" />}
-            onClick={func.onOpenUploadModal}
-          >
+          <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
             Update
           </Button>
         </div>
@@ -287,7 +277,7 @@ const CoaPage = () => {
         rowClassName="editable-row"
         scroll={{
           x: setXColumn(value.params.item),
-          y: value.size.y - 200,
+          y: value.size.y - 280,
         }}
         rowKey="id"
       />
@@ -305,12 +295,25 @@ const CoaPage = () => {
 
       {/* </Content> */}
 
-      <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-      />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
+
+      <Modal open={value.openAction.open} closable={false} title="Ubah Data" footer={<CustomFooter status={value.openAction.status} onOk={func.onOk} onCancel={func.onCancel} />}>
+        <Form layout="vertical">
+          {value.openAction.status === "edit" ? (
+            <Form.Item>
+              <Input placeholder="Description" />
+            </Form.Item>
+          ) : (
+            <Typography.Text>Apakah Anda ingin menghapus item ?</Typography.Text>
+          )}
+
+          {/* <Form.Item>
+            <Button className="btn-cari" type="primary">
+              Ubah
+            </Button>
+          </Form.Item> */}
+        </Form>
+      </Modal>
     </div>
   );
 };

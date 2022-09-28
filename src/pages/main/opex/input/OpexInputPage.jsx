@@ -1,12 +1,6 @@
 import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
 import OpexInputLogic from "./OpexInputLogic";
 import "./OpexInputStyle.scss";
@@ -24,16 +18,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  keyNotEditTable,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -46,7 +31,6 @@ const EditableCell = ({
 
   const toggleEdit = () => {
     let notEditing = areEqual(keyNotEditTable, record);
-    log(`keyNotEditTable => ${notEditing}`);
 
     if (!notEditing) {
       setEditing(!editing);
@@ -63,8 +47,8 @@ const EditableCell = ({
       toggleEdit();
       const keysEdit = Object.keys(values);
       const valuesEdit = values[keysEdit];
-      console.log(`values => ${JSON.stringify(values)}`);
-      console.log(`values => ${keysEdit}`);
+      log("values", values);
+      log("dataColumnInput", keysEdit);
       // console.log(`record => ${JSON.stringify(record)}`);
       handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
@@ -88,7 +72,7 @@ const EditableCell = ({
           },
         ]}
       >
-        <Input ref={inputRef} onPressEnter={save} />
+        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
       </Form.Item>
     ) : (
       <div
@@ -125,12 +109,7 @@ const OpexInputPage = () => {
         className="card-style-opex"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form
-          className="form-filter-opex"
-          layout="vertical"
-          ref={value.ref}
-          onFinish={func.onFinish}
-        >
+        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -141,14 +120,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-              // initialValues="211"
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
-            >
-              <Select.Option value="211">211</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_company.map((val, i) => (
+                <Select.Option key={i} value={val.code_company}>
+                  {val.code_company}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -162,13 +139,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-              style={{
-                width: 130,
-              }}
-              // onChange={handleChange}
-            >
-              <Select.Option value="107">107</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_product.map((val, i) => (
+                <Select.Option key={i} value={val.code_product}>
+                  {val.code_product}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -182,10 +158,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-            // onChange={handleChange}
-            >
-              <Select.Option value="110117">110117</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_location.map((val, i) => (
+                <Select.Option key={i} value={val.code_location}>
+                  {val.code_location}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -199,11 +177,12 @@ const OpexInputPage = () => {
               },
             ]}
           >
-            <Select
-
-            // onChange={handleChange}
-            >
-              <Select.Option value="116">116</Select.Option>
+            <Select>
+              {value.allCodeFilter.code_dept.map((val, i) => (
+                <Select.Option key={i} value={val.code_dept}>
+                  {val.code_dept}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
@@ -215,23 +194,20 @@ const OpexInputPage = () => {
         </Form>
       </Card>
 
-      <Form form={value.form} component={false}>
-        <Table
-          components={components}
-          rowClassName={(record, index) =>
-            areEqual(value.listKeyParent, record) ? "parent" : "child"
-          }
-          bordered
-          dataSource={value.dataColumnInput}
-          columns={value.tableColumn}
-          pagination={false}
-          size="small"
-          scroll={{
-            x: 2900,
-            y: value.size.y - 200,
-          }}
-        />
-      </Form>
+      <Table
+        components={components}
+        rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+        bordered
+        dataSource={value.dataColumnInput}
+        columns={value.tableColumn}
+        pagination={false}
+        loading={value.loading}
+        size="small"
+        scroll={{
+          x: 2900,
+          y: value.size.y,
+        }}
+      />
     </div>
   );
 };
