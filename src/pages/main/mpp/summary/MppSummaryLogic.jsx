@@ -10,7 +10,7 @@ import { getSizeScreen, log } from "../../../../values/Utilitas";
 //   "Opex Direct": "",
 // };
 
-const OpexSummaryLogic = () => {
+const MppSummaryLogic = () => {
   let params = useParams();
 
   const ref = createRef();
@@ -73,7 +73,7 @@ const OpexSummaryLogic = () => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
     setLoading(true);
-    dispatch(getAsync(`opex/summary`, "get-data"));
+    dispatch(getAsync(`mpp/summary`, "get-data"));
     // onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -121,7 +121,7 @@ const OpexSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      Opex: [
+      MPP: [
         {
           title: "Account",
           dataIndex: "account",
@@ -167,12 +167,12 @@ const OpexSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(getAsync(`mpp/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
   };
 
   const onTambahData = () => {
-    dispatch(loadStart());
-    navigate(`/main/opex/Input/${itemPage}`);
+    // dispatch(loadStart());
+    // navigate(`/main/mpp/Input/${itemPage}`);
   };
 
   const onFinish = (values) => {
@@ -203,4 +203,4 @@ const OpexSummaryLogic = () => {
   };
 };
 
-export default OpexSummaryLogic;
+export default MppSummaryLogic;

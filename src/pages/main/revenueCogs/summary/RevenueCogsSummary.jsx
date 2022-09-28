@@ -1,14 +1,14 @@
 import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
-import OpexSummaryLogic from "./OpexSummaryLogic";
-import "../OpexStyle.scss";
-const OpexSummary = () => {
-  const { value, func } = OpexSummaryLogic();
+import RevenueCogsSummaryLogic from "./RevenueCogsSummaryLogic";
+import "../RevenueCogsStyle.scss";
+const RevenueCogsSummary = () => {
+  const { value, func } = RevenueCogsSummaryLogic();
 
   return (
     <div className="custom-root-layout">
-      <Card className="card-style-opex">
+      <Card className="card-style-capex">
         <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
           <Form.Item
             label="Kode Perusahaan"
@@ -121,4 +121,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default RevenueCogsSummary;

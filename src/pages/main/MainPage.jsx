@@ -11,17 +11,7 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-  "Akun",
-];
+const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
 
 const getPath = (pathName, item) => {
   const spliter = pathName?.split("/");
@@ -61,20 +51,8 @@ const MainPage = () => {
         title={[
           <div key="test">
             <Typography.Text>{value.titleMenu}</Typography.Text>
-
-            {/* <Segmented
-              options={[
-                { value: "Input", label: "Input" },
-                { value: "Summary", label: "Summary" },
-              ]}
-              className="segmented-style"
-              defaultValue="Input"
-              value={value.segmentedValue}
-              onChange={func.onChangeSegmented}
-            /> */}
           </div>,
         ]}
-        // bodyStyle={{ overflowY: "scroll" }}
         open={value.showMenu}
         className="modal-menu"
         closable={false}
@@ -90,19 +68,7 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button
-                  type="text"
-                  block
-                  disabled={value.itemDisabledMenu[i]}
-                  onClick={() =>
-                    func.onClickedMenu(
-                      value.keyMenu,
-                      "submenu",
-                      item,
-                      value.titleMenu
-                    )
-                  }
-                >
+                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
                   {item}
                 </Button>
               </List.Item>

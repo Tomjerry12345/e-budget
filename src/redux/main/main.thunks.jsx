@@ -15,4 +15,11 @@ const postAsync = (path, req, nameReducer, start) => (dispatch) => {
     .catch((error) => dispatch(loadError(error.message)));
 };
 
-export { getAsync, postAsync };
+const deleteAsync = (path, req, nameReducer, start) => (dispatch) => {
+  dispatch(loadStart(nameReducer, start));
+  MainServices.delete(path, req)
+    .then((response) => dispatch(loadSuccess(response.data)))
+    .catch((error) => dispatch(loadError(error.message)));
+};
+
+export { getAsync, postAsync, deleteAsync };

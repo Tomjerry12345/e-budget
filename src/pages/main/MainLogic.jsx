@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import { allItemInputSubMenu, disabledItemInputMenu } from "../../values/Constant";
+import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
 import { getLocal, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -107,8 +107,14 @@ const MainLogic = () => {
       setShowMenu(false);
       // setTitleHeader(title);
 
-      if (index === 2) {
+      if (index === 1) {
+        pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+      } else if (index === 2) {
         pageNavigation = `/main/opex/summary/${nameMenu}`;
+      } else if (index === 3) {
+        pageNavigation = `/main/capex/summary/${nameMenu}`;
+      } else if (index === 4) {
+        pageNavigation = `/main/mpp/summary/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
       } else if (index === 8) {
@@ -133,8 +139,8 @@ const MainLogic = () => {
   // };
 
   const getSubmenu = (index) => {
-    setItem(allItemInputSubMenu[index]);
-    setitemDisabledMenu(disabledItemInputMenu[index]);
+    setItem(allItemSummarySubMenu[index]);
+    setitemDisabledMenu(disabledItemSummaryMenu[index]);
   };
 
   return {
