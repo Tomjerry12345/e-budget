@@ -24,12 +24,6 @@ const getPath = (pathName, item) => {
     const pathSplit = path1.split("%20").join(" ");
     log(`path1 => ${pathSplit}`);
 
-    // if (pathSplit === item) {
-    //   path = pathSplit;
-    // } else {
-    //   path = `${path1} ${item}`;
-    // }
-
     if (pathSplit === "Summary") {
       path = item;
     } else if (pathSplit === "Input") {
