@@ -121,7 +121,7 @@ const CapexSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      Capex: [
+      "Summary Capex": [
         {
           title: "Account",
           dataIndex: "account",
