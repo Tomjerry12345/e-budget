@@ -121,7 +121,7 @@ const MppSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      MPP: [
+      "Summary MPP": [
         {
           title: "Account",
           dataIndex: "account",

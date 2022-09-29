@@ -121,7 +121,7 @@ const OpexSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      Opex: [
+      "Summary Opex": [
         {
           title: "Account",
           dataIndex: "account",

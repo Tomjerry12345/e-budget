@@ -24,8 +24,14 @@ const getPath = (pathName, item) => {
     const pathSplit = path1.split("%20").join(" ");
     log(`path1 => ${pathSplit}`);
 
-    if (pathSplit === item) {
-      path = pathSplit;
+    // if (pathSplit === item) {
+    //   path = pathSplit;
+    // } else {
+    //   path = `${path1} ${item}`;
+    // }
+
+    if (pathSplit === "Summary") {
+      path = item;
     } else {
       path = `${path1} ${item}`;
     }
@@ -90,6 +96,7 @@ const MainPage = () => {
           {value.params.item !== "" ? (
             <Text strong style={{ fontSize: "24px" }}>
               {path}
+              {/* {value.params.item} */}
             </Text>
           ) : null}
         </Header>
