@@ -32,8 +32,10 @@ const getPath = (pathName, item) => {
 
     if (pathSplit === "Summary") {
       path = item;
-    } else {
+    } else if (pathSplit === "Input") {
       path = `${path1} ${item}`;
+    } else {
+      path = pathSplit;
     }
   }
 
