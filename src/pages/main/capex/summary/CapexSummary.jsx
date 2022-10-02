@@ -9,7 +9,13 @@ const CapexSummary = () => {
   return (
     <div className="custom-root-layout">
       <Card className="card-style-capex">
-        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+        <Form
+          className="form-filter-opex"
+          layout="vertical"
+          ref={value.ref}
+          onFinish={func.onFinish}
+          form={value.form}
+        >
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -25,7 +31,7 @@ const CapexSummary = () => {
 
             // onChange={handleChange}
             >
-              {value.allCodeFilter.code_company.map((val, i) => (
+              {value.allCodeFilter.code_company && value.allCodeFilter.code_company.map((val, i) => (
                 <Select.Option key={i} value={val.code_company}>
                   {val.code_company}
                 </Select.Option>
@@ -44,7 +50,7 @@ const CapexSummary = () => {
             ]}
           >
             <Select>
-              {value.allCodeFilter.code_product.map((val, i) => (
+              {value.allCodeFilter.code_product?.map((val, i) => (
                 <Select.Option key={i} value={val.code_product}>
                   {val.code_product}
                 </Select.Option>
@@ -63,7 +69,7 @@ const CapexSummary = () => {
             ]}
           >
             <Select>
-              {value.allCodeFilter.code_location.map((val, i) => (
+              {value.allCodeFilter.code_location || value.allCodeFilter.code_location.map((val, i) => (
                 <Select.Option key={i} value={val.code_location}>
                   {val.code_location}
                 </Select.Option>
@@ -82,7 +88,7 @@ const CapexSummary = () => {
             ]}
           >
             <Select>
-              {value.allCodeFilter.code_dept.map((val, i) => (
+              {value.allCodeFilter.code_dept || value.allCodeFilter.code_dept.map((val, i) => (
                 <Select.Option key={i} value={val.code_dept}>
                   {val.code_dept}
                 </Select.Option>

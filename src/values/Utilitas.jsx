@@ -4,6 +4,8 @@ export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 export const getLocal = (key) => localStorage.getItem(key);
 
+export const getToken = () => localStorage.getItem("token")
+
 export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${simpleStringify(message)}`));
 
 function simpleStringify(object) {
