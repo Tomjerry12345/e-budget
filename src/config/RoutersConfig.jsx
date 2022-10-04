@@ -13,6 +13,7 @@ import CapexInputPage from "../pages/main/capex/input/CapexInputPage";
 import MppInputPage from "../pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "../pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "../pages/main/others/summary/OthersSummary";
+import OthersInputPage from "../pages/main/others/input/OthersInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -39,7 +40,7 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            {/* <Route path="input/:item" element={<MppInputPage />} /> */}
+            <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
           </Route>
           <Route path="coa">

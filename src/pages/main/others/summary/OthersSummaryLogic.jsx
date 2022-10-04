@@ -8,6 +8,7 @@ import { getSizeScreen, log } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Pendapatan Non Operasional": "othersPNO",
+  "Biaya Non Operasional": "othersBNO",
 };
 
 const OthersSummaryLogic = () => {
@@ -75,7 +76,7 @@ const OthersSummaryLogic = () => {
     setLoading(true);
     dispatch(getAsync(`${endPoint[itemPage]}/summary`, "get-data"));
     // onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (response !== null) {
@@ -122,6 +123,42 @@ const OthersSummaryLogic = () => {
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
       "Pendapatan Non Operasional": [
+        {
+          title: "Account",
+          dataIndex: "account",
+          width: "4%",
+          fixed: "left",
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          width: "30%",
+        },
+        {
+          title: `Year ${year_1}`,
+          dataIndex: "value_1",
+          width: "4%",
+          fixed: "right",
+        },
+        {
+          title: `Year ${year_2}`,
+          dataIndex: "value_2",
+          width: "4%",
+          fixed: "right",
+        },
+        // {
+        //   dataIndex: "operation",
+        //   fixed: "right",
+        //   width: "5%",
+        //   render: (_, record) =>
+        //     dataColumn.length >= 1 ? (
+        //       <Dropdown overlay={menu} placement="bottom">
+        //         <Button icon={<MoreVertIcon />}></Button>
+        //       </Dropdown>
+        //     ) : null,
+        // },
+      ],
+      "Biaya Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",

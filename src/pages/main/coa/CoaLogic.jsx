@@ -1,14 +1,12 @@
 import { Button, Dropdown, Menu } from "antd";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { getAsync, postAsync, deleteAsync } from "../../../redux/main/main.thunks";
 import { constantActionCoa, constantGetCoa, constantUploadCoa } from "./ConstantCoa";
-import { getSizeScreen, getToken, log, setLocal } from "../../../values/Utilitas";
-import qs from "qs";
-import axios from "axios";
+import { getSizeScreen, log, setLocal } from "../../../values/Utilitas";
 
 const endPoint = {
   "Kode perusahaan": "company",
@@ -21,13 +19,56 @@ const endPoint = {
 };
 
 const req = {
-  "Kode perusahaan": ["code_company", "code_parent", "description"],
-  "Kode produk": [],
-  "Kode lokasi": [],
-  "Kode departemen": [],
-  "Kode akun": [],
-  "Kode projek": [],
-  "Kode ICP": [],
+  "Kode perusahaan": [
+    { key: "code_company", placeholder: "Kode Perusahaan" },
+    { key: "code_parent", placeholder: "Kode Parent" },
+    { key: "description", placeholder: "Description" },
+  ],
+  "Kode produk": [
+    { key: "code_product", placeholder: "Kode Produk" },
+    { key: "description", placeholder: "Description" },
+    { key: "HSI", placeholder: "HSI" },
+    { key: "HK", placeholder: "HK" },
+    { key: "BSU", placeholder: "BSU" },
+    { key: "KIA", placeholder: "KIA" },
+    { key: "BLT", placeholder: "BLT" },
+    { key: "BJU", placeholder: "BJU" },
+    { key: "BSB", placeholder: "BSB" },
+    { key: "BSD", placeholder: "BSD" },
+    { key: "KIK", placeholder: "KIK" },
+    { key: "KKI", placeholder: "KKI" },
+    { key: "BLU", placeholder: "BLU" },
+    { key: "IKP", placeholder: "IKP" },
+    { key: "BK", placeholder: "BK" },
+    { key: "BBU", placeholder: "BBU" },
+  ],
+  "Kode lokasi": [
+    { key: "code_location", placeholder: "Kode Lokasi" },
+    { key: "code_parent", placeholder: "Kode Parent" },
+    { key: "description", placeholder: "Description" },
+  ],
+  "Kode departemen": [
+    { key: "code_dept", placeholder: "Kode Departement" },
+    { key: "description", placeholder: "Description" },
+  ],
+  "Kode akun": [
+    { key: "type_account", placeholder: "Tipe Akun" },
+    { key: "code_account", placeholder: "Kode Akun" },
+    { key: "code_parent", placeholder: "Kode Parent" },
+    { key: "description", placeholder: "Description" },
+  ],
+  "Kode projek": [
+    { key: "code_project", placeholder: "Kode Projek" },
+    { key: "description", placeholder: "Description" },
+    { key: "BJU", placeholder: "BJU" },
+    { key: "BSB", placeholder: "BSB" },
+    { key: "KIK", placeholder: "KIK" },
+    { key: "BARUGA", placeholder: "BARUGA" },
+  ],
+  "Kode ICP": [
+    { key: "code_icp", placeholder: "Kode Departement" },
+    { key: "description", placeholder: "Description" },
+  ],
 };
 
 const DropdownMenu = ({ onAction, record }) => (
@@ -47,6 +88,8 @@ const DropdownMenu = ({ onAction, record }) => (
 );
 
 const CoaInputLogic = () => {
+  const ref = createRef();
+
   let params = useParams();
 
   const dispatch = useDispatch();
@@ -199,12 +242,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
     "Kode lokasi": [
@@ -299,12 +341,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
     "Kode departemen": [
@@ -323,12 +364,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
     "Kode akun": [
@@ -356,12 +396,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
     "Kode projek": [
@@ -402,12 +441,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
     "Kode ICP": [
@@ -426,12 +464,11 @@ const CoaInputLogic = () => {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
-        render: (_, record) =>
-          dataColumn.length >= 1 ? (
-            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
-              <Button icon={<MoreVertIcon />}></Button>
-            </Dropdown>
-          ) : null,
+        render: (_, record) => (
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
     ],
   };
@@ -511,22 +548,6 @@ const CoaInputLogic = () => {
     dispatch(getAsync(`${endPoint[itemPage]}/list`, constantGetCoa));
   };
 
-  // const handleDelete = (key) => {
-  //   const newData = dataColumn.filter((item) => item.key !== key);
-  //   setDataColumn(newData);
-  // };
-
-  // const handleAdd = () => {
-  //   const newData = {
-  //     key: count,
-  //     name: `Edward King ${count}`,
-  //     age: "32",
-  //     address: `London, Park Lane no. ${count}`,
-  //   };
-  //   setDataColumn([...dataColumn, newData]);
-  //   setCount(count + 1);
-  // };
-
   const handleSave = (row) => {
     const newData = [...dataColumn];
     const index = newData.findIndex((item) => row.key === item.key);
@@ -553,24 +574,11 @@ const CoaInputLogic = () => {
     dispatch(postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa));
   };
 
-  const onOk = () => {
+  const onDelete = () => {
     const { uuid } = selectedItem;
-    const path = `${endPoint[itemPage]}/delete`;
-    log("onOk", selectedItem);
-    log(`uuid => ${uuid}`);
-    log(`delete => ${path}`);
     setLoading(true);
     onCancel();
-    if (openAction.status === "edit") {
-      let formData = new FormData();
-      formData.append("uuid", uuid);
-      // req[itemPage].forEach(key => {
-      //   formData.append(key, uuid);
-      // })
-      dispatch(postAsync(path, formData, constantActionCoa));
-    } else {
-      dispatch(deleteAsync(path, { uuid: uuid }, constantActionCoa));
-    }
+    dispatch(deleteAsync(`${endPoint[itemPage]}/delete`, { uuid: uuid }, constantActionCoa));
   };
 
   const onCancel = () => {
@@ -579,6 +587,20 @@ const CoaInputLogic = () => {
       open: false,
       status: "",
     });
+  };
+
+  const onEdit = (values) => {
+    const { uuid } = selectedItem;
+    let formData = new FormData();
+    formData.append("uuid", uuid);
+
+    for (const prop in values) {
+      formData.append(prop, values[prop]);
+    }
+
+    setLoading(true);
+    onCancel();
+    dispatch(postAsync(`${endPoint[itemPage]}/update`, formData, constantActionCoa));
   };
 
   return {
@@ -593,13 +615,16 @@ const CoaInputLogic = () => {
       size,
       openAction,
       loading,
+      ref,
+      req: req[itemPage],
     },
     func: {
       onCloseUploadModal,
       onOpenUploadModal,
       onUploadFile,
-      onOk,
+      onDelete,
       onCancel,
+      onEdit,
     },
   };
 };

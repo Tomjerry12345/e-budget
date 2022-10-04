@@ -754,6 +754,7 @@ const OthersInputLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
+    log(`endpoint => ${endPoint[itemPage]}`);
     const path = `${endPoint[itemPage]}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     dispatch(getAsync(path, "get-data"));
   };

@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
-import CapexInputLogic from "./CapexInputLogic";
+import OthersInputLogic from "./OthersInputLogic";
 
 const EditableContext = createContext(null);
 
@@ -92,8 +92,8 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const CapexInputPage = () => {
-  const { value, func } = CapexInputLogic();
+const othersInputPage = () => {
+  const { value, func } = OthersInputLogic();
 
   const components = {
     body: {
@@ -108,7 +108,7 @@ const CapexInputPage = () => {
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
+        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -211,4 +211,4 @@ const CapexInputPage = () => {
   );
 };
 
-export default CapexInputPage;
+export default othersInputPage;

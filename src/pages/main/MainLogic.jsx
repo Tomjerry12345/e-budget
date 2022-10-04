@@ -73,7 +73,6 @@ const MainLogic = () => {
   };
 
   const onClickedMenu = (key, item, nameMenu, title) => {
-    dispatch(loadStart());
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     let pageNavigation = "";

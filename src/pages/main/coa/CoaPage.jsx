@@ -87,11 +87,11 @@ const setXColumn = (params) => {
   return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
 
-const CustomFooter = ({ status, onOk, onCancel }) => (
-  <div>
+const CustomFooter = ({ onOk, onCancel }) => (
+  <>
     <Button onClick={onCancel}>Batal</Button>
-    {status === "edit" ? <Button onClick={onOk}>Ubah</Button> : <Button onClick={onOk}>Hapus</Button>}
-  </div>
+    <Button onClick={onOk}>Hapus</Button>
+  </>
 );
 
 // const VirtualTable = (props) => {
@@ -236,6 +236,8 @@ const CustomFooter = ({ status, onOk, onCancel }) => (
 const CoaPage = () => {
   const { value, func } = CoaInputLogic();
 
+  const status = value.openAction.status;
+
   const components = {
     body: {
       row: EditableRow,
@@ -298,21 +300,37 @@ const CoaPage = () => {
 
       <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
 
-      <Modal open={value.openAction.open} closable={false} title="Ubah Data" footer={<CustomFooter status={value.openAction.status} onOk={func.onOk} onCancel={func.onCancel} />}>
-        <Form layout="vertical">
+      <Modal open={value.openAction.open} closable={false} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
+        <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
           {value.openAction.status === "edit" ? (
-            <Form.Item>
-              <Input placeholder="Description" />
-            </Form.Item>
+            <>
+              {value.req.map((val, i) => (
+                <Form.Item key={i} name={val.key} rules={[{ required: true, message: "Tidak Boleh Kosong" }]}>
+                  <Input placeholder={val.placeholder} />
+                </Form.Item>
+              ))}
+
+              <Form.Item>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <Button
+                    onClick={func.onCancel}
+                    style={{
+                      marginRight: "16px",
+                    }}
+                  >
+                    Batal
+                  </Button>
+                  <Button htmlType="submit">Ubah</Button>
+                </div>
+              </Form.Item>
+            </>
           ) : (
             <Typography.Text>Apakah Anda ingin menghapus item ?</Typography.Text>
           )}
-
-          {/* <Form.Item>
-            <Button className="btn-cari" type="primary">
-              Ubah
-            </Button>
-          </Form.Item> */}
         </Form>
       </Modal>
     </div>
