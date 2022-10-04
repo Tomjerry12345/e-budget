@@ -171,8 +171,8 @@ const MppSummaryLogic = () => {
   };
 
   const onTambahData = () => {
-    // dispatch(loadStart());
-    // navigate(`/main/mpp/Input/${itemPage}`);
+    dispatch(loadStart());
+    navigate(`/main/mpp/Input/${itemPage}`);
   };
 
   const onFinish = (values) => {

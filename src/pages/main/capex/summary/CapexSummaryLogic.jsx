@@ -171,8 +171,8 @@ const CapexSummaryLogic = () => {
   };
 
   const onTambahData = () => {
-    // dispatch(loadStart());
-    // navigate(`/main/capex/Input/${itemPage}`);
+    dispatch(loadStart());
+    navigate(`/main/capex/Input/${itemPage}`);
   };
 
   const onFinish = (values) => {

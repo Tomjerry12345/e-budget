@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
-import OpexInputLogic from "./OpexInputLogic";
+import RevenueCogsInputLogic from "./RevenueCogsInputLogic";
 
 const EditableContext = createContext(null);
 
@@ -92,8 +92,8 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const OpexInputPage = () => {
-  const { value, func } = OpexInputLogic();
+const RevenueCogsInputPage = () => {
+  const { value, func } = RevenueCogsInputLogic();
 
   const components = {
     body: {
@@ -105,10 +105,10 @@ const OpexInputPage = () => {
   return (
     <div className="custom-root-layout">
       <Card
-        className="card-style-opex"
+        className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
+        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -211,4 +211,4 @@ const OpexInputPage = () => {
   );
 };
 
-export default OpexInputPage;
+export default RevenueCogsInputPage;

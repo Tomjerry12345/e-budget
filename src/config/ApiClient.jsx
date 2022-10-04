@@ -2,7 +2,6 @@ import axios from "axios";
 import { getToken } from "../values/Utilitas";
 
 const apiClient = () => {
-  console.log(`getToken => ${getToken()}`);
   const headers = {
     // "Content-Type": "application/x-www-form-urlencoded",
     // "Content-Type": "application/json",
@@ -12,7 +11,7 @@ const apiClient = () => {
 
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
-    responseType: "json",
+    // responseType: "json",
     headers: headers,
     // withCredentials: false,
   });

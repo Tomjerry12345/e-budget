@@ -1,5 +1,4 @@
 import apiClient from "../config/ApiClient";
-import { getToken } from "../values/Utilitas";
 
 class MainServices {
   get = (endPoint) =>
@@ -9,7 +8,10 @@ class MainServices {
       // },
     });
   post = (endPoint, req) => apiClient().post(`/ebudget/${endPoint}`, req);
-  delete = (endPoint, req) => apiClient().delete(`/ebudget/${endPoint}`, req);
+  delete = (endPoint, req) =>
+    apiClient().delete(`/ebudget/${endPoint}`, {
+      data: req,
+    });
 }
 
 export default new MainServices();

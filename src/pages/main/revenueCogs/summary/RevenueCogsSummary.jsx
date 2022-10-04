@@ -2,14 +2,14 @@ import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
 import RevenueCogsSummaryLogic from "./RevenueCogsSummaryLogic";
-import "../RevenueCogsStyle.scss";
+
 const RevenueCogsSummary = () => {
   const { value, func } = RevenueCogsSummaryLogic();
 
   return (
     <div className="custom-root-layout">
-      <Card className="card-style-capex">
-        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+      <Card className="card-style">
+        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -103,7 +103,6 @@ const RevenueCogsSummary = () => {
       </Button>
 
       <Table
-        className="table-custom-opex"
         rowClassName={() => "editable-row"}
         bordered
         dataSource={value.dataColumn}

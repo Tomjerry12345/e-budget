@@ -273,6 +273,7 @@ const CoaPage = () => {
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
+        loading={value.loading}
         size="small"
         rowClassName="editable-row"
         scroll={{

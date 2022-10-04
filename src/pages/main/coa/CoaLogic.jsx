@@ -4,17 +4,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getAsync,
-  postAsync,
-  deleteAsync,
-} from "../../../redux/main/main.thunks";
-import {
-  constantActionCoa,
-  constantGetCoa,
-  constantUploadCoa,
-} from "./ConstantCoa";
-import { getSizeScreen, log, setLocal } from "../../../values/Utilitas";
+import { getAsync, postAsync, deleteAsync } from "../../../redux/main/main.thunks";
+import { constantActionCoa, constantGetCoa, constantUploadCoa } from "./ConstantCoa";
+import { getSizeScreen, getToken, log, setLocal } from "../../../values/Utilitas";
+import qs from "qs";
+import axios from "axios";
 
 const endPoint = {
   "Kode perusahaan": "company",
@@ -24,6 +18,16 @@ const endPoint = {
   "Kode akun": "account",
   "Kode projek": "project",
   "Kode ICP": "icp",
+};
+
+const req = {
+  "Kode perusahaan": ["code_company", "code_parent", "description"],
+  "Kode produk": [],
+  "Kode lokasi": [],
+  "Kode departemen": [],
+  "Kode akun": [],
+  "Kode projek": [],
+  "Kode ICP": [],
 };
 
 const DropdownMenu = ({ onAction, record }) => (
@@ -49,9 +53,7 @@ const CoaInputLogic = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const itemPage = params.item;
 
@@ -60,6 +62,8 @@ const CoaInputLogic = () => {
   const [tableColumn, setTableColumn] = useState([]);
 
   const [dataColumn, setDataColumn] = useState([]);
+
+  const [loading, setLoading] = useState(false);
 
   const [openAction, setOpenAction] = useState({
     open: false,
@@ -97,11 +101,7 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown
-            overlay={<DropdownMenu onAction={onAction} record={record} />}
-            placement="bottom"
-            trigger={["click"]}
-          >
+          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -201,10 +201,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -304,10 +301,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -331,10 +325,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -367,10 +358,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -416,10 +404,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -443,10 +428,7 @@ const CoaInputLogic = () => {
         width: "5%",
         render: (_, record) =>
           dataColumn.length >= 1 ? (
-            <Dropdown
-              overlay={<DropdownMenu onAction={onAction} />}
-              placement="bottom"
-            >
+            <Dropdown overlay={<DropdownMenu onAction={onAction} />} placement="bottom">
               <Button icon={<MoreVertIcon />}></Button>
             </Dropdown>
           ) : null,
@@ -456,9 +438,7 @@ const CoaInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -471,7 +451,9 @@ const CoaInputLogic = () => {
 
   useEffect(() => {
     log("response", response);
+    setLoading(false);
     if (response !== null) {
+      setLoading(false);
       if (nameReducer === constantGetCoa) {
         const { data } = response;
 
@@ -525,6 +507,7 @@ const CoaInputLogic = () => {
   };
 
   const onSetDataTable = () => {
+    setLoading(true);
     dispatch(getAsync(`${endPoint[itemPage]}/list`, constantGetCoa));
   };
 
@@ -567,22 +550,26 @@ const CoaInputLogic = () => {
     });
     let formData = new FormData();
     formData.append("file", file1);
-    dispatch(
-      postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa)
-    );
+    dispatch(postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa));
   };
 
   const onOk = () => {
     const { uuid } = selectedItem;
+    const path = `${endPoint[itemPage]}/delete`;
     log("onOk", selectedItem);
     log(`uuid => ${uuid}`);
-    let formData = new FormData();
-    formData.append("uuid", uuid);
+    log(`delete => ${path}`);
+    setLoading(true);
+    onCancel();
     if (openAction.status === "edit") {
+      let formData = new FormData();
+      formData.append("uuid", uuid);
+      // req[itemPage].forEach(key => {
+      //   formData.append(key, uuid);
+      // })
+      dispatch(postAsync(path, formData, constantActionCoa));
     } else {
-      dispatch(
-        deleteAsync(`${endPoint[itemPage]}/delete`, formData, constantActionCoa)
-      );
+      dispatch(deleteAsync(path, { uuid: uuid }, constantActionCoa));
     }
   };
 
@@ -605,6 +592,7 @@ const CoaInputLogic = () => {
       acceptedFiles,
       size,
       openAction,
+      loading,
     },
     func: {
       onCloseUploadModal,

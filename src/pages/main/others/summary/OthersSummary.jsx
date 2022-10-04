@@ -1,10 +1,10 @@
 import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
-import CapexSummaryLogic from "./CapexSummaryLogic";
+import OthersSummaryLogic from "./OthersSummaryLogic";
 
-const CapexSummary = () => {
-  const { value, func } = CapexSummaryLogic();
+const OthersSummary = () => {
+  const { value, func } = OthersSummaryLogic();
 
   return (
     <div className="custom-root-layout">
@@ -116,4 +116,4 @@ const CapexSummary = () => {
   );
 };
 
-export default CapexSummary;
+export default OthersSummary;
