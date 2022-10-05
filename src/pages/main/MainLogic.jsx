@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
 import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
-import { getLocal, log, setLocal } from "../../values/Utilitas";
+import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -15,12 +15,18 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
   const dispatch = useDispatch();
+  const token = getToken();
+
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
   const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
+
+    if (token === null) {
+      navigate("/login");
+    }
     if (movePage !== "null") {
       navigate(movePage);
     }
