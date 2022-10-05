@@ -73,7 +73,6 @@ const MainLogic = () => {
   };
 
   const onClickedMenu = (key, item, nameMenu, title) => {
-    dispatch(loadStart());
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     let pageNavigation = "";
@@ -115,6 +114,8 @@ const MainLogic = () => {
         pageNavigation = `/main/capex/summary/${nameMenu}`;
       } else if (index === 4) {
         pageNavigation = `/main/mpp/summary/${nameMenu}`;
+      } else if (index === 5) {
+        pageNavigation = `/main/others/summary/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
       } else if (index === 8) {

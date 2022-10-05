@@ -6,11 +6,12 @@ import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
-// const endPoint = {
-//   "revenueandcogs Direct": "",
-// };
+const endPoint = {
+  "Pendapatan Non Operasional": "othersPNO",
+  "Biaya Non Operasional": "othersBNO",
+};
 
-const RevenueCogsSummaryLogic = () => {
+const OthersSummaryLogic = () => {
   let params = useParams();
 
   const ref = createRef();
@@ -73,17 +74,17 @@ const RevenueCogsSummaryLogic = () => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
     setLoading(true);
-    dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
+    dispatch(getAsync(`${endPoint[itemPage]}/summary`, "get-data"));
     // onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    log("response", response);
-
     if (response !== null) {
       if (nameReducer === "get-data") {
         onGetCodeFilter();
         const { data } = response;
+        log("response", response);
+        log("data", data);
         let list = [];
         let year_1 = "";
         let year_2 = "";
@@ -121,7 +122,43 @@ const RevenueCogsSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      "Summary Revenue & COGS": [
+      "Pendapatan Non Operasional": [
+        {
+          title: "Account",
+          dataIndex: "account",
+          width: "4%",
+          fixed: "left",
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          width: "30%",
+        },
+        {
+          title: `Year ${year_1}`,
+          dataIndex: "value_1",
+          width: "4%",
+          fixed: "right",
+        },
+        {
+          title: `Year ${year_2}`,
+          dataIndex: "value_2",
+          width: "4%",
+          fixed: "right",
+        },
+        // {
+        //   dataIndex: "operation",
+        //   fixed: "right",
+        //   width: "5%",
+        //   render: (_, record) =>
+        //     dataColumn.length >= 1 ? (
+        //       <Dropdown overlay={menu} placement="bottom">
+        //         <Button icon={<MoreVertIcon />}></Button>
+        //       </Dropdown>
+        //     ) : null,
+        // },
+      ],
+      "Biaya Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",
@@ -167,12 +204,12 @@ const RevenueCogsSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(getAsync(`${endPoint[itemPage]}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
   };
 
   const onTambahData = () => {
     dispatch(loadStart());
-    navigate(`/main/revenue-cogs/Input/${itemPage}`);
+    navigate(`/main/others/Input/${itemPage}`);
   };
 
   const onFinish = (values) => {
@@ -203,4 +240,4 @@ const RevenueCogsSummaryLogic = () => {
   };
 };
 
-export default RevenueCogsSummaryLogic;
+export default OthersSummaryLogic;

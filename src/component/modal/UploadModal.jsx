@@ -19,14 +19,8 @@ const CustomFooterModal = ({ onOk, onCancel }) => (
 );
 
 const UploadModal = ({ open, onCancel, value, onOk }) => {
-  log(`${process.env.PUBLIC_URL}/file/${value.params.item}.xlsx`);
   return (
-    <Modal
-      open={open}
-      className="custom-upload-modal"
-      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
-      onCancel={onCancel}
-    >
+    <Modal open={open} className="custom-upload-modal" footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />} onCancel={onCancel}>
       <Title level={4}>Upload Template</Title>
       <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>
@@ -46,9 +40,7 @@ const UploadModal = ({ open, onCancel, value, onOk }) => {
 
         <div className="layout-download-template">
           <Text className="txt-accepted">Accepted File Type .xlsx</Text>
-          <Text className="txt-belum-mempunyai-template">
-            Anda Belum Mempunyai Template ?
-          </Text>
+          <Text className="txt-belum-mempunyai-template">Anda Belum Mempunyai Template ?</Text>
           {/* <Link
             to={`${process.env.PUBLIC_URL}/file/${value.params.item}.xlsx`}
             target="_blank"

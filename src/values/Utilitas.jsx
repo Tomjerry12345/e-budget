@@ -4,7 +4,7 @@ export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 export const getLocal = (key) => localStorage.getItem(key);
 
-export const getToken = () => localStorage.getItem("token")
+export const getToken = () => localStorage.getItem("token");
 
 export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${simpleStringify(message)}`));
 
@@ -52,4 +52,19 @@ export const areEqual = (array1, array2) => {
   }
 
   return isEqual;
+};
+
+export const classx = (obj) => {
+  let classes = "";
+  for (const ob in obj) {
+    if (obj[ob]) {
+      classes += ob + " ";
+    }
+  }
+
+  return classes;
+};
+
+export const fastIf = (if1, if2, val1, val2) => {
+  return if1 === if2 ? val1 : val2;
 };

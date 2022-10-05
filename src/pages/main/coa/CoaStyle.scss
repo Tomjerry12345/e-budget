@@ -35,3 +35,12 @@
     }
   }
 }
+
+.custom-action-modal {
+  top: 24px;
+
+  .ant-modal-body {
+    overflow: auto;
+    height: calc(100vh - 127px);
+  }
+}

@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getLocal } from "../values/Utilitas";
+import { getLocal, getToken } from "../values/Utilitas";
 
 const App = () => {
   const navigate = useNavigate();
   const auth = getLocal("auth");
+  const token = getToken();
 
   useEffect(() => {
-    console.log(`auth => ${auth}`);
-    if (auth === "true") {
+    if (auth === "true" && token !== null) {
       navigate("/main");
     } else {
       navigate("/login");

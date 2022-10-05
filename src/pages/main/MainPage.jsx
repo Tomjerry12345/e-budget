@@ -5,6 +5,8 @@ import NavComponent from "../../component/navbar/NavComponent";
 import { getLocal, log } from "../../values/Utilitas";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
+import "./InputStyles.scss";
+import "./SummaryStyle.scss";
 
 const { Header, Content } = Layout;
 const { Text } = Typography;
