@@ -108,7 +108,7 @@ const CapexInputPage = () => {
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form className="form-filter-opex" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
+        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
