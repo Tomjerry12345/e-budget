@@ -4,7 +4,7 @@ import CoaInputLogic from "./CoaLogic";
 import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { log } from "../../../values/Utilitas";
+import { classx, fastIf, log } from "../../../values/Utilitas";
 // import ResizeObserver from "rc-resize-observer";
 // import { VariableSizeGrid as Grid } from "react-window";
 // import classNames from "classnames";
@@ -245,6 +245,10 @@ const CoaPage = () => {
     },
   };
 
+  const customClass = classx({
+    "custom-action-modal": status === "edit" ? (setXColumn(value.params.item) === null ? false : true) : false,
+  });
+
   return (
     <div className="custom-root-layout">
       <div className="top-content">
@@ -300,7 +304,7 @@ const CoaPage = () => {
 
       <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
 
-      <Modal open={value.openAction.open} closable={false} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
+      <Modal className={customClass} open={value.openAction.open} onCancel={func.onCancel} closable={true} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
         <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
           {value.openAction.status === "edit" ? (
             <>
