@@ -84,6 +84,7 @@ const OpexSummaryLogic = () => {
       if (nameReducer === "get-data") {
         onGetCodeFilter();
         const { data } = response;
+        log("data", data);
         let list = [];
         let year_1 = "";
         let year_2 = "";
