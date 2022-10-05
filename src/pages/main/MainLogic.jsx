@@ -105,6 +105,7 @@ const MainLogic = () => {
         isShowMenu();
       }
     } else {
+      dispatch(loadStart());
       setLocal("index-menu", index);
       setiEmenu(keyMenu);
       isActivated[index] = 2;
