@@ -16,7 +16,9 @@ const RevenueCogsnputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -491,6 +493,8 @@ const RevenueCogsnputLogic = () => {
       const listYear2 = [];
       let parent = val.detail[0].list_month[0]?.parent;
 
+      
+
       if (parent) {
         keyParent.push(i);
       }
@@ -504,6 +508,8 @@ const RevenueCogsnputLogic = () => {
         listYear2.push(month);
         year_total_2 += month.value;
       });
+
+      const jan_val_1 = parseInt(listYear1[0]?.value).format(0, 3, ".", ",");
 
       list.push({
         key: i,
@@ -651,7 +657,7 @@ const RevenueCogsnputLogic = () => {
   };
 
   const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list", "code_company"));
+    dispatch(getAsync("company/list-master", "code_company"));
   };
 
   return {

@@ -121,8 +121,8 @@ const CapexInputPage = () => {
           >
             <Select>
               {value.allCodeFilter.code_company.map((val, i) => (
-                <Select.Option key={i} value={val.code_company}>
-                  {val.code_company}
+                <Select.Option key={i} value={val.code}>
+                  {`${val.code} (${val.title})`}
                 </Select.Option>
               ))}
             </Select>

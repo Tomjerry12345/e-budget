@@ -6,7 +6,13 @@ export const getLocal = (key) => localStorage.getItem(key);
 
 export const getToken = () => localStorage.getItem("token");
 
-export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${simpleStringify(message)}`));
+export const log = (tag, message) =>
+  typeof message === "undefined"
+    ? console.log(`${tag}`)
+    : console.log(`${tag} => ${simpleStringify(message)}`);
+
+export const logObj = (tag, message) =>
+  console.log(`${tag} => ${JSON.stringify(message)}`);
 
 function simpleStringify(object) {
   // stringify an object, avoiding circular structures
@@ -68,3 +74,13 @@ export const classx = (obj) => {
 export const fastIf = (if1, if2, val1, val2) => {
   return if1 === if2 ? val1 : val2;
 };
+
+Number.prototype.format = function (n, x, s, c) {
+  var re = "\\d(?=(\\d{" + (x || 3) + "})+" + (n > 0 ? "\\D" : "$") + ")",
+    num = this.toFixed(Math.max(0, ~~n));
+
+  return (c ? num.replace(".", c) : num).replace(
+    new RegExp(re, "g"),
+    "$&" + (s || ",")
+  );
+}; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/

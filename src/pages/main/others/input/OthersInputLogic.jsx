@@ -21,7 +21,9 @@ const OthersInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -942,7 +944,7 @@ const OthersInputLogic = () => {
   };
 
   const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list", "code_company"));
+    dispatch(getAsync("company/list-master", "code_company"));
   };
 
   return {
