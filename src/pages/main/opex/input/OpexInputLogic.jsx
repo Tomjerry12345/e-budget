@@ -651,7 +651,7 @@ const OpexInputLogic = () => {
   };
 
   const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list", "code_company"));
+    dispatch(getAsync("company/list-master", "code_company"));
   };
 
   return {

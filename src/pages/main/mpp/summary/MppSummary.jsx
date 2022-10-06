@@ -9,7 +9,13 @@ const MppSummary = () => {
   return (
     <div className="custom-root-layout">
       <Card className="card-style">
-        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+        <Form
+          className="form-filter"
+          layout="vertical"
+          ref={value.ref}
+          onFinish={func.onFinish}
+          form={value.form}
+        >
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -26,8 +32,8 @@ const MppSummary = () => {
             // onChange={handleChange}
             >
               {value.allCodeFilter.code_company.map((val, i) => (
-                <Select.Option key={i} value={val.code_company}>
-                  {val.code_company}
+                <Select.Option key={i} value={val.code}>
+                  {`${val.code} (${val.title})`}
                 </Select.Option>
               ))}
             </Select>
@@ -108,6 +114,7 @@ const MppSummary = () => {
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
+        size="small"
         loading={value.loading}
         scroll={{
           x: 1100,
