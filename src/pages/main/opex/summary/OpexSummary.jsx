@@ -109,6 +109,7 @@ const OpexSummary = () => {
         columns={value.tableColumn}
         pagination={false}
         loading={value.loading}
+        size="small"
         scroll={{
           x: 1100,
           y: value.size.y - 410,
