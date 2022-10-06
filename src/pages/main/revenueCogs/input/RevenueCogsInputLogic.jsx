@@ -75,11 +75,7 @@ const RevenueCogsnputLogic = () => {
     },
     {
       name: "code_location",
-      endPoint: "location/list",
-    },
-    {
-      name: "code_product",
-      endPoint: "product/list",
+      endPoint: "location",
     },
   ];
 
@@ -88,6 +84,8 @@ const RevenueCogsnputLogic = () => {
   const [listKeyParent, setListKeyParent] = useState();
 
   const [loading, setLoading] = useState(false);
+
+  const [codeCompany, setCodeCompany] = useState(null);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -116,11 +114,23 @@ const RevenueCogsnputLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 2) {
-          dispatch(getAsync(url[urlIndex]?.endPoint, url[urlIndex]?.name));
-        }
+        if (codeCompany !== null) {
+          let urlComboBox;
 
-        setUrlIndex((current) => current + 1);
+          if (urlIndex <= 1) {
+            if (urlIndex === 0) {
+              urlComboBox = url[urlIndex].endPoint;
+            } else {
+              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
+            }
+          }
+
+          if (urlComboBox !== undefined) {
+            dispatch(getAsync(urlComboBox, url[urlIndex].name));
+          }
+
+          setUrlIndex((current) => current + 1);
+        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -493,8 +503,6 @@ const RevenueCogsnputLogic = () => {
       const listYear2 = [];
       let parent = val.detail[0].list_month[0]?.parent;
 
-      
-
       if (parent) {
         keyParent.push(i);
       }
@@ -660,6 +668,12 @@ const RevenueCogsnputLogic = () => {
     dispatch(getAsync("company/list-master", "code_company"));
   };
 
+  const onChange = (e) => {
+    const urlComboBox = `product/list-by-com?code_company=${e}`;
+    setCodeCompany(e);
+    dispatch(getAsync(urlComboBox, "code_product"));
+  };
+
   return {
     value: {
       dataColumnInput,
@@ -674,6 +688,7 @@ const RevenueCogsnputLogic = () => {
     },
     func: {
       onFinish,
+      onChange,
     },
   };
 };

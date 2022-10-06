@@ -19,7 +19,9 @@ const OpexSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const navigate = useNavigate();
 
@@ -58,17 +60,15 @@ const OpexSummaryLogic = () => {
     },
     {
       name: "code_location",
-      endPoint: "location/list",
-    },
-    {
-      name: "code_product",
-      endPoint: "product/list",
+      endPoint: "location",
     },
   ];
 
   const [urlIndex, setUrlIndex] = useState(0);
 
   const [loading, setLoading] = useState(false);
+
+  const [codeCompany, setCodeCompany] = useState(null);
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
@@ -111,11 +111,23 @@ const OpexSummaryLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 2) {
-          dispatch(getAsync(url[urlIndex].endPoint, url[urlIndex].name));
-        }
+        if (codeCompany !== null) {
+          let urlComboBox;
 
-        setUrlIndex((current) => current + 1);
+          if (urlIndex <= 1) {
+            if (urlIndex === 0) {
+              urlComboBox = url[urlIndex].endPoint;
+            } else {
+              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
+            }
+          }
+
+          if (urlComboBox !== undefined) {
+            dispatch(getAsync(urlComboBox, url[urlIndex].name));
+          }
+
+          setUrlIndex((current) => current + 1);
+        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -170,7 +182,12 @@ const OpexSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(
+      getAsync(
+        `opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        "get-data"
+      )
+    );
   };
 
   const onTambahData = () => {
@@ -188,6 +205,12 @@ const OpexSummaryLogic = () => {
     dispatch(getAsync("company/list-master", "code_company"));
   };
 
+  const onChange = (e) => {
+    const urlComboBox = `product/list-by-com?code_company=${e}`;
+    setCodeCompany(e);
+    dispatch(getAsync(urlComboBox, "code_product"));
+  };
+
   return {
     value: {
       dataColumn,
@@ -202,6 +225,7 @@ const OpexSummaryLogic = () => {
     func: {
       onTambahData,
       onFinish,
+      onChange,
     },
   };
 };

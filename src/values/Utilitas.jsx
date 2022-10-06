@@ -14,6 +14,8 @@ export const log = (tag, message) =>
 export const logObj = (tag, message) =>
   console.log(`${tag} => ${JSON.stringify(message)}`);
 
+export const logS = (message) => console.log(message);
+
 function simpleStringify(object) {
   // stringify an object, avoiding circular structures
   // https://stackoverflow.com/a/31557814

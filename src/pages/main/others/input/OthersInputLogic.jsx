@@ -80,11 +80,7 @@ const OthersInputLogic = () => {
     },
     {
       name: "code_location",
-      endPoint: "location/list",
-    },
-    {
-      name: "code_product",
-      endPoint: "product/list",
+      endPoint: "location",
     },
   ];
 
@@ -93,6 +89,8 @@ const OthersInputLogic = () => {
   const [listKeyParent, setListKeyParent] = useState();
 
   const [loading, setLoading] = useState(false);
+
+  const [codeCompany, setCodeCompany] = useState(null);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -121,11 +119,23 @@ const OthersInputLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 2) {
-          dispatch(getAsync(url[urlIndex]?.endPoint, url[urlIndex]?.name));
-        }
+        if (codeCompany !== null) {
+          let urlComboBox;
 
-        setUrlIndex((current) => current + 1);
+          if (urlIndex <= 1) {
+            if (urlIndex === 0) {
+              urlComboBox = url[urlIndex].endPoint;
+            } else {
+              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
+            }
+          }
+
+          if (urlComboBox !== undefined) {
+            dispatch(getAsync(urlComboBox, url[urlIndex].name));
+          }
+
+          setUrlIndex((current) => current + 1);
+        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -947,6 +957,12 @@ const OthersInputLogic = () => {
     dispatch(getAsync("company/list-master", "code_company"));
   };
 
+  const onChange = (e) => {
+    const urlComboBox = `product/list-by-com?code_company=${e}`;
+    setCodeCompany(e);
+    dispatch(getAsync(urlComboBox, "code_product"));
+  };
+
   return {
     value: {
       dataColumnInput,
@@ -961,6 +977,7 @@ const OthersInputLogic = () => {
     },
     func: {
       onFinish,
+      onChange,
     },
   };
 };

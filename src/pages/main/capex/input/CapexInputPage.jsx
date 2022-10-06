@@ -1,6 +1,12 @@
 import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
 import CapexInputLogic from "./CapexInputLogic";
 
@@ -17,7 +23,16 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  keyNotEditTable,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -108,7 +123,12 @@ const CapexInputPage = () => {
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
+        <Form
+          className="form-filter"
+          layout="vertical"
+          ref={value.ref}
+          onFinish={func.onFinish}
+        >
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -119,7 +139,7 @@ const CapexInputPage = () => {
               },
             ]}
           >
-            <Select>
+            <Select onChange={func.onChange}>
               {value.allCodeFilter.code_company.map((val, i) => (
                 <Select.Option key={i} value={val.code}>
                   {`${val.code} (${val.title})`}
@@ -141,7 +161,7 @@ const CapexInputPage = () => {
             <Select>
               {value.allCodeFilter.code_product.map((val, i) => (
                 <Select.Option key={i} value={val.code_product}>
-                  {val.code_product}
+                  {`${val.code_product} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -160,7 +180,7 @@ const CapexInputPage = () => {
             <Select>
               {value.allCodeFilter.code_location.map((val, i) => (
                 <Select.Option key={i} value={val.code_location}>
-                  {val.code_location}
+                  {`${val.code_location} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -179,7 +199,7 @@ const CapexInputPage = () => {
             <Select>
               {value.allCodeFilter.code_dept.map((val, i) => (
                 <Select.Option key={i} value={val.code_dept}>
-                  {val.code_dept}
+                  {`${val.code_dept} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -195,7 +215,9 @@ const CapexInputPage = () => {
 
       <Table
         components={components}
-        rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+        rowClassName={(record, index) =>
+          areEqual(value.listKeyParent, record) ? "parent" : "child"
+        }
         bordered
         dataSource={value.dataColumnInput}
         columns={value.tableColumn}
