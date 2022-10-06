@@ -27,9 +27,7 @@ const MppSummary = () => {
             ]}
           >
             <Select
-            // initialValues="211"
-
-            // onChange={handleChange}
+onChange={func.onChange}
             >
               {value.allCodeFilter.code_company.map((val, i) => (
                 <Select.Option key={i} value={val.code}>
@@ -52,7 +50,7 @@ const MppSummary = () => {
             <Select>
               {value.allCodeFilter.code_product.map((val, i) => (
                 <Select.Option key={i} value={val.code_product}>
-                  {val.code_product}
+                {`${val.code_product} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -71,7 +69,7 @@ const MppSummary = () => {
             <Select>
               {value.allCodeFilter.code_location.map((val, i) => (
                 <Select.Option key={i} value={val.code_location}>
-                  {val.code_location}
+                {`${val.code_location} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -90,7 +88,7 @@ const MppSummary = () => {
             <Select>
               {value.allCodeFilter.code_dept.map((val, i) => (
                 <Select.Option key={i} value={val.code_dept}>
-                  {val.code_dept}
+                {`${val.code_dept} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>

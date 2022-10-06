@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
-import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
 
 // const endPoint = {
 //   "revenueandcogs Direct": "",
@@ -60,15 +60,13 @@ const RevenueCogsSummaryLogic = () => {
     },
     {
       name: "code_location",
-      endPoint: "location/list",
-    },
-    {
-      name: "code_product",
-      endPoint: "product/list",
+      endPoint: "location",
     },
   ];
 
   const [urlIndex, setUrlIndex] = useState(0);
+
+  const [codeCompany, setCodeCompany] = useState(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -111,11 +109,26 @@ const RevenueCogsSummaryLogic = () => {
           [nameReducer]: data,
         });
 
-        if (urlIndex <= 2) {
-          dispatch(getAsync(url[urlIndex].endPoint, url[urlIndex].name));
-        }
+        if (codeCompany !== null) {
+          let urlComboBox;
 
-        setUrlIndex((current) => current + 1);
+          if (urlIndex <= 1) {
+            logObj("urlIndex", urlIndex);
+            if (urlIndex === 0) {
+              urlComboBox = url[urlIndex].endPoint;
+            } else {
+              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
+            }
+          }
+
+          logObj("urlComboBox", urlComboBox);
+
+          if (urlComboBox !== undefined) {
+            dispatch(getAsync(urlComboBox, url[urlIndex].name));
+          }
+
+          setUrlIndex((current) => current + 1);
+        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -191,6 +204,13 @@ const RevenueCogsSummaryLogic = () => {
 
   const onGetCodeFilter = () => {
     dispatch(getAsync("company/list-master", "code_company"));
+    // dispatch(getAsync("dept/list", "code_dept"));
+  };
+
+  const onChange = (e) => {
+    const urlComboBox = `product/list-by-com?code_company=${e}`;
+    setCodeCompany(e);
+    dispatch(getAsync(urlComboBox, "code_product"));
   };
 
   return {
@@ -207,6 +227,7 @@ const RevenueCogsSummaryLogic = () => {
     func: {
       onTambahData,
       onFinish,
+      onChange,
     },
   };
 };
