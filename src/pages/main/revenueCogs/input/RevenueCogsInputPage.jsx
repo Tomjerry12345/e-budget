@@ -1,13 +1,7 @@
 import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { areEqual, log } from "../../../../values/Utilitas";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import { areEqual, log, logObj, logS } from "../../../../values/Utilitas";
 import RevenueCogsInputLogic from "./RevenueCogsInputLogic";
 
 const EditableContext = createContext(null);
@@ -23,16 +17,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  keyNotEditTable,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -99,7 +84,7 @@ const EditableCell = ({
         }
         onClick={toggleEdit}
       >
-        {children}
+        {parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   }
@@ -123,12 +108,7 @@ const RevenueCogsInputPage = () => {
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form
-          className="form-filter"
-          layout="vertical"
-          ref={value.ref}
-          onFinish={func.onFinish}
-        >
+        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -215,9 +195,7 @@ const RevenueCogsInputPage = () => {
 
       <Table
         components={components}
-        rowClassName={(record, index) =>
-          areEqual(value.listKeyParent, record) ? "parent" : "child"
-        }
+        rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
         bordered
         dataSource={value.dataColumnInput}
         columns={value.tableColumn}

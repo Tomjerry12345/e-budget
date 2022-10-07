@@ -6,15 +6,11 @@ export const getLocal = (key) => localStorage.getItem(key);
 
 export const getToken = () => localStorage.getItem("token");
 
-export const log = (tag, message) =>
-  typeof message === "undefined"
-    ? console.log(`${tag}`)
-    : console.log(`${tag} => ${simpleStringify(message)}`);
+export const log = (tag, message) => (typeof message === "undefined" ? console.log(`${tag}`) : console.log(`${tag} => ${simpleStringify(message)}`));
 
-export const logObj = (tag, message) =>
-  console.log(`${tag} => ${JSON.stringify(message)}`);
+export const logObj = (tag, message) => console.log(`${tag} => ${JSON.stringify(message)}`);
 
-export const logS = (message) => console.log(message);
+export const logS = (tag, message) => console.log(`${tag} => ${message}`);
 
 function simpleStringify(object) {
   // stringify an object, avoiding circular structures
@@ -81,8 +77,5 @@ Number.prototype.format = function (n, x, s, c) {
   var re = "\\d(?=(\\d{" + (x || 3) + "})+" + (n > 0 ? "\\D" : "$") + ")",
     num = this.toFixed(Math.max(0, ~~n));
 
-  return (c ? num.replace(".", c) : num).replace(
-    new RegExp(re, "g"),
-    "$&" + (s || ",")
-  );
+  return (c ? num.replace(".", c) : num).replace(new RegExp(re, "g"), "$&" + (s || ","));
 }; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/
