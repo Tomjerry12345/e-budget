@@ -16,9 +16,7 @@ const RevenueCogsnputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -517,13 +515,14 @@ const RevenueCogsnputLogic = () => {
         year_total_2 += month.value;
       });
 
-      const jan_val_1 = parseInt(listYear1[0]?.value).format(0, 3, ".", ",");
+      // const jan_val_1 = parseInt(listYear1[0]?.value).format(0, 3, ".", ",");
 
       list.push({
         key: i,
         account: account,
         description: description,
         jan_1: listYear1[0]?.value,
+        // jan_1: jan_val_1,
         jan_1_uuid: listYear1[0]?.uuid,
         jan_1_month: listYear1[0]?.month,
         jan_1_year: year_1,
