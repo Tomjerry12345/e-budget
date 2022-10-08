@@ -114,7 +114,11 @@ const MainLogic = () => {
       // setTitleHeader(title);
 
       if (index === 1) {
-        pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+        if (nameMenu === "Summary Revenue & COGS") {
+          pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+        } else {
+          pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
+        }
       } else if (index === 2) {
         pageNavigation = `/main/opex/summary/${nameMenu}`;
       } else if (index === 3) {

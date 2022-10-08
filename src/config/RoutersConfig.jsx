@@ -14,6 +14,7 @@ import MppInputPage from "../pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "../pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "../pages/main/others/summary/OthersSummary";
 import OthersInputPage from "../pages/main/others/input/OthersInputPage";
+import OthersRevenueCogsPage from "../pages/main/revenueCogs/others/OthersRevenueCogsPage";
 
 const RoutersConfig = () => {
   return (
@@ -26,6 +27,7 @@ const RoutersConfig = () => {
           <Route path="revenue-cogs">
             <Route path="input/:item" element={<RevenueCogsInputPage />} />
             <Route path="summary/:item" element={<RevenueCogsSummary />} />
+            <Route path="others/:item" element={<OthersRevenueCogsPage />} />
           </Route>
           <Route path="opex">
             <Route path="input/:item" element={<OpexInputPage />} />

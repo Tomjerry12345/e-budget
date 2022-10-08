@@ -3,9 +3,13 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
-const RevenueCogsInputLogic = () => {
+const endPoint = {
+  "Revenue & COGS HK": "hk",
+};
+
+const OthersRevenueCogsLogic = () => {
   let params = useParams();
 
   const itemPage = params.item;
@@ -22,39 +26,46 @@ const RevenueCogsInputLogic = () => {
 
   // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
 
-  const [dataColumnInput, setDataColumnInput] = useState([
-    {
-      key: "",
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      jan_1: 0,
-      feb_1: 0,
-      mar_1: 0,
-      apr_1: 0,
-      mei_1: 0,
-      jun_1: 0,
-      jul_1: 0,
-      aug_1: 0,
-      sep_1: 0,
-      okt_1: 0,
-      nov_1: 0,
-      des_1: 0,
-      jan_2: 0,
-      feb_2: 0,
-      mar_2: 0,
-      apr_2: 0,
-      mei_2: 0,
-      jun_2: 0,
-      jul_2: 0,
-      aug_2: 0,
-      sep_2: 0,
-      okt_2: 0,
-      nov_2: 0,
-      des_2: 0,
-    },
-  ]);
+  // const [dataColumnInput, setDataColumnInput] = useState([
+  //   {
+  //     key: "",
+  //     account: "",
+  //     description: "",
+  //     year_1: "",
+  //     year_2: "",
+  //     jan_1: 0,
+  //     feb_1: 0,
+  //     mar_1: 0,
+  //     apr_1: 0,
+  //     mei_1: 0,
+  //     jun_1: 0,
+  //     jul_1: 0,
+  //     aug_1: 0,
+  //     sep_1: 0,
+  //     okt_1: 0,
+  //     nov_1: 0,
+  //     des_1: 0,
+  //     jan_2: 0,
+  //     feb_2: 0,
+  //     mar_2: 0,
+  //     apr_2: 0,
+  //     mei_2: 0,
+  //     jun_2: 0,
+  //     jul_2: 0,
+  //     aug_2: 0,
+  //     sep_2: 0,
+  //     okt_2: 0,
+  //     nov_2: 0,
+  //     des_2: 0,
+  //   },
+  // ]);
+
+  const [dataColumnInput, setDataColumnInput] = useState({
+    listAsumsi: [],
+    listHarga: [],
+    listPenjualan: [],
+    listPotongan: [],
+  });
 
   const [codeFilter, setCodeFilter] = useState();
 
@@ -66,7 +77,7 @@ const RevenueCogsInputLogic = () => {
     code_account: [],
   });
 
-  const url = [
+  const urlComboBox = [
     {
       name: "code_dept",
       endPoint: "dept/list",
@@ -76,6 +87,27 @@ const RevenueCogsInputLogic = () => {
       endPoint: "location",
     },
   ];
+
+  const url = [
+    {
+      name: "listAsumsi",
+      endPoint: "listasumsi",
+    },
+    {
+      name: "listHarga",
+      endPoint: "listharga",
+    },
+    {
+      name: "listPenjualan",
+      endPoint: "listpenjualan",
+    },
+    {
+      name: "listPotongan",
+      endPoint: "listpotongan",
+    },
+  ];
+
+  const [urlIndexComboBox, setUrlIndexComboBox] = useState(0);
 
   const [urlIndex, setUrlIndex] = useState(0);
 
@@ -103,9 +135,29 @@ const RevenueCogsInputLogic = () => {
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
-        getDataTable(response);
+        const {
+          code_company,
+          code_dept,
+          code_location,
+          code_product,
+          // code_account,
+        } = codeFilter;
+
+        getDataTable(response, url[urlIndex].name);
+
+        if (urlIndex + 1 <= 3) {
+          // if (url[urlIndex + 1].endPoint !== undefined) {
+
+          // }
+          const path = `${endPoint[itemPage]}/${url[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          dispatch(getAsync(path, "get-data"));
+        }
+
+        setUrlIndex((current) => current + 1);
+
         setLoading(false);
       } else {
+        log(`setAllCodeFilter`);
         const { data } = response;
         setAllCodeFilter({
           ...allCodeFilter,
@@ -113,21 +165,21 @@ const RevenueCogsInputLogic = () => {
         });
 
         if (codeCompany !== null) {
-          let urlComboBox;
+          let urlComboBox1;
 
-          if (urlIndex <= 1) {
-            if (urlIndex === 0) {
-              urlComboBox = url[urlIndex].endPoint;
+          if (urlIndexComboBox <= 1) {
+            if (urlIndexComboBox === 0) {
+              urlComboBox1 = urlComboBox[urlIndexComboBox].endPoint;
             } else {
-              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
+              urlComboBox1 = `${urlComboBox[urlIndexComboBox].endPoint}/list-by-com?code_company=${codeCompany}`;
             }
           }
 
-          if (urlComboBox !== undefined) {
-            dispatch(getAsync(urlComboBox, url[urlIndex].name));
+          if (urlComboBox1 !== undefined) {
+            dispatch(getAsync(urlComboBox1, urlComboBox[urlIndexComboBox].name));
           }
 
-          setUrlIndex((current) => current + 1);
+          setUrlIndexComboBox((current) => current + 1);
         }
       }
     } else {
@@ -137,13 +189,7 @@ const RevenueCogsInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary Revenue & COGS": [
-        {
-          title: "Account",
-          dataIndex: "account",
-          width: "18%",
-          fixed: "left",
-        },
+      "Revenue & COGS HK": [
         {
           title: "Description",
           dataIndex: "description",
@@ -473,12 +519,12 @@ const RevenueCogsInputLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
-    const path = `revenueandcogs/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    const path = `${endPoint[itemPage]}/listasumsi?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
   };
 
-  const getDataTable = (response) => {
+  const getDataTable = (response, name) => {
     const { data } = response;
     let list = [];
     let year_1 = 0;
@@ -624,7 +670,9 @@ const RevenueCogsInputLogic = () => {
     });
 
     setListKeyParent(keyParent);
-    setDataColumnInput(list);
+
+    logObj(`name`, name);
+    setDataColumnInput({ ...dataColumnInput, [name]: list });
 
     onSetColumn(year_1, year_2, keyParent);
   };
@@ -692,4 +740,4 @@ const RevenueCogsInputLogic = () => {
   };
 };
 
-export default RevenueCogsInputLogic;
+export default OthersRevenueCogsLogic;
