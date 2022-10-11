@@ -1,3 +1,5 @@
+version: revision-v1.0.9
+
 FE @andri055 
 - tambahkan edit & hapus setiap master kode
 - input asumsi
