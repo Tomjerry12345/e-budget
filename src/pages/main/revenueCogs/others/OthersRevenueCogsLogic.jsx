@@ -3,7 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Revenue & COGS HK": "hk",
@@ -97,9 +97,11 @@ const OthersRevenueCogsLogic = () => {
   });
 
   useEffect(() => {
+    logS("useEffect", "true");
     window.onresize = getSizeScreen(setSize);
-    onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (codeFilter) onGetCodeFilter();
+  }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     log("response", response);
