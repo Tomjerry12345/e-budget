@@ -13,7 +13,17 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
+const title = [
+  "Dashboard",
+  "Revenue & COGS",
+  "Opex",
+  "Capex",
+  "MPP",
+  "Others",
+  "Report",
+  "Master COA",
+  "Akun",
+];
 
 const getPath = (pathName, item) => {
   const spliter = pathName?.split("/");
@@ -72,7 +82,19 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
+                <Button
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onClick={() =>
+                    func.onClickedMenu(
+                      value.keyMenu,
+                      "submenu",
+                      item,
+                      value.titleMenu
+                    )
+                  }
+                >
                   {item}
                 </Button>
               </List.Item>
@@ -87,12 +109,12 @@ const MainPage = () => {
         }}
       >
         <Header className="custom-header">
-          <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb className="custom-breadcrumb" separator=">">
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
             <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
           </Breadcrumb>
           {value.params.item !== "" ? (
-            <Text strong style={{ fontSize: "24px" }}>
+            <Text className="header-title">
               {path}
               {/* {value.params.item} */}
             </Text>
