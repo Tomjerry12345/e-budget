@@ -7,6 +7,11 @@ import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Revenue & COGS HK": "hk",
+  "Revenue & COGS BJU": "bju",
+  "Revenue & COGS BLT": "blt",
+  "Revenue & COGS BSB": "bsb",
+  "Revenue & COGS IKP": "ikp",
+  "Revenue & COGS KIK": "kik",
 };
 
 const OthersRevenueCogsLogic = () => {
@@ -20,45 +25,11 @@ const OthersRevenueCogsLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState([]);
-
-  // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
-
-  // const [dataColumnInput, setDataColumnInput] = useState([
-  //   {
-  //     key: "",
-  //     account: "",
-  //     description: "",
-  //     year_1: "",
-  //     year_2: "",
-  //     jan_1: 0,
-  //     feb_1: 0,
-  //     mar_1: 0,
-  //     apr_1: 0,
-  //     mei_1: 0,
-  //     jun_1: 0,
-  //     jul_1: 0,
-  //     aug_1: 0,
-  //     sep_1: 0,
-  //     okt_1: 0,
-  //     nov_1: 0,
-  //     des_1: 0,
-  //     jan_2: 0,
-  //     feb_2: 0,
-  //     mar_2: 0,
-  //     apr_2: 0,
-  //     mei_2: 0,
-  //     jun_2: 0,
-  //     jul_2: 0,
-  //     aug_2: 0,
-  //     sep_2: 0,
-  //     okt_2: 0,
-  //     nov_2: 0,
-  //     des_2: 0,
-  //   },
-  // ]);
 
   const [dataColumnInput, setDataColumnInput] = useState({
     listAsumsi: [],
@@ -156,7 +127,9 @@ const OthersRevenueCogsLogic = () => {
           // if (url[urlIndex + 1].endPoint !== undefined) {
 
           // }
-          const path = `${endPoint[itemPage]}/${url[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          const path = `${endPoint[itemPage]}/${
+            url[urlIndex + 1].endPoint
+          }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
@@ -187,7 +160,9 @@ const OthersRevenueCogsLogic = () => {
           }
 
           if (urlComboBox1 !== undefined) {
-            dispatch(getAsync(urlComboBox1, urlComboBox[urlIndexComboBox].name));
+            dispatch(
+              getAsync(urlComboBox1, urlComboBox[urlIndexComboBox].name)
+            );
           }
 
           setUrlIndexComboBox((current) => current + 1);
@@ -199,290 +174,288 @@ const OthersRevenueCogsLogic = () => {
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetColumn = (year_1, year_2, keyParent) => {
-    const constantTableColums = {
-      "Revenue & COGS HK": [
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <span>
-                  Jan. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Feb. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Mar. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Apr. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  May. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jun. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jul. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Aug. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Sep. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Okt. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Nov. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Des. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_1",
-          width: "14%",
-        },
-        {
-          title: `Year ${year_2}`,
-          children: [
-            {
-              title: (
-                <span>
-                  Jan. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jan_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Feb. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "feb_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Mar. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "mar_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Apr. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "apr_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  May. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "mei_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jun. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jun_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jul. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jul_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Aug. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "aug_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Sep. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "sep_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Okt. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "okt_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Nov. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "nov_2",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Des. <span className="ebu-styles">Ebu</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "des_2",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_2",
-          width: "14%",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-    };
+    const constantTableColums = [
+      {
+        title: "Description",
+        dataIndex: "description",
+        width: "30%",
+        fixed: "left",
+      },
+      {
+        title: `Year ${year_1}`,
+        editable: true,
+        children: [
+          {
+            title: (
+              <span>
+                Jan. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jan_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Feb. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "feb_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Mar. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "mar_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Apr. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "apr_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                May. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "mei_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Jun. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jun_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Jul. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jul_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Aug. <span className="act-styles">Act</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "aug_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Sep. <span className="for-styles">For</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "sep_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Okt. <span className="for-styles">For</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "okt_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Nov. <span className="for-styles">For</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "nov_1",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Des. <span className="for-styles">For</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "des_1",
+            editable: true,
+          },
+        ],
+      },
+      {
+        title: "Year total",
+        dataIndex: "year_total_1",
+        width: "14%",
+      },
+      {
+        title: `Year ${year_2}`,
+        children: [
+          {
+            title: (
+              <span>
+                Jan. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jan_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Feb. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "feb_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Mar. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "mar_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Apr. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "apr_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                May. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "mei_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Jun. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jun_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Jul. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "jul_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Aug. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "aug_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Sep. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "sep_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Okt. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 100,
+            dataIndex: "okt_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Nov. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "nov_2",
+            editable: true,
+          },
+          {
+            title: (
+              <span>
+                Des. <span className="ebu-styles">Ebu</span>
+              </span>
+            ),
+            width: 110,
+            dataIndex: "des_2",
+            editable: true,
+          },
+        ],
+      },
+      {
+        title: "Year total",
+        dataIndex: "year_total_2",
+        width: "14%",
+      },
+      // {
+      //   dataIndex: "operation",
+      //   fixed: "right",
+      //   width: "5%",
+      //   render: (_, record) =>
+      //     dataColumn.length >= 1 ? (
+      //       <Dropdown overlay={menu} placement="bottom">
+      //         <Button icon={<MoreVertIcon />}></Button>
+      //       </Dropdown>
+      //     ) : null,
+      // },
+    ];
 
-    const columns = constantTableColums[itemPage].map((col) => {
+    const columns = constantTableColums.map((col) => {
       // console.log(`col => ${JSON.stringify(col)}`);
       if (!col.editable) {
         return col;
