@@ -92,10 +92,12 @@ const OthersRevenueCogsLogic = () => {
     {
       name: "listAsumsi",
       endPoint: "listasumsi",
+      update: "update",
     },
     {
       name: "listHarga",
       endPoint: "listharga",
+      update: "updateharga",
     },
     {
       name: "listPenjualan",
@@ -104,6 +106,7 @@ const OthersRevenueCogsLogic = () => {
     {
       name: "listPotongan",
       endPoint: "listpotongan",
+      updater: "updatepotongan",
     },
   ];
 
@@ -129,9 +132,13 @@ const OthersRevenueCogsLogic = () => {
 
   useEffect(() => {
     log("response", response);
+    logObj("nameReducer", nameReducer);
 
     if (response !== null) {
       if (nameReducer === "update") {
+        // setDataColumnInput({});
+        setUrlIndex(0);
+        logObj("urlindex", urlIndex);
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
@@ -143,7 +150,7 @@ const OthersRevenueCogsLogic = () => {
           // code_account,
         } = codeFilter;
 
-        getDataTable(response, url[urlIndex].name);
+        getDataTable(response, url[urlIndex].name, url[urlIndex].update);
 
         if (urlIndex + 1 <= 3) {
           // if (url[urlIndex + 1].endPoint !== undefined) {
@@ -151,6 +158,10 @@ const OthersRevenueCogsLogic = () => {
           // }
           const path = `${endPoint[itemPage]}/${url[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
+        }
+
+        if (urlIndex === 3) {
+          setUrlIndex(0);
         }
 
         setUrlIndex((current) => current + 1);
@@ -524,7 +535,7 @@ const OthersRevenueCogsLogic = () => {
     dispatch(getAsync(path, "get-data"));
   };
 
-  const getDataTable = (response, name) => {
+  const getDataTable = (response, name, e) => {
     const { data } = response;
     let list = [];
     let year_1 = 0;
@@ -541,8 +552,10 @@ const OthersRevenueCogsLogic = () => {
       year_total_1 = 0;
       year_total_2 = 0;
 
-      const account = val.account;
+      // const account = val.account;
+      const code = val.code;
       const description = val.description;
+
       const listYear1 = [];
       const listYear2 = [];
       let parent = val.detail[0].list_month[0]?.parent;
@@ -565,8 +578,10 @@ const OthersRevenueCogsLogic = () => {
 
       list.push({
         key: i,
-        account: account,
+        code: code,
+        // account: account,
         description: description,
+        endpoint: e,
         jan_1: listYear1[0]?.value,
         // jan_1: jan_val_1,
         jan_1_uuid: listYear1[0]?.uuid,
@@ -690,12 +705,21 @@ const OthersRevenueCogsLogic = () => {
     setLoading(true);
     let formData = new FormData();
     const { code_company, code_dept, code_location, code_product } = codeFilter;
+    const code = row.code;
     const year = row[`${keysEdit}_year`];
     const month = row[`${keysEdit}_month`];
     const uuid = row[`${keysEdit}_uuid`];
+    let e = row["endpoint"];
+
+    logObj("row", row);
+    logObj("e", e);
+    logObj("year", year);
+    logObj("month", month);
+    logObj("code", code);
+    logObj("valuesEdit", valuesEdit);
 
     if (uuid === null) {
-      formData.append("code", row.account);
+      formData.append("code", code);
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
@@ -708,7 +732,7 @@ const OthersRevenueCogsLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`revenueandcogs/update`, formData, "update"));
+    dispatch(postAsync(`${endPoint[itemPage]}/${e}`, formData, "update"));
   };
 
   const onGetCodeFilter = () => {
