@@ -1,0 +1,46 @@
+FE @andri055 
+- tambahkan edit & hapus setiap master kode
+- input asumsi
+- revenue & cogs HK (page 1)
+- revenue & cogs KIU (page 1)
+- revenue & cogs BTS (page 1)
+- revenue & cogs KIA (page 1)
+- revenue & cogs BJU (page 1)
+- revenue & cogs BLU (page 1)
+- revenue & cogs BSU (page 1)
+- revenue & cogs BSB (page 1)
+- revenue & cogs KIK (page 1)
+- revenue & cogs IKP (page 1)
+- revenue & cogs BAND (page 1)
+
+BE @fajarpratamap @zulhisham17 :
+- role user @fajarpratamap
+- revenue & cogs BLT (page 1) @fajarpratamap ✅
+- revenue & cogs BK (page 1) @fajarpratamap
+- revenue & cogs BSU (page 1) @fajarpratamap 
+- revenue & cogs HK (page 2)
+- input asumsi
+ 
+- tambahkan edit & hapus setiap master kode @zulhisham17 ✅
+- revenue & cogs KIU (page 1)
+- revenue & cogs BTS (page 1)
+- revenue & cogs KIA (page 1)
+- revenue & cogs BJU (page 1) @zulhisham17 ✅
+- revenue & cogs BLU (page 1)
+- revenue & cogs BSU (page 1)
+- revenue & cogs BSB (page 1) @zulhisham17 ✅
+- revenue & cogs KIK (page 1) @zulhisham17 ✅
+- revenue & cogs IKP (page 1) @zulhisham17 ✅
+- revenue & cogs BAND (page 1)
+
+noted: 
+* master akun
+- perlu softdelete
+- log acitify
+* filter tahun untuk summary (ini filter tahun bagamana nanti kak @asrarulikram  ?)
+* tombol kembali dari input ke summary
+* tambahkan validasi update data pada code parent
+* capex filter perlu diperbaiki tampilannya
+* list mpp summary tidak sesuai (kurang field parent)
+* list input direct mpp parentnya double
+* summary belum ada pembeda parent
