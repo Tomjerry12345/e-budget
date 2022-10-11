@@ -24,15 +24,15 @@ $grey: fafafa;
     // background-color: green;
 
     &.selected {
-      background-color: #f4f4f4;
+      background-color: #ffffff;
     }
 
     &.notSelected {
-      background-color: grey;
+      background-color: #c6ced6;
     }
 
     &.open {
-      background-color: green;
+      background-color: #008041;
     }
   }
 }
