@@ -100,7 +100,7 @@ const OthersRevenueCogsLogic = () => {
     logS("useEffect", "true");
     window.onresize = getSizeScreen(setSize);
 
-    if (codeFilter) onGetCodeFilter();
+    onGetCodeFilter()
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
