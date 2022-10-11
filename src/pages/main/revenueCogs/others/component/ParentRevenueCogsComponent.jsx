@@ -1,4 +1,7 @@
-const ContentRevenueCogsComponent = () => {
+import { Form, Select, Button, Tabs } from "antd";
+import { Card } from "@mui/material";
+
+const ParentRevenueCogsComponent = ({ value, func, child }) => {
   return (
     <>
       <Card
@@ -94,37 +97,15 @@ const ContentRevenueCogsComponent = () => {
           </Form.Item>
         </Form>
       </Card>
-      {tTable.map((x) => (
-        <div
-          style={{
-            margin: "16px",
-          }}
-        >
-          <Typography.Text strong style={{ fontSize: "14px" }}>
-            {x.title}
-            {/* {value.params.item} */}
-          </Typography.Text>
 
-          <Table
-            components={components}
-            rowClassName={(record, index) =>
-              areEqual(value.listKeyParent, record) ? "parent" : "child"
-            }
-            bordered
-            dataSource={x.data}
-            columns={value.tableColumn}
-            pagination={false}
-            loading={value.loading}
-            size="small"
-            scroll={{
-              x: 2900,
-              y: value.size.y,
-            }}
-          />
-        </div>
-      ))}
+      <Tabs
+        defaultActiveKey="1"
+        type="card"
+        // size={size}
+        items={child}
+      />
     </>
   );
 };
 
-export default ContentRevenueCogsComponent;
+export default ParentRevenueCogsComponent;

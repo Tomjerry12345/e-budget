@@ -13,7 +13,17 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
+const title = [
+  "Dashboard",
+  "Revenue & COGS",
+  "Opex",
+  "Capex",
+  "MPP",
+  "Others",
+  "Report",
+  "Master COA",
+  "Akun",
+];
 
 const getPath = (pathName, item) => {
   const spliter = pathName?.split("/");
@@ -26,7 +36,7 @@ const getPath = (pathName, item) => {
     const pathSplit = path1.split("%20").join(" ");
     log(`path1 => ${pathSplit}`);
 
-    if (pathSplit === "Summary") {
+    if (pathSplit === "Summary" || pathSplit === "Others") {
       path = item;
     } else if (pathSplit === "Input") {
       path = `${path1} ${item}`;
@@ -72,7 +82,19 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
+                <Button
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onClick={() =>
+                    func.onClickedMenu(
+                      value.keyMenu,
+                      "submenu",
+                      item,
+                      value.titleMenu
+                    )
+                  }
+                >
                   {item}
                 </Button>
               </List.Item>
