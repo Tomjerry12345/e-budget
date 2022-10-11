@@ -109,12 +109,12 @@ const MainPage = () => {
         }}
       >
         <Header className="custom-header">
-          <Breadcrumb className="custom-breadcrumb">
+          <Breadcrumb className="custom-breadcrumb" separator=">">
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
             <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
           </Breadcrumb>
           {value.params.item !== "" ? (
-            <Text strong style={{ fontSize: "24px" }}>
+            <Text className="header-title">
               {path}
               {/* {value.params.item} */}
             </Text>
