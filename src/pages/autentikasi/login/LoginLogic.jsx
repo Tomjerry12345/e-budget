@@ -1,9 +1,10 @@
+import axios from "axios";
 import { createRef } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginAsync from "../../../redux/auth/auth.thunks";
-import { setLocal } from "../../../values/Utilitas";
+import { log, setLocal } from "../../../values/Utilitas";
 
 const LoginLogic = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,17 @@ const LoginLogic = () => {
 
   useEffect(() => {
     setLocal("auth", false);
-    setLocal("index-menu", null);
+    setLocal("index-menu", 0);
     setLocal("move-page", null);
+    setLocal("token", "");
+    log("response", response);
+
     if (response !== null) {
-      const { responseCode, responseDescription } = response;
+      const { responseCode, responseDescription, token } = response;
       if (responseCode === "200") {
+        log(`token => ${token}`);
         setLocal("auth", true);
+        setLocal("token", token);
         navigate("/");
       } else {
         alert(responseDescription);
@@ -37,6 +43,7 @@ const LoginLogic = () => {
     let formData = new FormData();
     formData.append("username", values.username);
     formData.append("password", values.password);
+
     dispatch(loginAsync(formData));
   };
 

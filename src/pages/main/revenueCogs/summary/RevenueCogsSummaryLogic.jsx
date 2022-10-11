@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
 
 // const endPoint = {
-//   "Opex Direct": "",
+//   "revenueandcogs Direct": "",
 // };
 
-const OpexSummaryLogic = () => {
+const RevenueCogsSummaryLogic = () => {
   let params = useParams();
 
   const ref = createRef();
@@ -66,25 +66,23 @@ const OpexSummaryLogic = () => {
 
   const [urlIndex, setUrlIndex] = useState(0);
 
-  const [loading, setLoading] = useState(false);
-
   const [codeCompany, setCodeCompany] = useState(null);
+
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
     setLoading(true);
-    dispatch(getAsync(`opex/summary`, "get-data"));
+    dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
     // onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    log("response", response);
-
+    logObj("response", response);
     if (response !== null) {
       if (nameReducer === "get-data") {
         onGetCodeFilter();
         const { data } = response;
-        log("data", data);
         let list = [];
         let year_1 = "";
         let year_2 = "";
@@ -115,12 +113,15 @@ const OpexSummaryLogic = () => {
           let urlComboBox;
 
           if (urlIndex <= 1) {
+            logObj("urlIndex", urlIndex);
             if (urlIndex === 0) {
               urlComboBox = url[urlIndex].endPoint;
             } else {
               urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
             }
           }
+
+          logObj("urlComboBox", urlComboBox);
 
           if (urlComboBox !== undefined) {
             dispatch(getAsync(urlComboBox, url[urlIndex].name));
@@ -136,7 +137,7 @@ const OpexSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      "Summary Opex": [
+      "Summary Revenue & COGS": [
         {
           title: "Account",
           dataIndex: "account",
@@ -184,7 +185,7 @@ const OpexSummaryLogic = () => {
     const { code_company, code_dept, code_location, code_product } = values;
     dispatch(
       getAsync(
-        `opex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
         "get-data"
       )
     );
@@ -192,7 +193,7 @@ const OpexSummaryLogic = () => {
 
   const onTambahData = () => {
     dispatch(loadStart());
-    navigate(`/main/opex/Input/${itemPage}`);
+    navigate(`/main/revenue-cogs/Input/${itemPage}`);
   };
 
   const onFinish = (values) => {
@@ -203,6 +204,7 @@ const OpexSummaryLogic = () => {
 
   const onGetCodeFilter = () => {
     dispatch(getAsync("company/list-master", "code_company"));
+    // dispatch(getAsync("dept/list", "code_dept"));
   };
 
   const onChange = (e) => {
@@ -230,4 +232,4 @@ const OpexSummaryLogic = () => {
   };
 };
 
-export default OpexSummaryLogic;
+export default RevenueCogsSummaryLogic;

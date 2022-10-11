@@ -1,8 +1,14 @@
 import { Card } from "@mui/material";
-import { Table, Form, Input, Select, Button } from "antd";
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-import { areEqual, log } from "../../../../values/Utilitas";
-import OpexInputLogic from "./OpexInputLogic";
+import { Table, Form, Input, Select, Button, Typography, Tabs } from "antd";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { areEqual, log, logObj, logS } from "../../../../values/Utilitas";
+import OthersRevenueCogsLogic from "./OthersRevenueCogsLogic";
 
 const EditableContext = createContext(null);
 
@@ -17,7 +23,16 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  keyNotEditTable,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -92,8 +107,21 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const OpexInputPage = () => {
-  const { value, func } = OpexInputLogic();
+const tabItemParent = [
+  {
+    key: 1,
+    label: "Input Penjualan dan Potongan penjualan",
+    // children: `Content of card tab ${id}`,
+  },
+  {
+    key: 2,
+    label: "Input HPP dan pendapatan lainnya",
+    // children: `Content of card tab ${id}`,
+  },
+];
+
+const OthersRevenueCogsPage = () => {
+  const { value, func } = OthersRevenueCogsLogic();
 
   const components = {
     body: {
@@ -102,13 +130,43 @@ const OpexInputPage = () => {
     },
   };
 
+  const tTable = [
+    {
+      title: "List Asumsi",
+      data: value.dataColumnInput.listAsumsi,
+    },
+    {
+      title: "List Harga",
+      data: value.dataColumnInput.listHarga,
+    },
+    {
+      title: "List Penjualan",
+      data: value.dataColumnInput.listPenjualan,
+    },
+    {
+      title: "List Potongan",
+      data: value.dataColumnInput.listPotongan,
+    },
+  ];
+
   return (
     <div className="custom-root-layout">
+      <Tabs
+        defaultActiveKey="1"
+        type="card"
+        // size={size}
+        items={tabItemParent}
+      />
       <Card
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
       >
-        <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
+        <Form
+          className="form-filter"
+          layout="vertical"
+          ref={value.ref}
+          onFinish={func.onFinish}
+        >
           <Form.Item
             label="Kode Perusahaan"
             name="code_company"
@@ -192,23 +250,37 @@ const OpexInputPage = () => {
           </Form.Item>
         </Form>
       </Card>
+      {tTable.map((x) => (
+        <div
+          style={{
+            margin: "16px",
+          }}
+        >
+          <Typography.Text strong style={{ fontSize: "14px" }}>
+            {x.title}
+            {/* {value.params.item} */}
+          </Typography.Text>
 
-      <Table
-        components={components}
-        rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
-        bordered
-        dataSource={value.dataColumnInput}
-        columns={value.tableColumn}
-        pagination={false}
-        loading={value.loading}
-        size="small"
-        scroll={{
-          x: 2900,
-          y: value.size.y,
-        }}
-      />
+          <Table
+            components={components}
+            rowClassName={(record, index) =>
+              areEqual(value.listKeyParent, record) ? "parent" : "child"
+            }
+            bordered
+            dataSource={x.data}
+            columns={value.tableColumn}
+            pagination={false}
+            loading={value.loading}
+            size="small"
+            scroll={{
+              x: 2900,
+              y: value.size.y,
+            }}
+          />
+        </div>
+      ))}
     </div>
   );
 };
 
-export default OpexInputPage;
+export default OthersRevenueCogsPage;

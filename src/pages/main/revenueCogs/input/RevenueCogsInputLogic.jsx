@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
-const OpexInputLogic = () => {
+const RevenueCogsInputLogic = () => {
   let params = useParams();
 
   const itemPage = params.item;
@@ -16,9 +16,7 @@ const OpexInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -101,7 +99,7 @@ const OpexInputLogic = () => {
     log("response", response);
 
     if (response !== null) {
-      if (nameReducer === "update-opex") {
+      if (nameReducer === "update") {
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
@@ -139,7 +137,7 @@ const OpexInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary Opex": [
+      "Summary Revenue & COGS": [
         {
           title: "Account",
           dataIndex: "account",
@@ -475,8 +473,8 @@ const OpexInputLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
-    const path = `opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-    // const path = `opex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
+    const path = `revenueandcogs/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
   };
 
@@ -517,11 +515,14 @@ const OpexInputLogic = () => {
         year_total_2 += month.value;
       });
 
+      // const jan_val_1 = parseInt(listYear1[0]?.value).format(0, 3, ".", ",");
+
       list.push({
         key: i,
         account: account,
         description: description,
         jan_1: listYear1[0]?.value,
+        // jan_1: jan_val_1,
         jan_1_uuid: listYear1[0]?.uuid,
         jan_1_month: listYear1[0]?.month,
         jan_1_year: year_1,
@@ -659,7 +660,7 @@ const OpexInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`opex/update`, formData, "update-opex"));
+    dispatch(postAsync(`revenueandcogs/update`, formData, "update"));
   };
 
   const onGetCodeFilter = () => {
@@ -691,4 +692,4 @@ const OpexInputLogic = () => {
   };
 };
 
-export default OpexInputLogic;
+export default RevenueCogsInputLogic;

@@ -1,25 +1,15 @@
-import {
-  Table,
-  Form,
-  Input,
-  Breadcrumb,
-  Typography,
-  Layout,
-  Button,
-} from "antd";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { Table, Form, Input, Button, Modal, Typography } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import CoaInputLogic from "./CoaLogic";
 import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
-import ResizeObserver from "rc-resize-observer";
-import { VariableSizeGrid as Grid } from "react-window";
-import classNames from "classnames";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { classx, fastIf, log } from "../../../values/Utilitas";
+// import ResizeObserver from "rc-resize-observer";
+// import { VariableSizeGrid as Grid } from "react-window";
+// import classNames from "classnames";
 
-const { Header, Content } = Layout;
-const { Text } = Typography;
-
-const EditableContext = React.createContext(null);
+const EditableContext = createContext(null);
 
 const EditableRow = ({ index, ...props }) => {
   const [form] = Form.useForm();
@@ -32,15 +22,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -102,155 +84,159 @@ const EditableCell = ({
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" ||
-    params === "Kode departemen" ||
-    params === "Kode akun" ||
-    params === "Kode ICP"
-    ? null
-    : 1600;
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
 
-const VirtualTable = (props) => {
-  const { columns, scroll } = props;
-  const [tableWidth, setTableWidth] = useState(0);
-  const widthColumnCount = columns.filter(({ width }) => !width).length;
-  const mergedColumns = columns.map((column) => {
-    if (column.width) {
-      return column;
-    }
-
-    return { ...column, width: Math.floor(tableWidth / widthColumnCount) };
-  });
-  const gridRef = useRef();
-  const [connectObject] = useState(() => {
-    const obj = {};
-    Object.defineProperty(obj, "scrollLeft", {
-      get: () => {
-        if (gridRef.current) {
-          return gridRef.current?.state?.scrollLeft;
-        }
-
-        return null;
-      },
-      set: (scrollLeft) => {
-        if (gridRef.current) {
-          gridRef.current.scrollTo({
-            scrollLeft,
-          });
-        }
-      },
-    });
-    return obj;
-  });
-
-  const resetVirtualGrid = () => {
-    gridRef.current?.resetAfterIndices({
-      columnIndex: 0,
-      shouldForceUpdate: true,
-    });
-  };
-
-  useEffect(() => resetVirtualGrid, [tableWidth]);
-
-  const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
-    ref.current = connectObject;
-    const totalHeight = rawData.length * 54;
-    return (
-      <Grid
-        ref={gridRef}
-        className="virtual-grid"
-        style={{ margin: 20 }}
-        columnCount={mergedColumns.length}
-        columnWidth={(index) => {
-          const { width } = mergedColumns[index];
-          return totalHeight > scroll.y && index === mergedColumns.length - 1
-            ? width - scrollbarSize - 1
-            : width;
-        }}
-        height={scroll.y}
-        rowCount={rawData.length}
-        rowHeight={() => 54}
-        width={tableWidth}
-        onScroll={({ scrollLeft }) => {
-          onScroll({
-            scrollLeft,
-          });
-        }}
-      >
-        {({ columnIndex, rowIndex, style }) => (
-          <div
-            className={classNames("virtual-table-cell", {
-              "virtual-table-cell-last":
-                columnIndex === mergedColumns.length - 1,
-            })}
-            style={style}
-          >
-            {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
-          </div>
-        )}
-      </Grid>
-    );
-  };
-
-  return (
-    <ResizeObserver
-      onResize={({ width }) => {
-        setTableWidth(width);
-      }}
-    >
-      <Table
-        {...props}
-        className="virtual-table"
-        columns={mergedColumns}
-        pagination={false}
-        components={{
-          body: renderVirtualList,
-        }}
-      />
-    </ResizeObserver>
-  );
-}; // Usage
-
-const columns = [
-  {
-    title: "A",
-    dataIndex: "key",
-    width: 150,
-  },
-  {
-    title: "B",
-    dataIndex: "key",
-  },
-  {
-    title: "C",
-    dataIndex: "key",
-  },
-  {
-    title: "D",
-    dataIndex: "key",
-  },
-  {
-    title: "E",
-    dataIndex: "key",
-    width: 200,
-  },
-  {
-    title: "F",
-    dataIndex: "key",
-    width: 100,
-  },
-];
-const data = Array.from(
-  {
-    length: 100000,
-  },
-  (_, key) => ({
-    key,
-  })
+const CustomFooter = ({ onOk, onCancel }) => (
+  <>
+    <Button onClick={onCancel}>Batal</Button>
+    <Button onClick={onOk}>Hapus</Button>
+  </>
 );
+
+// const VirtualTable = (props) => {
+//   const { columns, scroll } = props;
+//   const [tableWidth, setTableWidth] = useState(0);
+//   const widthColumnCount = columns.filter(({ width }) => !width).length;
+//   const mergedColumns = columns.map((column) => {
+//     if (column.width) {
+//       return column;
+//     }
+
+//     return { ...column, width: Math.floor(tableWidth / widthColumnCount) };
+//   });
+//   const gridRef = useRef();
+//   const [connectObject] = useState(() => {
+//     const obj = {};
+//     Object.defineProperty(obj, "scrollLeft", {
+//       get: () => {
+//         if (gridRef.current) {
+//           return gridRef.current?.state?.scrollLeft;
+//         }
+
+//         return null;
+//       },
+//       set: (scrollLeft) => {
+//         if (gridRef.current) {
+//           gridRef.current.scrollTo({
+//             scrollLeft,
+//           });
+//         }
+//       },
+//     });
+//     return obj;
+//   });
+
+//   const resetVirtualGrid = () => {
+//     gridRef.current?.resetAfterIndices({
+//       columnIndex: 0,
+//       shouldForceUpdate: true,
+//     });
+//   };
+
+//   useEffect(() => resetVirtualGrid, [tableWidth]);
+
+//   const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
+//     ref.current = connectObject;
+//     const totalHeight = rawData.length * 54;
+//     return (
+//       <Grid
+//         ref={gridRef}
+//         className="virtual-grid"
+//         style={{ margin: 20 }}
+//         columnCount={mergedColumns.length}
+//         columnWidth={(index) => {
+//           const { width } = mergedColumns[index];
+//           return totalHeight > scroll.y && index === mergedColumns.length - 1
+//             ? width - scrollbarSize - 1
+//             : width;
+//         }}
+//         height={scroll.y}
+//         rowCount={rawData.length}
+//         rowHeight={() => 54}
+//         width={tableWidth}
+//         onScroll={({ scrollLeft }) => {
+//           onScroll({
+//             scrollLeft,
+//           });
+//         }}
+//       >
+//         {({ columnIndex, rowIndex, style }) => (
+//           <div
+//             className={classNames("virtual-table-cell", {
+//               "virtual-table-cell-last":
+//                 columnIndex === mergedColumns.length - 1,
+//             })}
+//             style={style}
+//           >
+//             {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
+//           </div>
+//         )}
+//       </Grid>
+//     );
+//   };
+
+//   return (
+//     <ResizeObserver
+//       onResize={({ width }) => {
+//         setTableWidth(width);
+//       }}
+//     >
+//       <Table
+//         {...props}
+//         className="virtual-table"
+//         columns={mergedColumns}
+//         pagination={false}
+//         components={{
+//           body: renderVirtualList,
+//         }}
+//       />
+//     </ResizeObserver>
+//   );
+// }; // Usage
+
+// const columns = [
+//   {
+//     title: "A",
+//     dataIndex: "key",
+//     width: 150,
+//   },
+//   {
+//     title: "B",
+//     dataIndex: "key",
+//   },
+//   {
+//     title: "C",
+//     dataIndex: "key",
+//   },
+//   {
+//     title: "D",
+//     dataIndex: "key",
+//   },
+//   {
+//     title: "E",
+//     dataIndex: "key",
+//     width: 200,
+//   },
+//   {
+//     title: "F",
+//     dataIndex: "key",
+//     width: 100,
+//   },
+// ];
+// const data = Array.from(
+//   {
+//     length: 100000,
+//   },
+//   (_, key) => ({
+//     key,
+//   })
+// );
 
 const CoaPage = () => {
   const { value, func } = CoaInputLogic();
+
+  const status = value.openAction.status;
 
   const components = {
     body: {
@@ -258,6 +244,10 @@ const CoaPage = () => {
       cell: EditableCell,
     },
   };
+
+  const customClass = classx({
+    "custom-action-modal": status === "edit" ? (setXColumn(value.params.item) === null ? false : true) : false,
+  });
 
   return (
     <div className="custom-root-layout">
@@ -276,12 +266,7 @@ const CoaPage = () => {
             Clear Data
           </Button>
 
-          <Button
-            className="btn-update"
-            type="primary"
-            icon={<UploadOutlined className="custom-icon" />}
-            onClick={func.onOpenUploadModal}
-          >
+          <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
             Update
           </Button>
         </div>
@@ -289,15 +274,17 @@ const CoaPage = () => {
 
       <Table
         className="table-custom-root"
-        // components={components}
-        rowClassName={() => "editable-row"}
+        components={components}
         bordered
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
+        loading={value.loading}
+        size="small"
+        rowClassName="editable-row"
         scroll={{
           x: setXColumn(value.params.item),
-          y: value.size.y - 200,
+          y: value.size.y - 280,
         }}
         rowKey="id"
       />
@@ -315,12 +302,41 @@ const CoaPage = () => {
 
       {/* </Content> */}
 
-      <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-      />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
+
+      <Modal className={customClass} open={value.openAction.open} onCancel={func.onCancel} closable={true} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
+        <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
+          {value.openAction.status === "edit" ? (
+            <>
+              {value.req.map((val, i) => (
+                <Form.Item key={i} name={val.key} rules={[{ required: true, message: "Tidak Boleh Kosong" }]}>
+                  <Input placeholder={val.placeholder} />
+                </Form.Item>
+              ))}
+
+              <Form.Item>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <Button
+                    onClick={func.onCancel}
+                    style={{
+                      marginRight: "16px",
+                    }}
+                  >
+                    Batal
+                  </Button>
+                  <Button htmlType="submit">Ubah</Button>
+                </div>
+              </Form.Item>
+            </>
+          ) : (
+            <Typography.Text>Apakah Anda ingin menghapus item ?</Typography.Text>
+          )}
+        </Form>
+      </Modal>
     </div>
   );
 };

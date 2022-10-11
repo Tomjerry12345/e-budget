@@ -1,20 +1,15 @@
-import { Table, Form, Button, Select } from "antd";
-import { Card } from "@mui/material";
-import React from "react";
-import OpexSummaryLogic from "./OpexSummaryLogic";
-
-const OpexSummary = () => {
-  const { value, func } = OpexSummaryLogic();
-
+const ContentRevenueCogsComponent = () => {
   return (
-    <div className="custom-root-layout">
-      <Card className="card-style">
+    <>
+      <Card
+        className="card-style"
+        // style={{ marginBottom: 16, height: 120 }}
+      >
         <Form
           className="form-filter"
           layout="vertical"
           ref={value.ref}
           onFinish={func.onFinish}
-          form={value.form}
         >
           <Form.Item
             label="Kode Perusahaan"
@@ -48,7 +43,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_product.map((val, i) => (
                 <Select.Option key={i} value={val.code_product}>
-                {`${val.code_product} (${val.description})`}
+                  {`${val.code_product} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -67,7 +62,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_location.map((val, i) => (
                 <Select.Option key={i} value={val.code_location}>
-                {`${val.code_location} (${val.description})`}
+                  {`${val.code_location} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -86,7 +81,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_dept.map((val, i) => (
                 <Select.Option key={i} value={val.code_dept}>
-                {`${val.code_dept} (${val.description})`}
+                  {`${val.code_dept} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -99,28 +94,37 @@ const OpexSummary = () => {
           </Form.Item>
         </Form>
       </Card>
+      {tTable.map((x) => (
+        <div
+          style={{
+            margin: "16px",
+          }}
+        >
+          <Typography.Text strong style={{ fontSize: "14px" }}>
+            {x.title}
+            {/* {value.params.item} */}
+          </Typography.Text>
 
-      <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
-        Tambah Data
-      </Button>
-
-      <Table
-        rowClassName={() => "editable-row"}
-        bordered
-        dataSource={value.dataColumn}
-        columns={value.tableColumn}
-        pagination={false}
-        loading={value.loading}
-        size="small"
-        scroll={{
-          x: 1100,
-          y: value.size.y - 410,
-          // y: 200,
-        }}
-        rowKey="id"
-      />
-    </div>
+          <Table
+            components={components}
+            rowClassName={(record, index) =>
+              areEqual(value.listKeyParent, record) ? "parent" : "child"
+            }
+            bordered
+            dataSource={x.data}
+            columns={value.tableColumn}
+            pagination={false}
+            loading={value.loading}
+            size="small"
+            scroll={{
+              x: 2900,
+              y: value.size.y,
+            }}
+          />
+        </div>
+      ))}
+    </>
   );
 };
 
-export default OpexSummary;
+export default ContentRevenueCogsComponent;

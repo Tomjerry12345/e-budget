@@ -1,10 +1,10 @@
 import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
-import OpexSummaryLogic from "./OpexSummaryLogic";
+import RevenueCogsSummaryLogic from "./RevenueCogsSummaryLogic";
 
-const OpexSummary = () => {
-  const { value, func } = OpexSummaryLogic();
+const RevenueCogsSummary = () => {
+  const { value, func } = RevenueCogsSummaryLogic();
 
   return (
     <div className="custom-root-layout">
@@ -48,7 +48,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_product.map((val, i) => (
                 <Select.Option key={i} value={val.code_product}>
-                {`${val.code_product} (${val.description})`}
+                  {`${val.code_product} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -67,7 +67,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_location.map((val, i) => (
                 <Select.Option key={i} value={val.code_location}>
-                {`${val.code_location} (${val.description})`}
+                  {`${val.code_location} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -86,7 +86,7 @@ const OpexSummary = () => {
             <Select>
               {value.allCodeFilter.code_dept.map((val, i) => (
                 <Select.Option key={i} value={val.code_dept}>
-                {`${val.code_dept} (${val.description})`}
+                  {`${val.code_dept} (${val.description})`}
                 </Select.Option>
               ))}
             </Select>
@@ -110,8 +110,8 @@ const OpexSummary = () => {
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
-        loading={value.loading}
         size="small"
+        loading={value.loading}
         scroll={{
           x: 1100,
           y: value.size.y - 410,
@@ -123,4 +123,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default RevenueCogsSummary;

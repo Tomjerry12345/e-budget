@@ -1,6 +1,8 @@
 import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
+// import { Link } from "react-router-dom";
+import { log } from "../../values/Utilitas";
 import "./UploadModal.scss";
 
 const { Title, Text } = Typography;
@@ -18,12 +20,7 @@ const CustomFooterModal = ({ onOk, onCancel }) => (
 
 const UploadModal = ({ open, onCancel, value, onOk }) => {
   return (
-    <Modal
-      open={open}
-      className="custom-upload-modal"
-      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
-      onCancel={onCancel}
-    >
+    <Modal open={open} className="custom-upload-modal" footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />} onCancel={onCancel}>
       <Title level={4}>Upload Template</Title>
       <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>
@@ -43,13 +40,21 @@ const UploadModal = ({ open, onCancel, value, onOk }) => {
 
         <div className="layout-download-template">
           <Text className="txt-accepted">Accepted File Type .xlsx</Text>
-          <Text className="txt-belum-mempunyai-template">
-            Anda Belum Mempunyai Template ?
-          </Text>
+          <Text className="txt-belum-mempunyai-template">Anda Belum Mempunyai Template ?</Text>
+          {/* <Link
+            to={`${process.env.PUBLIC_URL}/file/${value.params.item}.xlsx`}
+            target="_blank"
+            download
+          >
+            Download
+          </Link> */}
           <Button
             className="btn-download-template"
             type="primary"
+            href={`${process.env.PUBLIC_URL}/file/${value.params.item}.xlsx`}
             icon={<UploadOutlined className="custom-icon" />}
+            download={`${value.params.item}.xlsx`}
+            // download="code_account.xlsx"
           >
             Download Template
           </Button>

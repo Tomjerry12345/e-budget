@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
-import OpexInputLogic from "./OpexInputLogic";
+import OthersInputLogic from "./OthersInputLogic";
 
 const EditableContext = createContext(null);
 
@@ -92,8 +92,8 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const OpexInputPage = () => {
-  const { value, func } = OpexInputLogic();
+const othersInputPage = () => {
+  const { value, func } = OthersInputLogic();
 
   const components = {
     body: {
@@ -211,4 +211,4 @@ const OpexInputPage = () => {
   );
 };
 
-export default OpexInputPage;
+export default othersInputPage;

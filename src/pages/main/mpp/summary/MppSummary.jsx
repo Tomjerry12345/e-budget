@@ -1,10 +1,10 @@
 import { Table, Form, Button, Select } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
-import OpexSummaryLogic from "./OpexSummaryLogic";
+import MppSummaryLogic from "./MppSummaryLogic";
 
-const OpexSummary = () => {
-  const { value, func } = OpexSummaryLogic();
+const MppSummary = () => {
+  const { value, func } = MppSummaryLogic();
 
   return (
     <div className="custom-root-layout">
@@ -26,7 +26,9 @@ const OpexSummary = () => {
               },
             ]}
           >
-            <Select onChange={func.onChange}>
+            <Select
+onChange={func.onChange}
+            >
               {value.allCodeFilter.code_company.map((val, i) => (
                 <Select.Option key={i} value={val.code}>
                   {`${val.code} (${val.title})`}
@@ -110,8 +112,8 @@ const OpexSummary = () => {
         dataSource={value.dataColumn}
         columns={value.tableColumn}
         pagination={false}
-        loading={value.loading}
         size="small"
+        loading={value.loading}
         scroll={{
           x: 1100,
           y: value.size.y - 410,
@@ -123,4 +125,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default MppSummary;

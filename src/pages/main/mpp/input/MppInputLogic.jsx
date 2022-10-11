@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
-const OpexInputLogic = () => {
+const MppInputLogic = () => {
   let params = useParams();
 
   const itemPage = params.item;
@@ -101,7 +101,7 @@ const OpexInputLogic = () => {
     log("response", response);
 
     if (response !== null) {
-      if (nameReducer === "update-opex") {
+      if (nameReducer === "update") {
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
@@ -139,7 +139,7 @@ const OpexInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary Opex": [
+      "Summary MPP": [
         {
           title: "Account",
           dataIndex: "account",
@@ -475,8 +475,8 @@ const OpexInputLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
-    const path = `opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-    // const path = `opex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
+    const path = `mpp/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    // const path = `mpp/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
   };
 
@@ -659,7 +659,7 @@ const OpexInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`opex/update`, formData, "update-opex"));
+    dispatch(postAsync(`mpp/update`, formData, "update"));
   };
 
   const onGetCodeFilter = () => {
@@ -691,4 +691,4 @@ const OpexInputLogic = () => {
   };
 };
 
-export default OpexInputLogic;
+export default MppInputLogic;

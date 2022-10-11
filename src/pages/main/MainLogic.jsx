@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import {
-  allItemInputSubMenu,
-  disabledItemInputMenu,
-} from "../../values/Constant";
-import { getLocal, setLocal } from "../../values/Utilitas";
+import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -17,30 +14,51 @@ const MainLogic = () => {
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const [titleHeader, setTitleHeader] = useState();
   const dispatch = useDispatch();
+  const token = getToken();
+
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
+
+    if (token === null) {
+      navigate("/login");
+    }
     if (movePage !== "null") {
       navigate(movePage);
     }
 
+    onRefreshBrowser();
+    onClosingTab();
+
+    setLocal("move-page", null);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
       const index = getLocal("index-menu");
       isActivated[index] = 2;
       setiEmenu(index);
       setListMenuActivated(isActivated);
     }
+  };
+
+  const onClosingTab = () => {
+    window.addEventListener("beforeunload", alertUser);
+    return () => {
+      window.removeEventListener("beforeunload", alertUser);
+    };
+  };
+
+  const alertUser = (event) => {
+    // setLocal("index-menu", null);
     setLocal("move-page", null);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  };
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
@@ -61,8 +79,7 @@ const MainLogic = () => {
   };
 
   const onClickedMenu = (key, item, nameMenu, title) => {
-    dispatch(loadStart());
-    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0];
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
     let pageNavigation = "";
 
@@ -88,6 +105,7 @@ const MainLogic = () => {
         isShowMenu();
       }
     } else {
+      dispatch(loadStart());
       setLocal("index-menu", index);
       setiEmenu(keyMenu);
       isActivated[index] = 2;
@@ -95,10 +113,28 @@ const MainLogic = () => {
       setShowMenu(false);
       // setTitleHeader(title);
 
-      if (index === 2) {
+      if (index === 1) {
+        if (nameMenu === "Summary Revenue & COGS") {
+          pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+        } else {
+          pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
+        }
+      } else if (index === 2) {
         pageNavigation = `/main/opex/summary/${nameMenu}`;
+      } else if (index === 3) {
+        pageNavigation = `/main/capex/summary/${nameMenu}`;
+      } else if (index === 4) {
+        pageNavigation = `/main/mpp/summary/${nameMenu}`;
+      } else if (index === 5) {
+        pageNavigation = `/main/others/summary/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
+      } else if (index === 8) {
+        log("nameMenu", nameMenu);
+
+        if (nameMenu === "Logout") {
+          pageNavigation = `/login`;
+        }
       }
 
       navigate(pageNavigation);
@@ -115,8 +151,8 @@ const MainLogic = () => {
   // };
 
   const getSubmenu = (index) => {
-    setItem(allItemInputSubMenu[index]);
-    setitemDisabledMenu(disabledItemInputMenu[index]);
+    setItem(allItemSummarySubMenu[index]);
+    setitemDisabledMenu(disabledItemSummaryMenu[index]);
   };
 
   return {
