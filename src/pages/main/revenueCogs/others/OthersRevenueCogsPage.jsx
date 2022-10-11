@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import { Table, Form, Input, Select, Button, Typography } from "antd";
+import { Table, Form, Input, Select, Button, Typography, Tabs } from "antd";
 import React, {
   createContext,
   useContext,
@@ -107,6 +107,19 @@ const EditableCell = ({
   return <td {...restProps}>{childNode}</td>;
 };
 
+const tabItemParent = [
+  {
+    key: 1,
+    label: "Input Penjualan dan Potongan penjualan",
+    // children: `Content of card tab ${id}`,
+  },
+  {
+    key: 2,
+    label: "Input HPP dan pendapatan lainnya",
+    // children: `Content of card tab ${id}`,
+  },
+];
+
 const OthersRevenueCogsPage = () => {
   const { value, func } = OthersRevenueCogsLogic();
 
@@ -138,6 +151,12 @@ const OthersRevenueCogsPage = () => {
 
   return (
     <div className="custom-root-layout">
+      <Tabs
+        defaultActiveKey="1"
+        type="card"
+        // size={size}
+        items={tabItemParent}
+      />
       <Card
         className="card-style"
         // style={{ marginBottom: 16, height: 120 }}
