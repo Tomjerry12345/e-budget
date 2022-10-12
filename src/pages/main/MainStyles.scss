@@ -24,10 +24,50 @@
       }
     }
     .ant-modal-body {
-      padding: 6px 16px;
+      height: calc(100vh - 70px);
+      padding: 0px 0px 8px 0px;
       .scrollableDiv {
-        height: 85vh;
+        padding-left: 16px;
+        padding-bottom: 8px;
+        height: 100%;
         overflow: auto;
+        &::-webkit-scrollbar {
+          width: 6px;
+        }
+        &::-webkit-scrollbar-track {
+          background: none;
+          border-radius: 15px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background: #c4c4c4;
+          border-radius: 15px;
+          height: 10px;
+        }
+      }
+      .scroll-shadows {
+        background:
+    /* Shadow covers */ linear-gradient(
+            #ffffff 30%,
+            rgba(255, 255, 255, 0)
+          ),
+          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+            100%,
+          /* Shadows */
+            radial-gradient(
+              farthest-side at 50% 0,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            ),
+          radial-gradient(
+              farthest-side at 50% 100%,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            )
+            0 100%;
+        background-repeat: no-repeat;
+        background-color: white;
+        background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
+        background-attachment: local, local, scroll, scroll;
       }
       ul {
         .ant-list-item {
@@ -104,5 +144,26 @@
   .ant-breadcrumb li:last-child {
     color: #212121;
     font-weight: 500;
+  }
+}
+
+.ant-table-container {
+  border-right: 1px solid #f0f0f0;
+  border-bottom: 1px solid #f0f0f0;
+  .ant-table-body {
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: none;
+      border-radius: 15px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #c4c4c4;
+      border-radius: 15px;
+      width: 10px;
+    }
   }
 }
