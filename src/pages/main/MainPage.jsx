@@ -74,7 +74,7 @@ const MainPage = () => {
         mask={false}
         footer={null}
       >
-        <div className="scrollableDiv">
+        <div className="scrollableDiv scroll-shadows">
           <List
             size="large"
             header={null}
