@@ -102,9 +102,9 @@ const OpexSummary = () => {
         </Card>
       </div>
       <div className="custom-root-layout">
-        <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
+        {/* <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
           Tambah Data
-        </Button>
+        </Button> */}
 
         <Table
           rowClassName={() => "editable-row"}
@@ -115,9 +115,7 @@ const OpexSummary = () => {
           loading={value.loading}
           size="small"
           scroll={{
-            x: 1100,
-            y: value.size.y - 410,
-            // y: 200,
+            y: value.size.y - 313,
           }}
           rowKey="id"
         />
