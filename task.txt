@@ -1,4 +1,4 @@
-version: revision-v1.0.12
+version: revision-v1.1.0
 
 FE @andri055 
 - tambahkan edit & hapus setiap master kode
