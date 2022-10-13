@@ -1,0 +1,13 @@
+.custom-tabs {
+  .ant-tabs-tab-active {
+    .ant-tabs-tab-btn {
+      color: green;
+    }
+  }
+
+  .ant-tabs-tab-btn:active,
+  .ant-tabs-tab-remove:active,
+  .ant-tabs-tab:hover {
+    color: green;
+  }
+}
