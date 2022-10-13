@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import {
+  allItemSummarySubMenu,
+  disabledItemSummaryMenu,
+} from "../../values/Constant";
 import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -15,11 +18,19 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const pathName = location.pathname;
+
+  const spliter = pathName?.split("/");
+
   const token = getToken();
 
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -120,7 +131,17 @@ const MainLogic = () => {
           pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
         }
       } else if (index === 2) {
-        pageNavigation = `/main/opex/summary/${nameMenu}`;
+        const name = nameMenu.split(" ");
+        const pathMove = name[0].toLowerCase();
+        // const path1 = spliter[3].charAt(0).toUpperCase() + spliter[3].slice(1);
+        // const pathSplit = path1.split("%20").join(" ");
+        log(`path1 => ${pathMove}`);
+
+        if (pathMove === "input") {
+          pageNavigation = `/main/opex/input/${nameMenu}`;
+        } else {
+          pageNavigation = `/main/opex/summary/${nameMenu}`;
+        }
       } else if (index === 3) {
         pageNavigation = `/main/capex/summary/${nameMenu}`;
       } else if (index === 4) {
