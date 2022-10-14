@@ -6,8 +6,8 @@ import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
 const endPoint = {
-  "Pendapatan Non Operasional": "othersPNO",
-  "Biaya Non Operasional": "othersBNO",
+  "Input Direct Pendapatan Non Operasional": "othersPNO",
+  "Input Direct Biaya Non Operasional": "othersBNO",
 };
 
 const OthersInputLogic = () => {
@@ -144,7 +144,7 @@ const OthersInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Pendapatan Non Operasional": [
+      "Input Direct Pendapatan Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",
@@ -430,7 +430,7 @@ const OthersInputLogic = () => {
         //     ) : null,
         // },
       ],
-      "Biaya Non Operasional": [
+      "Input Direct Biaya Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",

@@ -139,7 +139,7 @@ const CapexInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary Capex": [
+      "Input Direct Capex": [
         {
           title: "Account",
           dataIndex: "account",
@@ -686,7 +686,7 @@ const CapexInputLogic = () => {
     },
     func: {
       onFinish,
-      onChange
+      onChange,
     },
   };
 };

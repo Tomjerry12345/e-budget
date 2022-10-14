@@ -7,8 +7,8 @@ import { loadStart } from "../../../../redux/response/response";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
 const endPoint = {
-  "Pendapatan Non Operasional": "othersPNO",
-  "Biaya Non Operasional": "othersBNO",
+  "Summary Pendapatan Non Operasional": "othersPNO",
+  "Summary Biaya Non Operasional": "othersBNO",
 };
 
 const OthersSummaryLogic = () => {
@@ -136,7 +136,7 @@ const OthersSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      "Pendapatan Non Operasional": [
+      "Summary Pendapatan Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",
@@ -172,7 +172,7 @@ const OthersSummaryLogic = () => {
         //     ) : null,
         // },
       ],
-      "Biaya Non Operasional": [
+      "Summary Biaya Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",

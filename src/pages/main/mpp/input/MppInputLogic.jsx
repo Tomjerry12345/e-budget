@@ -139,7 +139,7 @@ const MppInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary MPP": [
+      "Input MPP Direct": [
         {
           title: "Account",
           dataIndex: "account",

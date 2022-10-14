@@ -124,30 +124,27 @@ const MainLogic = () => {
       setShowMenu(false);
       // setTitleHeader(title);
 
+      const name = nameMenu.split(" ");
+      const pathMove = name[0].toLowerCase();
+      const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
+
       if (index === 1) {
-        if (nameMenu === "Summary Revenue & COGS") {
-          pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+        if (
+          nameMenu === "Summary Revenue & COGS" ||
+          nameMenu === "Input Direct Revenue & COGS"
+        ) {
+          pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
         } else {
           pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
         }
       } else if (index === 2) {
-        const name = nameMenu.split(" ");
-        const pathMove = name[0].toLowerCase();
-        // const path1 = spliter[3].charAt(0).toUpperCase() + spliter[3].slice(1);
-        // const pathSplit = path1.split("%20").join(" ");
-        log(`path1 => ${pathMove}`);
-
-        if (pathMove === "input") {
-          pageNavigation = `/main/opex/input/${nameMenu}`;
-        } else {
-          pageNavigation = `/main/opex/summary/${nameMenu}`;
-        }
+        pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
       } else if (index === 3) {
-        pageNavigation = `/main/capex/summary/${nameMenu}`;
+        pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
       } else if (index === 4) {
-        pageNavigation = `/main/mpp/summary/${nameMenu}`;
+        pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
       } else if (index === 5) {
-        pageNavigation = `/main/others/summary/${nameMenu}`;
+        pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
       } else if (index === 8) {
