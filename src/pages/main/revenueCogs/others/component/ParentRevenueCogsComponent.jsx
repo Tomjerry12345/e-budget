@@ -1,7 +1,142 @@
-import { Form, Select, Button, Tabs } from "antd";
+import { Form, Select, Button, Tabs, Typography } from "antd";
 import { Card } from "@mui/material";
+import ChildRevenueCogsComponent from "./ChildRevenueCogsComponent";
+import { logObj, logS } from "../../../../../values/Utilitas";
+import { useParams } from "react-router-dom";
 
-const ParentRevenueCogsComponent = ({ value, func, child }) => {
+const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
+  let params = useParams();
+
+  const itemPage = params.item;
+
+  const data1 = {
+    "Revenue & COGS HK": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS BLT": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+      {
+        title: "List Volume",
+        data: data.listVolume,
+      },
+    ],
+    "Revenue & COGS BJU": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS BSB": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS IKP": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS KIK": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS BSU": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+  };
   return (
     <>
       <div
@@ -106,12 +241,24 @@ const ParentRevenueCogsComponent = ({ value, func, child }) => {
       </div>
 
       {/* <div className="custom-root-layout"> */}
-      <Tabs
+      {/* <Tabs
         defaultActiveKey="1"
         type="card"
         // size={size}
         items={child}
-      />
+      /> */}
+
+      {logObj("test", data)}
+
+      {data1[itemPage].map((val) => (
+        <>
+          <Typography.Text>{val.title}</Typography.Text>
+          <ChildRevenueCogsComponent value={value} data={val.data} />
+        </>
+      ))}
+
+      {/* {data.map((val) => logS("hhhh", val))} */}
+
       {/* </div> */}
     </>
   );

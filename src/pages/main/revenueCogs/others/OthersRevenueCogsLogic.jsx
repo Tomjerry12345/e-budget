@@ -36,6 +36,7 @@ const OthersRevenueCogsLogic = () => {
     listHarga: [],
     listPenjualan: [],
     listPotongan: [],
+    listVolume: [],
   });
 
   const [codeFilter, setCodeFilter] = useState();
@@ -78,6 +79,11 @@ const OthersRevenueCogsLogic = () => {
       name: "listPotongan",
       endPoint: "listpotongan",
       updater: "updatepotongan",
+    },
+    {
+      name: "listVolume",
+      endPoint: "listvolume",
+      updater: "updatevolume",
     },
   ];
 
@@ -124,7 +130,7 @@ const OthersRevenueCogsLogic = () => {
 
         getDataTable(response, url[urlIndex].name, url[urlIndex].update);
 
-        if (urlIndex + 1 <= 3) {
+        if (urlIndex + 1 <= 4) {
           // if (url[urlIndex + 1].endPoint !== undefined) {
 
           // }
@@ -134,7 +140,7 @@ const OthersRevenueCogsLogic = () => {
           dispatch(getAsync(path, "get-data"));
         }
 
-        if (urlIndex === 3) {
+        if (urlIndex === 4) {
           setUrlIndex(0);
         }
 
