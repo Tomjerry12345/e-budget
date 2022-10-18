@@ -1,7 +1,6 @@
 import { Form, Select, Button, Tabs, Typography } from "antd";
 import { Card } from "@mui/material";
 import ChildRevenueCogsComponent from "./ChildRevenueCogsComponent";
-import { logObj, logS } from "../../../../../values/Utilitas";
 import { useParams } from "react-router-dom";
 
 const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
@@ -248,12 +247,14 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         items={child}
       /> */}
 
-      {logObj("test", data)}
-
       {data1[itemPage].map((val) => (
         <>
-          <Typography.Text>{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent value={value} data={val.data} />
+          <Typography.Text className="title">{val.title}</Typography.Text>
+          <ChildRevenueCogsComponent
+            className="child-revenue"
+            value={value}
+            data={val.data}
+          />
         </>
       ))}
 
