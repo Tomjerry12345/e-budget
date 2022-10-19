@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginAsync from "../../../redux/auth/auth.thunks";
-import { log, setLocal } from "../../../values/Utilitas";
+import { log, logS, setLocal } from "../../../values/Utilitas";
 
 const LoginLogic = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ const LoginLogic = () => {
     setLocal("index-menu", 0);
     setLocal("move-page", null);
     setLocal("token", "");
-    log("response", response);
 
     if (response !== null) {
       const { responseCode, responseDescription, token } = response;
@@ -31,7 +30,7 @@ const LoginLogic = () => {
         setLocal("token", token);
         navigate("/");
       } else {
-        alert(responseDescription);
+        logS(responseDescription);
       }
     } else {
       console.log(`error => ${errorMessage}`);
