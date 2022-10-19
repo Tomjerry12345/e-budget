@@ -121,6 +121,10 @@ const ChildRevenueCogsComponent = ({ value, data }) => {
       rowClassName={(record, index) =>
         areEqual(value.listKeyParent, record) ? "parent" : "child"
       }
+      style={{
+        marginTop: 16,
+        marginBottom: 16,
+      }}
       bordered
       dataSource={data}
       columns={value.tableColumn}

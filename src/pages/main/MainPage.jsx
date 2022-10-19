@@ -52,7 +52,7 @@ const MainPage = () => {
   const { func, value } = MainLogic();
   const location = useLocation();
   const pathName = location.pathname;
-  const path = getPath(pathName, value.params.item);
+  // const path = getPath(pathName, value.params.item);
   return (
     <Layout
       style={{
@@ -113,12 +113,21 @@ const MainPage = () => {
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
             <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
           </Breadcrumb>
-          {value.params.item !== "" ? (
+
+          {
+            // value.params.item !== "" ? (
+            //   <Text className="header-title">
+            //     {path}
+            //     {/* {value.params.item} */}
+            //   </Text>
+            // ) : null
+
             <Text className="header-title">
-              {path}
-              {/* {value.params.item} */}
+              {value.params.item === undefined
+                ? "Dashboard"
+                : value.params.item}
             </Text>
-          ) : null}
+          }
         </Header>
         <Content>
           <Outlet />

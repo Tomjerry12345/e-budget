@@ -139,7 +139,7 @@ const OpexInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Summary Opex": [
+      "Input By Opex Direct": [
         {
           title: "Account",
           dataIndex: "account",

@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import {
+  allItemSummarySubMenu,
+  disabledItemSummaryMenu,
+} from "../../values/Constant";
 import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -15,11 +18,19 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
   const dispatch = useDispatch();
+
+  const location = useLocation();
+  const pathName = location.pathname;
+
+  const spliter = pathName?.split("/");
+
   const token = getToken();
 
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -113,20 +124,27 @@ const MainLogic = () => {
       setShowMenu(false);
       // setTitleHeader(title);
 
+      const name = nameMenu.split(" ");
+      const pathMove = name[0].toLowerCase();
+      const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
+
       if (index === 1) {
-        if (nameMenu === "Summary Revenue & COGS") {
-          pageNavigation = `/main/revenue-cogs/summary/${nameMenu}`;
+        if (
+          nameMenu === "Summary Revenue & COGS" ||
+          nameMenu === "Input Direct Revenue & COGS"
+        ) {
+          pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
         } else {
           pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
         }
       } else if (index === 2) {
-        pageNavigation = `/main/opex/summary/${nameMenu}`;
+        pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
       } else if (index === 3) {
-        pageNavigation = `/main/capex/summary/${nameMenu}`;
+        pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
       } else if (index === 4) {
-        pageNavigation = `/main/mpp/summary/${nameMenu}`;
+        pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
       } else if (index === 5) {
-        pageNavigation = `/main/others/summary/${nameMenu}`;
+        pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
       } else if (index === 8) {

@@ -77,7 +77,8 @@ const OthersRevenueCogsPage = () => {
         <ParentRevenueCogsComponent
           value={value}
           func={func}
-          child={tabItemChild[0]}
+          // child={tabItemChild[0]}
+          data={value.dataColumnInput}
         />
       ),
     },
@@ -88,7 +89,8 @@ const OthersRevenueCogsPage = () => {
         <ParentRevenueCogsComponent
           value={value}
           func={func}
-          child={tabItemChild[1]}
+          data={value.dataColumnInput}
+          // child={tabItemChild[1]}
         />
       ),
     },
