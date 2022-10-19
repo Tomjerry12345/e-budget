@@ -27,6 +27,82 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         data: data.listPotongan,
       },
     ],
+    "Revenue & COGS KIU": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+      {
+        title: "List Disc",
+        data: data.listDisc,
+      },
+    ],
+    "Revenue & COGS BTS": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS KIA": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS BJU": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
     "Revenue & COGS BLT": [
       {
         title: "List Asumsi",
@@ -49,7 +125,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         data: data.listVolume,
       },
     ],
-    "Revenue & COGS BJU": [
+    "Revenue & COGS BLU": [
       {
         title: "List Asumsi",
         data: data.listAsumsi,
@@ -57,6 +133,30 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
       {
         title: "List Harga",
         data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+      {
+        title: "List Volume",
+        data: data.listVolume,
+      },
+    ],
+    "Revenue & COGS BK": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+    ],
+    "Revenue & COGS BSU": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
       },
       {
         title: "List Penjualan",
@@ -68,24 +168,6 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
       },
     ],
     "Revenue & COGS BSB": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
-    ],
-    "Revenue & COGS IKP": [
       {
         title: "List Asumsi",
         data: data.listAsumsi,
@@ -121,10 +203,32 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         data: data.listPotongan,
       },
     ],
-    "Revenue & COGS BSU": [
+    "Revenue & COGS IKP": [
       {
         title: "List Asumsi",
         data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
+      },
+      {
+        title: "List Penjualan",
+        data: data.listPenjualan,
+      },
+      {
+        title: "List Potongan",
+        data: data.listPotongan,
+      },
+    ],
+    "Revenue & COGS IKP": [
+      {
+        title: "List Asumsi",
+        data: data.listAsumsi,
+      },
+      {
+        title: "List Harga",
+        data: data.listHarga,
       },
       {
         title: "List Penjualan",

@@ -5,19 +5,323 @@ import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
 
-const endPoint = {
-  "Revenue & COGS HK": "hk",
-  "Revenue & COGS BJU": "bju",
-  "Revenue & COGS BLT": "blt",
-  "Revenue & COGS BSB": "bsb",
-  "Revenue & COGS IKP": "ikp",
-  "Revenue & COGS KIK": "kik",
+const menuReveneue = {
+  "Revenue & COGS HK": {
+    parentUrl: "hk",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS KIU": {
+    parentUrl: "kiu",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+      {
+        name: "listDisc",
+        endPoint: "listdisc",
+        updater: "updatedisc",
+      },
+    ],
+  },
+  "Revenue & COGS BTS": {
+    parentUrl: "bts",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS KIA": {
+    parentUrl: "kia",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS BJU": {
+    parentUrl: "bju",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS BLT": {
+    parentUrl: "blt",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+      {
+        name: "listVolume",
+        endPoint: "listvolume",
+        updater: "updatevolume",
+      },
+    ],
+  },
+  "Revenue & COGS BLU": {
+    parentUrl: "blu",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+      {
+        name: "listVolume",
+        endPoint: "listvolume",
+        updater: "updatevolume",
+      },
+    ],
+  },
+  "Revenue & COGS BK": {
+    parentUrl: "bk",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+    ],
+  },
+  "Revenue & COGS BSU": {
+    parentUrl: "bsu",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS BSB": {
+    parentUrl: "bsb",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS KIK": {
+    parentUrl: "kik",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS IKP": {
+    parentUrl: "ikp",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
+  "Revenue & COGS BAND": {
+    parentUrl: "band",
+    childUrl: [
+      {
+        name: "listAsumsi",
+        endPoint: "listasumsi",
+        update: "update",
+      },
+      {
+        name: "listHarga",
+        endPoint: "listharga",
+        update: "updateharga",
+      },
+      {
+        name: "listPenjualan",
+        endPoint: "listpenjualan",
+      },
+      {
+        name: "listPotongan",
+        endPoint: "listpotongan",
+        updater: "updatepotongan",
+      },
+    ],
+  },
 };
 
 const OthersRevenueCogsLogic = () => {
   let params = useParams();
 
   const itemPage = params.item;
+
+  const singleRevenue = menuReveneue[itemPage];
 
   const [form] = Form.useForm();
 
@@ -37,9 +341,10 @@ const OthersRevenueCogsLogic = () => {
     listPenjualan: [],
     listPotongan: [],
     listVolume: [],
+    listDisc: [],
   });
 
-  const [codeFilter, setCodeFilter] = useState();
+  const [codeFilter, setCodeFilter] = useState(null);
 
   const [allCodeFilter, setAllCodeFilter] = useState({
     code_company: [],
@@ -57,33 +362,6 @@ const OthersRevenueCogsLogic = () => {
     {
       name: "code_location",
       endPoint: "location",
-    },
-  ];
-
-  const url = [
-    {
-      name: "listAsumsi",
-      endPoint: "listasumsi",
-      update: "update",
-    },
-    {
-      name: "listHarga",
-      endPoint: "listharga",
-      update: "updateharga",
-    },
-    {
-      name: "listPenjualan",
-      endPoint: "listpenjualan",
-    },
-    {
-      name: "listPotongan",
-      endPoint: "listpotongan",
-      updater: "updatepotongan",
-    },
-    {
-      name: "listVolume",
-      endPoint: "listvolume",
-      updater: "updatevolume",
     },
   ];
 
@@ -105,7 +383,12 @@ const OthersRevenueCogsLogic = () => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
 
-    onGetCodeFilter();
+    if (codeFilter === null) {
+      onGetCodeFilter();
+    } else {
+      setUrlIndex(0);
+      onSetDataTable(codeFilter);
+    }
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -128,19 +411,25 @@ const OthersRevenueCogsLogic = () => {
           // code_account,
         } = codeFilter;
 
-        getDataTable(response, url[urlIndex].name, url[urlIndex].update);
+        getDataTable(
+          response,
+          singleRevenue.childUrl[urlIndex].name,
+          singleRevenue.childUrl[urlIndex].update
+        );
 
-        if (urlIndex + 1 <= 4) {
+        // alert(singleRevenue.childUrl.length);
+
+        if (urlIndex + 1 <= singleRevenue.childUrl.length - 1) {
           // if (url[urlIndex + 1].endPoint !== undefined) {
 
           // }
-          const path = `${endPoint[itemPage]}/${
-            url[urlIndex + 1].endPoint
+          const path = `${singleRevenue.parentUrl}/${
+            singleRevenue.childUrl[urlIndex + 1].endPoint
           }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
-        if (urlIndex === 4) {
+        if (urlIndex === singleRevenue.childUrl.length - 1) {
           setUrlIndex(0);
         }
 
@@ -510,7 +799,7 @@ const OthersRevenueCogsLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
-    const path = `${endPoint[itemPage]}/listasumsi?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    const path = `${singleRevenue.parentUrl}/listasumsi?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
   };
@@ -712,7 +1001,7 @@ const OthersRevenueCogsLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`${endPoint[itemPage]}/${e}`, formData, "update"));
+    dispatch(postAsync(`${singleRevenue.parentUrl}/${e}`, formData, "update"));
   };
 
   const onGetCodeFilter = () => {

@@ -6,9 +6,11 @@ import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
-// const endPoint = {
-//   "Opex Direct": "",
-// };
+const menuCapex = {
+  "Summary Total Aset": "capexAset",
+  "Summary Total Penyusutan": "capexPenyusutan",
+  "Summary Total Akumulasi Penyusutan": "capexAkumulasi",
+};
 
 const CapexSummaryLogic = () => {
   let params = useParams();
@@ -70,12 +72,14 @@ const CapexSummaryLogic = () => {
 
   const [codeCompany, setCodeCompany] = useState(null);
 
+  const singleMenuCapex = menuCapex[itemPage];
+
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
     setLoading(true);
-    dispatch(getAsync(`capex/summary`, "get-data"));
+    dispatch(getAsync(`${singleMenuCapex}/summary`, "get-data"));
     // onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (response !== null) {
@@ -135,7 +139,79 @@ const CapexSummaryLogic = () => {
 
   const onSetColumn = (year_1, year_2) => {
     const constantTableColums = {
-      "Summary Capex": [
+      "Summary Total Aset": [
+        {
+          title: "Account",
+          dataIndex: "account",
+          width: "4%",
+          fixed: "left",
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          width: "30%",
+        },
+        {
+          title: `Year ${year_1}`,
+          dataIndex: "value_1",
+          width: "4%",
+          fixed: "right",
+        },
+        {
+          title: `Year ${year_2}`,
+          dataIndex: "value_2",
+          width: "4%",
+          fixed: "right",
+        },
+        // {
+        //   dataIndex: "operation",
+        //   fixed: "right",
+        //   width: "5%",
+        //   render: (_, record) =>
+        //     dataColumn.length >= 1 ? (
+        //       <Dropdown overlay={menu} placement="bottom">
+        //         <Button icon={<MoreVertIcon />}></Button>
+        //       </Dropdown>
+        //     ) : null,
+        // },
+      ],
+      "Summary Total Penyusutan": [
+        {
+          title: "Account",
+          dataIndex: "account",
+          width: "4%",
+          fixed: "left",
+        },
+        {
+          title: "Description",
+          dataIndex: "description",
+          width: "30%",
+        },
+        {
+          title: `Year ${year_1}`,
+          dataIndex: "value_1",
+          width: "4%",
+          fixed: "right",
+        },
+        {
+          title: `Year ${year_2}`,
+          dataIndex: "value_2",
+          width: "4%",
+          fixed: "right",
+        },
+        // {
+        //   dataIndex: "operation",
+        //   fixed: "right",
+        //   width: "5%",
+        //   render: (_, record) =>
+        //     dataColumn.length >= 1 ? (
+        //       <Dropdown overlay={menu} placement="bottom">
+        //         <Button icon={<MoreVertIcon />}></Button>
+        //       </Dropdown>
+        //     ) : null,
+        // },
+      ],
+      "Summary Total Akumulasi Penyusutan": [
         {
           title: "Account",
           dataIndex: "account",
@@ -183,7 +259,7 @@ const CapexSummaryLogic = () => {
     const { code_company, code_dept, code_location, code_product } = values;
     dispatch(
       getAsync(
-        `capex/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        `${singleMenuCapex}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
         "get-data"
       )
     );
