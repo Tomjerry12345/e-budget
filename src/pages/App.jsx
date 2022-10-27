@@ -29,7 +29,7 @@ const App = () => {
       logS("responseCode", responseCode);
 
       if (responseCode === 2004) {
-        alert("200");
+        alert("2004");
         navigate("/login");
       } else {
         // alert("400");
@@ -40,6 +40,11 @@ const App = () => {
         }
       }
     } else {
+      // alert(errorMessage);
+      if (errorMessage === "Request failed with status code 500") {
+        navigate("/login");
+      }
+
       console.log(`error ${errorMessage}`);
     }
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
