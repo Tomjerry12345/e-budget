@@ -3,7 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 const menuReveneue = {
   "Revenue & COGS HK": {
@@ -26,7 +26,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -50,12 +65,27 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
       },
       {
         name: "listDisc",
         endPoint: "listdisc",
-        updater: "updatedisc",
+        update: "updatedisc",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -79,7 +109,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -103,7 +148,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -127,7 +187,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -151,12 +226,27 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
       },
       {
         name: "listVolume",
         endPoint: "listvolume",
-        updater: "updatevolume",
+        update: "updatevolume",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -180,12 +270,27 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
       },
       {
         name: "listVolume",
         endPoint: "listvolume",
-        updater: "updatevolume",
+        update: "updatevolume",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -196,6 +301,21 @@ const menuReveneue = {
         name: "listAsumsi",
         endPoint: "listasumsi",
         update: "update",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -214,7 +334,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -238,7 +373,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -262,7 +412,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -286,7 +451,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -310,7 +490,22 @@ const menuReveneue = {
       {
         name: "listPotongan",
         endPoint: "listpotongan",
-        updater: "updatepotongan",
+        update: "updatepotongan",
+      },
+      {
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
+      },
+      {
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
+      },
+      {
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
     ],
   },
@@ -329,9 +524,7 @@ const OthersRevenueCogsLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -342,6 +535,7 @@ const OthersRevenueCogsLogic = () => {
     listPotongan: [],
     listVolume: [],
     listDisc: [],
+    listPendapatanLain: [],
   });
 
   const [codeFilter, setCodeFilter] = useState(null);
@@ -411,11 +605,7 @@ const OthersRevenueCogsLogic = () => {
           // code_account,
         } = codeFilter;
 
-        getDataTable(
-          response,
-          singleRevenue.childUrl[urlIndex].name,
-          singleRevenue.childUrl[urlIndex].update
-        );
+        getDataTable(response, singleRevenue.childUrl[urlIndex].name, singleRevenue.childUrl[urlIndex].update);
 
         // alert(singleRevenue.childUrl.length);
 
@@ -423,9 +613,7 @@ const OthersRevenueCogsLogic = () => {
           // if (url[urlIndex + 1].endPoint !== undefined) {
 
           // }
-          const path = `${singleRevenue.parentUrl}/${
-            singleRevenue.childUrl[urlIndex + 1].endPoint
-          }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
@@ -456,9 +644,7 @@ const OthersRevenueCogsLogic = () => {
           }
 
           if (urlComboBox1 !== undefined) {
-            dispatch(
-              getAsync(urlComboBox1, urlComboBox[urlIndexComboBox].name)
-            );
+            dispatch(getAsync(urlComboBox1, urlComboBox[urlIndexComboBox].name));
           }
 
           setUrlIndexComboBox((current) => current + 1);

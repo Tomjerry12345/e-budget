@@ -12,42 +12,22 @@ const OthersRevenueCogsPage = () => {
       {
         key: 1,
         label: "Asumsi unit jual",
-        children: (
-          <ChildRevenueCogsComponent
-            value={value}
-            data={value.dataColumnInput.listAsumsi}
-          />
-        ),
+        children: <ChildRevenueCogsComponent value={value} data={value.dataColumnInput.listAsumsi} />,
       },
       {
         key: 2,
         label: "Harga jual per unit",
-        children: (
-          <ChildRevenueCogsComponent
-            value={value}
-            data={value.dataColumnInput.listHarga}
-          />
-        ),
+        children: <ChildRevenueCogsComponent value={value} data={value.dataColumnInput.listHarga} />,
       },
       {
         key: 3,
         label: "Penjualan",
-        children: (
-          <ChildRevenueCogsComponent
-            value={value}
-            data={value.dataColumnInput.listPenjualan}
-          />
-        ),
+        children: <ChildRevenueCogsComponent value={value} data={value.dataColumnInput.listPenjualan} />,
       },
       {
         key: 4,
         label: "Potongan penjualan",
-        children: (
-          <ChildRevenueCogsComponent
-            value={value}
-            data={value.dataColumnInput.listPotongan}
-          />
-        ),
+        children: <ChildRevenueCogsComponent value={value} data={value.dataColumnInput.listPotongan} />,
       },
     ],
     [
@@ -79,6 +59,7 @@ const OthersRevenueCogsPage = () => {
           func={func}
           // child={tabItemChild[0]}
           data={value.dataColumnInput}
+          tab="penjualan"
         />
       ),
     },
@@ -90,6 +71,7 @@ const OthersRevenueCogsPage = () => {
           value={value}
           func={func}
           data={value.dataColumnInput}
+          tab="hpp"
           // child={tabItemChild[1]}
         />
       ),

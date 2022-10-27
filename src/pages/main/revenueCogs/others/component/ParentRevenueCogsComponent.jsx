@@ -3,241 +3,449 @@ import { Card } from "@mui/material";
 import ChildRevenueCogsComponent from "./ChildRevenueCogsComponent";
 import { useParams } from "react-router-dom";
 
-const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
+const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
   let params = useParams();
 
   const itemPage = params.item;
 
   const data1 = {
     "Revenue & COGS HK": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS KIU": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
-      {
-        title: "List Disc",
-        data: data.listDisc,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+        {
+          title: "List Disc",
+          data: data.listDisc,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS BTS": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS KIA": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS BJU": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        // {
+        //   title: "List Pendapatan Lain",
+        //   data: data.listPendapatanLain,
+        // },
+        // {
+        //   title: "List Hpp Variable",
+        //   data: data.listHppVariable,
+        // },
+        // {
+        //   title: "List Hpp Lain",
+        //   data: data.listHppLain,
+        // },
+      ],
     ],
     "Revenue & COGS BLT": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
-      {
-        title: "List Volume",
-        data: data.listVolume,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+        {
+          title: "List Volume",
+          data: data.listVolume,
+        },
+      ],
+      [
+        // {
+        //   title: "List Pendapatan Lain",
+        //   data: data.listPendapatanLain,
+        // },
+        // {
+        //   title: "List Hpp Variable",
+        //   data: data.listHppVariable,
+        // },
+        // {
+        //   title: "List Hpp Lain",
+        //   data: data.listHppLain,
+        // },
+      ],
     ],
     "Revenue & COGS BLU": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
-      {
-        title: "List Volume",
-        data: data.listVolume,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+        {
+          title: "List Volume",
+          data: data.listVolume,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS BK": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+      ],
+      [
+        // {
+        //   title: "List Pendapatan Lain",
+        //   data: data.listPendapatanLain,
+        // },
+        // {
+        //   title: "List Hpp Variable",
+        //   data: data.listHppVariable,
+        // },
+        // {
+        //   title: "List Hpp Lain",
+        //   data: data.listHppLain,
+        // },
+      ],
     ],
     "Revenue & COGS BSU": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
     "Revenue & COGS BSB": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        // {
+        //   title: "List Pendapatan Lain",
+        //   data: data.listPendapatanLain,
+        // },
+        // {
+        //   title: "List Hpp Variable",
+        //   data: data.listHppVariable,
+        // },
+        // {
+        //   title: "List Hpp Lain",
+        //   data: data.listHppLain,
+        // },
+      ],
     ],
     "Revenue & COGS KIK": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        // {
+        //   title: "List Pendapatan Lain",
+        //   data: data.listPendapatanLain,
+        // },
+        // {
+        //   title: "List Hpp Variable",
+        //   data: data.listHppVariable,
+        // },
+        // {
+        //   title: "List Hpp Lain",
+        //   data: data.listHppLain,
+        // },
+      ],
     ],
     "Revenue & COGS IKP": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        {
+          title: "List Pendapatan Lain",
+          data: data.listPendapatanLain,
+        },
+        {
+          title: "List Hpp Variable",
+          data: data.listHppVariable,
+        },
+        {
+          title: "List Hpp Lain",
+          data: data.listHppLain,
+        },
+      ],
     ],
-    "Revenue & COGS IKP": [
-      {
-        title: "List Asumsi",
-        data: data.listAsumsi,
-      },
-      {
-        title: "List Harga",
-        data: data.listHarga,
-      },
-      {
-        title: "List Penjualan",
-        data: data.listPenjualan,
-      },
-      {
-        title: "List Potongan",
-        data: data.listPotongan,
-      },
+    "Revenue & COGS BAND": [
+      [
+        {
+          title: "List Asumsi",
+          data: data.listAsumsi,
+        },
+        {
+          title: "List Harga",
+          data: data.listHarga,
+        },
+        {
+          title: "List Penjualan",
+          data: data.listPenjualan,
+        },
+        {
+          title: "List Potongan",
+          data: data.listPotongan,
+        },
+      ],
+      [
+        //   {
+        //     title: "List Pendapatan Lain",
+        //     data: data.listPendapatanLain,
+        //   },
+        //   {
+        //     title: "List Hpp Variable",
+        //     data: data.listHppVariable,
+        //   },
+        //   {
+        //     title: "List Hpp Lain",
+        //     data: data.listHppLain,
+        //   },
+      ],
     ],
   };
   return (
@@ -251,13 +459,8 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         }}
       >
         <Card className="card-style">
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+            {}
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -351,16 +554,19 @@ const ParentRevenueCogsComponent = ({ value, func, child, data }) => {
         items={child}
       /> */}
 
-      {data1[itemPage].map((val) => (
-        <>
-          <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent
-            className="child-revenue"
-            value={value}
-            data={val.data}
-          />
-        </>
-      ))}
+      {tab === "penjualan"
+        ? data1[itemPage][0].map((val) => (
+            <>
+              <Typography.Text className="title">{val.title}</Typography.Text>
+              <ChildRevenueCogsComponent className="child-revenue" value={value} data={val.data} />
+            </>
+          ))
+        : data1[itemPage][1].map((val) => (
+            <>
+              <Typography.Text className="title">{val.title}</Typography.Text>
+              <ChildRevenueCogsComponent className="child-revenue" value={value} data={val.data} />
+            </>
+          ))}
 
       {/* {data.map((val) => logS("hhhh", val))} */}
 
