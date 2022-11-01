@@ -597,17 +597,16 @@ const OthersRevenueCogsLogic = () => {
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    log("response", response);
+    // logObj("response", response);
+    console.log("response", response);
     logObj("nameReducer", nameReducer);
 
     if (response !== null) {
       if (nameReducer === "update") {
         // setDataColumnInput({});
         setUrlIndex(0);
-        logObj("urlindex", urlIndex);
         onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
-        log(`get Data`);
         const {
           code_company,
           code_dept,
@@ -615,6 +614,8 @@ const OthersRevenueCogsLogic = () => {
           code_product,
           // code_account,
         } = codeFilter;
+
+        console.log("index", urlIndex);
 
         getDataTable(
           response,
@@ -636,9 +637,9 @@ const OthersRevenueCogsLogic = () => {
 
         if (urlIndex === singleRevenue.childUrl.length - 1) {
           setUrlIndex(0);
+        } else {
+          setUrlIndex((current) => current + 1);
         }
-
-        setUrlIndex((current) => current + 1);
 
         setLoading(false);
       } else {
@@ -2116,6 +2117,7 @@ const OthersRevenueCogsLogic = () => {
           dataIndex: "code",
           width: "10%",
           fixed: "left",
+          editable: false,
         },
         {
           title: "Description",
@@ -2983,6 +2985,7 @@ const OthersRevenueCogsLogic = () => {
           editable: col.editable,
           dataIndex: col.dataIndex,
           title: col.title,
+          handleSave,
           keyNotEditTable: keyParent,
         }),
       };
@@ -3042,7 +3045,7 @@ const OthersRevenueCogsLogic = () => {
       year_total_2 = 0;
 
       const potongan = val.potongan;
-      const code = val.code;
+      const code = `${val.code}`;
       const description = val.description;
 
       const listYear1 = [];
