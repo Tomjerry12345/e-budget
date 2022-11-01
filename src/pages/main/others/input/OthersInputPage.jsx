@@ -1,14 +1,9 @@
 import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button } from "antd";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
 import OthersInputLogic from "./OthersInputLogic";
+import { useParams } from "react-router-dom";
 
 const EditableContext = createContext(null);
 
@@ -23,19 +18,12 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  keyNotEditTable,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
+  let params = useParams();
+  const itemPage = params.item;
 
   useEffect(() => {
     if (editing) {
@@ -99,7 +87,7 @@ const EditableCell = ({
         }
         onClick={toggleEdit}
       >
-        {parseInt(children[1]).format(0, 3, ".", ",")}
+        {itemPage === "Input Asumsi" ? children[1] : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   }
@@ -124,12 +112,7 @@ const othersInputPage = () => {
           className="card-style"
           // style={{ marginBottom: 16, height: 120 }}
         >
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -218,9 +201,7 @@ const othersInputPage = () => {
       <div className="custom-root-layout">
         <Table
           components={components}
-          rowClassName={(record, index) =>
-            areEqual(value.listKeyParent, record) ? "parent" : "child"
-          }
+          rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
           bordered
           dataSource={value.dataColumnInput}
           columns={value.tableColumn}
