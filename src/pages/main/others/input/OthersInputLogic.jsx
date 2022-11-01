@@ -8,7 +8,6 @@ import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 const endPoint = {
   "Input Direct Pendapatan Non Operasional": "othersPNO",
   "Input Direct Biaya Non Operasional": "othersBNO",
-  "Input Asumsi": "asumsi",
 };
 
 const OthersInputLogic = () => {
@@ -22,7 +21,9 @@ const OthersInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -719,140 +720,6 @@ const OthersInputLogic = () => {
         //       </Dropdown>
         //     ) : null,
         // },
-      ],
-      "Input Asumsi": [
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "5%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <span>
-                  Jan. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Feb. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Mar. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Apr. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  May. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jun. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Jul. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Aug. <span className="act-styles">Act</span>
-                </span>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Sep. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Okt. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Nov. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <span>
-                  Des. <span className="for-styles">For</span>
-                </span>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
       ],
     };
 
