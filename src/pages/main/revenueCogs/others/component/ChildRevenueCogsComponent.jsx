@@ -102,12 +102,29 @@ const EditableCell = ({
         {parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
+  } else {
+    childNode = (
+      <div
+        className="editable-cell-value-wrap"
+        style={
+          {
+            // paddingRight: 24,
+            // fontWeight: 600,
+          }
+        }
+        // onClick={toggleEdit}
+      >
+        {isNaN(children[1])
+          ? children[1]
+          : parseInt(children[1]).format(0, 3, ".", ",")}
+      </div>
+    );
   }
 
   return <td {...restProps}>{childNode}</td>;
 };
 
-const ChildRevenueCogsComponent = ({ value, data }) => {
+const ChildRevenueCogsComponent = ({ value, name }) => {
   const components = {
     body: {
       cell: EditableCell,
@@ -126,8 +143,8 @@ const ChildRevenueCogsComponent = ({ value, data }) => {
         marginBottom: 16,
       }}
       bordered
-      dataSource={data}
-      columns={value.tableColumn}
+      dataSource={value.dataColumnInput[name]}
+      columns={value.tableColumn[name]}
       pagination={false}
       loading={value.loading}
       size="small"
