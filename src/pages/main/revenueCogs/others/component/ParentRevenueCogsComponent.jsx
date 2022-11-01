@@ -12,54 +12,54 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
     "Revenue & COGS HK": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS KIU": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
         {
           title: "List Disc",
@@ -68,138 +68,139 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS BTS": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS KIA": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
+
     "Revenue & COGS BJU": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         // {
-        //   title: "List Pendapatan Lain",
-        //   data: data.listPendapatanLain,
+        //   title: "Pendapatan Operasional Lainnya",
+        //   name: "listPendapatanLain",
         // },
         // {
-        //   title: "List Hpp Variable",
-        //   data: data.listHppVariable,
+        //   title: "HPP Variable",
+        //   name: "listHppVariable",
         // },
         // {
-        //   title: "List Hpp Lain",
-        //   data: data.listHppLain,
+        //   title: "Hpp Lainnya",
+        //   name: "listHppLain",
         // },
       ],
     ],
     "Revenue & COGS BLT": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
         {
           title: "List Volume",
@@ -208,36 +209,36 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
       ],
       [
         // {
-        //   title: "List Pendapatan Lain",
-        //   data: data.listPendapatanLain,
+        //   title: "Pendapatan Operasional Lainnya",
+        //   name: "listPendapatanLain",
         // },
         // {
-        //   title: "List Hpp Variable",
-        //   data: data.listHppVariable,
+        //   title: "HPP Variable",
+        //   name: "listHppVariable",
         // },
         // {
-        //   title: "List Hpp Lain",
-        //   data: data.listHppLain,
+        //   title: "Hpp Lainnya",
+        //   name: "listHppLain",
         // },
       ],
     ],
     "Revenue & COGS BLU": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
         {
           title: "List Volume",
@@ -246,204 +247,204 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS BK": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
       ],
       [
         // {
-        //   title: "List Pendapatan Lain",
-        //   data: data.listPendapatanLain,
+        //   title: "Pendapatan Operasional Lainnya",
+        //   name: "listPendapatanLain",
         // },
         // {
-        //   title: "List Hpp Variable",
-        //   data: data.listHppVariable,
+        //   title: "HPP Variable",
+        //   name: "listHppVariable",
         // },
         // {
-        //   title: "List Hpp Lain",
-        //   data: data.listHppLain,
+        //   title: "Hpp Lainnya",
+        //   name: "listHppLain",
         // },
       ],
     ],
     "Revenue & COGS BSU": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS BSB": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         // {
-        //   title: "List Pendapatan Lain",
-        //   data: data.listPendapatanLain,
+        //   title: "Pendapatan Operasional Lainnya",
+        //   name: "listPendapatanLain",
         // },
         // {
-        //   title: "List Hpp Variable",
-        //   data: data.listHppVariable,
+        //   title: "HPP Variable",
+        //   name: "listHppVariable",
         // },
         // {
-        //   title: "List Hpp Lain",
-        //   data: data.listHppLain,
+        //   title: "Hpp Lainnya",
+        //   name: "listHppLain",
         // },
       ],
     ],
     "Revenue & COGS KIK": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         // {
-        //   title: "List Pendapatan Lain",
-        //   data: data.listPendapatanLain,
+        //   title: "Pendapatan Operasional Lainnya",
+        //   name: "listPendapatanLain",
         // },
         // {
-        //   title: "List Hpp Variable",
-        //   data: data.listHppVariable,
+        //   title: "HPP Variable",
+        //   name: "listHppVariable",
         // },
         // {
-        //   title: "List Hpp Lain",
-        //   data: data.listHppLain,
+        //   title: "Hpp Lainnya",
+        //   name: "listHppLain",
         // },
       ],
     ],
     "Revenue & COGS IKP": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         {
-          title: "List Pendapatan Lain",
-          data: data.listPendapatanLain,
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
         },
         {
-          title: "List Hpp Variable",
-          data: data.listHppVariable,
+          title: "HPP Variable",
+          name: "listHppVariable",
         },
         {
-          title: "List Hpp Lain",
-          data: data.listHppLain,
+          title: "Hpp Lainnya",
+          name: "listHppLain",
         },
       ],
     ],
     "Revenue & COGS BAND": [
       [
         {
-          title: "List Asumsi",
-          data: data.listAsumsi,
+          title: "Asumsi Unit Jual",
+          name: "listAsumsi",
         },
         {
-          title: "List Harga",
-          data: data.listHarga,
+          title: "Harga Jual Per Unit",
+          name: "listHarga",
         },
         {
-          title: "List Penjualan",
-          data: data.listPenjualan,
+          title: "Penjualan",
+          name: "listPenjualan",
         },
         {
-          title: "List Potongan",
-          data: data.listPotongan,
+          title: "Potongan Penjualan",
+          name: "listPotongan",
         },
       ],
       [
         //   {
-        //     title: "List Pendapatan Lain",
-        //     data: data.listPendapatanLain,
+        //     title: "Pendapatan Operasional Lainnya",
+        //     name: "listPendapatanLain",
         //   },
         //   {
-        //     title: "List Hpp Variable",
-        //     data: data.listHppVariable,
+        //     title: "HPP Variable",
+        //     name: "listHppVariable",
         //   },
         //   {
-        //     title: "List Hpp Lain",
-        //     data: data.listHppLain,
+        //     title: "Hpp Lainnya",
+        //     name: "listHppLain",
         //   },
       ],
     ],
@@ -459,7 +460,13 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         }}
       >
         <Card className="card-style">
-          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+          <Form
+            className="form-filter"
+            layout="vertical"
+            ref={value.ref}
+            onFinish={func.onFinish}
+            form={value.form}
+          >
             {}
             <Form.Item
               label="Kode Perusahaan"
@@ -480,7 +487,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
               </Select>
             </Form.Item>
 
-            <Form.Item
+            {/* <Form.Item
               label="Kode Produk"
               name="code_product"
               rules={[
@@ -497,7 +504,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
                   </Select.Option>
                 ))}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
 
             <Form.Item
               label="Kode Lokasi"
@@ -558,13 +565,21 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         ? data1[itemPage][0].map((val) => (
             <>
               <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent className="child-revenue" value={value} data={val.data} />
+              <ChildRevenueCogsComponent
+                className="child-revenue"
+                value={value}
+                name={val.name}
+              />
             </>
           ))
         : data1[itemPage][1].map((val) => (
             <>
               <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent className="child-revenue" value={value} data={val.data} />
+              <ChildRevenueCogsComponent
+                className="child-revenue"
+                value={value}
+                name={val.name}
+              />
             </>
           ))}
 
