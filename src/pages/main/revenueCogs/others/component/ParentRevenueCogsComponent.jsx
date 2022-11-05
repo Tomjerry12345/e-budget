@@ -480,12 +480,8 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
                 },
               ]}
             >
-              <Select defaultValue={codeCompany.code}>
-                <Select.Option
-                  selected
-                  key={codeCompany.code}
-                  value={codeCompany.code}
-                >
+              <Select>
+                <Select.Option value={codeCompany.code}>
                   {`${codeCompany.code} (${codeCompany.title})`}
                 </Select.Option>
                 {/* {value.allCodeFilter.code_company.map((val, i) => (

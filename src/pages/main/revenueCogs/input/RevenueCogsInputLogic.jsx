@@ -16,7 +16,9 @@ const RevenueCogsInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -253,7 +255,9 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">For</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Okt.</Typography.Text>
               </div>
             ),
@@ -264,7 +268,9 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">For</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Nov.</Typography.Text>
               </div>
             ),
@@ -275,7 +281,9 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">For</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Des.</Typography.Text>
               </div>
             ),
@@ -296,7 +304,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Jan.</Typography.Text>
               </div>
             ),
@@ -307,7 +315,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Feb.</Typography.Text>
               </div>
             ),
@@ -318,7 +326,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Mar.</Typography.Text>
               </div>
             ),
@@ -329,7 +337,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Apr.</Typography.Text>
               </div>
             ),
@@ -340,7 +348,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>May.</Typography.Text>
               </div>
             ),
@@ -351,7 +359,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Jun.</Typography.Text>
               </div>
             ),
@@ -362,7 +370,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Jul.</Typography.Text>
               </div>
             ),
@@ -373,7 +381,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Aug.</Typography.Text>
               </div>
             ),
@@ -384,7 +392,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Sep.</Typography.Text>
               </div>
             ),
@@ -395,7 +403,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Okt.</Typography.Text>
               </div>
             ),
@@ -406,7 +414,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Nov.</Typography.Text>
               </div>
             ),
@@ -417,7 +425,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="ebu-styles">Ebudget</Typography.Text>
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
                 <Typography.Text>Des.</Typography.Text>
               </div>
             ),

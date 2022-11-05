@@ -1,8 +1,8 @@
-version: v1.1.9 ✅
+version: v1.2.1 ✅
 
 -kode perusahaan default brdasarkan menu
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
--untuk semua tabel, actual sampai september
--label actual dinaikkan dan ditulis lengkap
--untuk tabel direct tahun hilangkan Rp dan tambahkan titik
+-untuk semua tabel, actual sampai september ✅
+-label actual dinaikkan dan ditulis lengkap ✅
+-untuk tabel direct tahun hilangkan Rp dan tambahkan titik ✅
 -import explort excel disetiap tabel
