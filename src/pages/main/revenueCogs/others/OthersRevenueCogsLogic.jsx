@@ -44,6 +44,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "HK",
+    code: 311,
   },
   "Revenue & COGS KIU": {
     parentUrl: "kiu",
@@ -88,6 +90,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "KIU",
+    code: 311,
   },
   "Revenue & COGS BTS": {
     parentUrl: "bts",
@@ -166,6 +170,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "KIA",
+    code: 313,
   },
   "Revenue & COGS BJU": {
     parentUrl: "bju",
@@ -205,6 +211,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BJU",
+    code: 312,
   },
   "Revenue & COGS BLT": {
     parentUrl: "blt",
@@ -249,6 +257,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BLT",
+    code: 421,
   },
   "Revenue & COGS BLU": {
     parentUrl: "blu",
@@ -293,6 +303,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BLU",
+    code: 422,
   },
   "Revenue & COGS BK": {
     parentUrl: "bk",
@@ -318,6 +330,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BK",
+    code: 221,
   },
   "Revenue & COGS BSU": {
     parentUrl: "bsu",
@@ -352,6 +366,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BSU",
+    code: 411,
   },
   "Revenue & COGS BSB": {
     parentUrl: "bsb",
@@ -391,6 +407,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BSB",
+    code: 413,
   },
   "Revenue & COGS KIK": {
     parentUrl: "kik",
@@ -430,6 +448,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "KIK",
+    code: 241,
   },
   "Revenue & COGS IKP": {
     parentUrl: "ikp",
@@ -469,6 +489,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "IKP",
+    code: 242,
   },
   "Revenue & COGS BAND": {
     parentUrl: "band",
@@ -509,6 +531,8 @@ const menuReveneue = {
         update: "updatehpplain",
       },
     ],
+    title: "BAND",
+    code: 231,
   },
 };
 
@@ -587,10 +611,9 @@ const OthersRevenueCogsLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    onGetCodeFilter();
 
-    if (codeFilter === null) {
-      onGetCodeFilter();
-    } else {
+    if (codeFilter !== null) {
       setUrlIndex(0);
       onSetDataTable(codeFilter);
     }
@@ -676,287 +699,6 @@ const OthersRevenueCogsLogic = () => {
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetColumn = (year_1, year_2, keyParent, name) => {
-    // const constantTableColums = [
-    //   {
-    //     title: "Description",
-    //     dataIndex: "description",
-    //     width: "30%",
-    //     fixed: "left",
-    //   },
-    //   {
-    //     title: `Year ${year_1}`,
-    //     editable: true,
-    //     children: [
-    //       {
-    //         title: (
-    //           <span>
-    //             Jan. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jan_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Feb. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "feb_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Mar. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "mar_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Apr. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "apr_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             May. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "mei_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Jun. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jun_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Jul. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jul_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Aug. <span className="act-styles">Act</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "aug_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Sep. <span className="for-styles">For</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "sep_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Okt. <span className="for-styles">For</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "okt_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Nov. <span className="for-styles">For</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "nov_1",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Des. <span className="for-styles">For</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "des_1",
-    //         editable: true,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     title: "Year total",
-    //     dataIndex: "year_total_1",
-    //     width: "14%",
-    //   },
-    //   {
-    //     title: `Year ${year_2}`,
-    //     children: [
-    //       {
-    //         title: (
-    //           <span>
-    //             Jan. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jan_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Feb. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "feb_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Mar. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "mar_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Apr. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "apr_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             May. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "mei_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Jun. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jun_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Jul. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "jul_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Aug. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "aug_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Sep. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "sep_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Okt. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 100,
-    //         dataIndex: "okt_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Nov. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "nov_2",
-    //         editable: true,
-    //       },
-    //       {
-    //         title: (
-    //           <span>
-    //             Des. <span className="ebu-styles">Ebu</span>
-    //           </span>
-    //         ),
-    //         width: 110,
-    //         dataIndex: "des_2",
-    //         editable: true,
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     title: "Year total",
-    //     dataIndex: "year_total_2",
-    //     width: "14%",
-    //   },
-    //   // {
-    //   //   dataIndex: "operation",
-    //   //   fixed: "right",
-    //   //   width: "5%",
-    //   //   render: (_, record) =>
-    //   //     dataColumn.length >= 1 ? (
-    //   //       <Dropdown overlay={menu} placement="bottom">
-    //   //         <Button icon={<MoreVertIcon />}></Button>
-    //   //       </Dropdown>
-    //   //     ) : null,
-    //   // },
-    // ];
-
     const constantTableColums = {
       listAsumsi: [
         {
@@ -3204,13 +2946,6 @@ const OthersRevenueCogsLogic = () => {
     const uuid = row[`${keysEdit}_uuid`];
     let e = row["endpoint"];
 
-    logObj("row", row);
-    logObj("e", e);
-    logObj("year", year);
-    logObj("month", month);
-    logObj("code", code);
-    logObj("valuesEdit", valuesEdit);
-
     if (uuid === null) {
       formData.append("code", code);
       formData.append("code_company", code_company);
@@ -3229,7 +2964,16 @@ const OthersRevenueCogsLogic = () => {
   };
 
   const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list-master", "code_company"));
+    // dispatch(getAsync("company/list-master", "code_company"));
+    setAllCodeFilter({
+      ...allCodeFilter,
+      code_company: {
+        title: singleRevenue.title,
+        code: singleRevenue.code,
+      },
+    });
+
+    onChange(singleRevenue.code);
   };
 
   const onChange = (e) => {

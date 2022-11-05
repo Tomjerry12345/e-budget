@@ -449,6 +449,9 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
       ],
     ],
   };
+
+  const codeCompany = value.allCodeFilter.code_company;
+
   return (
     <>
       <div
@@ -467,7 +470,6 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
             onFinish={func.onFinish}
             form={value.form}
           >
-            {}
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -478,12 +480,19 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
                 },
               ]}
             >
-              <Select onChange={func.onChange}>
-                {value.allCodeFilter.code_company.map((val, i) => (
+              <Select defaultValue={codeCompany.code}>
+                <Select.Option
+                  selected
+                  key={codeCompany.code}
+                  value={codeCompany.code}
+                >
+                  {`${codeCompany.code} (${codeCompany.title})`}
+                </Select.Option>
+                {/* {value.allCodeFilter.code_company.map((val, i) => (
                   <Select.Option key={i} value={val.code}>
                     {`${val.code} (${val.title})`}
                   </Select.Option>
-                ))}
+                ))} */}
               </Select>
             </Form.Item>
 
