@@ -3,11 +3,11 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 const endPoint = {
-  "Pendapatan Non Operasional": "othersPNO",
-  "Biaya Non Operasional": "othersBNO",
+  "Input Direct Pendapatan Non Operasional": "othersPNO",
+  "Input Direct Biaya Non Operasional": "othersBNO",
 };
 
 const OthersInputLogic = () => {
@@ -99,11 +99,16 @@ const OthersInputLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-    onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (allCodeFilter.code_company.length !== 0) {
+      onFinish(allCodeFilter);
+    } else {
+      onGetCodeFilter();
+    }
+  }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    log("response", response);
+    // logObj("response", response);
 
     if (response !== null) {
       if (nameReducer === "update") {
@@ -144,7 +149,7 @@ const OthersInputLogic = () => {
 
   const onSetColumn = (year_1, year_2, keyParent) => {
     const constantTableColums = {
-      "Pendapatan Non Operasional": [
+      "Input Direct Pendapatan Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",
@@ -430,7 +435,7 @@ const OthersInputLogic = () => {
         //     ) : null,
         // },
       ],
-      "Biaya Non Operasional": [
+      "Input Direct Biaya Non Operasional": [
         {
           title: "Account",
           dataIndex: "account",
@@ -782,8 +787,8 @@ const OthersInputLogic = () => {
     let keyParent = [];
 
     data?.list?.forEach((val, i) => {
-      year_1 = val.detail[0].year;
-      year_2 = val.detail[1].year;
+      year_1 = val.detail[0]?.year;
+      year_2 = val.detail[1]?.year;
 
       year_total_1 = 0;
       year_total_2 = 0;
@@ -803,7 +808,7 @@ const OthersInputLogic = () => {
         year_total_1 += month.value;
       });
 
-      val.detail[1].list_month?.forEach((month) => {
+      val.detail[1]?.list_month?.forEach((month) => {
         listYear2.push(month);
         year_total_2 += month.value;
       });
