@@ -21,9 +21,7 @@ const CapexSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const navigate = useNavigate();
 
@@ -76,6 +74,12 @@ const CapexSummaryLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+      code_company: null,
+    });
     setLoading(true);
     dispatch(getAsync(`${singleMenuCapex}/summary`, "get-data"));
     // onGetCodeFilter();
@@ -257,12 +261,7 @@ const CapexSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(
-      getAsync(
-        `${singleMenuCapex}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
-        "get-data"
-      )
-    );
+    dispatch(getAsync(`${singleMenuCapex}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
   };
 
   const onTambahData = () => {
@@ -281,6 +280,12 @@ const CapexSummaryLogic = () => {
   };
 
   const onChange = (e) => {
+    setUrlIndex(0);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     const urlComboBox = `product/list-by-com?code_company=${e}`;
     setCodeCompany(e);
     dispatch(getAsync(urlComboBox, "code_product"));

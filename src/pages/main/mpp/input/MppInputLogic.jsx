@@ -678,6 +678,12 @@ const MppInputLogic = () => {
   };
 
   const onChange = (e) => {
+    setUrlIndex(0);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     const urlComboBox = `product/list-by-com?code_company=${e}`;
     setCodeCompany(e);
     dispatch(getAsync(urlComboBox, "code_product"));

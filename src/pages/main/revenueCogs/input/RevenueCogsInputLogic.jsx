@@ -16,9 +16,7 @@ const RevenueCogsInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -255,9 +253,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">
-                  Forecast
-                </Typography.Text>
+                <Typography.Text className="for-styles">Forecast</Typography.Text>
                 <Typography.Text>Okt.</Typography.Text>
               </div>
             ),
@@ -268,9 +264,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">
-                  Forecast
-                </Typography.Text>
+                <Typography.Text className="for-styles">Forecast</Typography.Text>
                 <Typography.Text>Nov.</Typography.Text>
               </div>
             ),
@@ -281,9 +275,7 @@ const RevenueCogsInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">
-                  Forecast
-                </Typography.Text>
+                <Typography.Text className="for-styles">Forecast</Typography.Text>
                 <Typography.Text>Des.</Typography.Text>
               </div>
             ),
@@ -695,6 +687,12 @@ const RevenueCogsInputLogic = () => {
   };
 
   const onChange = (e) => {
+    setUrlIndex(0);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     const urlComboBox = `product/list-by-com?code_company=${e}`;
     setCodeCompany(e);
     dispatch(getAsync(urlComboBox, "code_product"));
