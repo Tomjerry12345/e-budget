@@ -14,6 +14,7 @@ import MppInputPage from "../pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "../pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "../pages/main/others/summary/OthersSummary";
 import OthersInputPage from "../pages/main/others/input/OthersInputPage";
+import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsiPage";
 import OthersRevenueCogsPage from "../pages/main/revenueCogs/others/OthersRevenueCogsPage";
 
 const RoutersConfig = () => {
@@ -42,6 +43,7 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
+            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
           </Route>

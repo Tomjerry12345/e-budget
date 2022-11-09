@@ -263,11 +263,11 @@ const menuReveneue = {
   "Revenue & COGS BLU": {
     parentUrl: "blu",
     childUrl: [
-      {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
+      // {
+      //   name: "listAsumsi",
+      //   endPoint: "listasumsi",
+      //   update: "update",
+      // },
       {
         name: "listHarga",
         endPoint: "listharga",
@@ -3567,7 +3567,7 @@ const OthersRevenueCogsLogic = () => {
       // code_account,
     } = values;
     setCodeFilter(values);
-    const path = `${singleRevenue.parentUrl}/listasumsi?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[0].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
     dispatch(getAsync(path, "get-data"));
   };
