@@ -106,6 +106,8 @@ const CoaInputLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
+  const [updateData, setUpdateData] = useState(false);
+
   const [loading, setLoading] = useState(false);
 
   const [openAction, setOpenAction] = useState({
@@ -406,14 +408,14 @@ const CoaInputLogic = () => {
     "Kode projek": [
       {
         title: "Kode Project",
-        dataIndex: "kode_project",
+        dataIndex: "code_project",
         // width: "20%",
 
         fixed: "left",
       },
       {
         title: "Kode Parent",
-        dataIndex: "kode_parent",
+        dataIndex: "code_parent",
         // width: "5%",
       },
       {
@@ -484,7 +486,7 @@ const CoaInputLogic = () => {
     window.onresize = getSizeScreen(setSize);
     onSetColumn();
     onSetDataTable();
-  }, [params.item]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [params.item, updateData]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     log("response", response);
@@ -501,9 +503,14 @@ const CoaInputLogic = () => {
         }
       } else if (nameReducer === constantUploadCoa) {
         const { responseCode } = response;
-        if (responseCode === "200") {
-          setLocal("move-page", `/main/coa/${params.item}`);
-          navigate("/");
+        if (responseCode === 200) {
+          onCloseUploadModal();
+          setUpdateData((prev) => !prev);
+          setLoading(true);
+          // setLocal("move-page", `/main/coa/${params.item}`);
+          // navigate("/");
+        } else {
+          alert("terjadi kesalahan");
         }
       } else if (nameReducer === constantActionCoa) {
         onSetDataTable();
@@ -562,6 +569,7 @@ const CoaInputLogic = () => {
 
   const onCloseUploadModal = () => {
     setOpenUploadModal(false);
+    acceptedFiles.length = 0;
   };
 
   const onUploadFile = () => {

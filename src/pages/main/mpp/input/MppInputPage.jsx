@@ -102,6 +102,23 @@ const EditableCell = ({
         {parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
+  } else {
+    childNode = (
+      <div
+        className="editable-cell-value-wrap"
+        style={
+          {
+            // paddingRight: 24,
+            // fontWeight: 600,
+          }
+        }
+        // onClick={toggleEdit}
+      >
+        {typeof children[1] === "string"
+          ? children[1]
+          : parseInt(children[1]).format(0, 3, ".", ",")}
+      </div>
+    );
   }
 
   return <td {...restProps}>{childNode}</td>;

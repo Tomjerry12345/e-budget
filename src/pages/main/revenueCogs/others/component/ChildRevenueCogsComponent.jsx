@@ -114,7 +114,7 @@ const EditableCell = ({
         }
         // onClick={toggleEdit}
       >
-        {isNaN(children[1])
+        {typeof children[1] === "string"
           ? children[1]
           : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>

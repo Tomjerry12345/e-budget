@@ -1,4 +1,4 @@
-import { Form } from "antd";
+import { Form, Typography } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -16,9 +16,7 @@ const MppInputLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState([]);
 
@@ -158,9 +156,10 @@ const MppInputLogic = () => {
           children: [
             {
               title: (
-                <span>
-                  Jan. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Jan.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jan_1",
@@ -168,9 +167,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Feb. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Feb.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "feb_1",
@@ -178,9 +178,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Mar. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Jan.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "mar_1",
@@ -188,9 +189,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Apr. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Apr.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "apr_1",
@@ -198,9 +200,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  May. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>May.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "mei_1",
@@ -208,9 +211,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Jun. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Jun.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jun_1",
@@ -218,9 +222,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Jul. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Jul.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jul_1",
@@ -228,9 +233,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Aug. <span className="act-styles">Act</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Aug.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "aug_1",
@@ -238,9 +244,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Sep. <span className="for-styles">For</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text>Sep.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "sep_1",
@@ -248,9 +255,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Okt. <span className="for-styles">For</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text>Okt.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "okt_1",
@@ -258,9 +266,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Nov. <span className="for-styles">For</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text>Nov.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "nov_1",
@@ -268,9 +277,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Des. <span className="for-styles">For</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text>Des.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "des_1",
@@ -285,12 +295,14 @@ const MppInputLogic = () => {
         },
         {
           title: `Year ${year_2}`,
+          editable: true,
           children: [
             {
               title: (
-                <span>
-                  Jan. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Jan.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jan_2",
@@ -298,9 +310,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Feb. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Feb.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "feb_2",
@@ -308,9 +321,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Mar. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Mar.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "mar_2",
@@ -318,9 +332,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Apr. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Apr.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "apr_2",
@@ -328,9 +343,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  May. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>May.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "mei_2",
@@ -338,9 +354,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Jun. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Jun.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jun_2",
@@ -348,9 +365,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Jul. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Jul.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "jul_2",
@@ -358,9 +376,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Aug. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Aug.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "aug_2",
@@ -368,9 +387,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Sep. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Sep.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "sep_2",
@@ -378,9 +398,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Okt. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Okt.</Typography.Text>
+                </div>
               ),
               width: 100,
               dataIndex: "okt_2",
@@ -388,9 +409,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Nov. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Nov.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "nov_2",
@@ -398,9 +420,10 @@ const MppInputLogic = () => {
             },
             {
               title: (
-                <span>
-                  Des. <span className="ebu-styles">Ebu</span>
-                </span>
+                <div className="title-table">
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text>Des.</Typography.Text>
+                </div>
               ),
               width: 110,
               dataIndex: "des_2",
@@ -413,22 +436,10 @@ const MppInputLogic = () => {
           dataIndex: "year_total_2",
           width: "14%",
         },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
       ],
     };
 
     const columns = constantTableColums[itemPage].map((col) => {
-      // console.log(`col => ${JSON.stringify(col)}`);
       if (!col.editable) {
         return col;
       }
@@ -569,7 +580,7 @@ const MppInputLogic = () => {
         des_1_uuid: listYear1[11]?.uuid,
         des_1_month: listYear1[11]?.month,
         des_1_year: year_1,
-        year_total_1: `Rp. ${year_total_1}`,
+        year_total_1: year_total_1,
         jan_2: listYear2[0]?.value,
         jan_2_uuid: listYear2[0]?.uuid,
         jan_2_month: listYear2[0]?.month,
@@ -618,7 +629,7 @@ const MppInputLogic = () => {
         des_2_uuid: listYear2[11]?.uuid,
         des_2_month: listYear2[11]?.month,
         des_2_year: year_2,
-        year_total_2: `Rp. ${year_total_2}`,
+        year_total_2: year_total_2,
       });
     });
 

@@ -1,30 +1,11 @@
-version: v1.1.8
+version: v1.2.2 ✅
 
-FE @andri055 
-- tambahkan edit & hapus setiap master kode
-- input asumsi
-- revenue & cogs HK (page 1) ✅
-- revenue & cogs KIU (page 1)
-- revenue & cogs BTS (page 1) 
-- revenue & cogs KIA (page 1)
-- revenue & cogs BJU (page 1) ✅
-- revenue & cogs BLT (page 1) tambah input volume
-- revenue & cogs BLU (page 1)
-- revenue & cogs BSU (page 1)
-- revenue & cogs BSB (page 1) ✅
-- revenue & cogs KIK (page 1) ✅
-- revenue & cogs IKP (page 1) ✅
-- revenue & cogs BAND (page 1)
-
-noted: 
-* Tambah all pada setiap combo box + ketika load pertama pilihan otomatis adalah all (high)
-* master akun
-- perlu softdelete
-- log acitify
-* filter tahun untuk summary (ini filter tahun bagamana nanti kak @asrarulikram  ?)
-* tombol kembali dari input ke summary
-* tambahkan validasi update data pada code parent
-* capex filter perlu diperbaiki tampilannya
-* list mpp summary tidak sesuai (kurang field parent)
-* list input direct mpp parentnya double
-* summary belum ada pembeda parent
+-kode perusahaan default brdasarkan menu ✅
+-tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
+-untuk semua tabel, actual sampai september ✅
+-label actual dinaikkan dan ditulis lengkap ✅
+-untuk tabel direct tahun hilangkan Rp dan tambahkan titik ✅
+-upload file bermasalah ✅
+-mpp Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅
+-others Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅ -> bug be update othersPNO && othersBNO
+-import explort excel disetiap tabel
