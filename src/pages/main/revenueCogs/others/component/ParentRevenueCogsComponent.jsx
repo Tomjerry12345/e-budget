@@ -171,18 +171,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        // {
-        //   title: "Pendapatan Operasional Lainnya",
-        //   name: "listPendapatanLain",
-        // },
-        // {
-        //   title: "HPP Variable",
-        //   name: "listHppVariable",
-        // },
-        // {
-        //   title: "Hpp Lainnya",
-        //   name: "listHppLain",
-        // },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
     "Revenue & COGS BLT": [
@@ -209,26 +209,26 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        // {
-        //   title: "Pendapatan Operasional Lainnya",
-        //   name: "listPendapatanLain",
-        // },
-        // {
-        //   title: "HPP Variable",
-        //   name: "listHppVariable",
-        // },
-        // {
-        //   title: "Hpp Lainnya",
-        //   name: "listHppLain",
-        // },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
     "Revenue & COGS BLU": [
       [
-        {
-          title: "Asumsi Unit Jual",
-          name: "listAsumsi",
-        },
+        // {
+        //   title: "Asumsi Unit Jual",
+        //   name: "listAsumsi",
+        // },
         {
           title: "Harga Jual Per Unit",
           name: "listHarga",
@@ -269,18 +269,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        // {
-        //   title: "Pendapatan Operasional Lainnya",
-        //   name: "listPendapatanLain",
-        // },
-        // {
-        //   title: "HPP Variable",
-        //   name: "listHppVariable",
-        // },
-        // {
-        //   title: "Hpp Lainnya",
-        //   name: "listHppLain",
-        // },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
     "Revenue & COGS BSU": [
@@ -333,18 +333,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        // {
-        //   title: "Pendapatan Operasional Lainnya",
-        //   name: "listPendapatanLain",
-        // },
-        // {
-        //   title: "HPP Variable",
-        //   name: "listHppVariable",
-        // },
-        // {
-        //   title: "Hpp Lainnya",
-        //   name: "listHppLain",
-        // },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
     "Revenue & COGS KIK": [
@@ -367,18 +367,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        // {
-        //   title: "Pendapatan Operasional Lainnya",
-        //   name: "listPendapatanLain",
-        // },
-        // {
-        //   title: "HPP Variable",
-        //   name: "listHppVariable",
-        // },
-        // {
-        //   title: "Hpp Lainnya",
-        //   name: "listHppLain",
-        // },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
     "Revenue & COGS IKP": [
@@ -435,18 +435,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
       ],
       [
-        //   {
-        //     title: "Pendapatan Operasional Lainnya",
-        //     name: "listPendapatanLain",
-        //   },
-        //   {
-        //     title: "HPP Variable",
-        //     name: "listHppVariable",
-        //   },
-        //   {
-        //     title: "Hpp Lainnya",
-        //     name: "listHppLain",
-        //   },
+        {
+          title: "Pendapatan Operasional Lainnya",
+          name: "listPendapatanLain",
+        },
+        {
+          title: "HPP Variable",
+          name: "listHppVariable",
+        },
+        {
+          title: "Hpp Lainnya",
+          name: "listHppLain",
+        },
       ],
     ],
   };

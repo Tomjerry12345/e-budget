@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import {
-  allItemSummarySubMenu,
-  disabledItemSummaryMenu,
-} from "../../values/Constant";
+import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
 import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -28,9 +25,7 @@ const MainLogic = () => {
 
   // const [segmentedValue, setSegmentedValue] = useState("Input");
 
-  const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -129,10 +124,7 @@ const MainLogic = () => {
       const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
 
       if (index === 1) {
-        if (
-          nameMenu === "Summary Revenue & COGS" ||
-          nameMenu === "Input Direct Revenue & COGS"
-        ) {
+        if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
           pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
         } else {
           pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
@@ -144,7 +136,11 @@ const MainLogic = () => {
       } else if (index === 4) {
         pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
       } else if (index === 5) {
-        pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
+        if (nameMenu === "Input Asumsi") {
+          pageNavigation = `/main/others/others-input/Input Asumsi`;
+        } else {
+          pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
+        }
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
       } else if (index === 8) {
