@@ -2,6 +2,7 @@ import { Form, Select, Button, Tabs, Typography } from "antd";
 import { Card } from "@mui/material";
 import ChildRevenueCogsComponent from "./ChildRevenueCogsComponent";
 import { useParams } from "react-router-dom";
+import { Input } from "antd";
 
 const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
   let params = useParams();
@@ -63,7 +64,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
         {
           title: "List Disc",
-          data: data.listDisc,
+          name: "listDisc",
         },
       ],
       [
@@ -204,7 +205,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
         {
           title: "List Volume",
-          data: data.listVolume,
+          data: "listVolume",
         },
       ],
       [
@@ -242,7 +243,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         },
         {
           title: "List Volume",
-          data: data.listVolume,
+          data: "listVolume",
         },
       ],
       [
@@ -463,13 +464,7 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         }}
       >
         <Card className="card-style">
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -481,35 +476,11 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
               ]}
             >
               <Select>
-                <Select.Option value={codeCompany.code}>
-                  {`${codeCompany.code} (${codeCompany.title})`}
-                </Select.Option>
-                {/* {value.allCodeFilter.code_company.map((val, i) => (
-                  <Select.Option key={i} value={val.code}>
-                    {`${val.code} (${val.title})`}
-                  </Select.Option>
-                ))} */}
+                <Select.Option value={codeCompany.code}>{`${codeCompany.code} (${codeCompany.title})`}</Select.Option>
               </Select>
+              {/* <Input placeholder={`${codeCompany.code} (${codeCompany.title})`} disabled value={codeCompany.code} /> */}
+              {/* <Input /> */}
             </Form.Item>
-
-            {/* <Form.Item
-              label="Kode Produk"
-              name="code_product"
-              rules={[
-                {
-                  required: true,
-                  message: "tidak boleh kosong!",
-                },
-              ]}
-            >
-              <Select>
-                {value.allCodeFilter.code_product.map((val, i) => (
-                  <Select.Option key={i} value={val.code_product}>
-                    {`${val.code_product} (${val.description})`}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item> */}
 
             <Form.Item
               label="Kode Lokasi"
@@ -570,21 +541,13 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         ? data1[itemPage][0].map((val) => (
             <>
               <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent
-                className="child-revenue"
-                value={value}
-                name={val.name}
-              />
+              <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
             </>
           ))
         : data1[itemPage][1].map((val) => (
             <>
               <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent
-                className="child-revenue"
-                value={value}
-                name={val.name}
-              />
+              <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
             </>
           ))}
 

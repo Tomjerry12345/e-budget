@@ -1,8 +1,11 @@
-version: v1.2.1 ✅
+version: v1.2.2 ✅
 
--kode perusahaan default brdasarkan menu
+-kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
 -untuk semua tabel, actual sampai september ✅
 -label actual dinaikkan dan ditulis lengkap ✅
 -untuk tabel direct tahun hilangkan Rp dan tambahkan titik ✅
+-upload file bermasalah ✅
+-mpp Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅
+-others Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅ -> bug be update othersPNO && othersBNO
 -import explort excel disetiap tabel
