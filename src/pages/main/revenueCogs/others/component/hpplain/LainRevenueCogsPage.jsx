@@ -1,48 +1,44 @@
 import { Form, Select, Button, Tabs, Typography } from "antd";
 import { Card } from "@mui/material";
-import ChildRevenueCogsComponent from "./ChildRevenueCogsComponent";
 import { useParams } from "react-router-dom";
-import { Input } from "antd";
+import ChildRevenueCogsComponent from "../ChildRevenueCogsComponent";
+import LainRevenueCogsLogic from "./LainRevenueCogsLogic";
 
-const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
+const LainRevenueCogsPage = ({ changeTabs }) => {
+  const { value, func } = LainRevenueCogsLogic({ changeTabs });
+
   let params = useParams();
 
   const itemPage = params.item;
 
   const data1 = {
     "Revenue & COGS HK": [
-      [
-        {
-          title: "Asumsi Unit Jual",
-          name: "listAsumsi",
-        },
-        {
-          title: "Harga Jual Per Unit",
-          name: "listHarga",
-        },
-        {
-          title: "Penjualan",
-          name: "listPenjualan",
-        },
-        {
-          title: "Potongan Penjualan",
-          name: "listPotongan",
-        },
-      ],
-      [
-        {
-          title: "Pendapatan Operasional Lainnya",
-          name: "listPendapatanLain",
-        },
-        {
-          title: "HPP Variable",
-          name: "listHppVariable",
-        },
-        {
-          title: "Hpp Lainnya",
-          name: "listHppLain",
-        },
-      ],
+      {
+        title: "Pendapatan Operasional Lainnya",
+        name: "listPendapatanLain",
+      },
+      {
+        title: "HPP Variable",
+        name: "listHppVariable",
+      },
+      {
+        title: "Hpp Lainnya",
+        name: "listHppLain",
+      },
+      // [
+      //   {
+      //     title: "Pendapatan Operasional Lainnya",
+      //     name: "listPendapatanLain",
+      //   },
+      //   {
+      //     title: "HPP Variable",
+      //     name: "listHppVariable",
+      //   },
+      //   {
+      //     title: "Hpp Lainnya",
+      //     name: "listHppLain",
+      //   },
+      // ],
     ],
     "Revenue & COGS KIU": [
       [
@@ -451,7 +447,9 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
     ],
   };
 
-  const codeCompany = value.allCodeFilter.code_company;
+  const codeCompany = value.filterCompany;
+
+  console.log("value.allCodeFilter", value.allCodeFilter);
 
   return (
     <>
@@ -464,7 +462,13 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
         }}
       >
         <Card className="card-style">
-          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+          <Form
+            className="form-filter"
+            layout="vertical"
+            ref={value.ref}
+            onFinish={func.onFinish}
+            form={value.form}
+          >
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -476,7 +480,9 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
               ]}
             >
               <Select>
-                <Select.Option value={codeCompany.code}>{`${codeCompany.code} (${codeCompany.title})`}</Select.Option>
+                <Select.Option
+                  value={codeCompany.code}
+                >{`${codeCompany.code} (${codeCompany.title})`}</Select.Option>
               </Select>
               {/* <Input placeholder={`${codeCompany.code} (${codeCompany.title})`} disabled value={codeCompany.code} /> */}
               {/* <Input /> */}
@@ -528,26 +534,18 @@ const ParentRevenueCogsComponent = ({ value, func, child, data, tab }) => {
           </Form>
         </Card>
       </div>
-
-      {tab === "penjualan"
-        ? data1[itemPage][0].map((val) => (
-            <>
-              <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
-            </>
-          ))
-        : data1[itemPage][1].map((val) => (
-            <>
-              <Typography.Text className="title">{val.title}</Typography.Text>
-              <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
-            </>
-          ))}
-
-      {/* {data.map((val) => logS("hhhh", val))} */}
-
-      {/* </div> */}
+      {data1[itemPage].map((val) => (
+        <>
+          <Typography.Text className="title">{val.title}</Typography.Text>
+          <ChildRevenueCogsComponent
+            className="child-revenue"
+            value={value}
+            name={val.name}
+          />
+        </>
+      ))}
     </>
   );
 };
 
-export default ParentRevenueCogsComponent;
+export default LainRevenueCogsPage;

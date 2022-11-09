@@ -6,7 +6,7 @@ import "./LoginStyle.scss";
 import logo from "../../../assets/img/logo.png";
 import LoginLogic from "./LoginLogic";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import ModalComponent from "../../../component/modal/ModalComponent";
+import NotifComponent from "../../../component/modal/NotifComponent";
 
 const LoginPage = () => {
   const { value, func } = LoginLogic();
@@ -83,7 +83,7 @@ const LoginPage = () => {
                   name="password"
                   label="Masukkan Password"
                   rules={[
-                    { required: true, message: "Please input your username!" },
+                    { required: true, message: "Please input your password!" },
                   ]}
                 >
                   <Input.Password
@@ -114,7 +114,11 @@ const LoginPage = () => {
         </Col>
       </Row>
 
-      <ModalComponent open={false} />
+      {/* <NotifComponent
+        open={value.open}
+        onOk={func.handleOk}
+        onCancel={func.handleCancel}
+      /> */}
     </Layout>
   );
 };
