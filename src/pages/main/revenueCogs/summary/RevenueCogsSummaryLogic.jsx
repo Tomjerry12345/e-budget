@@ -19,9 +19,7 @@ const RevenueCogsSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const navigate = useNavigate();
 
@@ -183,12 +181,7 @@ const RevenueCogsSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(
-      getAsync(
-        `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
-        "get-data"
-      )
-    );
+    dispatch(getAsync(`revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
   };
 
   const onTambahData = () => {
@@ -208,6 +201,12 @@ const RevenueCogsSummaryLogic = () => {
   };
 
   const onChange = (e) => {
+    setUrlIndex(0);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     const urlComboBox = `product/list-by-com?code_company=${e}`;
     setCodeCompany(e);
     dispatch(getAsync(urlComboBox, "code_product"));

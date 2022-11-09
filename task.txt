@@ -1,4 +1,4 @@
-version: v1.2.2 ✅
+version: v1.2.3✅
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -8,4 +8,5 @@ version: v1.2.2 ✅
 -upload file bermasalah ✅
 -mpp Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅
 -others Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅ -> bug be update othersPNO && othersBNO
+-input direct kode lokasi tidak berubah ketika memilih perusahaan ✅
 -import explort excel disetiap tabel

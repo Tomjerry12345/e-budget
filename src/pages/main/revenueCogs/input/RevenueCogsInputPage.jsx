@@ -129,6 +129,7 @@ const RevenueCogsInputPage = () => {
             layout="vertical"
             ref={value.ref}
             onFinish={func.onFinish}
+            form={value.form}
           >
             <Form.Item
               label="Kode Perusahaan"

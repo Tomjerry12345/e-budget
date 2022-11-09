@@ -10,13 +10,7 @@ const CapexSummary = () => {
     <>
       <div className="custom-root-card">
         <Card className="card-style">
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"

@@ -98,11 +98,60 @@ const OthersInputLogic = () => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
 
-    if (allCodeFilter.code_company.length !== 0) {
-      onFinish(allCodeFilter);
-    } else {
-      onGetCodeFilter();
-    }
+    setTableColumn([]);
+
+    setDataColumnInput([
+      {
+        key: "",
+        account: "",
+        description: "",
+        year_1: "",
+        year_2: "",
+        jan_1: 0,
+        feb_1: 0,
+        mar_1: 0,
+        apr_1: 0,
+        mei_1: 0,
+        jun_1: 0,
+        jul_1: 0,
+        aug_1: 0,
+        sep_1: 0,
+        okt_1: 0,
+        nov_1: 0,
+        des_1: 0,
+        jan_2: 0,
+        feb_2: 0,
+        mar_2: 0,
+        apr_2: 0,
+        mei_2: 0,
+        jun_2: 0,
+        jul_2: 0,
+        aug_2: 0,
+        sep_2: 0,
+        okt_2: 0,
+        nov_2: 0,
+        des_2: 0,
+      },
+    ]);
+
+    // setUrlIndexComboBox(0);
+    // setUrlIndex(0);
+    setAllCodeFilter({
+      code_company: [],
+      code_dept: [],
+      code_location: [],
+      code_product: [],
+      code_account: [],
+    });
+    // setCodeFilter(null);
+
+    onGetCodeFilter();
+
+    // if (allCodeFilter.code_company.length !== 0) {
+    //   onFinish(allCodeFilter);
+    // } else {
+    //   onGetCodeFilter();
+    // }
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -973,10 +1022,22 @@ const OthersInputLogic = () => {
   };
 
   const onGetCodeFilter = () => {
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+      code_company: null,
+    });
     dispatch(getAsync("company/list-master", "code_company"));
   };
 
   const onChange = (e) => {
+    setUrlIndex(0);
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     const urlComboBox = `product/list-by-com?code_company=${e}`;
     setCodeCompany(e);
     dispatch(getAsync(urlComboBox, "code_product"));
