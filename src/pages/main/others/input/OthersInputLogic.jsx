@@ -858,7 +858,7 @@ const OthersInputLogic = () => {
       const description = val.description;
       const listYear1 = [];
       const listYear2 = [];
-      let parent = val.detail[0].list_month[0]?.parent;
+      let parent = val.parent;
 
       if (parent) {
         keyParent.push(i);
