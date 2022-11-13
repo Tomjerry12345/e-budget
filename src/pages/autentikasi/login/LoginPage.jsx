@@ -6,7 +6,7 @@ import "./LoginStyle.scss";
 import logo from "../../../assets/img/logo.png";
 import LoginLogic from "./LoginLogic";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
-import NotifComponent from "../../../component/modal/NotifComponent";
+import ilustrasi from "../../../assets/img/ilustrasi.svg";
 
 const LoginPage = () => {
   const { value, func } = LoginLogic();
@@ -19,7 +19,12 @@ const LoginPage = () => {
         <Col
           span={14}
           style={{
-            backgroundColor: "#02AAB0",
+            // backgroundColor: "#02AAB0",
+            backgroundImage: `url(${ilustrasi})`,
+            backgroundSize: "cover",
+            backgroundPositionY: "50%",
+            backgroundPosition: "center",
+            // backgroundAttachment: "fixed",
             height: "100vh",
           }}
         ></Col>
