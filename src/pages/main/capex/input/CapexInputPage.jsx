@@ -1,5 +1,5 @@
 import { Card } from "@mui/material";
-import { Table, Form, Input, Select, Button } from "antd";
+import { Table, Form, Input, Select, Button, Spin } from "antd";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log } from "../../../../values/Utilitas";
 import CapexInputLogic from "./CapexInputLogic";
@@ -211,20 +211,26 @@ const CapexInputPage = () => {
       </div>
 
       <div className="custom-root-layout">
-        <Table
-          components={components}
-          rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
-          bordered
-          dataSource={value.dataColumnInput}
-          columns={value.tableColumn}
-          pagination={false}
-          loading={value.loading}
-          size="small"
-          scroll={{
-            x: 2900,
-            y: value.size.y - 352,
-          }}
-        />
+        {value.dataColumnInput.length > 1 ? (
+          <Table
+            components={components}
+            rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+            bordered
+            dataSource={value.dataColumnInput}
+            columns={value.tableColumn}
+            pagination={false}
+            loading={value.loading}
+            size="small"
+            scroll={{
+              x: 2900,
+              y: value.size.y - 352,
+            }}
+          />
+        ) : value.loading === true ? (
+          <div className="style-progress">
+            <Spin />
+          </div>
+        ) : null}
       </div>
     </>
   );

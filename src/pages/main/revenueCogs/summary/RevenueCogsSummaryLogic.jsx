@@ -70,6 +70,12 @@ const RevenueCogsSummaryLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    form.setFieldsValue({
+      code_company: 0,
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
     setLoading(true);
     dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
     // onGetCodeFilter();

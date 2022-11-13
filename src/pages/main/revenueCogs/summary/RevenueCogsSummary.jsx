@@ -10,13 +10,7 @@ const RevenueCogsSummary = () => {
     <>
       <div className="custom-root-card">
         <Card className="card-style">
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -28,6 +22,9 @@ const RevenueCogsSummary = () => {
               ]}
             >
               <Select onChange={func.onChange}>
+                <Select.Option key={0} value={0}>
+                  All
+                </Select.Option>
                 {value.allCodeFilter.code_company.map((val, i) => (
                   <Select.Option key={i} value={val.code}>
                     {`${val.code} (${val.title})`}

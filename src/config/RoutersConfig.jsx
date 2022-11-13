@@ -16,6 +16,8 @@ import OthersSummary from "../pages/main/others/summary/OthersSummary";
 import OthersInputPage from "../pages/main/others/input/OthersInputPage";
 import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsiPage";
 import OthersRevenueCogsPage from "../pages/main/revenueCogs/others/OthersRevenueCogsPage";
+import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/others/component/penjualan/PenjualanRevenueCogsPage";
+import LainRevenueCogsPage from "../pages/main/revenueCogs/others/component/hpplain/LainRevenueCogsPage";
 
 const RoutersConfig = () => {
   return (
@@ -28,7 +30,10 @@ const RoutersConfig = () => {
           <Route path="revenue-cogs">
             <Route path="input/:item" element={<RevenueCogsInputPage />} />
             <Route path="summary/:item" element={<RevenueCogsSummary />} />
-            <Route path="others/:item" element={<OthersRevenueCogsPage />} />
+            <Route path="others/:item" element={<OthersRevenueCogsPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
           </Route>
           <Route path="opex">
             <Route path="input/:item" element={<OpexInputPage />} />
