@@ -1,4 +1,4 @@
-version: v1.2.8 ✅ ❌
+version: v1.2.9 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -22,8 +22,8 @@ version: v1.2.8 ✅ ❌
 pencarian berdasarkan kode dan deskripsi
 
 -ketika pindah ke hpp lain dropdown sama data hilang ✅
--pengali penjualan masih
--potongan penjualan msh brmslh
+-pengali penjualan masih 
+-potongan penjualan msh brmslh ✅
 -input nilai tinggi tidak bisa
 -revenue BSU belum jadi
 -BK (butuh list projek) ❌
