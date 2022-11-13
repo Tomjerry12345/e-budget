@@ -350,7 +350,9 @@ const PenjualanRevenueCogsLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const [tableColumn, setTableColumn] = useState({
     listAsumsi: [],
@@ -382,11 +384,11 @@ const PenjualanRevenueCogsLogic = () => {
     code_company: [],
     code_dept: [],
     code_location: [],
-    // code_product: [],
+    code_project: [],
     code_account: [],
   });
 
-  const urlComboBox = [
+  const [urlComboBox, setUrlComboBox] = useState([
     {
       name: "code_dept",
       endPoint: "dept",
@@ -395,9 +397,16 @@ const PenjualanRevenueCogsLogic = () => {
       name: "code_location",
       endPoint: "location",
     },
-  ];
+  ]);
 
-  const [urlIndexComboBox, setUrlIndexComboBox] = useState(0);
+  const [codeProject, setCodeProject] = useState([
+    {
+      code: 0,
+      title: "",
+    },
+  ]);
+
+  const [urlIndexComboBox, setUrlIndexComboBox] = useState(1);
 
   const [urlIndex, setUrlIndex] = useState(0);
 
@@ -414,6 +423,16 @@ const PenjualanRevenueCogsLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+
+    if (itemPage === "Revenue & COGS BJU") {
+      setUrlComboBox([
+        ...urlComboBox,
+        {
+          name: "code_project",
+          endPoint: "project",
+        },
+      ]);
+    }
 
     setTableColumn({
       listAsumsi: [],
@@ -435,13 +454,12 @@ const PenjualanRevenueCogsLogic = () => {
       listPendapatanLain: [],
     });
 
-    setUrlIndexComboBox(0);
+    setUrlIndexComboBox(1);
 
     setAllCodeFilter({
       code_company: [],
       code_dept: [],
       code_location: [],
-      // code_product: [],
       code_account: [],
     });
     setCodeFilter(null);
@@ -466,10 +484,16 @@ const PenjualanRevenueCogsLogic = () => {
 
         log("index", urlIndex);
 
-        getDataTable(response, singleRevenue.childUrl[urlIndex].name, singleRevenue.childUrl[urlIndex].update);
+        getDataTable(
+          response,
+          singleRevenue.childUrl[urlIndex].name,
+          singleRevenue.childUrl[urlIndex].update
+        );
 
         if (urlIndex + 1 <= singleRevenue.childUrl.length - 1) {
-          const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          const path = `${singleRevenue.parentUrl}/${
+            singleRevenue.childUrl[urlIndex + 1].endPoint
+          }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
@@ -482,17 +506,61 @@ const PenjualanRevenueCogsLogic = () => {
         setLoading(false);
       } else {
         if (codeCompany != null) {
-          if (urlIndexComboBox < 2) {
+          // alert(`urlComboBox.length ${urlComboBox.length}`);
+          if (urlIndexComboBox < urlComboBox.length + 1) {
             setUrlIndexComboBox((current) => current + 1);
             const { data } = response;
-            log(`data => ${nameReducer}`, data);
-            setAllCodeFilter({
-              ...allCodeFilter,
-              [nameReducer]: data,
-            });
 
-            const urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
-            dispatch(getAsync(urlx, urlComboBox[1].name));
+            // alert(urlIndexComboBox);
+
+            let urlx, nameReducerx;
+
+            if (nameReducer !== "code_project") {
+              setAllCodeFilter({
+                ...allCodeFilter,
+                [nameReducer]: data,
+              });
+            } else {
+              log(`data => ${nameReducer}`, data);
+
+              const listData = [];
+              data.map((perusahaan) => {
+                const bju = perusahaan.BJU;
+                const code = perusahaan.code_project;
+                const description = perusahaan.description;
+
+                if (bju === "1") {
+                  log(`data => ${nameReducer}`, bju);
+                  listData.push({
+                    code,
+                    description,
+                  });
+                }
+              });
+
+              log(`listData`, listData);
+
+              setAllCodeFilter({
+                ...allCodeFilter,
+                code_project: listData,
+              });
+            }
+
+            if (urlIndexComboBox === 1) {
+              // alert("test-1");
+              urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
+              nameReducerx = urlComboBox[1].name;
+            } else if (urlIndexComboBox === 2) {
+              if (urlComboBox[2] !== undefined) {
+                // alert("test-2");
+                urlx = `${urlComboBox[2].endPoint}/list`;
+                nameReducerx = urlComboBox[2].name;
+              }
+            }
+
+            if (urlx !== undefined) {
+              dispatch(getAsync(urlx, nameReducerx));
+            }
           }
         }
       }
@@ -523,7 +591,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -534,7 +604,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -545,7 +617,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -556,7 +630,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -567,7 +643,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -578,7 +656,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -589,7 +669,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -600,7 +682,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -611,7 +695,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -622,7 +708,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -633,7 +721,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -644,7 +734,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -666,7 +758,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -677,7 +771,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -688,7 +784,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -699,7 +797,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -710,7 +810,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -721,7 +823,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -732,7 +836,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -743,7 +849,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -754,7 +862,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -765,7 +875,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -776,7 +888,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -787,7 +901,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -834,7 +950,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -845,7 +963,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -856,7 +976,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -867,7 +989,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -878,7 +1002,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -889,7 +1015,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -900,7 +1028,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -911,7 +1041,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -922,7 +1054,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -933,7 +1067,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -944,7 +1080,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -955,7 +1093,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -977,7 +1117,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -988,7 +1130,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -999,7 +1143,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1010,7 +1156,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1021,7 +1169,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1032,7 +1182,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1043,7 +1195,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1054,7 +1208,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1065,7 +1221,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1076,7 +1234,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1087,7 +1247,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1098,7 +1260,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1145,7 +1309,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1156,7 +1322,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1167,7 +1335,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1178,7 +1348,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1189,7 +1361,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1200,7 +1374,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1211,7 +1387,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1222,7 +1400,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1233,7 +1413,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1244,7 +1426,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1255,7 +1439,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1266,7 +1452,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1287,7 +1475,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1298,7 +1488,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1309,7 +1501,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1320,7 +1514,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1331,7 +1527,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1342,7 +1540,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1353,7 +1553,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1364,7 +1566,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1375,7 +1579,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1386,7 +1592,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1397,7 +1605,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1408,7 +1618,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1455,7 +1667,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1466,7 +1680,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1477,7 +1693,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1488,7 +1706,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1499,7 +1719,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1510,7 +1732,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1521,7 +1745,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1532,7 +1758,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1543,7 +1771,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1554,7 +1784,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1565,7 +1797,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1576,7 +1810,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1597,7 +1833,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1608,7 +1846,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1619,7 +1859,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1630,7 +1872,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1641,7 +1885,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1652,7 +1898,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1663,7 +1911,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1674,7 +1924,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1685,7 +1937,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1696,7 +1950,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1707,7 +1963,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1718,7 +1976,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1765,7 +2025,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1776,7 +2038,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1787,7 +2051,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1798,7 +2064,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1809,7 +2077,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1820,7 +2090,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1831,7 +2103,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1842,7 +2116,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1853,7 +2129,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1864,7 +2142,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1875,7 +2155,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1886,7 +2168,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1907,7 +2191,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1918,7 +2204,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1929,7 +2217,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1940,7 +2230,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1951,7 +2243,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1962,7 +2256,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1973,7 +2269,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1984,7 +2282,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1995,7 +2295,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2006,7 +2308,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2017,7 +2321,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2028,7 +2334,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2082,7 +2390,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2093,7 +2403,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2104,7 +2416,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2115,7 +2429,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2126,7 +2442,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2137,7 +2455,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2148,7 +2468,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2159,7 +2481,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2170,7 +2494,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
+                  <Typography.Text className="act-styles">
+                    Actual
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2181,7 +2507,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2192,7 +2520,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2203,7 +2533,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
+                  <Typography.Text className="for-styles">
+                    Forecast
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2224,7 +2556,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2235,7 +2569,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2246,7 +2582,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2257,7 +2595,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2268,7 +2608,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2279,7 +2621,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2290,7 +2634,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2301,7 +2647,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2312,7 +2660,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2323,7 +2673,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2334,7 +2686,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2345,7 +2699,9 @@ const PenjualanRevenueCogsLogic = () => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                  <Typography.Text className="ebu-styles">
+                    Budget
+                  </Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2657,6 +3013,7 @@ const PenjualanRevenueCogsLogic = () => {
       loading,
       // test,
       filterCompany,
+      codeProject,
     },
     func: {
       onFinish,

@@ -19,7 +19,9 @@ const RevenueCogsSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const navigate = useNavigate();
 
@@ -70,15 +72,15 @@ const RevenueCogsSummaryLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-    form.setFieldsValue({
-      code_company: 0,
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
-    setLoading(true);
-    dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
-    // onGetCodeFilter();
+    // form.setFieldsValue({
+    //   code_company: 0,
+    //   code_location: null,
+    //   code_dept: null,
+    //   code_product: null,
+    // });
+    // setLoading(true);
+    // dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
+    onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -187,7 +189,12 @@ const RevenueCogsSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(
+      getAsync(
+        `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        "get-data"
+      )
+    );
   };
 
   const onTambahData = () => {

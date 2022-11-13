@@ -20,7 +20,9 @@ const OthersSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const navigate = useNavigate();
 
@@ -77,9 +79,18 @@ const OthersSummaryLogic = () => {
       code_product: null,
       code_company: null,
     });
-    setLoading(true);
-    dispatch(getAsync(`${endPoint[itemPage]}/summary`, "get-data"));
-    // onGetCodeFilter();
+
+    setDataColumn({
+      account: "",
+      description: "",
+      year_1: "",
+      year_2: "",
+      value_1: 0,
+      value_2: 0,
+    });
+    // setLoading(true);
+    // dispatch(getAsync(`${endPoint[itemPage]}/summary`, "get-data"));
+    onGetCodeFilter();
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -222,7 +233,12 @@ const OthersSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`${endPoint[itemPage]}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(
+      getAsync(
+        `${endPoint[itemPage]}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        "get-data"
+      )
+    );
   };
 
   const onTambahData = () => {

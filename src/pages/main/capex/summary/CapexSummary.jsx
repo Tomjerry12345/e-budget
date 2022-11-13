@@ -1,4 +1,4 @@
-import { Table, Form, Button, Select } from "antd";
+import { Table, Form, Button, Select, Spin } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
 import CapexSummaryLogic from "./CapexSummaryLogic";
@@ -10,7 +10,13 @@ const CapexSummary = () => {
     <>
       <div className="custom-root-card">
         <Card className="card-style">
-          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
+          <Form
+            className="form-filter"
+            layout="vertical"
+            ref={value.ref}
+            onFinish={func.onFinish}
+            form={value.form}
+          >
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -101,19 +107,25 @@ const CapexSummary = () => {
           Tambah Data
         </Button> */}
 
-        <Table
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          pagination={false}
-          loading={value.loading}
-          size="small"
-          scroll={{
-            y: value.size.y - 313,
-          }}
-          rowKey="id"
-        />
+        {value.dataColumn.length > 0 ? (
+          <Table
+            rowClassName={() => "editable-row"}
+            bordered
+            dataSource={value.dataColumn}
+            columns={value.tableColumn}
+            pagination={false}
+            size="small"
+            loading={value.loading}
+            scroll={{
+              y: value.size.y - 313,
+            }}
+            rowKey="id"
+          />
+        ) : value.loading === true ? (
+          <div className="style-progress">
+            <Spin />
+          </div>
+        ) : null}
       </div>
     </>
   );
