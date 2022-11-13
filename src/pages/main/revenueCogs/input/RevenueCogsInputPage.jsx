@@ -1,12 +1,6 @@
 import { Card } from "@mui/material";
-import { Table, Form, Input, Select, Button } from "antd";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Table, Form, Input, Select, Button, Spin } from "antd";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { areEqual, log, logObj, logS } from "../../../../values/Utilitas";
 import RevenueCogsInputLogic from "./RevenueCogsInputLogic";
 
@@ -23,16 +17,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  keyNotEditTable,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -124,13 +109,7 @@ const RevenueCogsInputPage = () => {
           className="card-style"
           // style={{ marginBottom: 16, height: 120 }}
         >
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -217,22 +196,26 @@ const RevenueCogsInputPage = () => {
       </div>
 
       <div className="custom-root-layout">
-        <Table
-          components={components}
-          rowClassName={(record, index) =>
-            areEqual(value.listKeyParent, record) ? "parent" : "child"
-          }
-          bordered
-          dataSource={value.dataColumnInput}
-          columns={value.tableColumn}
-          pagination={false}
-          loading={value.loading}
-          size="small"
-          scroll={{
-            x: 2900,
-            y: value.size.y - 352,
-          }}
-        />
+        {value.dataColumnInput.length > 1 ? (
+          <Table
+            components={components}
+            rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+            bordered
+            dataSource={value.dataColumnInput}
+            columns={value.tableColumn}
+            pagination={false}
+            loading={value.loading}
+            size="small"
+            scroll={{
+              x: 2900,
+              y: value.size.y - 352,
+            }}
+          />
+        ) : value.loading === true ? (
+          <div className="style-progress">
+            <Spin />
+          </div>
+        ) : null}
       </div>
     </>
   );

@@ -68,7 +68,14 @@ const MainLogic = () => {
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
-    isActivated[keyMenu] = 0;
+    const i = isActivated.findIndex((val) => val === 2);
+
+    if (i !== -1) {
+      isActivated[keyMenu] = 0;
+    } else {
+      isActivated[keyMenu] = 2;
+    }
+
     setListMenuActivated(isActivated);
     setShowMenu(false);
   };
@@ -127,7 +134,7 @@ const MainLogic = () => {
         if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
           pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
         } else {
-          pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
+          pageNavigation = `/main/revenue-cogs/others/${nameMenu}/penjualan`;
         }
       } else if (index === 2) {
         pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;

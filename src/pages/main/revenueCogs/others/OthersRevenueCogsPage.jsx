@@ -1,52 +1,30 @@
-import { Tabs } from "antd";
+import { Form, Tabs } from "antd";
 import { useState } from "react";
-import ChildRevenueCogsComponent from "./component/ChildRevenueCogsComponent";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import LainRevenueCogsPage from "./component/hpplain/LainRevenueCogsPage";
 import ParentRevenueCogsComponent from "./component/ParentRevenueCogsComponent";
 import PenjualanRevenueCogsPage from "./component/penjualan/PenjualanRevenueCogsPage";
-import OthersRevenueCogsLogic from "./OthersRevenueCogsLogic";
 import "./OthersRevenueCogsStyle.scss";
 
 const OthersRevenueCogsPage = () => {
-  // const { value, func } = OthersRevenueCogsLogic();
+  const [key, setKey] = useState(1);
 
-  const [changeTabs, setChangeTabs] = useState(false);
+  let params = useParams();
+
+  const itemPage = params.item;
+
+  const navigate = useNavigate();
 
   const tabItemParent = [
     {
       key: 1,
       label: "Input Penjualan dan Potongan penjualan",
-      children: (
-        // <ParentRevenueCogsComponent
-        //   value={value}
-        //   func={func}
-        //   // child={tabItemChild[0]}
-        //   data={value.dataColumnInput}
-        //   tab="penjualan"
-        // />
-        <PenjualanRevenueCogsPage
-          changeTabs={changeTabs}
-          // setChangeTabs={setChangeTabs}
-        />
-      ),
+      // children: ,
     },
     {
       key: 2,
       label: "Input HPP dan pendapatan lainnya",
-      children: (
-        <LainRevenueCogsPage
-          changeTabs={changeTabs}
-          // setChangeTabs={setChangeTabs}
-        />
-        // <ParentRevenueCogsComponent
-        //   value={value}
-        //   func={func}
-        //   data={value.dataColumnInput}
-        //   tab="hpp"
-        //   // child={tabItemChild[1]}
-        // />
-        // <PenjualanRevenueCogsPage />
-      ),
+      // children: <Outlet />,
     },
   ];
 
@@ -55,14 +33,25 @@ const OthersRevenueCogsPage = () => {
       <Tabs
         className="custom-tabs"
         defaultActiveKey="1"
+        activeKey={key}
         type="card"
         // size={size}
         items={tabItemParent}
         onChange={(key) => {
-          alert("change");
-          setChangeTabs(!changeTabs);
+          setKey(key);
+          if (key === 1) {
+            navigate(`/main/revenue-cogs/others/${itemPage}/penjualan`);
+          } else {
+            navigate(`/main/revenue-cogs/others/${itemPage}/hpplain`);
+          }
+
+          // form.setFieldsValue({
+          //   code_location: null,
+          //   code_dept: null,
+          // });
         }}
       />
+      <Outlet />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../../../redux/main/main.thunks";
+import { loadStart } from "../../../../../../redux/response/response";
 import { getSizeScreen, log } from "../../../../../../values/Utilitas";
 
 const menuReveneue = {
@@ -28,21 +29,6 @@ const menuReveneue = {
         endPoint: "listpotongan",
         update: "updatepotongan",
       },
-      // {
-      //   name: "listPendapatanLain",
-      //   endPoint: "listpendapatanlain",
-      //   update: "updatependapatanlain",
-      // },
-      // {
-      //   name: "listHppVariable",
-      //   endPoint: "listhppvariable",
-      //   update: "updatehpp",
-      // },
-      // {
-      //   name: "listHppLain",
-      //   endPoint: "listhpplain",
-      //   update: "updatehpplain",
-      // },
     ],
     title: "HK",
     code: 311,
@@ -74,21 +60,6 @@ const menuReveneue = {
         endPoint: "listdisc",
         update: "updatedisc",
       },
-      // {
-      //   name: "listPendapatanLain",
-      //   endPoint: "listpendapatanlain",
-      //   update: "updatependapatanlain",
-      // },
-      // {
-      //   name: "listHppVariable",
-      //   endPoint: "listhppvariable",
-      //   update: "updatehpp",
-      // },
-      // {
-      //   name: "listHppLain",
-      //   endPoint: "listhpplain",
-      //   update: "updatehpplain",
-      // },
     ],
     title: "KIU",
     code: 311,
@@ -115,21 +86,6 @@ const menuReveneue = {
         endPoint: "listpotongan",
         update: "updatepotongan",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
   },
   "Revenue & COGS KIA": {
@@ -153,21 +109,6 @@ const menuReveneue = {
         name: "listPotongan",
         endPoint: "listpotongan",
         update: "updatepotongan",
-      },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
       },
     ],
     title: "KIA",
@@ -194,21 +135,6 @@ const menuReveneue = {
         name: "listPotongan",
         endPoint: "listpotongan",
         update: "updatepotongan",
-      },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
       },
     ],
     title: "BJU",
@@ -241,21 +167,6 @@ const menuReveneue = {
         endPoint: "listvolume",
         update: "updatevolume",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
     title: "BLT",
     code: 421,
@@ -263,11 +174,6 @@ const menuReveneue = {
   "Revenue & COGS BLU": {
     parentUrl: "blu",
     childUrl: [
-      // {
-      //   name: "listAsumsi",
-      //   endPoint: "listasumsi",
-      //   update: "update",
-      // },
       {
         name: "listHarga",
         endPoint: "listharga",
@@ -287,21 +193,6 @@ const menuReveneue = {
         endPoint: "listvolume",
         update: "updatevolume",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
     title: "BLU",
     code: 422,
@@ -313,21 +204,6 @@ const menuReveneue = {
         name: "listAsumsi",
         endPoint: "listasumsi",
         update: "update",
-      },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
       },
     ],
     title: "BK",
@@ -349,21 +225,6 @@ const menuReveneue = {
         name: "listPotongan",
         endPoint: "listpotongan",
         update: "updatepotongan",
-      },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
       },
     ],
     title: "BSU",
@@ -391,21 +252,6 @@ const menuReveneue = {
         endPoint: "listpotongan",
         update: "updatepotongan",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
     title: "BSB",
     code: 413,
@@ -432,21 +278,6 @@ const menuReveneue = {
         endPoint: "listpotongan",
         update: "updatepotongan",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
     title: "KIK",
     code: 241,
@@ -472,21 +303,6 @@ const menuReveneue = {
         name: "listPotongan",
         endPoint: "listpotongan",
         update: "updatepotongan",
-      },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
       },
     ],
     title: "IKP",
@@ -515,43 +331,26 @@ const menuReveneue = {
         endPoint: "listpotongan",
         update: "updatepotongan",
       },
-      {
-        name: "listPendapatanLain",
-        endPoint: "listpendapatanlain",
-        update: "updatependapatanlain",
-      },
-      {
-        name: "listHppVariable",
-        endPoint: "listhppvariable",
-        update: "updatehpp",
-      },
-      {
-        name: "listHppLain",
-        endPoint: "listhpplain",
-        update: "updatehpplain",
-      },
     ],
     title: "BAND",
     code: 231,
   },
 };
 
-const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
+const PenjualanRevenueCogsLogic = () => {
+  const [form] = Form.useForm();
+
   let params = useParams();
 
   const itemPage = params.item;
 
   const singleRevenue = menuReveneue[itemPage];
 
-  const [form] = Form.useForm();
-
   const ref = createRef();
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState({
     listAsumsi: [],
@@ -616,36 +415,36 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
 
-    // setTableColumn({
-    //   listAsumsi: [],
-    //   listHarga: [],
-    //   listPenjualan: [],
-    //   listPotongan: [],
-    //   listVolume: [],
-    //   listDisc: [],
-    //   listPendapatanLain: [],
-    // });
+    setTableColumn({
+      listAsumsi: [],
+      listHarga: [],
+      listPenjualan: [],
+      listPotongan: [],
+      listVolume: [],
+      listDisc: [],
+      listPendapatanLain: [],
+    });
 
-    // setDataColumnInput({
-    //   listAsumsi: [],
-    //   listHarga: [],
-    //   listPenjualan: [],
-    //   listPotongan: [],
-    //   listVolume: [],
-    //   listDisc: [],
-    //   listPendapatanLain: [],
-    // });
+    setDataColumnInput({
+      listAsumsi: [],
+      listHarga: [],
+      listPenjualan: [],
+      listPotongan: [],
+      listVolume: [],
+      listDisc: [],
+      listPendapatanLain: [],
+    });
 
     setUrlIndexComboBox(0);
 
-    // setAllCodeFilter({
-    //   code_company: [],
-    //   code_dept: [],
-    //   code_location: [],
-    //   code_product: [],
-    //   code_account: [],
-    // });
-    // setCodeFilter(null);
+    setAllCodeFilter({
+      code_company: [],
+      code_dept: [],
+      code_location: [],
+      // code_product: [],
+      code_account: [],
+    });
+    setCodeFilter(null);
 
     onGetCodeFilter();
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -667,16 +466,10 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
 
         log("index", urlIndex);
 
-        getDataTable(
-          response,
-          singleRevenue.childUrl[urlIndex].name,
-          singleRevenue.childUrl[urlIndex].update
-        );
+        getDataTable(response, singleRevenue.childUrl[urlIndex].name, singleRevenue.childUrl[urlIndex].update);
 
         if (urlIndex + 1 <= singleRevenue.childUrl.length - 1) {
-          const path = `${singleRevenue.parentUrl}/${
-            singleRevenue.childUrl[urlIndex + 1].endPoint
-          }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
@@ -697,8 +490,6 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
               ...allCodeFilter,
               [nameReducer]: data,
             });
-            alert(nameReducer);
-            // alert(urlIndexComboBox);
 
             const urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
             dispatch(getAsync(urlx, urlComboBox[1].name));
@@ -732,9 +523,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -745,9 +534,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -758,9 +545,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -771,9 +556,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -784,9 +567,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -797,9 +578,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -810,9 +589,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -823,9 +600,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -836,9 +611,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -849,9 +622,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -862,9 +633,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -875,9 +644,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -899,9 +666,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -912,9 +677,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -925,9 +688,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -938,9 +699,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -951,9 +710,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -964,9 +721,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -977,9 +732,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -990,9 +743,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1003,9 +754,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1016,9 +765,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1029,9 +776,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1042,9 +787,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1091,9 +834,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1104,9 +845,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1117,9 +856,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1130,9 +867,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1143,9 +878,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1156,9 +889,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1169,9 +900,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1182,9 +911,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1195,9 +922,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1208,9 +933,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1221,9 +944,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1234,9 +955,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1258,9 +977,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1271,9 +988,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1284,9 +999,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1297,9 +1010,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1310,9 +1021,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1323,9 +1032,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1336,9 +1043,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1349,9 +1054,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1362,9 +1065,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1375,9 +1076,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1388,9 +1087,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1401,9 +1098,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1450,9 +1145,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1463,9 +1156,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1476,9 +1167,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1489,9 +1178,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1502,9 +1189,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1515,9 +1200,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1528,9 +1211,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1541,9 +1222,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1554,9 +1233,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1567,9 +1244,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1580,9 +1255,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1593,9 +1266,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1616,9 +1287,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1629,9 +1298,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1642,9 +1309,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1655,9 +1320,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1668,9 +1331,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1681,9 +1342,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1694,9 +1353,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1707,9 +1364,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1720,9 +1375,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1733,9 +1386,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1746,9 +1397,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1759,9 +1408,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1808,9 +1455,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1821,9 +1466,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1834,9 +1477,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1847,9 +1488,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1860,9 +1499,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1873,9 +1510,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1886,9 +1521,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1899,9 +1532,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1912,9 +1543,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1925,9 +1554,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1938,9 +1565,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1951,9 +1576,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1974,9 +1597,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1987,9 +1608,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2000,9 +1619,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2013,9 +1630,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2026,9 +1641,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2039,9 +1652,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2052,9 +1663,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2065,9 +1674,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2078,9 +1685,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2091,9 +1696,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2104,9 +1707,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2117,9 +1718,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2166,9 +1765,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2179,9 +1776,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2192,9 +1787,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2205,9 +1798,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2218,9 +1809,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2231,9 +1820,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2244,9 +1831,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2257,9 +1842,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2270,9 +1853,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2283,9 +1864,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2296,9 +1875,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2309,9 +1886,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2332,9 +1907,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2345,9 +1918,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2358,9 +1929,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2371,9 +1940,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2384,9 +1951,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2397,9 +1962,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2410,9 +1973,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2423,9 +1984,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2436,9 +1995,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2449,9 +2006,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2462,9 +2017,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2475,9 +2028,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2531,9 +2082,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2544,9 +2093,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2557,9 +2104,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2570,9 +2115,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2583,9 +2126,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2596,9 +2137,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2609,9 +2148,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2622,9 +2159,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2635,9 +2170,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2648,9 +2181,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2661,9 +2192,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2674,9 +2203,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2697,9 +2224,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2710,9 +2235,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2723,9 +2246,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2736,9 +2257,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2749,9 +2268,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2762,9 +2279,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2775,9 +2290,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2788,9 +2301,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2801,9 +2312,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2814,9 +2323,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2827,9 +2334,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2840,1084 +2345,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "des_2",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_2",
-          width: "14%",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-      listPendapatanLain: [
-        {
-          title: "Kode",
-          dataIndex: "code",
-          width: "10%",
-          fixed: "left",
-          editable: false,
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Apr.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_1",
-          width: "14%",
-        },
-        {
-          title: `Year ${year_2}`,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mar_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "sep_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "nov_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "des_2",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_2",
-          width: "14%",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-      listHppVariable: [
-        {
-          title: "Kode",
-          dataIndex: "code",
-          width: "10%",
-          fixed: "left",
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Apr.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_1",
-          width: "14%",
-        },
-        {
-          title: `Year ${year_2}`,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mar_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "sep_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "nov_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "des_2",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_2",
-          width: "14%",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-      listHppLain: [
-        {
-          title: "Kode",
-          dataIndex: "code",
-          width: "10%",
-          fixed: "left",
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Apr.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_1",
-          width: "14%",
-        },
-        {
-          title: `Year ${year_2}`,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mar_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "sep_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "nov_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3985,6 +2413,7 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
 
     // setTableColumn(columns);
     setTableColumn({ ...tableColumn, [name]: columns });
+    dispatch(loadStart());
   };
 
   const onSetDataTable = (values) => {
@@ -3995,6 +2424,9 @@ const PenjualanRevenueCogsLogic = ({ changeTabs }) => {
       code_product,
       // code_account,
     } = values;
+
+    log("values", values);
+
     setCodeFilter(values);
     const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[0].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
     // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;

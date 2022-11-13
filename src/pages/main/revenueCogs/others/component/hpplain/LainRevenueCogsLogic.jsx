@@ -3,6 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../../../redux/main/main.thunks";
+import { loadStart } from "../../../../../../redux/response/response";
 import { getSizeScreen, log } from "../../../../../../values/Utilitas";
 
 const menuReveneue = {
@@ -10,39 +11,20 @@ const menuReveneue = {
     parentUrl: "hk",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
       },
       {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
       },
       {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      // {
-      //   name: "listPendapatanLain",
-      //   endPoint: "listpendapatanlain",
-      //   update: "updatependapatanlain",
-      // },
-      // {
-      //   name: "listHppVariable",
-      //   endPoint: "listhppvariable",
-      //   update: "updatehpp",
-      // },
-      // {
-      //   name: "listHppLain",
-      //   endPoint: "listhpplain",
-      //   update: "updatehpplain",
-      // },
     ],
     title: "HK",
     code: 311,
@@ -51,44 +33,20 @@ const menuReveneue = {
     parentUrl: "kiu",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
+        name: "listPendapatanLain",
+        endPoint: "listpendapatanlain",
+        update: "updatependapatanlain",
       },
       {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
+        name: "listHppVariable",
+        endPoint: "listhppvariable",
+        update: "updatehpp",
       },
       {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
+        name: "listHppLain",
+        endPoint: "listhpplain",
+        update: "updatehpplain",
       },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
-        name: "listDisc",
-        endPoint: "listdisc",
-        update: "updatedisc",
-      },
-      // {
-      //   name: "listPendapatanLain",
-      //   endPoint: "listpendapatanlain",
-      //   update: "updatependapatanlain",
-      // },
-      // {
-      //   name: "listHppVariable",
-      //   endPoint: "listhppvariable",
-      //   update: "updatehpp",
-      // },
-      // {
-      //   name: "listHppLain",
-      //   endPoint: "listhpplain",
-      //   update: "updatehpplain",
-      // },
     ],
     title: "KIU",
     code: 311,
@@ -96,25 +54,6 @@ const menuReveneue = {
   "Revenue & COGS BTS": {
     parentUrl: "bts",
     childUrl: [
-      {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
       {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
@@ -135,25 +74,6 @@ const menuReveneue = {
   "Revenue & COGS KIA": {
     parentUrl: "kia",
     childUrl: [
-      {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
       {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
@@ -177,25 +97,6 @@ const menuReveneue = {
     parentUrl: "bju",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -218,30 +119,6 @@ const menuReveneue = {
     parentUrl: "blt",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
-        name: "listVolume",
-        endPoint: "listvolume",
-        update: "updatevolume",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -263,30 +140,6 @@ const menuReveneue = {
   "Revenue & COGS BLU": {
     parentUrl: "blu",
     childUrl: [
-      // {
-      //   name: "listAsumsi",
-      //   endPoint: "listasumsi",
-      //   update: "update",
-      // },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
-        name: "listVolume",
-        endPoint: "listvolume",
-        update: "updatevolume",
-      },
       {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
@@ -310,11 +163,6 @@ const menuReveneue = {
     parentUrl: "bk",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -336,20 +184,6 @@ const menuReveneue = {
   "Revenue & COGS BSU": {
     parentUrl: "bsu",
     childUrl: [
-      {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
       {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
@@ -373,25 +207,6 @@ const menuReveneue = {
     parentUrl: "bsb",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -413,25 +228,6 @@ const menuReveneue = {
   "Revenue & COGS KIK": {
     parentUrl: "kik",
     childUrl: [
-      {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
       {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
@@ -455,25 +251,6 @@ const menuReveneue = {
     parentUrl: "ikp",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -496,26 +273,6 @@ const menuReveneue = {
     parentUrl: "band",
     childUrl: [
       {
-        name: "listAsumsi",
-        endPoint: "listasumsi",
-        update: "update",
-      },
-      {
-        name: "listHarga",
-        endPoint: "listharga",
-        update: "updateharga",
-      },
-      {
-        name: "listPenjualan",
-        endPoint: "listpenjualan",
-        update: "updatepenjualan",
-      },
-      {
-        name: "listPotongan",
-        endPoint: "listpotongan",
-        update: "updatepotongan",
-      },
-      {
         name: "listPendapatanLain",
         endPoint: "listpendapatanlain",
         update: "updatependapatanlain",
@@ -536,22 +293,19 @@ const menuReveneue = {
   },
 };
 
-const LainRevenueCogsLogic = ({ changeTabs }) => {
+const LainRevenueCogsLogic = () => {
+  const [form] = Form.useForm();
   let params = useParams();
 
   const itemPage = params.item;
 
   const singleRevenue = menuReveneue[itemPage];
 
-  const [form] = Form.useForm();
-
   const ref = createRef();
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [tableColumn, setTableColumn] = useState({
     listAsumsi: [],
@@ -616,33 +370,33 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
 
-    // setTableColumn({
-    //   listAsumsi: [],
-    //   listHarga: [],
-    //   listPenjualan: [],
-    //   listPotongan: [],
-    //   listVolume: [],
-    //   listDisc: [],
-    //   listPendapatanLain: [],
-    // });
+    setTableColumn({
+      listAsumsi: [],
+      listHarga: [],
+      listPenjualan: [],
+      listPotongan: [],
+      listVolume: [],
+      listDisc: [],
+      listPendapatanLain: [],
+    });
 
-    // setDataColumnInput({
-    //   listAsumsi: [],
-    //   listHarga: [],
-    //   listPenjualan: [],
-    //   listPotongan: [],
-    //   listVolume: [],
-    //   listDisc: [],
-    //   listPendapatanLain: [],
-    // });
+    setDataColumnInput({
+      listAsumsi: [],
+      listHarga: [],
+      listPenjualan: [],
+      listPotongan: [],
+      listVolume: [],
+      listDisc: [],
+      listPendapatanLain: [],
+    });
 
-    setUrlIndexComboBox(0);
+    // setUrlIndexComboBox(0);
 
     // setAllCodeFilter({
     //   code_company: [],
     //   code_dept: [],
     //   code_location: [],
-    //   code_product: [],
+    //   // code_product: [],
     //   code_account: [],
     // });
     // setCodeFilter(null);
@@ -667,16 +421,10 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
 
         log("index", urlIndex);
 
-        getDataTable(
-          response,
-          singleRevenue.childUrl[urlIndex].name,
-          singleRevenue.childUrl[urlIndex].update
-        );
+        getDataTable(response, singleRevenue.childUrl[urlIndex].name, singleRevenue.childUrl[urlIndex].update);
 
         if (urlIndex + 1 <= singleRevenue.childUrl.length - 1) {
-          const path = `${singleRevenue.parentUrl}/${
-            singleRevenue.childUrl[urlIndex + 1].endPoint
-          }?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+          const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[urlIndex + 1].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
           dispatch(getAsync(path, "get-data"));
         }
 
@@ -697,8 +445,6 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
               ...allCodeFilter,
               [nameReducer]: data,
             });
-            alert(nameReducer);
-            // alert(urlIndexComboBox);
 
             const urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
             dispatch(getAsync(urlx, urlComboBox[1].name));
@@ -732,9 +478,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -745,9 +489,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -758,9 +500,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -771,9 +511,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -784,9 +522,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -797,9 +533,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -810,9 +544,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -823,9 +555,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -836,9 +566,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -849,9 +577,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -862,9 +588,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -875,9 +599,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -899,9 +621,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -912,9 +632,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -925,9 +643,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -938,9 +654,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -951,9 +665,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -964,9 +676,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -977,9 +687,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -990,9 +698,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1003,9 +709,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1016,9 +720,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1029,9 +731,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1042,9 +742,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1091,9 +789,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1104,9 +800,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1117,9 +811,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1130,9 +822,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1143,9 +833,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1156,9 +844,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1169,9 +855,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1182,9 +866,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1195,9 +877,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1208,9 +888,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1221,9 +899,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1234,9 +910,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1258,9 +932,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1271,9 +943,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1284,9 +954,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1297,9 +965,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1310,9 +976,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1323,9 +987,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1336,9 +998,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1349,9 +1009,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1362,9 +1020,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1375,9 +1031,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1388,9 +1042,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1401,9 +1053,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1450,9 +1100,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1463,9 +1111,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1476,9 +1122,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1489,9 +1133,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1502,9 +1144,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1515,9 +1155,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1528,9 +1166,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1541,9 +1177,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1554,9 +1188,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1567,9 +1199,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1580,9 +1210,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1593,9 +1221,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1616,9 +1242,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1629,9 +1253,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1642,9 +1264,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1655,9 +1275,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1668,9 +1286,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1681,9 +1297,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1694,9 +1308,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1707,9 +1319,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1720,9 +1330,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1733,9 +1341,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1746,9 +1352,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1759,9 +1363,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1808,9 +1410,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1821,9 +1421,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -1834,9 +1432,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -1847,9 +1443,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -1860,9 +1454,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -1873,9 +1465,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -1886,9 +1476,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -1899,9 +1487,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -1912,9 +1498,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -1925,9 +1509,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -1938,9 +1520,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -1951,9 +1531,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -1974,9 +1552,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -1987,9 +1563,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2000,9 +1574,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2013,9 +1585,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2026,9 +1596,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2039,9 +1607,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2052,9 +1618,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2065,9 +1629,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2078,9 +1640,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2091,9 +1651,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2104,9 +1662,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2117,9 +1673,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2166,9 +1720,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2179,9 +1731,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2192,9 +1742,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2205,9 +1753,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2218,9 +1764,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2231,9 +1775,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2244,9 +1786,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2257,9 +1797,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2270,9 +1808,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2283,9 +1819,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2296,9 +1830,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2309,9 +1841,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2332,9 +1862,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2345,9 +1873,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2358,9 +1884,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2371,9 +1895,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2384,9 +1906,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2397,9 +1917,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2410,9 +1928,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2423,9 +1939,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2436,9 +1950,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2449,9 +1961,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2462,9 +1972,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2475,9 +1983,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2531,9 +2037,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2544,9 +2048,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2557,9 +2059,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2570,9 +2070,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2583,9 +2081,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2596,9 +2092,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2609,9 +2103,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2622,9 +2114,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2635,9 +2125,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2648,9 +2136,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2661,9 +2147,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2674,9 +2158,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2697,9 +2179,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2710,9 +2190,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2723,9 +2201,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2736,9 +2212,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2749,9 +2223,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2762,9 +2234,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2775,9 +2245,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2788,9 +2256,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2801,9 +2267,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -2814,9 +2278,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -2827,9 +2289,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -2840,9 +2300,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -2890,9 +2348,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -2903,9 +2359,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -2916,9 +2370,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -2929,9 +2381,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -2942,9 +2392,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -2955,9 +2403,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -2968,9 +2414,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -2981,9 +2425,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -2994,9 +2436,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3007,9 +2447,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3020,9 +2458,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3033,9 +2469,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3056,9 +2490,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -3069,9 +2501,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -3082,9 +2512,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3095,9 +2523,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3108,9 +2534,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -3121,9 +2545,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -3134,9 +2556,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -3147,9 +2567,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -3160,9 +2578,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3173,9 +2589,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3186,9 +2600,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3199,9 +2611,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3248,9 +2658,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -3261,9 +2669,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -3274,9 +2680,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3287,9 +2691,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -3300,9 +2702,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -3313,9 +2713,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -3326,9 +2724,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -3339,9 +2735,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -3352,9 +2746,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3365,9 +2757,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3378,9 +2768,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3391,9 +2779,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3414,9 +2800,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -3427,9 +2811,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -3440,9 +2822,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3453,9 +2833,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3466,9 +2844,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -3479,9 +2855,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -3492,9 +2866,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -3505,9 +2877,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -3518,9 +2888,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3531,9 +2899,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3544,9 +2910,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3557,9 +2921,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3606,9 +2968,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -3619,9 +2979,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -3632,9 +2990,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3645,9 +3001,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Apr.</Typography.Text>
                 </div>
               ),
@@ -3658,9 +3012,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -3671,9 +3023,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -3684,9 +3034,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -3697,9 +3045,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -3710,9 +3056,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="act-styles">
-                    Actual
-                  </Typography.Text>
+                  <Typography.Text className="act-styles">Actual</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3723,9 +3067,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3736,9 +3078,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3749,9 +3089,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="for-styles">
-                    Forecast
-                  </Typography.Text>
+                  <Typography.Text className="for-styles">Forecast</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3772,9 +3110,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jan.</Typography.Text>
                 </div>
               ),
@@ -3785,9 +3121,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Feb.</Typography.Text>
                 </div>
               ),
@@ -3798,9 +3132,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3811,9 +3143,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Mar.</Typography.Text>
                 </div>
               ),
@@ -3824,9 +3154,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>May.</Typography.Text>
                 </div>
               ),
@@ -3837,9 +3165,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jun.</Typography.Text>
                 </div>
               ),
@@ -3850,9 +3176,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Jul.</Typography.Text>
                 </div>
               ),
@@ -3863,9 +3187,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Aug.</Typography.Text>
                 </div>
               ),
@@ -3876,9 +3198,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Sep.</Typography.Text>
                 </div>
               ),
@@ -3889,9 +3209,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Okt.</Typography.Text>
                 </div>
               ),
@@ -3902,9 +3220,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Nov.</Typography.Text>
                 </div>
               ),
@@ -3915,9 +3231,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
             {
               title: (
                 <div className="title-table">
-                  <Typography.Text className="ebu-styles">
-                    Budget
-                  </Typography.Text>
+                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
                   <Typography.Text>Des.</Typography.Text>
                 </div>
               ),
@@ -3985,6 +3299,7 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
 
     // setTableColumn(columns);
     setTableColumn({ ...tableColumn, [name]: columns });
+    dispatch(loadStart());
   };
 
   const onSetDataTable = (values) => {
@@ -3995,10 +3310,14 @@ const LainRevenueCogsLogic = ({ changeTabs }) => {
       code_product,
       // code_account,
     } = values;
-    setCodeFilter(values);
-    const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[0].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-    // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
-    dispatch(getAsync(path, "get-data"));
+
+    if (code_company !== undefined) {
+      setCodeFilter(values);
+      log("codeFilter", values);
+      const path = `${singleRevenue.parentUrl}/${singleRevenue.childUrl[0].endPoint}?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+      // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
+      dispatch(getAsync(path, "get-data"));
+    }
   };
 
   const getDataTable = (response, name, e) => {
