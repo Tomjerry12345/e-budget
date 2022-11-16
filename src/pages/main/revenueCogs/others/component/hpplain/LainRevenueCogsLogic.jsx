@@ -331,17 +331,18 @@ const LainRevenueCogsLogic = () => {
     title: "",
     code: 0,
   });
+
   const [codeFilter, setCodeFilter] = useState(null);
 
   const [allCodeFilter, setAllCodeFilter] = useState({
     code_company: [],
     code_dept: [],
     code_location: [],
-    // code_product: [],
+    code_project: [],
     code_account: [],
   });
 
-  const urlComboBox = [
+  const [urlComboBox, setUrlComboBox] = useState([
     {
       name: "code_dept",
       endPoint: "dept",
@@ -350,7 +351,7 @@ const LainRevenueCogsLogic = () => {
       name: "code_location",
       endPoint: "location",
     },
-  ];
+  ]);
 
   const [urlIndexComboBox, setUrlIndexComboBox] = useState(0);
 
@@ -369,6 +370,16 @@ const LainRevenueCogsLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+
+    if (itemPage === "Revenue & COGS BJU") {
+      setUrlComboBox([
+        ...urlComboBox,
+        {
+          name: "code_project",
+          endPoint: "project",
+        },
+      ]);
+    }
 
     setTableColumn({
       listAsumsi: [],
@@ -390,16 +401,15 @@ const LainRevenueCogsLogic = () => {
       listPendapatanLain: [],
     });
 
-    // setUrlIndexComboBox(0);
+    setUrlIndexComboBox(1);
 
-    // setAllCodeFilter({
-    //   code_company: [],
-    //   code_dept: [],
-    //   code_location: [],
-    //   // code_product: [],
-    //   code_account: [],
-    // });
-    // setCodeFilter(null);
+    setAllCodeFilter({
+      code_company: [],
+      code_dept: [],
+      code_location: [],
+      code_account: [],
+    });
+    setCodeFilter(null);
 
     onGetCodeFilter();
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -419,8 +429,6 @@ const LainRevenueCogsLogic = () => {
           // code_account,
         } = codeFilter;
 
-        log("index", urlIndex);
-
         getDataTable(response, singleRevenue.childUrl[urlIndex].name, singleRevenue.childUrl[urlIndex].update);
 
         if (urlIndex + 1 <= singleRevenue.childUrl.length - 1) {
@@ -437,17 +445,55 @@ const LainRevenueCogsLogic = () => {
         setLoading(false);
       } else {
         if (codeCompany != null) {
-          if (urlIndexComboBox < 2) {
+          if (urlIndexComboBox < urlComboBox.length + 1) {
             setUrlIndexComboBox((current) => current + 1);
             const { data } = response;
-            log(`data => ${nameReducer}`, data);
-            setAllCodeFilter({
-              ...allCodeFilter,
-              [nameReducer]: data,
-            });
 
-            const urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
-            dispatch(getAsync(urlx, urlComboBox[1].name));
+            // alert(urlIndexComboBox);
+
+            let urlx, nameReducerx;
+
+            if (nameReducer !== "code_project") {
+              setAllCodeFilter({
+                ...allCodeFilter,
+                [nameReducer]: data,
+              });
+            } else {
+              const listData = [];
+              data.forEach((perusahaan) => {
+                const bju = perusahaan.BJU;
+                const code = perusahaan.code_project;
+                const description = perusahaan.description;
+
+                if (bju === "1") {
+                  listData.push({
+                    code,
+                    description,
+                  });
+                }
+              });
+
+              setAllCodeFilter({
+                ...allCodeFilter,
+                code_project: listData,
+              });
+            }
+
+            if (urlIndexComboBox === 1) {
+              // alert("test-1");
+              urlx = `${urlComboBox[1].endPoint}/list-by-com?code_company=${codeCompany}`;
+              nameReducerx = urlComboBox[1].name;
+            } else if (urlIndexComboBox === 2) {
+              if (urlComboBox[2] !== undefined) {
+                // alert("test-2");
+                urlx = `${urlComboBox[2].endPoint}/list`;
+                nameReducerx = urlComboBox[2].name;
+              }
+            }
+
+            if (urlx !== undefined) {
+              dispatch(getAsync(urlx, nameReducerx));
+            }
           }
         }
       }

@@ -127,7 +127,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
       },
       {
         title: "List Volume",
-        data: "listVolume",
+        name: "listVolume",
       },
     ],
     "Revenue & COGS BLU": [
@@ -255,13 +255,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         }}
       >
         <Card className="card-style">
-          <Form
-            className="form-filter"
-            layout="vertical"
-            ref={value.ref}
-            onFinish={func.onFinish}
-            form={value.form}
-          >
+          <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
               label="Kode Perusahaan"
               name="code_company"
@@ -273,9 +267,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
               ]}
             >
               <Select>
-                <Select.Option
-                  value={codeCompany.code}
-                >{`${codeCompany.code} (${codeCompany.title})`}</Select.Option>
+                <Select.Option value={codeCompany.code}>{`${codeCompany.code} (${codeCompany.title})`}</Select.Option>
               </Select>
             </Form.Item>
 
@@ -291,13 +283,6 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
                 ]}
               >
                 <Select>
-                  {/* {value.codeProject.length > 0
-                    ? value.codeProject.map((val, i) => (
-                        <Select.Option key={val.code} value={val.title}>
-                          {`${val.code} (${val.title})`}
-                        </Select.Option>
-                      ))
-                    : null} */}
                   {value.allCodeFilter.code_project &&
                     value.allCodeFilter.code_project.map((val, i) => (
                       <Select.Option key={i} value={val.code}>
@@ -357,11 +342,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
       {data1[itemPage].map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent
-            className="child-revenue"
-            value={value}
-            name={val.name}
-          />
+          <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
         </>
       ))}
     </>
