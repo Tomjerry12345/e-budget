@@ -81,7 +81,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
         }
         onClick={toggleEdit}
       >
-        {children[1] === null ? "0%" : `${parseInt(children[1]).format(0, 3, ".", ",")}%`}
+        {children[1] === null ? "0%" : `${parseInt(children[1]).format(0, 3, ".", ",")}`}
       </div>
     );
   } else {
