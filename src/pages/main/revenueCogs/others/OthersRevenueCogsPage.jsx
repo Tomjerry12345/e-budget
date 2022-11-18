@@ -1,9 +1,6 @@
 import { Form, Tabs } from "antd";
 import { useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
-import LainRevenueCogsPage from "./component/hpplain/LainRevenueCogsPage";
-import ParentRevenueCogsComponent from "./component/ParentRevenueCogsComponent";
-import PenjualanRevenueCogsPage from "./component/penjualan/PenjualanRevenueCogsPage";
 import "./OthersRevenueCogsStyle.scss";
 
 const OthersRevenueCogsPage = () => {

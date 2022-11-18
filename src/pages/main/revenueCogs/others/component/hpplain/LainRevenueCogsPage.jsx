@@ -228,6 +228,28 @@ const LainRevenueCogsPage = () => {
               {/* <Input /> */}
             </Form.Item>
 
+            {itemPage === "Revenue & COGS BJU" ? (
+              <Form.Item
+                label="Kode Project"
+                name="code_project"
+                rules={[
+                  {
+                    required: true,
+                    message: "tidak boleh kosong!",
+                  },
+                ]}
+              >
+                <Select>
+                  {value.allCodeFilter.code_project &&
+                    value.allCodeFilter.code_project.map((val, i) => (
+                      <Select.Option key={i} value={val.code}>
+                        {`${val.code} (${val.description})`}
+                      </Select.Option>
+                    ))}
+                </Select>
+              </Form.Item>
+            ) : null}
+
             <Form.Item
               label="Kode Lokasi"
               name="code_location"

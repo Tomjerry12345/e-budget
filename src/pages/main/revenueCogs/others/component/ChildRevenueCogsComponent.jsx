@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
 import { areEqual, log, logObj, logS } from "../../../../../values/Utilitas";
 
@@ -23,16 +17,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  keyNotEditTable,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -61,9 +46,6 @@ const EditableCell = ({
       toggleEdit();
       const keysEdit = Object.keys(values);
       const valuesEdit = values[keysEdit];
-      log("values", values);
-      log("dataColumnInput", keysEdit);
-      // console.log(`record => ${JSON.stringify(record)}`);
       handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
@@ -99,7 +81,7 @@ const EditableCell = ({
         }
         onClick={toggleEdit}
       >
-        {parseInt(children[1]).format(0, 3, ".", ",")}
+        {children[1] === null ? "0%" : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   } else {
@@ -114,9 +96,7 @@ const EditableCell = ({
         }
         // onClick={toggleEdit}
       >
-        {typeof children[1] === "string"
-          ? children[1]
-          : parseInt(children[1]).format(0, 3, ".", ",")}
+        {typeof children[1] === "string" ? children[1] : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   }
@@ -135,9 +115,7 @@ const ChildRevenueCogsComponent = ({ value, name }) => {
   return (
     <Table
       components={components}
-      rowClassName={(record, index) =>
-        areEqual(value.listKeyParent, record) ? "parent" : "child"
-      }
+      rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
       style={{
         marginTop: 16,
         marginBottom: 16,

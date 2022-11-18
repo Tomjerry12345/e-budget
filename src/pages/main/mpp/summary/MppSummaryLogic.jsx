@@ -19,7 +19,9 @@ const MppSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const navigate = useNavigate();
 
@@ -70,9 +72,9 @@ const MppSummaryLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-    setLoading(true);
-    dispatch(getAsync(`mpp/summary`, "get-data"));
-    // onGetCodeFilter();
+    // setLoading(true);
+    // dispatch(getAsync(`mpp/summary`, "get-data"));
+    onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -179,7 +181,12 @@ const MppSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(getAsync(`mpp/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`, "get-data"));
+    dispatch(
+      getAsync(
+        `mpp/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
+        "get-data"
+      )
+    );
   };
 
   const onTambahData = () => {

@@ -43,6 +43,8 @@ const App = () => {
       // alert(errorMessage);
       if (errorMessage === "Request failed with status code 500") {
         navigate("/login");
+      } else if (errorMessage === "Network Error") {
+        alert("jaringan tidak tersedia");
       }
 
       console.log(`error ${errorMessage}`);
