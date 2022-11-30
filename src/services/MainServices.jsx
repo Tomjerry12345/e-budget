@@ -1,8 +1,8 @@
 import apiClient from "../config/ApiClient";
 
 class MainServices {
-  get = (endPoint) =>
-    apiClient().get(`/ebudget/${endPoint}`, {
+  get = async (endPoint) =>
+    await apiClient().get(`/ebudget/${endPoint}`, {
       // headers: {
       //   "EBUDGET-TOKEN": getToken(),
       // },
