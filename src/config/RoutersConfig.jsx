@@ -18,6 +18,7 @@ import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsi
 import OthersRevenueCogsPage from "../pages/main/revenueCogs/others/OthersRevenueCogsPage";
 import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/others/component/penjualan/PenjualanRevenueCogsPage";
 import LainRevenueCogsPage from "../pages/main/revenueCogs/others/component/hpplain/LainRevenueCogsPage";
+import LabaRugiPage from "../pages/main/report/laba-rugi/LabaRugiPage";
 
 const RoutersConfig = () => {
   return (
@@ -51,6 +52,9 @@ const RoutersConfig = () => {
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
+          </Route>
+          <Route path="report">
+            <Route path="laba-rugi" element={<LabaRugiPage />} />
           </Route>
           <Route path="coa">
             <Route path=":item" element={<CoaPage />} />

@@ -13,17 +13,7 @@ const { Text } = Typography;
 
 // const data = ["Kode produk", "Kode company"];
 
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-  "Akun",
-];
+const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
 
 const getPath = (pathName, item) => {
   const spliter = pathName?.split("/");
@@ -82,19 +72,7 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button
-                  type="text"
-                  block
-                  disabled={value.itemDisabledMenu[i]}
-                  onClick={() =>
-                    func.onClickedMenu(
-                      value.keyMenu,
-                      "submenu",
-                      item,
-                      value.titleMenu
-                    )
-                  }
-                >
+                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
                   {item}
                 </Button>
               </List.Item>
@@ -122,11 +100,7 @@ const MainPage = () => {
             //   </Text>
             // ) : null
 
-            <Text className="header-title">
-              {value.params.item === undefined
-                ? "Dashboard"
-                : value.params.item}
-            </Text>
+            <Text className="header-title">{value.params.item === undefined ? (value.header !== "" ? value.header : "Dashboard") : value.params.item}</Text>
           }
         </Header>
         <Content>

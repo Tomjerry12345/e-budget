@@ -14,6 +14,9 @@ const MainLogic = () => {
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
+
+  const [header, setHeader] = useState();
+
   const dispatch = useDispatch();
 
   const location = useLocation();
@@ -126,6 +129,8 @@ const MainLogic = () => {
       setShowMenu(false);
       // setTitleHeader(title);
 
+      setHeader(nameMenu);
+
       const name = nameMenu.split(" ");
       const pathMove = name[0].toLowerCase();
       const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
@@ -147,6 +152,11 @@ const MainLogic = () => {
           pageNavigation = `/main/others/others-input/Input Asumsi`;
         } else {
           pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
+        }
+      } else if (index === 6) {
+        const baseReport = `/main/report`;
+        if (nameMenu === "Laba Rugi") {
+          pageNavigation = `${baseReport}/laba-rugi`;
         }
       } else if (index === 7) {
         pageNavigation = `/main/coa/${nameMenu}`;
@@ -190,6 +200,7 @@ const MainLogic = () => {
       itemDisabledMenu,
       titleMenu,
       params,
+      header,
       // segmentedValue,
     },
   };
