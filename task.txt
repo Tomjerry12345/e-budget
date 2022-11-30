@@ -1,4 +1,4 @@
-version: v1.3.2 ✅ ❌
+version: v1.3.3 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -26,14 +26,14 @@ pencarian berdasarkan kode dan deskripsi
 -potongan penjualan msh brmslh ✅
 -input nilai tinggi tidak bisa
 -revenue BSU belum jadi ✅
--BK (butuh list projek) ❌
+-BK (butuh list projek) ❌ ❌
 -BJU tambah parameter project ✅
 -potongan jadi 0% ✅
 -BLT kurang satu kolom (tabel volume ndak ada isinya) ✅
 -hilangkan tabel saat pertama kali di semua summary ✅
 -menu aktif kadang2 hilang ✅
--padding table 1px 8px, font-size: 10px
--tambahkan clear data disemua input berdasarkan tahun (tambah tombol)
+-padding table 1px 8px, font-size: 10px ✅
+-tambahkan clear data disemua input berdasarkan tahun (tambah tombol) ❌
 
 - report laba rugi
 
