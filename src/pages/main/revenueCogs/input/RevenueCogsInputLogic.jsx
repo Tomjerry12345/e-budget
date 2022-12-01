@@ -518,7 +518,9 @@ const RevenueCogsInputLogic = () => {
       const description = val.description;
       const listYear1 = [];
       const listYear2 = [];
-      let parent = val.parent;
+
+      // let parent = val.parent;
+      let parent = val.detail[0].list_month[0].parent;
 
       if (parent) {
         keyParent.push(i);
@@ -589,7 +591,7 @@ const RevenueCogsInputLogic = () => {
         des_1_uuid: listYear1[11]?.uuid,
         des_1_month: listYear1[11]?.month,
         des_1_year: year_1,
-        year_total_1: `Rp. ${year_total_1}`,
+        year_total_1: year_total_1,
         jan_2: listYear2[0]?.value,
         jan_2_uuid: listYear2[0]?.uuid,
         jan_2_month: listYear2[0]?.month,
@@ -638,7 +640,7 @@ const RevenueCogsInputLogic = () => {
         des_2_uuid: listYear2[11]?.uuid,
         des_2_month: listYear2[11]?.month,
         des_2_year: year_2,
-        year_total_2: `Rp. ${year_total_2}`,
+        year_total_2: year_total_2,
       });
     });
 

@@ -89,10 +89,19 @@ const MainPage = () => {
         <Header className="custom-header">
           <Breadcrumb className="custom-breadcrumb" separator=">">
             <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
-            <Breadcrumb.Item>{value.header}</Breadcrumb.Item>
+            <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
           </Breadcrumb>
 
-          {<Text className="header-title">{value.header}</Text>}
+          {
+            // value.params.item !== "" ? (
+            //   <Text className="header-title">
+            //     {path}
+            //     {/* {value.params.item} */}
+            //   </Text>
+            // ) : null
+
+            <Text className="header-title">{getLocal("name-menu")}</Text>
+          }
         </Header>
         <Content>
           <Outlet />

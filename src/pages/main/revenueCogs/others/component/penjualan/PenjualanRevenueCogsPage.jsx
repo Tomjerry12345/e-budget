@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 // import { Input } from "antd";
 import PenjualanRevenueCogsLogic from "./PenjualanRevenueCogsLogic";
 import ChildRevenueCogsComponent from "../ChildRevenueCogsComponent";
+import TablePotonganComponent from "../TablePotonganComponent";
 
 const PenjualanRevenueCogsPage = ({ tabsKey }) => {
   const { value, func } = PenjualanRevenueCogsLogic({ tabsKey });
@@ -114,6 +115,10 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listAsumsi",
       },
       {
+        title: "List Volume",
+        name: "listVolume",
+      },
+      {
         title: "Harga Jual Per Unit",
         name: "listHarga",
       },
@@ -124,10 +129,6 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
       {
         title: "Potongan Penjualan",
         name: "listPotongan",
-      },
-      {
-        title: "List Volume",
-        name: "listVolume",
       },
     ],
     "Revenue & COGS BLU": [
@@ -342,7 +343,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
       {data1[itemPage].map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
+          {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />}
         </>
       ))}
     </>

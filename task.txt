@@ -1,4 +1,4 @@
-version: v1.3.3 ✅ ❌
+version: v1.3.4 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -12,7 +12,7 @@ version: v1.3.3 ✅ ❌
 -page 2 all perusahaan revenue & cogs ✅
 -import export excel disetiap tabel
 
--dropdown di ganti cari auto select search
+-dropdown di ganti cari auto select search ❌
 
 *login
 -notif salah password ✅
@@ -22,8 +22,8 @@ version: v1.3.3 ✅ ❌
 pencarian berdasarkan kode dan deskripsi
 
 -ketika pindah ke hpp lain dropdown sama data hilang ✅
--pengali penjualan masih 
--potongan penjualan msh brmslh ✅
+-pengali penjualan masih ✅
+-potongan penjualan msh brmslh 
 -input nilai tinggi tidak bisa
 -revenue BSU belum jadi ✅
 -BK (butuh list projek) ❌ ❌
@@ -35,7 +35,8 @@ pencarian berdasarkan kode dan deskripsi
 -padding table 1px 8px, font-size: 10px ✅
 -tambahkan clear data disemua input berdasarkan tahun (tambah tombol) ❌
 
-- report laba rugi
+- report laba rugi ✅
+- tulisan actual, forecast dan budget perkecil ✅
 
 * update code
 
