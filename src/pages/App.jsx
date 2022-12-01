@@ -2,14 +2,12 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAsync } from "../redux/main/main.thunks";
-import { getLocal, getToken, log, logObj, logS } from "../values/Utilitas";
+import { getLocal, getToken, log, logObj, logS, setLocal } from "../values/Utilitas";
 
 const App = () => {
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const dispatch = useDispatch();
 
@@ -34,6 +32,8 @@ const App = () => {
       } else {
         // alert("400");
         if (auth === "true" && token !== null) {
+          setLocal("name-menu", "Dashboard");
+          setLocal("index-menu", 0);
           navigate("/main");
         } else {
           navigate("/login");

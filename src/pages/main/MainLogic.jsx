@@ -36,13 +36,19 @@ const MainLogic = () => {
     if (token === null) {
       navigate("/login");
     }
+
     if (movePage !== "null") {
       navigate(movePage);
     }
 
+    if (spliter[2] === "") {
+      setLocal("index-menu", 0);
+      setLocal("name-menu", "Dashboard");
+      navigate("/main");
+    }
+
     onRefreshBrowser();
     onClosingTab();
-
     setLocal("move-page", null);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
