@@ -1,4 +1,5 @@
 import { AutoComplete, Form } from "antd";
+import { log } from "../../../values/Utilitas";
 
 const options = [
   {
@@ -12,7 +13,14 @@ const options = [
   },
 ];
 
-const AutoCompleteElement = ({ label, name, onChange, value }) => {
+const AutoCompleteElement = ({ label, name, onSelect, value }) => {
+  const newVal = [];
+  log("value", value);
+  value.forEach((val) => {
+    newVal.push({
+      value: `${val.title} (${val.code})`,
+    });
+  });
   return (
     <Form.Item
       label={label}
@@ -28,8 +36,9 @@ const AutoCompleteElement = ({ label, name, onChange, value }) => {
         style={{
           width: 200,
         }}
-        options={options}
-        placeholder="try to type `b`"
+        options={newVal}
+        onSelect={onSelect}
+        placeholder={label}
         filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       />
     </Form.Item>

@@ -51,6 +51,40 @@ const FilterComponentLogic = ({ isCodeProduct }) => {
     }
   };
 
+  const onSelect = async (e) => {
+    console.log("onSelect", e);
+    // console.log("length", e.length);
+
+    // const length = e.length;
+
+    // const code = e.slice(length - 4, length - 1);
+    const code = e.replace(/[^0-9]/g, "");
+
+    console.log("code : ", code);
+
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
+    const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${code}`) : null;
+    const resLocation = await MainServices.get(`location/list-by-com?code_company=${code}`);
+    const resDept = await MainServices.get(`dept/list`);
+
+    console.log("resProduct", resProduct);
+    console.log("resLocation", resLocation);
+    console.log("resDept", resDept);
+
+    if (resLocation.data.responseCode === 200) {
+      setState({
+        ...state,
+        code_product: resProduct !== null ? setProduct(resProduct) : [],
+        code_location: setLocation(resLocation),
+        code_dept: setDept(resDept),
+      });
+    }
+  };
+
   const setProduct = (resProduct) => {
     const formatResProduct = [];
     resProduct.data.data.forEach((element) => {
@@ -91,6 +125,7 @@ const FilterComponentLogic = ({ isCodeProduct }) => {
     },
     func: {
       onChange,
+      onSelect,
     },
   };
 };

@@ -18,7 +18,13 @@ const SelectFilter = ({ value, func, isCodeProduct }) => (
 
 const AutoCompleteFilter = ({ value, func, isCodeProduct }) => (
   <>
-    <AutoCompleteElement label="Kode Perusahaan" name="code_company" value={value.state.code_company} onChange={func.onChange} />
+    <AutoCompleteElement label="Kode Perusahaan" name="code_company" value={value.state.code_company} onSelect={func.onSelect} />
+
+    <AutoCompleteElement label="Kode Produk" name="code_product" value={value.state.code_product} />
+
+    <AutoCompleteElement label="Kode Lokasi" name="code_location" value={value.state.code_location} />
+
+    <AutoCompleteElement label="Kode Dept" name="code_dept" value={value.state.code_dept} />
   </>
 );
 
