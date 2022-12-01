@@ -36,8 +36,8 @@ const FilterComponent = ({ onFinish, isCodeProduct, type = 1 }) => {
     <div className="custom-root-card">
       <Card className="card-style">
         <Form className="form-filter" layout="vertical" onFinish={onFinish} form={value.form}>
+          {element}
           <Form.Item>
-            {element}
             <Button className="btn-tampilkan" htmlType="submit">
               Tampilkan
             </Button>
