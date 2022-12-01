@@ -103,7 +103,7 @@ const CapexSummary = () => {
 
         {value.dataColumn.length > 0 ? (
           <Table
-            rowClassName={() => "editable-row"}
+            rowClassName="child"
             bordered
             dataSource={value.dataColumn}
             columns={value.tableColumn}

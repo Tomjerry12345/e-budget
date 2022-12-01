@@ -5,7 +5,7 @@ const TableOutputType1 = ({ dataSource, columns, loading }) => {
     <>
       {dataSource.length > 0 ? (
         <Table
-          rowClassName={() => "editable-row"}
+          rowClassName="child"
           bordered
           dataSource={dataSource}
           columns={columns}

@@ -22,15 +22,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({
-  title,
-  editable,
-  children,
-  dataIndex,
-  record,
-  handleSave,
-  ...restProps
-}) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -92,12 +84,7 @@ const EditableCell = ({
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" ||
-    params === "Kode departemen" ||
-    params === "Kode akun" ||
-    params === "Kode ICP"
-    ? null
-    : 1600;
+  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
 };
 
 const CustomFooter = ({ onOk, onCancel }) => (
@@ -259,12 +246,7 @@ const CoaPage = () => {
   };
 
   const customClass = classx({
-    "custom-action-modal":
-      status === "edit"
-        ? setXColumn(value.params.item) === null
-          ? false
-          : true
-        : false,
+    "custom-action-modal": status === "edit" ? (setXColumn(value.params.item) === null ? false : true) : false,
   });
 
   return (
@@ -284,12 +266,7 @@ const CoaPage = () => {
             Clear Data
           </Button>
 
-          <Button
-            className="btn-update"
-            type="primary"
-            icon={<UploadOutlined className="custom-icon" />}
-            onClick={func.onOpenUploadModal}
-          >
+          <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
             Update
           </Button>
         </div>
@@ -304,7 +281,7 @@ const CoaPage = () => {
         pagination={false}
         loading={value.loading}
         size="small"
-        rowClassName="editable-row"
+        rowClassName="child"
         scroll={{
           x: setXColumn(value.params.item),
           y: value.size.y - 246,
@@ -325,34 +302,14 @@ const CoaPage = () => {
 
       {/* </Content> */}
 
-      <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-      />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
 
-      <Modal
-        className={customClass}
-        open={value.openAction.open}
-        onCancel={func.onCancel}
-        closable={true}
-        title="Ubah Data"
-        footer={
-          status === "edit" ? null : (
-            <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />
-          )
-        }
-      >
+      <Modal className={customClass} open={value.openAction.open} onCancel={func.onCancel} closable={true} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
         <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
           {value.openAction.status === "edit" ? (
             <>
               {value.req.map((val, i) => (
-                <Form.Item
-                  key={i}
-                  name={val.key}
-                  rules={[{ required: true, message: "Tidak Boleh Kosong" }]}
-                >
+                <Form.Item key={i} name={val.key} rules={[{ required: true, message: "Tidak Boleh Kosong" }]}>
                   <Input placeholder={val.placeholder} />
                 </Form.Item>
               ))}
@@ -376,9 +333,7 @@ const CoaPage = () => {
               </Form.Item>
             </>
           ) : (
-            <Typography.Text>
-              Apakah Anda ingin menghapus item ?
-            </Typography.Text>
+            <Typography.Text>Apakah Anda ingin menghapus item ?</Typography.Text>
           )}
         </Form>
       </Modal>

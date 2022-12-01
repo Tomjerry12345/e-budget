@@ -15,7 +15,7 @@ const MainLogic = () => {
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
 
-  const [header, setHeader] = useState("Dashboard");
+  const [header, setHeader] = useState("");
 
   const dispatch = useDispatch();
 
@@ -109,9 +109,10 @@ const MainLogic = () => {
       // setSegmentedValue("Input");
 
       if (index === 0) {
-        setHeader("Dashboard");
+        // setHeader("Dashboard");
         isActivated[index] = 2;
         setLocal("index-menu", index);
+        setLocal("name-menu", "Dashboard");
         pageNavigation = "/";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
@@ -124,6 +125,7 @@ const MainLogic = () => {
     } else {
       dispatch(loadStart());
       setLocal("index-menu", index);
+      setLocal("name-menu", nameMenu);
       setiEmenu(keyMenu);
       isActivated[index] = 2;
       setItem([]);

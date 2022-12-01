@@ -1,11 +1,13 @@
 .parent {
-  font-weight: 600;
-  line-height: 14px;
-  font-size: 14px;
+  font-weight: 600 !important;
+  padding: 1px 8px !important;
+  line-height: 14px !important;
+  font-size: 11px !important;
 }
 .child {
-  line-height: 14px;
-  font-size: 12px;
+  line-height: 14px !important;
+  padding: 1px 8px !important;
+  font-size: 10px !important;
 }
 
 .act-styles {
@@ -13,8 +15,8 @@
   padding: 4px 8px;
   border-radius: 16px;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: 10px;
+  // line-height: 22px;
   color: #34a853;
 }
 
@@ -23,8 +25,8 @@
   padding: 4px 8px;
   border-radius: 16px;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: 10px;
+  // line-height: 22px;
   color: #fbbc05;
 }
 
@@ -33,8 +35,8 @@
   padding: 4px 8px;
   border-radius: 16px;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 22px;
+  font-size: 10px;
+  // line-height: 22px;
   color: #4285f4;
 }
 
