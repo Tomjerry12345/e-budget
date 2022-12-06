@@ -1,4 +1,4 @@
-version: v1.3.5 ✅ ❌
+version: v1.3.6 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -10,9 +10,9 @@ version: v1.3.5 ✅ ❌
 -others Done 2022, tapi yang 2023 ndak bisa di tes input ? ✅ -> bug be update othersPNO && othersBNO
 -input direct kode lokasi tidak berubah ketika memilih perusahaan ✅
 -page 2 all perusahaan revenue & cogs ✅
--import export excel disetiap tabel
+-import export excel disetiap tabel ✅
 
--dropdown di ganti cari auto select search ❌
+-dropdown di ganti cari auto select search ✅
 
 *login
 -notif salah password ✅
@@ -40,4 +40,4 @@ pencarian berdasarkan kode dan deskripsi
 
 * update code
 
-- buatkan component sendiri untuk combo box
+- buatkan component sendiri untuk combo box ✅
