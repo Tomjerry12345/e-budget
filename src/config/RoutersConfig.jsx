@@ -15,10 +15,22 @@ import RevenueCogsInputPage from "../pages/main/revenueCogs/input/RevenueCogsInp
 import OthersSummary from "../pages/main/others/summary/OthersSummary";
 import OthersInputPage from "../pages/main/others/input/OthersInputPage";
 import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsiPage";
-import OthersRevenueCogsPage from "../pages/main/revenueCogs/others/OthersRevenueCogsPage";
-import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/others/component/penjualan/PenjualanRevenueCogsPage";
-import LainRevenueCogsPage from "../pages/main/revenueCogs/others/component/hpplain/LainRevenueCogsPage";
 import LabaRugiPage from "../pages/main/report/laba-rugi/LabaRugiPage";
+import HkPage from "../pages/main/revenueCogs/hk/HkPage";
+import KiuPage from "../pages/main/revenueCogs/kiu/KiuPage";
+import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/component/penjualan/PenjualanRevenueCogsPage";
+import LainRevenueCogsPage from "../pages/main/revenueCogs/component/hpplain/LainRevenueCogsPage";
+import BtsPage from "../pages/main/revenueCogs/bts/BtsPage";
+import KiaPage from "../pages/main/revenueCogs/kia/KiaPage";
+import BjuPage from "../pages/main/revenueCogs/bju/BjuPage";
+import BltPage from "../pages/main/revenueCogs/blt/BltPage";
+import BluPage from "../pages/main/revenueCogs/blu/BluPage";
+import BkPage from "../pages/main/revenueCogs/bk/BkPage";
+import BsuPage from "../pages/main/revenueCogs/bsu/BsuPage";
+import BsbPage from "../pages/main/revenueCogs/bsb/BsbPage";
+import KikPage from "../pages/main/revenueCogs/kik/KikPage";
+import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
+import BandPage from "../pages/main/revenueCogs/band/BandPage";
 
 const RoutersConfig = () => {
   return (
@@ -31,7 +43,56 @@ const RoutersConfig = () => {
           <Route path="revenue-cogs">
             <Route path="input/:item" element={<RevenueCogsInputPage />} />
             <Route path="summary/:item" element={<RevenueCogsSummary />} />
-            <Route path="others/:item" element={<OthersRevenueCogsPage />}>
+
+            <Route path="Revenue & COGS HK" element={<HkPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS KIU" element={<KiuPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BTS" element={<BtsPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS KIA" element={<KiaPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BJU" element={<BjuPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BLT" element={<BltPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BLU" element={<BluPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BK" element={<BkPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BSU" element={<BsuPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BSB" element={<BsbPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS KIK" element={<KikPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS IKP" element={<IkpPage />}>
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+            </Route>
+            <Route path="Revenue & COGS BAND" element={<BandPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>

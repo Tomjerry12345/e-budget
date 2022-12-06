@@ -60,3 +60,9 @@ Number.prototype.format = function (n, x, s, c) {
 
   return (c ? num.replace(".", c) : num).replace(new RegExp(re, "g"), "$&" + (s || ","));
 }; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/
+
+export const slicing = (text, format, i) => {
+  const split = text.split(format);
+
+  return split[i];
+};

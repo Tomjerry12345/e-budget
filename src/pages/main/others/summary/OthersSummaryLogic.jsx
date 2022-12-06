@@ -20,9 +20,7 @@ const OthersSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const navigate = useNavigate();
 
@@ -46,30 +44,7 @@ const OthersSummaryLogic = () => {
     y: window.innerHeight,
   });
 
-  const [allCodeFilter, setAllCodeFilter] = useState({
-    code_company: [],
-    code_dept: [],
-    code_location: [],
-    code_product: [],
-    code_account: [],
-  });
-
-  const url = [
-    {
-      name: "code_dept",
-      endPoint: "dept/list",
-    },
-    {
-      name: "code_location",
-      endPoint: "location",
-    },
-  ];
-
-  const [urlIndex, setUrlIndex] = useState(0);
-
   const [loading, setLoading] = useState(false);
-
-  const [codeCompany, setCodeCompany] = useState(null);
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
@@ -88,15 +63,11 @@ const OthersSummaryLogic = () => {
       value_1: 0,
       value_2: 0,
     });
-    // setLoading(true);
-    // dispatch(getAsync(`${endPoint[itemPage]}/summary`, "get-data"));
-    onGetCodeFilter();
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (response !== null) {
       if (nameReducer === "get-data") {
-        onGetCodeFilter();
         const { data } = response;
         log("response", response);
         log("data", data);
@@ -119,30 +90,6 @@ const OthersSummaryLogic = () => {
         setDataColumn(list);
         onSetColumn(year_1, year_2);
         setLoading(false);
-      } else {
-        const { data } = response;
-        setAllCodeFilter({
-          ...allCodeFilter,
-          [nameReducer]: data,
-        });
-
-        if (codeCompany !== null) {
-          let urlComboBox;
-
-          if (urlIndex <= 1) {
-            if (urlIndex === 0) {
-              urlComboBox = url[urlIndex].endPoint;
-            } else {
-              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
-            }
-          }
-
-          if (urlComboBox !== undefined) {
-            dispatch(getAsync(urlComboBox, url[urlIndex].name));
-          }
-
-          setUrlIndex((current) => current + 1);
-        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -233,12 +180,29 @@ const OthersSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(
-      getAsync(
-        `${endPoint[itemPage]}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
-        "get-data"
-      )
-    );
+
+    let url;
+    const type = 2;
+
+    if (type === 1) {
+      url = `${endPoint[itemPage]}/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    } else if (type === 2) {
+      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+
+      // console.log("fCodeCompany", fCodeCompany);
+      // console.log("fCodeProduct", fCodeProduct);
+      // console.log("fCodeLocation", fCodeLocation);
+      // console.log("fCodeDept", fCodeDept);
+
+      url = `${endPoint[itemPage]}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+    }
+
+    log("url", url);
+
+    dispatch(getAsync(url, "get-data"));
   };
 
   const onTambahData = () => {
@@ -248,24 +212,7 @@ const OthersSummaryLogic = () => {
 
   const onFinish = (values) => {
     setLoading(true);
-    console.log("Success:", JSON.stringify(values));
     onSetDataTable(values);
-  };
-
-  const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list-master", "code_company"));
-  };
-
-  const onChange = (e) => {
-    setUrlIndex(0);
-    form.setFieldsValue({
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
-    const urlComboBox = `product/list-by-com?code_company=${e}`;
-    setCodeCompany(e);
-    dispatch(getAsync(urlComboBox, "code_product"));
   };
 
   return {
@@ -276,13 +223,11 @@ const OthersSummaryLogic = () => {
       size,
       ref,
       form,
-      allCodeFilter,
       loading,
     },
     func: {
       onTambahData,
       onFinish,
-      onChange,
     },
   };
 };

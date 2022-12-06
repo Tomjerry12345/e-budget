@@ -1,6 +1,7 @@
 import { Card } from "@mui/material";
 import { Table, Form, Input, Select, Button, Spin } from "antd";
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 import { areEqual, log } from "../../../../values/Utilitas";
 import MppInputLogic from "./MppInputLogic";
 
@@ -119,7 +120,7 @@ const MppInputPage = () => {
 
   return (
     <>
-      <div className="custom-root-card">
+      {/* <div className="custom-root-card">
         <Card
           className="card-style"
           // style={{ marginBottom: 16, height: 120 }}
@@ -208,7 +209,9 @@ const MppInputPage = () => {
             </Form.Item>
           </Form>
         </Card>
-      </div>
+      </div> */}
+
+      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         {value.dataColumnInput.length > 1 ? (

@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
-import { areEqual, log, logObj, logS } from "../../../../../values/Utilitas";
+import { areEqual } from "../../../../values/Utilitas";
 
-import { Table, Form, Input, Select, Button, Typography, Tabs } from "antd";
+import { Table, Form, Input } from "antd";
 
 const EditableContext = createContext(null);
 
@@ -81,7 +81,8 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
         }
         onClick={toggleEdit}
       >
-        {children[1] === null ? "0%" : `${parseInt(children[1]).format(0, 3, ".", ",")}%`}
+        {/* {children[1] === null ? "0%" : `${parseInt(children[1]).format(0, 3, ".", ",")}%`} */}
+        {parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   } else {
@@ -104,7 +105,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const TablePotonganComponent = ({ value, name }) => {
+const ChildRevenueCogsComponent = ({ value, name }) => {
   const components = {
     body: {
       cell: EditableCell,
@@ -134,4 +135,4 @@ const TablePotonganComponent = ({ value, name }) => {
   );
 };
 
-export default TablePotonganComponent;
+export default ChildRevenueCogsComponent;

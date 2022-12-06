@@ -1,14 +1,12 @@
-import { Form, Tabs } from "antd";
 import { useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
-import "./OthersRevenueCogsStyle.scss";
+import { Outlet, useNavigate } from "react-router-dom";
+import "../OthersRevenueCogsStyle.scss";
+import { Tabs } from "antd";
 
-const OthersRevenueCogsPage = () => {
+const BluPage = () => {
   const [key, setKey] = useState(1);
 
-  let params = useParams();
-
-  const itemPage = params.item;
+  // alert(location.pathname);
 
   const navigate = useNavigate();
 
@@ -29,7 +27,7 @@ const OthersRevenueCogsPage = () => {
     <div className="custom-root-layout">
       <Tabs
         className="custom-tabs"
-        defaultActiveKey="1"
+        // defaultActiveKey="1"
         activeKey={key}
         type="card"
         // size={size}
@@ -37,15 +35,10 @@ const OthersRevenueCogsPage = () => {
         onChange={(key) => {
           setKey(key);
           if (key === 1) {
-            navigate(`/main/revenue-cogs/others/${itemPage}/penjualan`);
+            navigate(`/main/revenue-cogs/Revenue & COGS KIU/penjualan`);
           } else {
-            navigate(`/main/revenue-cogs/others/${itemPage}/hpplain`);
+            navigate(`/main/revenue-cogs/Revenue & COGS KIU/hpplain`);
           }
-
-          // form.setFieldsValue({
-          //   code_location: null,
-          //   code_dept: null,
-          // });
         }}
       />
       <Outlet />
@@ -53,4 +46,4 @@ const OthersRevenueCogsPage = () => {
   );
 };
 
-export default OthersRevenueCogsPage;
+export default BluPage;

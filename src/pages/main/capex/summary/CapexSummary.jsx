@@ -2,13 +2,14 @@ import { Table, Form, Button, Select, Spin } from "antd";
 import { Card } from "@mui/material";
 import React from "react";
 import CapexSummaryLogic from "./CapexSummaryLogic";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const CapexSummary = () => {
   const { value, func } = CapexSummaryLogic();
 
   return (
     <>
-      <div className="custom-root-card">
+      {/* <div className="custom-root-card">
         <Card className="card-style">
           <Form className="form-filter" layout="vertical" ref={value.ref} onFinish={func.onFinish} form={value.form}>
             <Form.Item
@@ -94,7 +95,9 @@ const CapexSummary = () => {
             </Form.Item>
           </Form>
         </Card>
-      </div>
+      </div> */}
+
+      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         {/* <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
