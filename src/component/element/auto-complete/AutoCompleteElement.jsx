@@ -1,21 +1,7 @@
 import { AutoComplete, Form } from "antd";
-import { log } from "../../../values/Utilitas";
 
-const options = [
-  {
-    value: "Burns Bay Road",
-  },
-  {
-    value: "Downing Street",
-  },
-  {
-    value: "Wall Street",
-  },
-];
-
-const AutoCompleteElement = ({ label, name, onSelect, value }) => {
+const AutoCompleteElement = ({ label, name, onSelect, value, disabled }) => {
   const newVal = [];
-  log("value", value);
   value.forEach((val) => {
     newVal.push({
       value: `${val.title} (${val.code})`,
@@ -39,6 +25,7 @@ const AutoCompleteElement = ({ label, name, onSelect, value }) => {
         options={newVal}
         onSelect={onSelect}
         placeholder={label}
+        disabled={disabled}
         filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
       />
     </Form.Item>

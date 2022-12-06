@@ -2,15 +2,16 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import MainServices from "../../services/MainServices";
 
-const FilterComponentLogic = ({ isCodeProduct }) => {
+const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, codeCompany, formGlobal }) => {
   const [state, setState] = useState({
     code_company: [],
     code_product: [],
     code_location: [],
     code_dept: [],
+    code_project: [],
   });
 
-  const [form] = Form.useForm();
+  let [form] = Form.useForm();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,15 +25,30 @@ const FilterComponentLogic = ({ isCodeProduct }) => {
       }
     };
 
-    fetchData();
-  }, []);
+    console.log("codeCompany : ", codeCompany);
+
+    if (codeCompany === null) {
+      fetchData();
+    } else {
+      getValueComboBox(codeCompany);
+    }
+  }, [codeCompany]);
 
   const onChange = async (e) => {
-    form.setFieldsValue({
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
+    if (formGlobal !== null) {
+      formGlobal.setFieldsValue({
+        code_location: null,
+        code_dept: null,
+        code_product: null,
+      });
+    } else {
+      form.setFieldsValue({
+        code_location: null,
+        code_dept: null,
+        code_product: null,
+      });
+    }
+
     const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${e}`) : null;
     const resLocation = await MainServices.get(`location/list-by-com?code_company=${e}`);
     const resDept = await MainServices.get(`dept/list`);
@@ -51,37 +67,49 @@ const FilterComponentLogic = ({ isCodeProduct }) => {
     }
   };
 
-  const onSelect = async (e) => {
-    console.log("onSelect", e);
-    // console.log("length", e.length);
+  const onSelect = (e) => {
+    getValueComboBox(e);
+  };
 
-    // const length = e.length;
-
-    // const code = e.slice(length - 4, length - 1);
+  const getValueComboBox = async (e) => {
     const code = e.replace(/[^0-9]/g, "");
 
     console.log("code : ", code);
 
-    form.setFieldsValue({
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
-    const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${code}`) : null;
-    const resLocation = await MainServices.get(`location/list-by-com?code_company=${code}`);
-    const resDept = await MainServices.get(`dept/list`);
+    if (code !== 0) {
+      if (formGlobal !== null) {
+        formGlobal.setFieldsValue({
+          code_location: null,
+          code_dept: null,
+          code_product: null,
+        });
+      } else {
+        form.setFieldsValue({
+          code_location: null,
+          code_dept: null,
+          code_product: null,
+        });
+      }
 
-    console.log("resProduct", resProduct);
-    console.log("resLocation", resLocation);
-    console.log("resDept", resDept);
+      const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${code}`) : null;
+      const resLocation = await MainServices.get(`location/list-by-com?code_company=${code}`);
+      const resDept = await MainServices.get(`dept/list`);
+      const resProject = isCodeProject === true && keyCodeProject !== null ? await MainServices.get(`project/list`) : null;
 
-    if (resLocation.data.responseCode === 200) {
-      setState({
-        ...state,
-        code_product: resProduct !== null ? setProduct(resProduct) : [],
-        code_location: setLocation(resLocation),
-        code_dept: setDept(resDept),
-      });
+      console.log("resProduct", resProduct);
+      console.log("resLocation", resLocation);
+      console.log("resDept", resDept);
+      console.log("resProject", resProject);
+
+      if (resLocation.data.responseCode === 200) {
+        setState({
+          ...state,
+          code_product: resProduct !== null ? setProduct(resProduct) : [],
+          code_location: setLocation(resLocation),
+          code_dept: setDept(resDept),
+          code_project: resProject !== null ? setProject(resProject) : [],
+        });
+      }
     }
   };
 
@@ -116,6 +144,28 @@ const FilterComponentLogic = ({ isCodeProduct }) => {
       });
     });
     return formatResDept;
+  };
+
+  const setProject = (resProject) => {
+    const formatResProject = [];
+    const data = resProject.data.data;
+
+    data.forEach((element) => {
+      let perusahaan;
+
+      if (keyCodeProject === "BJU") {
+        perusahaan = element.BJU;
+      }
+
+      if (perusahaan === "1") {
+        formatResProject.push({
+          code: element.code_project,
+          title: element.description,
+        });
+      }
+    });
+
+    return formatResProject;
   };
 
   return {

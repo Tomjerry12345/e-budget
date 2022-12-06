@@ -58,32 +58,9 @@ const OpexInputLogic = () => {
 
   const [codeFilter, setCodeFilter] = useState();
 
-  const [allCodeFilter, setAllCodeFilter] = useState({
-    code_company: [],
-    code_dept: [],
-    code_location: [],
-    code_product: [],
-    code_account: [],
-  });
-
-  const url = [
-    {
-      name: "code_dept",
-      endPoint: "dept/list",
-    },
-    {
-      name: "code_location",
-      endPoint: "location",
-    },
-  ];
-
-  const [urlIndex, setUrlIndex] = useState(0);
-
   const [listKeyParent, setListKeyParent] = useState();
 
   const [loading, setLoading] = useState(false);
-
-  const [codeCompany, setCodeCompany] = useState(null);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -92,7 +69,6 @@ const OpexInputLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-    onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -105,30 +81,6 @@ const OpexInputLogic = () => {
         log(`get Data`);
         getDataTable(response);
         setLoading(false);
-      } else {
-        const { data } = response;
-        setAllCodeFilter({
-          ...allCodeFilter,
-          [nameReducer]: data,
-        });
-
-        if (codeCompany !== null) {
-          let urlComboBox;
-
-          if (urlIndex <= 1) {
-            if (urlIndex === 0) {
-              urlComboBox = url[urlIndex].endPoint;
-            } else {
-              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
-            }
-          }
-
-          if (urlComboBox !== undefined) {
-            dispatch(getAsync(urlComboBox, url[urlIndex].name));
-          }
-
-          setUrlIndex((current) => current + 1);
-        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -497,10 +449,38 @@ const OpexInputLogic = () => {
       code_product,
       // code_account,
     } = values;
-    setCodeFilter(values);
-    const path = `opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+
+    let url;
+    const type = 2;
+
+    if (type === 1) {
+      url = `$opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+      setCodeFilter(values);
+    } else if (type === 2) {
+      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+
+      // console.log("fCodeCompany", fCodeCompany);
+      // console.log("fCodeProduct", fCodeProduct);
+      // console.log("fCodeLocation", fCodeLocation);
+      // console.log("fCodeDept", fCodeDept);
+
+      url = `opex/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+
+      setCodeFilter({
+        code_company: fCodeCompany,
+        code_dept: fCodeDept,
+        code_location: fCodeLocation,
+        code_product: fCodeProduct,
+      });
+    }
+
+    log("url", url);
+
     // const path = `opex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
-    dispatch(getAsync(path, "get-data"));
+    dispatch(getAsync(url, "get-data"));
   };
 
   const getDataTable = (response) => {
@@ -652,12 +632,8 @@ const OpexInputLogic = () => {
   };
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    onSetDataTable(values);
     setLoading(true);
-    // let formData = new FormData();
-    // formData.append("username", values.username);
-    // formData.append("password", values.password);
+    onSetDataTable(values);
   };
 
   const handleSave = (row, keysEdit, valuesEdit) => {
@@ -669,6 +645,8 @@ const OpexInputLogic = () => {
     const uuid = row[`${keysEdit}_uuid`];
 
     if (uuid === null) {
+      log("row-account", row.account);
+      log("codeFilter", codeFilter);
       formData.append("code", row.account);
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
@@ -685,22 +663,6 @@ const OpexInputLogic = () => {
     dispatch(postAsync(`opex/update`, formData, "update-opex"));
   };
 
-  const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list-master", "code_company"));
-  };
-
-  const onChange = (e) => {
-    setUrlIndex(0);
-    form.setFieldsValue({
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
-    const urlComboBox = `product/list-by-com?code_company=${e}`;
-    setCodeCompany(e);
-    dispatch(getAsync(urlComboBox, "code_product"));
-  };
-
   return {
     value: {
       dataColumnInput,
@@ -710,12 +672,10 @@ const OpexInputLogic = () => {
       ref,
       size,
       listKeyParent,
-      allCodeFilter,
       loading,
     },
     func: {
       onFinish,
-      onChange,
     },
   };
 };

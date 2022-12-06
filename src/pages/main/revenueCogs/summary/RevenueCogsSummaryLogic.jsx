@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
-import { getSizeScreen, log, logObj, logS } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 // const endPoint = {
 //   "revenueandcogs Direct": "",
@@ -19,9 +19,7 @@ const RevenueCogsSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const navigate = useNavigate();
 
@@ -45,49 +43,16 @@ const RevenueCogsSummaryLogic = () => {
     y: window.innerHeight,
   });
 
-  const [allCodeFilter, setAllCodeFilter] = useState({
-    code_company: [],
-    code_dept: [],
-    code_location: [],
-    code_product: [],
-    code_account: [],
-  });
-
-  const url = [
-    {
-      name: "code_dept",
-      endPoint: "dept/list",
-    },
-    {
-      name: "code_location",
-      endPoint: "location",
-    },
-  ];
-
-  const [urlIndex, setUrlIndex] = useState(0);
-
-  const [codeCompany, setCodeCompany] = useState(null);
-
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
-    // form.setFieldsValue({
-    //   code_company: 0,
-    //   code_location: null,
-    //   code_dept: null,
-    //   code_product: null,
-    // });
-    // setLoading(true);
-    // dispatch(getAsync(`revenueandcogs/summary`, "get-data"));
-    onGetCodeFilter();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     logObj("response", response);
     if (response !== null) {
       if (nameReducer === "get-data") {
-        onGetCodeFilter();
         const { data } = response;
         let list = [];
         let year_1 = "";
@@ -108,33 +73,6 @@ const RevenueCogsSummaryLogic = () => {
         setDataColumn(list);
         onSetColumn(year_1, year_2);
         setLoading(false);
-      } else {
-        const { data } = response;
-        setAllCodeFilter({
-          ...allCodeFilter,
-          [nameReducer]: data,
-        });
-
-        if (codeCompany !== null) {
-          let urlComboBox;
-
-          if (urlIndex <= 1) {
-            logObj("urlIndex", urlIndex);
-            if (urlIndex === 0) {
-              urlComboBox = url[urlIndex].endPoint;
-            } else {
-              urlComboBox = `${url[urlIndex].endPoint}/list-by-com?code_company=${codeCompany}`;
-            }
-          }
-
-          logObj("urlComboBox", urlComboBox);
-
-          if (urlComboBox !== undefined) {
-            dispatch(getAsync(urlComboBox, url[urlIndex].name));
-          }
-
-          setUrlIndex((current) => current + 1);
-        }
       }
     } else {
       console.log(`error ${errorMessage}`);
@@ -189,12 +127,29 @@ const RevenueCogsSummaryLogic = () => {
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
-    dispatch(
-      getAsync(
-        `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`,
-        "get-data"
-      )
-    );
+
+    let url;
+    const type = 2;
+
+    if (type === 1) {
+      url = `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+    } else if (type === 2) {
+      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+
+      // console.log("fCodeCompany", fCodeCompany);
+      // console.log("fCodeProduct", fCodeProduct);
+      // console.log("fCodeLocation", fCodeLocation);
+      // console.log("fCodeDept", fCodeDept);
+
+      url = `revenueandcogs/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+    }
+
+    log("url", url);
+
+    dispatch(getAsync(url, "get-data"));
   };
 
   const onTambahData = () => {
@@ -204,25 +159,7 @@ const RevenueCogsSummaryLogic = () => {
 
   const onFinish = (values) => {
     setLoading(true);
-    console.log("Success:", JSON.stringify(values));
     onSetDataTable(values);
-  };
-
-  const onGetCodeFilter = () => {
-    dispatch(getAsync("company/list-master", "code_company"));
-    // dispatch(getAsync("dept/list", "code_dept"));
-  };
-
-  const onChange = (e) => {
-    setUrlIndex(0);
-    form.setFieldsValue({
-      code_location: null,
-      code_dept: null,
-      code_product: null,
-    });
-    const urlComboBox = `product/list-by-com?code_company=${e}`;
-    setCodeCompany(e);
-    dispatch(getAsync(urlComboBox, "code_product"));
   };
 
   return {
@@ -233,13 +170,11 @@ const RevenueCogsSummaryLogic = () => {
       size,
       ref,
       form,
-      allCodeFilter,
       loading,
     },
     func: {
       onTambahData,
       onFinish,
-      onChange,
     },
   };
 };
