@@ -8,7 +8,7 @@ import { getSizeScreen, log, slicing } from "../../../../../values/Utilitas";
 import { useLocation } from "react-router-dom";
 
 const menuReveneue = {
-  "Revenue & COGS HK": {
+  hk: {
     parentUrl: "hk",
     childUrl: [
       {

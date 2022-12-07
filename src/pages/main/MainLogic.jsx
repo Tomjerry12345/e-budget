@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import { allItemSummarySubMenu, disabledItemSummaryMenu } from "../../values/Constant";
+import { allItemSummarySubMenu, disabledItemSummaryMenu, urlPageRevenue } from "../../values/Constant";
 import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -112,10 +112,6 @@ const MainLogic = () => {
     setKeyMenu(index);
 
     if (item === "menu") {
-      // setSegmentedValue("Input");
-
-      alert("test");
-
       if (index === 0) {
         // setHeader("Dashboard");
         isActivated[index] = 2;
@@ -148,10 +144,9 @@ const MainLogic = () => {
 
       if (index === 1) {
         if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
-          // pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
-          pageNavigation = `/main/revenue-cogs/input/input-direct-revenue-cogs`;
+          pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
         } else {
-          pageNavigation = `/main/revenue-cogs/${nameMenu}/penjualan`;
+          pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
         }
       } else if (index === 2) {
         pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
