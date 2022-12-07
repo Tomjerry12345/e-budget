@@ -114,6 +114,8 @@ const MainLogic = () => {
     if (item === "menu") {
       // setSegmentedValue("Input");
 
+      alert("test");
+
       if (index === 0) {
         // setHeader("Dashboard");
         isActivated[index] = 2;
