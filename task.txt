@@ -1,4 +1,4 @@
-version: v1.3.6 ✅ ❌
+version: v1.3.7 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -41,3 +41,5 @@ pencarian berdasarkan kode dan deskripsi
 * update code
 
 - buatkan component sendiri untuk combo box ✅
+
+- master data ubah jad
