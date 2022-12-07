@@ -13,7 +13,7 @@ const LainRevenueCogsPage = () => {
   const path = slicing(location.pathname, "/", 3);
 
   const data1 = {
-    "Revenue & COGS HK": [
+    hk: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
