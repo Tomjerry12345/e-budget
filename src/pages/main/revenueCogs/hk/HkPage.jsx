@@ -6,10 +6,6 @@ import { Form, Tabs } from "antd";
 const HkPage = () => {
   const [key, setKey] = useState(1);
 
-  let params = useParams();
-
-  alert("test");
-
   const navigate = useNavigate();
 
   const tabItemParent = [
@@ -37,9 +33,9 @@ const HkPage = () => {
         onChange={(key) => {
           setKey(key);
           if (key === 1) {
-            navigate(`/main/revenue-cogs/Revenue & COGS HK/penjualan`);
+            navigate(`/main/revenue-cogs/hk/penjualan`);
           } else {
-            navigate(`/main/revenue-cogs/Revenue & COGS HK/hpplain`);
+            navigate(`/main/revenue-cogs/hk/hpplain`);
           }
         }}
       />

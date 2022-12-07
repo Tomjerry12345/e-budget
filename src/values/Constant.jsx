@@ -216,4 +216,20 @@ export const disabledItemSummaryMenu = [
 
 export const endPointGetCoa = "";
 
-// export const urlOthers
+export const urlPageRevenue = {
+  "Revenue & COGS HK": "hk",
+  "Revenue & COGS KIU": "kiu",
+  "Revenue & COGS BTS": "bts",
+  "Revenue & COGS KIA": "kia",
+  "Revenue & COGS BJU": "bju",
+  "Revenue & COGS BLT": "blt",
+  "Revenue & COGS BLU": "blu",
+  "Revenue & COGS BK": "bk",
+  "Revenue & COGS BSU": "bsu",
+  "Revenue & COGS BSB": "bsb",
+  "Revenue & COGS KIK": "kik",
+  "Revenue & COGS IKP": "ikp",
+  "Revenue & COGS BAND": "band",
+  "Input Direct Revenue & COGS": "input-revenue-cogs",
+  "Summary Revenue & COGS": "summary-revenue-cogs",
+};
