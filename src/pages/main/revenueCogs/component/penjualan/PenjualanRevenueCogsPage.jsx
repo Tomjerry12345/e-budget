@@ -15,6 +15,8 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
 
   const path = slicing(location.pathname, "/", 3);
 
+  console.log("path", path);
+
   const data1 = {
     "Revenue & COGS HK": [
       {
