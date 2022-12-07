@@ -1,8 +1,8 @@
 import { Breadcrumb, Button, Layout, List, Modal, Typography } from "antd";
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
-import { getLocal, log } from "../../values/Utilitas";
+import { getLocal } from "../../values/Utilitas";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
@@ -15,34 +15,9 @@ const { Text } = Typography;
 
 const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
 
-const getPath = (pathName, item) => {
-  const spliter = pathName?.split("/");
-
-  let path = "";
-  if (typeof spliter[3] === "undefined") {
-    path = "Dashboard";
-  } else {
-    const path1 = spliter[3].charAt(0).toUpperCase() + spliter[3].slice(1);
-    const pathSplit = path1.split("%20").join(" ");
-    log(`path1 => ${pathSplit}`);
-
-    if (pathSplit === "Summary" || pathSplit === "Others") {
-      path = item;
-    } else if (pathSplit === "Input") {
-      path = `${path1} ${item}`;
-    } else {
-      path = pathSplit;
-    }
-  }
-
-  return path;
-};
-
 const MainPage = () => {
   const { func, value } = MainLogic();
-  const location = useLocation();
-  const pathName = location.pathname;
-  // const path = getPath(pathName, value.params.item);
+
   return (
     <Layout
       style={{
