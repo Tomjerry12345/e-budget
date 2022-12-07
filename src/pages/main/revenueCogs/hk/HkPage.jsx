@@ -8,7 +8,7 @@ const HkPage = () => {
 
   let params = useParams();
 
-  // alert(location.pathname);
+  alert("test");
 
   const navigate = useNavigate();
 
