@@ -250,16 +250,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
 
   return (
     <>
-      <FilterComponent
-        codeCompany={codeCompany}
-        type={2}
-        isCodeProduct={false}
-        isCodeProject={path === "Revenue & COGS BJU" ? true : false}
-        form={value.form}
-        onFinish={func.onFinish}
-        disabled={true}
-        keyCodeProject={path === "Revenue & COGS BJU" ? "BJU" : null}
-      />
+      <FilterComponent codeCompany={codeCompany} type={2} isCodeProduct={false} isCodeProject={path === "bju" ? true : false} form={value.form} onFinish={func.onFinish} disabled={true} keyCodeProject={path === "bju" ? "BJU" : null} />
 
       {data1[path].map((val) => (
         <>
