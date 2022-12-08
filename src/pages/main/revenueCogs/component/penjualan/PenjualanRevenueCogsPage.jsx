@@ -36,7 +36,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS KIU": [
+    kiu: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -58,7 +58,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listDisc",
       },
     ],
-    "Revenue & COGS BTS": [
+    bts: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -76,7 +76,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS KIA": [
+    kia: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -94,7 +94,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS BJU": [
+    bju: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -112,7 +112,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS BLT": [
+    blt: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -134,7 +134,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS BLU": [
+    blu: [
       {
         title: "Harga Jual Per Unit",
         name: "listHarga",
@@ -152,13 +152,13 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         data: "listVolume",
       },
     ],
-    "Revenue & COGS BK": [
+    bk: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
       },
     ],
-    "Revenue & COGS BSU": [
+    bsu: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -172,7 +172,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS BSB": [
+    bsb: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -190,7 +190,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS KIK": [
+    kik: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -208,7 +208,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS IKP": [
+    ikp: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
@@ -226,7 +226,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listPotongan",
       },
     ],
-    "Revenue & COGS BAND": [
+    band: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",
