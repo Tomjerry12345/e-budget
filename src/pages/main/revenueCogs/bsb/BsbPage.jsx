@@ -35,9 +35,9 @@ const BsbPage = () => {
         onChange={(key) => {
           setKey(key);
           if (key === 1) {
-            navigate(`/main/revenue-cogs/Revenue & COGS KIU/penjualan`);
+            navigate(`/main/revenue-cogs/bsb/penjualan`);
           } else {
-            navigate(`/main/revenue-cogs/Revenue & COGS KIU/hpplain`);
+            navigate(`/main/revenue-cogs/bsb/hpplain`);
           }
         }}
       />

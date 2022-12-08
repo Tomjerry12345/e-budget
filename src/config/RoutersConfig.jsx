@@ -49,51 +49,51 @@ const RoutersConfig = () => {
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS KIU" element={<KiuPage />}>
+            <Route path="kiu" element={<KiuPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BTS" element={<BtsPage />}>
+            <Route path="bts" element={<BtsPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS KIA" element={<KiaPage />}>
+            <Route path="kia" element={<KiaPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BJU" element={<BjuPage />}>
+            <Route path="bju" element={<BjuPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BLT" element={<BltPage />}>
+            <Route path="blt" element={<BltPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BLU" element={<BluPage />}>
+            <Route path="blu" element={<BluPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BK" element={<BkPage />}>
+            <Route path="bk" element={<BkPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BSU" element={<BsuPage />}>
+            <Route path="bsu" element={<BsuPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BSB" element={<BsbPage />}>
+            <Route path="bsb" element={<BsbPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS KIK" element={<KikPage />}>
+            <Route path="kik" element={<KikPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS IKP" element={<IkpPage />}>
+            <Route path="ikp" element={<IkpPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="Revenue & COGS BAND" element={<BandPage />}>
+            <Route path="band" element={<BandPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>

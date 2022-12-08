@@ -34,7 +34,7 @@ const menuReveneue = {
     title: "HK",
     code: 311,
   },
-  "Revenue & COGS KIU": {
+  kiu: {
     parentUrl: "kiu",
     childUrl: [
       {
@@ -65,7 +65,7 @@ const menuReveneue = {
     title: "KIU",
     code: 311,
   },
-  "Revenue & COGS BTS": {
+  bts: {
     parentUrl: "bts",
     childUrl: [
       {
@@ -89,7 +89,7 @@ const menuReveneue = {
       },
     ],
   },
-  "Revenue & COGS KIA": {
+  kia: {
     parentUrl: "kia",
     childUrl: [
       {
@@ -115,7 +115,7 @@ const menuReveneue = {
     title: "KIA",
     code: 313,
   },
-  "Revenue & COGS BJU": {
+  bju: {
     parentUrl: "bju",
     childUrl: [
       {
@@ -141,7 +141,7 @@ const menuReveneue = {
     title: "BJU",
     code: 312,
   },
-  "Revenue & COGS BLT": {
+  blt: {
     parentUrl: "blt",
     childUrl: [
       {
@@ -172,7 +172,7 @@ const menuReveneue = {
     title: "BLT",
     code: 421,
   },
-  "Revenue & COGS BLU": {
+  blu: {
     parentUrl: "blu",
     childUrl: [
       {
@@ -198,7 +198,7 @@ const menuReveneue = {
     title: "BLU",
     code: 422,
   },
-  "Revenue & COGS BK": {
+  bk: {
     parentUrl: "bk",
     childUrl: [
       {
@@ -210,7 +210,7 @@ const menuReveneue = {
     title: "BK",
     code: 221,
   },
-  "Revenue & COGS BSU": {
+  bsu: {
     parentUrl: "bsu",
     childUrl: [
       {
@@ -231,7 +231,7 @@ const menuReveneue = {
     title: "BSU",
     code: 411,
   },
-  "Revenue & COGS BSB": {
+  bsb: {
     parentUrl: "bsb",
     childUrl: [
       {
@@ -257,7 +257,7 @@ const menuReveneue = {
     title: "BSB",
     code: 413,
   },
-  "Revenue & COGS KIK": {
+  kik: {
     parentUrl: "kik",
     childUrl: [
       {
@@ -283,7 +283,7 @@ const menuReveneue = {
     title: "KIK",
     code: 241,
   },
-  "Revenue & COGS IKP": {
+  ikp: {
     parentUrl: "ikp",
     childUrl: [
       {
@@ -309,7 +309,7 @@ const menuReveneue = {
     title: "IKP",
     code: 242,
   },
-  "Revenue & COGS BAND": {
+  band: {
     parentUrl: "band",
     childUrl: [
       {

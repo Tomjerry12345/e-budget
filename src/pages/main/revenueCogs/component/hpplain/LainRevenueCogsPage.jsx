@@ -27,7 +27,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS KIU": [
+    kiu: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -41,7 +41,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BTS": [
+    bts: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -55,7 +55,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS KIA": [
+    kia: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -69,8 +69,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-
-    "Revenue & COGS BJU": [
+    bju: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -84,7 +83,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BLT": [
+    blt: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -98,7 +97,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BLU": [
+    blu: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -112,7 +111,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BK": [
+    bk: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -126,7 +125,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BSU": [
+    bsu: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -140,7 +139,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BSB": [
+    bsb: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -154,7 +153,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS KIK": [
+    kik: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -168,7 +167,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS IKP": [
+    ikp: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
@@ -182,7 +181,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    "Revenue & COGS BAND": [
+    band: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",
