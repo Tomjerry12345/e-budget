@@ -130,6 +130,7 @@ const MainLogic = () => {
       dispatch(loadStart());
       setLocal("index-menu", index);
       setLocal("name-menu", nameMenu);
+
       setiEmenu(keyMenu);
       isActivated[index] = 2;
       setItem([]);

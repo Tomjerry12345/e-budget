@@ -66,3 +66,7 @@ export const slicing = (text, format, i) => {
 
   return split[i];
 };
+
+export const getKeyByValue = (object, value) => {
+  return Object.keys(object).find(key => object[key] === value);
+}
