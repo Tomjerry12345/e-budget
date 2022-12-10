@@ -8,6 +8,31 @@
   line-height: 14px !important;
   padding: 1px 8px !important;
   font-size: 10px !important;
+
+  td {
+    padding: 2px 8px !important;
+  }
+
+  .ant-table-cell-with-append {
+    display: flex;
+    align-items: center;
+    height: 28px;
+    // padding: 1px 8px;
+
+    .ant-table-row-expand-icon {
+      margin-top: 0px;
+      transform: scale(0.6) !important;
+    }
+  }
+
+  .more-style {
+    border: none;
+    height: 23px;
+
+    .ic-more {
+      height: 19px;
+    }
+  }
 }
 
 .act-styles {

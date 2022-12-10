@@ -42,8 +42,8 @@ const RoutersConfig = () => {
           <Route index element={<DashboardPage />} />
           <Route path="revenue-cogs">
             {/* <Route path="input/Input Direct Revenue & COGS" element={<RevenueCogsInputPage />} /> */}
-            <Route path="input/input-revenue-cogs" element={<RevenueCogsInputPage />} />
-            <Route path="summary/summary-revenue-cogs" element={<RevenueCogsSummary />} />
+            <Route path="input" element={<RevenueCogsInputPage />} />
+            <Route path="summary" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
