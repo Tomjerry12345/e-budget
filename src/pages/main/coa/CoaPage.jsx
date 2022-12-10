@@ -94,144 +94,88 @@ const CustomFooter = ({ onOk, onCancel }) => (
   </>
 );
 
-// const VirtualTable = (props) => {
-//   const { columns, scroll } = props;
-//   const [tableWidth, setTableWidth] = useState(0);
-//   const widthColumnCount = columns.filter(({ width }) => !width).length;
-//   const mergedColumns = columns.map((column) => {
-//     if (column.width) {
-//       return column;
-//     }
-
-//     return { ...column, width: Math.floor(tableWidth / widthColumnCount) };
-//   });
-//   const gridRef = useRef();
-//   const [connectObject] = useState(() => {
-//     const obj = {};
-//     Object.defineProperty(obj, "scrollLeft", {
-//       get: () => {
-//         if (gridRef.current) {
-//           return gridRef.current?.state?.scrollLeft;
-//         }
-
-//         return null;
-//       },
-//       set: (scrollLeft) => {
-//         if (gridRef.current) {
-//           gridRef.current.scrollTo({
-//             scrollLeft,
-//           });
-//         }
-//       },
-//     });
-//     return obj;
-//   });
-
-//   const resetVirtualGrid = () => {
-//     gridRef.current?.resetAfterIndices({
-//       columnIndex: 0,
-//       shouldForceUpdate: true,
-//     });
-//   };
-
-//   useEffect(() => resetVirtualGrid, [tableWidth]);
-
-//   const renderVirtualList = (rawData, { scrollbarSize, ref, onScroll }) => {
-//     ref.current = connectObject;
-//     const totalHeight = rawData.length * 54;
-//     return (
-//       <Grid
-//         ref={gridRef}
-//         className="virtual-grid"
-//         style={{ margin: 20 }}
-//         columnCount={mergedColumns.length}
-//         columnWidth={(index) => {
-//           const { width } = mergedColumns[index];
-//           return totalHeight > scroll.y && index === mergedColumns.length - 1
-//             ? width - scrollbarSize - 1
-//             : width;
-//         }}
-//         height={scroll.y}
-//         rowCount={rawData.length}
-//         rowHeight={() => 54}
-//         width={tableWidth}
-//         onScroll={({ scrollLeft }) => {
-//           onScroll({
-//             scrollLeft,
-//           });
-//         }}
-//       >
-//         {({ columnIndex, rowIndex, style }) => (
-//           <div
-//             className={classNames("virtual-table-cell", {
-//               "virtual-table-cell-last":
-//                 columnIndex === mergedColumns.length - 1,
-//             })}
-//             style={style}
-//           >
-//             {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
-//           </div>
-//         )}
-//       </Grid>
-//     );
-//   };
-
-//   return (
-//     <ResizeObserver
-//       onResize={({ width }) => {
-//         setTableWidth(width);
-//       }}
-//     >
-//       <Table
-//         {...props}
-//         className="virtual-table"
-//         columns={mergedColumns}
-//         pagination={false}
-//         components={{
-//           body: renderVirtualList,
-//         }}
-//       />
-//     </ResizeObserver>
-//   );
-// }; // Usage
-
 // const columns = [
 //   {
-//     title: "A",
-//     dataIndex: "key",
-//     width: 150,
+//     title: "Code",
+//     dataIndex: "code",
+//     key: "code",
 //   },
 //   {
-//     title: "B",
-//     dataIndex: "key",
-//   },
-//   {
-//     title: "C",
-//     dataIndex: "key",
-//   },
-//   {
-//     title: "D",
-//     dataIndex: "key",
-//   },
-//   {
-//     title: "E",
-//     dataIndex: "key",
-//     width: 200,
-//   },
-//   {
-//     title: "F",
-//     dataIndex: "key",
-//     width: 100,
+//     title: "Description",
+//     dataIndex: "description",
+//     key: "description",
+//     width: "12%",
 //   },
 // ];
-// const data = Array.from(
-//   {
-//     length: 100000,
-//   },
-//   (_, key) => ({
-//     key,
-//   })
-// );
+
+const data = [
+  {
+    // key: 1,
+    code: 60,
+    description: "New York No. 1 Lake Park",
+    children: [
+      {
+        // key: 11,
+        code: 42,
+        description: "New York No. 2 Lake Park",
+      },
+      {
+        // key: 12,
+        code: 30,
+        description: "New York No. 3 Lake Park",
+        children: [
+          {
+            // key: 121,
+            code: 16,
+            description: "New York No. 3 Lake Park",
+          },
+        ],
+      },
+      {
+        // key: 13,
+
+        code: 72,
+        description: "London No. 1 Lake Park",
+        children: [
+          {
+            // key: 131,
+            code: 42,
+            description: "London No. 2 Lake Park",
+            children: [
+              {
+                // key: 1311,
+                code: 25,
+                description: "London No. 3 Lake Park",
+              },
+              {
+                // key: 1312,
+                code: 18,
+                description: "London No. 4 Lake Park",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    // key: 2,
+    code: 32,
+    address: "Sidney No. 1 Lake Park",
+  },
+];
+
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
+  },
+  onSelect: (record, selected, selectedRows) => {
+    console.log(record, selected, selectedRows);
+  },
+  onSelectAll: (selected, selectedRows, changeRows) => {
+    console.log(selected, selectedRows, changeRows);
+  },
+};
 
 const CoaPage = () => {
   const { value, func } = CoaInputLogic();
@@ -262,17 +206,13 @@ const CoaPage = () => {
         </Form>
 
         <div className="layout-btn-action">
-          <Button className="btn-clear" type="ghost" disabled>
-            Clear Data
-          </Button>
-
           <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
             Update
           </Button>
         </div>
       </div>
 
-      <Table
+      {/* <Table
         className="table-custom-root"
         components={components}
         bordered
@@ -287,20 +227,24 @@ const CoaPage = () => {
           y: value.size.y - 246,
         }}
         rowKey="id"
-      />
-
-      {/* <VirtualTable
-        columns={value.tableColumn}
-        dataSource={value.dataColumn}
-        scroll={{
-          // y: 300,
-          y: value.size.y - 200,
-          // x: "100vw",
-          x: setXColumn(value.params.item),
-        }}
       /> */}
 
-      {/* </Content> */}
+      <Table
+        rowKey="id"
+        size="small"
+        rowClassName="child"
+        columns={value.columns}
+        pagination={false}
+        rowSelection={{
+          ...rowSelection,
+          // checkStrictly,
+        }}
+        dataSource={value.dataColumn}
+        scroll={{
+          x: setXColumn(value.params.item),
+          y: value.size.y - 246,
+        }}
+      />
 
       <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
 

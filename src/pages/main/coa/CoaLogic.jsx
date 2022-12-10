@@ -2,6 +2,7 @@ import { Button, Dropdown, Menu } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { getAsync, postAsync, deleteAsync } from "../../../redux/main/main.thunks";
@@ -122,19 +123,41 @@ const CoaInputLogic = () => {
     y: window.innerHeight,
   });
 
+  const columns = [
+    {
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+      width: "150px",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      key: "description",
+    },
+    {
+      dataIndex: "operation",
+      fixed: "right",
+      width: "5%",
+      render: (_, record) => (
+        <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Button className="more-style" icon={<MoreHorizIcon className="ic-more" />}></Button>
+        </Dropdown>
+      ),
+    },
+  ];
+
   const constantTableColums = {
     "Kode perusahaan": [
       {
         title: "Kode Company",
         dataIndex: "code_company",
-
         width: "10%",
         fixed: "left",
       },
       {
         title: "Kode Parent",
         dataIndex: "code_parent",
-
         width: "10%",
       },
       {
@@ -498,6 +521,7 @@ const CoaInputLogic = () => {
 
         if (data !== undefined) {
           log("data.length", data.length);
+          log("data", data);
 
           setDataColumn(data);
         }
@@ -552,7 +576,7 @@ const CoaInputLogic = () => {
 
   const onSetDataTable = () => {
     setLoading(true);
-    dispatch(getAsync(`${endPoint[itemPage]}/list`, constantGetCoa));
+    dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
   const handleSave = (row) => {
@@ -625,6 +649,7 @@ const CoaInputLogic = () => {
       loading,
       ref,
       req: req[itemPage],
+      columns,
     },
     func: {
       onCloseUploadModal,

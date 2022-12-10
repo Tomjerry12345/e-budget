@@ -145,7 +145,7 @@ const MainLogic = () => {
 
       if (index === 1) {
         if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
-          pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
+          pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}`;
         } else {
           pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
         }

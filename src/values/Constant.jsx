@@ -230,6 +230,6 @@ export const urlPageRevenue = {
   "Revenue & COGS KIK": "kik",
   "Revenue & COGS IKP": "ikp",
   "Revenue & COGS BAND": "band",
-  "Input Direct Revenue & COGS": "input-revenue-cogs",
-  "Summary Revenue & COGS": "summary-revenue-cogs",
+  "Input Direct Revenue & COGS": "input",
+  "Summary Revenue & COGS": "summary",
 };
