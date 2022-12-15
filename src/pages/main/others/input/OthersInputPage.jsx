@@ -33,7 +33,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   }, [editing]);
 
   const toggleEdit = () => {
-    let notEditing = areEqual(keyNotEditTable, record);
+    let notEditing = record.parent;
 
     if (!notEditing) {
       setEditing(!editing);
@@ -132,7 +132,7 @@ const othersInputPage = () => {
             rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
             bordered
             dataSource={value.dataColumnInput}
-            columns={value.tableColumn}
+            columns={value.columns}
             pagination={false}
             loading={value.loading}
             size="small"

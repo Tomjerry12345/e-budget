@@ -8,21 +8,13 @@ import { getSizeScreen, log } from "../../../../values/Utilitas";
 const CapexInputLogic = () => {
   let params = useParams();
 
-  const itemPage = params.item;
-
   const [form] = Form.useForm();
 
   const ref = createRef();
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
-
-  const [tableColumn, setTableColumn] = useState([]);
-
-  // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -58,76 +50,21 @@ const CapexInputLogic = () => {
     },
   ]);
 
-  // test
-
-  const [dataSource, setDataSource] = useState([]);
-
-  const [count, setCount] = useState(2);
-
-  const defaultColumns = [
-    {
-      title: "name",
-      dataIndex: "name",
-      width: "30%",
-      editable: true,
-    },
-    {
-      title: "age",
-      dataIndex: "age",
-    },
-    {
-      title: "address",
-      dataIndex: "address",
-    },
-    // {
-    //   title: "operation",
-    //   dataIndex: "operation",
-    //   render: (_, record) =>
-    //     dataSource.length >= 1 ? (
-    //       <Popconfirm
-    //         title="Sure to delete?"
-    //         onConfirm={() => handleDelete(record.key)}
-    //       >
-    //         <a>Delete</a>
-    //       </Popconfirm>
-    //     ) : null,
-    // },
-  ];
-
-  const columns1 = defaultColumns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        handleSave,
-      }),
-    };
-  });
-
-  const [tableColumn1, setTableColumn1] = useState(columns1);
-
-  //
-
   const [codeFilter, setCodeFilter] = useState();
 
   const [listKeyParent, setListKeyParent] = useState();
 
   const [loading, setLoading] = useState(false);
 
-  const date = new Date();
-
-  const year = date.getFullYear();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
   });
+
+  const date = new Date();
+
+  const year = date.getFullYear();
 
   const constantTableColums = [
     {
@@ -497,366 +434,6 @@ const CapexInputLogic = () => {
     }
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // const onSetColumn = (year_1, year_2, keyParent) => {
-  //   const constantTableColums = [
-  //     {
-  //       title: "Account",
-  //       dataIndex: "account",
-  //       width: "18%",
-  //       fixed: "left",
-  //     },
-  //     {
-  //       title: "Description",
-  //       dataIndex: "description",
-  //       width: "30%",
-  //       fixed: "left",
-  //     },
-  //     {
-  //       title: `Year ${year_1}`,
-  //       editable: true,
-  //       children: [
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Jan.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jan_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Feb.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "feb_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Mar.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "mar_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Apr.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "apr_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>May.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "mei_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Jun.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jun_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Jul.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jul_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Aug.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "aug_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="act-styles">Actual</Typography.Text>
-  //               <Typography.Text>Sep.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "sep_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="for-styles">
-  //                 Forecast
-  //               </Typography.Text>
-  //               <Typography.Text>Okt.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "okt_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="for-styles">
-  //                 Forecast
-  //               </Typography.Text>
-  //               <Typography.Text>Nov.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "nov_1",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="for-styles">
-  //                 Forecast
-  //               </Typography.Text>
-  //               <Typography.Text>Des.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "des_1",
-  //           editable: true,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: "Year total",
-  //       dataIndex: "year_total_1",
-  //       width: "14%",
-  //     },
-  //     {
-  //       title: `Year ${year_2}`,
-  //       editable: true,
-  //       children: [
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Jan.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jan_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Feb.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "feb_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Mar.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "mar_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Apr.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "apr_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>May.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "mei_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Jun.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jun_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Jul.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "jul_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Aug.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "aug_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Sep.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "sep_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Okt.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 100,
-  //           dataIndex: "okt_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Nov.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "nov_2",
-  //           editable: true,
-  //         },
-  //         {
-  //           title: (
-  //             <div className="title-table">
-  //               <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //               <Typography.Text>Des.</Typography.Text>
-  //             </div>
-  //           ),
-  //           width: 110,
-  //           dataIndex: "des_2",
-  //           editable: true,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: "Year total",
-  //       dataIndex: "year_total_2",
-  //       width: "14%",
-  //     },
-  //     // {
-  //     //   dataIndex: "operation",
-  //     //   fixed: "right",
-  //     //   width: "5%",
-  //     //   render: (_, record) =>
-  //     //     dataColumn.length >= 1 ? (
-  //     //       <Dropdown overlay={menu} placement="bottom">
-  //     //         <Button icon={<MoreVertIcon />}></Button>
-  //     //       </Dropdown>
-  //     //     ) : null,
-  //     // },
-  //   ];
-
-  //   const columns = constantTableColums.map((col) => {
-  //     // console.log(`col => ${JSON.stringify(col)}`);
-  //     if (!col.editable) {
-  //       return col;
-  //     }
-
-  //     let newCol = {
-  //       ...col,
-  //       onCell: (record) => ({
-  //         record,
-  //         editable: col.editable,
-  //         dataIndex: col.dataIndex,
-  //         title: col.title,
-  //         keyNotEditTable: keyParent,
-  //       }),
-  //     };
-
-  //     if (col.children) {
-  //       newCol.children = col.children.map((t) => {
-  //         return {
-  //           ...t,
-  //           onCell: (record) => ({
-  //             record,
-  //             editable: t.editable,
-  //             dataIndex: t.dataIndex,
-  //             title: t.title,
-  //             handleSave,
-  //             keyNotEditTable: keyParent,
-  //           }),
-  //         };
-  //       });
-  //     }
-
-  //     return newCol;
-  //   });
-
-  //   setTableColumn(columns);
-
-  //   // setTableColumn1(columns1);
-  // };
-
   const onSetDataTable = (values) => {
     const {
       code_company,
@@ -1043,18 +620,8 @@ const CapexInputLogic = () => {
     });
 
     // onSetColumn(year_1, year_2, keyParent);
-
     setListKeyParent(keyParent);
     setDataColumnInput(list);
-
-    // const newData = {
-    //   key: count,
-    //   name: `Edward King ${count}`,
-    //   age: "32",
-    //   address: `London, Park Lane no. ${count}`,
-    // };
-    // setDataSource([...dataSource, newData]);
-    // setCount(count + 1);
   };
 
   const onFinish = (values) => {
@@ -1063,8 +630,6 @@ const CapexInputLogic = () => {
   };
 
   const handleSave = (row, keysEdit, valuesEdit) => {
-    // setLoading(true);
-
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
@@ -1077,10 +642,7 @@ const CapexInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] =
-          parseInt(itemparent[`${keysEdit}`]) +
-          parseInt(valuesEdit) -
-          parseInt(oldValue);
+        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -1115,20 +677,16 @@ const CapexInputLogic = () => {
   return {
     value: {
       dataColumnInput,
-      tableColumn,
       params,
       form,
       ref,
       size,
-      listKeyParent,
       loading,
-      dataSource,
-      tableColumn1,
       columns,
+      listKeyParent,
     },
     func: {
       onFinish,
-      handleSave,
     },
   };
 };

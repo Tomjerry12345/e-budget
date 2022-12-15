@@ -1,4 +1,4 @@
-version: v1.3.9 ✅ ❌
+version: v1.4.0 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp

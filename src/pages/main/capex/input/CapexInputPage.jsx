@@ -166,13 +166,6 @@ const CapexInputPage = () => {
           </div>
         ) : null}
 
-        {/* <Table
-          components={components}
-          rowClassName={() => "editable-row"}
-          bordered
-          dataSource={value.dataSource}
-          columns={value.columns}
-        /> */}
       </div>
     </>
   );
