@@ -26,7 +26,9 @@ const AutoCompleteElement = ({ label, name, onSelect, value, disabled }) => {
         onSelect={onSelect}
         placeholder={label}
         disabled={disabled}
-        filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+        filterOption={(inputValue, option) =>
+          option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+        }
       />
     </Form.Item>
   );

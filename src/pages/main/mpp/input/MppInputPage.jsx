@@ -18,7 +18,7 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -30,7 +30,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   }, [editing]);
 
   const toggleEdit = () => {
-    let notEditing = areEqual(keyNotEditTable, record);
+    let notEditing = record.parent;
 
     if (!notEditing) {
       setEditing(!editing);
@@ -47,9 +47,6 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
       toggleEdit();
       const keysEdit = Object.keys(values);
       const valuesEdit = values[keysEdit];
-      log("values", values);
-      log("dataColumnInput", keysEdit);
-      // console.log(`record => ${JSON.stringify(record)}`);
       handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
@@ -220,7 +217,7 @@ const MppInputPage = () => {
             rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
             bordered
             dataSource={value.dataColumnInput}
-            columns={value.tableColumn}
+            columns={value.columns}
             pagination={false}
             loading={value.loading}
             size="small"

@@ -8,8 +8,6 @@ import { getSizeScreen, log } from "../../../../values/Utilitas";
 const CapexInputLogic = () => {
   let params = useParams();
 
-  const itemPage = params.item;
-
   const [form] = Form.useForm();
 
   const ref = createRef();
@@ -17,10 +15,6 @@ const CapexInputLogic = () => {
   const dispatch = useDispatch();
 
   const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
-
-  const [tableColumn, setTableColumn] = useState([]);
-
-  // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -62,9 +56,362 @@ const CapexInputLogic = () => {
 
   const [loading, setLoading] = useState(false);
 
+
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
+  });
+
+  const date = new Date();
+
+  const year = date.getFullYear();
+
+  const constantTableColums = [
+    {
+      title: "Account",
+      dataIndex: "account",
+      width: "18%",
+      fixed: "left",
+    },
+    {
+      title: "Description",
+      dataIndex: "description",
+      width: "30%",
+      fixed: "left",
+    },
+    {
+      title: `Year ${year}`,
+      editable: true,
+      children: [
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Jan.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jan_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Feb.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "feb_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Mar.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "mar_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Apr.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "apr_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>May.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "mei_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Jun.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jun_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Jul.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jul_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Aug.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "aug_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="act-styles">Actual</Typography.Text>
+              <Typography.Text>Sep.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "sep_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="for-styles">Forecast</Typography.Text>
+              <Typography.Text>Okt.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "okt_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="for-styles">Forecast</Typography.Text>
+              <Typography.Text>Nov.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "nov_1",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="for-styles">Forecast</Typography.Text>
+              <Typography.Text>Des.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "des_1",
+          editable: true,
+        },
+      ],
+    },
+    {
+      title: "Year total",
+      dataIndex: "year_total_1",
+      width: "14%",
+    },
+    {
+      title: `Year ${year + 1}`,
+      editable: true,
+      children: [
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Jan.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jan_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Feb.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "feb_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Mar.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "mar_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Apr.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "apr_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>May.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "mei_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Jun.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jun_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Jul.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "jul_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Aug.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "aug_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Sep.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "sep_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Okt.</Typography.Text>
+            </div>
+          ),
+          width: 100,
+          dataIndex: "okt_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Nov.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "nov_2",
+          editable: true,
+        },
+        {
+          title: (
+            <div className="title-table">
+              <Typography.Text className="ebu-styles">Budget</Typography.Text>
+              <Typography.Text>Des.</Typography.Text>
+            </div>
+          ),
+          width: 110,
+          dataIndex: "des_2",
+          editable: true,
+        },
+      ],
+    },
+    {
+      title: "Year total",
+      dataIndex: "year_total_2",
+      width: "14%",
+    },
+    // {
+    //   dataIndex: "operation",
+    //   fixed: "right",
+    //   width: "5%",
+    //   render: (_, record) =>
+    //     dataColumn.length >= 1 ? (
+    //       <Dropdown overlay={menu} placement="bottom">
+    //         <Button icon={<MoreVertIcon />}></Button>
+    //       </Dropdown>
+    //     ) : null,
+    // },
+  ];
+
+  const columns = constantTableColums.map((col) => {
+    // console.log(`col => ${JSON.stringify(col)}`);
+    if (!col.editable) {
+      return col;
+    }
+
+    let newCol = {
+      ...col,
+      onCell: (record) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        // keyNotEditTable: keyParent,
+      }),
+    };
+
+    if (col.children) {
+      newCol.children = col.children.map((t) => {
+        return {
+          ...t,
+          onCell: (record) => ({
+            record,
+            editable: t.editable,
+            dataIndex: t.dataIndex,
+            title: t.title,
+            handleSave,
+            // keyNotEditTable: keyParent,
+          }),
+        };
+      });
+    }
+
+    return newCol;
   });
 
   useEffect(() => {
@@ -76,7 +423,7 @@ const CapexInputLogic = () => {
 
     if (response !== null) {
       if (nameReducer === "update") {
-        onSetDataTable(codeFilter);
+        // onSetDataTable(codeFilter);
       } else if (nameReducer === "get-data") {
         log(`get Data`);
         getDataTable(response);
@@ -86,360 +433,6 @@ const CapexInputLogic = () => {
       console.log(`error ${errorMessage}`);
     }
   }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const onSetColumn = (year_1, year_2, keyParent) => {
-    const constantTableColums = {
-      "Input Direct Capex": [
-        {
-          title: "Account",
-          dataIndex: "account",
-          width: "18%",
-          fixed: "left",
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-          fixed: "left",
-        },
-        {
-          title: `Year ${year_1}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "mar_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Apr.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="act-styles">Actual</Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "sep_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "nov_1",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="for-styles">Forecast</Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "des_1",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_1",
-          width: "14%",
-        },
-        {
-          title: `Year ${year_2}`,
-          editable: true,
-          children: [
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Jan.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jan_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Feb.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "feb_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Mar.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mar_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Apr.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "apr_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>May.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "mei_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Jun.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jun_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Jul.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "jul_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Aug.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "aug_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Sep.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "sep_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Okt.</Typography.Text>
-                </div>
-              ),
-              width: 100,
-              dataIndex: "okt_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Nov.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "nov_2",
-              editable: true,
-            },
-            {
-              title: (
-                <div className="title-table">
-                  <Typography.Text className="ebu-styles">Budget</Typography.Text>
-                  <Typography.Text>Des.</Typography.Text>
-                </div>
-              ),
-              width: 110,
-              dataIndex: "des_2",
-              editable: true,
-            },
-          ],
-        },
-        {
-          title: "Year total",
-          dataIndex: "year_total_2",
-          width: "14%",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-    };
-
-    const columns = constantTableColums[itemPage].map((col) => {
-      // console.log(`col => ${JSON.stringify(col)}`);
-      if (!col.editable) {
-        return col;
-      }
-
-      let newCol = {
-        ...col,
-        onCell: (record) => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          keyNotEditTable: keyParent,
-        }),
-      };
-
-      if (col.children) {
-        newCol.children = col.children.map((t) => {
-          return {
-            ...t,
-            onCell: (record) => ({
-              record,
-              editable: t.editable,
-              dataIndex: t.dataIndex,
-              title: t.title,
-              handleSave,
-              keyNotEditTable: keyParent,
-            }),
-          };
-        });
-      }
-
-      return newCol;
-    });
-
-    setTableColumn(columns);
-  };
 
   const onSetDataTable = (values) => {
     const {
@@ -454,7 +447,7 @@ const CapexInputLogic = () => {
     const type = 2;
 
     if (type === 1) {
-      url = `$capex/list/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
+      url = `$capex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
       setCodeFilter(values);
     } else if (type === 2) {
       let fCodeCompany = code_company.replace(/[^0-9]/g, "");
@@ -467,7 +460,7 @@ const CapexInputLogic = () => {
       // console.log("fCodeLocation", fCodeLocation);
       // console.log("fCodeDept", fCodeDept);
 
-      url = `capex/list/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+      url = `capex/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
 
       setCodeFilter({
         code_company: fCodeCompany,
@@ -522,6 +515,7 @@ const CapexInputLogic = () => {
 
       list.push({
         key: i,
+        parent: parent,
         account: account,
         description: description,
         jan_1: listYear1[0]?.value,
@@ -625,10 +619,9 @@ const CapexInputLogic = () => {
       });
     });
 
+    // onSetColumn(year_1, year_2, keyParent);
     setListKeyParent(keyParent);
     setDataColumnInput(list);
-
-    onSetColumn(year_1, year_2, keyParent);
   };
 
   const onFinish = (values) => {
@@ -637,7 +630,27 @@ const CapexInputLogic = () => {
   };
 
   const handleSave = (row, keysEdit, valuesEdit) => {
-    setLoading(true);
+    const newData = [...dataColumnInput];
+    const index = newData.findIndex((item) => row.key === item.key);
+    const item = newData[index];
+    const oldValue = item[`${keysEdit}`];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
+    });
+    for (let x = index - 1; x >= 0; x--) {
+      if (newData[x].parent === true) {
+        const itemparent = newData[x];
+        const itemold = newData[x];
+        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+        newData.splice(x, 1, {
+          ...itemold,
+          ...itemparent,
+        });
+      }
+    }
+    setDataColumnInput(newData);
+
     let formData = new FormData();
     const { code_company, code_dept, code_location, code_product } = codeFilter;
     const year = row[`${keysEdit}_year`];
@@ -664,13 +677,13 @@ const CapexInputLogic = () => {
   return {
     value: {
       dataColumnInput,
-      tableColumn,
       params,
       form,
       ref,
       size,
-      listKeyParent,
       loading,
+      columns,
+      listKeyParent,
     },
     func: {
       onFinish,

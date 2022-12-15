@@ -1,6 +1,12 @@
 import { Card } from "@mui/material";
-import { Table, Form, Input, Spin } from "antd";
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import { Table, Form, Input, Spin, Button } from "antd";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import FilterComponent from "../../../../component/filter/FilterComponent";
 import { areEqual, log } from "../../../../values/Utilitas";
 import CapexInputLogic from "./CapexInputLogic";
@@ -18,7 +24,16 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  keyNotEditTable,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -30,7 +45,8 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   }, [editing]);
 
   const toggleEdit = () => {
-    let notEditing = areEqual(keyNotEditTable, record);
+    // let notEditing = areEqual(keyNotEditTable, record);
+    let notEditing = record.parent;
 
     if (!notEditing) {
       setEditing(!editing);
@@ -47,9 +63,6 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
       toggleEdit();
       const keysEdit = Object.keys(values);
       const valuesEdit = values[keysEdit];
-      log("values", values);
-      log("dataColumnInput", keysEdit);
-      // console.log(`record => ${JSON.stringify(record)}`);
       handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
       console.log("Save failed:", errInfo);
@@ -100,7 +113,9 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
         }
         // onClick={toggleEdit}
       >
-        {typeof children[1] === "string" ? children[1] : parseInt(children[1]).format(0, 3, ".", ",")}
+        {typeof children[1] === "string"
+          ? children[1]
+          : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   }
@@ -120,16 +135,23 @@ const CapexInputPage = () => {
 
   return (
     <>
-      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
+      <FilterComponent
+        type={2}
+        isCodeProduct={true}
+        form={value.form}
+        onFinish={func.onFinish}
+      />
 
       <div className="custom-root-layout">
         {value.dataColumnInput.length > 1 ? (
           <Table
             components={components}
-            rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+            rowClassName={(record, index) =>
+              areEqual(value.listKeyParent, record) ? "parent" : "child"
+            }
             bordered
             dataSource={value.dataColumnInput}
-            columns={value.tableColumn}
+            columns={value.columns}
             pagination={false}
             loading={value.loading}
             size="small"
@@ -143,6 +165,7 @@ const CapexInputPage = () => {
             <Spin />
           </div>
         ) : null}
+
       </div>
     </>
   );
