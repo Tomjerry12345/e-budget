@@ -1,20 +1,14 @@
 import { Form, Typography } from "antd";
-import { createRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useParams } from "react-router-dom";
-import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import MainServices from "../../../../services/MainServices";
+import { log } from "../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
   let params = useParams();
 
   const [form] = Form.useForm();
-
-  const ref = createRef();
-
-  const dispatch = useDispatch();
-
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -51,19 +45,11 @@ const CapexInputLogic = () => {
   ]);
 
   const [codeFilter, setCodeFilter] = useState();
-
   const [listKeyParent, setListKeyParent] = useState();
-
   const [loading, setLoading] = useState(false);
-
-
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
+  const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const date = new Date();
-
   const year = date.getFullYear();
 
   const constantTableColums = [
@@ -414,25 +400,11 @@ const CapexInputLogic = () => {
     return newCol;
   });
 
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    log("response", response);
-
-    if (response !== null) {
-      if (nameReducer === "update") {
-        // onSetDataTable(codeFilter);
-      } else if (nameReducer === "get-data") {
-        log(`get Data`);
-        getDataTable(response);
-        setLoading(false);
-      }
-    } else {
-      console.log(`error ${errorMessage}`);
-    }
-  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    },
+  });
 
   const onSetDataTable = (values) => {
     const {
@@ -443,37 +415,31 @@ const CapexInputLogic = () => {
       // code_account,
     } = values;
 
-    let url;
-    const type = 2;
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    if (type === 1) {
-      url = `$capex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-      setCodeFilter(values);
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
 
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+    });
+  };
 
-      url = `capex/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
+    const url = `capex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
-      setCodeFilter({
-        code_company: fCodeCompany,
-        code_dept: fCodeDept,
-        code_location: fCodeLocation,
-        code_product: fCodeProduct,
-      });
-    }
+    const { data } = await MainServices.get(url);
 
-    log("url", url);
+    log("data", data);
 
-    // const path = `capex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
-    dispatch(getAsync(url, "get-data"));
+    getDataTable(data);
+
+    setLoading(false);
   };
 
   const getDataTable = (response) => {
@@ -629,7 +595,7 @@ const CapexInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const handleSave = (row, keysEdit, valuesEdit) => {
+  const handleSave = async (row, keysEdit, valuesEdit) => {
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
@@ -671,7 +637,46 @@ const CapexInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`capex/update`, formData, "update"));
+    const response = await MainServices.post("capex/update", formData);
+
+    log("response-update", response);
+  };
+
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+    acceptedFiles.length = 0;
+  };
+
+  const onUploadFile = async () => {
+    let file1;
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
+
+    let formData = new FormData();
+
+    formData.append("file", file1);
+    formData.append("company", code_company);
+    formData.append("product", code_product);
+    formData.append("location", code_location);
+    formData.append("dept", code_dept);
+
+    const res = await MainServices.post("opex/import", formData);
+
+    log("res", res);
+
+    getData(code_company, code_product, code_location, code_dept);
+
+    onCloseUploadModal();
+
+    // navigate(0);
   };
 
   return {
@@ -679,14 +684,19 @@ const CapexInputLogic = () => {
       dataColumnInput,
       params,
       form,
-      ref,
-      size,
       loading,
       columns,
       listKeyParent,
+      openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
     },
     func: {
       onFinish,
+      onOpenUploadModal,
+      onCloseUploadModal,
+      onUploadFile,
     },
   };
 };

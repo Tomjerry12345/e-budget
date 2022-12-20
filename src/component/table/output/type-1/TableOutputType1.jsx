@@ -1,6 +1,6 @@
 import { Table, Spin } from "antd";
 
-const TableOutputType1 = ({ dataSource, columns, loading }) => {
+const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
   return (
     <>
       {dataSource.length > 0 ? (
@@ -11,10 +11,8 @@ const TableOutputType1 = ({ dataSource, columns, loading }) => {
           columns={columns}
           pagination={false}
           size="small"
-          //   loading={value.loading}
-          //   scroll={{
-          //     y: value.size.y - 313,
-          //   }}
+          // loading={value.loading}
+          scroll={scroll}
           rowKey="id"
         />
       ) : loading === true ? (

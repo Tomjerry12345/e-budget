@@ -16,7 +16,7 @@
   .ant-table-cell-with-append {
     display: flex;
     align-items: center;
-    height: 28px;
+    height: 38px;
     // padding: 1px 8px;
 
     .ant-table-row-expand-icon {
@@ -81,4 +81,29 @@
   padding: 30px 50px;
   text-align: center;
   border-radius: 4px;
+}
+
+.layout-btn-action {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 16px;
+
+  .btn-clear {
+    margin-left: 8px;
+    border-radius: 8px;
+    width: 92px;
+    background-color: white;
+  }
+  .btn-update {
+    margin-left: 8px;
+    border-radius: 8px;
+    width: 118px;
+    border: none;
+    background-color: #f5f7f9;
+    color: black;
+
+    .anticon {
+      color: #008041;
+    }
+  }
 }

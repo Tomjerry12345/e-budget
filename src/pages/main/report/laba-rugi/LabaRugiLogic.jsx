@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
@@ -7,37 +9,37 @@ const LabaRugiLogic = () => {
   const [data, setData] = useState();
   const [columns, setColumns] = useState();
   const [loading, setLoading] = useState(false);
+  const [openUploadModal, setOpenUploadModal] = useState(false);
 
-  const type = 2;
+  let params = useParams();
+
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    },
+  });
 
   const onFinish = async (values) => {
     setLoading(true);
-    console.log("values", values);
 
     const { code_company, code_dept, code_location, code_product } = values;
 
     let url;
 
-    if (type === 1) {
-      url = `report/labarugi?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
+    // console.log("fCodeCompany", fCodeCompany);
+    // console.log("fCodeProduct", fCodeProduct);
+    // console.log("fCodeLocation", fCodeLocation);
+    // console.log("fCodeDept", fCodeDept);
 
-      url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
-    }
-
-    log("url", url);
+    url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
 
     const { data } = await MainServices.get(url);
-    console.log("res", data);
+    log("res", data);
     getData(data.data);
   };
 
@@ -63,14 +65,44 @@ const LabaRugiLogic = () => {
     setLoading(false);
   };
 
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+    acceptedFiles.length = 0;
+  };
+
+  const onUploadFile = async () => {
+    let file1;
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    const url = "report/tablereport?code_company=200&code_location=110116&code_dept=109&code_product=107";
+
+    const { data } = await MainServices.post(``, formData);
+  };
+
   return {
     value: {
       data,
       columns,
       loading,
+      params,
+      openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
     },
     func: {
       onFinish,
+      onOpenUploadModal,
+      onCloseUploadModal,
+      onUploadFile,
     },
   };
 };

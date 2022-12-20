@@ -1,4 +1,4 @@
-version: v1.4.0 ✅ ❌
+version: v1.4.1 ✅ ❌
 
 -kode perusahaan default brdasarkan menu ✅
 -tabel HPP variable jadikan dua kolom setiap bulan, kiri % kanan Rp
@@ -43,3 +43,34 @@ pencarian berdasarkan kode dan deskripsi
 - buatkan component sendiri untuk combo box ✅
 
 - master data ubah jad
+
+- report laba rugi (flow data) (mandatory)
+- hpp variabel (tambahkan persen setiap bulan)
+- tambahkan all di kode produk, kode lokasi dan kode dept di summary
+- pencarian berdasarkan kode dan deskripsi
+- Revenue BSU belum jadi
+- BTS (328) -> GMM
+- BK (butuh list projek)
+- BJU tambah parameter project
+- tambah project di input direct revenue
+- menu aktif kadang2 hilang
+- tambahkan clear data disemua input berdasarkan tahun
+- refresh tabel di revenue * cogs
+- upload by excel di input direct (mandatory), asumsi unit jual, harga jual per unit, volume, pendapatan operasional lainnya, hpp lainnya
+
+* upload master
+- ketika parent tdk ditemukan / ada item yg gagal upload dimunculkan notifikasi detail knp gagal upload
+- tambah kolom status, created at, updated at
+- fitur tambah untk satu item
+- deskripsi bisa edit
+- hapus bisa dilakukan jika belum ada saldo
+- update status aktif & tdk aktif
+- hasil pencarian tdk dlm bentuk tree
+
+*akun capex belum diklasifikasikan
+
+*menu klik kanan open new tab
+
+- bts jadi gmm (328)
+- hapus kode Asumsi Unit Jual di BSU
+- Fix masalah di bsu
