@@ -1,8 +1,10 @@
 import { Form, Typography } from "antd";
 import { createRef, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
+import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
 
 const MppInputLogic = () => {
@@ -11,10 +13,6 @@ const MppInputLogic = () => {
   const [form] = Form.useForm();
 
   const ref = createRef();
-
-  const dispatch = useDispatch();
-
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -51,10 +49,9 @@ const MppInputLogic = () => {
   ]);
 
   const [codeFilter, setCodeFilter] = useState();
-
   const [listKeyParent, setListKeyParent] = useState();
-
   const [loading, setLoading] = useState(false);
+  const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -399,25 +396,15 @@ const MppInputLogic = () => {
     return newCol;
   });
 
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    },
+  });
+
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    log("response", response);
-
-    if (response !== null) {
-      if (nameReducer === "update") {
-        // onSetDataTable(codeFilter);
-      } else if (nameReducer === "get-data") {
-        log(`get Data`);
-        getDataTable(response);
-        setLoading(false);
-      }
-    } else {
-      console.log(`error ${errorMessage}`);
-    }
-  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetDataTable = (values) => {
     const {
@@ -429,35 +416,32 @@ const MppInputLogic = () => {
     } = values;
 
     let url;
-    const type = 2;
 
-    if (type === 1) {
-      url = `$mpp/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-      setCodeFilter(values);
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+    });
 
-      url = `mpp/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+  };
 
-      setCodeFilter({
-        code_company: fCodeCompany,
-        code_dept: fCodeDept,
-        code_location: fCodeLocation,
-        code_product: fCodeProduct,
-      });
-    }
+  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
+    const url = `mpp/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
-    log("url", url);
+    const { data } = await MainServices.get(url);
 
-    dispatch(getAsync(url, "get-data"));
+    log("data", data);
+
+    getDataTable(data);
+
+    setLoading(false);
   };
 
   const getDataTable = (response) => {
@@ -614,7 +598,7 @@ const MppInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const handleSave = (row, keysEdit, valuesEdit) => {
+  const handleSave = async (row, keysEdit, valuesEdit) => {
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
@@ -656,7 +640,46 @@ const MppInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`mpp/update`, formData, "update"));
+    const response = await MainServices.post("mpp/update", formData);
+
+    log("response-update", response);
+  };
+
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+    acceptedFiles.length = 0;
+  };
+
+  const onUploadFile = async () => {
+    let file1;
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
+
+    let formData = new FormData();
+
+    formData.append("file", file1);
+    formData.append("company", code_company);
+    formData.append("product", code_product);
+    formData.append("location", code_location);
+    formData.append("dept", code_dept);
+
+    const res = await MainServices.post("mpp/import", formData);
+
+    log("res", res);
+
+    getData(code_company, code_product, code_location, code_dept);
+
+    onCloseUploadModal();
+
+    // navigate(0);
   };
 
   return {
@@ -669,9 +692,16 @@ const MppInputLogic = () => {
       size,
       listKeyParent,
       loading,
+      openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
     },
     func: {
       onFinish,
+      onOpenUploadModal,
+      onCloseUploadModal,
+      onUploadFile,
     },
   };
 };

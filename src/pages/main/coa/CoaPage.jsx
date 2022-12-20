@@ -4,10 +4,7 @@ import CoaInputLogic from "./CoaLogic";
 import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
-import { classx, fastIf, log } from "../../../values/Utilitas";
-// import ResizeObserver from "rc-resize-observer";
-// import { VariableSizeGrid as Grid } from "react-window";
-// import classNames from "classnames";
+import { classx } from "../../../values/Utilitas";
 
 const EditableContext = createContext(null);
 
@@ -94,77 +91,6 @@ const CustomFooter = ({ onOk, onCancel }) => (
   </>
 );
 
-// const columns = [
-//   {
-//     title: "Code",
-//     dataIndex: "code",
-//     key: "code",
-//   },
-//   {
-//     title: "Description",
-//     dataIndex: "description",
-//     key: "description",
-//     width: "12%",
-//   },
-// ];
-
-const data = [
-  {
-    // key: 1,
-    code: 60,
-    description: "New York No. 1 Lake Park",
-    children: [
-      {
-        // key: 11,
-        code: 42,
-        description: "New York No. 2 Lake Park",
-      },
-      {
-        // key: 12,
-        code: 30,
-        description: "New York No. 3 Lake Park",
-        children: [
-          {
-            // key: 121,
-            code: 16,
-            description: "New York No. 3 Lake Park",
-          },
-        ],
-      },
-      {
-        // key: 13,
-
-        code: 72,
-        description: "London No. 1 Lake Park",
-        children: [
-          {
-            // key: 131,
-            code: 42,
-            description: "London No. 2 Lake Park",
-            children: [
-              {
-                // key: 1311,
-                code: 25,
-                description: "London No. 3 Lake Park",
-              },
-              {
-                // key: 1312,
-                code: 18,
-                description: "London No. 4 Lake Park",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-  {
-    // key: 2,
-    code: 32,
-    address: "Sidney No. 1 Lake Park",
-  },
-];
-
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
     console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
@@ -212,23 +138,6 @@ const CoaPage = () => {
         </div>
       </div>
 
-      {/* <Table
-        className="table-custom-root"
-        components={components}
-        bordered
-        dataSource={value.dataColumn}
-        columns={value.tableColumn}
-        pagination={false}
-        loading={value.loading}
-        size="small"
-        rowClassName="child"
-        scroll={{
-          x: setXColumn(value.params.item),
-          y: value.size.y - 246,
-        }}
-        rowKey="id"
-      /> */}
-
       <Table
         rowKey="id"
         size="small"
@@ -246,7 +155,7 @@ const CoaPage = () => {
         }}
       />
 
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file={`file/${value.params.item}.xlsx`} />
 
       <Modal className={customClass} open={value.openAction.open} onCancel={func.onCancel} closable={true} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
         <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>

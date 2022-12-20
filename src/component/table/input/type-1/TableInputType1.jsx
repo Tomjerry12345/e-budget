@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-import { areEqual, log } from "../../../../values/Utilitas";
+import { areEqual, getSizeScreen, log } from "../../../../values/Utilitas";
 import { Table, Form, Input, Select, Button, Spin } from "antd";
 
 const EditableContext = createContext(null);
@@ -27,7 +27,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   }, [editing]);
 
   const toggleEdit = () => {
-    let notEditing = areEqual(keyNotEditTable, record);
+    let notEditing = record.parent;
 
     if (!notEditing) {
       setEditing(!editing);
@@ -105,28 +105,38 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const TableInputType1 = ({ dataSource, columns, loading }) => {
+const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
   const components = {
     body: {
       cell: EditableCell,
       row: EditableRow,
     },
   };
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
+
+  useEffect(() => {
+    window.onresize = getSizeScreen(setSize);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
-      {dataSource.length > 0 ? (
+      {dataSource.length > 1 ? (
         <Table
-          rowClassName={() => "editable-row"}
+          components={components}
+          rowClassName={(record, index) => (areEqual(listKeyParent, record) ? "parent" : "child")}
           bordered
           dataSource={dataSource}
           columns={columns}
           pagination={false}
+          loading={loading}
           size="small"
-          //   loading={value.loading}
-          //   scroll={{
-          //     y: value.size.y - 313,
-          //   }}
-          rowKey="id"
+          scroll={{
+            x: 2900,
+            y: size.y - 352,
+          }}
         />
       ) : loading === true ? (
         <div className="style-progress">

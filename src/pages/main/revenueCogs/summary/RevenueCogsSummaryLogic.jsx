@@ -80,52 +80,49 @@ const RevenueCogsSummaryLogic = () => {
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetColumn = (year_1, year_2) => {
-    const constantTableColums = {
-      "Summary Revenue & COGS": [
-        {
-          title: "Account",
-          dataIndex: "account",
-          width: "4%",
-          fixed: "left",
-        },
-        {
-          title: "Description",
-          dataIndex: "description",
-          width: "30%",
-        },
-        {
-          title: `Year ${year_1}`,
-          dataIndex: "value_1",
-          width: "4%",
-          fixed: "right",
-        },
-        {
-          title: `Year ${year_2}`,
-          dataIndex: "value_2",
-          width: "4%",
-          fixed: "right",
-        },
-        // {
-        //   dataIndex: "operation",
-        //   fixed: "right",
-        //   width: "5%",
-        //   render: (_, record) =>
-        //     dataColumn.length >= 1 ? (
-        //       <Dropdown overlay={menu} placement="bottom">
-        //         <Button icon={<MoreVertIcon />}></Button>
-        //       </Dropdown>
-        //     ) : null,
-        // },
-      ],
-    };
+    const constantTableColums = [
+      {
+        title: "Account",
+        dataIndex: "account",
+        width: "4%",
+        fixed: "left",
+      },
+      {
+        title: "Description",
+        dataIndex: "description",
+        width: "30%",
+      },
+      {
+        title: `Year ${year_1}`,
+        dataIndex: "value_1",
+        width: "4%",
+        fixed: "right",
+      },
+      {
+        title: `Year ${year_2}`,
+        dataIndex: "value_2",
+        width: "4%",
+        fixed: "right",
+      },
+      // {
+      //   dataIndex: "operation",
+      //   fixed: "right",
+      //   width: "5%",
+      //   render: (_, record) =>
+      //     dataColumn.length >= 1 ? (
+      //       <Dropdown overlay={menu} placement="bottom">
+      //         <Button icon={<MoreVertIcon />}></Button>
+      //       </Dropdown>
+      //     ) : null,
+      // },
+    ];
 
-    const columns = constantTableColums[itemPage];
+    const columns = constantTableColums;
 
     setTableColumn(columns);
   };
 
   const onSetDataTable = (values) => {
-    // setDataColumn(constantDataTable[itemPage]);
     const { code_company, code_dept, code_location, code_product } = values;
 
     let url;

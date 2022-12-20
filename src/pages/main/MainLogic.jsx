@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
 import { allItemSummarySubMenu, disabledItemSummaryMenu, urlPageRevenue } from "../../values/Constant";
+import { routingMasterCoa } from "../../values/RoutingPage";
 import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
@@ -167,7 +168,8 @@ const MainLogic = () => {
           pageNavigation = `${baseReport}/laba-rugi`;
         }
       } else if (index === 7) {
-        pageNavigation = `/main/coa/${nameMenu}`;
+        const routing = routingMasterCoa[nameMenu];
+        pageNavigation = `/main/coa/${routing}`;
       } else if (index === 8) {
         log("nameMenu", nameMenu);
 

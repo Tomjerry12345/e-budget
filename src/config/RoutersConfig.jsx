@@ -31,7 +31,7 @@ import BsbPage from "../pages/main/revenueCogs/bsb/BsbPage";
 import KikPage from "../pages/main/revenueCogs/kik/KikPage";
 import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
 import BandPage from "../pages/main/revenueCogs/band/BandPage";
-import DebugSystem from "../pages/debug/DebugSystem";
+import DepartementPage from "../pages/main/coa/departement/DepartementPage";
 
 const RoutersConfig = () => {
   return (
@@ -47,107 +47,55 @@ const RoutersConfig = () => {
             <Route path="summary" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="kiu" element={<KiuPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="bts" element={<BtsPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="kia" element={<KiaPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="bju" element={<BjuPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="blt" element={<BltPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="blu" element={<BluPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="bk" element={<BkPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="bsu" element={<BsuPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="bsb" element={<BsbPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="kik" element={<KikPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="ikp" element={<IkpPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
             <Route path="band" element={<BandPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
+              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
           </Route>
@@ -164,10 +112,7 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            <Route
-              path="others-input/Input Asumsi"
-              element={<OthersInputAsumsiPage />}
-            />
+            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
           </Route>
@@ -175,11 +120,10 @@ const RoutersConfig = () => {
             <Route path="laba-rugi" element={<LabaRugiPage />} />
           </Route>
           <Route path="coa">
+            <Route path="departement" element={<DepartementPage />} />
             <Route path=":item" element={<CoaPage />} />
           </Route>
         </Route>
-
-        <Route path="/debug" element={<DebugSystem />} />
       </Routes>
     </BrowserRouter>
   );

@@ -48,7 +48,7 @@ const MainPage = () => {
             renderItem={(item, i) => (
               <List.Item key={i}>
                 <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
-                  {item}
+                {item}
                 </Button>
               </List.Item>
             )}

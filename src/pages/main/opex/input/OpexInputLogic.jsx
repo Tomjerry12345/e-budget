@@ -1,27 +1,12 @@
-import { Form, Typography } from "antd";
-import { createRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "antd";
+import { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import MainServices from "../../../../services/MainServices";
+import { log } from "../../../../values/Utilitas";
 
 const OpexInputLogic = () => {
-  let params = useParams();
-
-  const itemPage = params.item;
-
-  const [form] = Form.useForm();
-
-  const ref = createRef();
-
-  const dispatch = useDispatch();
-
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
-
-  const [tableColumn, setTableColumn] = useState([]);
-
-  // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
-
   const [dataColumnInput, setDataColumnInput] = useState([
     {
       key: "",
@@ -57,18 +42,11 @@ const OpexInputLogic = () => {
   ]);
 
   const [codeFilter, setCodeFilter] = useState();
-
   const [listKeyParent, setListKeyParent] = useState();
-
   const [loading, setLoading] = useState(false);
-
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
+  const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const date = new Date();
-
   const year = date.getFullYear();
 
   const constantTableColums = [
@@ -417,25 +395,11 @@ const OpexInputLogic = () => {
     return newCol;
   });
 
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    log("response", response);
-
-    if (response !== null) {
-      if (nameReducer === "update-opex") {
-        // onSetDataTable(codeFilter);
-      } else if (nameReducer === "get-data") {
-        log(`get Data`);
-        getDataTable(response);
-        setLoading(false);
-      }
-    } else {
-      console.log(`error ${errorMessage}`);
-    }
-  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    },
+  });
 
   const onSetDataTable = (values) => {
     const {
@@ -446,32 +410,31 @@ const OpexInputLogic = () => {
       // code_account,
     } = values;
 
-    let url;
-    const type = 2;
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    if (type === 1) {
-      url = `$opex/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-      setCodeFilter(values);
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+    });
 
-      url = `opex/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+  };
 
-      setCodeFilter({
-        code_company: fCodeCompany,
-        code_dept: fCodeDept,
-        code_location: fCodeLocation,
-        code_product: fCodeProduct,
-      });
-    }
+  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
+    const url = `opex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
-    log("url", url);
+    const { data } = await MainServices.get(url);
 
-    // const path = `opex/list?code_company=${211}&code_product=${107}&code_location=${110117}&code_dept=${116}`;
-    dispatch(getAsync(url, "get-data"));
+    log("data", data);
+
+    getDataTable(data);
+
+    setLoading(false);
   };
 
   const getDataTable = (response) => {
@@ -626,7 +589,7 @@ const OpexInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const handleSave = (row, keysEdit, valuesEdit) => {
+  const handleSave = async (row, keysEdit, valuesEdit) => {
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
@@ -655,8 +618,6 @@ const OpexInputLogic = () => {
     const uuid = row[`${keysEdit}_uuid`];
 
     if (uuid === null) {
-      log("row-account", row.account);
-      log("codeFilter", codeFilter);
       formData.append("code", row.account);
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
@@ -670,22 +631,64 @@ const OpexInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    dispatch(postAsync(`opex/update`, formData, "update-opex"));
+    const response = await MainServices.post("opex/update", formData);
+
+    log("response-update", response);
+  };
+
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+    acceptedFiles.length = 0;
+  };
+
+  const onUploadFile = async () => {
+    let file1;
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
+
+    let formData = new FormData();
+
+    formData.append("file", file1);
+    formData.append("company", code_company);
+    formData.append("product", code_product);
+    formData.append("location", code_location);
+    formData.append("dept", code_dept);
+
+    const res = await MainServices.post("opex/import", formData);
+
+    log("res", res);
+
+    getData(code_company, code_product, code_location, code_dept);
+
+    onCloseUploadModal();
+
+    // navigate(0);
   };
 
   return {
     value: {
       dataColumnInput,
       columns,
-      params,
-      form,
-      ref,
-      size,
       listKeyParent,
       loading,
+      openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
     },
     func: {
       onFinish,
+      onOpenUploadModal,
+      onCloseUploadModal,
+      onUploadFile,
     },
   };
 };

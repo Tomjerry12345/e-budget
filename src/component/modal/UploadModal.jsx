@@ -16,9 +16,9 @@ const CustomFooterModal = ({ onOk, onCancel }) => (
   </>
 );
 
-const UploadModal = ({ open, onCancel, value, onOk }) => {
+const UploadModal = ({ open, onCancel, value, onOk, file }) => {
   const downloadFile = () => {
-    window.location.href = `${process.env.PUBLIC_URL}/file/${value.params.item}.xlsx`;
+    window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
 
   return (
