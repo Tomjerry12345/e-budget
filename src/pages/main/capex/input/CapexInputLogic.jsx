@@ -47,6 +47,7 @@ const CapexInputLogic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const date = new Date();
@@ -652,6 +653,8 @@ const CapexInputLogic = () => {
   };
 
   const onUploadFile = async () => {
+    setLoadingUpload(true);
+
     let file1;
 
     acceptedFiles.forEach((file) => {
@@ -674,6 +677,8 @@ const CapexInputLogic = () => {
 
     getData(code_company, code_product, code_location, code_dept);
 
+    setLoadingUpload(false);
+
     onCloseUploadModal();
 
     // navigate(0);
@@ -682,9 +687,8 @@ const CapexInputLogic = () => {
   return {
     value: {
       dataColumnInput,
-      params,
-      form,
       loading,
+      loadingUpload,
       columns,
       listKeyParent,
       openUploadModal,

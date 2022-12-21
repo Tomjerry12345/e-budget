@@ -5,24 +5,24 @@ import "./UploadModal.scss";
 
 const { Title, Text } = Typography;
 
-const CustomFooterModal = ({ onOk, onCancel }) => (
+const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   <>
     <Button className="btn-cancel" type="text" onClick={onCancel}>
       Cancel
     </Button>
-    <Button className="btn-upload" type="primary" onClick={onOk}>
+    <Button className="btn-upload" type="primary" onClick={onOk} loading={loading}>
       Upload
     </Button>
   </>
 );
 
-const UploadModal = ({ open, onCancel, value, onOk, file }) => {
+const UploadModal = ({ open, onCancel, value, onOk, file, loading }) => {
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
 
   return (
-    <Modal open={open} className="custom-upload-modal" footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />} onCancel={onCancel}>
+    <Modal open={open} className="custom-upload-modal" footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />} onCancel={onCancel}>
       <Title level={4}>Upload Template</Title>
       <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>

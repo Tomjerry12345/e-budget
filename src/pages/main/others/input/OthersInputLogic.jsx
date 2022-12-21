@@ -1,13 +1,20 @@
 import { Form, Typography } from "antd";
 import { createRef, useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
+import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Input Direct Pendapatan Non Operasional": "othersPNO",
   "Input Direct Biaya Non Operasional": "othersBNO",
+};
+
+const eFile = {
+  "Input Direct Pendapatan Non Operasional": "pno.xlsx",
+  "Input Direct Biaya Non Operasional": "bno.xlsx",
 };
 
 const OthersInputLogic = () => {
@@ -18,12 +25,6 @@ const OthersInputLogic = () => {
   const [form] = Form.useForm();
 
   const ref = createRef();
-
-  const dispatch = useDispatch();
-
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
-
-  // const [dataColumn, setDataColumnInput] = useState(constantDataTable[itemPage]);
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -58,20 +59,12 @@ const OthersInputLogic = () => {
       des_2: 0,
     },
   ]);
-
   const [codeFilter, setCodeFilter] = useState();
-
   const [listKeyParent, setListKeyParent] = useState();
-
   const [loading, setLoading] = useState(false);
-
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
+  const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const date = new Date();
-
   const year = date.getFullYear();
 
   const constantTableColums = {
@@ -697,9 +690,15 @@ const OthersInputLogic = () => {
     return newCol;
   });
 
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    accept: {
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+    },
+  });
 
+  const endPFile = eFile[itemPage];
+
+  useEffect(() => {
     setDataColumnInput([
       {
         key: "",
@@ -742,22 +741,6 @@ const OthersInputLogic = () => {
     });
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    logObj("response", response);
-
-    if (response !== null) {
-      if (nameReducer === "update") {
-        // onSetDataTable(codeFilter);
-      } else if (nameReducer === "get-data") {
-        log(`get Data`);
-        getDataTable(response);
-        setLoading(false);
-      }
-    } else {
-      console.log(`error ${errorMessage}`);
-    }
-  }, [isLoading, response]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const onSetDataTable = (values) => {
     const {
       code_company,
@@ -767,36 +750,31 @@ const OthersInputLogic = () => {
       // code_account,
     } = values;
 
-    let url;
-    const type = 2;
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    if (type === 1) {
-      url = `${endPoint[itemPage]}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-      setCodeFilter(values);
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+    });
 
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
+    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+  };
 
-      url = `${endPoint[itemPage]}/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
+    const url = `${endPoint[itemPage]}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
-      setCodeFilter({
-        code_company: fCodeCompany,
-        code_dept: fCodeDept,
-        code_location: fCodeLocation,
-        code_product: fCodeProduct,
-      });
-    }
+    const { data } = await MainServices.get(url);
 
-    log("url", url);
+    log("data", data);
 
-    dispatch(getAsync(url, "get-data"));
+    getDataTable(data);
+
+    setLoading(false);
   };
 
   const getDataTable = (response) => {
@@ -951,7 +929,7 @@ const OthersInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const handleSave = (row, keysEdit, valuesEdit) => {
+  const handleSave = async (row, keysEdit, valuesEdit) => {
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
@@ -993,9 +971,46 @@ const OthersInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    log("endpoint-update", endPoint[itemPage]);
+    const response = await MainServices.post(`${endPoint[itemPage]}/update`, formData);
 
-    dispatch(postAsync(`${endPoint[itemPage]}/update`, formData, "update"));
+    log("response-update", response);
+  };
+
+  const onOpenUploadModal = () => {
+    setOpenUploadModal(true);
+  };
+
+  const onCloseUploadModal = () => {
+    setOpenUploadModal(false);
+    acceptedFiles.length = 0;
+  };
+
+  const onUploadFile = async () => {
+    let file1;
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
+
+    let formData = new FormData();
+
+    formData.append("file", file1);
+    formData.append("company", code_company);
+    formData.append("product", code_product);
+    formData.append("location", code_location);
+    formData.append("dept", code_dept);
+
+    const res = await MainServices.post("others/import", formData);
+
+    log("res", res);
+
+    getData(code_company, code_product, code_location, code_dept);
+
+    onCloseUploadModal();
+
+    // navigate(0);
   };
 
   return {
@@ -1005,12 +1020,19 @@ const OthersInputLogic = () => {
       params,
       form,
       ref,
-      size,
       listKeyParent,
       loading,
+      openUploadModal,
+      getRootProps,
+      getInputProps,
+      acceptedFiles,
+      endPFile,
     },
     func: {
       onFinish,
+      onOpenUploadModal,
+      onCloseUploadModal,
+      onUploadFile,
     },
   };
 };

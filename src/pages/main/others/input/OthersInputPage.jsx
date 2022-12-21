@@ -5,6 +5,9 @@ import { areEqual, log } from "../../../../values/Utilitas";
 import OthersInputLogic from "./OthersInputLogic";
 import { useParams } from "react-router-dom";
 import FilterComponent from "../../../../component/filter/FilterComponent";
+import TableComponent from "../../../../component/table/TableComponent";
+import { UploadOutlined } from "@ant-design/icons";
+import UploadModal from "../../../../component/modal/UploadModal";
 
 const EditableContext = createContext(null);
 
@@ -127,26 +130,15 @@ const othersInputPage = () => {
 
       <div className="custom-root-layout">
         {value.dataColumnInput.length > 1 ? (
-          <Table
-            components={components}
-            rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
-            bordered
-            dataSource={value.dataColumnInput}
-            columns={value.columns}
-            pagination={false}
-            loading={value.loading}
-            size="small"
-            scroll={{
-              x: 2900,
-              y: value.size.y - 352,
-            }}
-          />
-        ) : value.loading === true ? (
-          <div className="style-progress">
-            <Spin />
+          <div className="layout-btn-action">
+            <Button className="btn-update" type="primary" icon={<UploadOutlined className="custom-icon" />} onClick={func.onOpenUploadModal}>
+              Update
+            </Button>
           </div>
         ) : null}
+        <TableComponent variant="input" dataSource={value.dataColumnInput} columns={value.columns} loading={value.loading} listKeyParent={value.listKeyParent} />
       </div>
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file={`file/${value.endPFile}`} />
     </>
   );
 };
