@@ -1,23 +1,16 @@
 import { useState } from "react";
-import { useDropzone } from "react-dropzone";
 import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
 const LabaRugiLogic = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [columns, setColumns] = useState();
   const [loading, setLoading] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [codeFilter, setCodeFilter] = useState();
 
   let params = useParams();
-
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-    },
-  });
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -31,16 +24,18 @@ const LabaRugiLogic = () => {
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
     let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    // console.log("fCodeCompany", fCodeCompany);
-    // console.log("fCodeProduct", fCodeProduct);
-    // console.log("fCodeLocation", fCodeLocation);
-    // console.log("fCodeDept", fCodeDept);
-
     url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
 
     const { data } = await MainServices.get(url);
     log("res", data);
     getData(data.data);
+
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+    });
   };
 
   const getData = (data) => {
@@ -65,26 +60,10 @@ const LabaRugiLogic = () => {
     setLoading(false);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
-    acceptedFiles.length = 0;
-  };
-
-  const onUploadFile = async () => {
-    let file1;
-    acceptedFiles.forEach((file) => {
-      file1 = file;
-    });
-    let formData = new FormData();
-    formData.append("file", file1);
-
-    const url = "report/tablereport?code_company=200&code_location=110116&code_dept=109&code_product=107";
-
-    const { data } = await MainServices.post(``, formData);
+  const downloadFile = () => {
+    const { code_company, code_dept, code_location, code_product } = codeFilter;
+    const urlFile = `https://apikalla.binaries.id/ebudget/report/tablereport?code_company=${code_company}&code_location=${code_location}&code_dept=${code_dept}&code_product=${code_product}`;
+    window.location.href = urlFile;
   };
 
   return {
@@ -93,16 +72,10 @@ const LabaRugiLogic = () => {
       columns,
       loading,
       params,
-      openUploadModal,
-      getRootProps,
-      getInputProps,
-      acceptedFiles,
     },
     func: {
       onFinish,
-      onOpenUploadModal,
-      onCloseUploadModal,
-      onUploadFile,
+      downloadFile,
     },
   };
 };

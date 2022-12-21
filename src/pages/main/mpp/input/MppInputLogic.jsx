@@ -1,18 +1,12 @@
-import { Form, Typography } from "antd";
-import { createRef, useEffect, useState } from "react";
+import { Typography } from "antd";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import MainServices from "../../../../services/MainServices";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { log } from "../../../../values/Utilitas";
 
 const MppInputLogic = () => {
   let params = useParams();
-
-  const [form] = Form.useForm();
-
-  const ref = createRef();
 
   const [dataColumnInput, setDataColumnInput] = useState([
     {
@@ -51,12 +45,8 @@ const MppInputLogic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
   const [openUploadModal, setOpenUploadModal] = useState(false);
-
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
 
   const date = new Date();
 
@@ -402,10 +392,6 @@ const MppInputLogic = () => {
     },
   });
 
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   const onSetDataTable = (values) => {
     const {
       code_company,
@@ -655,6 +641,7 @@ const MppInputLogic = () => {
   };
 
   const onUploadFile = async () => {
+    setLoadingUpload(true);
     let file1;
 
     acceptedFiles.forEach((file) => {
@@ -677,6 +664,8 @@ const MppInputLogic = () => {
 
     getData(code_company, code_product, code_location, code_dept);
 
+    setLoadingUpload(false);
+
     onCloseUploadModal();
 
     // navigate(0);
@@ -687,11 +676,9 @@ const MppInputLogic = () => {
       dataColumnInput,
       columns,
       params,
-      form,
-      ref,
-      size,
       listKeyParent,
       loading,
+      loadingUpload,
       openUploadModal,
       getRootProps,
       getInputProps,

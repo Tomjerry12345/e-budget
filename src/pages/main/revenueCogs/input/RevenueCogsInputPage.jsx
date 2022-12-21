@@ -24,7 +24,7 @@ const RevenueCogsInputPage = () => {
 
         <TableComponent variant="input" dataSource={value.dataColumnInput} columns={value.columns} loading={value.loading} listKeyParent={value.listKeyParent} />
       </div>
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file="file/revenue-cogs.xlsx" />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file="file/revenue-cogs.xlsx" loading={value.loadingUpload} />
     </>
   );
 };

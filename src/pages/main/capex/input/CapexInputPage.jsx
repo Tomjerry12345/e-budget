@@ -11,7 +11,7 @@ const CapexInputPage = () => {
 
   return (
     <>
-      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
+      <FilterComponent type={2} isCodeProduct={true} onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         {value.dataColumnInput.length > 1 ? (

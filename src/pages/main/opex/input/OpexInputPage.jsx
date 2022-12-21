@@ -23,7 +23,7 @@ const OpexInputPage = () => {
         ) : null}
         <TableComponent variant="input" dataSource={value.dataColumnInput} columns={value.columns} loading={value.loading} listKeyParent={value.listKeyParent} />
       </div>
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file="file/opex.xlsx" />
+      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file="file/opex.xlsx" loading={value.loadingUpload} />
     </>
   );
 };
