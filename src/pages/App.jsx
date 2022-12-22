@@ -34,6 +34,7 @@ const App = () => {
         if (auth === "true" && token !== null) {
           setLocal("name-menu", "Dashboard");
           setLocal("index-menu", 0);
+          setLocal("move-page", null);
           navigate("/main");
         } else {
           navigate("/login");
