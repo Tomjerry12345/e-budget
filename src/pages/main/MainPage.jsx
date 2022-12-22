@@ -47,8 +47,15 @@ const MainPage = () => {
             dataSource={value.item}
             renderItem={(item, i) => (
               <List.Item key={i}>
-                <Button type="text" block disabled={value.itemDisabledMenu[i]} onClick={() => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu)}>
-                {item}
+                <Button
+                  href={value.routerNewPage}
+                  type="text"
+                  block
+                  disabled={value.itemDisabledMenu[i]}
+                  onMouseDown={(e) => func.onMouseDownClickedMenu(value.keyMenu, item)}
+                  onClick={(e) => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu, e)}
+                >
+                  {item}
                 </Button>
               </List.Item>
             )}

@@ -37,7 +37,7 @@ const RoutersConfig = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}></Route>
+        <Route index path="/" element={<App />}></Route>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/main" element={<MainPage />}>
           <Route index element={<DashboardPage />} />
