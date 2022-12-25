@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-
-import { areEqual } from "../../../../values/Utilitas";
-
-import { Table, Form, Input } from "antd";
+import { areEqual, getSizeScreen, log } from "../../../../values/Utilitas";
+import { Table, Form, Input, Select, Button, Spin } from "antd";
 
 const EditableContext = createContext(null);
 
@@ -29,7 +27,7 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   }, [editing]);
 
   const toggleEdit = () => {
-    let notEditing = areEqual(keyNotEditTable, record);
+    let notEditing = record.parent;
 
     if (!notEditing) {
       setEditing(!editing);
@@ -82,34 +80,46 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
   return <td {...restProps}>{childNode}</td>;
 };
 
-const TablePotonganComponent = ({ value, name }) => {
+const TableInputTypePotongan = ({ dataSource, columns, loading, listKeyParent }) => {
   const components = {
     body: {
       cell: EditableCell,
       row: EditableRow,
     },
   };
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
+
+  useEffect(() => {
+    window.onresize = getSizeScreen(setSize);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Table
-      components={components}
-      rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
-      style={{
-        marginTop: 16,
-        marginBottom: 16,
-      }}
-      bordered
-      dataSource={value.dataColumnInput[name]}
-      columns={value.tableColumn[name]}
-      pagination={false}
-      loading={value.loading}
-      size="small"
-      scroll={{
-        x: 2900,
-        y: value.size.y,
-      }}
-    />
+    <>
+      {dataSource.length > 1 ? (
+        <Table
+          components={components}
+          rowClassName={(record, index) => (areEqual(listKeyParent, record) ? "parent" : "child")}
+          bordered
+          dataSource={dataSource}
+          columns={columns}
+          pagination={false}
+          loading={loading}
+          size="small"
+          scroll={{
+            x: 2900,
+            y: size.y - 352,
+          }}
+        />
+      ) : loading === true ? (
+        <div className="style-progress">
+          <Spin />
+        </div>
+      ) : null}
+    </>
   );
 };
 
-export default TablePotonganComponent;
+export default TableInputTypePotongan;

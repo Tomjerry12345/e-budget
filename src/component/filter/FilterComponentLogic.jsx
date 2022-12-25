@@ -1,14 +1,9 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import MainServices from "../../services/MainServices";
+import { log } from "../../values/Utilitas";
 
-const FilterComponentLogic = ({
-  isCodeProduct,
-  isCodeProject,
-  keyCodeProject,
-  codeCompany,
-  formGlobal,
-}) => {
+const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, codeCompany, formGlobal }) => {
   const [state, setState] = useState({
     code_company: [],
     code_product: [],
@@ -30,6 +25,8 @@ const FilterComponentLogic = ({
         });
       }
     };
+
+    log("codeCompany", codeCompany);
 
     if (codeCompany === null) {
       fetchData();
@@ -53,13 +50,8 @@ const FilterComponentLogic = ({
       });
     }
 
-    const resProduct =
-      isCodeProduct === true
-        ? await MainServices.get(`product/list-by-com?code_company=${e}`)
-        : null;
-    const resLocation = await MainServices.get(
-      `location/list-by-com?code_company=${e}`
-    );
+    const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${e}`) : null;
+    const resLocation = await MainServices.get(`location/list-by-com?code_company=${e}`);
     const resDept = await MainServices.get(`dept/list`);
 
     if (resLocation.data.responseCode === 200) {
@@ -79,7 +71,7 @@ const FilterComponentLogic = ({
   const getValueComboBox = async (e) => {
     const code = e.replace(/[^0-9]/g, "");
 
-    if (code !== 0) {
+    if (code !== "0") {
       if (formGlobal !== null) {
         formGlobal.setFieldsValue({
           code_location: null,
@@ -94,18 +86,10 @@ const FilterComponentLogic = ({
         });
       }
 
-      const resProduct =
-        isCodeProduct === true
-          ? await MainServices.get(`product/list-by-com?code_company=${code}`)
-          : null;
-      const resLocation = await MainServices.get(
-        `location/list-by-com?code_company=${code}`
-      );
+      const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${code}`) : null;
+      const resLocation = await MainServices.get(`location/list-by-com?code_company=${code}`);
       const resDept = await MainServices.get(`dept/list`);
-      const resProject =
-        isCodeProject === true && keyCodeProject !== null
-          ? await MainServices.get(`project/list`)
-          : null;
+      const resProject = isCodeProject === true && keyCodeProject !== null ? await MainServices.get(`project/list`) : null;
 
       if (resLocation.data.responseCode === 200) {
         setState({
