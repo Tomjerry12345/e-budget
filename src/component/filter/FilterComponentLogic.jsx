@@ -14,6 +14,8 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
 
   let [form] = Form.useForm();
 
+  // const [gCode, setGCode] = useState()
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await MainServices.get("company/list-master");
@@ -97,7 +99,7 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
           code_product: resProduct !== null ? setProduct(resProduct) : [],
           code_location: setLocation(resLocation),
           code_dept: setDept(resDept),
-          code_project: resProject !== null ? setProject(resProject) : [],
+          code_project: resProject !== null ? setProject(resProject, code) : [],
         });
       }
     }
@@ -136,14 +138,26 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     return formatResDept;
   };
 
-  const setProject = (resProject) => {
+  const setProject = (resProject, c) => {
     const formatResProject = [];
     const data = resProject.data.data;
+
+    log("dataProject", data)
 
     data.forEach((element) => {
       let perusahaan;
 
-      if (keyCodeProject === "BJU") {
+      if (keyCodeProject === "default") {
+        if (c === "231") {
+          perusahaan = element.BAND;
+        } else if (c === "241") {
+          perusahaan = element.KIK
+        } else if (c === "312") {
+          perusahaan = element.BJU
+        } else if (c === "413") {
+          perusahaan = element.BSB
+        }
+      } else if (keyCodeProject === "BJU") {
         perusahaan = element.BJU;
       }
 
