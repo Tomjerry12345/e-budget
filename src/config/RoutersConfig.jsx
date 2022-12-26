@@ -33,6 +33,7 @@ import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
 import BandPage from "../pages/main/revenueCogs/band/BandPage";
 import DepartementPage from "../pages/main/coa/departement/DepartementPage";
 import PenjualanHkPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
+import LainHkPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
 
 const RoutersConfig = () => {
   return (
@@ -48,7 +49,7 @@ const RoutersConfig = () => {
 
             <Route path="hk" element={<HkPage />}>
               <Route index path="penjualan" element={<PenjualanHkPage />} />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route path="hpplain" element={<LainHkPage />} />
             </Route>
             <Route path="kiu" element={<KiuPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />

@@ -1,16 +1,10 @@
 import { Typography } from "antd";
-import ChildRevenueCogsComponent from "../ChildRevenueCogsComponent";
-import LainRevenueCogsLogic from "./LainRevenueCogsLogic";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import { useLocation } from "react-router-dom";
-import { slicing } from "../../../../../values/Utilitas";
+import FilterComponent from "../../../../../../component/filter/FilterComponent";
+import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
+import LainRevenueCogsLogic from "./LainHkLogic";
 
-const LainRevenueCogsPage = () => {
+const LainHkPage = () => {
   const { value, func } = LainRevenueCogsLogic();
-
-  const location = useLocation();
-
-  const path = slicing(location.pathname, "/", 3);
 
   const data1 = [
     {
@@ -35,13 +29,11 @@ const LainRevenueCogsPage = () => {
         codeCompany={codeCompany}
         type={2}
         isCodeProduct={false}
-        isCodeProject={path === "Revenue & COGS BJU" ? true : false}
         form={value.form}
         onFinish={func.onFinish}
         disabled={true}
-        keyCodeProject={path === "Revenue & COGS BJU" ? "BJU" : null}
       />
-      {data1[path].map((val) => (
+      {data1.map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
           <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
@@ -51,4 +43,4 @@ const LainRevenueCogsPage = () => {
   );
 };
 
-export default LainRevenueCogsPage;
+export default LainHkPage;
