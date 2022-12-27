@@ -32,6 +32,8 @@ import KikPage from "../pages/main/revenueCogs/kik/KikPage";
 import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
 import BandPage from "../pages/main/revenueCogs/band/BandPage";
 import DepartementPage from "../pages/main/coa/departement/DepartementPage";
+import PenjualanHkPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
+import LainHkPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
 
 const RoutersConfig = () => {
   return (
@@ -42,13 +44,12 @@ const RoutersConfig = () => {
         <Route path="/main" element={<MainPage />}>
           <Route index element={<DashboardPage />} />
           <Route path="revenue-cogs">
-            {/* <Route path="input/Input Direct Revenue & COGS" element={<RevenueCogsInputPage />} /> */}
             <Route path="input" element={<RevenueCogsInputPage />} />
             <Route path="summary" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
-              <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan" element={<PenjualanHkPage />} />
+              <Route path="hpplain" element={<LainHkPage />} />
             </Route>
             <Route path="kiu" element={<KiuPage />}>
               <Route index path="penjualan" element={<PenjualanRevenueCogsPage />} />

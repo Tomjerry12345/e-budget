@@ -665,13 +665,15 @@ const CapexInputLogic = () => {
 
     let formData = new FormData();
 
+    log("codeFilter", codeFilter)
+
     formData.append("file", file1);
     formData.append("company", code_company);
     formData.append("product", code_product);
     formData.append("location", code_location);
     formData.append("dept", code_dept);
 
-    const res = await MainServices.post("opex/import", formData);
+    const res = await MainServices.post("capex/import", formData);
 
     log("res", res);
 

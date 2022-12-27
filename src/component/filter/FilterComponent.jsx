@@ -32,6 +32,16 @@ const AutoCompleteFilter = ({ value, func, isCodeProduct, isCodeProject, disable
   </>
 );
 
+/**
+ *
+ * @param {{
+* keyCodeProject: "default" | "BJU";
+* isCodeProject: true | false;
+* onFinish: const function = () => {};
+* }} props Props for the component
+*
+*/
+
 const FilterComponent = ({ onFinish, isCodeProduct = true, isCodeProject = false, keyCodeProject = null, form = null, type = 1, codeCompany = null, disabled = false }) => {
   const { value, func } = FilterComponentLogic({ isCodeProduct, isCodeProject, keyCodeProject, codeCompany, formGlobal: form });
   let element;

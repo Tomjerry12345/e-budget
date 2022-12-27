@@ -255,7 +255,8 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
       {data1[path].map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
-          {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />}
+          {/* {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent className="child-revenue" value={value[val.name]} name={val.name} />} */}
+          {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent value={value} name={val.name} />}
         </>
       ))}
     </>
