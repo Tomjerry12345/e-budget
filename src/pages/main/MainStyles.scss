@@ -86,21 +86,8 @@
 
 .custom-root-layout {
   padding: 24px;
-}
-
-.custom-header {
-  height: 100px;
-  padding: 24px;
-  // background-color: #fafafa;
-  background-color: #ffffff;
-  background-image: linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.45) 100%);
-  line-height: 0px;
-  .header-title {
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 34px;
-    color: #212121;
-  }
+  background-color: #f5f7f9;
+  height: 100%;
 }
 
 .custom-breadcrumb {

@@ -1,7 +1,7 @@
 import { UploadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import React from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "../../../../component/header/HeaderComponent";
 import UploadModal from "../../../../component/modal/UploadModal";
 import TableComponent from "../../../../component/table/TableComponent";
 import OpexInputLogic from "./OpexInputLogic";
@@ -11,8 +11,7 @@ const OpexInputPage = () => {
 
   return (
     <>
-      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
-
+      <HeaderComponent form={value.form} onFinish={func.onFinish} />
       <div className="custom-root-layout">
         {value.dataColumnInput.length > 1 ? (
           <div className="layout-btn-action">
