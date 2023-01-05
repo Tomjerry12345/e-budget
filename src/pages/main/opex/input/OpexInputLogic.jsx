@@ -44,6 +44,7 @@ const OpexInputLogic = () => {
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [filter, setFilter] = useState(false);
 
   const date = new Date();
   const year = date.getFullYear();
@@ -584,6 +585,7 @@ const OpexInputLogic = () => {
   };
 
   const onFinish = (values) => {
+    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -682,6 +684,7 @@ const OpexInputLogic = () => {
       columns,
       listKeyParent,
       loading,
+      filter,
       loadingUpload,
       openUploadModal,
       getRootProps,

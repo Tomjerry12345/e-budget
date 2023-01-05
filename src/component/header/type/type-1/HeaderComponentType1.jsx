@@ -2,29 +2,36 @@ import { DeleteOutlined, DownloadOutlined, FilterOutlined, MoreOutlined, ReloadO
 import { Breadcrumb, Button, Dropdown, Input, Layout, Menu, Modal, Typography } from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
-import HeaderComponentLogic from "../../HeaderComponentLogic";
+import HeaderComponentType1Logic from "./HeaderComponentType1Logic";
+
 import "./style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;
-const { Search } = Input;
 
 // const data = ["Kode produk", "Kode company"];
 
 const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
 
-const ModalFilter = ({ filter, onOk, onCloseFilter, form, onFinish }) => {
+const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
   return (
-    <Modal className="filter-modal" title="Filter" open={filter} onCancel={onCloseFilter} footer={null}>
-      <FilterComponent type={2} isCodeProduct={true} form={form} onFinish={onFinish} />
+    <Modal className="filter-modal" title="Filter" open={filter} onCancel={onCloseFilter} footer={null} mask={false}>
+      <FilterComponent type={2} isCodeProduct={true} onFinish={onFinish} />
     </Modal>
   );
 };
 
-const ModalMenuMore = ({ open, onCancel }) => {
+const ModalMenuMore = ({ open, onCancel, onClickImport }) => {
   return (
-    <Modal className="more-modal" title={null} open={open} onCancel={onCancel} footer={null} closable={false}>
-      <Button type="text" icon={<DownloadOutlined />}>
+    <Modal className="more-modal" title={null} open={open} onCancel={onCancel} footer={null} closable={false} mask={false}>
+      <Button
+        type="text"
+        icon={<DownloadOutlined />}
+        onClick={() => {
+          onClickImport();
+          onCancel();
+        }}
+      >
         Import
       </Button>
       <Button type="text" icon={<ToTopOutlined />}>
@@ -37,28 +44,8 @@ const ModalMenuMore = ({ open, onCancel }) => {
   );
 };
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <Button type="text" icon={<DownloadOutlined />}>
-        Import
-      </Button>
-    </Menu.Item>
-    <Menu.Item>
-      <Button type="text" icon={<ToTopOutlined />}>
-        Export
-      </Button>
-    </Menu.Item>
-    <Menu.Item>
-      <Button type="text" icon={<DeleteOutlined />} style={{ color: "red" }}>
-        Clear Data
-      </Button>
-    </Menu.Item>
-  </Menu>
-);
-
-const HeaderComponentType1 = ({ form, onFinish }) => {
-  const { value, func } = HeaderComponentLogic();
+const HeaderComponentType1 = ({ onFinish, onChangeFilter, onClickImport }) => {
+  const { value, func } = HeaderComponentType1Logic({ onChangeFilter });
   return (
     <Header className="custom-header">
       {/* <Breadcrumb className="custom-breadcrumb" separator=">">
@@ -79,9 +66,9 @@ const HeaderComponentType1 = ({ form, onFinish }) => {
         <Button className="btn-more" icon={<MoreOutlined />} onClick={func.onClickMore} />
       </div>
 
-      <ModalFilter filter={value.filter} onOk={null} onCloseFilter={func.onCloseFilter} />
+      <ModalFilter filter={value.filter} onCloseFilter={func.onCloseFilter} onFinish={onFinish} />
 
-      <ModalMenuMore open={value.more} onCancel={func.onCloseMore} />
+      <ModalMenuMore open={value.more} onCancel={func.onCloseMore} onClickImport={onClickImport} />
     </Header>
   );
 };

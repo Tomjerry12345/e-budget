@@ -70,6 +70,15 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     getValueComboBox(e);
   };
 
+  const onReset = () => {
+    form.setFieldsValue({
+      code_company: null,
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
+  };
+
   const getValueComboBox = async (e) => {
     const code = e.replace(/[^0-9]/g, "");
 
@@ -142,7 +151,7 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     const formatResProject = [];
     const data = resProject.data.data;
 
-    log("dataProject", data)
+    log("dataProject", data);
 
     data.forEach((element) => {
       let perusahaan;
@@ -151,11 +160,11 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
         if (c === "231") {
           perusahaan = element.BAND;
         } else if (c === "241") {
-          perusahaan = element.KIK
+          perusahaan = element.KIK;
         } else if (c === "312") {
-          perusahaan = element.BJU
+          perusahaan = element.BJU;
         } else if (c === "413") {
-          perusahaan = element.BSB
+          perusahaan = element.BSB;
         }
       } else if (keyCodeProject === "BJU") {
         perusahaan = element.BJU;
@@ -180,6 +189,7 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     func: {
       onChange,
       onSelect,
+      onReset
     },
   };
 };

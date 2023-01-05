@@ -31,7 +31,7 @@ const NavComponent = ({ func, value }) => {
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#F5F7F9",
+          background: "linear-gradient(4.31deg, #008041 71.9%, #17C770 107.48%)",
         }}
         className="menuNav"
         triggerSubMenuAction="click"

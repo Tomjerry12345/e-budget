@@ -38,7 +38,7 @@ const FilterComponent = ({ onFinish, isCodeProduct = true, isCodeProject = false
           <AutoCompleteFilter value={value} func={func} isCodeProduct={isCodeProduct} isCodeProject={isCodeProject} disabled={disabled} />
           <div style={{ display: "flex" }}>
             <Form.Item>
-              <Button className="btn-reset" htmlType="submit">
+              <Button className="btn-reset" onClick={func.onReset}>
                 Reset
               </Button>
             </Form.Item>

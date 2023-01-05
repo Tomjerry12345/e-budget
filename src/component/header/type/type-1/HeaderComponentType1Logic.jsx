@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const HeaderComponentLogic = () => {
+const HeaderComponentType1Logic = ({ onChangeFilter }) => {
   const [filter, setFilter] = useState(false);
   const [more, setMore] = useState(false);
+
+  useEffect(() => {
+    onChangeFilter(setFilter);
+  }, [onChangeFilter]);
 
   const onCilckFilter = () => {
     setFilter(true);
@@ -22,8 +26,8 @@ const HeaderComponentLogic = () => {
 
   return {
     value: {
-      filter,
       more,
+      filter,
     },
     func: {
       onCilckFilter,
@@ -34,4 +38,4 @@ const HeaderComponentLogic = () => {
   };
 };
 
-export default HeaderComponentLogic;
+export default HeaderComponentType1Logic;

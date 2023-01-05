@@ -13,11 +13,7 @@ const MainPage = () => {
   const { func, value } = MainLogic();
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout>
       <NavComponent func={func} value={value} />
 
       <Modal
