@@ -58,7 +58,7 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
       closable={false}
       mask={false}
     >
-      <Button
+      {/* <Button
         type="text"
         icon={<DownloadOutlined />}
         disabled={disabledImportExport}
@@ -68,7 +68,7 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
         }}
       >
         Import
-      </Button>
+      </Button> */}
       <Button type="text" icon={<ToTopOutlined />} disabled={disabledImportExport}>
         Export
       </Button>
