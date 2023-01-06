@@ -15,7 +15,16 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  keyNotEditTable,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -97,7 +106,9 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
         }
         // onClick={toggleEdit}
       >
-        {typeof children[1] === "string" ? children[1] : parseInt(children[1]).format(0, 3, ".", ",")}
+        {typeof children[1] === "string"
+          ? children[1]
+          : parseInt(children[1]).format(0, 3, ".", ",")}
       </div>
     );
   }
@@ -126,7 +137,9 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
       {dataSource.length > 1 ? (
         <Table
           components={components}
-          rowClassName={(record, index) => (areEqual(listKeyParent, record) ? "parent" : "child")}
+          rowClassName={(record, index) =>
+            areEqual(listKeyParent, record) ? "parent" : "child"
+          }
           bordered
           dataSource={dataSource}
           columns={columns}
@@ -135,7 +148,7 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
           size="small"
           scroll={{
             x: 2900,
-            y: size.y - 352,
+            y: size.y - 200,
           }}
         />
       ) : loading === true ? (

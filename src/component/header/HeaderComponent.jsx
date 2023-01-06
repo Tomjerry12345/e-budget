@@ -1,11 +1,32 @@
-import HeaderComponentType1 from "./type/type-1/HeaderComponentType1";
+import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput";
 
-const HeaderComponent = ({ onFinish, type = 1, onChangeFilter, onClickImport }) => {
+const HeaderComponent = ({
+  onFinish,
+  type,
+  onChangeFilter,
+  onChangeLoadingUpload,
+  onUploadFile,
+  accesFile = null,
+  downloadFile,
+  disabledImportExport,
+}) => {
   let component;
 
-  if (type === 1) {
-    component = <HeaderComponentType1 onFinish={onFinish} onChangeFilter={onChangeFilter} onClickImport={onClickImport} />;
+  if (type === "input") {
+    component = (
+      <HeaderComponentTypeInput
+        onFinish={onFinish}
+        onChangeFilter={onChangeFilter}
+        onChangeLoadingUpload={onChangeLoadingUpload}
+        onUploadFile={onUploadFile}
+        accesFile={accesFile}
+        downloadFile={downloadFile}
+        disabledImportExport={disabledImportExport}
+      />
+    );
+  } else if (type === "summary") {
   }
+
   return component;
 };
 

@@ -3,13 +3,29 @@ import { Card } from "@mui/material";
 import React from "react";
 import OpexSummaryLogic from "./OpexSummaryLogic";
 import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "../../../../component/header/HeaderComponent";
 
 const OpexSummary = () => {
   const { value, func } = OpexSummaryLogic();
 
   return (
     <>
-      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
+      <HeaderComponent
+        onFinish={func.onFinish}
+        onChangeFilter={(set) => {
+          set(value.filter);
+        }}
+        onChangeLoadingUpload={(set, setImport) => {
+          set(value.loadingUpload);
+
+          if (value.uploadSucces === true) {
+            setImport(false);
+          }
+        }}
+        onUploadFile={func.onUploadFile}
+        downloadFile="file/opex.xlsx"
+        disabledImportExport={value.dataColumn.length <= 1}
+      />
 
       <div className="custom-root-layout">
         {value.dataColumn.length > 1 ? (
