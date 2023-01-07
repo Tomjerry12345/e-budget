@@ -49,6 +49,8 @@ const OpexInputLogic = () => {
   const date = new Date();
   const year = date.getFullYear();
 
+  const [tahun, setTahun] = useState();
+
   const constantTableColums = [
     {
       title: "Account",
@@ -397,7 +399,9 @@ const OpexInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -604,7 +608,9 @@ const OpexInputLogic = () => {
         const itemparent = newData[x];
         const itemold = newData[x];
         itemparent[`${keysEdit}`] =
-          parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+          parseInt(itemparent[`${keysEdit}`]) +
+          parseInt(valuesEdit) -
+          parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -661,6 +667,7 @@ const OpexInputLogic = () => {
     formData.append("product", code_product);
     formData.append("location", code_location);
     formData.append("dept", code_dept);
+    formData.append("tahun", tahun);
 
     const res = await MainServices.post("opex/import", formData);
 
@@ -673,6 +680,11 @@ const OpexInputLogic = () => {
     onSuccess();
 
     // navigate(0);
+  };
+
+  const onChangeTahun = (e) => {
+    console.log("tahun", e);
+    setTahun(e);
   };
 
   return {
@@ -691,6 +703,7 @@ const OpexInputLogic = () => {
     func: {
       onFinish,
       onUploadFile,
+      onChangeTahun,
     },
   };
 };

@@ -1,6 +1,17 @@
 import { Table, Spin } from "antd";
+import { useEffect, useState } from "react";
+import { getSizeScreen } from "../../../../values/Utilitas";
 
 const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
+  const [size, setSize] = useState({
+    x: window.innerWidth,
+    y: window.innerHeight,
+  });
+
+  useEffect(() => {
+    window.onresize = getSizeScreen(setSize);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <>
       {dataSource.length > 0 ? (
@@ -12,7 +23,7 @@ const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
           pagination={false}
           size="small"
           // loading={value.loading}
-          scroll={scroll}
+          scroll={scroll === null ? { y: size.y - 140 } : scroll}
           rowKey="id"
         />
       ) : loading === true ? (

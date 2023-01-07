@@ -119,11 +119,20 @@
             #ffffff 30%,
             rgba(255, 255, 255, 0)
           ),
-          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0 100%,
+          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+            100%,
           /* Shadows */
-            radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)),
-          radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)) 0
-            100%;
+            radial-gradient(
+              farthest-side at 50% 0,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            ),
+          radial-gradient(
+              farthest-side at 50% 100%,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            )
+            0 100%;
         background-repeat: no-repeat;
         background-color: white;
         background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
@@ -182,32 +191,30 @@
             #ffffff 30%,
             rgba(255, 255, 255, 0)
           ),
-          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0 100%,
+          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+            100%,
           /* Shadows */
-            radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)),
-          radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)) 0
-            100%;
+            radial-gradient(
+              farthest-side at 50% 0,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            ),
+          radial-gradient(
+              farthest-side at 50% 100%,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            )
+            0 100%;
         background-repeat: no-repeat;
         background-color: white;
         background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
         background-attachment: local, local, scroll, scroll;
       }
-
-      //   ul {
-      //     .ant-list-item {
-      //       border-bottom: 0px;
-      //       padding: 0px;
-
-      //       .ant-btn {
-      //         height: 34px;
-      //         padding: 6px 10px;
-      //       }
-
-      //       .ant-btn-block {
-      //         display: flex;
-      //       }
-      //     }
-      //   }
     }
+  }
+
+  .btn {
+    width: 100%;
+    display: flex;
   }
 }

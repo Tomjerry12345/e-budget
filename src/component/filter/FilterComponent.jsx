@@ -4,17 +4,51 @@ import FilterComponentLogic from "./FilterComponentLogic";
 import AutoCompleteElement from "../element/auto-complete/AutoCompleteElement";
 import "./Style.scss";
 
-const AutoCompleteFilter = ({ value, func, isCodeProduct, isCodeProject, disabled }) => (
+const AutoCompleteFilter = ({
+  value,
+  func,
+  isCodeProduct,
+  isCodeProject,
+  disabled,
+  variant,
+}) => (
   <>
-    <AutoCompleteElement label="Kode Perusahaan" name="code_company" value={value.state.code_company} onSelect={func.onSelect} disabled={disabled} />
+    <AutoCompleteElement
+      label="Kode Perusahaan"
+      name="code_company"
+      value={value.state.code_company}
+      onSelect={func.onSelect}
+      disabled={disabled}
+      intialValue={variant === "summary" ? { value: "all" } : undefined}
+    />
 
-    {isCodeProduct === true ? <AutoCompleteElement label="Kode Produk" name="code_product" value={value.state.code_product} /> : null}
+    {isCodeProduct === true ? (
+      <AutoCompleteElement
+        label="Kode Produk"
+        name="code_product"
+        value={value.state.code_product}
+      />
+    ) : null}
 
-    {isCodeProject === true ? <AutoCompleteElement label="Kode Project" name="code_project" value={value.state.code_project} /> : null}
+    {isCodeProject === true ? (
+      <AutoCompleteElement
+        label="Kode Project"
+        name="code_project"
+        value={value.state.code_project}
+      />
+    ) : null}
 
-    <AutoCompleteElement label="Kode Lokasi" name="code_location" value={value.state.code_location} />
+    <AutoCompleteElement
+      label="Kode Lokasi"
+      name="code_location"
+      value={value.state.code_location}
+    />
 
-    <AutoCompleteElement label="Kode Dept" name="code_dept" value={value.state.code_dept} />
+    <AutoCompleteElement
+      label="Kode Dept"
+      name="code_dept"
+      value={value.state.code_dept}
+    />
   </>
 );
 
@@ -28,14 +62,41 @@ const AutoCompleteFilter = ({ value, func, isCodeProduct, isCodeProject, disable
  *
  */
 
-const FilterComponent = ({ onFinish, isCodeProduct = true, isCodeProject = false, keyCodeProject = null, form = null, type = 1, codeCompany = null, disabled = false }) => {
-  const { value, func } = FilterComponentLogic({ isCodeProduct, isCodeProject, keyCodeProject, codeCompany, formGlobal: form });
+const FilterComponent = ({
+  onFinish,
+  isCodeProduct = true,
+  isCodeProject = false,
+  keyCodeProject = null,
+  form = null,
+  codeCompany = null,
+  disabled = false,
+  variant,
+}) => {
+  const { value, func } = FilterComponentLogic({
+    isCodeProduct,
+    isCodeProject,
+    keyCodeProject,
+    codeCompany,
+    formGlobal: form,
+  });
 
   return (
     <div className="custom-root-card">
       <Card className="card-style">
-        <Form className="form-filter" layout="vertical" onFinish={onFinish} form={form !== null ? form : value.form}>
-          <AutoCompleteFilter value={value} func={func} isCodeProduct={isCodeProduct} isCodeProject={isCodeProject} disabled={disabled} />
+        <Form
+          className="form-filter"
+          layout="vertical"
+          onFinish={onFinish}
+          form={form !== null ? form : value.form}
+        >
+          <AutoCompleteFilter
+            value={value}
+            func={func}
+            isCodeProduct={isCodeProduct}
+            isCodeProject={isCodeProject}
+            disabled={disabled}
+            variant={variant}
+          />
           <div style={{ display: "flex" }}>
             <Form.Item>
               <Button className="btn-reset" onClick={func.onReset}>

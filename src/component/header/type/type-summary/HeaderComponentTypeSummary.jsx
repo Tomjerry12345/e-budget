@@ -7,7 +7,16 @@ import {
   SearchOutlined,
   ToTopOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Dropdown, Input, Layout, Menu, Modal, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  Modal,
+  Typography,
+} from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
 import UploadModal from "../../../modal/UploadModal";
@@ -42,12 +51,17 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
       footer={null}
       mask={false}
     >
-      <FilterComponent type={2} isCodeProduct={true} onFinish={onFinish} />
+      <FilterComponent
+        type={2}
+        isCodeProduct={true}
+        onFinish={onFinish}
+        variant="summary"
+      />
     </Modal>
   );
 };
 
-const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) => {
+const ModalMenuMore = ({ open, onCancel, disabledImportExport }) => {
   return (
     <Modal
       className="more-modal"
@@ -58,18 +72,11 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
       closable={false}
       mask={false}
     >
-      {/* <Button
+      <Button
         type="text"
-        icon={<DownloadOutlined />}
+        icon={<ToTopOutlined />}
         disabled={disabledImportExport}
-        onClick={() => {
-          onClickImport();
-          onCancel();
-        }}
       >
-        Import
-      </Button> */}
-      <Button type="text" icon={<ToTopOutlined />} disabled={disabledImportExport}>
         Export
       </Button>
       <Button
@@ -87,10 +94,7 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
 const HeaderComponentTypeSummary = ({
   onFinish,
   onChangeFilter,
-  onUploadFile,
-  downloadFile,
   onChangeLoadingUpload,
-  accesFile,
   disabledImportExport,
 }) => {
   const { value, func } = HeaderComponentTypeSummaryLogic({
@@ -112,13 +116,21 @@ const HeaderComponentTypeSummary = ({
           placeholder="input search text"
           suffix={<SearchOutlined />}
         />
-        <Button className="btn-filter" icon={<FilterOutlined />} onClick={func.onCilckFilter}>
+        <Button
+          className="btn-filter"
+          icon={<FilterOutlined />}
+          onClick={func.onCilckFilter}
+        >
           Filter
         </Button>
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>
-        <Button className="btn-more" icon={<MoreOutlined />} onClick={func.onClickMore} />
+        <Button
+          className="btn-more"
+          icon={<MoreOutlined />}
+          onClick={func.onClickMore}
+        />
       </div>
 
       <ModalFilter
@@ -133,15 +145,6 @@ const HeaderComponentTypeSummary = ({
         onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
       />
-
-      {/* <UploadModal
-        open={value.isImport}
-        onCancel={func.onCloseImport}
-        value={accesFile}
-        onOk={onUploadFile}
-        file={downloadFile}
-        loading={value.loadingUpload}
-      /> */}
     </Header>
   );
 };

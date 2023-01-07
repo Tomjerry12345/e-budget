@@ -44,6 +44,7 @@ const OpexSummaryLogic = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState(false);
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
@@ -173,6 +174,7 @@ const OpexSummaryLogic = () => {
       ref,
       form,
       loading,
+      filter,
     },
     func: {
       onTambahData,

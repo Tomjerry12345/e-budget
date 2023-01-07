@@ -1,4 +1,5 @@
 import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput";
+import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
 const HeaderComponent = ({
   onFinish,
@@ -9,6 +10,7 @@ const HeaderComponent = ({
   accesFile = null,
   downloadFile,
   disabledImportExport,
+  onChangeSelect,
 }) => {
   let component;
 
@@ -22,9 +24,21 @@ const HeaderComponent = ({
         accesFile={accesFile}
         downloadFile={downloadFile}
         disabledImportExport={disabledImportExport}
+        onChangeSelect={onChangeSelect}
       />
     );
   } else if (type === "summary") {
+    component = (
+      <HeaderComponentTypeSummary
+        onFinish={onFinish}
+        onChangeFilter={onChangeFilter}
+        onChangeLoadingUpload={onChangeLoadingUpload}
+        onUploadFile={onUploadFile}
+        accesFile={accesFile}
+        downloadFile={downloadFile}
+        disabledImportExport={disabledImportExport}
+      />
+    );
   }
 
   return component;

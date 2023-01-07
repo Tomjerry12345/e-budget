@@ -10,7 +10,12 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
     <Button className="btn-cancel" type="text" onClick={onCancel}>
       Cancel
     </Button>
-    <Button className="btn-upload" type="primary" onClick={onOk} loading={loading}>
+    <Button
+      className="btn-upload"
+      type="primary"
+      onClick={onOk}
+      loading={loading}
+    >
       Upload
     </Button>
   </>
@@ -25,7 +30,9 @@ const UploadModal = ({ open, onCancel, value, onOk, file, loading }) => {
     <Modal
       open={open}
       className="custom-upload-modal"
-      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />}
+      footer={
+        <CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />
+      }
       onCancel={onCancel}
     >
       <Title level={4}>Upload Template</Title>
@@ -47,7 +54,9 @@ const UploadModal = ({ open, onCancel, value, onOk, file, loading }) => {
 
         <div className="layout-download-template">
           <Text className="txt-accepted">Accepted File Type .xlsx</Text>
-          <Text className="txt-belum-mempunyai-template">Anda Belum Mempunyai Template ?</Text>
+          <Text className="txt-belum-mempunyai-template">
+            Anda Belum Mempunyai Template ?
+          </Text>
           <Button
             className="btn-download-template"
             type="primary"

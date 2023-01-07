@@ -9,6 +9,7 @@ const OpexInputPage = () => {
   return (
     <>
       <HeaderComponent
+        type="input"
         onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
@@ -24,6 +25,7 @@ const OpexInputPage = () => {
         accesFile={value}
         downloadFile="file/opex.xlsx"
         disabledImportExport={value.dataColumnInput.length <= 1}
+        onChangeSelect={func.onChangeTahun}
       />
       <div className="custom-root-layout">
         <TableComponent

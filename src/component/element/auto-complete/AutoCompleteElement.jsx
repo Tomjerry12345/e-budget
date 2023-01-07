@@ -1,7 +1,14 @@
 import { AutoComplete, Form } from "antd";
 
-const AutoCompleteElement = ({ label, name, onSelect, value, disabled }) => {
-  const newVal = [];
+const AutoCompleteElement = ({
+  label,
+  name,
+  onSelect,
+  value,
+  disabled,
+  intialValue,
+}) => {
+  const newVal = intialValue === undefined ? [] : [intialValue];
   value.forEach((val) => {
     newVal.push({
       value: `${val.title} (${val.code})`,
@@ -27,7 +34,9 @@ const AutoCompleteElement = ({ label, name, onSelect, value, disabled }) => {
         onSelect={onSelect}
         placeholder={label}
         disabled={disabled}
-        filterOption={(inputValue, option) => option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+        filterOption={(inputValue, option) =>
+          option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+        }
       />
     </Form.Item>
   );

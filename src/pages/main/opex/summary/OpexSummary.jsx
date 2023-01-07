@@ -4,6 +4,7 @@ import React from "react";
 import OpexSummaryLogic from "./OpexSummaryLogic";
 import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
+import TableComponent from "../../../../component/table/TableComponent";
 
 const OpexSummary = () => {
   const { value, func } = OpexSummaryLogic();
@@ -11,6 +12,7 @@ const OpexSummary = () => {
   return (
     <>
       <HeaderComponent
+        type="summary"
         onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
@@ -28,7 +30,7 @@ const OpexSummary = () => {
       />
 
       <div className="custom-root-layout">
-        {value.dataColumn.length > 1 ? (
+        {/* {value.dataColumn.length > 1 ? (
           <Table
             rowClassName="child"
             bordered
@@ -46,6 +48,13 @@ const OpexSummary = () => {
           <div className="style-progress">
             <Spin />
           </div>
+        ) : null} */}
+        {value.dataColumn.length > 1 ? (
+          <TableComponent
+            dataSource={value.dataColumn}
+            columns={value.tableColumn}
+            loading={value.loading}
+          />
         ) : null}
       </div>
     </>

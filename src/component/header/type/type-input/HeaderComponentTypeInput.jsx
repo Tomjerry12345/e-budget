@@ -7,9 +7,19 @@ import {
   SearchOutlined,
   ToTopOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Button, Dropdown, Input, Layout, Menu, Modal, Typography } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  Modal,
+  Typography,
+} from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
+import ImportInputModal from "../../../modal/import/ImportInputModal";
 import UploadModal from "../../../modal/UploadModal";
 import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
 
@@ -42,12 +52,22 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
       footer={null}
       mask={false}
     >
-      <FilterComponent type={2} isCodeProduct={true} onFinish={onFinish} />
+      <FilterComponent
+        type={2}
+        isCodeProduct={true}
+        onFinish={onFinish}
+        variant="input"
+      />
     </Modal>
   );
 };
 
-const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) => {
+const ModalMenuMore = ({
+  open,
+  onCancel,
+  onClickImport,
+  disabledImportExport,
+}) => {
   return (
     <Modal
       className="more-modal"
@@ -59,6 +79,7 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
       mask={false}
     >
       <Button
+        className="btn"
         type="text"
         icon={<DownloadOutlined />}
         disabled={disabledImportExport}
@@ -69,10 +90,16 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
       >
         Import
       </Button>
-      <Button type="text" icon={<ToTopOutlined />} disabled={disabledImportExport}>
+      <Button
+        className="btn"
+        type="text"
+        icon={<ToTopOutlined />}
+        disabled={disabledImportExport}
+      >
         Export
       </Button>
       <Button
+        className="btn"
         type="text"
         icon={<DeleteOutlined />}
         style={{ color: "red" }}
@@ -92,6 +119,7 @@ const HeaderComponentTypeInput = ({
   onChangeLoadingUpload,
   accesFile,
   disabledImportExport,
+  onChangeSelect,
 }) => {
   const { value, func } = HeaderComponentTypeInputLogic({
     onChangeFilter,
@@ -112,13 +140,21 @@ const HeaderComponentTypeInput = ({
           placeholder="input search text"
           suffix={<SearchOutlined />}
         />
-        <Button className="btn-filter" icon={<FilterOutlined />} onClick={func.onCilckFilter}>
+        <Button
+          className="btn-filter"
+          icon={<FilterOutlined />}
+          onClick={func.onCilckFilter}
+        >
           Filter
         </Button>
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>
-        <Button className="btn-more" icon={<MoreOutlined />} onClick={func.onClickMore} />
+        <Button
+          className="btn-more"
+          icon={<MoreOutlined />}
+          onClick={func.onClickMore}
+        />
       </div>
 
       <ModalFilter
@@ -134,13 +170,14 @@ const HeaderComponentTypeInput = ({
         disabledImportExport={disabledImportExport}
       />
 
-      <UploadModal
+      <ImportInputModal
         open={value.isImport}
         onCancel={func.onCloseImport}
         value={accesFile}
         onOk={onUploadFile}
         file={downloadFile}
         loading={value.loadingUpload}
+        onChangeSelect={onChangeSelect}
       />
     </Header>
   );
