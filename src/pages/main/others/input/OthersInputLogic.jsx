@@ -62,7 +62,10 @@ const OthersInputLogic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+  const [filter, setFilter] = useState(false);
+  const [tahun, setTahun] = useState();
 
   const date = new Date();
   const year = date.getFullYear();
@@ -187,7 +190,9 @@ const OthersInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">Forecast</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Okt.</Typography.Text>
               </div>
             ),
@@ -198,7 +203,9 @@ const OthersInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">Forecast</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Nov.</Typography.Text>
               </div>
             ),
@@ -209,7 +216,9 @@ const OthersInputLogic = () => {
           {
             title: (
               <div className="title-table">
-                <Typography.Text className="for-styles">Forecast</Typography.Text>
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
                 <Typography.Text>Des.</Typography.Text>
               </div>
             ),
@@ -692,7 +701,9 @@ const OthersInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -925,6 +936,7 @@ const OthersInputLogic = () => {
   };
 
   const onFinish = (values) => {
+    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -942,7 +954,10 @@ const OthersInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+        itemparent[`${keysEdit}`] =
+          parseInt(itemparent[`${keysEdit}`]) +
+          parseInt(valuesEdit) -
+          parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -971,21 +986,22 @@ const OthersInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post(`${endPoint[itemPage]}/update`, formData);
+    const response = await MainServices.post(
+      `${endPoint[itemPage]}/update`,
+      formData
+    );
 
     log("response-update", response);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
   const onUploadFile = async () => {
+    setLoadingUpload(true);
+
     let file1;
 
     acceptedFiles.forEach((file) => {
@@ -1008,9 +1024,16 @@ const OthersInputLogic = () => {
 
     getData(code_company, code_product, code_location, code_dept);
 
-    onCloseUploadModal();
+    setLoadingUpload(false);
+
+    onSuccess();
 
     // navigate(0);
+  };
+
+  const onChangeTahun = (e) => {
+    console.log("tahun", e);
+    setTahun(e);
   };
 
   return {
@@ -1022,17 +1045,18 @@ const OthersInputLogic = () => {
       ref,
       listKeyParent,
       loading,
-      openUploadModal,
       getRootProps,
       getInputProps,
       acceptedFiles,
       endPFile,
+      filter,
+      uploadSucces,
+      loadingUpload,
     },
     func: {
       onFinish,
-      onOpenUploadModal,
-      onCloseUploadModal,
       onUploadFile,
+      onChangeTahun,
     },
   };
 };

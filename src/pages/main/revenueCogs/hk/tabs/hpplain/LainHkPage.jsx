@@ -25,18 +25,22 @@ const LainHkPage = () => {
 
   return (
     <>
-      <FilterComponent
+      {/* <FilterComponent
         codeCompany={codeCompany}
         type={2}
         isCodeProduct={false}
         form={value.form}
         onFinish={func.onFinish}
         disabled={true}
-      />
+      /> */}
       {data1.map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
+          <ChildRevenueCogsComponent
+            className="child-revenue"
+            value={value}
+            name={val.name}
+          />
         </>
       ))}
     </>

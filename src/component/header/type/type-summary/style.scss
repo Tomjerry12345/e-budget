@@ -17,7 +17,7 @@
     font-weight: 700;
     line-height: 34px;
     color: #212121;
-    width: 400px;
+    width: 100%;
   }
 
   .container-menu {
@@ -209,5 +209,10 @@
       //     }
       //   }
     }
+  }
+
+  .btn {
+    width: 100%;
+    display: flex;
   }
 }

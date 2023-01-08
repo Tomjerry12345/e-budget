@@ -45,11 +45,10 @@ const OpexInputLogic = () => {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
   const [filter, setFilter] = useState(false);
+  const [tahun, setTahun] = useState();
 
   const date = new Date();
   const year = date.getFullYear();
-
-  const [tahun, setTahun] = useState();
 
   const constantTableColums = [
     {

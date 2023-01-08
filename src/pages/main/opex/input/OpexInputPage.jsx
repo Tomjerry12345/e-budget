@@ -27,6 +27,7 @@ const OpexInputPage = () => {
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
       />
+
       <div className="custom-root-layout">
         <TableComponent
           variant="input"

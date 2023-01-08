@@ -19,9 +19,8 @@ import {
 } from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
-import UploadModal from "../../../modal/UploadModal";
-import HeaderComponentTypeSummaryLogic from "./HeaderComponentTypeSummaryLogic";
-
+import ImportInputModal from "../../../modal/import/ImportInputModal";
+import HeaderComponentTypeRevenueInputLogic from "./HeaderComponentTypeRevenueInputLogic";
 import "./style.scss";
 
 const { Header } = Layout;
@@ -41,7 +40,7 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
+const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
   return (
     <Modal
       className="filter-modal"
@@ -54,15 +53,20 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
       <FilterComponent
         type={2}
         isCodeProduct={true}
+        isCodeProject={true}
         onFinish={onFinish}
-        variant="summary"
-        form={form}
+        variant="input"
       />
     </Modal>
   );
 };
 
-const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
+const ModalMenuMore = ({
+  open,
+  onCancel,
+  onClickImport,
+  disabledImportExport,
+}) => {
   return (
     <Modal
       className="more-modal"
@@ -76,12 +80,20 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
       <Button
         className="btn"
         type="text"
-        icon={<ToTopOutlined />}
+        icon={<DownloadOutlined />}
         disabled={disabledImportExport}
         onClick={() => {
-          onExport();
+          onClickImport();
           onCancel();
         }}
+      >
+        Import
+      </Button>
+      <Button
+        className="btn"
+        type="text"
+        icon={<ToTopOutlined />}
+        disabled={disabledImportExport}
       >
         Export
       </Button>
@@ -98,15 +110,19 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
   );
 };
 
-const HeaderComponentTypeSummary = ({
+const HeaderComponentTypeRevenueInput = ({
   onFinish,
   onChangeFilter,
+  onUploadFile,
+  downloadFile,
+  onChangeLoadingUpload,
+  accesFile,
   disabledImportExport,
-  onExport,
-  form,
+  onChangeSelect,
 }) => {
-  const { value, func } = HeaderComponentTypeSummaryLogic({
+  const { value, func } = HeaderComponentTypeRevenueInputLogic({
     onChangeFilter,
+    onChangeLoadingUpload,
   });
   return (
     <Header className="custom-header">
@@ -144,17 +160,26 @@ const HeaderComponentTypeSummary = ({
         filter={value.filter}
         onCloseFilter={func.onCloseFilter}
         onFinish={onFinish}
-        form={form}
       />
 
       <ModalMenuMore
         open={value.more}
         onCancel={func.onCloseMore}
+        onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
-        onExport={onExport}
+      />
+
+      <ImportInputModal
+        open={value.isImport}
+        onCancel={func.onCloseImport}
+        value={accesFile}
+        onOk={onUploadFile}
+        file={downloadFile}
+        loading={value.loadingUpload}
+        onChangeSelect={onChangeSelect}
       />
     </Header>
   );
 };
 
-export default HeaderComponentTypeSummary;
+export default HeaderComponentTypeRevenueInput;

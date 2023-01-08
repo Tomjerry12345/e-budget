@@ -250,13 +250,17 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
 
   return (
     <>
-      <FilterComponent codeCompany={codeCompany} type={2} isCodeProduct={false} isCodeProject={path === "bju" ? true : false} form={value.form} onFinish={func.onFinish} disabled={true} keyCodeProject={path === "bju" ? "BJU" : null} />
+      {/* <FilterComponent codeCompany={codeCompany} type={2} isCodeProduct={false} isCodeProject={path === "bju" ? true : false} form={value.form} onFinish={func.onFinish} disabled={true} keyCodeProject={path === "bju" ? "BJU" : null} /> */}
 
       {data1[path].map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
           {/* {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent className="child-revenue" value={value[val.name]} name={val.name} />} */}
-          {val.name === "listPotongan" ? <TablePotonganComponent value={value} name={val.name} /> : <ChildRevenueCogsComponent value={value} name={val.name} />}
+          {val.name === "listPotongan" ? (
+            <TablePotonganComponent value={value} name={val.name} />
+          ) : (
+            <ChildRevenueCogsComponent value={value} name={val.name} />
+          )}
         </>
       ))}
     </>

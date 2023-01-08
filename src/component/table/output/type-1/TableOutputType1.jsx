@@ -14,7 +14,7 @@ const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
 
   return (
     <>
-      {dataSource.length > 0 ? (
+      {dataSource.length > 1 ? (
         <Table
           rowClassName="child"
           bordered

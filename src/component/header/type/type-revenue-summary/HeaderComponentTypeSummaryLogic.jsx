@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeSummaryLogic = ({
-  onChangeFilter,
-  onChangeLoadingUpload,
-}) => {
+const HeaderComponentTypeRevenueSummaryLogic = ({ onChangeFilter }) => {
   const [filter, setFilter] = useState(false);
   const [more, setMore] = useState(false);
   const [isImport, setImport] = useState(false);
@@ -53,4 +50,4 @@ const HeaderComponentTypeSummaryLogic = ({
   };
 };
 
-export default HeaderComponentTypeSummaryLogic;
+export default HeaderComponentTypeRevenueSummaryLogic;

@@ -42,7 +42,7 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
+const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
   return (
     <Modal
       className="filter-modal"
@@ -57,6 +57,7 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
         isCodeProduct={true}
         onFinish={onFinish}
         variant="input"
+        form={form}
       />
     </Modal>
   );
@@ -120,6 +121,7 @@ const HeaderComponentTypeInput = ({
   accesFile,
   disabledImportExport,
   onChangeSelect,
+  form,
 }) => {
   const { value, func } = HeaderComponentTypeInputLogic({
     onChangeFilter,
@@ -161,6 +163,7 @@ const HeaderComponentTypeInput = ({
         filter={value.filter}
         onCloseFilter={func.onCloseFilter}
         onFinish={onFinish}
+        form={form}
       />
 
       <ModalMenuMore

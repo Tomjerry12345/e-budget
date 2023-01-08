@@ -19,9 +19,7 @@ import {
 } from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
-import UploadModal from "../../../modal/UploadModal";
-import HeaderComponentTypeSummaryLogic from "./HeaderComponentTypeSummaryLogic";
-
+import HeaderComponentTypeRevenueSummaryLogic from "./HeaderComponentTypeSummaryLogic";
 import "./style.scss";
 
 const { Header } = Layout;
@@ -54,6 +52,7 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
       <FilterComponent
         type={2}
         isCodeProduct={true}
+        isCodeProject={true}
         onFinish={onFinish}
         variant="summary"
         form={form}
@@ -98,14 +97,14 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
   );
 };
 
-const HeaderComponentTypeSummary = ({
+const HeaderComponentTypeRevenueSummary = ({
   onFinish,
   onChangeFilter,
   disabledImportExport,
   onExport,
   form,
 }) => {
-  const { value, func } = HeaderComponentTypeSummaryLogic({
+  const { value, func } = HeaderComponentTypeRevenueSummaryLogic({
     onChangeFilter,
   });
   return (
@@ -157,4 +156,4 @@ const HeaderComponentTypeSummary = ({
   );
 };
 
-export default HeaderComponentTypeSummary;
+export default HeaderComponentTypeRevenueSummary;

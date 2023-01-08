@@ -17,38 +17,10 @@ const OpexSummary = () => {
         onChangeFilter={(set) => {
           set(value.filter);
         }}
-        onChangeLoadingUpload={(set, setImport) => {
-          set(value.loadingUpload);
-
-          if (value.uploadSucces === true) {
-            setImport(false);
-          }
-        }}
-        onUploadFile={func.onUploadFile}
-        downloadFile="file/opex.xlsx"
         disabledImportExport={value.dataColumn.length <= 1}
       />
 
       <div className="custom-root-layout">
-        {/* {value.dataColumn.length > 1 ? (
-          <Table
-            rowClassName="child"
-            bordered
-            dataSource={value.dataColumn}
-            columns={value.tableColumn}
-            pagination={false}
-            size="small"
-            loading={value.loading}
-            scroll={{
-              y: value.size.y - 313,
-            }}
-            rowKey="id"
-          />
-        ) : value.loading === true ? (
-          <div className="style-progress">
-            <Spin />
-          </div>
-        ) : null} */}
         {value.dataColumn.length > 1 ? (
           <TableComponent
             dataSource={value.dataColumn}

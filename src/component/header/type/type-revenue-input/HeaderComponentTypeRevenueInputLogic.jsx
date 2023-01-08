@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeSummaryLogic = ({
+const HeaderComponentTypeRevenueInputLogic = ({
   onChangeFilter,
   onChangeLoadingUpload,
 }) => {
   const [filter, setFilter] = useState(false);
   const [more, setMore] = useState(false);
   const [isImport, setImport] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
   useEffect(() => {
     onChangeFilter(setFilter);
-  }, [onChangeFilter]);
+    onChangeLoadingUpload(setLoadingUpload, setImport);
+  }, [onChangeFilter, onChangeLoadingUpload]);
 
   const onCilckFilter = () => {
     setFilter(true);
@@ -41,6 +43,7 @@ const HeaderComponentTypeSummaryLogic = ({
       more,
       filter,
       isImport,
+      loadingUpload,
     },
     func: {
       onCilckFilter,
@@ -53,4 +56,4 @@ const HeaderComponentTypeSummaryLogic = ({
   };
 };
 
-export default HeaderComponentTypeSummaryLogic;
+export default HeaderComponentTypeRevenueInputLogic;
