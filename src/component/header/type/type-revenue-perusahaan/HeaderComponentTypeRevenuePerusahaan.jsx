@@ -40,7 +40,16 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
+const ModalFilter = ({
+  filter,
+  onCloseFilter,
+  onFinish,
+  codeCompany,
+  isCodeProject,
+  form,
+  disabled,
+  keyCodeProject,
+}) => {
   return (
     <Modal
       className="filter-modal"
@@ -52,10 +61,14 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
     >
       <FilterComponent
         type={2}
-        isCodeProduct={true}
-        isCodeProject={true}
+        isCodeProduct={false}
+        isCodeProject={isCodeProject}
         onFinish={onFinish}
         variant="input"
+        codeCompany={codeCompany}
+        form={form}
+        disabled={disabled}
+        keyCodeProject={keyCodeProject}
       />
     </Modal>
   );
@@ -119,6 +132,11 @@ const HeaderComponentTypeRevenuePerusahaan = ({
   accesFile,
   disabledImportExport,
   onChangeSelect,
+  form,
+  codeCompany,
+  isCodeProject,
+  disabled,
+  keyCodeProject,
 }) => {
   const { value, func } = HeaderComponentTypeRevenuePerusahaanLogic({
     onChangeFilter,
@@ -156,11 +174,16 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         /> */}
       </div>
 
-      {/* <ModalFilter
+      <ModalFilter
         filter={value.filter}
         onCloseFilter={func.onCloseFilter}
         onFinish={onFinish}
-      /> */}
+        codeCompany={codeCompany}
+        form={form}
+        isCodeProject={isCodeProject}
+        disabled={disabled}
+        keyCodeProject={keyCodeProject}
+      />
 
       {/* <ModalMenuMore
         open={value.more}

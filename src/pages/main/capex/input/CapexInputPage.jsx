@@ -25,6 +25,7 @@ const CapexInputPage = () => {
 
           if (value.uploadSucces === true) {
             setImport(false);
+            func.setUploadSucces(null);
           }
         }}
         onUploadFile={func.onUploadFile}
@@ -41,7 +42,6 @@ const CapexInputPage = () => {
           columns={value.columns}
           loading={value.loading}
           listKeyParent={value.listKeyParent}
-          test=""
         />
       </div>
     </>

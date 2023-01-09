@@ -16,6 +16,10 @@ const HeaderComponent = ({
   onChangeSelect,
   onExport,
   form,
+  codeCompany,
+  isCodeProject = false,
+  disabled = false,
+  keyCodeProject,
 }) => {
   let component;
 
@@ -85,6 +89,10 @@ const HeaderComponent = ({
         disabledImportExport={disabledImportExport}
         onChangeSelect={onChangeSelect}
         form={form}
+        codeCompany={codeCompany}
+        isCodeProject={isCodeProject}
+        disabled={disabled}
+        keyCodeProject={keyCodeProject}
       />
     );
   }

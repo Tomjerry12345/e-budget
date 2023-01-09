@@ -107,7 +107,7 @@ const FilterComponentLogic = ({
   };
 
   const getValueComboBox = async (e) => {
-    const code = e.replace(/[^0-9]/g, "");
+    const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
 
     if (code !== "0") {
       if (formGlobal !== null) {

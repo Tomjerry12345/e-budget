@@ -646,7 +646,10 @@ const MppInputLogic = () => {
 
   const onUploadFile = async () => {
     setLoadingUpload(true);
+
     let file1;
+    let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    console.log("tahun", tahun1);
 
     acceptedFiles.forEach((file) => {
       file1 = file;
@@ -657,16 +660,18 @@ const MppInputLogic = () => {
     let formData = new FormData();
 
     formData.append("file", file1);
-    formData.append("company", code_company);
-    formData.append("product", code_product);
-    formData.append("location", code_location);
-    formData.append("dept", code_dept);
+    formData.append("year", tahun1);
 
     const res = await MainServices.post("mpp/import", formData);
 
     log("res", res);
 
-    getData(code_company, code_product, code_location, code_dept);
+    if (codeFilter !== undefined) {
+      const { code_company, code_dept, code_location, code_product } =
+        codeFilter;
+
+      getData(code_company, code_product, code_location, code_dept);
+    }
 
     setLoadingUpload(false);
 
@@ -699,6 +704,7 @@ const MppInputLogic = () => {
       onSuccess,
       onUploadFile,
       onChangeTahun,
+      setUploadSucces,
     },
   };
 };

@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { areEqual } from "../../../../values/Utilitas";
 
@@ -17,7 +23,16 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, keyNotEditTable, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  keyNotEditTable,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -72,11 +87,19 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
       </Form.Item>
     ) : (
       <div className="editable-cell-value-wrap" onClick={toggleEdit}>
-        {children[1] === null ? "0%" : `${parseInt(children[1]).format(0, 3, ".", ",")}%`}
+        {children[1] === null
+          ? "0%"
+          : `${parseInt(children[1]).format(0, 3, ".", ",")}%`}
       </div>
     );
   } else {
-    childNode = <div className="editable-cell-value-wrap">{typeof children[1] === "string" ? children[1] : parseInt(children[1]).format(0, 3, ".", ",")}</div>;
+    childNode = (
+      <div className="editable-cell-value-wrap">
+        {typeof children[1] === "string"
+          ? children[1]
+          : parseInt(children[1]).format(0, 3, ".", ",")}
+      </div>
+    );
   }
 
   return <td {...restProps}>{childNode}</td>;
@@ -93,7 +116,9 @@ const TablePotonganComponent = ({ value, name }) => {
   return (
     <Table
       components={components}
-      rowClassName={(record, index) => (areEqual(value.listKeyParent, record) ? "parent" : "child")}
+      rowClassName={(record, index) =>
+        areEqual(value.listKeyParent, record) ? "parent" : "child"
+      }
       style={{
         marginTop: 16,
         marginBottom: 16,
@@ -106,7 +131,7 @@ const TablePotonganComponent = ({ value, name }) => {
       size="small"
       scroll={{
         x: 2900,
-        y: value.size.y,
+        // y: value.size.y,
       }}
     />
   );

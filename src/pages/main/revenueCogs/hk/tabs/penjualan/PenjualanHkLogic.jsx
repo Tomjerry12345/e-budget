@@ -1,7 +1,7 @@
 import { Typography, Form } from "antd";
 import { createRef, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getSizeScreen, log} from "../../../../../../values/Utilitas";
+import { useLocation, useParams } from "react-router-dom";
+import { getSizeScreen, log } from "../../../../../../values/Utilitas";
 import MainServices from "../../../../../../services/MainServices";
 
 const menuReveneue = {
@@ -34,6 +34,7 @@ const menuReveneue = {
 const PenjualanHkLogic = () => {
   const [form] = Form.useForm();
   let params = useParams();
+  const { state } = useLocation();
 
   const singleRevenue = menuReveneue;
 
@@ -1383,21 +1384,23 @@ const PenjualanHkLogic = () => {
   };
 
   useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-
-    onGetCodeFilter();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  useEffect(() => {
-    log("codeFilter effect", codeFilter);
-  }, [codeFilter]);
+    log("codeFilter effect", state);
+    if (state !== null) {
+      onFinish(state);
+      window.history.replaceState({}, document.title);
+    }
+  }, [state]);
 
   const onSetDataTable = async (values) => {
     const { code_company, code_dept, code_location } = values;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    // let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    // let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    // let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+
+    let fCodeCompany = code_company;
+    let fCodeLocation = code_dept;
+    let fCodeDept = code_location;
 
     log("fCodeCompany", fCodeCompany);
 
@@ -1654,7 +1657,10 @@ const PenjualanHkLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post(`${singleRevenue.parentUrl}/${e}`, formData);
+    const response = await MainServices.post(
+      `${singleRevenue.parentUrl}/${e}`,
+      formData
+    );
 
     log("response-update", response);
 
