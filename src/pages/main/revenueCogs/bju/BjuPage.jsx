@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
-import { Tabs } from "antd";
+import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
+import { log } from "../../../../values/Utilitas";
 
 const BjuPage = () => {
   const [key, setKey] = useState(1);
+  const [form] = Form.useForm();
+  const [isClickFinish, setIsClickFinish] = useState(null);
+  const [isMoveTabs, setIsMoveTabs] = useState(false);
+  const [path, setPath] = useState("/main/revenue-cogs/bju/penjualan");
 
   // alert(location.pathname);
 
@@ -24,13 +29,41 @@ const BjuPage = () => {
     },
   ];
 
+  useEffect(() => {
+    form.setFieldsValue({
+      code_company: `BJU (312)`,
+      code_location: null,
+      code_dept: null,
+      code_project: null,
+    });
+  }, [isMoveTabs]);
+
+  const onFinish = (values) => {
+    log("filter", values);
+    const { code_company, code_dept, code_location, code_product } = values;
+
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+
+    navigate(path, {
+      state: {
+        code_company: fCodeCompany,
+        code_location: fCodeLocation,
+        code_dept: fCodeDept,
+      },
+    });
+
+    setIsClickFinish(false);
+  };
+
   return (
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        // onFinish={func.onFinish}
+        onFinish={onFinish}
         onChangeFilter={(set) => {
-          // set(value.filter);
+          set(isClickFinish);
         }}
         // onChangeLoadingUpload={(set, setImport) => {
         //   set(value.loadingUpload);
@@ -44,6 +77,11 @@ const BjuPage = () => {
         // downloadFile="file/capex.xlsx"
         // disabledImportExport={value.dataColumnInput.length <= 1}
         // onChangeSelect={func.onChangeTahun}
+        codeCompany={312}
+        form={form}
+        isCodeProject={true}
+        keyCodeProject="BJU"
+        disabled={true}
       />
 
       <div className="custom-root-layout">
@@ -58,8 +96,12 @@ const BjuPage = () => {
             setKey(key);
             if (key === 1) {
               navigate(`/main/revenue-cogs/bju/penjualan`);
+              setPath("/main/revenue-cogs/bju/penjualan");
+              setIsMoveTabs(!isMoveTabs);
             } else {
               navigate(`/main/revenue-cogs/bju/hpplain`);
+              setPath("/main/revenue-cogs/bju/hpplain");
+              setIsMoveTabs(!isMoveTabs);
             }
           }}
         />

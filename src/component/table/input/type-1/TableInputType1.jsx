@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { areEqual, getSizeScreen, log } from "../../../../values/Utilitas";
 import { Table, Form, Input, Select, Button, Spin } from "antd";
 
@@ -134,28 +140,28 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
 
   return (
     <>
-      {dataSource.length > 1 ? (
-        <Table
-          components={components}
-          rowClassName={(record, index) =>
-            areEqual(listKeyParent, record) ? "parent" : "child"
-          }
-          bordered
-          dataSource={dataSource}
-          columns={columns}
-          pagination={false}
-          loading={loading}
-          size="small"
-          scroll={{
-            x: 2900,
-            y: size.y - 200,
-          }}
-        />
-      ) : loading === true ? (
+      {/* {dataSource.length > 1 ? ( */}
+      <Table
+        components={components}
+        rowClassName={(record, index) =>
+          areEqual(listKeyParent, record) ? "parent" : "child"
+        }
+        bordered
+        dataSource={dataSource}
+        columns={columns}
+        pagination={false}
+        loading={loading}
+        size="small"
+        scroll={{
+          x: 2900,
+          y: size.y - 200,
+        }}
+      />
+      {/* ) : loading === true ? (
         <div className="style-progress">
           <Spin />
         </div>
-      ) : null}
+      ) : null} */}
     </>
   );
 };

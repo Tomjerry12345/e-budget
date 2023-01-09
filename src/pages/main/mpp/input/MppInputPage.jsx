@@ -23,6 +23,7 @@ const MppInputPage = () => {
 
           if (value.uploadSucces === true) {
             setImport(false);
+            func.setUploadSucces(null);
           }
         }}
         onUploadFile={func.onUploadFile}

@@ -24,11 +24,9 @@ const menuReveneue = {
       update: "updatehpplain",
     },
   ],
-  title: "HK",
-  code: 311,
 };
 
-const LainHkLogic = () => {
+const LainBkLogic = () => {
   const [form] = Form.useForm();
   let params = useParams();
   const { state } = useLocation();
@@ -41,19 +39,9 @@ const LainHkLogic = () => {
     listPendapatanLain: [],
   });
 
-  const [filterCompany, setFilterCompany] = useState({
-    title: "",
-    code: 0,
-  });
-
   const [codeFilter, setCodeFilter] = useState(null);
 
   const [loading, setLoading] = useState(false);
-
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
 
   const constantTableColums = {
     listPendapatanLain: [
@@ -1113,7 +1101,7 @@ const LainHkLogic = () => {
     endPoint,
     update
   ) => {
-    const url = `hk/${endPoint}?code_company=${codeCompany}&code_location=${codeLocation}&code_dept=${codeDept}`;
+    const url = `${menuReveneue.parentUrl}/${endPoint}?code_company=${codeCompany}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
     const { data } = await MainServices.get(url);
 
@@ -1306,19 +1294,6 @@ const LainHkLogic = () => {
     onSetDataTable(codeFilter);
   };
 
-  const onGetCodeFilter = () => {
-    form.setFieldsValue({
-      code_company: `${singleRevenue.title} (${singleRevenue.code})`,
-      code_location: null,
-      code_dept: null,
-    });
-
-    setFilterCompany({
-      title: singleRevenue.title,
-      code: singleRevenue.code,
-    });
-  };
-
   return {
     value: {
       dataColumnInput,
@@ -1326,9 +1301,7 @@ const LainHkLogic = () => {
       params,
       form,
       ref,
-      size,
       loading,
-      filterCompany,
     },
     func: {
       onFinish,
@@ -1336,4 +1309,4 @@ const LainHkLogic = () => {
   };
 };
 
-export default LainHkLogic;
+export default LainBkLogic;

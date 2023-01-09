@@ -101,7 +101,8 @@ const ImportInputModal = ({
           className="select-style"
           onSelect={onChangeSelect}
           options={listTahun}
-          defaultValue={"2013"}
+          // value={}
+          defaultValue={new Date().getFullYear()}
         />
         <div {...value.getRootProps()}>
           <Text className="title-upload">Upload Dokumen Template</Text>

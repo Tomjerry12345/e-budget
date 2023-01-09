@@ -40,7 +40,7 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
+const ModalFilter = ({ filter, onCloseFilter, onFinish, codeCompany }) => {
   return (
     <Modal
       className="filter-modal"
@@ -52,7 +52,7 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish }) => {
     >
       <FilterComponent
         type={2}
-        isCodeProduct={true}
+        isCodeProduct={false}
         isCodeProject={true}
         onFinish={onFinish}
         variant="input"

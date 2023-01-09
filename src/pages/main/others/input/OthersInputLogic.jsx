@@ -1000,6 +1000,9 @@ const OthersInputLogic = () => {
   };
 
   const onUploadFile = async () => {
+    let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    console.log("tahun", tahun1);
+
     setLoadingUpload(true);
 
     let file1;
@@ -1013,16 +1016,18 @@ const OthersInputLogic = () => {
     let formData = new FormData();
 
     formData.append("file", file1);
-    formData.append("company", code_company);
-    formData.append("product", code_product);
-    formData.append("location", code_location);
-    formData.append("dept", code_dept);
+    formData.append("year", tahun1);
 
     const res = await MainServices.post("others/import", formData);
 
     log("res", res);
 
-    getData(code_company, code_product, code_location, code_dept);
+    if (codeFilter !== undefined) {
+      const { code_company, code_dept, code_location, code_product } =
+        codeFilter;
+
+      getData(code_company, code_product, code_location, code_dept);
+    }
 
     setLoadingUpload(false);
 
@@ -1032,7 +1037,6 @@ const OthersInputLogic = () => {
   };
 
   const onChangeTahun = (e) => {
-    console.log("tahun", e);
     setTahun(e);
   };
 
@@ -1057,6 +1061,7 @@ const OthersInputLogic = () => {
       onFinish,
       onUploadFile,
       onChangeTahun,
+      setUploadSucces,
     },
   };
 };

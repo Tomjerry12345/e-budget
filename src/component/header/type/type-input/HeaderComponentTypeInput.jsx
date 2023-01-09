@@ -83,7 +83,7 @@ const ModalMenuMore = ({
         className="btn"
         type="text"
         icon={<DownloadOutlined />}
-        disabled={disabledImportExport}
+        // disabled={disabledImportExport}
         onClick={() => {
           onClickImport();
           onCancel();
@@ -95,7 +95,7 @@ const ModalMenuMore = ({
         className="btn"
         type="text"
         icon={<ToTopOutlined />}
-        disabled={disabledImportExport}
+        // disabled={disabledImportExport}
       >
         Export
       </Button>
