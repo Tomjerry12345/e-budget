@@ -1,0 +1,83 @@
+.custom-root-card {
+  padding: 0px 24px 24px 24px;
+
+  //   background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.46) 0%, rgba(250, 250, 250, 1) 100%);
+
+  .card-style {
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  .form-filter {
+    // display: flex;
+    // justify-content: space-between;
+    padding: 0px;
+
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+
+    .ant-select {
+      //   width: calc((100vw - 362px) / 4);
+      width: 100% !important;
+      margin-right: 16px;
+    }
+
+    .ant-form-item-label {
+      padding-bottom: 4px;
+      label {
+        color: black;
+        font-weight: 500;
+      }
+    }
+
+    .ant-select-selector {
+      border-radius: 8px;
+      background-color: #f5f7f9;
+      border: none;
+      height: 40px;
+      padding: 5px 12px;
+
+      .ant-select-selection-search-input {
+        height: 100%;
+      }
+    }
+
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+      box-shadow: none;
+    }
+
+    .btn-reset {
+      // border: 1px solid #c6ced6;
+      background: #e2e4e6;
+      width: 134px;
+      border-radius: 8px;
+      align-items: center;
+      margin-top: 27px;
+      margin-right: 16px;
+      height: 40px;
+      color: #121212;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn-reset:hover {
+      color: #008041;
+    }
+
+    .btn-tampilkan {
+      // border: 1px solid #c6ced6;
+      background: #018142;
+      width: 134px;
+      border-radius: 8px;
+      align-items: center;
+      margin-top: 27px;
+      height: 40px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn-reset:hover {
+      color: #008041;
+    }
+  }
+}

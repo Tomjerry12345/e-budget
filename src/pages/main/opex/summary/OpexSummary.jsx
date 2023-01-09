@@ -3,33 +3,30 @@ import { Card } from "@mui/material";
 import React from "react";
 import OpexSummaryLogic from "./OpexSummaryLogic";
 import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "../../../../component/header/HeaderComponent";
+import TableComponent from "../../../../component/table/TableComponent";
 
 const OpexSummary = () => {
   const { value, func } = OpexSummaryLogic();
 
   return (
     <>
-      <FilterComponent type={2} isCodeProduct={true} form={value.form} onFinish={func.onFinish} />
+      <HeaderComponent
+        type="summary"
+        onFinish={func.onFinish}
+        onChangeFilter={(set) => {
+          set(value.filter);
+        }}
+        disabledImportExport={value.dataColumn.length <= 1}
+      />
 
       <div className="custom-root-layout">
         {value.dataColumn.length > 1 ? (
-          <Table
-            rowClassName="child"
-            bordered
+          <TableComponent
             dataSource={value.dataColumn}
             columns={value.tableColumn}
-            pagination={false}
-            size="small"
             loading={value.loading}
-            scroll={{
-              y: value.size.y - 313,
-            }}
-            rowKey="id"
           />
-        ) : value.loading === true ? (
-          <div className="style-progress">
-            <Spin />
-          </div>
         ) : null}
       </div>
     </>

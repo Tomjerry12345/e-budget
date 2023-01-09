@@ -2,28 +2,18 @@ import { Breadcrumb, Button, Layout, List, Modal, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
-import { getLocal } from "../../values/Utilitas";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
 import "./SummaryStyle.scss";
 
-const { Header, Content } = Layout;
-const { Text } = Typography;
-
-// const data = ["Kode produk", "Kode company"];
-
-const title = ["Dashboard", "Revenue & COGS", "Opex", "Capex", "MPP", "Others", "Report", "Master COA", "Akun"];
+const { Content } = Layout;
 
 const MainPage = () => {
   const { func, value } = MainLogic();
 
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout>
       <NavComponent func={func} value={value} />
 
       <Modal
@@ -68,23 +58,6 @@ const MainPage = () => {
           backgroundColor: "white",
         }}
       >
-        <Header className="custom-header">
-          <Breadcrumb className="custom-breadcrumb" separator=">">
-            <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
-            <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-          </Breadcrumb>
-
-          {
-            // value.params.item !== "" ? (
-            //   <Text className="header-title">
-            //     {path}
-            //     {/* {value.params.item} */}
-            //   </Text>
-            // ) : null
-
-            <Text className="header-title">{getLocal("name-menu")}</Text>
-          }
-        </Header>
         <Content>
           <Outlet />
         </Content>

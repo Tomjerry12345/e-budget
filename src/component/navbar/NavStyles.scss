@@ -3,7 +3,7 @@ $grey: fafafa;
 .titleMenu {
   font-size: 14px;
   font-weight: 400;
-  color: #717171;
+  color: #fff;
   line-height: 22px;
   margin-bottom: 0px;
 }
@@ -24,15 +24,15 @@ $grey: fafafa;
     // background-color: green;
 
     &.selected {
-      background-color: #ffffff;
+      background-color: #fff;
     }
 
     &.notSelected {
-      background-color: #c6ced6;
+      background-color: #2b9661;
     }
 
     &.open {
-      background-color: #008041;
+      background-color: #fff;
     }
   }
 }
@@ -48,7 +48,7 @@ $grey: fafafa;
   }
 
   &.open {
-    color: white;
+    color: #008041;
   }
 }
 

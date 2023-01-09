@@ -48,7 +48,9 @@ const CapexInputLogic = () => {
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [filter, setFilter] = useState(false);
+  const [tahun, setTahun] = useState();
+  const [uploadSucces, setUploadSucces] = useState(null);
 
   const date = new Date();
   const year = date.getFullYear();
@@ -403,7 +405,9 @@ const CapexInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -592,6 +596,7 @@ const CapexInputLogic = () => {
   };
 
   const onFinish = (values) => {
+    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -609,7 +614,10 @@ const CapexInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+        itemparent[`${keysEdit}`] =
+          parseInt(itemparent[`${keysEdit}`]) +
+          parseInt(valuesEdit) -
+          parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -643,15 +651,6 @@ const CapexInputLogic = () => {
     log("response-update", response);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
-    acceptedFiles.length = 0;
-  };
-
   const onUploadFile = async () => {
     setLoadingUpload(true);
 
@@ -665,7 +664,7 @@ const CapexInputLogic = () => {
 
     let formData = new FormData();
 
-    log("codeFilter", codeFilter)
+    log("codeFilter", codeFilter);
 
     formData.append("file", file1);
     formData.append("company", code_company);
@@ -681,9 +680,19 @@ const CapexInputLogic = () => {
 
     setLoadingUpload(false);
 
-    onCloseUploadModal();
+    onSuccess();
 
     // navigate(0);
+  };
+
+  const onChangeTahun = (e) => {
+    console.log("tahun", e);
+    setTahun(e);
+  };
+
+  const onSuccess = () => {
+    setUploadSucces(true);
+    acceptedFiles.length = 0;
   };
 
   return {
@@ -693,16 +702,16 @@ const CapexInputLogic = () => {
       loadingUpload,
       columns,
       listKeyParent,
-      openUploadModal,
       getRootProps,
       getInputProps,
       acceptedFiles,
+      filter,
+      uploadSucces,
     },
     func: {
       onFinish,
-      onOpenUploadModal,
-      onCloseUploadModal,
       onUploadFile,
+      onChangeTahun,
     },
   };
 };

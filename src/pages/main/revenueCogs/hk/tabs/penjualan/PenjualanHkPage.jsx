@@ -3,10 +3,10 @@ import FilterComponent from "../../../../../../component/filter/FilterComponent"
 import PenjualanHkLogic from "./PenjualanHkLogic";
 import TablePotonganComponent from "../../../component/TablePotonganComponent";
 import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
+import HeaderComponent from "../../../../../../component/header/HeaderComponent";
 
 const PenjualanHkPage = () => {
   const { value, func } = PenjualanHkLogic();
-
 
   const data1 = [
     {
@@ -31,14 +31,15 @@ const PenjualanHkPage = () => {
 
   return (
     <>
-      <FilterComponent
+      {/* <FilterComponent
         codeCompany={codeCompany}
         type={2}
         isCodeProduct={false}
         form={value.form}
         onFinish={func.onFinish}
         disabled={true}
-      />
+      /> */}
+
       {data1.map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>

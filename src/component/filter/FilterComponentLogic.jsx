@@ -3,7 +3,13 @@ import { useEffect, useState } from "react";
 import MainServices from "../../services/MainServices";
 import { log } from "../../values/Utilitas";
 
-const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, codeCompany, formGlobal }) => {
+const FilterComponentLogic = ({
+  isCodeProduct,
+  isCodeProject,
+  keyCodeProject,
+  codeCompany,
+  formGlobal,
+}) => {
   const [state, setState] = useState({
     code_company: [],
     code_product: [],
@@ -52,8 +58,13 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
       });
     }
 
-    const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${e}`) : null;
-    const resLocation = await MainServices.get(`location/list-by-com?code_company=${e}`);
+    const resProduct =
+      isCodeProduct === true
+        ? await MainServices.get(`product/list-by-com?code_company=${e}`)
+        : null;
+    const resLocation = await MainServices.get(
+      `location/list-by-com?code_company=${e}`
+    );
     const resDept = await MainServices.get(`dept/list`);
 
     if (resLocation.data.responseCode === 200) {
@@ -67,7 +78,32 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
   };
 
   const onSelect = (e) => {
-    getValueComboBox(e);
+    if (e === "all") {
+      if (formGlobal !== null) {
+        formGlobal.setFieldsValue({
+          code_location: "all",
+          code_dept: "all",
+          code_product: "all",
+        });
+      } else {
+        form.setFieldsValue({
+          code_location: "all",
+          code_dept: "all",
+          code_product: "all",
+        });
+      }
+    } else {
+      getValueComboBox(e);
+    }
+  };
+
+  const onReset = () => {
+    form.setFieldsValue({
+      code_company: null,
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+    });
   };
 
   const getValueComboBox = async (e) => {
@@ -88,10 +124,18 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
         });
       }
 
-      const resProduct = isCodeProduct === true ? await MainServices.get(`product/list-by-com?code_company=${code}`) : null;
-      const resLocation = await MainServices.get(`location/list-by-com?code_company=${code}`);
+      const resProduct =
+        isCodeProduct === true
+          ? await MainServices.get(`product/list-by-com?code_company=${code}`)
+          : null;
+      const resLocation = await MainServices.get(
+        `location/list-by-com?code_company=${code}`
+      );
       const resDept = await MainServices.get(`dept/list`);
-      const resProject = isCodeProject === true && keyCodeProject !== null ? await MainServices.get(`project/list`) : null;
+      const resProject =
+        isCodeProject === true && keyCodeProject !== null
+          ? await MainServices.get(`project/list`)
+          : null;
 
       if (resLocation.data.responseCode === 200) {
         setState({
@@ -142,7 +186,7 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     const formatResProject = [];
     const data = resProject.data.data;
 
-    log("dataProject", data)
+    log("dataProject", data);
 
     data.forEach((element) => {
       let perusahaan;
@@ -151,11 +195,11 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
         if (c === "231") {
           perusahaan = element.BAND;
         } else if (c === "241") {
-          perusahaan = element.KIK
+          perusahaan = element.KIK;
         } else if (c === "312") {
-          perusahaan = element.BJU
+          perusahaan = element.BJU;
         } else if (c === "413") {
-          perusahaan = element.BSB
+          perusahaan = element.BSB;
         }
       } else if (keyCodeProject === "BJU") {
         perusahaan = element.BJU;
@@ -180,6 +224,7 @@ const FilterComponentLogic = ({ isCodeProduct, isCodeProject, keyCodeProject, co
     func: {
       onChange,
       onSelect,
+      onReset,
     },
   };
 };

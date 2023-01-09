@@ -201,7 +201,7 @@ const LainRevenueCogsPage = () => {
 
   return (
     <>
-      <FilterComponent
+      {/* <FilterComponent
         codeCompany={codeCompany}
         type={2}
         isCodeProduct={false}
@@ -210,11 +210,15 @@ const LainRevenueCogsPage = () => {
         onFinish={func.onFinish}
         disabled={true}
         keyCodeProject={path === "Revenue & COGS BJU" ? "BJU" : null}
-      />
+      /> */}
       {data1[path].map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent className="child-revenue" value={value} name={val.name} />
+          <ChildRevenueCogsComponent
+            className="child-revenue"
+            value={value}
+            name={val.name}
+          />
         </>
       ))}
     </>

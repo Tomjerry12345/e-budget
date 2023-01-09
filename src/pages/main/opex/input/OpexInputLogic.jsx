@@ -43,7 +43,9 @@ const OpexInputLogic = () => {
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+  const [filter, setFilter] = useState(false);
+  const [tahun, setTahun] = useState();
 
   const date = new Date();
   const year = date.getFullYear();
@@ -396,7 +398,9 @@ const OpexInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -584,6 +588,7 @@ const OpexInputLogic = () => {
   };
 
   const onFinish = (values) => {
+    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -601,7 +606,10 @@ const OpexInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+        itemparent[`${keysEdit}`] =
+          parseInt(itemparent[`${keysEdit}`]) +
+          parseInt(valuesEdit) -
+          parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -635,12 +643,8 @@ const OpexInputLogic = () => {
     log("response-update", response);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
@@ -662,6 +666,7 @@ const OpexInputLogic = () => {
     formData.append("product", code_product);
     formData.append("location", code_location);
     formData.append("dept", code_dept);
+    formData.append("tahun", tahun);
 
     const res = await MainServices.post("opex/import", formData);
 
@@ -671,9 +676,14 @@ const OpexInputLogic = () => {
 
     setLoadingUpload(false);
 
-    onCloseUploadModal();
+    onSuccess();
 
     // navigate(0);
+  };
+
+  const onChangeTahun = (e) => {
+    console.log("tahun", e);
+    setTahun(e);
   };
 
   return {
@@ -682,17 +692,17 @@ const OpexInputLogic = () => {
       columns,
       listKeyParent,
       loading,
+      filter,
       loadingUpload,
-      openUploadModal,
+      uploadSucces,
       getRootProps,
       getInputProps,
       acceptedFiles,
     },
     func: {
       onFinish,
-      onOpenUploadModal,
-      onCloseUploadModal,
       onUploadFile,
+      onChangeTahun,
     },
   };
 };

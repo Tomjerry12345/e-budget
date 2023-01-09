@@ -10,7 +10,12 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
     <Button className="btn-cancel" type="text" onClick={onCancel}>
       Cancel
     </Button>
-    <Button className="btn-upload" type="primary" onClick={onOk} loading={loading}>
+    <Button
+      className="btn-upload"
+      type="primary"
+      onClick={onOk}
+      loading={loading}
+    >
       Upload
     </Button>
   </>
@@ -22,7 +27,14 @@ const UploadModal = ({ open, onCancel, value, onOk, file, loading }) => {
   };
 
   return (
-    <Modal open={open} className="custom-upload-modal" footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />} onCancel={onCancel}>
+    <Modal
+      open={open}
+      className="custom-upload-modal"
+      footer={
+        <CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />
+      }
+      onCancel={onCancel}
+    >
       <Title level={4}>Upload Template</Title>
       <div className="root-content-upload" {...value.getRootProps()}>
         <Text className="title-upload">Upload Dokumen Template</Text>
@@ -42,8 +54,15 @@ const UploadModal = ({ open, onCancel, value, onOk, file, loading }) => {
 
         <div className="layout-download-template">
           <Text className="txt-accepted">Accepted File Type .xlsx</Text>
-          <Text className="txt-belum-mempunyai-template">Anda Belum Mempunyai Template ?</Text>
-          <Button className="btn-download-template" type="primary" onClick={downloadFile} icon={<UploadOutlined className="custom-icon" />}>
+          <Text className="txt-belum-mempunyai-template">
+            Anda Belum Mempunyai Template ?
+          </Text>
+          <Button
+            className="btn-download-template"
+            type="primary"
+            onClick={downloadFile}
+            icon={<UploadOutlined className="custom-icon" />}
+          >
             Download Template
           </Button>
         </div>
