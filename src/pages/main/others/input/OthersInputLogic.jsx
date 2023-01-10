@@ -26,39 +26,7 @@ const OthersInputLogic = () => {
 
   const ref = createRef();
 
-  const [dataColumnInput, setDataColumnInput] = useState([
-    {
-      key: "",
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      jan_1: 0,
-      feb_1: 0,
-      mar_1: 0,
-      apr_1: 0,
-      mei_1: 0,
-      jun_1: 0,
-      jul_1: 0,
-      aug_1: 0,
-      sep_1: 0,
-      okt_1: 0,
-      nov_1: 0,
-      des_1: 0,
-      jan_2: 0,
-      feb_2: 0,
-      mar_2: 0,
-      apr_2: 0,
-      mei_2: 0,
-      jun_2: 0,
-      jul_2: 0,
-      aug_2: 0,
-      sep_2: 0,
-      okt_2: 0,
-      nov_2: 0,
-      des_2: 0,
-    },
-  ]);
+  const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
@@ -396,9 +364,10 @@ const OthersInputLogic = () => {
         children: [
           {
             title: (
-              <span>
-                Jan. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Jan.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jan_1",
@@ -406,9 +375,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Feb. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Feb.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "feb_1",
@@ -416,9 +386,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Mar. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Mar.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "mar_1",
@@ -426,9 +397,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Apr. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Apr.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "apr_1",
@@ -436,9 +408,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                May. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>May.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "mei_1",
@@ -446,9 +419,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Jun. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Jun.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jun_1",
@@ -456,9 +430,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Jul. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Jul.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jul_1",
@@ -466,9 +441,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Aug. <span className="act-styles">Act</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Aug.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "aug_1",
@@ -476,9 +452,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Sep. <span className="for-styles">For</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="act-styles">Actual</Typography.Text>
+                <Typography.Text>Sep.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "sep_1",
@@ -486,9 +463,12 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Okt. <span className="for-styles">For</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
+                <Typography.Text>Okt.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "okt_1",
@@ -496,9 +476,12 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Nov. <span className="for-styles">For</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
+                <Typography.Text>Nov.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "nov_1",
@@ -506,9 +489,12 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Des. <span className="for-styles">For</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="for-styles">
+                  Forecast
+                </Typography.Text>
+                <Typography.Text>Des.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "des_1",
@@ -527,9 +513,10 @@ const OthersInputLogic = () => {
         children: [
           {
             title: (
-              <span>
-                Jan. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Jan.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jan_2",
@@ -537,9 +524,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Feb. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Feb.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "feb_2",
@@ -547,9 +535,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Mar. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Mar.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "mar_2",
@@ -557,9 +546,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Apr. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Apr.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "apr_2",
@@ -567,9 +557,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                May. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>May.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "mei_2",
@@ -577,9 +568,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Jun. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Jun.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jun_2",
@@ -587,9 +579,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Jul. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Jul.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "jul_2",
@@ -597,9 +590,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Aug. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Aug.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "aug_2",
@@ -607,9 +601,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Sep. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Sep.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "sep_2",
@@ -617,9 +612,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Okt. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Okt.</Typography.Text>
+              </div>
             ),
             width: 100,
             dataIndex: "okt_2",
@@ -627,9 +623,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Nov. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Nov.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "nov_2",
@@ -637,9 +634,10 @@ const OthersInputLogic = () => {
           },
           {
             title: (
-              <span>
-                Des. <span className="ebu-styles">Ebu</span>
-              </span>
+              <div className="title-table">
+                <Typography.Text className="ebu-styles">Budget</Typography.Text>
+                <Typography.Text>Des.</Typography.Text>
+              </div>
             ),
             width: 110,
             dataIndex: "des_2",
@@ -652,17 +650,6 @@ const OthersInputLogic = () => {
         dataIndex: "year_total_2",
         width: "14%",
       },
-      // {
-      //   dataIndex: "operation",
-      //   fixed: "right",
-      //   width: "5%",
-      //   render: (_, record) =>
-      //     dataColumn.length >= 1 ? (
-      //       <Dropdown overlay={menu} placement="bottom">
-      //         <Button icon={<MoreVertIcon />}></Button>
-      //       </Dropdown>
-      //     ) : null,
-      // },
     ],
   };
 
@@ -710,39 +697,7 @@ const OthersInputLogic = () => {
   const endPFile = eFile[itemPage];
 
   useEffect(() => {
-    setDataColumnInput([
-      {
-        key: "",
-        account: "",
-        description: "",
-        year_1: "",
-        year_2: "",
-        jan_1: 0,
-        feb_1: 0,
-        mar_1: 0,
-        apr_1: 0,
-        mei_1: 0,
-        jun_1: 0,
-        jul_1: 0,
-        aug_1: 0,
-        sep_1: 0,
-        okt_1: 0,
-        nov_1: 0,
-        des_1: 0,
-        jan_2: 0,
-        feb_2: 0,
-        mar_2: 0,
-        apr_2: 0,
-        mei_2: 0,
-        jun_2: 0,
-        jul_2: 0,
-        aug_2: 0,
-        sep_2: 0,
-        okt_2: 0,
-        nov_2: 0,
-        des_2: 0,
-      },
-    ]);
+    setDataColumnInput([]);
 
     form.setFieldsValue({
       code_location: null,
