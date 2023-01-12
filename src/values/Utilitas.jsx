@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-use-before-define
 
+import MainServices from "../services/MainServices";
+
 export const setLocal = (key, value) => localStorage.setItem(key, value);
 
 export const getLocal = (key) => localStorage.getItem(key);
@@ -8,7 +10,8 @@ export const getToken = () => localStorage.getItem("token");
 
 export const log = (tag, msg) => console.log(tag, msg);
 
-export const logObj = (tag, message) => console.log(`${tag} => ${JSON.stringify(message)}`);
+export const logObj = (tag, message) =>
+  console.log(`${tag} => ${JSON.stringify(message)}`);
 
 export const logS = (tag, message) => console.log(`${tag} => ${message}`);
 
@@ -58,7 +61,10 @@ Number.prototype.format = function (n, x, s, c) {
   var re = "\\d(?=(\\d{" + (x || 3) + "})+" + (n > 0 ? "\\D" : "$") + ")",
     num = this.toFixed(Math.max(0, ~~n));
 
-  return (c ? num.replace(".", c) : num).replace(new RegExp(re, "g"), "$&" + (s || ","));
+  return (c ? num.replace(".", c) : num).replace(
+    new RegExp(re, "g"),
+    "$&" + (s || ",")
+  );
 }; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/
 
 export const slicing = (text, format, i) => {
@@ -68,5 +74,28 @@ export const slicing = (text, format, i) => {
 };
 
 export const getKeyByValue = (object, value) => {
-  return Object.keys(object).find(key => object[key] === value);
-}
+  return Object.keys(object).find((key) => object[key] === value);
+};
+
+export const cekToken = async (navigate) => {
+  console.log("token");
+  const token = getToken();
+
+  try {
+    await MainServices.get("company/list");
+
+    console.log("getExpired");
+
+    if (token === null) {
+      navigate("/login");
+    }
+  } catch (error) {
+    console.log("error", error.code);
+
+    if (error.code === "ERR_BAD_RESPONSE") {
+      navigate("/login");
+    } else {
+      alert("terjadi kesalahan");
+    }
+  }
+};

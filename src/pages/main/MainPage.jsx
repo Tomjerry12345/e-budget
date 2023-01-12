@@ -6,11 +6,14 @@ import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
 import "./SummaryStyle.scss";
+import { cekToken } from "../../values/Utilitas";
 
 const { Content } = Layout;
 
 const MainPage = () => {
   const { func, value } = MainLogic();
+
+  // cekToken(value.navigate);
 
   return (
     <Layout>
@@ -42,8 +45,18 @@ const MainPage = () => {
                   type="text"
                   block
                   disabled={value.itemDisabledMenu[i]}
-                  onMouseDown={(e) => func.onMouseDownClickedMenu(value.keyMenu, item)}
-                  onClick={(e) => func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu, e)}
+                  onMouseDown={(e) =>
+                    func.onMouseDownClickedMenu(value.keyMenu, item)
+                  }
+                  onClick={(e) =>
+                    func.onClickedMenu(
+                      value.keyMenu,
+                      "submenu",
+                      item,
+                      value.titleMenu,
+                      e
+                    )
+                  }
                 >
                   {item}
                 </Button>

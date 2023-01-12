@@ -667,20 +667,24 @@ const CapexInputLogic = () => {
     formData.append("file", file1);
     formData.append("year", tahun1);
 
-    const res = await MainServices.post("capex/import", formData);
+    try {
+      const res = await MainServices.post("capex/import", formData);
 
-    log("res", res);
+      log("res", res);
 
-    if (codeFilter !== undefined) {
-      const { code_company, code_dept, code_location, code_product } =
-        codeFilter;
+      if (codeFilter !== undefined) {
+        const { code_company, code_dept, code_location, code_product } =
+          codeFilter;
 
-      getData(code_company, code_product, code_location, code_dept);
+        getData(code_company, code_product, code_location, code_dept);
+      }
+
+      setLoadingUpload(false);
+
+      onSuccess();
+    } catch (error) {
+      alert("gagal upload");
     }
-
-    setLoadingUpload(false);
-
-    onSuccess();
 
     // navigate(0);
   };

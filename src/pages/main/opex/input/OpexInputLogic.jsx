@@ -5,39 +5,7 @@ import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
 const OpexInputLogic = () => {
-  const [dataColumnInput, setDataColumnInput] = useState([
-    {
-      key: "",
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      jan_1: 0,
-      feb_1: 0,
-      mar_1: 0,
-      apr_1: 0,
-      mei_1: 0,
-      jun_1: 0,
-      jul_1: 0,
-      aug_1: 0,
-      sep_1: 0,
-      okt_1: 0,
-      nov_1: 0,
-      des_1: 0,
-      jan_2: 0,
-      feb_2: 0,
-      mar_2: 0,
-      apr_2: 0,
-      mei_2: 0,
-      jun_2: 0,
-      jul_2: 0,
-      aug_2: 0,
-      sep_2: 0,
-      okt_2: 0,
-      nov_2: 0,
-      des_2: 0,
-    },
-  ]);
+  const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
@@ -667,20 +635,24 @@ const OpexInputLogic = () => {
     formData.append("file", file1);
     formData.append("year", tahun1);
 
-    const res = await MainServices.post("opex/import", formData);
+    try {
+      const res = await MainServices.post("opex/import", formData);
 
-    log("res", res);
+      log("res", res);
 
-    if (codeFilter !== undefined) {
-      const { code_company, code_dept, code_location, code_product } =
-        codeFilter;
+      if (codeFilter !== undefined) {
+        const { code_company, code_dept, code_location, code_product } =
+          codeFilter;
 
-      getData(code_company, code_product, code_location, code_dept);
+        getData(code_company, code_product, code_location, code_dept);
+      }
+
+      setLoadingUpload(false);
+
+      onSuccess();
+    } catch (error) {
+      alert("gagal upload");
     }
-
-    setLoadingUpload(false);
-
-    onSuccess();
 
     // navigate(0);
   };
