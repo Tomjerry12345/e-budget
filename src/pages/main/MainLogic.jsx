@@ -2,9 +2,19 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import { allItemSummarySubMenu, disabledItemSummaryMenu, urlPageRevenue } from "../../values/Constant";
+import {
+  allItemSummarySubMenu,
+  disabledItemSummaryMenu,
+  urlPageRevenue,
+} from "../../values/Constant";
 import { routingMasterCoa } from "../../values/RoutingPage";
-import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
+import {
+  cekToken,
+  getLocal,
+  getToken,
+  log,
+  setLocal,
+} from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -15,7 +25,9 @@ const MainLogic = () => {
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([
+    2, 0, 0, 0, 0, 0, 0, 0, 0,
+  ]);
   const [header, setHeader] = useState("");
   const [routerNewPage, setRouterNewPage] = useState("#");
 
@@ -23,14 +35,11 @@ const MainLogic = () => {
   const location = useLocation();
   const pathName = location.pathname;
   const spliter = pathName?.split("/");
-  const token = getToken();
 
   useEffect(() => {
     const movePage = getLocal("move-page");
 
-    if (token === null) {
-      navigate("/login");
-    }
+    cekToken(navigate);
 
     if (movePage !== "null") {
       navigate(movePage);
@@ -126,6 +135,7 @@ const MainLogic = () => {
         isShowMenu();
       }
     } else {
+      cekToken(navigate);
       dispatch(loadStart());
       setLocal("index-menu", index);
       setLocal("name-menu", nameMenu);
@@ -165,7 +175,10 @@ const MainLogic = () => {
     const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
 
     if (index === 1) {
-      if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
+      if (
+        nameMenu === "Summary Revenue & COGS" ||
+        nameMenu === "Input Direct Revenue & COGS"
+      ) {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}`;
       } else {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
@@ -222,6 +235,7 @@ const MainLogic = () => {
       params,
       header,
       routerNewPage,
+      navigate,
     },
   };
 };
