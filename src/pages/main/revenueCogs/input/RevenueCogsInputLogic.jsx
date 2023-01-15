@@ -5,45 +5,15 @@ import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
 const RevenueCogsInputLogic = () => {
-  const [dataColumnInput, setDataColumnInput] = useState([
-    {
-      key: "",
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      jan_1: 0,
-      feb_1: 0,
-      mar_1: 0,
-      apr_1: 0,
-      mei_1: 0,
-      jun_1: 0,
-      jul_1: 0,
-      aug_1: 0,
-      sep_1: 0,
-      okt_1: 0,
-      nov_1: 0,
-      des_1: 0,
-      jan_2: 0,
-      feb_2: 0,
-      mar_2: 0,
-      apr_2: 0,
-      mei_2: 0,
-      jun_2: 0,
-      jul_2: 0,
-      aug_2: 0,
-      sep_2: 0,
-      okt_2: 0,
-      nov_2: 0,
-      des_2: 0,
-    },
-  ]);
+  const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
-  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+  const [filter, setFilter] = useState(false);
+  const [tahun, setTahun] = useState();
 
   const date = new Date();
   const year = date.getFullYear();
@@ -394,7 +364,9 @@ const RevenueCogsInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -403,12 +375,12 @@ const RevenueCogsInputLogic = () => {
       code_company,
       code_dept,
       code_location,
-      code_product,
+      code_project,
       // code_account,
     } = values;
 
     let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeProject = code_project.replace(/[^0-9]/g, "");
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
     let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
@@ -416,14 +388,14 @@ const RevenueCogsInputLogic = () => {
       code_company: fCodeCompany,
       code_dept: fCodeDept,
       code_location: fCodeLocation,
-      code_product: fCodeProduct,
+      code_project: fCodeProject,
     });
 
-    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+    getData(fCodeCompany, fCodeProject, fCodeLocation, fCodeDept);
   };
 
-  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
-    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
+  const getData = async (codeCompany, codeProject, codeLocation, codeDept) => {
+    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProject}&code_location=${codeLocation}&code_dept=${codeDept}`;
 
     const { data } = await MainServices.get(url);
 
@@ -587,6 +559,7 @@ const RevenueCogsInputLogic = () => {
   };
 
   const onFinish = (values) => {
+    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -605,7 +578,10 @@ const RevenueCogsInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] = parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+        itemparent[`${keysEdit}`] =
+          parseInt(itemparent[`${keysEdit}`]) +
+          parseInt(valuesEdit) -
+          parseInt(oldValue);
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
@@ -640,16 +616,15 @@ const RevenueCogsInputLogic = () => {
     log("response-update", response);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
   const onUploadFile = async () => {
+    let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    console.log("tahun", tahun1);
+
     setLoadingUpload(true);
 
     let file1;
@@ -663,22 +638,51 @@ const RevenueCogsInputLogic = () => {
     let formData = new FormData();
 
     formData.append("file", file1);
-    formData.append("company", code_company);
-    formData.append("product", code_product);
-    formData.append("location", code_location);
-    formData.append("dept", code_dept);
+    formData.append("year", tahun1);
+    // formData.append("company", code_company);
+    // formData.append("product", code_product);
+    // formData.append("location", code_location);
+    // formData.append("dept", code_dept);
 
-    const res = await MainServices.post("revenueandcogs/import", formData);
+    // const res = await MainServices.post("revenueandcogs/import", formData);
 
-    log("res", res);
+    // log("res", res);
 
-    getData(code_company, code_product, code_location, code_dept);
+    // if (codeFilter !== undefined) {
+    //   const { code_company, code_dept, code_location, code_product } =
+    //     codeFilter;
 
-    setLoadingUpload(false);
+    //   getData(code_company, code_product, code_location, code_dept);
+    // }
 
-    onCloseUploadModal();
+    // setLoadingUpload(false);
+
+    // onSuccess();
+
+    try {
+      const res = await MainServices.post("revenueandcogs/import", formData);
+
+      log("res", res);
+
+      if (codeFilter !== undefined) {
+        const { code_company, code_dept, code_location, code_project } =
+          codeFilter;
+
+        getData(code_company, code_project, code_location, code_dept);
+      }
+
+      setLoadingUpload(false);
+
+      onSuccess();
+    } catch (error) {
+      alert("gagal upload");
+    }
 
     // navigate(0);
+  };
+
+  const onChangeTahun = (e) => {
+    setTahun(e);
   };
 
   return {
@@ -687,17 +691,18 @@ const RevenueCogsInputLogic = () => {
       columns,
       listKeyParent,
       loading,
+      filter,
       loadingUpload,
-      openUploadModal,
+      uploadSucces,
       getRootProps,
       getInputProps,
       acceptedFiles,
     },
     func: {
       onFinish,
-      onOpenUploadModal,
-      onCloseUploadModal,
       onUploadFile,
+      onChangeTahun,
+      setUploadSucces,
     },
   };
 };

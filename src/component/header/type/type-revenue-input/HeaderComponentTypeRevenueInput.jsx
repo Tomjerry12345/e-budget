@@ -55,7 +55,7 @@ const ModalFilter = ({ filter, onCloseFilter, onFinish, codeCompany }) => {
         isCodeProduct={false}
         isCodeProject={true}
         onFinish={onFinish}
-        variant="input"
+        keyCodeProject="default"
       />
     </Modal>
   );
