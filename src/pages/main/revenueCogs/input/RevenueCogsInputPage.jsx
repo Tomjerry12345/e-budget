@@ -36,7 +36,7 @@ const RevenueCogsInputPage = () => {
       />
 
       <div className="custom-root-layout">
-        {value.dataColumnInput.length > 1 ? (
+        {/* {value.dataColumnInput.length > 1 ? (
           <div className="layout-btn-action">
             <Button
               className="btn-update"
@@ -47,7 +47,7 @@ const RevenueCogsInputPage = () => {
               Update
             </Button>
           </div>
-        ) : null}
+        ) : null} */}
 
         <TableComponent
           variant="input"

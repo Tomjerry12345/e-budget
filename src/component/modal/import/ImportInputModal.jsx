@@ -90,7 +90,7 @@ const ImportInputModal = ({
 
   const listTahun = [];
 
-  for (let i = dateNow - 2; i <= dateNow + 2; i++) {
+  for (let i = dateNow - 2; i <= dateNow + 1; i++) {
     listTahun.push({
       label: i,
       value: i,
