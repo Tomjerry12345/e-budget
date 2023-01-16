@@ -966,8 +966,6 @@ const OthersInputLogic = () => {
       file1 = file;
     });
 
-    const { code_company, code_dept, code_location, code_product } = codeFilter;
-
     let formData = new FormData();
 
     formData.append("file", file1);
