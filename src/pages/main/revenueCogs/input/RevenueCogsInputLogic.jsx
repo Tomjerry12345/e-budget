@@ -633,31 +633,10 @@ const RevenueCogsInputLogic = () => {
       file1 = file;
     });
 
-    const { code_company, code_dept, code_location, code_product } = codeFilter;
-
     let formData = new FormData();
 
     formData.append("file", file1);
     formData.append("year", tahun1);
-    // formData.append("company", code_company);
-    // formData.append("product", code_product);
-    // formData.append("location", code_location);
-    // formData.append("dept", code_dept);
-
-    // const res = await MainServices.post("revenueandcogs/import", formData);
-
-    // log("res", res);
-
-    // if (codeFilter !== undefined) {
-    //   const { code_company, code_dept, code_location, code_product } =
-    //     codeFilter;
-
-    //   getData(code_company, code_product, code_location, code_dept);
-    // }
-
-    // setLoadingUpload(false);
-
-    // onSuccess();
 
     try {
       const res = await MainServices.post("revenueandcogs/import", formData);
