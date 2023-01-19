@@ -13,13 +13,15 @@ const MppSummary = () => {
     <>
       <HeaderComponent
         type="summary"
-        onFinish={func.onFinish}
+        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
         onExport={func.downloadFile}
         disabledImportExport={value.dataColumn.length <= 1}
       />
+
+      <FilterComponent onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         {/* {value.dataColumn.length > 1 ? (

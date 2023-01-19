@@ -23,7 +23,7 @@ const othersInputPage = () => {
     <>
       <HeaderComponent
         type="input"
-        onFinish={func.onFinish}
+        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
@@ -40,8 +40,10 @@ const othersInputPage = () => {
         downloadFile={value.endPFile}
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
-        form={value.form}
+        // form={value.form}
       />
+
+      <FilterComponent onFinish={func.onFinish} form={value.form} />
 
       <div className="custom-root-layout">
         <TableComponent

@@ -142,13 +142,13 @@ const HeaderComponentTypeInput = ({
           placeholder="input search text"
           suffix={<SearchOutlined />}
         />
-        <Button
+        {/* <Button
           className="btn-filter"
           icon={<FilterOutlined />}
           onClick={func.onCilckFilter}
         >
           Filter
-        </Button>
+        </Button> */}
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>
@@ -159,12 +159,12 @@ const HeaderComponentTypeInput = ({
         />
       </div>
 
-      <ModalFilter
+      {/* <ModalFilter
         filter={value.filter}
         onCloseFilter={func.onCloseFilter}
         onFinish={onFinish}
         form={form}
-      />
+      /> */}
 
       <ModalMenuMore
         open={value.more}

@@ -3,18 +3,24 @@ import { Card } from "@mui/material";
 import React from "react";
 import OthersSummaryLogic from "./OthersSummaryLogic";
 import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "../../../../component/header/HeaderComponent";
 
 const OthersSummary = () => {
   const { value, func } = OthersSummaryLogic();
 
   return (
     <>
-      <FilterComponent
-        type={2}
-        isCodeProduct={true}
-        form={value.form}
-        onFinish={func.onFinish}
+      <HeaderComponent
+        type="summary"
+        // onFinish={func.onFinish}
+        onChangeFilter={(set) => {
+          set(value.filter);
+        }}
+        onExport={func.downloadFile}
+        disabledImportExport={value.dataColumn.length <= 1}
       />
+
+      <FilterComponent onFinish={func.onFinish} form={value.form} />
 
       <div className="custom-root-layout">
         {/* <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>

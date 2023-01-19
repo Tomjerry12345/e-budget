@@ -57,6 +57,7 @@ const CapexSummaryLogic = () => {
       code_dept: null,
       code_product: null,
       code_company: null,
+      periode: null,
     });
 
     setDataColumn({

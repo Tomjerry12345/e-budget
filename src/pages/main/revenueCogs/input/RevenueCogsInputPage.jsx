@@ -35,6 +35,8 @@ const RevenueCogsInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
+      <FilterComponent onFinish={func.onFinish} />
+
       <div className="custom-root-layout">
         {/* {value.dataColumnInput.length > 1 ? (
           <div className="layout-btn-action">

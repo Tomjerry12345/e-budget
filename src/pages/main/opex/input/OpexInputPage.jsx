@@ -1,4 +1,5 @@
 import React from "react";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import OpexInputLogic from "./OpexInputLogic";
@@ -10,7 +11,7 @@ const OpexInputPage = () => {
     <>
       <HeaderComponent
         type="input"
-        onFinish={func.onFinish}
+        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
@@ -28,6 +29,8 @@ const OpexInputPage = () => {
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
       />
+
+      <FilterComponent onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         <TableComponent

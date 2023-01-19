@@ -10,10 +10,18 @@ const AutoCompleteElement = ({
 }) => {
   const newVal = intialValue === undefined ? [] : [intialValue];
   value.forEach((val) => {
-    newVal.push({
-      value: `${val.title} (${val.code})`,
-    });
+    if (val.code !== "") {
+      newVal.push({
+        value: `${val.title} (${val.code})`,
+      });
+    } else {
+      newVal.push({
+        value: `${val.title}`,
+      });
+    }
   });
+
+  console.log("value", value);
   return (
     <Form.Item
       label={label}
