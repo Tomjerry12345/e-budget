@@ -123,13 +123,13 @@ const HeaderComponentTypeSummary = ({
           placeholder="input search text"
           suffix={<SearchOutlined />}
         />
-        <Button
+        {/* <Button
           className="btn-filter"
           icon={<FilterOutlined />}
           onClick={func.onCilckFilter}
         >
           Filter
-        </Button>
+        </Button> */}
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>

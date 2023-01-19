@@ -24,7 +24,10 @@ const FilterComponentLogic = ({
 
   useEffect(() => {
     const fetchData = async () => {
+      // const { data } = await MainServices.get("company/list-master");
       const { data } = await MainServices.get("company/list-master");
+
+      console.log("test", data);
 
       if (data.responseCode === 200) {
         setState({

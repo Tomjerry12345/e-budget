@@ -1,8 +1,12 @@
-import { Button, Form } from "antd";
+import { Button, Collapse, Form } from "antd";
 import { Card } from "@mui/material";
 import FilterComponentLogic from "./FilterComponentLogic";
 import AutoCompleteElement from "../element/auto-complete/AutoCompleteElement";
 import "./Style.scss";
+
+const { Panel } = Collapse;
+
+const periode = [{ title: "2022-2023", code: "" }];
 
 const AutoCompleteFilter = ({
   value,
@@ -49,6 +53,8 @@ const AutoCompleteFilter = ({
       name="code_dept"
       value={value.state.code_dept}
     />
+
+    <AutoCompleteElement label="Periode" name="periode" value={periode} />
   </>
 );
 
@@ -82,35 +88,45 @@ const FilterComponent = ({
 
   return (
     <div className="custom-root-card">
-      <Card className="card-style">
-        <Form
-          className="form-filter"
-          layout="vertical"
-          onFinish={onFinish}
-          form={form !== null ? form : value.form}
-        >
-          <AutoCompleteFilter
-            value={value}
-            func={func}
-            isCodeProduct={isCodeProduct}
-            isCodeProject={isCodeProject}
-            disabled={disabled}
-            variant={variant}
-          />
-          <div style={{ display: "flex" }}>
-            <Form.Item>
-              <Button className="btn-reset" onClick={func.onReset}>
-                Reset
-              </Button>
-            </Form.Item>
-            <Form.Item>
-              <Button className="btn-tampilkan" htmlType="submit">
-                Tampilkan
-              </Button>
-            </Form.Item>
-          </div>
-        </Form>
-      </Card>
+      <Collapse
+        expandIconPosition="end"
+        activeKey="1"
+        style={{
+          marginTop: 12,
+        }}
+      >
+        <Panel header="Filter Data" key="1">
+          <Card className="card-style">
+            <Form
+              className="form-filter"
+              layout="vertical"
+              onFinish={onFinish}
+              form={form !== null ? form : value.form}
+            >
+              <AutoCompleteFilter
+                value={value}
+                func={func}
+                isCodeProduct={isCodeProduct}
+                isCodeProject={isCodeProject}
+                disabled={disabled}
+                variant={variant}
+              />
+              <div style={{ display: "flex" }}>
+                {/* <Form.Item>
+                  <Button className="btn-reset" onClick={func.onReset}>
+                    Reset
+                  </Button>
+                </Form.Item> */}
+                <Form.Item>
+                  <Button className="btn-tampilkan" htmlType="submit">
+                    Tampilkan
+                  </Button>
+                </Form.Item>
+              </div>
+            </Form>
+          </Card>
+        </Panel>
+      </Collapse>
     </div>
   );
 };

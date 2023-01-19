@@ -2,6 +2,7 @@ import React from "react";
 import RevenueCogsSummaryLogic from "./RevenueCogsSummaryLogic";
 import TableComponent from "../../../../component/table/TableComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const RevenueCogsSummary = () => {
   const { value, func } = RevenueCogsSummaryLogic();
@@ -17,6 +18,8 @@ const RevenueCogsSummary = () => {
         onExport={func.downloadFile}
         disabledImportExport={value.dataColumn.length <= 1}
       />
+
+      <FilterComponent onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         <TableComponent

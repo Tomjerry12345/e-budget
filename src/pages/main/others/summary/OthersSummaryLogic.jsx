@@ -20,7 +20,9 @@ const OthersSummaryLogic = () => {
 
   const dispatch = useDispatch();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const navigate = useNavigate();
 
@@ -53,6 +55,7 @@ const OthersSummaryLogic = () => {
       code_dept: null,
       code_product: null,
       code_company: null,
+      periode: null,
     });
 
     setDataColumn({

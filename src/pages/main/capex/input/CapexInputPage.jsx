@@ -16,7 +16,7 @@ const CapexInputPage = () => {
 
       <HeaderComponent
         type="input"
-        onFinish={func.onFinish}
+        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
@@ -34,6 +34,8 @@ const CapexInputPage = () => {
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
       />
+
+      <FilterComponent onFinish={func.onFinish} />
 
       <div className="custom-root-layout">
         <TableComponent
