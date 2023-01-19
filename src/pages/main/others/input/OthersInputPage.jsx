@@ -37,7 +37,7 @@ const othersInputPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/opex.xlsx"
+        downloadFile={value.endPFile}
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
         form={value.form}

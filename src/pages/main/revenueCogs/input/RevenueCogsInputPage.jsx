@@ -30,7 +30,7 @@ const RevenueCogsInputPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/revenue-cogs.xlsx"
+        downloadFile="file/revenue.xlsx"
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
       />

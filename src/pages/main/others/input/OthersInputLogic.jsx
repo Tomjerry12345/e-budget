@@ -13,8 +13,8 @@ const endPoint = {
 };
 
 const eFile = {
-  "Input Direct Pendapatan Non Operasional": "pno.xlsx",
-  "Input Direct Biaya Non Operasional": "bno.xlsx",
+  "Input Direct Pendapatan Non Operasional": "file/pno.xlsx",
+  "Input Direct Biaya Non Operasional": "file/bno.xlsx",
 };
 
 const OthersInputLogic = () => {

@@ -5,8 +5,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { getAsync, postAsync, deleteAsync } from "../../../redux/main/main.thunks";
-import { constantActionCoa, constantGetCoa, constantUploadCoa } from "./ConstantCoa";
+import {
+  getAsync,
+  postAsync,
+  deleteAsync,
+} from "../../../redux/main/main.thunks";
+import {
+  constantActionCoa,
+  constantGetCoa,
+  constantUploadCoa,
+} from "./ConstantCoa";
 import { getSizeScreen, log, setLocal } from "../../../values/Utilitas";
 
 const endPoint = {
@@ -92,7 +100,9 @@ const CoaInputLogic = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const itemPage = params.item;
 
@@ -165,7 +175,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -263,7 +277,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -361,7 +379,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -393,7 +415,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -438,7 +464,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -461,7 +491,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -488,7 +522,9 @@ const CoaInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -574,14 +610,22 @@ const CoaInputLogic = () => {
     });
     let formData = new FormData();
     formData.append("file", file1);
-    dispatch(postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa));
+    dispatch(
+      postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa)
+    );
   };
 
   const onDelete = () => {
     const { uuid } = selectedItem;
     setLoading(true);
     onCancel();
-    dispatch(deleteAsync(`${endPoint[itemPage]}/delete`, { uuid: uuid }, constantActionCoa));
+    dispatch(
+      deleteAsync(
+        `${endPoint[itemPage]}/delete`,
+        { uuid: uuid },
+        constantActionCoa
+      )
+    );
   };
 
   const onCancel = () => {
@@ -603,7 +647,9 @@ const CoaInputLogic = () => {
 
     setLoading(true);
     onCancel();
-    dispatch(postAsync(`${endPoint[itemPage]}/update`, formData, constantActionCoa));
+    dispatch(
+      postAsync(`${endPoint[itemPage]}/update`, formData, constantActionCoa)
+    );
   };
 
   return {
