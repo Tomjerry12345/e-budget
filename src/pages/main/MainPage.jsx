@@ -6,7 +6,6 @@ import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
 import "./SummaryStyle.scss";
-import { cekToken } from "../../values/Utilitas";
 
 const { Content } = Layout;
 

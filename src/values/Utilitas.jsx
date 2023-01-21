@@ -99,3 +99,11 @@ export const cekToken = async (navigate) => {
     }
   }
 };
+
+export const cekNumber = (val) => {
+  if (isNaN(val)) {
+    return false;
+  } else {
+    return true;
+  }
+};
