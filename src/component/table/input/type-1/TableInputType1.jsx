@@ -154,7 +154,7 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
         size="small"
         scroll={{
           x: 2900,
-          y: size.y - 200,
+          y: size.y - 366,
         }}
       />
       {/* ) : loading === true ? (

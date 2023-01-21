@@ -5,6 +5,7 @@ import "./CoaStyle.scss";
 import UploadModal from "../../../component/modal/UploadModal";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { classx } from "../../../values/Utilitas";
+import HeaderComponent from "../../../component/header/HeaderComponent";
 
 const EditableContext = createContext(null);
 
@@ -19,7 +20,15 @@ const EditableRow = ({ index, ...props }) => {
   );
 };
 
-const EditableCell = ({ title, editable, children, dataIndex, record, handleSave, ...restProps }) => {
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
   const [editing, setEditing] = useState(false);
   const inputRef = useRef(null);
   const form = useContext(EditableContext);
@@ -81,7 +90,12 @@ const EditableCell = ({ title, editable, children, dataIndex, record, handleSave
 };
 
 const setXColumn = (params) => {
-  return params === "Kode perusahaan" || params === "Kode departemen" || params === "Kode akun" || params === "Kode ICP" ? null : 1600;
+  return params === "Kode perusahaan" ||
+    params === "Kode departemen" ||
+    params === "Kode akun" ||
+    params === "Kode ICP"
+    ? null
+    : 1600;
 };
 
 const CustomFooter = ({ onOk, onCancel }) => (
@@ -93,7 +107,11 @@ const CustomFooter = ({ onOk, onCancel }) => (
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
-    console.log(`selectedRowKeys: ${selectedRowKeys}`, "selectedRows: ", selectedRows);
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      "selectedRows: ",
+      selectedRows
+    );
   },
   onSelect: (record, selected, selectedRows) => {
     console.log(record, selected, selectedRows);
@@ -116,12 +134,38 @@ const CoaPage = () => {
   };
 
   const customClass = classx({
-    "custom-action-modal": status === "edit" ? (setXColumn(value.params.item) === null ? false : true) : false,
+    "custom-action-modal":
+      status === "edit"
+        ? setXColumn(value.params.item) === null
+          ? false
+          : true
+        : false,
   });
 
   return (
-    <div className="custom-root-layout">
-      <div className="top-content">
+    <>
+      <HeaderComponent
+        type="coa"
+        // onFinish={func.onFinish}
+        onChangeFilter={(set) => {
+          set(value.filter);
+        }}
+        onChangeLoadingUpload={(set, setImport) => {
+          set(value.loadingUpload);
+
+          if (value.uploadSucces === true) {
+            setImport(false);
+            func.setUploadSucces(null);
+          }
+        }}
+        onUploadFile={func.onUploadFile}
+        accesFile={value}
+        downloadFile="file/mpp.xlsx"
+        onChangeSelect={func.onChangeTahun}
+      />
+
+      <div className="custom-root-layout">
+        {/* <div className="top-content">
         <Form className="form-cari" layout="vertical">
           <Form.Item>
             <Input placeholder="Cari data di sini..." />
@@ -136,61 +180,85 @@ const CoaPage = () => {
             Update
           </Button>
         </div>
-      </div>
+      </div> */}
 
-      <Table
-        rowKey="id"
-        size="small"
-        rowClassName="child"
-        columns={value.columns}
-        pagination={false}
-        rowSelection={{
-          ...rowSelection,
-          // checkStrictly,
-        }}
-        dataSource={value.dataColumn}
-        scroll={{
-          x: setXColumn(value.params.item),
-          y: value.size.y - 246,
-        }}
-      />
+        <Table
+          rowKey="id"
+          size="small"
+          rowClassName="child"
+          columns={value.columns}
+          pagination={false}
+          rowSelection={{
+            ...rowSelection,
+            // checkStrictly,
+          }}
+          dataSource={value.dataColumn}
+          scroll={{
+            x: setXColumn(value.params.item),
+            y: value.size.y - 246,
+          }}
+        />
 
-      <UploadModal open={value.openUploadModal} onCancel={func.onCloseUploadModal} value={value} onOk={func.onUploadFile} file={`file/${value.params.item}.xlsx`} />
+        <UploadModal
+          open={value.openUploadModal}
+          onCancel={func.onCloseUploadModal}
+          value={value}
+          onOk={func.onUploadFile}
+          file={`file/${value.params.item}.xlsx`}
+        />
 
-      <Modal className={customClass} open={value.openAction.open} onCancel={func.onCancel} closable={true} title="Ubah Data" footer={status === "edit" ? null : <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />}>
-        <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
-          {value.openAction.status === "edit" ? (
-            <>
-              {value.req.map((val, i) => (
-                <Form.Item key={i} name={val.key} rules={[{ required: true, message: "Tidak Boleh Kosong" }]}>
-                  <Input placeholder={val.placeholder} />
-                </Form.Item>
-              ))}
+        <Modal
+          className={customClass}
+          open={value.openAction.open}
+          onCancel={func.onCancel}
+          closable={true}
+          title="Ubah Data"
+          footer={
+            status === "edit" ? null : (
+              <CustomFooter onOk={func.onDelete} onCancel={func.onCancel} />
+            )
+          }
+        >
+          <Form layout="vertical" ref={value.ref} onFinish={func.onEdit}>
+            {value.openAction.status === "edit" ? (
+              <>
+                {value.req.map((val, i) => (
+                  <Form.Item
+                    key={i}
+                    name={val.key}
+                    rules={[{ required: true, message: "Tidak Boleh Kosong" }]}
+                  >
+                    <Input placeholder={val.placeholder} />
+                  </Form.Item>
+                ))}
 
-              <Form.Item>
-                <div
-                  style={{
-                    display: "flex",
-                  }}
-                >
-                  <Button
-                    onClick={func.onCancel}
+                <Form.Item>
+                  <div
                     style={{
-                      marginRight: "16px",
+                      display: "flex",
                     }}
                   >
-                    Batal
-                  </Button>
-                  <Button htmlType="submit">Ubah</Button>
-                </div>
-              </Form.Item>
-            </>
-          ) : (
-            <Typography.Text>Apakah Anda ingin menghapus item ?</Typography.Text>
-          )}
-        </Form>
-      </Modal>
-    </div>
+                    <Button
+                      onClick={func.onCancel}
+                      style={{
+                        marginRight: "16px",
+                      }}
+                    >
+                      Batal
+                    </Button>
+                    <Button htmlType="submit">Ubah</Button>
+                  </div>
+                </Form.Item>
+              </>
+            ) : (
+              <Typography.Text>
+                Apakah Anda ingin menghapus item ?
+              </Typography.Text>
+            )}
+          </Form>
+        </Modal>
+      </div>
+    </>
   );
 };
 

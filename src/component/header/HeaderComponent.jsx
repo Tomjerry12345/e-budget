@@ -1,3 +1,4 @@
+import HeaderComponentTypeCoa from "./type/type-coa/HeaderComponentTypeCoa";
 import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput";
 import HeaderComponentTypeRevenueInput from "./type/type-revenue-input/HeaderComponentTypeRevenueInput";
 import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan/HeaderComponentTypeRevenuePerusahaan";
@@ -20,6 +21,7 @@ const HeaderComponent = ({
   isCodeProject = false,
   disabled = false,
   keyCodeProject,
+  inputSearch,
 }) => {
   let component;
 
@@ -93,6 +95,20 @@ const HeaderComponent = ({
         isCodeProject={isCodeProject}
         disabled={disabled}
         keyCodeProject={keyCodeProject}
+      />
+    );
+  } else if (type === "coa") {
+    component = (
+      <HeaderComponentTypeCoa
+        onFinish={onFinish}
+        onChangeFilter={onChangeFilter}
+        onUploadFile={onUploadFile}
+        accesFile={accesFile}
+        downloadFile={downloadFile}
+        disabledImportExport={disabledImportExport}
+        onExport={onExport}
+        form={form}
+        inputSearch={inputSearch}
       />
     );
   }

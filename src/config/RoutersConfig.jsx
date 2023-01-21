@@ -38,6 +38,7 @@ import PenjualanBjuPage from "../pages/main/revenueCogs/bju/tabs/penjualan/Penju
 import LainBjuPage from "../pages/main/revenueCogs/bju/tabs/hpplain/LainBjuPage";
 import PenjualanBkPage from "../pages/main/revenueCogs/bk/tabs/penjualan/PenjualanBkPage";
 import LainBkPage from "../pages/main/revenueCogs/bk/tabs/hpplain/LainBkPage";
+import CompanyPage from "../pages/main/coa/company/CompanyPage";
 
 const RoutersConfig = () => {
   return (
@@ -169,6 +170,7 @@ const RoutersConfig = () => {
           </Route>
           <Route path="coa">
             <Route path="departement" element={<DepartementPage />} />
+            <Route path="perusahaan" element={<CompanyPage />} />
             <Route path=":item" element={<CoaPage />} />
           </Route>
         </Route>
