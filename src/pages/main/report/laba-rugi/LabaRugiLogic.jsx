@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
@@ -10,25 +10,25 @@ const LabaRugiLogic = () => {
   const [loading, setLoading] = useState(false);
   const [codeFilter, setCodeFilter] = useState();
 
+  const codeCompany = "211";
+
   let params = useParams();
+
+  useEffect(() => {
+    loadData(codeCompany, "all", "all", "all");
+  }, []);
 
   const onFinish = async (values) => {
     setLoading(true);
 
     const { code_company, code_dept, code_location, code_product } = values;
 
-    let url;
-
     let fCodeCompany = code_company.replace(/[^0-9]/g, "");
     let fCodeProduct = code_product.replace(/[^0-9]/g, "");
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
     let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
-
-    const { data } = await MainServices.get(url);
-    log("res", data);
-    getData(data.data);
+    loadData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
 
     setCodeFilter({
       code_company: fCodeCompany,
@@ -36,6 +36,19 @@ const LabaRugiLogic = () => {
       code_location: fCodeLocation,
       code_product: fCodeProduct,
     });
+  };
+
+  const loadData = async (
+    fCodeCompany,
+    fCodeProduct,
+    fCodeLocation,
+    fCodeDept
+  ) => {
+    const url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+
+    const { data } = await MainServices.get(url);
+    log("res", data);
+    getData(data.data);
   };
 
   const getData = (data) => {

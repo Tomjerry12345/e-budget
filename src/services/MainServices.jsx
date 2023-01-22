@@ -12,6 +12,7 @@ class MainServices {
     apiClient().delete(`/ebudget/${endPoint}`, {
       data: req,
     });
+  patch = (endPoint, req) => apiClient().patch(`/ebudget/${endPoint}`, req);
 }
 
 export default new MainServices();

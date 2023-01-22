@@ -1,34 +1,8 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeCoaLogic = ({
-  onChangeFilter,
-  onChangeLoadingUpload,
-}) => {
-  const [filter, setFilter] = useState(false);
-  const [more, setMore] = useState(false);
+const HeaderComponentTypeCoaLogic = () => {
   const [isImport, setImport] = useState(false);
-  const [loadingUpload, setLoadingUpload] = useState(false);
-
-  // useEffect(() => {
-  //   onChangeFilter(setFilter);
-  //   onChangeLoadingUpload(setLoadingUpload, setImport);
-  // }, [onChangeFilter, onChangeLoadingUpload]);
-
-  const onCilckFilter = () => {
-    setFilter(true);
-  };
-
-  const onCloseFilter = () => {
-    setFilter(false);
-  };
-
-  const onClickMore = () => {
-    setMore(true);
-  };
-
-  const onCloseMore = () => {
-    setMore(false);
-  };
+  const [isTambahData, setIsTambahData] = useState(false);
 
   const onClickImport = () => {
     setImport(true);
@@ -38,20 +12,24 @@ const HeaderComponentTypeCoaLogic = ({
     setImport(false);
   };
 
+  const onClickTambahData = () => {
+    setIsTambahData(true);
+  };
+
+  const onCloseTambahData = () => {
+    setIsTambahData(false);
+  };
+
   return {
     value: {
-      more,
-      filter,
       isImport,
-      loadingUpload,
+      isTambahData,
     },
     func: {
-      onCilckFilter,
-      onCloseFilter,
-      onClickMore,
-      onCloseMore,
       onClickImport,
       onCloseImport,
+      onClickTambahData,
+      onCloseTambahData,
     },
   };
 };

@@ -16,7 +16,7 @@ const LabaRugiPage = () => {
         disabledImportExport={value.data.length <= 1}
       />
 
-      <div className="custom-root-layout">
+      <div className="custom-root-layout custom-root-coa">
         {/* {value.data.length > 1 ? (
           <div className="layout-btn-action">
             <Button className="btn-download-template" type="primary" onClick={func.downloadFile} icon={<UploadOutlined className="custom-icon" />}>

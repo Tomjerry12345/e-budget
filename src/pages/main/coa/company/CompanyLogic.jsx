@@ -1,4 +1,12 @@
-import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
+import {
+  Button,
+  Dropdown,
+  Form,
+  Menu,
+  Popconfirm,
+  Switch,
+  Typography,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -91,11 +99,14 @@ const CompanyLogic = () => {
 
   const [form] = Form.useForm();
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [isSucces, setIsSucces] = useState(false);
+
   const constantTableColums = [
     {
       title: "Code",
       dataIndex: "code",
-      width: "30%",
+      width: 130,
       editable: true,
       fixed: "left",
     },
@@ -105,9 +116,37 @@ const CompanyLogic = () => {
       editable: true,
     },
     {
+      title: "Created At",
+      dataIndex: "created_at",
+      editable: true,
+      width: 150,
+    },
+    {
+      title: "Update At",
+      dataIndex: "updated_at",
+      editable: true,
+      width: 150,
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      width: "5%",
+      render: (_, record) => {
+        let rStatus = record.status;
+
+        return (
+          <Switch
+            size="small"
+            checked={rStatus === 1}
+            onChange={() => onActive(record)}
+          />
+        );
+      },
+    },
+    {
       dataIndex: "operation",
       fixed: "right",
-      width: "7%",
+      width: "5%",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -192,37 +231,70 @@ const CompanyLogic = () => {
 
   const save = async (key) => {
     try {
+      setIsSucces(false);
+      setShowPopup(true);
+
       log("data", data);
       const row = await form.validateFields();
-      const newData = [...dataColumn];
+      // const newData = [...dataColumn];
       // const data = [...data];
-      const index = newData.findIndex((item) => key === item.code);
+      // const index = newData.findIndex((item) => key === item.code);
       const value = data.findIndex((item) => key === item.code_company);
-      if (index > -1) {
-        const item = newData[index];
-        const val = data[value];
-        newData.splice(index, 1, {
-          ...item,
-          ...row,
-        });
-        setDataColumn(newData);
-        setEditingKey("");
-        log("editing", row);
 
-        const d = new FormData();
-        d.append("uuid", val.uuid);
-        d.append("code_company", row.code);
-        d.append("code_parent", val.code_parent);
-        d.append("description", row.description);
+      // const item = newData[index];
+      const val = data[value];
+      // newData.splice(index, 1, {
+      //   ...item,
+      //   ...row,
+      // });
+      // setDataColumn(newData);
 
-        const res = await MainServices.post("company/update", d);
+      // log("editing", row);
 
-        console.log("res-edit", res);
-      } else {
-        newData.push(row);
-        setDataColumn(newData);
-        setEditingKey("");
-      }
+      const d = new FormData();
+      d.append("uuid", val.uuid);
+      d.append("code_company", row.code);
+      d.append("code_parent", val.code_parent);
+      d.append("description", row.description);
+
+      const res = await MainServices.post("company/update", d);
+
+      console.log("res-edit", res);
+
+      onSetDataTable();
+
+      setEditingKey("");
+      // if (index > -1) {
+      //   setIsSucces(false);
+      //   setShowPopup(true);
+      //   // const item = newData[index];
+      //   const val = data[value];
+      //   // newData.splice(index, 1, {
+      //   //   ...item,
+      //   //   ...row,
+      //   // });
+      //   // setDataColumn(newData);
+
+      //   // log("editing", row);
+
+      //   const d = new FormData();
+      //   d.append("uuid", val.uuid);
+      //   d.append("code_company", row.code);
+      //   d.append("code_parent", val.code_parent);
+      //   d.append("description", row.description);
+
+      //   const res = await MainServices.post("company/update", d);
+
+      //   console.log("res-edit", res);
+
+      //   onSetDataTable();
+
+      //   setEditingKey("");
+      // } else {
+      //   newData.push(row);
+      //   setDataColumn(newData);
+      //   setEditingKey("");
+      // }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -242,67 +314,72 @@ const CompanyLogic = () => {
   };
 
   const onDelete = async (record) => {
+    setIsSucces(false);
+    setShowPopup(true);
+
     log("row-del", record);
     // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code_company);
+    // const i = data.findIndex((item) => record.code === item.code);
     // const val = data[i];
 
-    // log("value", value);
+    // log("val", val);
 
     // setDataColumn(value);
 
     // log("val", val.uuid);
 
-    // const res = await MainServices.delete("company/delete", {
-    //   uuid: val.uuid,
-    // });
+    const res = await MainServices.delete("company/delete", {
+      uuid: record.uuid,
+    });
 
-    // console.log("res-edit", res);
+    console.log("res-hapus", res);
 
-    let test = dataColumn.filter((item) => item.id !== record.id);
+    onSetDataTable();
 
-    log("value", test);
-    log("length-value", test.length);
-    log("dataColumn-value", dataColumn.length);
+    // let test = dataColumn.filter((item) => item.id !== record.id);
 
-    // if (test.length === dummyData.length) {
-    //   const list = [];
-    //   dataColumn.forEach((root) => {
-    //     if (root.children.length !== 0) {
-    //       const listCh1 = [];
+    // log("value", test);
+    // log("length-value", test.length);
+    // log("dataColumn-value", dataColumn.length);
 
-    //       // level 1
-    //       root.children.forEach((ch1) => {
-    //         log("ch1", ch1);
-    //         if (ch1.children !== undefined) {
-    //           log("undefined");
-    //           listCh1.push(ch1);
-    //         } else {
-    //           log("record.id", record.id);
-    //           log("ch1.id", ch1.id);
-    //           if (ch1.id !== record.id) {
-    //             log("test");
-    //             listCh1.push(ch1);
-    //           }
-    //         }
-    //       });
+    // // if (test.length === dummyData.length) {
+    // //   const list = [];
+    // //   dataColumn.forEach((root) => {
+    // //     if (root.children.length !== 0) {
+    // //       const listCh1 = [];
 
-    //       log("listCh1", listCh1);
+    // //       // level 1
+    // //       root.children.forEach((ch1) => {
+    // //         log("ch1", ch1);
+    // //         if (ch1.children !== undefined) {
+    // //           log("undefined");
+    // //           listCh1.push(ch1);
+    // //         } else {
+    // //           log("record.id", record.id);
+    // //           log("ch1.id", ch1.id);
+    // //           if (ch1.id !== record.id) {
+    // //             log("test");
+    // //             listCh1.push(ch1);
+    // //           }
+    // //         }
+    // //       });
 
-    //       list.push({
-    //         id: root.id,
-    //         uuid: root.uuid,
-    //         code: root.code,
-    //         children: listCh1,
-    //       });
+    // //       log("listCh1", listCh1);
 
-    //       // list.push(listCh1);
-    //     }
-    //   });
-    //   // test = list;
-    // }
+    // //       list.push({
+    // //         id: root.id,
+    // //         uuid: root.uuid,
+    // //         code: root.code,
+    // //         children: listCh1,
+    // //       });
 
-    setDataColumn(test);
+    // //       // list.push(listCh1);
+    // //     }
+    // //   });
+    // //   // test = list;
+    // // }
+
+    // setDataColumn(test);
   };
 
   const onAction = (e, record) => {
@@ -318,6 +395,8 @@ const CompanyLogic = () => {
     log("company/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
+
+    setIsSucces(true);
     // setDataColumn(dummyData);
     // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
@@ -345,6 +424,10 @@ const CompanyLogic = () => {
     onCloseUploadModal();
 
     navigate(0);
+  };
+
+  const onClosePopupModal = () => {
+    setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -381,6 +464,29 @@ const CompanyLogic = () => {
     setDataColumn(list);
   };
 
+  const onActive = async (record) => {
+    setIsSucces(false);
+    setShowPopup(true);
+
+    log("record.status", record.status);
+
+    const f = new FormData();
+
+    f.append("uuid", record.uuid);
+
+    if (record.status === 0) {
+      const res = await MainServices.post("company/active", f);
+
+      console.log("res-hapus", res);
+    } else {
+      const res = await MainServices.post("company/unactive", f);
+
+      console.log("res-hapus", res);
+    }
+
+    onSetDataTable();
+  };
+
   return {
     value: {
       dataColumn,
@@ -393,10 +499,13 @@ const CompanyLogic = () => {
       loading,
       columns,
       form,
+      showPopup,
+      isSucces,
     },
     func: {
       onCloseUploadModal,
       onOpenUploadModal,
+      onClosePopupModal,
       onUploadFile,
       onSearch,
     },
