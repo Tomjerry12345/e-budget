@@ -21,6 +21,7 @@ import {
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
 import ImportInputModal from "../../../modal/import/ImportInputModal";
+import TambahDataCoaModal from "../../../modal/tambah-data-coa/TambahDataCoaModal";
 import UploadCoaModal from "../../../modal/upload-coa/UploadCoaModal";
 import HeaderComponentTypeCoaLogic from "./HeaderComponentTypeCoaLogic";
 
@@ -145,13 +146,6 @@ const HeaderComponentTypeCoa = ({
           suffix={<SearchOutlined />}
           onPressEnter={inputSearch.onChange}
         />
-        {/* <Button
-          className="btn-filter"
-          icon={<FilterOutlined />}
-          onClick={func.onCilckFilter}
-        >
-          Filter
-        </Button> */}
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>
@@ -162,29 +156,14 @@ const HeaderComponentTypeCoa = ({
         >
           Import Data
         </Button>
-        <Button className="btn-tambah" icon={<FileAddOutlined />}>
+        <Button
+          className="btn-tambah"
+          icon={<FileAddOutlined />}
+          onClick={func.onClickTambahData}
+        >
           Tambah Data
         </Button>
-        {/* <Button
-          className="btn-more"
-          icon={<MoreOutlined />}
-          onClick={func.onClickMore}
-        /> */}
       </div>
-
-      {/* <ModalFilter
-        filter={value.filter}
-        onCloseFilter={func.onCloseFilter}
-        onFinish={onFinish}
-        form={form}
-      /> */}
-
-      {/* <ModalMenuMore
-        open={value.more}
-        onCancel={func.onCloseMore}
-        onClickImport={func.onClickImport}
-        disabledImportExport={disabledImportExport}
-      /> */}
 
       <UploadCoaModal
         open={value.isImport}
@@ -193,6 +172,15 @@ const HeaderComponentTypeCoa = ({
         onOk={onUploadFile}
         file={downloadFile}
         loading={value.loadingUpload}
+      />
+
+      <TambahDataCoaModal
+        open={value.isTambahData}
+        onCancel={func.onCloseTambahData}
+        // value={accesFile}
+        // onOk={onUploadFile}
+        // file={downloadFile}
+        // loading={value.loadingUpload}
       />
     </Header>
   );

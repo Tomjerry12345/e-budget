@@ -23,7 +23,7 @@ const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
           pagination={false}
           size="small"
           // loading={value.loading}
-          scroll={scroll === null ? { y: size.y - 366 } : scroll}
+          scroll={scroll === null ? { y: size.y - 150 } : scroll}
           rowKey="id"
         />
       ) : loading === true ? (
