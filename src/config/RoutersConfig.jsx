@@ -31,7 +31,6 @@ import BsbPage from "../pages/main/revenueCogs/bsb/BsbPage";
 import KikPage from "../pages/main/revenueCogs/kik/KikPage";
 import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
 import BandPage from "../pages/main/revenueCogs/band/BandPage";
-import DepartementPage from "../pages/main/coa/departement/DepartementPage";
 import PenjualanHkPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
 import LainHkPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
 import PenjualanBjuPage from "../pages/main/revenueCogs/bju/tabs/penjualan/PenjualanBjuPage";
@@ -39,6 +38,11 @@ import LainBjuPage from "../pages/main/revenueCogs/bju/tabs/hpplain/LainBjuPage"
 import PenjualanBkPage from "../pages/main/revenueCogs/bk/tabs/penjualan/PenjualanBkPage";
 import LainBkPage from "../pages/main/revenueCogs/bk/tabs/hpplain/LainBkPage";
 import CompanyPage from "../pages/main/coa/company/CompanyPage";
+import ProductPage from "../pages/main/coa/product/ProductPage";
+import DepartementPage from "../pages/main/coa/departement/DepartementPage";
+import AkunPage from "../pages/main/coa/akun/AkunPage";
+import ProjectPage from "../pages/main/coa/project/ProjectPage";
+import IcpPage from "../pages/main/coa/icp/IcpPage";
 
 const RoutersConfig = () => {
   return (
@@ -169,9 +173,13 @@ const RoutersConfig = () => {
             <Route path="laba-rugi" element={<LabaRugiPage />} />
           </Route>
           <Route path="coa">
-            <Route path="departement" element={<DepartementPage />} />
             <Route path="perusahaan" element={<CompanyPage />} />
-            <Route path=":item" element={<CoaPage />} />
+            <Route path="produk" element={<ProductPage />} />
+            <Route path="departement" element={<DepartementPage />} />
+            <Route path="akun" element={<AkunPage />} />
+            <Route path="project" element={<ProjectPage />} />
+            <Route path="icp" element={<IcpPage />} />
+            {/* <Route path=":item" element={<CoaPage />} /> */}
           </Route>
         </Route>
       </Routes>

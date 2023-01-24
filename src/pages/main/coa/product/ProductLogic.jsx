@@ -71,7 +71,7 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 //   },
 // ];
 
-const DepartementLogic = () => {
+const ProductLogic = () => {
   const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
@@ -533,4 +533,4 @@ const DepartementLogic = () => {
   };
 };
 
-export default DepartementLogic;
+export default ProductLogic;

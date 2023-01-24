@@ -44,91 +44,16 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
-  return (
-    <Modal
-      className="filter-modal"
-      title="Filter"
-      open={filter}
-      onCancel={onCloseFilter}
-      footer={null}
-      mask={false}
-    >
-      <FilterComponent
-        type={2}
-        isCodeProduct={true}
-        onFinish={onFinish}
-        variant="input"
-        form={form}
-      />
-    </Modal>
-  );
-};
-
-const ModalMenuMore = ({
-  open,
-  onCancel,
-  onClickImport,
-  disabledImportExport,
-}) => {
-  return (
-    <Modal
-      className="more-modal"
-      title={null}
-      open={open}
-      onCancel={onCancel}
-      footer={null}
-      closable={false}
-      mask={false}
-    >
-      <Button
-        className="btn"
-        type="text"
-        icon={<DownloadOutlined />}
-        // disabled={disabledImportExport}
-        onClick={() => {
-          onClickImport();
-          onCancel();
-        }}
-      >
-        Import
-      </Button>
-      <Button
-        className="btn"
-        type="text"
-        icon={<ToTopOutlined />}
-        // disabled={disabledImportExport}
-      >
-        Export
-      </Button>
-      <Button
-        className="btn"
-        type="text"
-        icon={<DeleteOutlined />}
-        style={{ color: "red" }}
-        disabled={disabledImportExport}
-      >
-        Clear Data
-      </Button>
-    </Modal>
-  );
-};
-
 const HeaderComponentTypeCoa = ({
-  onFinish,
-  onChangeFilter,
   onUploadFile,
   downloadFile,
-  onChangeLoadingUpload,
   accesFile,
-  disabledImportExport,
-  onChangeSelect,
-  form,
   inputSearch,
+  onTambahData,
+  onChangeTambahData,
 }) => {
   const { value, func } = HeaderComponentTypeCoaLogic({
-    onChangeFilter,
-    onChangeLoadingUpload,
+    onChangeTambahData,
   });
   return (
     <Header className="custom-header">
@@ -177,6 +102,7 @@ const HeaderComponentTypeCoa = ({
       <TambahDataCoaModal
         open={value.isTambahData}
         onCancel={func.onCloseTambahData}
+        onFinish={onTambahData}
         // value={accesFile}
         // onOk={onUploadFile}
         // file={downloadFile}

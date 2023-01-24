@@ -22,25 +22,27 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-const TambahDataCoaModal = ({ open, onCancel, value, onOk, loading }) => {
+const TambahDataCoaModal = ({ open, onCancel, onFinish }) => {
+  // const
   return (
     <Modal
       open={open}
-      className="custom-upload-modal"
-      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
+      className="custom-tambah-data-modal"
+      // footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
+      footer={null}
       onCancel={onCancel}
     >
       <Title level={4}>Tambah Data</Title>
       <div className="root-content-upload">
         <Form
-          // onFinish={onOk}
+          onFinish={onFinish}
           // onFinishFailed={onFinishFailed}
           autoComplete="on"
           layout="vertical"
         >
           <Form.Item
             label="Code Company"
-            name="username"
+            name="code_company"
             rules={[
               {
                 required: true,
@@ -53,7 +55,7 @@ const TambahDataCoaModal = ({ open, onCancel, value, onOk, loading }) => {
 
           <Form.Item
             label="Code Parent"
-            name="password"
+            name="code_parent"
             rules={[
               {
                 required: true,
@@ -74,6 +76,22 @@ const TambahDataCoaModal = ({ open, onCancel, value, onOk, loading }) => {
             ]}
           >
             <Input.TextArea rows={4} />
+          </Form.Item>
+          <Form.Item>
+            <div className="footer-custom">
+              <Button className="btn-cancel" type="text" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button
+                className="btn-upload"
+                type="primary"
+                htmlType="submit"
+                // onClick={onOk}
+                // loading={loading}
+              >
+                Tambah
+              </Button>
+            </div>
           </Form.Item>
         </Form>
       </div>

@@ -3,6 +3,7 @@ import TableComponent from "../../../../component/table/TableComponent";
 import CompanyLogic from "./CompanyLogic";
 import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
+import { log } from "../../../../values/Utilitas";
 
 const CompanyPage = () => {
   const { value, func } = CompanyLogic();
@@ -28,6 +29,14 @@ const CompanyPage = () => {
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,
+        }}
+        onTambahData={func.onTambahData}
+        onChangeTambahData={(set) => {
+          log("value.isTambah", value.isTambah);
+          if (value.isTambah) {
+            set(false);
+            func.setIsTambah(null);
+          }
         }}
       />
       <div className="custom-root-layout custom-root-coa">

@@ -3,10 +3,10 @@ import TableComponent from "../../../../component/table/TableComponent";
 import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
-import DepartementLogic from "./DepartementLogic";
+import ProductLogic from "./ProductLogic";
 
-const DepartementPage = () => {
-  const { value, func } = DepartementLogic();
+const ProductPage = () => {
+  const { value, func } = ProductLogic();
   return (
     <>
       <HeaderComponent
@@ -85,4 +85,4 @@ const DepartementPage = () => {
   );
 };
 
-export default DepartementPage;
+export default ProductPage;

@@ -3,9 +3,9 @@ import TableComponent from "../../../../component/table/TableComponent";
 import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
-import DepartementLogic from "./DepartementLogic";
+import DepartementLogic from "./AkunLogic";
 
-const DepartementPage = () => {
+const AkunPage = () => {
   const { value, func } = DepartementLogic();
   return (
     <>
@@ -85,4 +85,4 @@ const DepartementPage = () => {
   );
 };
 
-export default DepartementPage;
+export default AkunPage;
