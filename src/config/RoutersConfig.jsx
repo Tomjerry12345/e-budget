@@ -44,6 +44,7 @@ import AkunPage from "../pages/main/coa/akun/AkunPage";
 import ProjectPage from "../pages/main/coa/project/ProjectPage";
 import IcpPage from "../pages/main/coa/icp/IcpPage";
 import LocationPage from "../pages/main/coa/location/LocationPage";
+import LabaRugiTestingPage from "../pages/main/report/laba-rugi-testing/LabaRugiTestingPage";
 
 const RoutersConfig = () => {
   return (
@@ -172,6 +173,7 @@ const RoutersConfig = () => {
           </Route>
           <Route path="report">
             <Route path="laba-rugi" element={<LabaRugiPage />} />
+            <Route path="laba-rugi-testing" element={<LabaRugiTestingPage />} />
           </Route>
           <Route path="coa">
             <Route path="perusahaan" element={<CompanyPage />} />
