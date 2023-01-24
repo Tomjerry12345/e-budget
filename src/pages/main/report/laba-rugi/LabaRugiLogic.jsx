@@ -23,6 +23,8 @@ const LabaRugiLogic = () => {
 
     const { code_company, code_dept, code_location, code_product } = values;
 
+    // alert("test");
+
     let fCodeCompany = code_company.replace(/[^0-9]/g, "");
     let fCodeProduct = code_product.replace(/[^0-9]/g, "");
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
