@@ -43,6 +43,7 @@ import DepartementPage from "../pages/main/coa/departement/DepartementPage";
 import AkunPage from "../pages/main/coa/akun/AkunPage";
 import ProjectPage from "../pages/main/coa/project/ProjectPage";
 import IcpPage from "../pages/main/coa/icp/IcpPage";
+import LocationPage from "../pages/main/coa/location/LocationPage";
 
 const RoutersConfig = () => {
   return (
@@ -175,6 +176,7 @@ const RoutersConfig = () => {
           <Route path="coa">
             <Route path="perusahaan" element={<CompanyPage />} />
             <Route path="produk" element={<ProductPage />} />
+            <Route path="lokasi" element={<LocationPage />} />
             <Route path="departement" element={<DepartementPage />} />
             <Route path="akun" element={<AkunPage />} />
             <Route path="project" element={<ProjectPage />} />

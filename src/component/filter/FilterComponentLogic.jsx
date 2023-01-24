@@ -20,6 +20,8 @@ const FilterComponentLogic = ({
 
   let [form] = Form.useForm();
 
+  const [isLoad, setIsLoad] = useState(false);
+
   // const [gCode, setGCode] = useState()
 
   useEffect(() => {
@@ -34,51 +36,27 @@ const FilterComponentLogic = ({
           ...state,
           code_company: data.data,
         });
+
+        setIsLoad(true);
       }
     };
 
     log("codeCompany", codeCompany);
 
-    if (codeCompany === null) {
-      fetchData();
-    } else {
-      getValueComboBox(codeCompany);
-    }
+    fetchData();
+
+    // if (codeCompany === null) {
+    //   fetchData();
+    // } else {
+    //   getValueComboBox(codeCompany, true);
+    // }
   }, [codeCompany]);
 
-  const onChange = async (e) => {
-    if (formGlobal !== null) {
-      formGlobal.setFieldsValue({
-        code_location: null,
-        code_dept: null,
-        code_product: null,
-      });
-    } else {
-      form.setFieldsValue({
-        code_location: null,
-        code_dept: null,
-        code_product: null,
-      });
+  useEffect(() => {
+    if (codeCompany !== null) {
+      getValueComboBox(codeCompany);
     }
-
-    const resProduct =
-      isCodeProduct === true
-        ? await MainServices.get(`product/list-by-com?code_company=${e}`)
-        : null;
-    const resLocation = await MainServices.get(
-      `location/list-by-com?code_company=${e}`
-    );
-    const resDept = await MainServices.get(`dept/list`);
-
-    if (resLocation.data.responseCode === 200) {
-      setState({
-        ...state,
-        code_product: resProduct !== null ? setProduct(resProduct) : [],
-        code_location: setLocation(resLocation),
-        code_dept: setDept(resDept),
-      });
-    }
-  };
+  }, [isLoad]);
 
   const onSelect = (e) => {
     if (e === "all") {
@@ -112,20 +90,23 @@ const FilterComponentLogic = ({
   const getValueComboBox = async (e) => {
     const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
 
+    log("code", code);
+
     if (code !== "0") {
-      if (formGlobal !== null) {
-        formGlobal.setFieldsValue({
-          code_location: null,
-          code_dept: null,
-          code_product: null,
-        });
-      } else {
-        form.setFieldsValue({
-          code_location: null,
-          code_dept: null,
-          code_product: null,
-        });
-      }
+      // if (formGlobal !== null) {
+
+      //   formGlobal.setFieldsValue({
+      //     code_location: null,
+      //     code_dept: null,
+      //     code_product: null,
+      //   });
+      // } else {
+      //   form.setFieldsValue({
+      //     code_location: null,
+      //     code_dept: null,
+      //     code_product: null,
+      //   });
+      // }
 
       const resProduct =
         isCodeProduct === true
@@ -153,7 +134,12 @@ const FilterComponentLogic = ({
   };
 
   const setProduct = (resProduct) => {
-    const formatResProduct = [];
+    const formatResProduct = [
+      {
+        title: "all",
+        code: "",
+      },
+    ];
     resProduct.data.data.forEach((element) => {
       formatResProduct.push({
         code: element.code_product,
@@ -164,7 +150,12 @@ const FilterComponentLogic = ({
   };
 
   const setLocation = (resLocation) => {
-    const formatResLocation = [];
+    const formatResLocation = [
+      {
+        title: "all",
+        code: "",
+      },
+    ];
     resLocation.data.data.forEach((element) => {
       formatResLocation.push({
         code: element.code_location,
@@ -175,7 +166,12 @@ const FilterComponentLogic = ({
   };
 
   const setDept = (resDept) => {
-    const formatResDept = [];
+    const formatResDept = [
+      {
+        title: "all",
+        code: "",
+      },
+    ];
     resDept.data.data.forEach((element) => {
       formatResDept.push({
         code: element.code_dept,
@@ -186,7 +182,12 @@ const FilterComponentLogic = ({
   };
 
   const setProject = (resProject, c) => {
-    const formatResProject = [];
+    const formatResProject = [
+      {
+        title: "all",
+        code: "",
+      },
+    ];
     const data = resProject.data.data;
 
     log("dataProject", data);
@@ -225,7 +226,6 @@ const FilterComponentLogic = ({
       form,
     },
     func: {
-      onChange,
       onSelect,
       onReset,
     },

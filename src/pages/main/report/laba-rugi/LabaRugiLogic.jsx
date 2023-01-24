@@ -23,6 +23,8 @@ const LabaRugiLogic = () => {
 
     const { code_company, code_dept, code_location, code_product } = values;
 
+    // alert("test");
+
     let fCodeCompany = code_company.replace(/[^0-9]/g, "");
     let fCodeProduct = code_product.replace(/[^0-9]/g, "");
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
@@ -64,8 +66,8 @@ const LabaRugiLogic = () => {
       list.push({
         account: val.code,
         description: val.description,
-        value_1: v1,
-        value_2: v2,
+        value_1: v1 === "NaN" ? "-" : v1,
+        value_2: v2 === "NaN" ? "-" : v2,
       });
     });
     setData(list);
