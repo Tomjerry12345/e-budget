@@ -64,8 +64,8 @@ const LabaRugiLogic = () => {
       list.push({
         account: val.code,
         description: val.description,
-        value_1: v1,
-        value_2: v2,
+        value_1: v1 === "NaN" ? "-" : v1,
+        value_2: v2 === "NaN" ? "-" : v2,
       });
     });
     setData(list);

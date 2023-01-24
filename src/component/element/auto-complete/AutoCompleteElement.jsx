@@ -21,7 +21,6 @@ const AutoCompleteElement = ({
     }
   });
 
-  console.log("value", value);
   return (
     <Form.Item
       label={label}

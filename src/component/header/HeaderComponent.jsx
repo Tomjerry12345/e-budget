@@ -3,6 +3,7 @@ import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput
 import HeaderComponentTypeRevenueInput from "./type/type-revenue-input/HeaderComponentTypeRevenueInput";
 import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan/HeaderComponentTypeRevenuePerusahaan";
 import HeaderComponentTypeRevenueSummary from "./type/type-revenue-summary/HeaderComponentTypeSummary";
+import HeaderComponentTypeSummaryLabaRugi from "./type/type-summary-laba-rugi/HeaderComponentTypeSummaryLabaRugi";
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
 const HeaderComponent = ({
