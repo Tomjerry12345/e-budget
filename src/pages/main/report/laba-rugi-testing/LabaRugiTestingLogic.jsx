@@ -32,7 +32,14 @@ const LabaRugiTestingLogic = () => {
     let fCodeLocation = code_location.replace(/[^0-9]/g, "");
     let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    loadData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+    loadData(
+      fCodeCompany,
+      fCodeProduct,
+      fCodeLocation,
+      fCodeDept,
+      "211",
+      "0000"
+    );
 
     setCodeFilter({
       code_company: fCodeCompany,
@@ -46,9 +53,11 @@ const LabaRugiTestingLogic = () => {
     fCodeCompany,
     fCodeProduct,
     fCodeLocation,
-    fCodeDept
+    fCodeDept,
+    fCodeIcp,
+    fCodeProject
   ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
 
     const { data } = await MainServices.get(url);
     log("res", data);
