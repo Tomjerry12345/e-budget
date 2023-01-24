@@ -4,6 +4,72 @@
   line-height: 14px !important;
   font-size: 11px !important;
 }
+.header-type {
+  line-height: 14px !important;
+  padding: 1px 8px !important;
+  font-size: 10px !important;
+  background-color: #d2d2d2;
+  font-weight: bold;
+
+  td {
+    padding: 2px 8px !important;
+  }
+
+  .ant-table-cell-with-append {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    // padding: 1px 8px;
+
+    .ant-table-row-expand-icon {
+      margin-top: 0px;
+      transform: scale(0.6) !important;
+    }
+  }
+
+  .more-style {
+    border: none;
+    height: 23px;
+
+    .ic-more {
+      height: 19px;
+    }
+  }
+}
+
+.footer-type {
+  line-height: 14px !important;
+  padding: 1px 8px !important;
+  font-size: 10px !important;
+  background-color: #d2ffd2;
+  font-weight: bold;
+
+  td {
+    padding: 2px 8px !important;
+  }
+
+  .ant-table-cell-with-append {
+    display: flex;
+    align-items: center;
+    height: 38px;
+    // padding: 1px 8px;
+
+    .ant-table-row-expand-icon {
+      margin-top: 0px;
+      transform: scale(0.6) !important;
+    }
+  }
+
+  .more-style {
+    border: none;
+    height: 23px;
+
+    .ic-more {
+      height: 19px;
+    }
+  }
+}
+
 .child {
   line-height: 14px !important;
   padding: 1px 8px !important;

@@ -77,8 +77,10 @@ const LabaRugiTestingLogic = () => {
       list.push({
         account: val.code,
         description: val.description,
-        value_1: v1 === "NaN" ? "-" : v1,
-        value_2: v2 === "NaN" ? "-" : v2,
+        description: val.description,
+        type_row: val.type_row,
+        value_1: v1 === "NaN" ? "" : v1,
+        value_2: v2 === "NaN" ? "" : v2,
       });
     });
     setData(list);
