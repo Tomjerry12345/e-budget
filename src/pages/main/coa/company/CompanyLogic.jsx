@@ -101,6 +101,7 @@ const CompanyLogic = () => {
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
+  const [isTambah, setIsTambah] = useState(null);
 
   const constantTableColums = [
     {
@@ -487,6 +488,23 @@ const CompanyLogic = () => {
     onSetDataTable();
   };
 
+  const onTambahData = async (values) => {
+    const { code_company, code_parent, description } = values;
+
+    const f = new FormData();
+    f.append("code_company", code_company);
+    f.append("code_parent", code_parent);
+    f.append("description", description);
+
+    const res = await MainServices.post("company/add", f);
+
+    log("res-tambah", res);
+
+    onSetDataTable();
+
+    setIsTambah(true);
+  };
+
   return {
     value: {
       dataColumn,
@@ -501,6 +519,7 @@ const CompanyLogic = () => {
       form,
       showPopup,
       isSucces,
+      isTambah,
     },
     func: {
       onCloseUploadModal,
@@ -508,6 +527,8 @@ const CompanyLogic = () => {
       onClosePopupModal,
       onUploadFile,
       onSearch,
+      onTambahData,
+      setIsTambah,
     },
   };
 };

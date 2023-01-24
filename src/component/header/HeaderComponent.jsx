@@ -11,6 +11,7 @@ const HeaderComponent = ({
   onChangeFilter,
   onChangeLoadingUpload,
   onUploadFile,
+  onChangeTambahData,
   accesFile = null,
   downloadFile,
   disabledImportExport,
@@ -22,6 +23,7 @@ const HeaderComponent = ({
   disabled = false,
   keyCodeProject,
   inputSearch,
+  onTambahData,
 }) => {
   let component;
 
@@ -100,15 +102,12 @@ const HeaderComponent = ({
   } else if (type === "coa") {
     component = (
       <HeaderComponentTypeCoa
-        onFinish={onFinish}
-        onChangeFilter={onChangeFilter}
         onUploadFile={onUploadFile}
-        accesFile={accesFile}
         downloadFile={downloadFile}
-        disabledImportExport={disabledImportExport}
-        onExport={onExport}
-        form={form}
+        accesFile={accesFile}
         inputSearch={inputSearch}
+        onTambahData={onTambahData}
+        onChangeTambahData={onChangeTambahData}
       />
     );
   }

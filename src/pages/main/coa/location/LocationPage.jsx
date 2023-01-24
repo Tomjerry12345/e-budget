@@ -3,10 +3,10 @@ import TableComponent from "../../../../component/table/TableComponent";
 import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
-import DepartementLogic from "./DepartementLogic";
+import LocationLogic from "./LocationLogic";
 
-const DepartementPage = () => {
-  const { value, func } = DepartementLogic();
+const LocationPage = () => {
+  const { value, func } = LocationLogic();
   return (
     <>
       <HeaderComponent
@@ -85,4 +85,4 @@ const DepartementPage = () => {
   );
 };
 
-export default DepartementPage;
+export default LocationPage;

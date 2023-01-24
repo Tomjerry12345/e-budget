@@ -71,7 +71,7 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 //   },
 // ];
 
-const DepartementLogic = () => {
+const ProjectLogic = () => {
   const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
@@ -225,8 +225,8 @@ const DepartementLogic = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onGetListCompany = async () => {
-    const { data } = await MainServices.get("product/list");
-    log("product/list", data.data);
+    const { data } = await MainServices.get("project/list");
+    log("project/list", data.data);
     setData(data.data);
   };
 
@@ -258,7 +258,7 @@ const DepartementLogic = () => {
       d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 
-      const res = await MainServices.post("product/update", d);
+      const res = await MainServices.post("project/update", d);
 
       console.log("res-edit", res);
 
@@ -329,7 +329,7 @@ const DepartementLogic = () => {
 
     // log("val", val.uuid);
 
-    const res = await MainServices.delete("product/delete", {
+    const res = await MainServices.delete("project/delete", {
       uuid: record.uuid,
     });
 
@@ -392,8 +392,8 @@ const DepartementLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("product/list-tree");
-    log("product/list-tree", data.data);
+    const { data } = await MainServices.get("project/list-tree");
+    log("project/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
 
@@ -419,7 +419,7 @@ const DepartementLogic = () => {
     let formData = new FormData();
     formData.append("file", file1);
 
-    const res = MainServices.post("product/import", formData);
+    const res = MainServices.post("project/import", formData);
     log("res", res);
 
     onCloseUploadModal();
@@ -441,11 +441,11 @@ const DepartementLogic = () => {
     let list = [];
 
     if (val === "") {
-      res = await MainServices.get(`product/list-tree`);
+      res = await MainServices.get(`project/list-tree`);
 
       list = res.data.data;
     } else {
-      res = await MainServices.get(`product/list?${key}=${val}`);
+      res = await MainServices.get(`project/list?${key}=${val}`);
 
       const d = res.data.data;
 
@@ -476,11 +476,11 @@ const DepartementLogic = () => {
     f.append("uuid", record.uuid);
 
     if (record.status === 0) {
-      const res = await MainServices.post("product/active", f);
+      const res = await MainServices.post("project/active", f);
 
       console.log("res-hapus", res);
     } else {
-      const res = await MainServices.post("product/unactive", f);
+      const res = await MainServices.post("project/unactive", f);
 
       console.log("res-hapus", res);
     }
@@ -496,7 +496,7 @@ const DepartementLogic = () => {
     f.append("code_parent", code_parent);
     f.append("description", description);
 
-    const res = await MainServices.post("product/add", f);
+    const res = await MainServices.post("project/add", f);
 
     log("res-tambah", res);
 
@@ -533,4 +533,4 @@ const DepartementLogic = () => {
   };
 };
 
-export default DepartementLogic;
+export default ProjectLogic;

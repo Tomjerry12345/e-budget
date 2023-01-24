@@ -11,7 +11,7 @@ const PopupModal = ({ open, succes, onOk, textSucces, textProses }) => {
   return (
     <Modal
       open={open}
-      className="custom-upload-modal"
+      className="custom-pop-up-modal"
       footer={null}
       // onCancel={onCancel}
       closable={true}
@@ -34,10 +34,10 @@ const PopupModal = ({ open, succes, onOk, textSucces, textProses }) => {
         </>
       ) : (
         <>
-          <CircularProgress size={100} />
+          <CircularProgress size={120} />
           <Title
             style={{
-              marginTop: 16,
+              marginTop: 32,
             }}
             level={4}
           >

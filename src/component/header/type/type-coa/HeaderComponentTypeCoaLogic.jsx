@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeCoaLogic = () => {
+const HeaderComponentTypeCoaLogic = ({ onChangeTambahData }) => {
   const [isImport, setImport] = useState(false);
   const [isTambahData, setIsTambahData] = useState(false);
+
+  useEffect(() => {
+    onChangeTambahData(setIsTambahData);
+  }, [onChangeTambahData]);
 
   const onClickImport = () => {
     setImport(true);
