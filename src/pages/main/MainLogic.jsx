@@ -7,7 +7,7 @@ import {
   disabledItemSummaryMenu,
   urlPageRevenue,
 } from "../../values/Constant";
-import { routingMasterCoa } from "../../values/RoutingPage";
+import { routingMasterCoa, routingReport } from "../../values/RoutingPage";
 import {
   cekToken,
   getLocal,
@@ -196,10 +196,8 @@ const MainLogic = () => {
         pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
       }
     } else if (index === 6) {
-      const baseReport = `/main/report`;
-      if (nameMenu === "Laba Rugi") {
-        pageNavigation = `${baseReport}/laba-rugi`;
-      }
+      const routing = routingReport[nameMenu];
+      pageNavigation = `/main/report/${routing}`;
     } else if (index === 7) {
       const routing = routingMasterCoa[nameMenu];
       pageNavigation = `/main/coa/${routing}`;

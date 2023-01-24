@@ -140,7 +140,7 @@ export const allItemSummarySubMenu = [
     "Input Asumsi",
   ],
   // 7 Report
-  ["Laba Rugi"],
+  ["Laba Rugi", "Laba Rugi Testing"],
   // 8 Master COA
   [
     "Kode perusahaan",
