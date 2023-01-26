@@ -107,3 +107,24 @@ export const cekNumber = (val) => {
     return true;
   }
 };
+
+export const inputTypeTable = (dataIndex) => {
+  const inputType =
+    dataIndex === "HK" ||
+    dataIndex === "KIU" ||
+    dataIndex === "GMM" ||
+    dataIndex === "KIA" ||
+    dataIndex === "BJU" ||
+    dataIndex === "BLT" ||
+    dataIndex === "BLU" ||
+    dataIndex === "BK" ||
+    dataIndex === "BSU" ||
+    dataIndex === "BSB" ||
+    dataIndex === "KIK" ||
+    dataIndex === "IKP" ||
+    dataIndex === "BAND"
+      ? "checkbox"
+      : "text";
+
+  return inputType;
+};

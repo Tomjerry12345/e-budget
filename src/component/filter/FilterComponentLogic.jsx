@@ -6,6 +6,7 @@ import { log } from "../../values/Utilitas";
 const FilterComponentLogic = ({
   isCodeProduct,
   isCodeProject,
+  isCodeIcp,
   keyCodeProject,
   codeCompany,
   formGlobal,
@@ -15,6 +16,7 @@ const FilterComponentLogic = ({
     code_product: [],
     code_location: [],
     code_dept: [],
+    code_icp: [],
     code_project: [],
   });
 
@@ -27,9 +29,7 @@ const FilterComponentLogic = ({
   useEffect(() => {
     const fetchData = async () => {
       // const { data } = await MainServices.get("company/list-master");
-      const { data } = await MainServices.get("company/list-master");
-
-      console.log("test", data);
+      const { data } = await MainServices.get("company/list-child");
 
       if (data.responseCode === 200) {
         setState({
@@ -112,14 +112,23 @@ const FilterComponentLogic = ({
         isCodeProduct === true
           ? await MainServices.get(`product/list-by-com?code_company=${code}`)
           : null;
+
       const resLocation = await MainServices.get(
         `location/list-by-com?code_company=${code}`
       );
-      const resDept = await MainServices.get(`dept/list`);
-      const resProject =
-        isCodeProject === true && keyCodeProject !== null
-          ? await MainServices.get(`project/list`)
+      const resDept = await MainServices.get(
+        `dept/list-dropdown?code_company=${code}`
+      );
+      const resIcp =
+        isCodeIcp === true
+          ? await MainServices.get(`icp/list-dropdown?code_company=${code}`)
           : null;
+      const resProject =
+        isCodeProject === true
+          ? await MainServices.get(`project/list-by-com?code_company=${code}`)
+          : null;
+
+      log("resProject", resProject);
 
       if (resLocation.data.responseCode === 200) {
         setState({
@@ -127,6 +136,7 @@ const FilterComponentLogic = ({
           code_product: resProduct !== null ? setProduct(resProduct) : [],
           code_location: setLocation(resLocation),
           code_dept: setDept(resDept),
+          code_icp: resIcp !== null ? setIcp(resIcp) : [],
           code_project: resProject !== null ? setProject(resProject, code) : [],
         });
       }
@@ -134,90 +144,106 @@ const FilterComponentLogic = ({
   };
 
   const setProduct = (resProduct) => {
-    const formatResProduct = [
-      {
-        title: "all",
-        code: "",
-      },
-    ];
-    resProduct.data.data.forEach((element) => {
-      formatResProduct.push({
-        code: element.code_product,
-        title: element.description,
-      });
-    });
-    return formatResProduct;
+    // const formatResProduct = [];
+    // resProduct.data.data.forEach((element) => {
+    //   formatResProduct.push({
+    //     code: element.code_product,
+    //     title: element.description,
+    //   });
+    // });
+    // return formatResProduct;
+    return resProduct.data.data;
   };
 
   const setLocation = (resLocation) => {
-    const formatResLocation = [
-      {
-        title: "all",
-        code: "",
-      },
-    ];
-    resLocation.data.data.forEach((element) => {
-      formatResLocation.push({
-        code: element.code_location,
-        title: element.description,
-      });
-    });
-    return formatResLocation;
+    // const formatResLocation = [
+    //   {
+    //     title: "all",
+    //     code: "",
+    //   },
+    // ];
+    // resLocation.data.data.forEach((element) => {
+    //   formatResLocation.push({
+    //     code: element.code_location,
+    //     title: element.description,
+    //   });
+    // });
+    // return formatResLocation;
+    return resLocation.data.data;
   };
 
   const setDept = (resDept) => {
-    const formatResDept = [
-      {
-        title: "all",
-        code: "",
-      },
-    ];
-    resDept.data.data.forEach((element) => {
-      formatResDept.push({
-        code: element.code_dept,
-        title: element.description,
-      });
-    });
-    return formatResDept;
+    // const formatResDept = [
+    //   {
+    //     title: "all",
+    //     code: "",
+    //   },
+    // ];
+    // resDept.data.data.forEach((element) => {
+    //   formatResDept.push({
+    //     code: element.code_dept,
+    //     title: element.description,
+    //   });
+    // });
+    // return formatResDept;
+    return resDept.data.data;
+  };
+
+  const setIcp = (resIcp) => {
+    // const formatResIcp = [
+    //   {
+    //     title: "all",
+    //     code: "",
+    //   },
+    // ];
+    // resIcp.data.data.forEach((element) => {
+    //   formatResIcp.push({
+    //     code: element.code_location,
+    //     title: element.description,
+    //   });
+    // });
+    // return formatResIcp;
+    return resIcp.data.data;
   };
 
   const setProject = (resProject, c) => {
-    const formatResProject = [
-      {
-        title: "all",
-        code: "",
-      },
-    ];
-    const data = resProject.data.data;
+    // const formatResProject = [
+    //   {
+    //     title: "all",
+    //     code: "",
+    //   },
+    // ];
+    // const data = resProject.data.data;
 
-    log("dataProject", data);
+    // log("dataProject", data);
 
-    data.forEach((element) => {
-      let perusahaan;
+    // data.forEach((element) => {
+    //   let perusahaan;
 
-      if (keyCodeProject === "default") {
-        if (c === "231") {
-          perusahaan = element.BAND;
-        } else if (c === "241") {
-          perusahaan = element.KIK;
-        } else if (c === "312") {
-          perusahaan = element.BJU;
-        } else if (c === "413") {
-          perusahaan = element.BSB;
-        }
-      } else if (keyCodeProject === "BJU") {
-        perusahaan = element.BJU;
-      }
+    //   if (keyCodeProject === "default") {
+    //     if (c === "231") {
+    //       perusahaan = element.BAND;
+    //     } else if (c === "241") {
+    //       perusahaan = element.KIK;
+    //     } else if (c === "312") {
+    //       perusahaan = element.BJU;
+    //     } else if (c === "413") {
+    //       perusahaan = element.BSB;
+    //     }
+    //   } else if (keyCodeProject === "BJU") {
+    //     perusahaan = element.BJU;
+    //   }
 
-      if (perusahaan === "1") {
-        formatResProject.push({
-          code: element.code_project,
-          title: element.description,
-        });
-      }
-    });
+    //   if (perusahaan === "1") {
+    //     formatResProject.push({
+    //       code: element.code_project,
+    //       title: element.description,
+    //     });
+    //   }
+    // });
 
-    return formatResProject;
+    // return formatResProject;
+    return resProject.data.data;
   };
 
   return {

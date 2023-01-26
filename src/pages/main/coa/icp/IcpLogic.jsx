@@ -106,7 +106,7 @@ const IcpLogic = () => {
   const constantTableColums = [
     {
       title: "Code",
-      dataIndex: "code",
+      dataIndex: "code_icp",
       width: 130,
       editable: true,
       fixed: "left",

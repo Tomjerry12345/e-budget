@@ -20,10 +20,12 @@ const LabaRugiTestingPage = () => {
     window.onresize = getSizeScreen(setSize);
     form.setFieldsValue({
       code_company: `HSI (211)`,
-      code_location: "all",
-      code_dept: "all",
-      code_product: "all",
-      periode: "2022-2023",
+      code_location: "ALL",
+      code_dept: "ALL",
+      code_product: "ALL",
+      code_icp: "ALL",
+      code_project: "ALL",
+      // periode: "2022-2023",
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -42,6 +44,8 @@ const LabaRugiTestingPage = () => {
       <FilterComponent
         onFinish={func.onFinish}
         codeCompany={211}
+        isCodeIcp={true}
+        isCodeProject={true}
         form={form}
         // disabled={true}
       />

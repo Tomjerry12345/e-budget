@@ -6,7 +6,16 @@ import React, {
   useState,
 } from "react";
 import { areEqual, getSizeScreen, log } from "../../../../values/Utilitas";
-import { Table, Form, Input, Select, Button, Spin, InputNumber } from "antd";
+import {
+  Table,
+  Form,
+  Input,
+  Select,
+  Button,
+  Spin,
+  InputNumber,
+  Checkbox,
+} from "antd";
 
 const EditableCell = ({
   editing,
@@ -18,26 +27,57 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  // const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
+  // const inputNode = inputType === "checkbox" ? <CheckBox /> : <Input />;
+  //   if (inputType === "checkbox") {
+  // log("children", children);
+  //   }
+  const inputNode = inputType === "checkbox" ? <Checkbox /> : <Input />;
+  const component =
+    inputType === "checkbox" ? (
+      <Checkbox disabled checked={children[1] === 1} />
+    ) : (
+      children
+    );
   return (
     <td {...restProps}>
       {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
+        inputType === "checkbox" ? (
+          <Form.Item
+            name={dataIndex}
+            valuePropName="checked"
+            style={{
+              margin: 0,
+            }}
+            rules={[
+              {
+                required: true,
+                message: `Please Input ${title}!`,
+              },
+            ]}
+          >
+            {inputNode}
+            {/* <Input /> */}
+          </Form.Item>
+        ) : (
+          <Form.Item
+            name={dataIndex}
+            style={{
+              margin: 0,
+            }}
+            rules={[
+              {
+                required: true,
+                message: `Please Input ${title}!`,
+              },
+            ]}
+          >
+            {inputNode}
+            {/* <Input /> */}
+          </Form.Item>
+        )
       ) : (
-        children
+        component
       )}
     </td>
   );
@@ -71,7 +111,7 @@ const TableInputTypeCoa = ({ dataSource, columns, loading, scroll, form }) => {
             pagination={false}
             size="small"
             // loading={value.loading}
-            scroll={scroll === null ? { y: size.y - 366 } : scroll}
+            scroll={scroll === null ? { y: size.y - 366, x: 1000 } : scroll}
             // showExpandColumn={false}
             defaultExpandAllRows={true}
             rowKey="uuid"

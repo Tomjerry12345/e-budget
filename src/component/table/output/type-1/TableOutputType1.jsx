@@ -1,6 +1,6 @@
 import { Table, Spin } from "antd";
 import { useEffect, useState } from "react";
-import { getSizeScreen } from "../../../../values/Utilitas";
+import { getSizeScreen, log } from "../../../../values/Utilitas";
 
 const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
   const [size, setSize] = useState({
@@ -16,7 +16,15 @@ const TableOutputType1 = ({ dataSource, columns, loading, scroll }) => {
     <>
       {dataSource.length > 1 ? (
         <Table
-          rowClassName="child"
+          rowClassName={(record) => {
+            if (record.type_row === "header") {
+              return "header-type";
+            } else if (record.type_row === "footer") {
+              return "footer-type";
+            } else {
+              return "child";
+            }
+          }}
           bordered
           dataSource={dataSource}
           columns={columns}

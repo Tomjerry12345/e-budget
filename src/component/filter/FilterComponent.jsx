@@ -12,6 +12,7 @@ const AutoCompleteFilter = ({
   value,
   func,
   isCodeProduct,
+  isCodeIcp,
   isCodeProject,
   disabled,
   variant,
@@ -34,14 +35,6 @@ const AutoCompleteFilter = ({
       />
     ) : null}
 
-    {isCodeProject === true ? (
-      <AutoCompleteElement
-        label="Kode Project"
-        name="code_project"
-        value={value.state.code_project}
-      />
-    ) : null}
-
     <AutoCompleteElement
       label="Kode Lokasi"
       name="code_location"
@@ -54,7 +47,23 @@ const AutoCompleteFilter = ({
       value={value.state.code_dept}
     />
 
-    <AutoCompleteElement label="Periode" name="periode" value={periode} />
+    {isCodeIcp ? (
+      <AutoCompleteElement
+        label="Kode Icp"
+        name="code_icp"
+        value={value.state.code_icp}
+      />
+    ) : null}
+
+    {isCodeProject === true ? (
+      <AutoCompleteElement
+        label="Kode Project"
+        name="code_project"
+        value={value.state.code_project}
+      />
+    ) : null}
+
+    {/* <AutoCompleteElement label="Periode" name="periode" value={periode} /> */}
   </>
 );
 
@@ -63,6 +72,7 @@ const AutoCompleteFilter = ({
  * @param {{
  * keyCodeProject: "default" | "BJU";
  * isCodeProject: true | false;
+ * isCodeIcp: true | false;
  * onFinish: const function = () => {};
  * }} props Props for the component
  *
@@ -72,6 +82,7 @@ const FilterComponent = ({
   onFinish,
   isCodeProduct = true,
   isCodeProject = false,
+  isCodeIcp = false,
   keyCodeProject = null,
   form = null,
   codeCompany = null,
@@ -81,6 +92,7 @@ const FilterComponent = ({
   const { value, func } = FilterComponentLogic({
     isCodeProduct,
     isCodeProject,
+    isCodeIcp,
     keyCodeProject,
     codeCompany,
     formGlobal: form,
@@ -108,6 +120,7 @@ const FilterComponent = ({
                 func={func}
                 isCodeProduct={isCodeProduct}
                 isCodeProject={isCodeProject}
+                isCodeIcp={isCodeIcp}
                 disabled={disabled}
                 variant={variant}
               />
