@@ -11,7 +11,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
+import {
+  cekNumber,
+  getSizeScreen,
+  inputTypeTable,
+  log,
+} from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
@@ -107,31 +112,112 @@ const LocationLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
-      width: 130,
+      width: "10px",
       editable: true,
       fixed: "left",
     },
     {
       title: "Description",
       dataIndex: "description",
+      width: "20px",
       editable: true,
+      fixed: "left",
+    },
+    {
+      title: "HK",
+      dataIndex: "HK",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "KIU",
+      dataIndex: "KIU",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "GMM",
+      dataIndex: "GMM",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "KIA",
+      dataIndex: "KIA",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BJU",
+      dataIndex: "BJU",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BLT",
+      dataIndex: "BLT",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BLU",
+      dataIndex: "BLU",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BK",
+      dataIndex: "BK",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BSU",
+      dataIndex: "BSU",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BSB",
+      dataIndex: "BSB",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "KIK",
+      dataIndex: "KIK",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "IKP",
+      dataIndex: "IKP",
+      editable: true,
+      width: "5px",
+    },
+    {
+      title: "BAND",
+      dataIndex: "BAND",
+      editable: true,
+      width: "5px",
     },
     {
       title: "Created At",
       dataIndex: "created_at",
-      editable: true,
-      width: 150,
+      editable: false,
+      width: "10px",
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
-      editable: true,
-      width: 150,
+      editable: false,
+      width: "10px",
     },
     {
       title: "Status",
       dataIndex: "status",
-      width: "5%",
+      width: "6px",
+      fixed: "right",
       render: (_, record) => {
         let rStatus = record.status;
 
@@ -139,6 +225,7 @@ const LocationLogic = () => {
           <Switch
             size="small"
             checked={rStatus === 1}
+            disabled={editingKey !== ""}
             onChange={() => onActive(record)}
           />
         );
@@ -147,14 +234,14 @@ const LocationLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "5%",
+      width: "6px",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code)}
+              onClick={() => save(record.uuid)}
               style={{
                 marginRight: 8,
               }}
@@ -200,7 +287,7 @@ const LocationLogic = () => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === "age" ? "number" : "text",
+        inputType: inputTypeTable(col.dataIndex),
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -235,28 +322,60 @@ const LocationLogic = () => {
       setIsSucces(false);
       setShowPopup(true);
 
-      log("data", data);
       const row = await form.validateFields();
-      // const newData = [...dataColumn];
-      // const data = [...data];
-      // const index = newData.findIndex((item) => key === item.code);
-      const value = data.findIndex((item) => key === item.code_company);
+      log("row", row);
 
-      // const item = newData[index];
+      const code = row["code"];
+      const description = row["description"];
+      const hk = row["HK"] === true ? 1 : row["HK"] === false ? 0 : row["HK"];
+      const kiu =
+        row["KIU"] === true ? 1 : row["KIU"] === false ? 0 : row["KIU"];
+      const gmm =
+        row["GMM"] === true ? 1 : row["GMM"] === false ? 0 : row["GMM"];
+      const kia =
+        row["KIA"] === true ? 1 : row["KIA"] === false ? 0 : row["KIA"];
+      const bju =
+        row["BJU"] === true ? 1 : row["BJU"] === false ? 0 : row["BJU"];
+      const blt =
+        row["BLT"] === true ? 1 : row["BLT"] === false ? 0 : row["BLT"];
+      const blu =
+        row["BLU"] === true ? 1 : row["BLU"] === false ? 0 : row["BLU"];
+      const bk = row["BK"] === true ? 1 : row["BK"] === false ? 0 : row["BK"];
+      const bsu =
+        row["BSU"] === true ? 1 : row["BSU"] === false ? 0 : row["BSU"];
+      const bsb =
+        row["BSB"] === true ? 1 : row["BSB"] === false ? 0 : row["BSB"];
+      const kik =
+        row["KIK"] === true ? 1 : row["KIK"] === false ? 0 : row["KIK"];
+      const ikp =
+        row["IKP"] === true ? 1 : row["IKP"] === false ? 0 : row["IKP"];
+      const band =
+        row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
+
+      const value = data.findIndex((item) => key === item.uuid);
+
       const val = data[value];
-      // newData.splice(index, 1, {
-      //   ...item,
-      //   ...row,
-      // });
-      // setDataColumn(newData);
-
-      // log("editing", row);
+      log("i", value);
+      log("val", val);
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_company", row.code);
+      d.append("code_project", code);
       d.append("code_parent", val.code_parent);
-      d.append("description", row.description);
+      d.append("description", description);
+      d.append("HK", hk);
+      d.append("KIU", kiu);
+      d.append("GMM", gmm);
+      d.append("KIA", kia);
+      d.append("BJU", bju);
+      d.append("BLT", blt);
+      d.append("BLU", blu);
+      d.append("BK", bk);
+      d.append("BSU", bsu);
+      d.append("BSB", bsb);
+      d.append("KIK", kik);
+      d.append("IKP", ikp);
+      d.append("BAND", band);
 
       const res = await MainServices.post("location/update", d);
 
@@ -319,15 +438,6 @@ const LocationLogic = () => {
     setShowPopup(true);
 
     log("row-del", record);
-    // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code);
-    // const val = data[i];
-
-    // log("val", val);
-
-    // setDataColumn(value);
-
-    // log("val", val.uuid);
 
     const res = await MainServices.delete("location/delete", {
       uuid: record.uuid,
@@ -336,51 +446,6 @@ const LocationLogic = () => {
     console.log("res-hapus", res);
 
     onSetDataTable();
-
-    // let test = dataColumn.filter((item) => item.id !== record.id);
-
-    // log("value", test);
-    // log("length-value", test.length);
-    // log("dataColumn-value", dataColumn.length);
-
-    // // if (test.length === dummyData.length) {
-    // //   const list = [];
-    // //   dataColumn.forEach((root) => {
-    // //     if (root.children.length !== 0) {
-    // //       const listCh1 = [];
-
-    // //       // level 1
-    // //       root.children.forEach((ch1) => {
-    // //         log("ch1", ch1);
-    // //         if (ch1.children !== undefined) {
-    // //           log("undefined");
-    // //           listCh1.push(ch1);
-    // //         } else {
-    // //           log("record.id", record.id);
-    // //           log("ch1.id", ch1.id);
-    // //           if (ch1.id !== record.id) {
-    // //             log("test");
-    // //             listCh1.push(ch1);
-    // //           }
-    // //         }
-    // //       });
-
-    // //       log("listCh1", listCh1);
-
-    // //       list.push({
-    // //         id: root.id,
-    // //         uuid: root.uuid,
-    // //         code: root.code,
-    // //         children: listCh1,
-    // //       });
-
-    // //       // list.push(listCh1);
-    // //     }
-    // //   });
-    // //   // test = list;
-    // // }
-
-    // setDataColumn(test);
   };
 
   const onAction = (e, record) => {

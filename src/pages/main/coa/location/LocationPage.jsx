@@ -40,27 +40,6 @@ const LocationPage = () => {
         }}
       />
       <div className="custom-root-layout custom-root-coa">
-        {/* <div className="top-content">
-          <Form className="form-cari" layout="vertical">
-            <Form.Item>
-              <Input placeholder="Cari data di sini..." />
-            </Form.Item>
-            <Button className="btn-cari" type="primary">
-              Cari
-            </Button>
-          </Form>
-
-          <div className="layout-btn-action">
-            <Button
-              className="btn-update"
-              type="primary"
-              icon={<UploadOutlined className="custom-icon" />}
-              onClick={func.onOpenUploadModal}
-            >
-              Update
-            </Button>
-          </div>
-        </div> */}
         <TableComponent
           variant="input"
           type="coa"
@@ -69,6 +48,7 @@ const LocationPage = () => {
           loading={value.loading}
           scroll={{
             y: value.size.y - 200,
+            x: 900,
           }}
           form={value.form}
         />
