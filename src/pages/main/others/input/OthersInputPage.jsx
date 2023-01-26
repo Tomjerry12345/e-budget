@@ -43,7 +43,12 @@ const othersInputPage = () => {
         // form={value.form}
       />
 
-      <FilterComponent onFinish={func.onFinish} form={value.form} />
+      <FilterComponent
+        onFinish={func.onFinish}
+        form={value.form}
+        isCodeIcp
+        isCodeProject
+      />
 
       <div className="custom-root-layout">
         <TableComponent

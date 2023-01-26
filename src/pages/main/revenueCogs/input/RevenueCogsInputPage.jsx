@@ -35,7 +35,7 @@ const RevenueCogsInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent onFinish={func.onFinish} />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
         {/* {value.dataColumnInput.length > 1 ? (

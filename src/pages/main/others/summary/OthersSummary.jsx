@@ -20,7 +20,12 @@ const OthersSummary = () => {
         disabledImportExport={value.dataColumn.length <= 1}
       />
 
-      <FilterComponent onFinish={func.onFinish} form={value.form} />
+      <FilterComponent
+        onFinish={func.onFinish}
+        form={value.form}
+        isCodeIcp
+        isCodeProject
+      />
 
       <div className="custom-root-layout">
         {/* <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
