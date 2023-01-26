@@ -182,7 +182,14 @@ const OthersSummaryLogic = () => {
 
   const onSetDataTable = (values) => {
     // setDataColumn(constantDataTable[itemPage]);
-    const { code_company, code_dept, code_location, code_product } = values;
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_icp,
+      code_project,
+    } = values;
 
     let url;
     const type = 2;
@@ -194,13 +201,18 @@ const OthersSummaryLogic = () => {
       let fCodeProduct = code_product.replace(/[^0-9]/g, "");
       let fCodeLocation = code_location.replace(/[^0-9]/g, "");
       let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+      let fCodeIcp = code_icp.replace(/[^0-9]/g, "");
+      let fCodeProject = code_project.replace(/[^0-9]/g, "");
 
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
+      fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
+      fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
+      fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
+      fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
+      fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
 
-      url = `${endPoint[itemPage]}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
+      log("fCodeProduct", fCodeProduct);
+
+      url = `${endPoint[itemPage]}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
     }
 
     log("url", url);
