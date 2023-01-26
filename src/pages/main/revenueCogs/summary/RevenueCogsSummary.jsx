@@ -19,7 +19,7 @@ const RevenueCogsSummary = () => {
         disabledImportExport={value.dataColumn.length <= 1}
       />
 
-      <FilterComponent onFinish={func.onFinish} />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
         <TableComponent

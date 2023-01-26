@@ -33,7 +33,7 @@ const MppInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent onFinish={func.onFinish} />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
         <TableComponent
