@@ -17,7 +17,7 @@ const LabaRugiTestingLogic = () => {
   let params = useParams();
 
   useEffect(() => {
-    loadData(codeCompany, "ALL", "ALL", "ALL");
+    loadData(codeCompany, "all", "all", "all", "all", "all");
   }, []);
 
   const onFinish = async (values) => {
@@ -41,6 +41,12 @@ const LabaRugiTestingLogic = () => {
     let fCodeIcp = code_icp.replace(/[^0-9]/g, "000");
     let fCodeProject = code_project.replace(/[^0-9]/g, "000");
 
+    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
+    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
+    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
+    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
+    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
+
     log("fCodeProject", fCodeProject);
 
     loadData(
@@ -57,6 +63,9 @@ const LabaRugiTestingLogic = () => {
       code_dept: fCodeDept,
       code_location: fCodeLocation,
       code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
     });
   };
 
