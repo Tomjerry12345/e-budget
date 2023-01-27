@@ -4,9 +4,7 @@ import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn"
 import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
-const rootEndpoint = "report/newlabarugi";
-
-const LabaRugiTestingLogic = () => {
+const LabaRugiLogic = () => {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState();
   const [loading, setLoading] = useState(false);
@@ -17,55 +15,28 @@ const LabaRugiTestingLogic = () => {
   let params = useParams();
 
   useEffect(() => {
-    loadData(codeCompany, "all", "all", "all", "all", "all");
+    loadData(codeCompany, "all", "all", "all");
   }, []);
 
   const onFinish = async (values) => {
     setLoading(true);
 
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-    } = values;
+    const { code_company, code_dept, code_location, code_product } = values;
 
     // alert("test");
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "000");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "000");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "000");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "000");
-    let fCodeIcp = code_icp.replace(/[^0-9]/g, "000");
-    let fCodeProject = code_project.replace(/[^0-9]/g, "000");
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
 
-    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
-    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
-    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
-    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
-    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
-
-    log("fCodeProject", fCodeProject);
-
-    loadData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject
-    );
+    loadData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
 
     setCodeFilter({
       code_company: fCodeCompany,
       code_dept: fCodeDept,
       code_location: fCodeLocation,
       code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
     });
   };
 
@@ -73,11 +44,9 @@ const LabaRugiTestingLogic = () => {
     fCodeCompany,
     fCodeProduct,
     fCodeLocation,
-    fCodeDept,
-    fCodeIcp,
-    fCodeProject
+    fCodeDept
   ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
+    const url = `report/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}`;
 
     const { data } = await MainServices.get(url);
     log("res", data);
@@ -97,10 +66,8 @@ const LabaRugiTestingLogic = () => {
       list.push({
         account: val.code,
         description: val.description,
-        description: val.description,
-        type_row: val.type_row,
-        value_1: v1 === "NaN" ? "" : v1,
-        value_2: v2 === "NaN" ? "" : v2,
+        value_1: v1 === "NaN" ? "-" : v1,
+        value_2: v2 === "NaN" ? "-" : v2,
       });
     });
     setData(list);
@@ -128,4 +95,4 @@ const LabaRugiTestingLogic = () => {
   };
 };
 
-export default LabaRugiTestingLogic;
+export default LabaRugiLogic;

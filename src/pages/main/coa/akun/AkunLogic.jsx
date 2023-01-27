@@ -35,42 +35,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const AkunLogic = () => {
   const navigate = useNavigate();
 
@@ -128,22 +92,22 @@ const AkunLogic = () => {
       editable: true,
       width: 150,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      width: "5%",
-      render: (_, record) => {
-        let rStatus = record.status;
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   width: "5%",
+    //   render: (_, record) => {
+    //     let rStatus = record.status;
 
-        return (
-          <Switch
-            size="small"
-            checked={rStatus === 1}
-            onChange={() => onActive(record)}
-          />
-        );
-      },
-    },
+    //     return (
+    //       <Switch
+    //         size="small"
+    //         checked={rStatus === 1}
+    //         onChange={() => onActive(record)}
+    //       />
+    //     );
+    //   },
+    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -465,28 +429,28 @@ const AkunLogic = () => {
     setDataColumn(list);
   };
 
-  const onActive = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+  // const onActive = async (record) => {
+  //   setIsSucces(false);
+  //   setShowPopup(true);
 
-    log("record.status", record.status);
+  //   log("record.status", record.status);
 
-    const f = new FormData();
+  //   const f = new FormData();
 
-    f.append("uuid", record.uuid);
+  //   f.append("uuid", record.uuid);
 
-    if (record.status === 0) {
-      const res = await MainServices.post("account/active", f);
+  //   if (record.status === 0) {
+  //     const res = await MainServices.post("account/active", f);
 
-      console.log("res-hapus", res);
-    } else {
-      const res = await MainServices.post("account/unactive", f);
+  //     console.log("res-hapus", res);
+  //   } else {
+  //     const res = await MainServices.post("account/unactive", f);
 
-      console.log("res-hapus", res);
-    }
+  //     console.log("res-hapus", res);
+  //   }
 
-    onSetDataTable();
-  };
+  //   onSetDataTable();
+  // };
 
   const onTambahData = async (values) => {
     const { code_account, code_parent, description } = values;

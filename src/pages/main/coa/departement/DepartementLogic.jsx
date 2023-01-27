@@ -128,22 +128,22 @@ const DepartementLogic = () => {
       editable: true,
       width: 150,
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      width: "5%",
-      render: (_, record) => {
-        let rStatus = record.status;
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   width: "5%",
+    //   render: (_, record) => {
+    //     let rStatus = record.status;
 
-        return (
-          <Switch
-            size="small"
-            checked={rStatus === 1}
-            onChange={() => onActive(record)}
-          />
-        );
-      },
-    },
+    //     return (
+    //       <Switch
+    //         size="small"
+    //         checked={rStatus === 1}
+    //         onChange={() => onActive(record)}
+    //       />
+    //     );
+    //   },
+    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -225,8 +225,8 @@ const DepartementLogic = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onGetListCompany = async () => {
-    const { data } = await MainServices.get("product/list");
-    log("product/list", data.data);
+    const { data } = await MainServices.get("dept/list");
+    log("dept/list", data.data);
     setData(data.data);
   };
 
@@ -237,20 +237,9 @@ const DepartementLogic = () => {
 
       log("data", data);
       const row = await form.validateFields();
-      // const newData = [...dataColumn];
-      // const data = [...data];
-      // const index = newData.findIndex((item) => key === item.code);
       const value = data.findIndex((item) => key === item.code_company);
 
-      // const item = newData[index];
       const val = data[value];
-      // newData.splice(index, 1, {
-      //   ...item,
-      //   ...row,
-      // });
-      // setDataColumn(newData);
-
-      // log("editing", row);
 
       const d = new FormData();
       d.append("uuid", val.uuid);
@@ -265,37 +254,6 @@ const DepartementLogic = () => {
       onSetDataTable();
 
       setEditingKey("");
-      // if (index > -1) {
-      //   setIsSucces(false);
-      //   setShowPopup(true);
-      //   // const item = newData[index];
-      //   const val = data[value];
-      //   // newData.splice(index, 1, {
-      //   //   ...item,
-      //   //   ...row,
-      //   // });
-      //   // setDataColumn(newData);
-
-      //   // log("editing", row);
-
-      //   const d = new FormData();
-      //   d.append("uuid", val.uuid);
-      //   d.append("code_company", row.code);
-      //   d.append("code_parent", val.code_parent);
-      //   d.append("description", row.description);
-
-      //   const res = await MainServices.post("company/update", d);
-
-      //   console.log("res-edit", res);
-
-      //   onSetDataTable();
-
-      //   setEditingKey("");
-      // } else {
-      //   newData.push(row);
-      //   setDataColumn(newData);
-      //   setEditingKey("");
-      // }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -319,15 +277,6 @@ const DepartementLogic = () => {
     setShowPopup(true);
 
     log("row-del", record);
-    // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code);
-    // const val = data[i];
-
-    // log("val", val);
-
-    // setDataColumn(value);
-
-    // log("val", val.uuid);
 
     const res = await MainServices.delete("dept/delete", {
       uuid: record.uuid,
@@ -336,51 +285,6 @@ const DepartementLogic = () => {
     console.log("res-hapus", res);
 
     onSetDataTable();
-
-    // let test = dataColumn.filter((item) => item.id !== record.id);
-
-    // log("value", test);
-    // log("length-value", test.length);
-    // log("dataColumn-value", dataColumn.length);
-
-    // // if (test.length === dummyData.length) {
-    // //   const list = [];
-    // //   dataColumn.forEach((root) => {
-    // //     if (root.children.length !== 0) {
-    // //       const listCh1 = [];
-
-    // //       // level 1
-    // //       root.children.forEach((ch1) => {
-    // //         log("ch1", ch1);
-    // //         if (ch1.children !== undefined) {
-    // //           log("undefined");
-    // //           listCh1.push(ch1);
-    // //         } else {
-    // //           log("record.id", record.id);
-    // //           log("ch1.id", ch1.id);
-    // //           if (ch1.id !== record.id) {
-    // //             log("test");
-    // //             listCh1.push(ch1);
-    // //           }
-    // //         }
-    // //       });
-
-    // //       log("listCh1", listCh1);
-
-    // //       list.push({
-    // //         id: root.id,
-    // //         uuid: root.uuid,
-    // //         code: root.code,
-    // //         children: listCh1,
-    // //       });
-
-    // //       // list.push(listCh1);
-    // //     }
-    // //   });
-    // //   // test = list;
-    // // }
-
-    // setDataColumn(test);
   };
 
   const onAction = (e, record) => {
@@ -465,28 +369,28 @@ const DepartementLogic = () => {
     setDataColumn(list);
   };
 
-  const onActive = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+  // const onActive = async (record) => {
+  //   setIsSucces(false);
+  //   setShowPopup(true);
 
-    log("record.status", record.status);
+  //   log("record.status", record.status);
 
-    const f = new FormData();
+  //   const f = new FormData();
 
-    f.append("uuid", record.uuid);
+  //   f.append("uuid", record.uuid);
 
-    if (record.status === 0) {
-      const res = await MainServices.post("dept/active", f);
+  //   if (record.status === 0) {
+  //     const res = await MainServices.post("dept/active", f);
 
-      console.log("res-hapus", res);
-    } else {
-      const res = await MainServices.post("dept/unactive", f);
+  //     console.log("res-hapus", res);
+  //   } else {
+  //     const res = await MainServices.post("dept/unactive", f);
 
-      console.log("res-hapus", res);
-    }
+  //     console.log("res-hapus", res);
+  //   }
 
-    onSetDataTable();
-  };
+  //   onSetDataTable();
+  // };
 
   const onTambahData = async (values) => {
     const { code_dept, code_parent, description } = values;

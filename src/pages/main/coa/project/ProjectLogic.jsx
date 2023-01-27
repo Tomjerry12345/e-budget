@@ -213,24 +213,24 @@ const ProjectLogic = () => {
       editable: false,
       width: "10px",
     },
-    {
-      title: "Status",
-      dataIndex: "status",
-      width: "6px",
-      fixed: "right",
-      render: (_, record) => {
-        let rStatus = record.status;
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   width: "6px",
+    //   fixed: "right",
+    //   render: (_, record) => {
+    //     let rStatus = record.status;
 
-        return (
-          <Switch
-            size="small"
-            checked={rStatus === 1}
-            disabled={editingKey !== ""}
-            onChange={() => onActive(record)}
-          />
-        );
-      },
-    },
+    //     return (
+    //       <Switch
+    //         size="small"
+    //         checked={rStatus === 1}
+    //         disabled={editingKey !== ""}
+    //         onChange={() => onActive(record)}
+    //       />
+    //     );
+    //   },
+    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -555,31 +555,31 @@ const ProjectLogic = () => {
     setDataColumn(list);
   };
 
-  const onActive = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+  // const onActive = async (record) => {
+  //   setIsSucces(false);
+  //   setShowPopup(true);
 
-    log("record.status", record.status);
+  //   log("record.status", record.status);
 
-    try {
-    } catch (error) {}
+  //   try {
+  //   } catch (error) {}
 
-    const f = new FormData();
+  //   const f = new FormData();
 
-    f.append("uuid", record.uuid);
+  //   f.append("uuid", record.uuid);
 
-    if (record.status === 0) {
-      const res = await MainServices.post("project/active", f);
+  //   if (record.status === 0) {
+  //     const res = await MainServices.post("project/active", f);
 
-      console.log("res-hapus", res);
-    } else {
-      const res = await MainServices.post("project/unactive", f);
+  //     console.log("res-hapus", res);
+  //   } else {
+  //     const res = await MainServices.post("project/unactive", f);
 
-      console.log("res-hapus", res);
-    }
+  //     console.log("res-hapus", res);
+  //   }
 
-    onSetDataTable();
-  };
+  //   onSetDataTable();
+  // };
 
   const onTambahData = async (values) => {
     const { code_company, code_parent, description } = values;
