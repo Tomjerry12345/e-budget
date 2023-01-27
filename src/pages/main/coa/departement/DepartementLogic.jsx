@@ -254,7 +254,7 @@ const DepartementLogic = () => {
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_company", row.code);
+      d.append("code_dept", row.code);
       d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 
@@ -329,7 +329,7 @@ const DepartementLogic = () => {
 
     // log("val", val.uuid);
 
-    const res = await MainServices.delete("product/delete", {
+    const res = await MainServices.delete("dept/delete", {
       uuid: record.uuid,
     });
 
@@ -476,11 +476,11 @@ const DepartementLogic = () => {
     f.append("uuid", record.uuid);
 
     if (record.status === 0) {
-      const res = await MainServices.post("product/active", f);
+      const res = await MainServices.post("dept/active", f);
 
       console.log("res-hapus", res);
     } else {
-      const res = await MainServices.post("product/unactive", f);
+      const res = await MainServices.post("dept/unactive", f);
 
       console.log("res-hapus", res);
     }
@@ -489,14 +489,14 @@ const DepartementLogic = () => {
   };
 
   const onTambahData = async (values) => {
-    const { code_company, code_parent, description } = values;
+    const { code_dept, code_parent, description } = values;
 
     const f = new FormData();
-    f.append("code_company", code_company);
+    f.append("code_dept", code_dept);
     f.append("code_parent", code_parent);
     f.append("description", description);
 
-    const res = await MainServices.post("product/add", f);
+    const res = await MainServices.post("dept/add", f);
 
     log("res-tambah", res);
 

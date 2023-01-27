@@ -254,7 +254,7 @@ const IcpLogic = () => {
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_company", row.code);
+      d.append("code_icp", row.code);
       d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 

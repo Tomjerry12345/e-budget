@@ -254,7 +254,7 @@ const AkunLogic = () => {
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_company", row.code);
+      d.append("code_account", row.code);
       d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 
@@ -489,10 +489,10 @@ const AkunLogic = () => {
   };
 
   const onTambahData = async (values) => {
-    const { code_company, code_parent, description } = values;
+    const { code_account, code_parent, description } = values;
 
     const f = new FormData();
-    f.append("code_company", code_company);
+    f.append("code_account", code_account);
     f.append("code_parent", code_parent);
     f.append("description", description);
 

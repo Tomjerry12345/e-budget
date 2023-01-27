@@ -523,6 +523,7 @@ const ProductLogic = () => {
   };
 
   const onTambahData = async (values) => {
+    log("values", values);
     const { code_company, code_parent, description } = values;
 
     const f = new FormData();

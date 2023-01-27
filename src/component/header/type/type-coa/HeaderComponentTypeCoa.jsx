@@ -51,6 +51,7 @@ const HeaderComponentTypeCoa = ({
   inputSearch,
   onTambahData,
   onChangeTambahData,
+  inputTambah,
 }) => {
   const { value, func } = HeaderComponentTypeCoaLogic({
     onChangeTambahData,
@@ -103,6 +104,7 @@ const HeaderComponentTypeCoa = ({
         open={value.isTambahData}
         onCancel={func.onCloseTambahData}
         onFinish={onTambahData}
+        inputTambah={inputTambah}
         // value={accesFile}
         // onOk={onUploadFile}
         // file={downloadFile}
