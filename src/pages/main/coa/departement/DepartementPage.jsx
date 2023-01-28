@@ -38,29 +38,25 @@ const DepartementPage = () => {
             func.setIsTambah(null);
           }
         }}
+        inputTambah={[
+          {
+            label: "Code Dept",
+            name: "code_dept",
+            type: "input",
+          },
+          {
+            label: "Code Parent",
+            name: "code_parent",
+            type: "input",
+          },
+          {
+            label: "Description",
+            name: "description",
+            type: "textarea",
+          },
+        ]}
       />
       <div className="custom-root-layout custom-root-coa">
-        {/* <div className="top-content">
-          <Form className="form-cari" layout="vertical">
-            <Form.Item>
-              <Input placeholder="Cari data di sini..." />
-            </Form.Item>
-            <Button className="btn-cari" type="primary">
-              Cari
-            </Button>
-          </Form>
-
-          <div className="layout-btn-action">
-            <Button
-              className="btn-update"
-              type="primary"
-              icon={<UploadOutlined className="custom-icon" />}
-              onClick={func.onOpenUploadModal}
-            >
-              Update
-            </Button>
-          </div>
-        </div> */}
         <TableComponent
           variant="input"
           type="coa"

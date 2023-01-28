@@ -4,10 +4,10 @@ import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import { getSizeScreen } from "../../../../values/Utilitas";
-import LabaRugiLogic from "./LabaRugiLogic";
+import LabaRugiTestingLogic from "./LabaRugiLogic";
 
 const LabaRugiPage = () => {
-  const { value, func } = LabaRugiLogic();
+  const { value, func } = LabaRugiTestingLogic();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -20,10 +20,12 @@ const LabaRugiPage = () => {
     window.onresize = getSizeScreen(setSize);
     form.setFieldsValue({
       code_company: `HSI (211)`,
-      code_location: "all",
-      code_dept: "all",
-      code_product: "all",
-      periode: "2022-2023",
+      code_location: "ALL",
+      code_dept: "ALL",
+      code_product: "ALL",
+      code_icp: "ALL",
+      code_project: "ALL",
+      // periode: "2022-2023",
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -42,6 +44,8 @@ const LabaRugiPage = () => {
       <FilterComponent
         onFinish={func.onFinish}
         codeCompany={211}
+        isCodeIcp={true}
+        isCodeProject={true}
         form={form}
         // disabled={true}
       />

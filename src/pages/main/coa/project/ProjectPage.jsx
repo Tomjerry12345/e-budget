@@ -38,6 +38,23 @@ const ProjectPage = () => {
             func.setIsTambah(null);
           }
         }}
+        inputTambah={[
+          {
+            label: "Code Project",
+            name: "code_location",
+            type: "input",
+          },
+          {
+            label: "Code Parent",
+            name: "code_parent",
+            type: "input",
+          },
+          {
+            label: "Description",
+            name: "description",
+            type: "textarea",
+          },
+        ]}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent

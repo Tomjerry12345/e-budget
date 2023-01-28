@@ -22,8 +22,16 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-const TambahDataCoaModal = ({ open, onCancel, onFinish }) => {
+const TambahDataCoaModal = ({ open, onCancel, onFinish, inputTambah }) => {
   // const
+
+  const typeForm = (type) => {
+    if (type === "input") {
+      return <Input />;
+    } else if (type === "textarea") {
+      return <Input.TextArea rows={4} />;
+    }
+  };
   return (
     <Modal
       open={open}
@@ -40,7 +48,23 @@ const TambahDataCoaModal = ({ open, onCancel, onFinish }) => {
           autoComplete="on"
           layout="vertical"
         >
-          <Form.Item
+          {inputTambah.map((val) => (
+            <Form.Item
+              label={val.label}
+              name={val.name}
+              rules={[
+                {
+                  required: true,
+                  message: `${val.label} tidak boleh kosong!`,
+                },
+              ]}
+            >
+              {typeForm(val.type)}
+              {/* <Input /> */}
+            </Form.Item>
+          ))}
+
+          {/* <Form.Item
             label="Code Company"
             name="code_company"
             rules={[
@@ -65,6 +89,7 @@ const TambahDataCoaModal = ({ open, onCancel, onFinish }) => {
           >
             <Input />
           </Form.Item>
+
           <Form.Item
             label="Description"
             name="description"
@@ -76,7 +101,8 @@ const TambahDataCoaModal = ({ open, onCancel, onFinish }) => {
             ]}
           >
             <Input.TextArea rows={4} />
-          </Form.Item>
+          </Form.Item> */}
+
           <Form.Item>
             <div className="footer-custom">
               <Button className="btn-cancel" type="text" onClick={onCancel}>

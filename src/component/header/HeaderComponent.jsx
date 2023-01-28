@@ -25,6 +25,7 @@ const HeaderComponent = ({
   keyCodeProject,
   inputSearch,
   onTambahData,
+  inputTambah,
 }) => {
   let component;
 
@@ -109,6 +110,7 @@ const HeaderComponent = ({
         inputSearch={inputSearch}
         onTambahData={onTambahData}
         onChangeTambahData={onChangeTambahData}
+        inputTambah={inputTambah}
       />
     );
   }
