@@ -119,13 +119,13 @@ const DepartementLogic = () => {
     {
       title: "Created At",
       dataIndex: "created_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     // {
@@ -296,8 +296,8 @@ const DepartementLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("product/list-tree");
-    log("product/list-tree", data.data);
+    const { data } = await MainServices.get("dept/list-tree");
+    log("dept/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
 

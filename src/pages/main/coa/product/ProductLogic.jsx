@@ -355,12 +355,14 @@ const ProductLogic = () => {
       const value = data.findIndex((item) => key === item.uuid);
 
       const val = data[value];
-      log("i", value);
-      log("val", val);
+      // log("i", value);
+      // log("val", val);
+      log("val.code_parent", val.code_parent);
+      log("val.uuid", val.uuid);
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_project", code);
+      d.append("code_product", code);
       d.append("code_parent", val.code_parent);
       d.append("description", description);
       d.append("HK", hk);
@@ -524,10 +526,10 @@ const ProductLogic = () => {
 
   const onTambahData = async (values) => {
     log("values", values);
-    const { code_company, code_parent, description } = values;
+    const { code_product, code_parent, description } = values;
 
     const f = new FormData();
-    f.append("code_company", code_company);
+    f.append("code_product", code_product);
     f.append("code_parent", code_parent);
     f.append("description", description);
 

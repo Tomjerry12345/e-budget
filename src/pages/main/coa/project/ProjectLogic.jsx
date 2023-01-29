@@ -40,42 +40,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const ProjectLogic = () => {
   const navigate = useNavigate();
 
@@ -319,8 +283,6 @@ const ProjectLogic = () => {
 
   const save = async (key) => {
     try {
-      // comment
-
       setIsSucces(false);
       setShowPopup(true);
 
@@ -409,15 +371,6 @@ const ProjectLogic = () => {
     setShowPopup(true);
 
     log("row-del", record);
-    // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code);
-    // const val = data[i];
-
-    // log("val", val);
-
-    // setDataColumn(value);
-
-    // log("val", val.uuid);
 
     const res = await MainServices.delete("project/delete", {
       uuid: record.uuid,
@@ -426,51 +379,6 @@ const ProjectLogic = () => {
     console.log("res-hapus", res);
 
     onSetDataTable();
-
-    // let test = dataColumn.filter((item) => item.id !== record.id);
-
-    // log("value", test);
-    // log("length-value", test.length);
-    // log("dataColumn-value", dataColumn.length);
-
-    // // if (test.length === dummyData.length) {
-    // //   const list = [];
-    // //   dataColumn.forEach((root) => {
-    // //     if (root.children.length !== 0) {
-    // //       const listCh1 = [];
-
-    // //       // level 1
-    // //       root.children.forEach((ch1) => {
-    // //         log("ch1", ch1);
-    // //         if (ch1.children !== undefined) {
-    // //           log("undefined");
-    // //           listCh1.push(ch1);
-    // //         } else {
-    // //           log("record.id", record.id);
-    // //           log("ch1.id", ch1.id);
-    // //           if (ch1.id !== record.id) {
-    // //             log("test");
-    // //             listCh1.push(ch1);
-    // //           }
-    // //         }
-    // //       });
-
-    // //       log("listCh1", listCh1);
-
-    // //       list.push({
-    // //         id: root.id,
-    // //         uuid: root.uuid,
-    // //         code: root.code,
-    // //         children: listCh1,
-    // //       });
-
-    // //       // list.push(listCh1);
-    // //     }
-    // //   });
-    // //   // test = list;
-    // // }
-
-    // setDataColumn(test);
   };
 
   const onAction = (e, record) => {
@@ -582,10 +490,10 @@ const ProjectLogic = () => {
   // };
 
   const onTambahData = async (values) => {
-    const { code_company, code_parent, description } = values;
+    const { code_project, code_parent, description } = values;
 
     const f = new FormData();
-    f.append("code_company", code_company);
+    f.append("code_project", code_project);
     f.append("code_parent", code_parent);
     f.append("description", description);
 

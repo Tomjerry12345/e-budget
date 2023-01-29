@@ -83,13 +83,13 @@ const AkunLogic = () => {
     {
       title: "Created At",
       dataIndex: "created_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     // {
@@ -201,20 +201,8 @@ const AkunLogic = () => {
 
       log("data", data);
       const row = await form.validateFields();
-      // const newData = [...dataColumn];
-      // const data = [...data];
-      // const index = newData.findIndex((item) => key === item.code);
-      const value = data.findIndex((item) => key === item.code_company);
-
-      // const item = newData[index];
+      const value = data.findIndex((item) => key === item.code_account);
       const val = data[value];
-      // newData.splice(index, 1, {
-      //   ...item,
-      //   ...row,
-      // });
-      // setDataColumn(newData);
-
-      // log("editing", row);
 
       const d = new FormData();
       d.append("uuid", val.uuid);
@@ -229,37 +217,6 @@ const AkunLogic = () => {
       onSetDataTable();
 
       setEditingKey("");
-      // if (index > -1) {
-      //   setIsSucces(false);
-      //   setShowPopup(true);
-      //   // const item = newData[index];
-      //   const val = data[value];
-      //   // newData.splice(index, 1, {
-      //   //   ...item,
-      //   //   ...row,
-      //   // });
-      //   // setDataColumn(newData);
-
-      //   // log("editing", row);
-
-      //   const d = new FormData();
-      //   d.append("uuid", val.uuid);
-      //   d.append("code_company", row.code);
-      //   d.append("code_parent", val.code_parent);
-      //   d.append("description", row.description);
-
-      //   const res = await MainServices.post("company/update", d);
-
-      //   console.log("res-edit", res);
-
-      //   onSetDataTable();
-
-      //   setEditingKey("");
-      // } else {
-      //   newData.push(row);
-      //   setDataColumn(newData);
-      //   setEditingKey("");
-      // }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -460,7 +417,7 @@ const AkunLogic = () => {
     f.append("code_parent", code_parent);
     f.append("description", description);
 
-    const res = await MainServices.post("account/add", f);
+    const res = await MainServices.post("account/insert", f);
 
     log("res-tambah", res);
 

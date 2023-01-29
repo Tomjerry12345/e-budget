@@ -3,3 +3,12 @@ version: v1.4.6 ✅ ❌
 issue:
 
 - band bermasalah
+- master lokasi get bermasalah
+- master departement get bermasalah
+- tambah di master account bermasalah
+- edit master project bermasalah / fe
+
+fix:
+
+- product edit, delete, tambah
+- 
