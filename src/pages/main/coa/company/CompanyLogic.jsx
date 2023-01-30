@@ -119,13 +119,13 @@ const CompanyLogic = () => {
     {
       title: "Created At",
       dataIndex: "created_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     {
@@ -134,10 +134,12 @@ const CompanyLogic = () => {
       width: "5%",
       render: (_, record) => {
         let rStatus = record.status;
+        const editable = isEditing(record);
 
         return (
           <Switch
             size="small"
+            disabled={editingKey !== ""}
             checked={rStatus === 1}
             onChange={() => onActive(record)}
           />
