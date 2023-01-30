@@ -44,11 +44,11 @@ const IcpPage = () => {
             name: "code_icp",
             type: "input",
           },
-          {
-            label: "Code Parent",
-            name: "code_parent",
-            type: "input",
-          },
+          // {
+          //   label: "Code Parent",
+          //   name: "code_parent",
+          //   type: "input",
+          // },
           {
             label: "Description",
             name: "description",

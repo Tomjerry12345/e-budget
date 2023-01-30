@@ -3,10 +3,10 @@ import TableComponent from "../../../../component/table/TableComponent";
 import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
-import DepartementLogic from "./ProjectLogic";
+import ProjectLogic from "./ProjectLogic";
 
 const ProjectPage = () => {
-  const { value, func } = DepartementLogic();
+  const { value, func } = ProjectLogic();
   return (
     <>
       <HeaderComponent
@@ -41,7 +41,7 @@ const ProjectPage = () => {
         inputTambah={[
           {
             label: "Code Project",
-            name: "code_location",
+            name: "code_project",
             type: "input",
           },
           {

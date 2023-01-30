@@ -83,13 +83,13 @@ const IcpLogic = () => {
     {
       title: "Created At",
       dataIndex: "created_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
-      editable: true,
+      editable: false,
       width: 150,
     },
     // {
@@ -205,10 +205,12 @@ const IcpLogic = () => {
 
       const val = data[value];
 
+      log("row", row);
+
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_icp", row.code);
-      d.append("code_parent", val.code_parent);
+      d.append("code_icp", row.code_icp);
+      // d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 
       const res = await MainServices.post("icp/update", d);
@@ -216,6 +218,8 @@ const IcpLogic = () => {
       console.log("res-edit", res);
 
       onSetDataTable();
+
+      setEditingKey("");
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -353,11 +357,11 @@ const IcpLogic = () => {
   };
 
   const onTambahData = async (values) => {
-    const { code_company, code_parent, description } = values;
+    const { code_icp, description } = values;
 
     const f = new FormData();
-    f.append("code_company", code_company);
-    f.append("code_parent", code_parent);
+    f.append("code_icp", code_icp);
+    // f.append("code_parent", code_parent);
     f.append("description", description);
 
     const res = await MainServices.post("icp/add", f);
