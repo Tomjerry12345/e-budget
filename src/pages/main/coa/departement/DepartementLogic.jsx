@@ -35,42 +35,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const DepartementLogic = () => {
   const navigate = useNavigate();
 
@@ -78,16 +42,7 @@ const DepartementLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -98,6 +53,7 @@ const DepartementLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -106,7 +62,7 @@ const DepartementLogic = () => {
   const constantTableColums = [
     {
       title: "Code",
-      dataIndex: "code",
+      dataIndex: "code_dept",
       width: 130,
       editable: true,
       fixed: "left",
@@ -154,7 +110,7 @@ const DepartementLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code)}
+              onClick={() => save(record.code_dept)}
               style={{
                 marginRight: 8,
               }}
@@ -220,34 +176,27 @@ const DepartementLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("dept/list");
-    log("dept/list", data.data);
-    setData(data.data);
-  };
-
   const save = async (key) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
-      log("data", data);
       const row = await form.validateFields();
-      const value = data.findIndex((item) => key === item.code_company);
+      const i = dataColumn.findIndex((item) => key === item.code_dept);
 
-      const val = data[value];
+      const val = dataColumn[i];
 
       const d = new FormData();
       d.append("uuid", val.uuid);
-      d.append("code_dept", row.code);
-      d.append("code_parent", val.code_parent);
+      d.append("code_dept", row.code_dept);
       d.append("description", row.description);
 
-      const res = await MainServices.post("product/update", d);
+      // log("row", row);
+
+      const res = await MainServices.post("dept/update", d);
+
+      setIsSucces(false);
+      setShowPopup(true);
 
       console.log("res-edit", res);
 
@@ -256,6 +205,7 @@ const DepartementLogic = () => {
       setEditingKey("");
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
     }
   };
 
@@ -288,7 +238,6 @@ const DepartementLogic = () => {
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -296,7 +245,7 @@ const DepartementLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("dept/list-tree");
+    const { data } = await MainServices.get("dept/list");
     log("dept/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
@@ -338,35 +287,25 @@ const DepartementLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`dept/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`product/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`product/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
-          code: val.code_company,
+          uuid: val.uuid,
+          code_dept: val.code_dept,
           description: val.description,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
-    }
 
-    setDataColumn(list);
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   // const onActive = async (record) => {
@@ -393,20 +332,28 @@ const DepartementLogic = () => {
   // };
 
   const onTambahData = async (values) => {
-    const { code_dept, code_parent, description } = values;
+    const { code_dept, description } = values;
 
-    const f = new FormData();
-    f.append("code_dept", code_dept);
-    f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_dept", code_dept);
+      f.append("description", description);
 
-    const res = await MainServices.post("dept/add", f);
+      const res = await MainServices.post("dept/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
+
+      formTambah.setFieldsValue({
+        code_dept: "",
+        description: "",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return {
@@ -417,13 +364,13 @@ const DepartementLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,

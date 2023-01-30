@@ -40,42 +40,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const LocationLogic = () => {
   const navigate = useNavigate();
 
@@ -83,16 +47,7 @@ const LocationLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -103,6 +58,7 @@ const LocationLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -213,24 +169,6 @@ const LocationLogic = () => {
       editable: false,
       width: "10px",
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   width: "6px",
-    //   fixed: "right",
-    //   render: (_, record) => {
-    //     let rStatus = record.status;
-
-    //     return (
-    //       <Switch
-    //         size="small"
-    //         checked={rStatus === 1}
-    //         disabled={editingKey !== ""}
-    //         onChange={() => onActive(record)}
-    //       />
-    //     );
-    //   },
-    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -241,7 +179,7 @@ const LocationLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.uuid)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
@@ -307,23 +245,12 @@ const LocationLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("location/list");
-    log("location/list", data.data);
-    setData(data.data);
-  };
-
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
       const row = await form.validateFields();
-      log("row", row);
 
       const code = row["code"];
       const description = row["description"];
@@ -352,16 +279,10 @@ const LocationLogic = () => {
       const band =
         row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
 
-      const value = data.findIndex((item) => key === item.uuid);
-
-      const val = data[value];
-      log("i", value);
-      log("val", val);
-
       const d = new FormData();
-      d.append("uuid", val.uuid);
-      d.append("code_project", code);
-      d.append("code_parent", val.code_parent);
+      d.append("uuid", record.uuid);
+      d.append("code_location", code);
+      d.append("code_parent", record.parent === null ? "" : record.parent);
       d.append("description", description);
       d.append("HK", hk);
       d.append("KIU", kiu);
@@ -381,42 +302,16 @@ const LocationLogic = () => {
 
       console.log("res-edit", res);
 
+      setIsSucces(false);
+      setShowPopup(true);
+
       onSetDataTable();
 
       setEditingKey("");
-      // if (index > -1) {
-      //   setIsSucces(false);
-      //   setShowPopup(true);
-      //   // const item = newData[index];
-      //   const val = data[value];
-      //   // newData.splice(index, 1, {
-      //   //   ...item,
-      //   //   ...row,
-      //   // });
-      //   // setDataColumn(newData);
-
-      //   // log("editing", row);
-
-      //   const d = new FormData();
-      //   d.append("uuid", val.uuid);
-      //   d.append("code_company", row.code);
-      //   d.append("code_parent", val.code_parent);
-      //   d.append("description", row.description);
-
-      //   const res = await MainServices.post("company/update", d);
-
-      //   console.log("res-edit", res);
-
-      //   onSetDataTable();
-
-      //   setEditingKey("");
-      // } else {
-      //   newData.push(row);
-      //   setDataColumn(newData);
-      //   setEditingKey("");
-      // }
     } catch (errInfo) {
+      setShowPopup(false);
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
     }
   };
 
@@ -449,7 +344,6 @@ const LocationLogic = () => {
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -499,75 +393,65 @@ const LocationLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`location/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`location/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`location/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
-          code: val.code_company,
+          uuid: val.uuid,
+          code: val.code_location,
+          code_parent: val.code_parent,
           description: val.description,
+          HK: val.HK,
+          KIU: val.KIU,
+          GMM: val.GMM,
+          KIA: val.KIA,
+          BJU: val.BJU,
+          BLT: val.BLT,
+          BLU: val.BLU,
+          BK: val.BK,
+          BSU: val.BSU,
+          BSB: val.BSB,
+          KIK: val.KIK,
+          IKP: val.IKP,
+          BAND: val.BAND,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
+
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
     }
-
-    setDataColumn(list);
   };
-
-  // const onActive = async (record) => {
-  //   setIsSucces(false);
-  //   setShowPopup(true);
-
-  //   log("record.status", record.status);
-
-  //   const f = new FormData();
-
-  //   f.append("uuid", record.uuid);
-
-  //   if (record.status === 0) {
-  //     const res = await MainServices.post("location/active", f);
-
-  //     console.log("res-hapus", res);
-  //   } else {
-  //     const res = await MainServices.post("location/unactive", f);
-
-  //     console.log("res-hapus", res);
-  //   }
-
-  //   onSetDataTable();
-  // };
 
   const onTambahData = async (values) => {
     const { code_location, code_parent, description } = values;
 
-    const f = new FormData();
-    f.append("code_location", code_location);
-    f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_location", code_location);
+      f.append("code_parent", code_parent);
+      f.append("description", description);
 
-    const res = await MainServices.post("location/add", f);
+      const res = await MainServices.post("location/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
+
+      formTambah.setFieldsValue({
+        code_dept: "",
+        description: "",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return {
@@ -578,13 +462,13 @@ const LocationLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,

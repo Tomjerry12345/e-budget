@@ -64,9 +64,10 @@ const IcpPage = () => {
           columns={value.columns}
           loading={value.loading}
           scroll={{
-            y: value.size.y - 200,
+            y: value.size.y - 140,
           }}
           form={value.form}
+          formTambah={value.formTambah}
         />
       </div>
 

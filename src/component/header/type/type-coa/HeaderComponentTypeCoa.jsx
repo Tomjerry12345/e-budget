@@ -18,6 +18,7 @@ import {
   Modal,
   Typography,
 } from "antd";
+import { useRef } from "react";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
 import ImportInputModal from "../../../modal/import/ImportInputModal";
@@ -52,10 +53,13 @@ const HeaderComponentTypeCoa = ({
   onTambahData,
   onChangeTambahData,
   inputTambah,
+  formTambah,
 }) => {
   const { value, func } = HeaderComponentTypeCoaLogic({
     onChangeTambahData,
   });
+  // const inputRef = useRef(null);
+
   return (
     <Header className="custom-header">
       {/* <Breadcrumb className="custom-breadcrumb" separator=">">
@@ -69,6 +73,7 @@ const HeaderComponentTypeCoa = ({
         <Input
           className="input-search"
           placeholder="input search text"
+          // ref={inputRef}
           suffix={<SearchOutlined />}
           onPressEnter={inputSearch.onChange}
         />
@@ -105,6 +110,7 @@ const HeaderComponentTypeCoa = ({
         onCancel={func.onCloseTambahData}
         onFinish={onTambahData}
         inputTambah={inputTambah}
+        form={formTambah}
         // value={accesFile}
         // onOk={onUploadFile}
         // file={downloadFile}

@@ -55,6 +55,7 @@ const CompanyPage = () => {
             type: "textarea",
           },
         ]}
+        formTambah={value.formTambah}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -64,7 +65,7 @@ const CompanyPage = () => {
           columns={value.columns}
           loading={value.loading}
           scroll={{
-            y: value.size.y - 200,
+            y: value.size.y - 140,
           }}
           form={value.form}
         />

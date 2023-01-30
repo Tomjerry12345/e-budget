@@ -26,6 +26,7 @@ const HeaderComponent = ({
   inputSearch,
   onTambahData,
   inputTambah,
+  formTambah,
 }) => {
   let component;
 
@@ -111,6 +112,7 @@ const HeaderComponent = ({
         onTambahData={onTambahData}
         onChangeTambahData={onChangeTambahData}
         inputTambah={inputTambah}
+        formTambah={formTambah}
       />
     );
   }

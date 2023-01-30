@@ -50,11 +50,17 @@ const AkunPage = () => {
             type: "input",
           },
           {
+            label: "Type Account",
+            name: "type_account",
+            type: "input",
+          },
+          {
             label: "Description",
             name: "description",
             type: "textarea",
           },
         ]}
+        formTambah={value.formTambah}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -64,7 +70,7 @@ const AkunPage = () => {
           columns={value.columns}
           loading={value.loading}
           scroll={{
-            y: value.size.y - 200,
+            y: value.size.y - 140,
           }}
           form={value.form}
         />

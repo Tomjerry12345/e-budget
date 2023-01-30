@@ -42,16 +42,7 @@ const IcpLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -62,6 +53,7 @@ const IcpLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -92,22 +84,6 @@ const IcpLogic = () => {
       editable: false,
       width: 150,
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   width: "5%",
-    //   render: (_, record) => {
-    //     let rStatus = record.status;
-
-    //     return (
-    //       <Switch
-    //         size="small"
-    //         checked={rStatus === 1}
-    //         onChange={() => onActive(record)}
-    //       />
-    //     );
-    //   },
-    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -118,7 +94,7 @@ const IcpLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code)}
+              onClick={() => save(record.code_icp)}
               style={{
                 marginRight: 8,
               }}
@@ -184,26 +160,16 @@ const IcpLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("icp/list");
-    log("icp/list", data.data);
-    setData(data.data);
-  };
-
   const save = async (key) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
-      log("data", data);
+      log("key", key);
       const row = await form.validateFields();
-      const value = data.findIndex((item) => key === item.code_company);
+      const value = dataColumn.findIndex((item) => key === item.code_icp);
 
-      const val = data[value];
+      const val = dataColumn[value];
 
       log("row", row);
 
@@ -217,11 +183,15 @@ const IcpLogic = () => {
 
       console.log("res-edit", res);
 
+      setIsSucces(false);
+      setShowPopup(true);
+
       onSetDataTable();
 
       setEditingKey("");
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
     }
   };
 
@@ -254,7 +224,6 @@ const IcpLogic = () => {
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -262,8 +231,8 @@ const IcpLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("icp/list-tree");
-    log("icp/list-tree", data.data);
+    const { data } = await MainServices.get("icp/list");
+    log("icp/list", data.data);
     setLoading(false);
     setDataColumn(data.data);
 
@@ -302,75 +271,53 @@ const IcpLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`icp/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`icp/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`icp/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
-          code: val.code_company,
+          uuid: val.uuid,
+          code_icp: val.code_icp,
+          code_parent: val.code_parent,
           description: val.description,
+          status: val.status,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
+
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
     }
-
-    setDataColumn(list);
-  };
-
-  const onActive = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
-
-    log("record.status", record.status);
-
-    const f = new FormData();
-
-    f.append("uuid", record.uuid);
-
-    if (record.status === 0) {
-      const res = await MainServices.post("icp/active", f);
-
-      console.log("res-hapus", res);
-    } else {
-      const res = await MainServices.post("icp/unactive", f);
-
-      console.log("res-hapus", res);
-    }
-
-    onSetDataTable();
   };
 
   const onTambahData = async (values) => {
     const { code_icp, description } = values;
 
-    const f = new FormData();
-    f.append("code_icp", code_icp);
-    // f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_icp", code_icp);
+      // f.append("code_parent", code_parent);
+      f.append("description", description);
 
-    const res = await MainServices.post("icp/add", f);
+      const res = await MainServices.post("icp/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
+
+      formTambah.setFieldsValue({
+        code_dept: "",
+        description: "",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return {
@@ -381,13 +328,13 @@ const IcpLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,
