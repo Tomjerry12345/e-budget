@@ -42,16 +42,7 @@ const AkunLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -62,6 +53,7 @@ const AkunLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -69,15 +61,15 @@ const AkunLogic = () => {
 
   const constantTableColums = [
     {
-      title: "Type ACcount",
-      dataIndex: "type_account",
+      title: "Code",
+      dataIndex: "code",
       width: 130,
       editable: true,
       fixed: "left",
     },
     {
-      title: "Code",
-      dataIndex: "code",
+      title: "Type Account",
+      dataIndex: "type_account",
       width: 130,
       editable: true,
       fixed: "left",
@@ -99,22 +91,6 @@ const AkunLogic = () => {
       editable: false,
       width: 150,
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   width: "5%",
-    //   render: (_, record) => {
-    //     let rStatus = record.status;
-
-    //     return (
-    //       <Switch
-    //         size="small"
-    //         checked={rStatus === 1}
-    //         onChange={() => onActive(record)}
-    //       />
-    //     );
-    //   },
-    // },
     {
       dataIndex: "operation",
       fixed: "right",
@@ -125,7 +101,7 @@ const AkunLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
@@ -191,41 +167,33 @@ const AkunLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("account/list");
-    log("account/list", data.data);
-    setData(data.data);
-  };
-
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
-      log("data", data);
       const row = await form.validateFields();
-      const value = data.findIndex((item) => key === item.code_account);
-      const val = data[value];
 
       const d = new FormData();
-      d.append("uuid", val.uuid);
+      d.append("uuid", record.uuid);
       d.append("code_account", row.code);
-      d.append("code_parent", val.code_parent);
+      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("type_account", row.type_account);
       d.append("description", row.description);
 
       const res = await MainServices.post("account/update", d);
 
       console.log("res-edit", res);
 
+      setIsSucces(false);
+      setShowPopup(true);
+
       onSetDataTable();
 
       setEditingKey("");
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
     }
   };
 
@@ -312,7 +280,6 @@ const AkunLogic = () => {
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -362,75 +329,53 @@ const AkunLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`account/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`account/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`account/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
-          code: val.code_company,
+          uuid: val.uuid,
+          code: val.code_account,
+          code_parent: val.code_parent,
+          type_account: val.type_account,
           description: val.description,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
-    }
 
-    setDataColumn(list);
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
+    }
   };
 
-  // const onActive = async (record) => {
-  //   setIsSucces(false);
-  //   setShowPopup(true);
-
-  //   log("record.status", record.status);
-
-  //   const f = new FormData();
-
-  //   f.append("uuid", record.uuid);
-
-  //   if (record.status === 0) {
-  //     const res = await MainServices.post("account/active", f);
-
-  //     console.log("res-hapus", res);
-  //   } else {
-  //     const res = await MainServices.post("account/unactive", f);
-
-  //     console.log("res-hapus", res);
-  //   }
-
-  //   onSetDataTable();
-  // };
-
   const onTambahData = async (values) => {
-    const { code_account, code_parent, description } = values;
+    const { code_account, code_parent, type_account, description } = values;
 
-    const f = new FormData();
-    f.append("code_account", code_account);
-    f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_account", code_account);
+      f.append("code_parent", code_parent);
+      f.append("type_account", type_account);
+      f.append("description", description);
 
-    const res = await MainServices.post("account/insert", f);
+      const res = await MainServices.post("account/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
+      formTambah.setFieldsValue({
+        code_dept: "",
+        description: "",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return {
@@ -441,13 +386,13 @@ const AkunLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,

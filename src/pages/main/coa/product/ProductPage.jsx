@@ -55,6 +55,7 @@ const ProductPage = () => {
             type: "textarea",
           },
         ]}
+        formTambah={value.formTambah}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -64,7 +65,7 @@ const ProductPage = () => {
           columns={value.columns}
           loading={value.loading}
           scroll={{
-            y: value.size.y - 200,
+            y: value.size.y - 140,
             x: 900,
           }}
           form={value.form}

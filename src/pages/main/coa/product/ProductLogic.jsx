@@ -40,42 +40,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const ProductLogic = () => {
   const navigate = useNavigate();
 
@@ -83,16 +47,7 @@ const ProductLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -103,6 +58,7 @@ const ProductLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -241,7 +197,7 @@ const ProductLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.uuid)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
@@ -307,23 +263,12 @@ const ProductLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("product/list");
-    log("product/list", data.data);
-    setData(data.data);
-  };
-
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
       const row = await form.validateFields();
-      log("row", row);
 
       const code = row["code"];
       const description = row["description"];
@@ -352,18 +297,10 @@ const ProductLogic = () => {
       const band =
         row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
 
-      const value = data.findIndex((item) => key === item.uuid);
-
-      const val = data[value];
-      // log("i", value);
-      // log("val", val);
-      log("val.code_parent", val.code_parent);
-      log("val.uuid", val.uuid);
-
       const d = new FormData();
-      d.append("uuid", val.uuid);
+      d.append("uuid", record.uuid);
       d.append("code_product", code);
-      d.append("code_parent", val.code_parent);
+      d.append("code_parent", record.parent === null ? "" : record.parent);
       d.append("description", description);
       d.append("HK", hk);
       d.append("KIU", kiu);
@@ -381,13 +318,18 @@ const ProductLogic = () => {
 
       const res = await MainServices.post("product/update", d);
 
+      setIsSucces(false);
+      setShowPopup(true);
+
       console.log("res-edit", res);
 
       onSetDataTable();
 
       setEditingKey("");
     } catch (errInfo) {
+      setShowPopup(false);
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
     }
   };
 
@@ -420,7 +362,6 @@ const ProductLogic = () => {
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -470,59 +411,40 @@ const ProductLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`product/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`product/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`product/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
-          code: val.code_company,
+          uuid: val.uuid,
+          code: val.code_product,
+          code_parent: val.code_parent,
           description: val.description,
+          HK: val.HK,
+          KIU: val.KIU,
+          GMM: val.GMM,
+          KIA: val.KIA,
+          BJU: val.BJU,
+          BLT: val.BLT,
+          BLU: val.BLU,
+          BK: val.BK,
+          BSU: val.BSU,
+          BSB: val.BSB,
+          KIK: val.KIK,
+          IKP: val.IKP,
+          BAND: val.BAND,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
+
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
     }
-
-    setDataColumn(list);
   };
-
-  // const onActive = async (record) => {
-  //   setIsSucces(false);
-  //   setShowPopup(true);
-
-  //   log("record.status", record.status);
-
-  //   const f = new FormData();
-
-  //   f.append("uuid", record.uuid);
-
-  //   if (record.status === 0) {
-  //     const res = await MainServices.post("product/active", f);
-
-  //     console.log("res-hapus", res);
-  //   } else {
-  //     const res = await MainServices.post("product/unactive", f);
-
-  //     console.log("res-hapus", res);
-  //   }
-
-  //   onSetDataTable();
-  // };
 
   const onTambahData = async (values) => {
     log("values", values);
@@ -540,6 +462,11 @@ const ProductLogic = () => {
     onSetDataTable();
 
     setIsTambah(true);
+
+    formTambah.setFieldsValue({
+      code_dept: "",
+      description: "",
+    });
   };
 
   return {
@@ -550,13 +477,13 @@ const ProductLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,

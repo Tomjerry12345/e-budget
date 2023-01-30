@@ -52,4 +52,58 @@
       margin-left: 16px;
     }
   }
+  
+}
+
+.custom-tambah-data-modal-1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  top: 20px;
+
+  .ant-modal-content {
+    width: 700px;
+    height: 578px;
+    border-radius: 8px;
+  }
+
+  .root-content-upload {
+    width: 652px;
+    height: 352px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 24px;
+
+    .title-upload {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0.2px;
+      color: rgba(18, 18, 18, 0.7);
+    }
+
+  }
+
+  .footer-custom {
+    margin-top: 16px;
+    display: flex;
+    justify-content: end;
+    .btn-cancel {
+      width: 120px;
+      height: 41px;
+      color: #888888;
+      border-color: #888888;
+      border-radius: 8px
+      
+    }
+    .btn-upload {
+      background-color: #008041;
+      border-radius: 8px;
+      width: 120px;
+      height: 41px;
+      border: none;
+      margin-left: 16px;
+    }
+  }
+
 }

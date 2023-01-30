@@ -22,7 +22,13 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-const TambahDataCoaModal = ({ open, onCancel, onFinish, inputTambah }) => {
+const TambahDataCoaModal = ({
+  open,
+  onCancel,
+  onFinish,
+  inputTambah,
+  form,
+}) => {
   // const
 
   const typeForm = (type) => {
@@ -32,10 +38,16 @@ const TambahDataCoaModal = ({ open, onCancel, onFinish, inputTambah }) => {
       return <Input.TextArea rows={4} />;
     }
   };
+
+  // alert(inputTambah.length);
   return (
     <Modal
       open={open}
-      className="custom-tambah-data-modal"
+      className={
+        inputTambah.length > 3
+          ? "custom-tambah-data-modal-1"
+          : "custom-tambah-data-modal"
+      }
       // footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
       footer={null}
       onCancel={onCancel}
@@ -47,6 +59,7 @@ const TambahDataCoaModal = ({ open, onCancel, onFinish, inputTambah }) => {
           // onFinishFailed={onFinishFailed}
           autoComplete="on"
           layout="vertical"
+          form={form}
         >
           {inputTambah.map((val) => (
             <Form.Item

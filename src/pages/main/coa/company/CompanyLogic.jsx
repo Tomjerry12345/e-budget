@@ -78,16 +78,7 @@ const CompanyLogic = () => {
 
   const [dataColumn, setDataColumn] = useState([]);
 
-  const [data, setData] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
-  const [openAction, setOpenAction] = useState({
-    open: false,
-    status: "",
-  });
-
-  const [selectedItem, setSelectedItem] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -98,6 +89,7 @@ const CompanyLogic = () => {
   const isEditing = (record) => record.uuid === editingKey;
 
   const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
@@ -156,7 +148,7 @@ const CompanyLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
@@ -222,81 +214,33 @@ const CompanyLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onGetListCompany();
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onGetListCompany = async () => {
-    const { data } = await MainServices.get("company/list");
-    log("company/list", data.data);
-    setData(data.data);
-  };
-
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
-
-      log("data", data);
       const row = await form.validateFields();
-      const value = data.findIndex((item) => key === item.code_company);
-
-      const val = data[value];
-      // newData.splice(index, 1, {
-      //   ...item,
-      //   ...row,
-      // });
-      // setDataColumn(newData);
-
-      // log("editing", row);
+      log("record", record);
 
       const d = new FormData();
-      d.append("uuid", val.uuid);
+      d.append("uuid", record.uuid);
       d.append("code_company", row.code);
-      d.append("code_parent", val.code_parent);
+      d.append("code_parent", record.parent === null ? "" : record.parent);
       d.append("description", row.description);
 
       const res = await MainServices.post("company/update", d);
-
       console.log("res-edit", res);
 
+      setIsSucces(false);
+      setShowPopup(true);
+
       onSetDataTable();
-      onGetListCompany();
 
       setEditingKey("");
-      // if (index > -1) {
-      //   setIsSucces(false);
-      //   setShowPopup(true);
-      //   // const item = newData[index];
-      //   const val = data[value];
-      //   // newData.splice(index, 1, {
-      //   //   ...item,
-      //   //   ...row,
-      //   // });
-      //   // setDataColumn(newData);
-
-      //   // log("editing", row);
-
-      //   const d = new FormData();
-      //   d.append("uuid", val.uuid);
-      //   d.append("code_company", row.code);
-      //   d.append("code_parent", val.code_parent);
-      //   d.append("description", row.description);
-
-      //   const res = await MainServices.post("company/update", d);
-
-      //   console.log("res-edit", res);
-
-      //   onSetDataTable();
-
-      //   setEditingKey("");
-      // } else {
-      //   newData.push(row);
-      //   setDataColumn(newData);
-      //   setEditingKey("");
-      // }
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
+      alert(errInfo);
+      setShowPopup(false);
     }
   };
 
@@ -314,76 +258,25 @@ const CompanyLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    try {
+      setIsSucces(false);
+      setShowPopup(true);
 
-    log("row-del", record);
-    // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code);
-    // const val = data[i];
+      log("row-del", record);
 
-    // log("val", val);
+      const res = await MainServices.delete("company/delete", {
+        uuid: record.uuid,
+      });
 
-    // setDataColumn(value);
+      console.log("res-hapus", res);
 
-    // log("val", val.uuid);
-
-    const res = await MainServices.delete("company/delete", {
-      uuid: record.uuid,
-    });
-
-    console.log("res-hapus", res);
-
-    onSetDataTable();
-
-    // let test = dataColumn.filter((item) => item.id !== record.id);
-
-    // log("value", test);
-    // log("length-value", test.length);
-    // log("dataColumn-value", dataColumn.length);
-
-    // // if (test.length === dummyData.length) {
-    // //   const list = [];
-    // //   dataColumn.forEach((root) => {
-    // //     if (root.children.length !== 0) {
-    // //       const listCh1 = [];
-
-    // //       // level 1
-    // //       root.children.forEach((ch1) => {
-    // //         log("ch1", ch1);
-    // //         if (ch1.children !== undefined) {
-    // //           log("undefined");
-    // //           listCh1.push(ch1);
-    // //         } else {
-    // //           log("record.id", record.id);
-    // //           log("ch1.id", ch1.id);
-    // //           if (ch1.id !== record.id) {
-    // //             log("test");
-    // //             listCh1.push(ch1);
-    // //           }
-    // //         }
-    // //       });
-
-    // //       log("listCh1", listCh1);
-
-    // //       list.push({
-    // //         id: root.id,
-    // //         uuid: root.uuid,
-    // //         code: root.code,
-    // //         children: listCh1,
-    // //       });
-
-    // //       // list.push(listCh1);
-    // //     }
-    // //   });
-    // //   // test = list;
-    // // }
-
-    // setDataColumn(test);
+      onSetDataTable();
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const onAction = (e, record) => {
-    setSelectedItem(record);
     if (e.key === "1") {
       edit(record);
     }
@@ -397,8 +290,6 @@ const CompanyLogic = () => {
     setDataColumn(data.data);
 
     setIsSucces(true);
-    // setDataColumn(dummyData);
-    // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
   const onOpenUploadModal = () => {
@@ -433,35 +324,27 @@ const CompanyLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    const key = cekNumber(val) ? "code" : "description";
+    try {
+      const res = await MainServices.get(`company/list?search=${val}`);
 
-    let res;
+      let list = [];
 
-    let list = [];
-
-    if (val === "") {
-      res = await MainServices.get(`company/list-tree`);
-
-      list = res.data.data;
-    } else {
-      res = await MainServices.get(`company/list?${key}=${val}`);
-
-      const d = res.data.data;
-
-      let i = 1;
-
-      d.forEach((val) => {
+      res.data.data.forEach((val) => {
         list.push({
-          id: val.uuid,
+          uuid: val.uuid,
           code: val.code_company,
+          code_parent: val.code_parent,
           description: val.description,
+          status: val.status,
+          created_at: val.created_at,
+          updated_at: val.updated_at,
         });
-
-        i += 1;
       });
-    }
 
-    setDataColumn(list);
+      setDataColumn(list);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const onActive = async (record) => {
@@ -490,18 +373,27 @@ const CompanyLogic = () => {
   const onTambahData = async (values) => {
     const { code_company, code_parent, description } = values;
 
-    const f = new FormData();
-    f.append("code_company", code_company);
-    f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_company", code_company);
+      f.append("code_parent", code_parent);
+      f.append("description", description);
 
-    const res = await MainServices.post("company/add", f);
+      const res = await MainServices.post("company/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
+
+      formTambah.setFieldsValue({
+        code_dept: "",
+        description: "",
+      });
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return {
@@ -512,13 +404,13 @@ const CompanyLogic = () => {
       getInputProps,
       acceptedFiles,
       size,
-      openAction,
       loading,
       columns,
       form,
       showPopup,
       isSucces,
       isTambah,
+      formTambah,
     },
     func: {
       onCloseUploadModal,

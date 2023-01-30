@@ -8,6 +8,8 @@ issue:
 - tambah di master account bermasalah
 - edit master project bermasalah / fe
 
+- master lokasi search bermasalah
+
 fix:
 
 - product edit, delete, tambah
