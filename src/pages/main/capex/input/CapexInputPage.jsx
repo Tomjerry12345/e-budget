@@ -35,7 +35,12 @@ const CapexInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeIcp
+        isCodeProject
+        type="input"
+      />
 
       <div className="custom-root-layout">
         <TableComponent

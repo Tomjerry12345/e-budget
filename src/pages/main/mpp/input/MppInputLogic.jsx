@@ -370,28 +370,54 @@ const MppInputLogic = () => {
       code_dept,
       code_location,
       code_product,
-      // code_account,
+      code_project,
+      code_icp,
     } = values;
 
-    let url;
+    // alert("test");
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "000");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "000");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "000");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "000");
+    let fCodeIcp = code_icp.replace(/[^0-9]/g, "000");
+    let fCodeProject = code_project.replace(/[^0-9]/g, "000");
+
+    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
+    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
+    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
+    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
+    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
+
+    getData(
+      fCodeCompany,
+      fCodeProduct,
+      fCodeLocation,
+      fCodeDept,
+      fCodeIcp,
+      fCodeProject
+    );
 
     setCodeFilter({
       code_company: fCodeCompany,
       code_dept: fCodeDept,
       code_location: fCodeLocation,
       code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
     });
-
-    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
   };
 
-  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
-    const url = `mpp/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
+  const getData = async (
+    codeCompany,
+    codeProduct,
+    codeLocation,
+    codeDept,
+    codeIcp,
+    codeProject
+  ) => {
+    const url = `mpp/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}`;
 
     const { data } = await MainServices.get(url);
 

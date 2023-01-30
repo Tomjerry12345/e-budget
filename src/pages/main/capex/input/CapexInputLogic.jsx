@@ -10,39 +10,7 @@ const CapexInputLogic = () => {
 
   const [form] = Form.useForm();
 
-  const [dataColumnInput, setDataColumnInput] = useState([
-    // {
-    //   key: "",
-    //   account: "",
-    //   description: "",
-    //   year_1: "",
-    //   year_2: "",
-    //   jan_1: 0,
-    //   feb_1: 0,
-    //   mar_1: 0,
-    //   apr_1: 0,
-    //   mei_1: 0,
-    //   jun_1: 0,
-    //   jul_1: 0,
-    //   aug_1: 0,
-    //   sep_1: 0,
-    //   okt_1: 0,
-    //   nov_1: 0,
-    //   des_1: 0,
-    //   jan_2: 0,
-    //   feb_2: 0,
-    //   mar_2: 0,
-    //   apr_2: 0,
-    //   mei_2: 0,
-    //   jun_2: 0,
-    //   jul_2: 0,
-    //   aug_2: 0,
-    //   sep_2: 0,
-    //   okt_2: 0,
-    //   nov_2: 0,
-    //   des_2: 0,
-    // },
-  ]);
+  const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
   const [listKeyParent, setListKeyParent] = useState();
@@ -417,26 +385,54 @@ const CapexInputLogic = () => {
       code_dept,
       code_location,
       code_product,
-      // code_account,
+      code_project,
+      code_icp,
     } = values;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    // alert("test");
 
-    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept);
+    let fCodeCompany = code_company.replace(/[^0-9]/g, "000");
+    let fCodeProduct = code_product.replace(/[^0-9]/g, "000");
+    let fCodeLocation = code_location.replace(/[^0-9]/g, "000");
+    let fCodeDept = code_dept.replace(/[^0-9]/g, "000");
+    let fCodeIcp = code_icp.replace(/[^0-9]/g, "000");
+    let fCodeProject = code_project.replace(/[^0-9]/g, "000");
+
+    // fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
+    // fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
+    // fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
+    // fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
+    // fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
+
+    getData(
+      fCodeCompany,
+      fCodeProduct,
+      fCodeLocation,
+      fCodeDept,
+      fCodeIcp,
+      fCodeProject
+    );
 
     setCodeFilter({
       code_company: fCodeCompany,
       code_dept: fCodeDept,
       code_location: fCodeLocation,
       code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
     });
   };
 
-  const getData = async (codeCompany, codeProduct, codeLocation, codeDept) => {
-    const url = `capex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}`;
+  const getData = async (
+    codeCompany,
+    codeProduct,
+    codeLocation,
+    codeDept,
+    codeIcp,
+    codeProject
+  ) => {
+    const url = `capex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}`;
 
     const { data } = await MainServices.get(url);
 

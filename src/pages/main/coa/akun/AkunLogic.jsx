@@ -69,6 +69,13 @@ const AkunLogic = () => {
 
   const constantTableColums = [
     {
+      title: "Type ACcount",
+      dataIndex: "type_account",
+      width: 130,
+      editable: true,
+      fixed: "left",
+    },
+    {
       title: "Code",
       dataIndex: "code",
       width: 130,

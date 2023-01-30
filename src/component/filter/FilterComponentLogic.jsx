@@ -10,6 +10,7 @@ const FilterComponentLogic = ({
   keyCodeProject,
   codeCompany,
   formGlobal,
+  type,
 }) => {
   const [state, setState] = useState({
     code_company: [],
@@ -128,8 +129,6 @@ const FilterComponentLogic = ({
           ? await MainServices.get(`project/list-by-com?code_company=${code}`)
           : null;
 
-      log("resProject", resProject);
-
       if (resLocation.data.responseCode === 200) {
         setState({
           ...state,
@@ -144,106 +143,66 @@ const FilterComponentLogic = ({
   };
 
   const setProduct = (resProduct) => {
-    // const formatResProduct = [];
-    // resProduct.data.data.forEach((element) => {
-    //   formatResProduct.push({
-    //     code: element.code_product,
-    //     title: element.description,
-    //   });
-    // });
-    // return formatResProduct;
-    return resProduct.data.data;
+    log("resProduct", resProduct);
+    let data;
+
+    if (type === "input") {
+      data = resProduct.data.data.filter((item) => item.code !== "all");
+    } else {
+      data = resProduct.data.data;
+    }
+
+    return data;
   };
 
   const setLocation = (resLocation) => {
-    // const formatResLocation = [
-    //   {
-    //     title: "all",
-    //     code: "",
-    //   },
-    // ];
-    // resLocation.data.data.forEach((element) => {
-    //   formatResLocation.push({
-    //     code: element.code_location,
-    //     title: element.description,
-    //   });
-    // });
-    // return formatResLocation;
-    return resLocation.data.data;
+    log("resLocation", resLocation);
+    let data;
+
+    if (type === "input") {
+      data = resLocation.data.data.filter((item) => item.code !== "all");
+    } else {
+      data = resLocation.data.data;
+    }
+    return data;
   };
 
   const setDept = (resDept) => {
-    // const formatResDept = [
-    //   {
-    //     title: "all",
-    //     code: "",
-    //   },
-    // ];
-    // resDept.data.data.forEach((element) => {
-    //   formatResDept.push({
-    //     code: element.code_dept,
-    //     title: element.description,
-    //   });
-    // });
-    // return formatResDept;
-    return resDept.data.data;
+    log("resDept", resDept);
+
+    let data;
+
+    if (type === "input") {
+      data = resDept.data.data.filter((item) => item.code !== "all");
+    } else {
+      data = resDept.data.data;
+    }
+
+    return data;
   };
 
   const setIcp = (resIcp) => {
-    // const formatResIcp = [
-    //   {
-    //     title: "all",
-    //     code: "",
-    //   },
-    // ];
-    // resIcp.data.data.forEach((element) => {
-    //   formatResIcp.push({
-    //     code: element.code_location,
-    //     title: element.description,
-    //   });
-    // });
-    // return formatResIcp;
-    return resIcp.data.data;
+    log("resIcp", resIcp);
+    let data;
+
+    if (type === "input") {
+      data = resIcp.data.data.filter((item) => item.code !== "all");
+    } else {
+      data = resIcp.data.data;
+    }
+    return data;
   };
 
   const setProject = (resProject, c) => {
-    // const formatResProject = [
-    //   {
-    //     title: "all",
-    //     code: "",
-    //   },
-    // ];
-    // const data = resProject.data.data;
+    log("resProject", resProject);
+    let data;
 
-    // log("dataProject", data);
-
-    // data.forEach((element) => {
-    //   let perusahaan;
-
-    //   if (keyCodeProject === "default") {
-    //     if (c === "231") {
-    //       perusahaan = element.BAND;
-    //     } else if (c === "241") {
-    //       perusahaan = element.KIK;
-    //     } else if (c === "312") {
-    //       perusahaan = element.BJU;
-    //     } else if (c === "413") {
-    //       perusahaan = element.BSB;
-    //     }
-    //   } else if (keyCodeProject === "BJU") {
-    //     perusahaan = element.BJU;
-    //   }
-
-    //   if (perusahaan === "1") {
-    //     formatResProject.push({
-    //       code: element.code_project,
-    //       title: element.description,
-    //     });
-    //   }
-    // });
-
-    // return formatResProject;
-    return resProject.data.data;
+    if (type === "input") {
+      data = resProject.data.data.filter((item) => item.code !== "all");
+    } else {
+      data = resProject.data.data;
+    }
+    return data;
   };
 
   return {
