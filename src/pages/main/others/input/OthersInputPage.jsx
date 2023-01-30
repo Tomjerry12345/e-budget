@@ -48,6 +48,7 @@ const othersInputPage = () => {
         form={value.form}
         isCodeIcp
         isCodeProject
+        type="input"
       />
 
       <div className="custom-root-layout">

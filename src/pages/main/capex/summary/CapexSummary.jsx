@@ -25,6 +25,7 @@ const CapexSummary = () => {
         form={value.form}
         isCodeIcp
         isCodeProject
+        type="summary"
       />
 
       <div className="custom-root-layout">

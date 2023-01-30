@@ -239,12 +239,8 @@ const CompanyLogic = () => {
 
       log("data", data);
       const row = await form.validateFields();
-      // const newData = [...dataColumn];
-      // const data = [...data];
-      // const index = newData.findIndex((item) => key === item.code);
       const value = data.findIndex((item) => key === item.code_company);
 
-      // const item = newData[index];
       const val = data[value];
       // newData.splice(index, 1, {
       //   ...item,
@@ -265,6 +261,7 @@ const CompanyLogic = () => {
       console.log("res-edit", res);
 
       onSetDataTable();
+      onGetListCompany();
 
       setEditingKey("");
       // if (index > -1) {

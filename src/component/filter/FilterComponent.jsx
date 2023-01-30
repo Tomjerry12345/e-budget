@@ -74,6 +74,7 @@ const AutoCompleteFilter = ({
  * isCodeProject: true | false;
  * isCodeIcp: true | false;
  * onFinish: const function = () => {};
+ * type: "summary" | "input";
  * }} props Props for the component
  *
  */
@@ -88,6 +89,7 @@ const FilterComponent = ({
   codeCompany = null,
   disabled = false,
   variant,
+  type = "summary",
 }) => {
   const { value, func } = FilterComponentLogic({
     isCodeProduct,
@@ -96,6 +98,7 @@ const FilterComponent = ({
     keyCodeProject,
     codeCompany,
     formGlobal: form,
+    type: type,
   });
 
   return (
