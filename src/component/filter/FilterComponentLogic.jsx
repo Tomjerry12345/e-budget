@@ -89,7 +89,8 @@ const FilterComponentLogic = ({
   };
 
   const getValueComboBox = async (e) => {
-    const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
+    // const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
+    const code = e.split(" ");
 
     log("code", code);
 
@@ -111,22 +112,26 @@ const FilterComponentLogic = ({
 
       const resProduct =
         isCodeProduct === true
-          ? await MainServices.get(`product/list-by-com?code_company=${code}`)
+          ? await MainServices.get(
+              `product/list-by-com?code_company=${code[0]}`
+            )
           : null;
 
       const resLocation = await MainServices.get(
-        `location/list-by-com?code_company=${code}`
+        `location/list-by-com?code_company=${code[0]}`
       );
       const resDept = await MainServices.get(
-        `dept/list-dropdown?code_company=${code}`
+        `dept/list-dropdown?code_company=${code[0]}`
       );
       const resIcp =
         isCodeIcp === true
-          ? await MainServices.get(`icp/list-dropdown?code_company=${code}`)
+          ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
           : null;
       const resProject =
         isCodeProject === true
-          ? await MainServices.get(`project/list-by-com?code_company=${code}`)
+          ? await MainServices.get(
+              `project/list-by-com?code_company=${code[0]}`
+            )
           : null;
 
       if (resLocation.data.responseCode === 200) {

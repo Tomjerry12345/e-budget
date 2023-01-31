@@ -1,16 +1,9 @@
 import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
-import { getAsync } from "../../../../redux/main/main.thunks";
-import { loadStart } from "../../../../redux/response/response";
 import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
-
-// const endPoint = {
-//   "Opex Direct": "",
-// };
 
 const OpexSummaryLogic = () => {
   let params = useParams();
@@ -18,16 +11,6 @@ const OpexSummaryLogic = () => {
   const ref = createRef();
 
   const [form] = Form.useForm();
-
-  const dispatch = useDispatch();
-
-  const { isLoading, response, errorMessage, nameReducer } = useSelector(
-    (state) => state.reducer
-  );
-
-  const navigate = useNavigate();
-
-  const itemPage = params.item;
 
   const [tableColumn, setTableColumn] = useState(null);
 
@@ -48,8 +31,6 @@ const OpexSummaryLogic = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState(false);
-  const [codeFilter, setCodeFilter] = useState();
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
@@ -67,20 +48,19 @@ const OpexSummaryLogic = () => {
 
     let url;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
-    let fCodeIcp = code_icp.replace(/[^0-9]/g, "");
-    let fCodeProject = code_project.replace(/[^0-9]/g, "");
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
-    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
-    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
-    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
-    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
-    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
-
-    log("fCodeProduct", fCodeProduct);
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
     url = `opex/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
 
@@ -91,16 +71,6 @@ const OpexSummaryLogic = () => {
     log("data", data);
 
     getData(data.data);
-
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-    });
   };
 
   const getData = (data) => {
@@ -139,7 +109,6 @@ const OpexSummaryLogic = () => {
       ref,
       form,
       loading,
-      filter,
     },
     func: {
       onFinish,

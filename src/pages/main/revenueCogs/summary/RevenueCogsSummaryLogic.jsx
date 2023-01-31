@@ -135,31 +135,21 @@ const RevenueCogsSummaryLogic = () => {
     } = values;
 
     let url;
-    const type = 2;
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
-    if (type === 1) {
-      url = `revenueandcogs/summary?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_dept=${code_dept}`;
-    } else if (type === 2) {
-      let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-      let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-      let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-      let fCodeDept = code_dept.replace(/[^0-9]/g, "");
-      let fCodeIcp = code_icp.replace(/[^0-9]/g, "");
-      let fCodeProject = code_project.replace(/[^0-9]/g, "");
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
-      fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
-      fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
-      fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
-      fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
-      fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
-
-      // console.log("fCodeCompany", fCodeCompany);
-      // console.log("fCodeProduct", fCodeProduct);
-      // console.log("fCodeLocation", fCodeLocation);
-      // console.log("fCodeDept", fCodeDept);
-
-      url = `revenueandcogs/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
-    }
+    url = `revenueandcogs/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
 
     log("url", url);
 

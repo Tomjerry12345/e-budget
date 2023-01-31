@@ -1,16 +1,12 @@
 version: v1.4.6 ✅ ❌
 
-issue:
-
-- band bermasalah
-- master lokasi get bermasalah
-- master departement get bermasalah
-- tambah di master account bermasalah
-- edit master project bermasalah / fe
-
-- master lokasi search bermasalah
-
 fix:
 
-- product edit, delete, tambah
-- 
+- value filter jadi split ✅
+- pencarian master data klo value kosong ambil api list tree ✅
+- edit input direct tambah parameter icp dan project ✅
+- text hsi sesuaikan dengan api ✅
+
+issue:
+
+- get summary opex bermasalah

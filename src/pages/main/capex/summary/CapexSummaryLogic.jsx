@@ -74,6 +74,8 @@ const CapexSummaryLogic = () => {
       code_dept: null,
       code_product: null,
       code_company: null,
+      code_icp: null,
+      code_project: null,
     });
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -99,18 +101,19 @@ const CapexSummaryLogic = () => {
 
     let url;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
-    let fCodeIcp = code_icp.replace(/[^0-9]/g, "");
-    let fCodeProject = code_project.replace(/[^0-9]/g, "");
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
-    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
-    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
-    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
-    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
-    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
     log("fCodeProduct", fCodeProduct);
 

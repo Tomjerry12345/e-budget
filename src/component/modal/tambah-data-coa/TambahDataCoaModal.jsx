@@ -53,14 +53,15 @@ const TambahDataCoaModal = ({
       onCancel={onCancel}
     >
       <Title level={4}>Tambah Data</Title>
-      <div className="root-content-upload">
-        <Form
-          onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
-          autoComplete="on"
-          layout="vertical"
-          form={form}
-        >
+
+      <Form
+        onFinish={onFinish}
+        // onFinishFailed={onFinishFailed}
+        autoComplete="on"
+        layout="vertical"
+        form={form}
+      >
+        <div className="root-content-upload">
           {inputTambah.map((val) => (
             <Form.Item
               label={val.label}
@@ -76,64 +77,24 @@ const TambahDataCoaModal = ({
               {/* <Input /> */}
             </Form.Item>
           ))}
-
-          {/* <Form.Item
-            label="Code Company"
-            name="code_company"
-            rules={[
-              {
-                required: true,
-                message: "Code company tidak boleh kosong!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Code Parent"
-            name="code_parent"
-            rules={[
-              {
-                required: true,
-                message: "Code parent tidak boleh kosong!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Description"
-            name="description"
-            rules={[
-              {
-                required: true,
-                message: "Description tidak boleh kosong!",
-              },
-            ]}
-          >
-            <Input.TextArea rows={4} />
-          </Form.Item> */}
-
-          <Form.Item>
-            <div className="footer-custom">
-              <Button className="btn-cancel" type="text" onClick={onCancel}>
-                Cancel
-              </Button>
-              <Button
-                className="btn-upload"
-                type="primary"
-                htmlType="submit"
-                // onClick={onOk}
-                // loading={loading}
-              >
-                Tambah
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
-      </div>
+        </div>
+        <Form.Item>
+          <div className="footer-custom">
+            <Button className="btn-cancel" type="text" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button
+              className="btn-upload"
+              type="primary"
+              htmlType="submit"
+              // onClick={onOk}
+              // loading={loading}
+            >
+              Tambah
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };

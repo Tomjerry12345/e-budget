@@ -288,48 +288,27 @@ const DepartementLogic = () => {
     const val = e.target.value;
 
     try {
-      const res = await MainServices.get(`dept/list?search=${val}`);
-
       let list = [];
-
-      res.data.data.forEach((val) => {
-        list.push({
-          uuid: val.uuid,
-          code_dept: val.code_dept,
-          description: val.description,
-          created_at: val.created_at,
-          updated_at: val.updated_at,
+      if (val !== "") {
+        const res = await MainServices.get(`dept/list?search=${val}`);
+        res.data.data.forEach((val) => {
+          list.push({
+            uuid: val.uuid,
+            code_dept: val.code_dept,
+            description: val.description,
+            created_at: val.created_at,
+            updated_at: val.updated_at,
+          });
         });
-      });
 
-      setDataColumn(list);
+        setDataColumn(list);
+      } else {
+        onSetDataTable();
+      }
     } catch (error) {
       alert(error);
     }
   };
-
-  // const onActive = async (record) => {
-  //   setIsSucces(false);
-  //   setShowPopup(true);
-
-  //   log("record.status", record.status);
-
-  //   const f = new FormData();
-
-  //   f.append("uuid", record.uuid);
-
-  //   if (record.status === 0) {
-  //     const res = await MainServices.post("dept/active", f);
-
-  //     console.log("res-hapus", res);
-  //   } else {
-  //     const res = await MainServices.post("dept/unactive", f);
-
-  //     console.log("res-hapus", res);
-  //   }
-
-  //   onSetDataTable();
-  // };
 
   const onTambahData = async (values) => {
     const { code_dept, description } = values;
