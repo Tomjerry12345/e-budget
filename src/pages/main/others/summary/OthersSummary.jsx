@@ -28,10 +28,6 @@ const OthersSummary = () => {
       />
 
       <div className="custom-root-layout">
-        {/* <Button style={{ marginBottom: "16px" }} onClick={func.onTambahData}>
-          Tambah Data
-        </Button> */}
-
         {value.dataColumn.length > 1 ? (
           <Table
             rowClassName="child"

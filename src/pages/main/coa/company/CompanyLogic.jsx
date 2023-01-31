@@ -325,23 +325,26 @@ const CompanyLogic = () => {
     const val = e.target.value;
 
     try {
-      const res = await MainServices.get(`company/list?search=${val}`);
-
       let list = [];
+      if (val !== "") {
+        const res = await MainServices.get(`company/list?search=${val}`);
 
-      res.data.data.forEach((val) => {
-        list.push({
-          uuid: val.uuid,
-          code: val.code_company,
-          code_parent: val.code_parent,
-          description: val.description,
-          status: val.status,
-          created_at: val.created_at,
-          updated_at: val.updated_at,
+        res.data.data.forEach((val) => {
+          list.push({
+            uuid: val.uuid,
+            code: val.code_company,
+            code_parent: val.code_parent,
+            description: val.description,
+            status: val.status,
+            created_at: val.created_at,
+            updated_at: val.updated_at,
+          });
         });
-      });
 
-      setDataColumn(list);
+        setDataColumn(list);
+      } else {
+        onSetDataTable();
+      }
     } catch (error) {
       alert(error);
     }

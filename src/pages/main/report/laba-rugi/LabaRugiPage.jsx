@@ -19,7 +19,7 @@ const LabaRugiPage = () => {
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
     form.setFieldsValue({
-      code_company: `HSI (211)`,
+      code_company: `211 - PT. Haka Sarana Investama`,
       code_location: "ALL",
       code_dept: "ALL",
       code_product: "ALL",

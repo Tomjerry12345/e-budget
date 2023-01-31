@@ -19,7 +19,7 @@ const AutoCompleteFilter = ({
 }) => (
   <>
     <AutoCompleteElement
-      label="Kode Perusahaan"
+      label="Perusahaan"
       name="code_company"
       value={value.state.code_company}
       onSelect={func.onSelect}
@@ -29,27 +29,27 @@ const AutoCompleteFilter = ({
 
     {isCodeProduct === true ? (
       <AutoCompleteElement
-        label="Kode Produk"
+        label="Produk"
         name="code_product"
         value={value.state.code_product}
       />
     ) : null}
 
     <AutoCompleteElement
-      label="Kode Lokasi"
+      label="Lokasi"
       name="code_location"
       value={value.state.code_location}
     />
 
     <AutoCompleteElement
-      label="Kode Dept"
+      label="Departemen"
       name="code_dept"
       value={value.state.code_dept}
     />
 
     {isCodeIcp ? (
       <AutoCompleteElement
-        label="Kode Icp"
+        label="ICP"
         name="code_icp"
         value={value.state.code_icp}
       />
@@ -57,7 +57,7 @@ const AutoCompleteFilter = ({
 
     {isCodeProject === true ? (
       <AutoCompleteElement
-        label="Kode Project"
+        label="Project"
         name="code_project"
         value={value.state.code_project}
       />
@@ -103,13 +103,7 @@ const FilterComponent = ({
 
   return (
     <div className="custom-root-card">
-      <Collapse
-        expandIconPosition="end"
-        activeKey="1"
-        style={{
-          marginTop: 12,
-        }}
-      >
+      <Collapse expandIconPosition="end" activeKey="1">
         <Panel header="Filter Data" key="1">
           <Card className="card-style">
             <Form

@@ -412,35 +412,38 @@ const ProductLogic = () => {
     const val = e.target.value;
 
     try {
-      const res = await MainServices.get(`product/list?search=${val}`);
-
       let list = [];
+      if (val !== "") {
+        const res = await MainServices.get(`product/list?search=${val}`);
 
-      res.data.data.forEach((val) => {
-        list.push({
-          uuid: val.uuid,
-          code: val.code_product,
-          code_parent: val.code_parent,
-          description: val.description,
-          HK: val.HK,
-          KIU: val.KIU,
-          GMM: val.GMM,
-          KIA: val.KIA,
-          BJU: val.BJU,
-          BLT: val.BLT,
-          BLU: val.BLU,
-          BK: val.BK,
-          BSU: val.BSU,
-          BSB: val.BSB,
-          KIK: val.KIK,
-          IKP: val.IKP,
-          BAND: val.BAND,
-          created_at: val.created_at,
-          updated_at: val.updated_at,
+        res.data.data.forEach((val) => {
+          list.push({
+            uuid: val.uuid,
+            code: val.code_product,
+            code_parent: val.code_parent,
+            description: val.description,
+            HK: val.HK,
+            KIU: val.KIU,
+            GMM: val.GMM,
+            KIA: val.KIA,
+            BJU: val.BJU,
+            BLT: val.BLT,
+            BLU: val.BLU,
+            BK: val.BK,
+            BSU: val.BSU,
+            BSB: val.BSB,
+            KIK: val.KIK,
+            IKP: val.IKP,
+            BAND: val.BAND,
+            created_at: val.created_at,
+            updated_at: val.updated_at,
+          });
         });
-      });
 
-      setDataColumn(list);
+        setDataColumn(list);
+      } else {
+        onSetDataTable();
+      }
     } catch (error) {
       alert(error);
     }

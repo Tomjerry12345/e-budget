@@ -382,20 +382,19 @@ const OpexInputLogic = () => {
       code_icp,
     } = values;
 
-    // alert("test");
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "000");
-    let fCodeProduct = code_product.replace(/[^0-9]/g, "000");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "000");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "000");
-    let fCodeIcp = code_icp.replace(/[^0-9]/g, "000");
-    let fCodeProject = code_project.replace(/[^0-9]/g, "000");
-
-    fCodeProduct = fCodeProduct === "" ? "all" : fCodeProduct;
-    fCodeLocation = fCodeLocation === "" ? "all" : fCodeLocation;
-    fCodeDept = fCodeDept === "" ? "all" : fCodeDept;
-    fCodeIcp = fCodeIcp === "" ? "all" : fCodeIcp;
-    fCodeProject = fCodeProject === "" ? "all" : fCodeProject;
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
     getData(
       fCodeCompany,
@@ -410,7 +409,6 @@ const OpexInputLogic = () => {
       code_company: fCodeCompany,
       code_dept: fCodeDept,
       code_location: fCodeLocation,
-      code_product: fCodeProduct,
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
@@ -614,7 +612,14 @@ const OpexInputLogic = () => {
     setDataColumnInput(newData);
 
     let formData = new FormData();
-    const { code_company, code_dept, code_location, code_product } = codeFilter;
+    const {
+      code_company,
+      code_product,
+      code_location,
+      code_dept,
+      code_icp,
+      code_project,
+    } = codeFilter;
     const year = row[`${keysEdit}_year`];
     const month = row[`${keysEdit}_month`];
     const uuid = row[`${keysEdit}_uuid`];
@@ -625,6 +630,8 @@ const OpexInputLogic = () => {
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
       formData.append("code_dept", code_dept);
+      formData.append("code_icp", code_icp);
+      formData.append("code_project", code_project);
       formData.append("month", month);
       formData.append("year", year);
     } else {

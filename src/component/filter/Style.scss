@@ -1,5 +1,6 @@
 .custom-root-card {
-  padding: 0px 24px 24px 24px;
+  padding: 16px 16px 0px 16px;
+  background: #f5f7f9;
 
   //   background-image: linear-gradient(180deg, rgba(250, 250, 250, 0.46) 0%, rgba(250, 250, 250, 1) 100%);
 
@@ -8,9 +9,32 @@
     border-radius: 8px;
   }
 
+  .ant-collapse{
+    border: none;
+  }
   .ant-collapse-item {
     background-color: white;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+    border: none;
+
+    &:last-child {
+      border-radius: 8px;
+      .ant-collapse-header {
+        border-radius: 8px 8px 0px 0px;
+        .ant-collapse-header-text{
+          color: #0ca258;
+        }
+        .ant-collapse-arrow{
+          color: #0ca258;
+        }
+      }
+      .ant-collapse-content {
+        border-radius: 0px 0px 8px 8px;
+        .ant-collapse-content-box{
+          padding: 12px;
+          padding-top: 0px;
+        }
+      }
+    }
   }
 
   .ant-collapse-content {
@@ -23,7 +47,7 @@
     padding: 0px;
 
     .ant-form-item {
-      margin-bottom: 16px;
+      margin-bottom: 0px;
     }
 
     .ant-select {

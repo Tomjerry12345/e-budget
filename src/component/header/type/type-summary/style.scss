@@ -1,9 +1,10 @@
 .custom-header {
   height: 80px;
-  padding: 24px;
+  padding: 24px 16px;
   // background-color: #fafafa;
   background-color: #ffffff;
   display: flex;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.08);
 
   background-image: linear-gradient(
     180deg,
@@ -29,7 +30,7 @@
       width: 200px;
       margin-right: 8px;
       border-radius: 8px;
-      border-color: grey;
+      border-color: #f5f7f9;
       background-color: #f5f7f9;
 
       input {
@@ -40,8 +41,14 @@
       }
 
       &:hover {
-        border-color: #018142;
+        border-color: #f5f7f9;
       }
+      &:focus {
+        box-shadow: none;
+      }
+    }
+    .ant-input-affix-wrapper-focused{
+      box-shadow: none;
     }
 
     .btn-filter {
@@ -57,17 +64,23 @@
     .btn-refresh {
       margin-right: 8px;
       border-radius: 8px;
-      background-color: #f5f7f9;
+      background-color: #edeff1;
+      border-color: #edeff1;
+        color: #1c1b1f;
+      &:hover {
+        border-color: #edeff1;
+        color: #1c1b1f;
+      }
     }
 
     .btn-more {
-      border-radius: 4px;
-      background-color: #f5f7f9;
-      border-color: grey;
-
+      border-radius: 8px;
+      background-color: #edeff1;
+      border-color: #edeff1;
+        color: #1c1b1f;
       &:hover {
-        border-color: #018142;
-        color: #018142;
+        border-color: #edeff1;
+        color: #1c1b1f;
       }
     }
   }
@@ -136,7 +149,7 @@
 .more-modal {
   top: 62px;
   bottom: 8px;
-  left: calc(100vw - 253px);
+  left: calc(100vw - 243px);
   max-width: 137px;
   margin: 0px;
   padding-bottom: 0;
@@ -157,7 +170,7 @@
     }
     .ant-modal-body {
       //   height: calc(100vh - 70px);
-      padding: 0px 0px 8px 0px;
+      padding: 8px 0px 8px 0px;
       .scrollableDiv {
         padding-left: 16px;
         padding-bottom: 8px;
@@ -214,5 +227,6 @@
   .btn {
     width: 100%;
     display: flex;
+    align-items: center;
   }
 }
