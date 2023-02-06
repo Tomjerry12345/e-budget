@@ -54,6 +54,7 @@ const HeaderComponentTypeCoa = ({
   onChangeTambahData,
   inputTambah,
   formTambah,
+  valueTreeData
 }) => {
   const { value, func } = HeaderComponentTypeCoaLogic({
     onChangeTambahData,
@@ -111,6 +112,7 @@ const HeaderComponentTypeCoa = ({
         onFinish={onTambahData}
         inputTambah={inputTambah}
         form={formTambah}
+        valueTreeData={valueTreeData}
         // value={accesFile}
         // onOk={onUploadFile}
         // file={downloadFile}

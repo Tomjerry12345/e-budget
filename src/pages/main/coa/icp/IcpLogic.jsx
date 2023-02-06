@@ -13,6 +13,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -157,6 +159,8 @@ const IcpLogic = () => {
     },
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
@@ -300,6 +304,8 @@ const IcpLogic = () => {
   const onTambahData = async (values) => {
     const { code_icp, description } = values;
 
+    log("values", values)
+
     try {
       const f = new FormData();
       f.append("code_icp", code_icp);
@@ -314,12 +320,24 @@ const IcpLogic = () => {
 
       setIsTambah(true);
 
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
       formTambah.setFieldsValue({
-        code_dept: "",
+        code_icp: "",
         description: "",
       });
+
     } catch (error) {
-      alert(error);
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 

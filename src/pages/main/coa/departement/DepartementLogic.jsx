@@ -13,6 +13,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -173,6 +175,8 @@ const DepartementLogic = () => {
     },
   });
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
@@ -326,12 +330,17 @@ const DepartementLogic = () => {
 
       setIsTambah(true);
 
+      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+
       formTambah.setFieldsValue({
         code_dept: "",
         description: "",
       });
+
     } catch (error) {
-      alert(error);
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: err.responseCode, message: err.responseDescription}))
     }
   };
 

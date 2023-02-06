@@ -3,6 +3,7 @@ import { createRef, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { val } from "../../../../redux/action/action.reducer";
 import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
@@ -696,6 +697,8 @@ const OthersInputLogic = () => {
 
   const endPFile = eFile[itemPage];
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setDataColumnInput([]);
 
@@ -1018,11 +1021,15 @@ const OthersInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
+      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      alert("gagal upload");
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: 400, message: "Gagal import data"}))
     }
 
     // navigate(0);

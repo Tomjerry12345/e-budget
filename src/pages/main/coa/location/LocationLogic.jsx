@@ -18,6 +18,8 @@ import {
   log,
 } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -242,6 +244,8 @@ const LocationLogic = () => {
     },
   });
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
@@ -448,12 +452,18 @@ const LocationLogic = () => {
 
       setIsTambah(true);
 
+      dispatch(val({status: parseInt(res.data.responseCode), message: res.data.responseDescription}))
+
       formTambah.setFieldsValue({
-        code_dept: "",
+        code_location: "",
+        code_parent: "",
         description: "",
+        parent: false,
       });
     } catch (error) {
-      alert(error);
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: err.responseCode, message: err.responseDescription}))
     }
   };
 

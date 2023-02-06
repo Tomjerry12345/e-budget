@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
 import {
@@ -7,7 +7,7 @@ import {
   disabledItemSummaryMenu,
   urlPageRevenue,
 } from "../../values/Constant";
-import { routingMasterCoa, routingReport } from "../../values/RoutingPage";
+import { routingMasterCoa, routingOthers, routingReport } from "../../values/RoutingPage";
 import {
   cekToken,
   getLocal,
@@ -36,6 +36,8 @@ const MainLogic = () => {
   const pathName = location.pathname;
   const spliter = pathName?.split("/");
 
+  const notifRedux = useSelector(state => state.notif)
+
   useEffect(() => {
     const movePage = getLocal("move-page");
 
@@ -56,6 +58,10 @@ const MainLogic = () => {
     onActivatedMenu();
     // setLocal("move-page", null);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useEffect(() => {
+  //   log("notifRedux", notifRedux)
+  // }, [notifRedux])
 
   const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
@@ -121,13 +127,16 @@ const MainLogic = () => {
 
     if (item === "menu") {
       if (index === 0) {
-        // setHeader("Dashboard");
+        setHeader("Dashboard");
+
         isActivated[index] = 2;
         setLocal("index-menu", index);
         setLocal("name-menu", "Dashboard");
         pageNavigation = "/";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
+
+        
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
@@ -190,11 +199,13 @@ const MainLogic = () => {
     } else if (index === 4) {
       pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
     } else if (index === 5) {
-      if (nameMenu === "Input Asumsi") {
-        pageNavigation = `/main/others/others-input/Input Asumsi`;
-      } else {
-        pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
-      }
+      const routing = routingOthers[nameMenu];
+      pageNavigation = `/main/others/${inputOrSummary}/${routing}`;
+      // if (nameMenu === "Input Asumsi") {
+      //   pageNavigation = `/main/others/others-input/Input Asumsi`;
+      // } else {
+      //   pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
+      // }
     } else if (index === 6) {
       const routing = routingReport[nameMenu];
       pageNavigation = `/main/report/${routing}`;
@@ -234,6 +245,7 @@ const MainLogic = () => {
       header,
       routerNewPage,
       navigate,
+      notifRedux
     },
   };
 };

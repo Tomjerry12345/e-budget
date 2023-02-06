@@ -44,6 +44,7 @@ import AkunPage from "../pages/main/coa/akun/AkunPage";
 import ProjectPage from "../pages/main/coa/project/ProjectPage";
 import IcpPage from "../pages/main/coa/icp/IcpPage";
 import LocationPage from "../pages/main/coa/location/LocationPage";
+import InputDirectAllPage from "../pages/main/others/input/direct-all/InputDirectAllPage";
 
 const RoutersConfig = () => {
   return (
@@ -167,6 +168,8 @@ const RoutersConfig = () => {
               path="others-input/Input Asumsi"
               element={<OthersInputAsumsiPage />}
             />
+            
+            <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
           </Route>

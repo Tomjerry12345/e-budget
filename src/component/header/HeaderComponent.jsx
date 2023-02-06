@@ -27,6 +27,7 @@ const HeaderComponent = ({
   onTambahData,
   inputTambah,
   formTambah,
+  valueTreeData
 }) => {
   let component;
 
@@ -113,6 +114,7 @@ const HeaderComponent = ({
         onChangeTambahData={onChangeTambahData}
         inputTambah={inputTambah}
         formTambah={formTambah}
+        valueTreeData={valueTreeData}
       />
     );
   }

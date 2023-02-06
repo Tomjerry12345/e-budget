@@ -13,6 +13,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -211,6 +213,8 @@ const CompanyLogic = () => {
     },
   });
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
@@ -238,7 +242,7 @@ const CompanyLogic = () => {
 
       setEditingKey("");
     } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
+      console.log("Validate Failed:", errInfo.response.status);
       alert(errInfo);
       setShowPopup(false);
     }
@@ -376,6 +380,8 @@ const CompanyLogic = () => {
   const onTambahData = async (values) => {
     const { code_company, code_parent, description } = values;
 
+    log("values", values)
+
     try {
       const f = new FormData();
       f.append("code_company", code_company);
@@ -390,13 +396,21 @@ const CompanyLogic = () => {
 
       setIsTambah(true);
 
+      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+
       formTambah.setFieldsValue({
-        code_dept: "",
+        code_company: "",
+        code_parent: "",
         description: "",
+        parent: false,
       });
     } catch (error) {
-      alert(error);
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: err.responseCode, message: err.responseDescription}))
     }
+
+    // dispatch(val({status: 200, message: "<div>No results. \n Please try another search term.</div>"}))
   };
 
   return {

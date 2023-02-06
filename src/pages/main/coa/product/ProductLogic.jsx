@@ -18,6 +18,8 @@ import {
   log,
 } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -260,6 +262,8 @@ const ProductLogic = () => {
     },
   });
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
@@ -453,23 +457,38 @@ const ProductLogic = () => {
     log("values", values);
     const { code_product, code_parent, description } = values;
 
-    const f = new FormData();
-    f.append("code_product", code_product);
-    f.append("code_parent", code_parent);
-    f.append("description", description);
+    try {
+      const f = new FormData();
+      f.append("code_product", code_product);
+      f.append("code_parent", code_parent);
+      f.append("description", description);
 
-    const res = await MainServices.post("product/add", f);
+      const res = await MainServices.post("product/add", f);
 
-    log("res-tambah", res);
+      log("res-tambah", res);
 
-    onSetDataTable();
+      onSetDataTable();
 
-    setIsTambah(true);
+      setIsTambah(true);
 
-    formTambah.setFieldsValue({
-      code_dept: "",
-      description: "",
-    });
+      dispatch(
+        val({
+          status: parseInt(res.data.responseCode),
+          message: res.data.responseDescription,
+        })
+      );
+
+      formTambah.setFieldsValue({
+        code_product: "",
+        code_parent: "",
+        description: "",
+        parent: false,
+      });
+    } catch (error) {
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+    }
   };
 
   return {

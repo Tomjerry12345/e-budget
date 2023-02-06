@@ -6,6 +6,7 @@ import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
 import "./SummaryStyle.scss";
+import NotificationComponent from "../../component/notification/NotificationComponent";
 
 const { Content } = Layout;
 
@@ -74,6 +75,8 @@ const MainPage = () => {
           <Outlet />
         </Content>
       </Layout>
+
+      <NotificationComponent status={value.notifRedux.status} message={value.notifRedux.message}/>
     </Layout>
   );
 };

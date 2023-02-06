@@ -13,6 +13,8 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../redux/action/action.reducer";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
@@ -164,10 +166,18 @@ const AkunLogic = () => {
     },
   });
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    formTambah.setFieldsValue({
+      code_account: "",
+      code_parent: "",
+      type_account: "Neraca",
+      description: "",
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const save = async (record) => {
@@ -355,6 +365,7 @@ const AkunLogic = () => {
   };
 
   const onTambahData = async (values) => {
+    log("values", values);
     const { code_account, code_parent, type_account, description } = values;
 
     try {
@@ -371,12 +382,20 @@ const AkunLogic = () => {
       onSetDataTable();
 
       setIsTambah(true);
+
+      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+
       formTambah.setFieldsValue({
-        code_dept: "",
+        code_account: "",
+        code_parent: "",
+        type_account: "",
         description: "",
+        parent: false,
       });
     } catch (error) {
-      alert(error);
+      const err =  error.response.data
+      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      log("error", err)
     }
   };
 

@@ -5,6 +5,25 @@ import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import ProductLogic from "./ProductLogic";
 
+const treeData = [
+  {
+    value: "200",
+    title: "200",
+  },
+  {
+    value: "300",
+    title: "300",
+  },
+  {
+    value: "400",
+    title: "400",
+  },
+  {
+    value: "500",
+    title: "500",
+  },
+];
+
 const ProductPage = () => {
   const { value, func } = ProductLogic();
   return (
@@ -43,19 +62,29 @@ const ProductPage = () => {
             label: "Code Product",
             name: "code_product",
             type: "input",
+            required: true
+          },
+          {
+            label: "Parent",
+            name: "parent",
+            type: "checkbox",
+            required: false
           },
           {
             label: "Code Parent",
             name: "code_parent",
-            type: "input",
+            type: "tree-select",
+            required: true
           },
           {
             label: "Description",
             name: "description",
             type: "textarea",
+            required: true
           },
         ]}
         formTambah={value.formTambah}
+        valueTreeData={treeData}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent

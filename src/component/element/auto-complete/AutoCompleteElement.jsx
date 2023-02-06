@@ -1,4 +1,5 @@
 import { AutoComplete, Form } from "antd";
+import "./style.scss";
 
 const AutoCompleteElement = ({
   label,
@@ -36,6 +37,7 @@ const AutoCompleteElement = ({
       ]}
     >
       <AutoComplete
+        popupClassName="autocomplete-style"
         style={{
           width: 200,
         }}
@@ -44,9 +46,12 @@ const AutoCompleteElement = ({
         onSelect={onSelect}
         placeholder={label}
         disabled={disabled}
-        filterOption={(inputValue, option) =>
-          option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-        }
+        filterOption={(inputValue, option) => {
+
+          return (
+            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+          );
+        }}
       />
     </Form.Item>
   );
