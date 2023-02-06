@@ -43,16 +43,13 @@ const DepartementPage = () => {
             label: "Code Dept",
             name: "code_dept",
             type: "input",
+            required: true
           },
-          // {
-          //   label: "Code Parent",
-          //   name: "code_parent",
-          //   type: "input",
-          // },
           {
             label: "Description",
             name: "description",
             type: "textarea",
+            required: true
           },
         ]}
         formTambah={value.formTambah}

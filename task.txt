@@ -2,10 +2,21 @@ version: v1.4.6 ✅ ❌
 
 fix:
 
-- value filter jadi split ✅
+- value filter jadi split ❌ => ketika mecari tidak hilang hasil pencarian
 - pencarian master data klo value kosong ambil api list tree ✅
 - edit input direct tambah parameter icp dan project ✅
 - text hsi sesuaikan dengan api ✅
+
+- ketika centang parent tidak muncul input kode parent tambah data ✅
+- search filter tidak hilang, order pencarian paling atas
+- isian code parent di jadikan tree select ✅
+- type akun di kode produk dropdown ✅
+- buat page input direct all yg header nya cuman ada import data
+
+- ini mungkin bisa dikasi keterangan kalau data sudah ada biar bisa langsung dimengerti sama user ✅
+- dan hilangkan inputan sebelumnya ketika di klik lagi tambah data ✅
+- tambahkan informasi setelah klik tambah "sukses menambah data" ✅
+- import data tidak berfungsi ✅
 
 issue:
 

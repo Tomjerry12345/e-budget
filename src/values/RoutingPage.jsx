@@ -1,3 +1,10 @@
+export const routingOthers = {
+  "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
+  "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
+  "Input Direct All": "direct-all",
+  "Summary Biaya Non Operasional": "Summary Biaya Non Operasional",
+  "Summary Pendapatan Non Operasional": "Summary Pendapatan Non Operasional",
+};
 export const routingReport = {
   "Laba Rugi": "laba-rugi",
   "Laba Rugi Testing": "laba-rugi-testing",

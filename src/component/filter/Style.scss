@@ -48,19 +48,24 @@
 
     .ant-form-item {
       margin-bottom: 0px;
+
+      .ant-form-item-explain-error {
+        font-size: 11px;
+      }
     }
 
     .ant-select {
-      //   width: calc((100vw - 362px) / 4);
+        // width: calc((100vw - 362px) / 24);
       width: 160px !important;
-      margin-right: 16px;
+      margin-right: 8px;
     }
 
     .ant-form-item-label {
-      padding-bottom: 4px;
+      padding-bottom: 0px;
       label {
         color: black;
         font-weight: 500;
+        font-size: 11px;
       }
     }
 
@@ -70,9 +75,15 @@
       border: none;
       height: 40px;
       padding: 5px 12px;
+      font-size: 11px;
+      height: 28px;
 
       .ant-select-selection-search-input {
         height: 100%;
+      }
+
+      .ant-select-selection-placeholder {
+        line-height: 16px;
       }
     }
 
@@ -103,8 +114,8 @@
       width: 134px;
       border-radius: 8px;
       align-items: center;
-      margin-top: 27px;
-      height: 40px;
+      margin-top: 22px;
+      height: 100%;
       color: #fff;
       font-weight: 600;
       font-size: 14px;

@@ -43,18 +43,16 @@ const IcpPage = () => {
             label: "Code ICP",
             name: "code_icp",
             type: "input",
+            required: true
           },
-          // {
-          //   label: "Code Parent",
-          //   name: "code_parent",
-          //   type: "input",
-          // },
           {
             label: "Description",
             name: "description",
             type: "textarea",
+            required: true
           },
         ]}
+        formTambah={value.formTambah}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
