@@ -2,6 +2,7 @@ import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useEffect } from "react";
+import { log } from "../../../values/Utilitas";
 import "./style.scss";
 
 const { Title, Text } = Typography;
@@ -45,6 +46,8 @@ const UploadCoaModal = ({
       value: i,
     });
   }
+
+  log("loading", loading)
 
   return (
     <Modal

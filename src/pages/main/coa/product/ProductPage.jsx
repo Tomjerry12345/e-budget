@@ -44,7 +44,7 @@ const ProductPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/perusahaan.xlsx"
+        downloadFile="file/produk.xlsx"
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeCoaLogic = ({ onChangeTambahData }) => {
+const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload }) => {
   const [isImport, setImport] = useState(false);
   const [isTambahData, setIsTambahData] = useState(false);
+  const [loadingUpload, setLoadingUpload] = useState(false);
 
   useEffect(() => {
     onChangeTambahData(setIsTambahData);
-  }, [onChangeTambahData]);
+    onChangeLoadingUpload(setLoadingUpload, setImport)
+  }, [onChangeTambahData, onChangeLoadingUpload]);
 
   const onClickImport = () => {
     setImport(true);
@@ -28,6 +30,7 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData }) => {
     value: {
       isImport,
       isTambahData,
+      loadingUpload
     },
     func: {
       onClickImport,

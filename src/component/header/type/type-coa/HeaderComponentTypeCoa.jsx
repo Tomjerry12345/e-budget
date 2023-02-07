@@ -52,12 +52,14 @@ const HeaderComponentTypeCoa = ({
   inputSearch,
   onTambahData,
   onChangeTambahData,
+  onChangeLoadingUpload,
   inputTambah,
   formTambah,
   valueTreeData
 }) => {
   const { value, func } = HeaderComponentTypeCoaLogic({
     onChangeTambahData,
+    onChangeLoadingUpload
   });
   // const inputRef = useRef(null);
 

@@ -96,6 +96,8 @@ const CompanyLogic = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
 
   const constantTableColums = [
     {
@@ -213,7 +215,7 @@ const CompanyLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumn([]);
@@ -300,25 +302,46 @@ const CompanyLogic = () => {
     setOpenUploadModal(true);
   };
 
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = () => {
+  const onUploadFile = async () => {
     let file1;
+    setLoadingUpload(true);
+
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
     let formData = new FormData();
     formData.append("file", file1);
 
-    const res = MainServices.post("dept/import", formData);
-    log("res", res);
+    try {
+      const res = await MainServices.post("company/import", formData);
+      log("res", res);
 
-    onCloseUploadModal();
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
-    navigate(0);
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onClosePopupModal = () => {
@@ -380,7 +403,7 @@ const CompanyLogic = () => {
   const onTambahData = async (values) => {
     const { code_company, code_parent, description } = values;
 
-    log("values", values)
+    log("values", values);
 
     try {
       const f = new FormData();
@@ -396,7 +419,12 @@ const CompanyLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       formTambah.setFieldsValue({
         code_company: "",
@@ -405,9 +433,11 @@ const CompanyLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
 
     // dispatch(val({status: 200, message: "<div>No results. \n Please try another search term.</div>"}))
@@ -428,15 +458,18 @@ const CompanyLogic = () => {
       isSucces,
       isTambah,
       formTambah,
+      uploadSucces,
+      loadingUpload
     },
     func: {
-      onCloseUploadModal,
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
+      setIsSucces,
+      setUploadSucces
     },
   };
 };
