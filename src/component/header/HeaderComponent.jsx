@@ -115,6 +115,7 @@ const HeaderComponent = ({
         inputTambah={inputTambah}
         formTambah={formTambah}
         valueTreeData={valueTreeData}
+        onChangeLoadingUpload={onChangeLoadingUpload}
       />
     );
   }

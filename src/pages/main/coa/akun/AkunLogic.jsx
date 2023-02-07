@@ -166,7 +166,7 @@ const AkunLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumn([]);
@@ -318,18 +318,34 @@ const AkunLogic = () => {
 
   const onUploadFile = () => {
     let file1;
-    acceptedFiles.forEach((file) => {
-      file1 = file;
-    });
-    let formData = new FormData();
-    formData.append("file", file1);
 
-    const res = MainServices.post("account/import", formData);
-    log("res", res);
+    try {
+      acceptedFiles.forEach((file) => {
+        file1 = file;
+      });
+      let formData = new FormData();
+      formData.append("file", file1);
 
-    onCloseUploadModal();
+      const res = MainServices.post("account/import", formData);
+      log("res", res);
 
-    navigate(0);
+      onCloseUploadModal();
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onClosePopupModal = () => {
@@ -383,7 +399,12 @@ const AkunLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       formTambah.setFieldsValue({
         code_account: "",
@@ -393,9 +414,11 @@ const AkunLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err =  error.response.data
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
-      log("error", err)
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
     }
   };
 
