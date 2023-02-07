@@ -61,6 +61,9 @@ const IcpLogic = () => {
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+
   const constantTableColums = [
     {
       title: "Code",
@@ -243,29 +246,51 @@ const IcpLogic = () => {
     setIsSucces(true);
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
+  // const onOpenUploadModal = () => {
+  //   setOpenUploadModal(true);
+  // };
 
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = () => {
+  const onUploadFile = async () => {
     let file1;
+
+    setLoadingUpload(true);
+
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
     let formData = new FormData();
     formData.append("file", file1);
 
-    const res = MainServices.post("icp/import", formData);
-    log("res", res);
+    try {
+      const res = await MainServices.post("icp/import", formData);
+      log("res", res);
 
-    onCloseUploadModal();
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
-    navigate(0);
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onClosePopupModal = () => {
@@ -356,15 +381,16 @@ const IcpLogic = () => {
       isSucces,
       isTambah,
       formTambah,
+      uploadSucces,
+      loadingUpload
     },
     func: {
-      onCloseUploadModal,
-      onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
+      setUploadSucces
     },
   };
 };

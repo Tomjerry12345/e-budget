@@ -96,6 +96,7 @@ const CompanyLogic = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
+
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
@@ -309,6 +310,7 @@ const CompanyLogic = () => {
 
   const onUploadFile = async () => {
     let file1;
+
     setLoadingUpload(true);
 
     acceptedFiles.forEach((file) => {
@@ -468,7 +470,6 @@ const CompanyLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setIsSucces,
       setUploadSucces
     },
   };

@@ -29,16 +29,7 @@ const CapexSummaryLogic = () => {
 
   const [tableColumn, setTableColumn] = useState(null);
 
-  const [dataColumn, setDataColumn] = useState([
-    {
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      value_1: 0,
-      value_2: 0,
-    },
-  ]);
+  const [dataColumn, setDataColumn] = useState([]);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -63,10 +54,8 @@ const CapexSummaryLogic = () => {
     setDataColumn({
       account: "",
       description: "",
-      year_1: "",
-      year_2: "",
-      value_1: 0,
-      value_2: 0,
+      year1: "",
+      year2: "",
     });
 
     form.setFieldsValue({
@@ -108,6 +97,8 @@ const CapexSummaryLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
+    let periode = "2023"
+
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
@@ -117,7 +108,7 @@ const CapexSummaryLogic = () => {
 
     log("fCodeProduct", fCodeProduct);
 
-    url = `${singleMenuCapex}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
+    url = `${singleMenuCapex}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
 
     log("url", url);
 
@@ -135,28 +126,16 @@ const CapexSummaryLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
+      periode: periode
     });
   };
 
   const getData = (data) => {
-    let list = [];
-    let year_1 = "";
-    let year_2 = "";
+    setDataColumn(data.list);
 
-    data?.list?.forEach((val) => {
-      year_1 = val.detail[0].year;
-      year_2 = val.detail[1].year;
-      const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
-      const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
-      list.push({
-        account: val.account,
-        description: val.description,
-        value_1: v1,
-        value_2: v2,
-      });
-    });
-    setDataColumn(list);
-    setTableColumn(columnOutputType1(year_1, year_2));
+    const dt = new Date()
+
+    setTableColumn(columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1));
     setLoading(false);
   };
 
