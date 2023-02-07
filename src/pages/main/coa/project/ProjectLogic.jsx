@@ -66,6 +66,9 @@ const ProjectLogic = () => {
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+
   const constantTableColums = [
     {
       title: "Code",
@@ -362,12 +365,12 @@ const ProjectLogic = () => {
     setOpenUploadModal(true);
   };
 
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = () => {
+  const onUploadFile = async () => {
     let file1;
     acceptedFiles.forEach((file) => {
       file1 = file;
@@ -375,12 +378,31 @@ const ProjectLogic = () => {
     let formData = new FormData();
     formData.append("file", file1);
 
-    const res = MainServices.post("project/import", formData);
-    log("res", res);
+    try {
+      const res = await MainServices.post("project/import", formData);
+      log("res", res);
 
-    onCloseUploadModal();
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
-    navigate(0);
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onClosePopupModal = () => {
@@ -475,15 +497,17 @@ const ProjectLogic = () => {
       isSucces,
       isTambah,
       formTambah,
+      uploadSucces,
+      loadingUpload
     },
     func: {
-      onCloseUploadModal,
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
+      setUploadSucces
     },
   };
 };

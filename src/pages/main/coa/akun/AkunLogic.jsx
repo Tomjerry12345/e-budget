@@ -61,6 +61,9 @@ const AkunLogic = () => {
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+
   const constantTableColums = [
     {
       title: "Code",
@@ -311,8 +314,8 @@ const AkunLogic = () => {
     setOpenUploadModal(true);
   };
 
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
@@ -329,7 +332,7 @@ const AkunLogic = () => {
       const res = MainServices.post("account/import", formData);
       log("res", res);
 
-      onCloseUploadModal();
+      // onCloseUploadModal();
 
       dispatch(
         val({
@@ -338,7 +341,11 @@ const AkunLogic = () => {
         })
       );
 
-      navigate(0);
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
     } catch (error) {
       const err = error.response.data;
       dispatch(
@@ -437,15 +444,17 @@ const AkunLogic = () => {
       isSucces,
       isTambah,
       formTambah,
+      loadingUpload,
+      uploadSucces
     },
     func: {
-      onCloseUploadModal,
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
+      setUploadSucces
     },
   };
 };

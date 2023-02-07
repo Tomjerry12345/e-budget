@@ -2,8 +2,10 @@ import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
 import { getAsync } from "../../../../redux/main/main.thunks";
 import { loadStart } from "../../../../redux/response/response";
+import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
 // const endPoint = {
@@ -29,16 +31,9 @@ const RevenueCogsSummaryLogic = () => {
 
   const [tableColumn, setTableColumn] = useState(null);
 
-  const [dataColumn, setDataColumn] = useState([
-    {
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      value_1: 0,
-      value_2: 0,
-    },
-  ]);
+  const [dataColumn, setDataColumn] = useState([]);
+
+  const [codeFilter, setCodeFilter] = useState();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -56,24 +51,24 @@ const RevenueCogsSummaryLogic = () => {
     if (response !== null) {
       if (nameReducer === "get-data") {
         const { data } = response;
-        let list = [];
-        let year_1 = "";
-        let year_2 = "";
+        // let list = [];
+        // let year_1 = "";
+        // let year_2 = "";
 
-        data?.list?.forEach((val) => {
-          year_1 = val.detail[0].year;
-          year_2 = val.detail[1].year;
-          const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
-          const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
-          list.push({
-            account: val.account,
-            description: val.description,
-            value_1: v1,
-            value_2: v2,
-          });
-        });
-        setDataColumn(list);
-        onSetColumn(year_1, year_2);
+        // data?.list?.forEach((val) => {
+        //   year_1 = val.detail[0].year;
+        //   year_2 = val.detail[1].year;
+        //   const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
+        //   const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
+        //   list.push({
+        //     account: val.account,
+        //     description: val.description,
+        //     value_1: v1,
+        //     value_2: v2,
+        //   });
+        // });
+        setDataColumn(data.list);
+        onSetColumn();
         setLoading(false);
       }
     } else {
@@ -81,50 +76,52 @@ const RevenueCogsSummaryLogic = () => {
     }
   }, [isLoading]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onSetColumn = (year_1, year_2) => {
-    const constantTableColums = [
-      {
-        title: "Account",
-        dataIndex: "account",
-        width: "4%",
-        fixed: "left",
-      },
-      {
-        title: "Description",
-        dataIndex: "description",
-        width: "30%",
-      },
-      {
-        title: `Year ${year_1}`,
-        dataIndex: "value_1",
-        width: "4%",
-        fixed: "right",
-      },
-      {
-        title: `Year ${year_2}`,
-        dataIndex: "value_2",
-        width: "4%",
-        fixed: "right",
-      },
-      // {
-      //   dataIndex: "operation",
-      //   fixed: "right",
-      //   width: "5%",
-      //   render: (_, record) =>
-      //     dataColumn.length >= 1 ? (
-      //       <Dropdown overlay={menu} placement="bottom">
-      //         <Button icon={<MoreVertIcon />}></Button>
-      //       </Dropdown>
-      //     ) : null,
-      // },
-    ];
+  const onSetColumn = () => {
+    // const constantTableColums = [
+    //   {
+    //     title: "Account",
+    //     dataIndex: "account",
+    //     width: "4%",
+    //     fixed: "left",
+    //   },
+    //   {
+    //     title: "Description",
+    //     dataIndex: "description",
+    //     width: "30%",
+    //   },
+    //   {
+    //     title: `Year ${year_1}`,
+    //     dataIndex: "value_1",
+    //     width: "4%",
+    //     fixed: "right",
+    //   },
+    //   {
+    //     title: `Year ${year_2}`,
+    //     dataIndex: "value_2",
+    //     width: "4%",
+    //     fixed: "right",
+    //   },
+    //   // {
+    //   //   dataIndex: "operation",
+    //   //   fixed: "right",
+    //   //   width: "5%",
+    //   //   render: (_, record) =>
+    //   //     dataColumn.length >= 1 ? (
+    //   //       <Dropdown overlay={menu} placement="bottom">
+    //   //         <Button icon={<MoreVertIcon />}></Button>
+    //   //       </Dropdown>
+    //   //     ) : null,
+    //   // },
+    // ];
 
-    const columns = constantTableColums;
+    const dt = new Date()
+
+    const columns = columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1);
 
     setTableColumn(columns);
   };
 
-  const onSetDataTable = (values) => {
+  const onSetDataTable = async (values) => {
     const {
       code_company,
       code_dept,
@@ -142,6 +139,8 @@ const RevenueCogsSummaryLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
+    let periode = "2023"
+
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
@@ -149,11 +148,38 @@ const RevenueCogsSummaryLogic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
-    url = `revenueandcogs/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
+    url = `revenueandcogs/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
 
     log("url", url);
 
-    dispatch(getAsync(url, "get-data"));
+    // dispatch(getAsync(url, "get-data"));
+
+    const { data } = await MainServices.get(url);
+
+    log("data", data);
+
+    getData(data.data);
+
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
+      periode: periode
+    });
+
+  };
+
+  const getData = (data) => {
+    setDataColumn(data.list);
+
+    const dt = new Date()
+
+    setTableColumn(columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1));
+    setLoading(false);
   };
 
   const onTambahData = () => {

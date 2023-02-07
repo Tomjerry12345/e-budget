@@ -61,6 +61,9 @@ const DepartementLogic = () => {
   const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [uploadSucces, setUploadSucces] = useState(null);
+
   const constantTableColums = [
     {
       title: "Code",
@@ -175,7 +178,7 @@ const DepartementLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumn([]);
@@ -255,33 +258,47 @@ const DepartementLogic = () => {
     setDataColumn(data.data);
 
     setIsSucces(true);
-    // setDataColumn(dummyData);
-    // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
-  const onOpenUploadModal = () => {
-    setOpenUploadModal(true);
-  };
-
-  const onCloseUploadModal = () => {
-    setOpenUploadModal(false);
+  const onSuccess = () => {
+    setUploadSucces(true);
     acceptedFiles.length = 0;
   };
 
   const onUploadFile = () => {
     let file1;
-    acceptedFiles.forEach((file) => {
-      file1 = file;
-    });
-    let formData = new FormData();
-    formData.append("file", file1);
 
-    const res = MainServices.post("product/import", formData);
-    log("res", res);
+    try {
+      acceptedFiles.forEach((file) => {
+        file1 = file;
+      });
+      let formData = new FormData();
+      formData.append("file", file1);
 
-    onCloseUploadModal();
+      const res = MainServices.post("dept/import", formData);
+      log("res", res);
 
-    navigate(0);
+      // onCloseUploadModal();
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onClosePopupModal = () => {
@@ -330,17 +347,23 @@ const DepartementLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(val({status: res.data.responseCode, message: res.data.responseDescription}))
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       formTambah.setFieldsValue({
         code_dept: "",
         description: "",
       });
-
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 
@@ -361,8 +384,6 @@ const DepartementLogic = () => {
       formTambah,
     },
     func: {
-      onCloseUploadModal,
-      onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,

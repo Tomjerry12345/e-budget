@@ -14,16 +14,7 @@ const OpexSummaryLogic = () => {
 
   const [tableColumn, setTableColumn] = useState(null);
 
-  const [dataColumn, setDataColumn] = useState([
-    {
-      account: "",
-      description: "",
-      year_1: "",
-      year_2: "",
-      value_1: 0,
-      value_2: 0,
-    },
-  ]);
+  const [dataColumn, setDataColumn] = useState([]);
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -48,6 +39,8 @@ const OpexSummaryLogic = () => {
 
     let url;
 
+    let periode = "2023"
+
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
@@ -62,7 +55,7 @@ const OpexSummaryLogic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
 
-    url = `opex/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
+    url = `opex/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
 
     log("url", url);
 
@@ -74,24 +67,28 @@ const OpexSummaryLogic = () => {
   };
 
   const getData = (data) => {
-    let list = [];
-    let year_1 = "";
-    let year_2 = "";
+    // let list = [];
+    // let year_1 = "";
+    // let year_2 = "";
 
-    data?.list?.forEach((val) => {
-      year_1 = val.detail[0].year;
-      year_2 = val.detail[1].year;
-      const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
-      const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
-      list.push({
-        account: val.account,
-        description: val.description,
-        value_1: v1,
-        value_2: v2,
-      });
-    });
-    setDataColumn(list);
-    setTableColumn(columnOutputType1(year_1, year_2));
+    // data?.list?.forEach((val) => {
+    //   year_1 = val.detail[0].year;
+    //   year_2 = val.detail[1].year;
+    //   const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
+    //   const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
+    //   list.push({
+    //     account: val.account,
+    //     description: val.description,
+    //     value_1: v1,
+    //     value_2: v2,
+    //   });
+    // });
+    // setDataColumn(list);
+    setDataColumn(data.list);
+
+    const dt = new Date()
+
+    setTableColumn(columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1));
     setLoading(false);
   };
 
