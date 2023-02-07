@@ -1,6 +1,8 @@
 import { Typography } from "antd";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useDispatch } from "react-redux";
+import { val } from "../../../../../redux/action/action.reducer";
 import MainServices from "../../../../../services/MainServices";
 import { log } from "../../../../../values/Utilitas";
 
@@ -17,6 +19,8 @@ const InputDirectAllLogic = () => {
 
   const date = new Date();
   const year = date.getFullYear();
+
+  const dispatch = useDispatch()
 
   const constantTableColums = [
     {
@@ -668,7 +672,7 @@ const InputDirectAllLogic = () => {
     formData.append("year", tahun1);
 
     try {
-      const res = await MainServices.post("opex/import", formData);
+      const res = await MainServices.post("directall  /import", formData);
 
       log("res", res);
 
@@ -679,11 +683,16 @@ const InputDirectAllLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
+      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      alert("gagal upload");
+      const err =  error.response.data
+      log("error", err)
+      dispatch(val({status: 400, message: "Gagal import data"}))
+      setLoadingUpload(false);
     }
 
     // navigate(0);

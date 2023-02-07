@@ -25,7 +25,7 @@ const InputDirectAllPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/opex.xlsx"
+        downloadFile="file/directall.xlsx"
         disabledImportExport={value.dataColumnInput.length <= 1}
         onChangeSelect={func.onChangeTahun}
       />
