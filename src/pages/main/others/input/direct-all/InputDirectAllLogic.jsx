@@ -672,7 +672,7 @@ const InputDirectAllLogic = () => {
     formData.append("year", tahun1);
 
     try {
-      const res = await MainServices.post("directall  /import", formData);
+      const res = await MainServices.post("directall/import", formData);
 
       log("res", res);
 
