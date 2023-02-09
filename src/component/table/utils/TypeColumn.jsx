@@ -58,6 +58,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jan1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -69,6 +70,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "feb1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -80,6 +82,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "mar1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -91,6 +94,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "apr1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -102,6 +106,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "mei1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -113,6 +118,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jun1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -124,6 +130,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jul1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -135,6 +142,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "agu1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -146,6 +154,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "sep1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -157,6 +166,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "okt1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -168,6 +178,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "nov1",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -179,6 +190,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "des1",
         editable: true,
+        align: "right"
       },
     ],
   },
@@ -186,6 +198,7 @@ const columnInputType1 = (year_1, year_2) => [
     title: "Year total",
     dataIndex: "year1",
     width: "14%",
+    align: "right"
   },
   {
     title: `Year ${year_2}`,
@@ -201,6 +214,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jan2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -212,6 +226,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "feb2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -223,6 +238,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "mar2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -234,6 +250,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "apr2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -245,6 +262,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "mei2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -256,6 +274,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jun2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -267,6 +286,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "jul2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -278,6 +298,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "agu2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -289,6 +310,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "sep2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -300,6 +322,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 100,
         dataIndex: "okt2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -311,6 +334,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "nov2",
         editable: true,
+        align: "right"
       },
       {
         title: (
@@ -322,6 +346,7 @@ const columnInputType1 = (year_1, year_2) => [
         width: 110,
         dataIndex: "des2",
         editable: true,
+        align: "right"
       },
     ],
   },
@@ -329,6 +354,7 @@ const columnInputType1 = (year_1, year_2) => [
     title: "Year total",
     dataIndex: "year2",
     width: "14%",
+    align: "right"
   },
   // {
   //   dataIndex: "operation",

@@ -1,8 +1,13 @@
 .parent {
-  font-weight: 600 !important;
-  padding: 1px 8px !important;
   line-height: 14px !important;
-  font-size: 11px !important;
+  padding: 1px 8px !important;
+  font-size: 10px !important;
+  font-weight: bold;
+}
+.child {
+  line-height: 14px !important;
+  padding: 1px 8px !important;
+  font-size: 10px !important;
 }
 .header-type {
   line-height: 14px !important;

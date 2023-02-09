@@ -28,6 +28,7 @@ const OpexSummary = () => {
             dataSource={value.dataColumn}
             columns={value.tableColumn}
             loading={value.loading}
+            type="type-2"
           />
         ) : null}
       </div>
