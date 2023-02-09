@@ -372,7 +372,7 @@ const RevenueCogsInputLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onSetDataTable = (values) => {
     const {
@@ -393,6 +393,8 @@ const RevenueCogsInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
+    let periode = "2023";
+
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
@@ -406,7 +408,8 @@ const RevenueCogsInputLogic = () => {
       fCodeLocation,
       fCodeDept,
       fCodeIcp,
-      fCodeProject
+      fCodeProject,
+      periode
     );
 
     setCodeFilter({
@@ -426,9 +429,10 @@ const RevenueCogsInputLogic = () => {
     codeLocation,
     codeDept,
     codeIcp,
-    codeProject
+    codeProject,
+    periode
   ) => {
-    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}`;
+    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
 
     log("data", data);
@@ -584,9 +588,9 @@ const RevenueCogsInputLogic = () => {
     //   });
     // });
 
-    data.list.forEach(val => {
-      keyParent.push(val.parent)
-    })
+    data.list.forEach((val) => {
+      keyParent.push(val.parent);
+    });
 
     setListKeyParent(keyParent);
     setDataColumnInput(data.list);
@@ -693,15 +697,17 @@ const RevenueCogsInputLogic = () => {
         getData(code_company, code_project, code_location, code_dept);
       }
 
-      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+      dispatch(
+        val({ status: res.data.responseCode, message: "Sukses import data" })
+      );
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: 400, message: "Gagal import data"}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(val({ status: 400, message: "Gagal import data" }));
     }
 
     // navigate(0);
