@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
-import { getAsync, postAsync } from "../../../../redux/main/main.thunks";
 import MainServices from "../../../../services/MainServices";
 import { getSizeScreen, log, logObj } from "../../../../values/Utilitas";
 
@@ -655,7 +654,7 @@ const OthersInputLogic = () => {
   //   ],
   // };
 
-  const columns = columnInputType1(year, year+1)[itemPage].map((col) => {
+  const columns = columnInputType1(year, year + 1).map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -698,7 +697,7 @@ const OthersInputLogic = () => {
 
   const endPFile = eFile[itemPage];
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumnInput([]);
@@ -708,8 +707,10 @@ const OthersInputLogic = () => {
       code_dept: null,
       code_product: null,
       code_company: null,
+      code_icp: null,
+      code_project: null,
+      periode: null,
     });
-    
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSetDataTable = (values) => {
@@ -729,6 +730,8 @@ const OthersInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
+    let periode = "2023";
+
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
@@ -742,7 +745,8 @@ const OthersInputLogic = () => {
       fCodeLocation,
       fCodeDept,
       fCodeIcp,
-      fCodeProject
+      fCodeProject,
+      periode
     );
 
     setCodeFilter({
@@ -762,9 +766,10 @@ const OthersInputLogic = () => {
     codeLocation,
     codeDept,
     codeIcp,
-    codeProject
+    codeProject,
+    periode
   ) => {
-    const url = `${endPoint[itemPage]}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}`;
+    const url = `${endPoint[itemPage]}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
 
     log("data", data);
@@ -917,9 +922,9 @@ const OthersInputLogic = () => {
     //   });
     // });
 
-    data.list.forEach(val => {
-      keyParent.push(val.parent)
-    })
+    data.list.forEach((val) => {
+      keyParent.push(val.parent);
+    });
 
     setListKeyParent(keyParent);
     setDataColumnInput(data.list);
@@ -1027,15 +1032,17 @@ const OthersInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+      dispatch(
+        val({ status: res.data.responseCode, message: "Sukses import data" })
+      );
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: 400, message: "Gagal import data"}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(val({ status: 400, message: "Gagal import data" }));
     }
 
     // navigate(0);
