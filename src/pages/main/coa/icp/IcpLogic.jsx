@@ -92,7 +92,7 @@ const IcpLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "5%",
+      width: "7%",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
