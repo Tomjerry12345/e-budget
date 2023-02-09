@@ -177,7 +177,7 @@ const LocationLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "6px",
+      width: "9px",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);

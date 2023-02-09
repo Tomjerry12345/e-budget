@@ -195,7 +195,7 @@ const ProductLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "6px",
+      width: "7px",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
