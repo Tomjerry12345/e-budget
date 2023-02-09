@@ -31,6 +31,36 @@ const columnOutputType1 = (year_1, year_2) => [
   },
 ];
 
+const columnOutputType2 = (year_1, year_2) => [
+  {
+    title: "Code",
+    dataIndex: "code",
+    width: "4%",
+    // fixed: "left",
+  },
+  {
+    title: (
+      <Typography.Text className="header-title">Description</Typography.Text>
+    ),
+    dataIndex: "description",
+    width: "30%",
+  },
+  {
+    title: `Year ${year_1}`,
+    dataIndex: "year1",
+    width: "4%",
+    // fixed: "right",
+    align: "right",
+  },
+  {
+    title: `Year ${year_2}`,
+    dataIndex: "year2",
+    width: "4%",
+    // fixed: "right",
+    align: "right",
+  },
+];
+
 const columnInputType1 = (year_1, year_2) => [
   {
     title: "Account",
@@ -369,4 +399,4 @@ const columnInputType1 = (year_1, year_2) => [
   // },
 ];
 
-export { columnOutputType1, columnInputType1 };
+export { columnOutputType1, columnOutputType2, columnInputType1 };
