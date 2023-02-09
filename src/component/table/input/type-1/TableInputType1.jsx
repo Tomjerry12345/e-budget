@@ -144,7 +144,7 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
       <Table
         components={components}
         rowClassName={(record, index) =>
-          areEqual(listKeyParent, record) ? "parent" : "child"
+          record.parent ? "parent" : "child"
         }
         bordered
         dataSource={dataSource}

@@ -3,12 +3,13 @@ import TableInputTypeCoa from "./input/type-coa/TableInputTypeCoa";
 import TableInputCoa from "./input/type-coa/TableInputTypeCoa";
 import TableInputTypePotongan from "./input/type-potongan/TableInputTypePotongan";
 import TableOutputType1 from "./output/type-1/TableOutputType1";
+import TableOutputType2 from "./output/type-2/TableOutputType2";
 
 /**
  *
  * @param {{
  * variant: "input" | "output";
- * type: "default" | "potongan" | "coa";
+ * type: "default" | "potongan" | "coa" | "type-2";
  * }} props Props for the component
  *
  */
@@ -59,6 +60,16 @@ const TableComponent = ({
     if (type === "default") {
       component = (
         <TableOutputType1
+          dataSource={dataSource}
+          columns={columns}
+          loading={loading}
+          scroll={scroll}
+        />
+      );
+    }
+    if (type === "type-2") {
+      component = (
+        <TableOutputType2
           dataSource={dataSource}
           columns={columns}
           loading={loading}

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
-import { Tabs } from "antd";
+import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const BsbPage = () => {
   const [key, setKey] = useState(1);
+  const [form] = Form.useForm();
 
   // alert(location.pathname);
 
@@ -24,13 +26,70 @@ const BsbPage = () => {
     },
   ];
 
+  useEffect(() => {
+    form.setFieldsValue({
+      code_company: `413 - PT. Bumi Sarana Beton`,
+      code_location: null,
+      code_dept: null,
+      code_project: null,
+    });
+  }, []);
+
+  const onFinish = (values) => {
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = values;
+
+    // alert("test");
+
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
+
+    let fPeriode = periode.split(" ");
+
+    fCodeCompany = fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0];
+    fCodeDept = fCodeDept[0];
+    fCodeIcp = fCodeIcp[0];
+    fCodeProject = fCodeProject[0];
+    fPeriode = fPeriode[0];
+
+    // setCodeFilter({
+    //   code_company: fCodeCompany,
+    //   code_dept: fCodeDept,
+    //   code_location: fCodeLocation,
+    //   code_product: fCodeProduct,
+    //   code_product: fCodeProduct,
+    //   code_icp: fCodeIcp,
+    //   code_project: fCodeProject,
+    //   periode: fPeriode
+    // });
+
+    if (key === 1) {
+      navigate(
+        `/main/revenue-cogs/bsb/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+      );
+    }
+  };
+
   return (
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        // onFinish={func.onFinish}
+        onFinish={onFinish}
         onChangeFilter={(set) => {
-          // set(value.filter);
+          // set(isClickFinish);
         }}
         // onChangeLoadingUpload={(set, setImport) => {
         //   set(value.loadingUpload);
@@ -44,6 +103,8 @@ const BsbPage = () => {
         // downloadFile="file/capex.xlsx"
         // disabledImportExport={value.dataColumnInput.length <= 1}
         // onChangeSelect={func.onChangeTahun}
+        codeCompany={311}
+        form={form}
       />
 
       <div className="custom-root-layout">
@@ -63,7 +124,19 @@ const BsbPage = () => {
             }
           }}
         />
-        <Outlet />
+        <FilterComponent
+          // onFinish={func.onFinish}
+          isCodeIcp
+          isCodeProject
+          type="input"
+          codeCompany={413}
+          form={form}
+          disabled
+          typeCompany="static"
+        />
+        <div style={{ marginTop: 16 }}>
+          <Outlet />
+        </div>
       </div>
     </>
   );

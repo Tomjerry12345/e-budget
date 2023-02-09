@@ -4,6 +4,7 @@ import React from "react";
 import OthersSummaryLogic from "./OthersSummaryLogic";
 import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
+import TableComponent from "../../../../component/table/TableComponent";
 
 const OthersSummary = () => {
   const { value, func } = OthersSummaryLogic();
@@ -28,7 +29,7 @@ const OthersSummary = () => {
       />
 
       <div className="custom-root-layout">
-        {value.dataColumn.length > 1 ? (
+        {/* {value.dataColumn.length > 1 ? (
           <Table
             rowClassName="child"
             bordered
@@ -46,7 +47,13 @@ const OthersSummary = () => {
           <div className="style-progress">
             <Spin />
           </div>
-        ) : null}
+        ) : null} */}
+        <TableComponent
+          dataSource={value.dataColumn}
+          columns={value.tableColumn}
+          loading={value.loading}
+          type="type-2"
+        />
       </div>
     </>
   );
