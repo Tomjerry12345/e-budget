@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
+import { columnOutputType1, columnOutputType2 } from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
@@ -17,7 +17,7 @@ const LabaRugiLogic = () => {
   let params = useParams();
 
   useEffect(() => {
-    loadData(codeCompany, "all", "all", "all", "all", "all");
+    loadData(codeCompany, "all", "all", "all", "all", "all", "2023");
   }, []);
 
   const onFinish = async (values) => {
@@ -39,6 +39,8 @@ const LabaRugiLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
+    let periode = "2023"
+
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
@@ -52,7 +54,8 @@ const LabaRugiLogic = () => {
       fCodeLocation,
       fCodeDept,
       fCodeIcp,
-      fCodeProject
+      fCodeProject,
+      periode
     );
 
     setCodeFilter({
@@ -72,9 +75,10 @@ const LabaRugiLogic = () => {
     fCodeLocation,
     fCodeDept,
     fCodeIcp,
-    fCodeProject
+    fCodeProject,
+    periode
   ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}`;
+    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
     log("url", url);
     const { data } = await MainServices.get(url);
     log("res", data);
@@ -100,11 +104,11 @@ const LabaRugiLogic = () => {
     //     value_2: v2 === "NaN" ? "" : v2,
     //   });
     // });
-    // setData(data.list);
+    setData(data.list);
     // setColumns(columnOutputType1(year_1, year_2));
     const dt = new Date()
 
-    setColumns(columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1));
+    setColumns(columnOutputType2(dt.getFullYear(), dt.getFullYear() + 1));
     setLoading(false);
   };
 

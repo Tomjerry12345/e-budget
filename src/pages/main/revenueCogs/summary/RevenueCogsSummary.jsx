@@ -26,6 +26,7 @@ const RevenueCogsSummary = () => {
           dataSource={value.dataColumn}
           columns={value.tableColumn}
           loading={value.loading}
+          type="type-2"
         />
       </div>
     </>
