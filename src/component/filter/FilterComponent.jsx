@@ -6,7 +6,12 @@ import "./Style.scss";
 
 const { Panel } = Collapse;
 
-const periode = [{ title: "2022-2023", code: "" }];
+const date = new Date();
+
+const periode = [
+  { description: `${date.getFullYear()} - ${date.getFullYear() + 1}` },
+  { description: `${date.getFullYear() + 1} - ${date.getFullYear() + 2}` },
+];
 
 const AutoCompleteFilter = ({
   value,
@@ -63,7 +68,7 @@ const AutoCompleteFilter = ({
       />
     ) : null}
 
-    {/* <AutoCompleteElement label="Periode" name="periode" value={periode} /> */}
+    <AutoCompleteElement label="Periode" name="periode" value={periode} />
   </>
 );
 
@@ -90,6 +95,7 @@ const FilterComponent = ({
   disabled = false,
   variant,
   type = "summary",
+  typeCompany = "change",
 }) => {
   const { value, func } = FilterComponentLogic({
     isCodeProduct,
@@ -99,6 +105,7 @@ const FilterComponent = ({
     codeCompany,
     formGlobal: form,
     type: type,
+    typeCompany,
   });
 
   return (

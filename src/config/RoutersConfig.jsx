@@ -59,8 +59,8 @@ const RoutersConfig = () => {
             <Route path="summary" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
-              <Route index path="penjualan" element={<PenjualanHkPage />} />
-              <Route path="hpplain" element={<LainHkPage />} />
+              <Route index path="penjualan/" element={<PenjualanHkPage />} />
+              <Route path="hpplain/" element={<LainHkPage />} />
             </Route>
             <Route path="kiu" element={<KiuPage />}>
               <Route

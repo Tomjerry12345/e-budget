@@ -11,6 +11,7 @@ const FilterComponentLogic = ({
   codeCompany,
   formGlobal,
   type,
+  typeCompany,
 }) => {
   const [state, setState] = useState({
     code_company: [],
@@ -42,9 +43,9 @@ const FilterComponentLogic = ({
       }
     };
 
-    log("codeCompany", codeCompany);
-
-    fetchData();
+    if (typeCompany === "change") {
+      fetchData();
+    }
 
     // if (codeCompany === null) {
     //   fetchData();
@@ -54,6 +55,8 @@ const FilterComponentLogic = ({
   }, [codeCompany]);
 
   useEffect(() => {
+    // log("codeCompany-11", codeCompany);
+
     if (codeCompany !== null) {
       getValueComboBox(codeCompany);
     }
@@ -90,7 +93,14 @@ const FilterComponentLogic = ({
 
   const getValueComboBox = async (e) => {
     // const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
-    const code = e.split(" ");
+
+    let code = [];
+
+    if (typeCompany === "change") {
+      code = e.split(" ");
+    } else {
+      code.push(e)
+    }
 
     log("code", code);
 
