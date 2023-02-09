@@ -4,6 +4,7 @@ import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import { log } from "../../../../values/Utilitas";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
@@ -14,9 +15,11 @@ const HkPage = () => {
 
   const navigate = useNavigate();
 
+  const [codeFilter, setCodeFilter] = useState();
+
   useEffect(() => {
     form.setFieldsValue({
-      code_company: `HK (311)`,
+      code_company: `311 - PT. Hadji Kalla`,
       code_location: null,
       code_dept: null,
       code_project: null,
@@ -37,20 +40,51 @@ const HkPage = () => {
   ];
 
   const onFinish = (values) => {
-    log("filter", values);
-    const { code_company, code_dept, code_location, code_product } = values;
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode
+    } = values;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    // alert("test");
 
-    navigate(path, {
-      state: {
-        code_company: fCodeCompany,
-        code_location: fCodeLocation,
-        code_dept: fCodeDept,
-      },
-    });
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
+
+    let fPeriode = periode.split(" ")
+
+    fCodeCompany = fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0];
+    fCodeDept = fCodeDept[0];
+    fCodeIcp = fCodeIcp[0];
+    fCodeProject = fCodeProject[0];
+    fPeriode = fPeriode[0];
+
+    // setCodeFilter({
+    //   code_company: fCodeCompany,
+    //   code_dept: fCodeDept,
+    //   code_location: fCodeLocation,
+    //   code_product: fCodeProduct,
+    //   code_product: fCodeProduct,
+    //   code_icp: fCodeIcp,
+    //   code_project: fCodeProject,
+    //   periode: fPeriode
+    // });
+
+    if (key === 1) {
+      navigate(
+        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+      );
+    }
 
     setIsClickFinish(false);
   };
@@ -89,17 +123,38 @@ const HkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/hk/penjualan`);
-              setPath("/main/revenue-cogs/hk/penjualan");
+              navigate(
+                `/main/revenue-cogs/hk/penjualan`
+              );
+              setPath(
+                "/main/revenue-cogs/hk/penjualan"
+              );
               setIsMoveTabs(!isMoveTabs);
             } else {
-              navigate(`/main/revenue-cogs/hk/hpplain`);
-              setPath("/main/revenue-cogs/hk/hpplain");
+              navigate(
+                `/main/revenue-cogs/hk/hpplain`
+              );
+              setPath(
+                "/main/revenue-cogs/hk/hpplain"
+              );
               setIsMoveTabs(!isMoveTabs);
             }
           }}
         />
-        <Outlet />
+        <FilterComponent
+          // onFinish={func.onFinish}
+          isCodeIcp
+          isCodeProject
+          type="input"
+          codeCompany={211}
+          form={form}
+          disabled
+          typeCompany="static"
+        />
+
+        <div style={{ marginTop: 16 }}>
+          <Outlet />
+        </div>
       </div>
     </>
   );

@@ -91,9 +91,9 @@ const BkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/bk/penjualan`);
+              navigate(`/main/revenue-cogs/bk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`);
             } else {
-              navigate(`/main/revenue-cogs/bk/hpplain`);
+              navigate(`/main/revenue-cogs/bk/hpplain?codeCompany=200?codeLocation=110116?codeDept=109`);
             }
           }}
         />

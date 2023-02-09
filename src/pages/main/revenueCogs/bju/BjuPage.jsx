@@ -4,6 +4,7 @@ import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import { log } from "../../../../values/Utilitas";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const BjuPage = () => {
   const [key, setKey] = useState(1);
@@ -31,7 +32,7 @@ const BjuPage = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      code_company: `BJU (312)`,
+      code_company: `312 - PT. Bumi Jasa Utama`,
       code_location: null,
       code_dept: null,
       code_project: null,
@@ -95,17 +96,38 @@ const BjuPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/bju/penjualan`);
-              setPath("/main/revenue-cogs/bju/penjualan");
+              navigate(
+                `/main/revenue-cogs/bju/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+              );
+              setPath(
+                "/main/revenue-cogs/bju/penjualan?codeCompany=200?codeLocation=110116?codeDept=109"
+              );
               setIsMoveTabs(!isMoveTabs);
             } else {
-              navigate(`/main/revenue-cogs/bju/hpplain`);
-              setPath("/main/revenue-cogs/bju/hpplain");
+              navigate(
+                `/main/revenue-cogs/bju/hpplain?codeCompany=200?codeLocation=110116?codeDept=109`
+              );
+              setPath(
+                "/main/revenue-cogs/bju/hpplain?codeCompany=200?codeLocation=110116?codeDept=109"
+              );
               setIsMoveTabs(!isMoveTabs);
             }
           }}
         />
-        <Outlet />
+        <FilterComponent
+          // onFinish={func.onFinish}
+          isCodeIcp
+          isCodeProject
+          type="input"
+          codeCompany={211}
+          form={form}
+          disabled
+          typeCompany="static"
+        />
+
+        <div style={{ marginTop: 16 }}>
+          <Outlet />
+        </div>
       </div>
     </>
   );
