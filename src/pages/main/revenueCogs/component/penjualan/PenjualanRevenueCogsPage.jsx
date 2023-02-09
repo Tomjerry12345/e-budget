@@ -58,7 +58,7 @@ const PenjualanRevenueCogsPage = ({ tabsKey }) => {
         name: "listDisc",
       },
     ],
-    bts: [
+    gmm: [
       {
         title: "Asumsi Unit Jual",
         name: "listAsumsi",

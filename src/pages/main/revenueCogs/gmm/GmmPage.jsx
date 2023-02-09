@@ -5,7 +5,7 @@ import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import FilterComponent from "../../../../component/filter/FilterComponent";
 
-const BandPage = () => {
+const GmmPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
 
@@ -28,7 +28,7 @@ const BandPage = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      code_company: `231 - PT. Baruga Asrinusa Development`,
+      code_company: `328 - PT. Gowa Modern Motor`,
       code_location: null,
       code_dept: null,
       code_project: null,
@@ -78,7 +78,7 @@ const BandPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/band/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
       );
     }
   };
@@ -87,9 +87,9 @@ const BandPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
+        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
-          // set(isClickFinish);
+          // set(value.filter);
         }}
         // onChangeLoadingUpload={(set, setImport) => {
         //   set(value.loadingUpload);
@@ -103,7 +103,6 @@ const BandPage = () => {
         // downloadFile="file/capex.xlsx"
         // disabledImportExport={value.dataColumnInput.length <= 1}
         // onChangeSelect={func.onChangeTahun}
-        form={form}
       />
 
       <div className="custom-root-layout">
@@ -117,9 +116,9 @@ const BandPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/band/penjualan`);
+              navigate(`/main/revenue-cogs/bts/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/band/hpplain`);
+              navigate(`/main/revenue-cogs/bts/hpplain`);
             }
           }}
         />
@@ -128,7 +127,7 @@ const BandPage = () => {
           isCodeIcp
           isCodeProject
           type="input"
-          codeCompany={231}
+          codeCompany={328}
           form={form}
           disabled
           typeCompany="static"
@@ -141,4 +140,4 @@ const BandPage = () => {
   );
 };
 
-export default BandPage;
+export default GmmPage;

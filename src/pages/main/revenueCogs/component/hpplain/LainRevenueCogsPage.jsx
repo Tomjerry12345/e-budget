@@ -41,7 +41,7 @@ const LainRevenueCogsPage = () => {
         name: "listHppLain",
       },
     ],
-    bts: [
+    gmm: [
       {
         title: "Pendapatan Operasional Lainnya",
         name: "listPendapatanLain",

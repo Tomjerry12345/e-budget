@@ -4,13 +4,13 @@ import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import { log } from "../../../../values/Utilitas";
+import FilterComponent from "../../../../component/filter/FilterComponent";
 
 const BkPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
-  const [isClickFinish, setIsClickFinish] = useState(null);
-  const [isMoveTabs, setIsMoveTabs] = useState(false);
-  const [path, setPath] = useState("/main/revenue-cogs/bk/penjualan");
+
+  // alert(location.pathname);
 
   const navigate = useNavigate();
 
@@ -29,30 +29,59 @@ const BkPage = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      code_company: `BJU (312)`,
+      code_company: `221 - PT. Bumi Karsa`,
       code_location: null,
       code_dept: null,
       code_project: null,
     });
-  }, [isMoveTabs]);
+  }, []);
 
   const onFinish = (values) => {
-    log("filter", values);
-    const { code_company, code_dept, code_location, code_product } = values;
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = values;
 
-    let fCodeCompany = code_company.replace(/[^0-9]/g, "");
-    let fCodeLocation = code_location.replace(/[^0-9]/g, "");
-    let fCodeDept = code_dept.replace(/[^0-9]/g, "");
+    // alert("test");
 
-    navigate(path, {
-      state: {
-        code_company: fCodeCompany,
-        code_location: fCodeLocation,
-        code_dept: fCodeDept,
-      },
-    });
+    let fCodeCompany = code_company.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
-    setIsClickFinish(false);
+    let fPeriode = periode.split(" ");
+
+    fCodeCompany = fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0];
+    fCodeDept = fCodeDept[0];
+    fCodeIcp = fCodeIcp[0];
+    fCodeProject = fCodeProject[0];
+    fPeriode = fPeriode[0];
+
+    // setCodeFilter({
+    //   code_company: fCodeCompany,
+    //   code_dept: fCodeDept,
+    //   code_location: fCodeLocation,
+    //   code_product: fCodeProduct,
+    //   code_product: fCodeProduct,
+    //   code_icp: fCodeIcp,
+    //   code_project: fCodeProject,
+    //   periode: fPeriode
+    // });
+
+    if (key === 1) {
+      navigate(
+        `/main/revenue-cogs/bk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+      );
+    }
   };
 
   return (
@@ -61,7 +90,7 @@ const BkPage = () => {
         type="revenue-perusahaan"
         onFinish={onFinish}
         onChangeFilter={(set) => {
-          // set(value.filter);
+          // set(isClickFinish);
         }}
         // onChangeLoadingUpload={(set, setImport) => {
         //   set(value.loadingUpload);
@@ -77,7 +106,6 @@ const BkPage = () => {
         // onChangeSelect={func.onChangeTahun}
         codeCompany={221}
         form={form}
-        disabled={true}
       />
 
       <div className="custom-root-layout">
@@ -91,13 +119,25 @@ const BkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/bk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`);
+              navigate(`/main/revenue-cogs/bk/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/bk/hpplain?codeCompany=200?codeLocation=110116?codeDept=109`);
+              navigate(`/main/revenue-cogs/bk/hpplain`);
             }
           }}
         />
-        <Outlet />
+        <FilterComponent
+          // onFinish={func.onFinish}
+          isCodeIcp
+          isCodeProject
+          type="input"
+          codeCompany={326}
+          form={form}
+          disabled
+          typeCompany="static"
+        />
+        <div style={{ marginTop: 16 }}>
+          <Outlet />
+        </div>
       </div>
     </>
   );

@@ -302,7 +302,7 @@ export const endPointGetCoa = "";
 export const urlPageRevenue = {
   "Revenue & COGS HK": "hk",
   "Revenue & COGS KIU": "kiu",
-  "Revenue & COGS BTS": "bts",
+  "Revenue & COGS GMM": "gmm",
   "Revenue & COGS KIA": "kia",
   "Revenue & COGS BJU": "bju",
   "Revenue & COGS BLT": "blt",

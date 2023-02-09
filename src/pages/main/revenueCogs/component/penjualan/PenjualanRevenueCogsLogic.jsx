@@ -65,8 +65,8 @@ const menuReveneue = {
     title: "KIU",
     code: 311,
   },
-  bts: {
-    parentUrl: "bts",
+  gmm: {
+    parentUrl: "gmm",
     childUrl: [
       {
         name: "listAsumsi",

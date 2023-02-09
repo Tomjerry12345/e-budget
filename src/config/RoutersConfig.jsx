@@ -20,7 +20,6 @@ import HkPage from "../pages/main/revenueCogs/hk/HkPage";
 import KiuPage from "../pages/main/revenueCogs/kiu/KiuPage";
 import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/component/penjualan/PenjualanRevenueCogsPage";
 import LainRevenueCogsPage from "../pages/main/revenueCogs/component/hpplain/LainRevenueCogsPage";
-import BtsPage from "../pages/main/revenueCogs/bts/BtsPage";
 import KiaPage from "../pages/main/revenueCogs/kia/KiaPage";
 import BjuPage from "../pages/main/revenueCogs/bju/BjuPage";
 import BltPage from "../pages/main/revenueCogs/blt/BltPage";
@@ -45,6 +44,7 @@ import ProjectPage from "../pages/main/coa/project/ProjectPage";
 import IcpPage from "../pages/main/coa/icp/IcpPage";
 import LocationPage from "../pages/main/coa/location/LocationPage";
 import InputDirectAllPage from "../pages/main/others/input/direct-all/InputDirectAllPage";
+import GmmPage from "../pages/main/revenueCogs/gmm/GmmPage";
 
 const RoutersConfig = () => {
   return (
@@ -70,7 +70,7 @@ const RoutersConfig = () => {
               />
               <Route path="hpplain" element={<LainRevenueCogsPage />} />
             </Route>
-            <Route path="bts" element={<BtsPage />}>
+            <Route path="gmm" element={<GmmPage />}>
               <Route
                 index
                 path="penjualan"
