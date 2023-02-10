@@ -10,7 +10,6 @@ const RevenueCogsInputLogic = () => {
   const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
-  const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -382,6 +381,7 @@ const RevenueCogsInputLogic = () => {
       code_product,
       code_project,
       code_icp,
+      periode
     } = values;
 
     // alert("test");
@@ -393,7 +393,7 @@ const RevenueCogsInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let periode = "2023";
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -401,6 +401,7 @@ const RevenueCogsInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fPeriode = fPeriode[0]
 
     getData(
       fCodeCompany,
@@ -409,7 +410,7 @@ const RevenueCogsInputLogic = () => {
       fCodeDept,
       fCodeIcp,
       fCodeProject,
-      periode
+      fPeriode
     );
 
     setCodeFilter({
@@ -420,6 +421,7 @@ const RevenueCogsInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
+      periode: fPeriode
     });
   };
 
@@ -444,156 +446,14 @@ const RevenueCogsInputLogic = () => {
 
   const getDataTable = (response) => {
     const { data } = response;
-    let list = [];
-    // let year_1 = 0;
-    // let year_2 = 0;
-    // let year_total_1 = "";
-    // let year_total_2 = "";
 
-    let keyParent = [];
+    const list = []
 
-    // data?.list?.forEach((val, i) => {
-    //   year_1 = val.detail[0].year;
-    //   year_2 = val.detail[1].year;
+    data.list.forEach((val, i) => {
+      list.push({...val, key: i})
+    })
 
-    //   year_total_1 = 0;
-    //   year_total_2 = 0;
-
-    //   const account = val.account;
-    //   const description = val.description;
-    //   const listYear1 = [];
-    //   const listYear2 = [];
-
-    //   // let parent = val.parent;
-    //   let parent = val.detail[0].list_month[0].parent;
-
-    //   if (parent) {
-    //     keyParent.push(i);
-    //   }
-
-    //   val.detail[0].list_month?.forEach((month) => {
-    //     listYear1.push(month);
-    //     year_total_1 += month.value;
-    //   });
-
-    //   val.detail[1].list_month?.forEach((month) => {
-    //     listYear2.push(month);
-    //     year_total_2 += month.value;
-    //   });
-
-    //   list.push({
-    //     key: i,
-    //     parent: parent,
-    //     account: account,
-    //     description: description,
-    //     jan_1: listYear1[0]?.value,
-    //     // jan_1: jan_val_1,
-    //     jan_1_uuid: listYear1[0]?.uuid,
-    //     jan_1_month: listYear1[0]?.month,
-    //     jan_1_year: year_1,
-    //     feb_1: listYear1[1]?.value,
-    //     feb_1_uuid: listYear1[1]?.uuid,
-    //     feb_1_month: listYear1[1]?.month,
-    //     feb_1_year: year_1,
-    //     mar_1: listYear1[2]?.value,
-    //     mar_1_uuid: listYear1[2]?.uuid,
-    //     mar_1_month: listYear1[2]?.month,
-    //     mar_1_year: year_1,
-    //     apr_1: listYear1[3]?.value,
-    //     apr_1_uuid: listYear1[3]?.uuid,
-    //     apr_1_month: listYear1[3]?.month,
-    //     apr_1_year: year_1,
-    //     mei_1: listYear1[4]?.value,
-    //     mei_1_uuid: listYear1[4]?.uuid,
-    //     mei_1_month: listYear1[4]?.month,
-    //     mei_1_year: year_1,
-    //     jun_1: listYear1[5]?.value,
-    //     jun_1_uuid: listYear1[5]?.uuid,
-    //     jun_1_month: listYear1[5]?.month,
-    //     jun_1_year: year_1,
-    //     jul_1: listYear1[6]?.value,
-    //     jul_1_uuid: listYear1[6]?.uuid,
-    //     jul_1_month: listYear1[6]?.month,
-    //     jul_1_year: year_1,
-    //     aug_1: listYear1[7]?.value,
-    //     aug_1_uuid: listYear1[7]?.uuid,
-    //     aug_1_month: listYear1[7]?.month,
-    //     aug_1_year: year_1,
-    //     sep_1: listYear1[8]?.value,
-    //     sep_1_uuid: listYear1[8]?.uuid,
-    //     sep_1_month: listYear1[8]?.month,
-    //     sep_1_year: year_1,
-    //     okt_1: listYear1[9]?.value,
-    //     okt_1_uuid: listYear1[9]?.uuid,
-    //     okt_1_month: listYear1[9]?.month,
-    //     okt_1_year: year_1,
-    //     nov_1: listYear1[10]?.value,
-    //     nov_1_uuid: listYear1[10]?.uuid,
-    //     nov_1_month: listYear1[10]?.month,
-    //     nov_1_year: year_1,
-    //     des_1: listYear1[11]?.value,
-    //     des_1_uuid: listYear1[11]?.uuid,
-    //     des_1_month: listYear1[11]?.month,
-    //     des_1_year: year_1,
-    //     year_total_1: year_total_1,
-    //     jan_2: listYear2[0]?.value,
-    //     jan_2_uuid: listYear2[0]?.uuid,
-    //     jan_2_month: listYear2[0]?.month,
-    //     jan_2_year: year_2,
-    //     feb_2: listYear2[1]?.value,
-    //     feb_2_uuid: listYear2[1]?.uuid,
-    //     feb_2_month: listYear2[1]?.month,
-    //     feb_2_year: year_2,
-    //     mar_2: listYear2[2]?.value,
-    //     mar_2_uuid: listYear2[2]?.uuid,
-    //     mar_2_month: listYear2[2]?.month,
-    //     mar_2_year: year_2,
-    //     apr_2: listYear2[3]?.value,
-    //     apr_2_uuid: listYear2[3]?.uuid,
-    //     apr_2_month: listYear2[3]?.month,
-    //     apr_2_year: year_2,
-    //     mei_2: listYear2[4]?.value,
-    //     mei_2_uuid: listYear2[4]?.uuid,
-    //     mei_2_month: listYear2[4]?.month,
-    //     mei_2_year: year_2,
-    //     jun_2: listYear2[5]?.value,
-    //     jun_2_uuid: listYear2[5]?.uuid,
-    //     jun_2_month: listYear2[5]?.month,
-    //     jun_2_year: year_2,
-    //     jul_2: listYear2[6]?.value,
-    //     jul_2_uuid: listYear2[6]?.uuid,
-    //     jul_2_month: listYear2[6]?.month,
-    //     jul_2_year: year_2,
-    //     aug_2: listYear2[7]?.value,
-    //     aug_2_uuid: listYear2[7]?.uuid,
-    //     aug_2_month: listYear2[7]?.month,
-    //     aug_2_year: year_2,
-    //     sep_2: listYear2[8]?.value,
-    //     sep_2_uuid: listYear2[8]?.uuid,
-    //     sep_2_month: listYear2[8]?.month,
-    //     sep_2_year: year_2,
-    //     okt_2: listYear2[9]?.value,
-    //     okt_2_uuid: listYear2[9]?.uuid,
-    //     okt_2_month: listYear2[9]?.month,
-    //     okt_2_year: year_2,
-    //     nov_2: listYear2[10]?.value,
-    //     nov_2_uuid: listYear2[10]?.uuid,
-    //     nov_2_month: listYear2[10]?.month,
-    //     nov_2_year: year_2,
-    //     des_2: listYear2[11]?.value,
-    //     des_2_uuid: listYear2[11]?.uuid,
-    //     des_2_month: listYear2[11]?.month,
-    //     des_2_year: year_2,
-    //     year_total_2: year_total_2,
-    //   });
-    // });
-
-    data.list.forEach((val) => {
-      keyParent.push(val.parent);
-    });
-
-    setListKeyParent(keyParent);
-    setDataColumnInput(data.list);
+    setDataColumnInput(list);
   };
 
   const onFinish = (values) => {
@@ -637,10 +497,11 @@ const RevenueCogsInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
+      periode
     } = codeFilter;
-    const year = row[`${keysEdit}_year`];
-    const month = row[`${keysEdit}_month`];
-    const uuid = row[`${keysEdit}_uuid`];
+    const year = periode;
+    const month = row[`${keysEdit}-month`];
+    const uuid = row[`${keysEdit}-uuid`];
 
     if (uuid === null) {
       formData.append("code", row.account);
@@ -721,7 +582,6 @@ const RevenueCogsInputLogic = () => {
     value: {
       dataColumnInput,
       columns,
-      listKeyParent,
       loading,
       filter,
       loadingUpload,

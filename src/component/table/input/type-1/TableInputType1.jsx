@@ -59,8 +59,6 @@ const EditableCell = ({
       toggleEdit();
       const keysEdit = Object.keys(values);
       const valuesEdit = values[keysEdit];
-      log("values", values);
-      log("dataColumnInput", keysEdit);
       // console.log(`record => ${JSON.stringify(record)}`);
       handleSave({ ...record, ...values }, keysEdit, valuesEdit);
     } catch (errInfo) {
