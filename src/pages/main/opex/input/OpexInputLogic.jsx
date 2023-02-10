@@ -1,4 +1,3 @@
-import { Typography } from "antd";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
@@ -11,7 +10,6 @@ const OpexInputLogic = () => {
   const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
-  const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -21,7 +19,7 @@ const OpexInputLogic = () => {
   const date = new Date();
   const year = date.getFullYear();
 
-  const columns = columnInputType1(year, year+1).map((col) => {
+  const columns = columnInputType1(year, year + 1).map((col) => {
     // console.log(`col => ${JSON.stringify(col)}`);
     if (!col.editable) {
       return col;
@@ -63,7 +61,7 @@ const OpexInputLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const onSetDataTable = (values) => {
     const {
@@ -73,6 +71,7 @@ const OpexInputLogic = () => {
       code_product,
       code_project,
       code_icp,
+      periode,
     } = values;
 
     let fCodeCompany = code_company.split(" ");
@@ -82,7 +81,7 @@ const OpexInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let periode = "2023"
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -90,6 +89,7 @@ const OpexInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -98,7 +98,7 @@ const OpexInputLogic = () => {
       fCodeDept,
       fCodeIcp,
       fCodeProject,
-      periode
+      fPeriode
     );
 
     setCodeFilter({
@@ -108,7 +108,7 @@ const OpexInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: periode,
+      periode: fPeriode,
     });
   };
 
@@ -133,14 +133,14 @@ const OpexInputLogic = () => {
 
   const getDataTable = (response) => {
     const { data } = response;
-    let keyParent = [];
 
-    data.list.forEach(val => {
-      keyParent.push(val.parent)
+    const list = []
+
+    data.list.forEach((val, i) => {
+      list.push({...val, key: i})
     })
 
-    setListKeyParent(keyParent);
-    setDataColumnInput(data.list);
+    setDataColumnInput(list);
   };
 
   const onFinish = (values) => {
@@ -153,7 +153,7 @@ const OpexInputLogic = () => {
     const newData = [...dataColumnInput];
     const index = newData.findIndex((item) => row.key === item.key);
     const item = newData[index];
-    const oldValue = item[`${keysEdit}`];
+    const oldValue = item[`${keysEdit[0]}`];
     newData.splice(index, 1, {
       ...item,
       ...row,
@@ -162,8 +162,8 @@ const OpexInputLogic = () => {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
         const itemold = newData[x];
-        itemparent[`${keysEdit}`] =
-          parseInt(itemparent[`${keysEdit}`]) +
+        itemparent[`${keysEdit[0]}`] =
+          parseInt(itemparent[`${keysEdit[0]}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
         newData.splice(x, 1, {
@@ -182,10 +182,11 @@ const OpexInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
+      periode,
     } = codeFilter;
-    const year = row[`${keysEdit}_year`];
-    const month = row[`${keysEdit}_month`];
-    const uuid = row[`${keysEdit}_uuid`];
+    const year = periode;
+    const month = row[`${keysEdit[0]}-month`];
+    const uuid = row[`${keysEdit[0]}-uuid`];
 
     if (uuid === null) {
       formData.append("code", row.account);
@@ -242,15 +243,17 @@ const OpexInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+      dispatch(
+        val({ status: res.data.responseCode, message: "Sukses import data" })
+      );
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: 400, message: "Gagal import data"}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(val({ status: 400, message: "Gagal import data" }));
     }
 
     // navigate(0);
@@ -264,7 +267,6 @@ const OpexInputLogic = () => {
     value: {
       dataColumnInput,
       columns,
-      listKeyParent,
       loading,
       filter,
       loadingUpload,

@@ -1,4 +1,3 @@
-import { Typography } from "antd";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
@@ -14,7 +13,6 @@ const MppInputLogic = () => {
   const [dataColumnInput, setDataColumnInput] = useState([]);
 
   const [codeFilter, setCodeFilter] = useState();
-  const [listKeyParent, setListKeyParent] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -76,6 +74,7 @@ const MppInputLogic = () => {
       code_product,
       code_project,
       code_icp,
+      periode
     } = values;
 
     // alert("test");
@@ -87,7 +86,7 @@ const MppInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let periode = "2023"
+    let fPeriode = periode.split(" ")
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -95,6 +94,7 @@ const MppInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fPeriode = fPeriode[0]
 
     getData(
       fCodeCompany,
@@ -103,7 +103,7 @@ const MppInputLogic = () => {
       fCodeDept,
       fCodeIcp,
       fCodeProject,
-      periode
+      fPeriode
     );
 
     setCodeFilter({
@@ -114,7 +114,7 @@ const MppInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: periode
+      periode: fPeriode
     });
   };
 
@@ -141,14 +141,13 @@ const MppInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    let keyParent = [];
+    const list = []
 
-    data.list.forEach(val => {
-      keyParent.push(val.parent)
+    data.list.forEach((val, i) => {
+      list.push({...val, key: i})
     })
 
-    setListKeyParent(keyParent);
-    setDataColumnInput(data.list);
+    setDataColumnInput(list);
   };
 
   const onFinish = (values) => {
@@ -190,10 +189,11 @@ const MppInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
+      periode
     } = codeFilter;
-    const year = row[`${keysEdit}_year`];
-    const month = row[`${keysEdit}_month`];
-    const uuid = row[`${keysEdit}_uuid`];
+    const year = periode;
+    const month = row[`${keysEdit[0]}-month`];
+    const uuid = row[`${keysEdit[0]}-uuid`];
 
     if (uuid === null) {
       formData.append("code", row.account);
@@ -273,7 +273,6 @@ const MppInputLogic = () => {
       dataColumnInput,
       columns,
       params,
-      listKeyParent,
       loading,
       loadingUpload,
       getRootProps,
