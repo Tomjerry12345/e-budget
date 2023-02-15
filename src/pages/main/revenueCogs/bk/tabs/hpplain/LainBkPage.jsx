@@ -1,9 +1,9 @@
 import { Typography } from "antd";
 import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
-import LainRevenueCogsLogic from "./LainBkLogic";
+import LainBkLogic from "./LainBkLogic";
 
 const LainBkPage = () => {
-  const { value, func } = LainRevenueCogsLogic();
+  const { value, func } = LainBkLogic();
 
   const data1 = [
     {
@@ -19,6 +19,8 @@ const LainBkPage = () => {
       name: "listHppLain",
     },
   ];
+
+  const codeCompany = `${value.filterCompany.title} (${value.filterCompany.code})`;
 
   return (
     <>

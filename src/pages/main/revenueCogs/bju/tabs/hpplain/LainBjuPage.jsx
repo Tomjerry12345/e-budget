@@ -20,6 +20,8 @@ const LainBjuPage = () => {
     },
   ];
 
+  const codeCompany = `${value.filterCompany.title} (${value.filterCompany.code})`;
+
   return (
     <>
       {/* <FilterComponent

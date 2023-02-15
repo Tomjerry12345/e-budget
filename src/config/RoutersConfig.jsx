@@ -18,8 +18,6 @@ import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsi
 import LabaRugiPage from "../pages/main/report/laba-rugi/LabaRugiPage";
 import HkPage from "../pages/main/revenueCogs/hk/HkPage";
 import KiuPage from "../pages/main/revenueCogs/kiu/KiuPage";
-import PenjualanRevenueCogsPage from "../pages/main/revenueCogs/component/penjualan/PenjualanRevenueCogsPage";
-import LainRevenueCogsPage from "../pages/main/revenueCogs/component/hpplain/LainRevenueCogsPage";
 import KiaPage from "../pages/main/revenueCogs/kia/KiaPage";
 import BjuPage from "../pages/main/revenueCogs/bju/BjuPage";
 import BltPage from "../pages/main/revenueCogs/blt/BltPage";
@@ -45,6 +43,26 @@ import IcpPage from "../pages/main/coa/icp/IcpPage";
 import LocationPage from "../pages/main/coa/location/LocationPage";
 import InputDirectAllPage from "../pages/main/others/input/direct-all/InputDirectAllPage";
 import GmmPage from "../pages/main/revenueCogs/gmm/GmmPage";
+import PenjualanKiuPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
+import LainKiuPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
+import PenjualanGmmPage from "../pages/main/revenueCogs/gmm/tabs/penjualan/PenjualanGmmPage";
+import LainGmmPage from "../pages/main/revenueCogs/gmm/tabs/hpplain/LainGmmPage";
+import PenjualanKiaPage from "../pages/main/revenueCogs/kia/tabs/penjualan/PenjualanKiaPage";
+import LainKiaPage from "../pages/main/revenueCogs/kia/tabs/hpplain/LainKiaPage";
+import PenjualanBltPage from "../pages/main/revenueCogs/blt/tabs/penjualan/PenjualanBltPage";
+import LainBltPage from "../pages/main/revenueCogs/blt/tabs/hpplain/LainBltPage";
+import PenjualanBluPage from "../pages/main/revenueCogs/blu/tabs/penjualan/PenjualanBluPage";
+import LainBluPage from "../pages/main/revenueCogs/blu/tabs/hpplain/LainBluPage";
+import PenjualanBsuPage from "../pages/main/revenueCogs/bsu/tabs/penjualan/PenjualanBsuPage";
+import LainBsuPage from "../pages/main/revenueCogs/bsu/tabs/hpplain/LainBsuPage";
+import PenjualanBsbPage from "../pages/main/revenueCogs/bsb/tabs/penjualan/PenjualanBsbPage";
+import LainBsbPage from "../pages/main/revenueCogs/bsb/tabs/hpplain/LainBsbPage";
+import PenjualanKikPage from "../pages/main/revenueCogs/kik/tabs/penjualan/PenjualanKikPage";
+import LainKikPage from "../pages/main/revenueCogs/kik/tabs/hpplain/LainKikPage";
+import PenjualanIkpPage from "../pages/main/revenueCogs/ikp/tabs/penjualan/PenjualanIkpPage";
+import LainIkpPage from "../pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
+import PenjualanBandPage from "../pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
+import LainBandPage from "../pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
 
 const RoutersConfig = () => {
   return (
@@ -63,92 +81,52 @@ const RoutersConfig = () => {
               <Route path="hpplain/" element={<LainHkPage />} />
             </Route>
             <Route path="kiu" element={<KiuPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanKiuPage />} />
+              <Route path="hpplain/" element={<LainKiuPage />} />
             </Route>
             <Route path="gmm" element={<GmmPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanGmmPage />} />
+              <Route path="hpplain/" element={<LainGmmPage />} />
             </Route>
             <Route path="kia" element={<KiaPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanKiaPage />} />
+              <Route path="hpplain/" element={<LainKiaPage />} />
             </Route>
             <Route path="bju" element={<BjuPage />}>
               <Route index path="penjualan" element={<PenjualanBjuPage />} />
               <Route path="hpplain" element={<LainBjuPage />} />
             </Route>
             <Route path="blt" element={<BltPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanBltPage />} />
+              <Route path="hpplain/" element={<LainBltPage />} />
             </Route>
             <Route path="blu" element={<BluPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanBluPage />} />
+              <Route path="hpplain/" element={<LainBluPage />} />
             </Route>
             <Route path="bk" element={<BkPage />}>
               <Route index path="penjualan" element={<PenjualanBkPage />} />
               <Route path="hpplain" element={<LainBkPage />} />
             </Route>
             <Route path="bsu" element={<BsuPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanBsuPage />} />
+              <Route path="hpplain/" element={<LainBsuPage />} />
             </Route>
             <Route path="bsb" element={<BsbPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanBsbPage />} />
+              <Route path="hpplain/" element={<LainBsbPage />} />
             </Route>
             <Route path="kik" element={<KikPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanKikPage />} />
+              <Route path="hpplain/" element={<LainKikPage />} />
             </Route>
             <Route path="ikp" element={<IkpPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanIkpPage />} />
+              <Route path="hpplain/" element={<LainIkpPage />} />
             </Route>
             <Route path="band" element={<BandPage />}>
-              <Route
-                index
-                path="penjualan"
-                element={<PenjualanRevenueCogsPage />}
-              />
-              <Route path="hpplain" element={<LainRevenueCogsPage />} />
+              <Route index path="penjualan/" element={<PenjualanBandPage />} />
+              <Route path="hpplain/" element={<LainBandPage />} />
             </Route>
           </Route>
           <Route path="opex">
@@ -168,7 +146,7 @@ const RoutersConfig = () => {
               path="others-input/Input Asumsi"
               element={<OthersInputAsumsiPage />}
             />
-            
+
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />

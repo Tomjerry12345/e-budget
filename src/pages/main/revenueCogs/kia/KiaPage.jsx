@@ -9,6 +9,8 @@ const KiaPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
 
+  const [isMoveTabs, setIsMoveTabs] = useState(false)
+
   // alert(location.pathname);
 
   const navigate = useNavigate();
@@ -29,11 +31,14 @@ const KiaPage = () => {
   useEffect(() => {
     form.setFieldsValue({
       code_company: `241 - PT. Kalla Inti Karsa`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
-  }, []);
+  }, [isMoveTabs]);
 
   const onFinish = (values) => {
     const {
@@ -78,7 +83,11 @@ const KiaPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/kia/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/kia/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
   };
@@ -87,7 +96,6 @@ const KiaPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
         onChangeFilter={(set) => {
           // set(isClickFinish);
         }}
@@ -122,10 +130,12 @@ const KiaPage = () => {
             } else {
               navigate(`/main/revenue-cogs/kia/hpplain`);
             }
+
+            setIsMoveTabs(!isMoveTabs)
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"
