@@ -9,7 +9,7 @@ const BltPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
 
-  // alert(location.pathname);
+  const [isMoveTabs, setIsMoveTabs] = useState(false)
 
   const navigate = useNavigate();
 
@@ -29,11 +29,14 @@ const BltPage = () => {
   useEffect(() => {
     form.setFieldsValue({
       code_company: `421 - PT. Bumi Lintas Tama`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
-  }, []);
+  }, [isMoveTabs]);
 
   const onFinish = (values) => {
     const {
@@ -78,7 +81,11 @@ const BltPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/blt/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/blt/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
   };
@@ -87,7 +94,6 @@ const BltPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
         onChangeFilter={(set) => {
           // set(isClickFinish);
         }}
@@ -125,7 +131,7 @@ const BltPage = () => {
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"

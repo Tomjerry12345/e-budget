@@ -10,7 +10,7 @@ const BkPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
 
-  // alert(location.pathname);
+  const [isMoveTabs, setIsMoveTabs] = useState(false)
 
   const navigate = useNavigate();
 
@@ -30,11 +30,14 @@ const BkPage = () => {
   useEffect(() => {
     form.setFieldsValue({
       code_company: `221 - PT. Bumi Karsa`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
-  }, []);
+  }, [isMoveTabs]);
 
   const onFinish = (values) => {
     const {
@@ -79,7 +82,11 @@ const BkPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/bk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/bk/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/bk/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
   };
@@ -88,7 +95,6 @@ const BkPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
         onChangeFilter={(set) => {
           // set(isClickFinish);
         }}
@@ -123,10 +129,13 @@ const BkPage = () => {
             } else {
               navigate(`/main/revenue-cogs/bk/hpplain`);
             }
+
+            setIsMoveTabs(!isMoveTabs)
+
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"

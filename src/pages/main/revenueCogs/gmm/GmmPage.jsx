@@ -29,9 +29,12 @@ const GmmPage = () => {
   useEffect(() => {
     form.setFieldsValue({
       code_company: `328 - PT. Gowa Modern Motor`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
   }, []);
 
@@ -78,7 +81,11 @@ const GmmPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/gmm/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/gmm/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
   };
@@ -116,14 +123,14 @@ const GmmPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/bts/penjualan`);
+              navigate(`/main/revenue-cogs/gmm/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/bts/hpplain`);
+              navigate(`/main/revenue-cogs/gmm/hpplain`);
             }
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"

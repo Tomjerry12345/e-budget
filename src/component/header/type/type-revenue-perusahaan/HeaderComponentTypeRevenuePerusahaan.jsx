@@ -157,13 +157,13 @@ const HeaderComponentTypeRevenuePerusahaan = ({
           placeholder="input search text"
           suffix={<SearchOutlined />}
         />
-        <Button
+        {/* <Button
           className="btn-filter"
           icon={<FilterOutlined />}
           onClick={func.onCilckFilter}
         >
           Filter
-        </Button>
+        </Button> */}
         <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
         </Button>
@@ -174,7 +174,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         /> */}
       </div>
 
-      <ModalFilter
+      {/* <ModalFilter
         filter={value.filter}
         onCloseFilter={func.onCloseFilter}
         onFinish={onFinish}
@@ -183,7 +183,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         isCodeProject={isCodeProject}
         disabled={disabled}
         keyCodeProject={keyCodeProject}
-      />
+      /> */}
 
       {/* <ModalMenuMore
         open={value.more}

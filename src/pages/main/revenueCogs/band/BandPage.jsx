@@ -29,9 +29,12 @@ const BandPage = () => {
   useEffect(() => {
     form.setFieldsValue({
       code_company: `231 - PT. Baruga Asrinusa Development`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
   }, []);
 
@@ -78,7 +81,11 @@ const BandPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/band/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/band/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/band/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
   };
@@ -87,7 +94,6 @@ const BandPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
         onChangeFilter={(set) => {
           // set(isClickFinish);
         }}
@@ -124,7 +130,7 @@ const BandPage = () => {
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"

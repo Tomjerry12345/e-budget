@@ -1,10 +1,10 @@
 import { Typography } from "antd";
 import TablePotonganComponent from "../../../component/TablePotonganComponent";
 import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
-import PenjualanBjuLogic from "./PenjualanBjuLogic";
+import PenjualanKiaLogic from "./PenjualanBjuLogic";
 
 const PenjualanBjuPage = () => {
-  const { value, func } = PenjualanBjuLogic();
+  const { value, func } = PenjualanKiaLogic();
 
   const data1 = [
     {
@@ -25,8 +25,19 @@ const PenjualanBjuPage = () => {
     },
   ];
 
+  const codeCompany = `${value.filterCompany.title} (${value.filterCompany.code})`;
+
   return (
     <>
+      {/* <FilterComponent
+        codeCompany={codeCompany}
+        type={2}
+        isCodeProduct={false}
+        form={value.form}
+        onFinish={func.onFinish}
+        disabled={true}
+      /> */}
+
       {data1.map((val) => (
         <>
           <Typography.Text className="title">{val.title}</Typography.Text>

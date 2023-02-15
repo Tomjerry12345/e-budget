@@ -3,7 +3,7 @@ import FilterComponent from "../../../../../../component/filter/FilterComponent"
 import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
 import LainRevenueCogsLogic from "./LainHkLogic";
 
-const LainHkPage = () => {
+const LainKiuPage = () => {
   const { value, func } = LainRevenueCogsLogic();
 
   const data1 = [
@@ -47,4 +47,4 @@ const LainHkPage = () => {
   );
 };
 
-export default LainHkPage;
+export default LainKiuPage;

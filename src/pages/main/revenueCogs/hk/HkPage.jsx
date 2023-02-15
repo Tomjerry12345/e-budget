@@ -11,18 +11,18 @@ const HkPage = () => {
   const [form] = Form.useForm();
   const [isClickFinish, setIsClickFinish] = useState(null);
   const [isMoveTabs, setIsMoveTabs] = useState(false);
-  const [path, setPath] = useState("/main/revenue-cogs/hk/penjualan");
 
   const navigate = useNavigate();
-
-  const [codeFilter, setCodeFilter] = useState();
 
   useEffect(() => {
     form.setFieldsValue({
       code_company: `311 - PT. Hadji Kalla`,
+      code_product: null,
       code_location: null,
       code_dept: null,
+      code_icp: null,
       code_project: null,
+      periode: null,
     });
   }, [isMoveTabs]);
 
@@ -47,7 +47,7 @@ const HkPage = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     // alert("test");
@@ -59,7 +59,7 @@ const HkPage = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let fPeriode = periode.split(" ")
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0];
     fCodeProduct = fCodeProduct[0];
@@ -69,20 +69,15 @@ const HkPage = () => {
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    // setCodeFilter({
-    //   code_company: fCodeCompany,
-    //   code_dept: fCodeDept,
-    //   code_location: fCodeLocation,
-    //   code_product: fCodeProduct,
-    //   code_product: fCodeProduct,
-    //   code_icp: fCodeIcp,
-    //   code_project: fCodeProject,
-    //   periode: fPeriode
-    // });
+    log("key", key);
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/hk/penjualan?codeCompany=200?codeLocation=110116?codeDept=109`
+        `/main/revenue-cogs/hk/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+      );
+    } else if (key === 2) {
+      navigate(
+        `/main/revenue-cogs/hk/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
 
@@ -93,7 +88,7 @@ const HkPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onFinish={onFinish}
+        // onFinish={onFinish}
         onChangeFilter={(set) => {
           set(isClickFinish);
         }}
@@ -109,7 +104,6 @@ const HkPage = () => {
         // downloadFile="file/capex.xlsx"
         // disabledImportExport={value.dataColumnInput.length <= 1}
         // onChangeSelect={func.onChangeTahun}
-        codeCompany={311}
         form={form}
       />
       <div className="custom-root-layout">
@@ -123,26 +117,16 @@ const HkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(
-                `/main/revenue-cogs/hk/penjualan`
-              );
-              setPath(
-                "/main/revenue-cogs/hk/penjualan"
-              );
-              setIsMoveTabs(!isMoveTabs);
+              navigate(`/main/revenue-cogs/hk/penjualan`);
             } else {
-              navigate(
-                `/main/revenue-cogs/hk/hpplain`
-              );
-              setPath(
-                "/main/revenue-cogs/hk/hpplain"
-              );
-              setIsMoveTabs(!isMoveTabs);
+              navigate(`/main/revenue-cogs/hk/hpplain`);
             }
+
+            setIsMoveTabs(!isMoveTabs);
           }}
         />
         <FilterComponent
-          // onFinish={func.onFinish}
+          onFinish={onFinish}
           isCodeIcp
           isCodeProject
           type="input"
