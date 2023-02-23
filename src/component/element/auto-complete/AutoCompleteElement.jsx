@@ -1,4 +1,4 @@
-import { AutoComplete, Form } from "antd";
+import { AutoComplete, Form, Input } from "antd";
 import "./style.scss";
 
 const AutoCompleteElement = ({
@@ -8,6 +8,7 @@ const AutoCompleteElement = ({
   value,
   disabled,
   intialValue,
+  variant = 'default'
 }) => {
   const newVal = intialValue === undefined ? [] : [intialValue];
   value.forEach((val) => {
@@ -36,7 +37,7 @@ const AutoCompleteElement = ({
         },
       ]}
     >
-      <AutoComplete
+    {variant === "default" ? <AutoComplete
         popupClassName="autocomplete-style"
         style={{
           width: 200,
@@ -52,7 +53,8 @@ const AutoCompleteElement = ({
             option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
           );
         }}
-      />
+      /> : <Input placeholder="Basic usage" readOnly={true} style={{}}/>}
+      
     </Form.Item>
   );
 };

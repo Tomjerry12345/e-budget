@@ -5,34 +5,6 @@ import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import LocationLogic from "./LocationLogic";
 
-const treeData = [
-  {
-    value: "100000",
-    title: "100000",
-    children: [
-      {
-        value: "110000",
-        title: "110000",
-        children: [
-          {
-            value: "110100",
-            title: "110100",
-          },
-          {
-            value: "110600",
-            title: "110600",
-          },
-          {
-            value: "110700",
-            title: "110700",
-          },
-          
-        ],
-      },
-    ],
-  },
-];
-
 const LocationPage = () => {
   const { value, func } = LocationLogic();
   return (
@@ -71,29 +43,29 @@ const LocationPage = () => {
             label: "Code Location",
             name: "code_location",
             type: "input",
-            required: true
+            required: true,
           },
           {
             label: "Parent",
             name: "parent",
             type: "checkbox",
-            required: false
+            required: false,
           },
           {
             label: "Code Parent",
             name: "code_parent",
             type: "tree-select",
-            required: true
+            required: true,
           },
           {
             label: "Description",
             name: "description",
             type: "textarea",
-            required: true
+            required: true,
           },
         ]}
         formTambah={value.formTambah}
-        valueTreeData={treeData}
+        valueTreeData={value.codeParent}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -110,13 +82,13 @@ const LocationPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

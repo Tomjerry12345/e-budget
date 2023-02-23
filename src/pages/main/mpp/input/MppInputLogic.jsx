@@ -66,6 +66,15 @@ const MppInputLogic = () => {
   
   const dispatch = useDispatch()
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const onSetDataTable = (values) => {
     const {
       code_company,
@@ -249,15 +258,14 @@ const MppInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+      responseShow(res)
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: 400, message: "Gagal import data"}))
+      const err =  error.response
+      responseShow(err)
     }
 
     // navigate(0);

@@ -15,7 +15,8 @@ const RevenueCogsInputPage = () => {
       {/* <FilterComponent type={2} isCodeProduct={true} isCodeProject={true}   form={value.form} onFinish={func.onFinish} /> */}
 
       <HeaderComponent
-        type="revenue-input"
+        // type="revenue-input"
+        type="input"
         onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);

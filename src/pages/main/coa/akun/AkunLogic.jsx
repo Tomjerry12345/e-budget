@@ -27,7 +27,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -43,6 +47,7 @@ const AkunLogic = () => {
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -113,7 +118,11 @@ const AkunLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -175,6 +184,7 @@ const AkunLogic = () => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    onSetCodeParent();
     formTambah.setFieldsValue({
       code_account: "",
       code_parent: "",
@@ -182,6 +192,12 @@ const AkunLogic = () => {
       description: "",
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onSetCodeParent = async () => {
+    const { data } = await MainServices.get("account/list-tree-option");
+    log("company/list-tree-option", data);
+    setCodeParent(data.data);
+  };
 
   const save = async (record) => {
     try {
@@ -198,15 +214,25 @@ const AkunLogic = () => {
 
       console.log("res-edit", res);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
     }
   };
 
@@ -224,72 +250,31 @@ const AkunLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
-    // const value = dataColumn.filter((item) => item.id !== record.id);
-    // const i = data.findIndex((item) => record.code === item.code);
-    // const val = data[i];
+    try {
+      const res = await MainServices.delete("account/delete", {
+        uuid: record.uuid,
+      });
 
-    // log("val", val);
+      console.log("res-hapus", res);
 
-    // setDataColumn(value);
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
-    // log("val", val.uuid);
-
-    const res = await MainServices.delete("account/delete", {
-      uuid: record.uuid,
-    });
-
-    console.log("res-hapus", res);
-
-    onSetDataTable();
-
-    // let test = dataColumn.filter((item) => item.id !== record.id);
-
-    // log("value", test);
-    // log("length-value", test.length);
-    // log("dataColumn-value", dataColumn.length);
-
-    // // if (test.length === dummyData.length) {
-    // //   const list = [];
-    // //   dataColumn.forEach((root) => {
-    // //     if (root.children.length !== 0) {
-    // //       const listCh1 = [];
-
-    // //       // level 1
-    // //       root.children.forEach((ch1) => {
-    // //         log("ch1", ch1);
-    // //         if (ch1.children !== undefined) {
-    // //           log("undefined");
-    // //           listCh1.push(ch1);
-    // //         } else {
-    // //           log("record.id", record.id);
-    // //           log("ch1.id", ch1.id);
-    // //           if (ch1.id !== record.id) {
-    // //             log("test");
-    // //             listCh1.push(ch1);
-    // //           }
-    // //         }
-    // //       });
-
-    // //       log("listCh1", listCh1);
-
-    // //       list.push({
-    // //         id: root.id,
-    // //         uuid: root.uuid,
-    // //         code: root.code,
-    // //         children: listCh1,
-    // //       });
-
-    // //       // list.push(listCh1);
-    // //     }
-    // //   });
-    // //   // test = list;
-    // // }
-
-    // setDataColumn(test);
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -305,9 +290,7 @@ const AkunLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
-    // setDataColumn(dummyData);
-    // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
+    // setIsSucces(true);
   };
 
   const onOpenUploadModal = () => {
@@ -332,8 +315,6 @@ const AkunLogic = () => {
       const res = MainServices.post("account/import", formData);
       log("res", res);
 
-      // onCloseUploadModal();
-
       dispatch(
         val({
           status: res.data.responseCode,
@@ -356,7 +337,7 @@ const AkunLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -432,6 +413,7 @@ const AkunLogic = () => {
   return {
     value: {
       dataColumn,
+      codeParent,
       openUploadModal,
       getRootProps,
       getInputProps,
@@ -445,7 +427,7 @@ const AkunLogic = () => {
       isTambah,
       formTambah,
       loadingUpload,
-      uploadSucces
+      uploadSucces,
     },
     func: {
       onOpenUploadModal,
@@ -454,7 +436,7 @@ const AkunLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

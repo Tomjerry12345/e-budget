@@ -32,7 +32,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -48,6 +52,7 @@ const LocationLogic = () => {
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -191,7 +196,11 @@ const LocationLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -247,13 +256,29 @@ const LocationLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    onSetCodeParent()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
+  const onSetCodeParent = async () => {
+    const { data } = await MainServices.get("location/list-tree-option");
+    log("company/list-tree-option", data);
+    setCodeParent(data.data);
+  };
 
   const save = async (record) => {
     try {
@@ -309,16 +334,17 @@ const LocationLogic = () => {
 
       console.log("res-edit", res);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
+
+      responseShow(res);
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      setShowPopup(false);
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -336,18 +362,23 @@ const LocationLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
+    try {
+      const res = await MainServices.delete("location/delete", {
+        uuid: record.uuid,
+      });
 
-    const res = await MainServices.delete("location/delete", {
-      uuid: record.uuid,
-    });
+      console.log("res-hapus", res);
 
-    console.log("res-hapus", res);
+      responseShow(res);
 
-    onSetDataTable();
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -363,7 +394,7 @@ const LocationLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
     // setDataColumn(dummyData);
     // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
@@ -417,7 +448,7 @@ const LocationLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -478,7 +509,12 @@ const LocationLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(val({status: parseInt(res.data.responseCode), message: res.data.responseDescription}))
+      dispatch(
+        val({
+          status: parseInt(res.data.responseCode),
+          message: res.data.responseDescription,
+        })
+      );
 
       formTambah.setFieldsValue({
         code_location: "",
@@ -487,15 +523,18 @@ const LocationLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 
   return {
     value: {
       dataColumn,
+      codeParent,
       openUploadModal,
       getRootProps,
       getInputProps,
@@ -509,7 +548,7 @@ const LocationLogic = () => {
       isTambah,
       formTambah,
       uploadSucces,
-      loadingUpload
+      loadingUpload,
     },
     func: {
       onOpenUploadModal,
@@ -518,7 +557,7 @@ const LocationLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

@@ -21,3 +21,15 @@ fix:
 issue:
 
 - get summary opex bermasalah
+
+new: 
+
+- alert ubah jadi notifikasi ✅
+- kasi hilang semua tombol refresh ✅
+- autocomplete pada revenue perusahaan ubah jadi input text
+- tombol eksport kasi hilang di input direct ✅
+- tombol clear data dihilangkan di summary direct ✅
+- proses import responnya dimasukkan ke notifikasi ✅
+- kasi hilang opsi produk di revenue perusahaan ✅
+- list parent ambil dari api ✅
+- update data yg di kirim di endpoint revenue perusahaan

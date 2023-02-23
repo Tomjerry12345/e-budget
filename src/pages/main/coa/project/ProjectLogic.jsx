@@ -32,7 +32,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -48,6 +52,7 @@ const ProjectLogic = () => {
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -191,7 +196,11 @@ const ProjectLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -241,13 +250,29 @@ const ProjectLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    onSetCodeParent();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
+  const onSetCodeParent = async () => {
+    const { data } = await MainServices.get("project/list-tree-option");
+    log("company/list-tree-option", data);
+    setCodeParent(data.data);
+  };
 
   const save = async (record) => {
     try {
@@ -303,15 +328,18 @@ const ProjectLogic = () => {
 
       console.log("res-edit", res);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
+
+      responseShow(res);
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
     }
   };
 
@@ -329,18 +357,24 @@ const ProjectLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
+    try {
+      const res = await MainServices.delete("project/delete", {
+        uuid: record.uuid,
+      });
 
-    const res = await MainServices.delete("project/delete", {
-      uuid: record.uuid,
-    });
+      console.log("res-hapus", res);
 
-    console.log("res-hapus", res);
+      responseShow(res);
 
-    onSetDataTable();
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -356,7 +390,7 @@ const ProjectLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
     // setDataColumn(dummyData);
     // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
@@ -406,7 +440,7 @@ const ProjectLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -467,7 +501,12 @@ const ProjectLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(val({status: parseInt(res.data.responseCode), message: res.data.responseDescription}))
+      dispatch(
+        val({
+          status: parseInt(res.data.responseCode),
+          message: res.data.responseDescription,
+        })
+      );
 
       formTambah.setFieldsValue({
         code_project: "",
@@ -476,15 +515,18 @@ const ProjectLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 
   return {
     value: {
       dataColumn,
+      codeParent,
       openUploadModal,
       getRootProps,
       getInputProps,
@@ -498,7 +540,7 @@ const ProjectLogic = () => {
       isTambah,
       formTambah,
       uploadSucces,
-      loadingUpload
+      loadingUpload,
     },
     func: {
       onOpenUploadModal,
@@ -507,7 +549,7 @@ const ProjectLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

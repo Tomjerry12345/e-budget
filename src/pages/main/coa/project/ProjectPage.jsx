@@ -5,28 +5,6 @@ import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import ProjectLogic from "./ProjectLogic";
 
-const treeData = [
-  {
-    value: "A000",
-    title: "A000",
-  },
-  {
-    value: "B000",
-    title: "B000",
-  },
-  {
-    value: "C000",
-    title: "C000",
-  },
-  {
-    value: "D000",
-    title: "D000",
-  },
-  {
-    value: "E000",
-    title: "E000",
-  },
-];
 
 const ProjectPage = () => {
   const { value, func } = ProjectLogic();
@@ -89,7 +67,7 @@ const ProjectPage = () => {
           
         ]}
         formTambah={value.formTambah}
-        valueTreeData={treeData}
+        valueTreeData={value.codeParent}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -106,13 +84,13 @@ const ProjectPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

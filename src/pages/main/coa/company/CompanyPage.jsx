@@ -5,34 +5,6 @@ import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 
-const treeData = [
-  {
-    value: "100",
-    title: "100",
-    children: [
-      {
-        value: "200",
-        title: "200",
-        children: [
-          {
-            value: "210",
-            title: "210",
-          },
-          {
-            value: "230",
-            title: "230",
-          },
-          {
-            value: "240",
-            title: "240",
-          },
-          
-        ],
-      },
-    ],
-  },
-];
-
 const CompanyPage = () => {
   const { value, func } = CompanyLogic();
   return (
@@ -93,7 +65,7 @@ const CompanyPage = () => {
           },
         ]}
         formTambah={value.formTambah}
-        valueTreeData={treeData}
+        valueTreeData={value.codeParent}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -109,13 +81,13 @@ const CompanyPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

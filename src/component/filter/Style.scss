@@ -9,7 +9,7 @@
     border-radius: 8px;
   }
 
-  .ant-collapse{
+  .ant-collapse {
     border: none;
   }
   .ant-collapse-item {
@@ -20,16 +20,16 @@
       border-radius: 8px;
       .ant-collapse-header {
         border-radius: 8px 8px 0px 0px;
-        .ant-collapse-header-text{
+        .ant-collapse-header-text {
           color: #0ca258;
         }
-        .ant-collapse-arrow{
+        .ant-collapse-arrow {
           color: #0ca258;
         }
       }
       .ant-collapse-content {
         border-radius: 0px 0px 8px 8px;
-        .ant-collapse-content-box{
+        .ant-collapse-content-box {
           padding: 12px;
           padding-top: 0px;
         }
@@ -55,7 +55,7 @@
     }
 
     .ant-select {
-        // width: calc((100vw - 362px) / 24);
+      // width: calc((100vw - 362px) / 24);
       width: 140px !important;
       margin-right: 8px;
     }
@@ -73,7 +73,6 @@
       border-radius: 8px;
       background-color: #f5f7f9;
       border: none;
-      height: 40px;
       padding: 5px 12px;
       font-size: 11px;
       height: 28px;
@@ -87,7 +86,23 @@
       }
     }
 
-    .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    .ant-input {
+      border-radius: 8px;
+      background-color: #f5f7f9;
+      border: none;
+      padding: 5px 12px;
+      font-size: 11px;
+      height: 28px;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    .ant-select-focused:not(.ant-select-disabled).ant-select:not(
+        .ant-select-customize-input
+      )
+      .ant-select-selector {
       box-shadow: none;
     }
 

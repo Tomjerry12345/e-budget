@@ -135,11 +135,13 @@ const IkpPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
+          isCodeProduct={false}
           type="input"
           codeCompany={242}
           form={form}
           disabled
           typeCompany="static"
+          variant="perusahaan"
         />
         <div style={{ marginTop: 16 }}>
           <Outlet />
