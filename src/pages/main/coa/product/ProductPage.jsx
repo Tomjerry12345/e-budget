@@ -5,24 +5,6 @@ import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import ProductLogic from "./ProductLogic";
 
-const treeData = [
-  {
-    value: "200",
-    title: "200",
-  },
-  {
-    value: "300",
-    title: "300",
-  },
-  {
-    value: "400",
-    title: "400",
-  },
-  {
-    value: "500",
-    title: "500",
-  },
-];
 
 const ProductPage = () => {
   const { value, func } = ProductLogic();
@@ -84,7 +66,7 @@ const ProductPage = () => {
           },
         ]}
         formTambah={value.formTambah}
-        valueTreeData={treeData}
+        valueTreeData={value.codeParent}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -101,13 +83,13 @@ const ProductPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

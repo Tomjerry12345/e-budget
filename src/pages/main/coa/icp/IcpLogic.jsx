@@ -27,7 +27,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -99,14 +103,18 @@ const IcpLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code_icp)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -170,35 +178,38 @@ const IcpLogic = () => {
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const save = async (key) => {
+  const save = async (record) => {
     try {
-      log("key", key);
       const row = await form.validateFields();
-      const value = dataColumn.findIndex((item) => key === item.code_icp);
-
-      const val = dataColumn[value];
-
-      log("row", row);
 
       const d = new FormData();
-      d.append("uuid", val.uuid);
+      d.append("uuid", record.uuid);
       d.append("code_icp", row.code_icp);
-      // d.append("code_parent", val.code_parent);
       d.append("description", row.description);
 
       const res = await MainServices.post("icp/update", d);
 
       console.log("res-edit", res);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
     }
   };
 
@@ -216,18 +227,31 @@ const IcpLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
+    try {
+      const res = await MainServices.delete("icp/delete", {
+        uuid: record.uuid,
+      });
 
-    const res = await MainServices.delete("icp/delete", {
-      uuid: record.uuid,
-    });
+      console.log("res-hapus", res);
 
-    console.log("res-hapus", res);
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
-    onSetDataTable();
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -243,7 +267,7 @@ const IcpLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
   };
 
   // const onOpenUploadModal = () => {
@@ -294,7 +318,7 @@ const IcpLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -329,7 +353,7 @@ const IcpLogic = () => {
   const onTambahData = async (values) => {
     const { code_icp, description } = values;
 
-    log("values", values)
+    log("values", values);
 
     try {
       const f = new FormData();
@@ -356,7 +380,6 @@ const IcpLogic = () => {
         code_icp: "",
         description: "",
       });
-
     } catch (error) {
       const err = error.response.data;
       log("error", err);
@@ -382,7 +405,7 @@ const IcpLogic = () => {
       isTambah,
       formTambah,
       uploadSucces,
-      loadingUpload
+      loadingUpload,
     },
     func: {
       onClosePopupModal,
@@ -390,7 +413,7 @@ const IcpLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

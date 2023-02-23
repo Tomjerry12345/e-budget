@@ -91,15 +91,15 @@ const ModalMenuMore = ({
       >
         Import
       </Button>
-      <Button
+      {/* <Button
         className="btn"
         type="text"
         icon={<ToTopOutlined />}
         // disabled={disabledImportExport}
       >
         Export
-      </Button>
-      <Button
+      </Button> */}
+      {/* <Button
         className="btn"
         type="text"
         icon={<DeleteOutlined />}
@@ -107,7 +107,7 @@ const ModalMenuMore = ({
         disabled={disabledImportExport}
       >
         Clear Data
-      </Button>
+      </Button> */}
     </Modal>
   );
 };
@@ -149,9 +149,9 @@ const HeaderComponentTypeInput = ({
         >
           Filter
         </Button> */}
-        <Button className="btn-refresh" icon={<ReloadOutlined />}>
+        {/* <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
-        </Button>
+        </Button> */}
         <Button
           className="btn-more"
           icon={<MoreOutlined />}

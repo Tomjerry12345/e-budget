@@ -129,11 +129,13 @@ const HkPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
+          isCodeProduct={false}
           type="input"
           codeCompany={211}
           form={form}
           disabled
           typeCompany="static"
+          variant="perusahaan"
         />
 
         <div style={{ marginTop: 16 }}>

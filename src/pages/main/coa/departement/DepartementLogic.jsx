@@ -27,7 +27,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -115,14 +119,18 @@ const DepartementLogic = () => {
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.code_dept)}
+              onClick={() => save(record)}
               style={{
                 marginRight: 8,
               }}
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -186,15 +194,15 @@ const DepartementLogic = () => {
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const save = async (key) => {
+  const save = async (record) => {
     try {
       const row = await form.validateFields();
-      const i = dataColumn.findIndex((item) => key === item.code_dept);
+      // const i = dataColumn.findIndex((item) => key === item.code_dept);
 
-      const val = dataColumn[i];
+      // const val = dataColumn[i];
 
       const d = new FormData();
-      d.append("uuid", val.uuid);
+      d.append("uuid", record.uuid);
       d.append("code_dept", row.code_dept);
       d.append("description", row.description);
 
@@ -202,17 +210,27 @@ const DepartementLogic = () => {
 
       const res = await MainServices.post("dept/update", d);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
 
       console.log("res-edit", res);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      log("error", error);
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 
@@ -230,18 +248,33 @@ const DepartementLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
+    try {
+      log("row-del", record);
 
-    const res = await MainServices.delete("dept/delete", {
-      uuid: record.uuid,
-    });
+      const res = await MainServices.delete("dept/delete", {
+        uuid: record.uuid,
+      });
 
-    console.log("res-hapus", res);
+      console.log("res-hapus", res);
 
-    onSetDataTable();
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -257,7 +290,7 @@ const DepartementLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
   };
 
   const onSuccess = () => {
@@ -302,7 +335,7 @@ const DepartementLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {

@@ -21,6 +21,7 @@ const AutoCompleteFilter = ({
   isCodeProject,
   disabled,
   variant,
+  type = "default"
 }) => (
   <>
     <AutoCompleteElement
@@ -30,6 +31,7 @@ const AutoCompleteFilter = ({
       onSelect={func.onSelect}
       disabled={disabled}
       intialValue={variant === "summary" ? { value: "all" } : undefined}
+      variant={variant}
     />
 
     {isCodeProduct === true ? (
@@ -68,7 +70,7 @@ const AutoCompleteFilter = ({
       />
     ) : null}
 
-    <AutoCompleteElement label="Periode" name="periode" value={periode} />
+    <AutoCompleteElement label="Periode" name="periode" value={periode}/>
   </>
 );
 

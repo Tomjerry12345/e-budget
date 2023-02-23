@@ -27,7 +27,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -37,48 +41,13 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
   />
 );
 
-// const dummyData = [
-//   {
-//     id: 1,
-//     uuid: "test",
-//     code: "200",
-//     children: [
-//       {
-//         id: 2,
-//         uuid: "test hellio",
-//         code: "201",
-//         children: [
-//           {
-//             id: 3,
-//             uuid: "testtesttest",
-//             code: "202",
-//             // children: [],
-//           },
-//         ],
-//       },
-//     ],
-//   },
-//   {
-//     id: 4,
-//     uuid: "test",
-//     code: "300",
-//     children: [
-//       {
-//         id: 5,
-//         uuid: "test hellio",
-//         code: "301",
-//         // children: [],
-//       },
-//     ],
-//   },
-// ];
-
 const CompanyLogic = () => {
   const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -160,7 +129,11 @@ const CompanyLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm  placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -222,7 +195,23 @@ const CompanyLogic = () => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    onSetCodeParent();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
+  const onSetCodeParent = async () => {
+    const { data } = await MainServices.get("company/list-tree-option");
+    log("company/list-tree-option", data);
+    setCodeParent(data.data);
+  };
 
   const save = async (record) => {
     try {
@@ -238,16 +227,19 @@ const CompanyLogic = () => {
       const res = await MainServices.post("company/update", d);
       console.log("res-edit", res);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
+
+      responseShow(res);
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo.response.status);
-      alert(errInfo);
-      setShowPopup(false);
+    } catch (error) {
+      // setShowPopup(false);
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
     }
   };
 
@@ -266,8 +258,8 @@ const CompanyLogic = () => {
 
   const onDelete = async (record) => {
     try {
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
 
       log("row-del", record);
 
@@ -277,9 +269,13 @@ const CompanyLogic = () => {
 
       console.log("res-hapus", res);
 
+      responseShow(res);
+
       onSetDataTable();
     } catch (error) {
-      alert(error);
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
     }
   };
 
@@ -296,7 +292,7 @@ const CompanyLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
   };
 
   const onOpenUploadModal = () => {
@@ -380,8 +376,10 @@ const CompanyLogic = () => {
   };
 
   const onActive = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
+
+    let res;
 
     log("record.status", record.status);
 
@@ -390,14 +388,19 @@ const CompanyLogic = () => {
     f.append("uuid", record.uuid);
 
     if (record.status === 0) {
-      const res = await MainServices.post("company/active", f);
-
-      console.log("res-hapus", res);
+      res = await MainServices.post("company/active", f);
     } else {
-      const res = await MainServices.post("company/unactive", f);
-
-      console.log("res-hapus", res);
+      res = await MainServices.post("company/unactive", f);
     }
+
+    console.log("res-hapus", res);
+
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
 
     onSetDataTable();
   };
@@ -441,13 +444,12 @@ const CompanyLogic = () => {
         val({ status: err.responseCode, message: err.responseDescription })
       );
     }
-
-    // dispatch(val({status: 200, message: "<div>No results. \n Please try another search term.</div>"}))
   };
 
   return {
     value: {
       dataColumn,
+      codeParent,
       openUploadModal,
       getRootProps,
       getInputProps,
@@ -461,7 +463,7 @@ const CompanyLogic = () => {
       isTambah,
       formTambah,
       uploadSucces,
-      loadingUpload
+      loadingUpload,
     },
     func: {
       onOpenUploadModal,
@@ -470,7 +472,7 @@ const CompanyLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

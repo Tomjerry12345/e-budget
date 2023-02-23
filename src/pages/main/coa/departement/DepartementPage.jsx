@@ -68,13 +68,13 @@ const DepartementPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

@@ -135,11 +135,13 @@ const BsuPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
+          isCodeProduct={false}
           type="input"
           codeCompany={411}
           form={form}
           disabled
           typeCompany="static"
+          variant="perusahaan"
         />
         <div style={{ marginTop: 16 }}>
           <Outlet />

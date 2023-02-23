@@ -32,7 +32,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
         key: "2",
         // label: "hapus",
         label: (
-          <Popconfirm title="Sure to delete" onConfirm={() => onDelete(record)}>
+          <Popconfirm
+            title="Sure to delete"
+            placement="leftTop"
+            onConfirm={() => onDelete(record)}
+          >
             <a>Hapus</a>
           </Popconfirm>
         ),
@@ -48,6 +52,7 @@ const ProductLogic = () => {
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -209,7 +214,11 @@ const ProductLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm
+              placement="leftTop"
+              title="Sure to cancel?"
+              onConfirm={cancel}
+            >
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -271,7 +280,23 @@ const ProductLogic = () => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
+    onSetCodeParent();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
+  const onSetCodeParent = async () => {
+    const { data } = await MainServices.get("product/list-tree-option");
+    log("company/list-tree-option", data);
+    setCodeParent(data.data);
+  };
 
   const save = async (record) => {
     try {
@@ -325,18 +350,20 @@ const ProductLogic = () => {
 
       const res = await MainServices.post("product/update", d);
 
-      setIsSucces(false);
-      setShowPopup(true);
+      // setIsSucces(false);
+      // setShowPopup(true);
 
       console.log("res-edit", res);
+
+      responseShow(res);
 
       onSetDataTable();
 
       setEditingKey("");
-    } catch (errInfo) {
-      setShowPopup(false);
-      console.log("Validate Failed:", errInfo);
-      alert(errInfo);
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
     }
   };
 
@@ -354,18 +381,24 @@ const ProductLogic = () => {
   };
 
   const onDelete = async (record) => {
-    setIsSucces(false);
-    setShowPopup(true);
+    // setIsSucces(false);
+    // setShowPopup(true);
 
-    log("row-del", record);
+    try {
+      const res = await MainServices.delete("product/delete", {
+        uuid: record.uuid,
+      });
 
-    const res = await MainServices.delete("product/delete", {
-      uuid: record.uuid,
-    });
+      console.log("res-hapus", res);
 
-    console.log("res-hapus", res);
+      responseShow(res);
 
-    onSetDataTable();
+      onSetDataTable();
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+      log("error", err);
+    }
   };
 
   const onAction = (e, record) => {
@@ -381,7 +414,7 @@ const ProductLogic = () => {
     setLoading(false);
     setDataColumn(data.data);
 
-    setIsSucces(true);
+    // setIsSucces(true);
     // setDataColumn(dummyData);
     // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
@@ -433,7 +466,7 @@ const ProductLogic = () => {
   };
 
   const onClosePopupModal = () => {
-    setShowPopup(false);
+    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -509,15 +542,18 @@ const ProductLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err =  error.response.data
-      log("error", err)
-      dispatch(val({status: err.responseCode, message: err.responseDescription}))
+      const err = error.response.data;
+      log("error", err);
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
     }
   };
 
   return {
     value: {
       dataColumn,
+      codeParent,
       openUploadModal,
       getRootProps,
       getInputProps,
@@ -531,7 +567,7 @@ const ProductLogic = () => {
       isTambah,
       formTambah,
       uploadSucces,
-      loadingUpload
+      loadingUpload,
     },
     func: {
       onOpenUploadModal,
@@ -540,7 +576,7 @@ const ProductLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
-      setUploadSucces
+      setUploadSucces,
     },
   };
 };

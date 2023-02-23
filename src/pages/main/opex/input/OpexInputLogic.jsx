@@ -134,11 +134,11 @@ const OpexInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    const list = []
+    const list = [];
 
     data.list.forEach((val, i) => {
-      list.push({...val, key: i})
-    })
+      list.push({ ...val, key: i });
+    });
 
     setDataColumnInput(list);
   };
@@ -237,10 +237,25 @@ const OpexInputLogic = () => {
       log("res", res);
 
       if (codeFilter !== undefined) {
-        const { code_company, code_dept, code_location, code_product } =
-          codeFilter;
+        const {
+          code_company,
+          code_product,
+          code_location,
+          code_dept,
+          code_icp,
+          code_project,
+          periode,
+        } = codeFilter;
 
-        getData(code_company, code_product, code_location, code_dept);
+        getData(
+          code_company,
+          code_product,
+          code_location,
+          code_dept,
+          code_icp,
+          code_project,
+          periode
+        );
       }
 
       dispatch(

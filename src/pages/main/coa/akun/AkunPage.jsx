@@ -5,34 +5,6 @@ import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import DepartementLogic from "./AkunLogic";
 
-const treeData = [
-  {
-    value: "1000000",
-    title: "1000000",
-    children: [
-      {
-        value: "1100000",
-        title: "1100000",
-        children: [
-          {
-            value: "1111000",
-            title: "1111000",
-          },
-          {
-            value: "1120000",
-            title: "1120000",
-          },
-          {
-            value: "1130000",
-            title: "1130000",
-          },
-          
-        ],
-      },
-    ],
-  },
-];
-
 const AkunPage = () => {
   const { value, func } = DepartementLogic();
   return (
@@ -99,7 +71,7 @@ const AkunPage = () => {
           },
         ]}
         formTambah={value.formTambah}
-        valueTreeData={treeData}
+        valueTreeData={value.codeParent}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent
@@ -115,13 +87,13 @@ const AkunPage = () => {
         />
       </div>
 
-      <PopupModal
+      {/* <PopupModal
         open={value.showPopup}
         succes={value.isSucces}
         onOk={func.onClosePopupModal}
         textSucces="Sukses melakukan perubahan"
         textProses="Silahkan tunggu..."
-      />
+      /> */}
     </>
   );
 };

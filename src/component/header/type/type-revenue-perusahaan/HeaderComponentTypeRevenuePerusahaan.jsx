@@ -164,9 +164,9 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         >
           Filter
         </Button> */}
-        <Button className="btn-refresh" icon={<ReloadOutlined />}>
+        {/* <Button className="btn-refresh" icon={<ReloadOutlined />}>
           Refresh
-        </Button>
+        </Button> */}
         {/* <Button
           className="btn-more"
           icon={<MoreOutlined />}
