@@ -9,6 +9,8 @@ const { Panel } = Collapse;
 const date = new Date();
 
 const periode = [
+  { description: `${date.getFullYear() - 2} - ${date.getFullYear() - 1}` },
+  { description: `${date.getFullYear() - 1} - ${date.getFullYear()}` },
   { description: `${date.getFullYear()} - ${date.getFullYear() + 1}` },
   { description: `${date.getFullYear() + 1} - ${date.getFullYear() + 2}` },
 ];
