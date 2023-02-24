@@ -21,6 +21,7 @@ const NotificationComponent = ({ status, message }) => {
         message: `Notifikasi`,
         description: <div style={{whiteSpace: "pre-line"}}>{message}</div>,
         placement,
+        className: "style-notif"
       });
     } else {
       api.error({
@@ -29,6 +30,7 @@ const NotificationComponent = ({ status, message }) => {
           <Context.Consumer>{({ name }) => message}</Context.Consumer>
         ),
         placement,
+        className: "style-notif"
       });
     }
   };

@@ -52,7 +52,6 @@ const KiuPage = () => {
     // alert("test");
 
     let fCodeCompany = code_company.split(" ");
-    let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
@@ -60,8 +59,7 @@ const KiuPage = () => {
 
     let fPeriode = periode.split(" ")
 
-    fCodeCompany = fCodeCompany[0];
-    fCodeProduct = fCodeProduct[0];
+    fCodeCompany = fCodeCompany[0]
     fCodeLocation = fCodeLocation[0];
     fCodeDept = fCodeDept[0];
     fCodeIcp = fCodeIcp[0];
@@ -70,11 +68,11 @@ const KiuPage = () => {
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/kiu/penjualan?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+        `/main/revenue-cogs/kiu/penjualan?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     } else if (key === 2) {
       navigate(
-        `/main/revenue-cogs/kiu/hpplain?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+        `/main/revenue-cogs/kiu/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
 

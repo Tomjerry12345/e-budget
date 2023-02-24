@@ -63,6 +63,15 @@ const OpexInputLogic = () => {
 
   const dispatch = useDispatch();
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const onSetDataTable = (values) => {
     const {
       code_company,
@@ -258,17 +267,15 @@ const OpexInputLogic = () => {
         );
       }
 
-      dispatch(
-        val({ status: res.data.responseCode, message: "Sukses import data" })
-      );
+      responseShow(res)
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err = error.response.data;
+      const err = error.response;
       log("error", err);
-      dispatch(val({ status: 400, message: "Gagal import data" }));
+      responseShow(err)
     }
 
     // navigate(0);

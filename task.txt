@@ -26,7 +26,7 @@ new:
 
 - alert ubah jadi notifikasi ✅
 - kasi hilang semua tombol refresh ✅
-- autocomplete pada revenue perusahaan ubah jadi input text
+- autocomplete pada revenue perusahaan ubah jadi input text ✅
 - tombol eksport kasi hilang di input direct ✅
 - tombol clear data dihilangkan di summary direct ✅
 - proses import responnya dimasukkan ke notifikasi ✅
