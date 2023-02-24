@@ -22,6 +22,15 @@ const InputDirectAllLogic = () => {
 
   const dispatch = useDispatch()
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const constantTableColums = [
     {
       title: "Account",
@@ -683,15 +692,15 @@ const InputDirectAllLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      dispatch(val({status: res.data.responseCode, message: "Sukses import data"}))
+      responseShow(res)
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response.data
+      const err =  error.response
       log("error", err)
-      dispatch(val({status: 400, message: "Gagal import data"}))
+      responseShow(err)
       setLoadingUpload(false);
     }
 
