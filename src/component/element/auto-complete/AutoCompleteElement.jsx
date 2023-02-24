@@ -47,6 +47,7 @@ const AutoCompleteElement = ({
         onSelect={onSelect}
         placeholder={label}
         disabled={disabled}
+        allowClear
         filterOption={(inputValue, option) => {
 
           return (
