@@ -63,7 +63,7 @@ const LabaRugiPage = () => {
           dataSource={value.data}
           columns={value.columns}
           loading={value.loading}
-          scroll={{ y: size.y - 340 }}
+          scroll={{ y: size.y - 260}}
         />
       </div>
     </>

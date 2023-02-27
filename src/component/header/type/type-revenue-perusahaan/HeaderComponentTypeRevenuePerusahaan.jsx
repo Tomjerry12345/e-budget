@@ -152,11 +152,11 @@ const HeaderComponentTypeRevenuePerusahaan = ({
       <Text className="header-title">{getLocal("name-menu")}</Text>
 
       <div className="container-menu">
-        <Input
+        {/* <Input
           className="input-search"
           placeholder="input search text"
           suffix={<SearchOutlined />}
-        />
+        /> */}
         {/* <Button
           className="btn-filter"
           icon={<FilterOutlined />}

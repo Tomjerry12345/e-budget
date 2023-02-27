@@ -9,12 +9,8 @@ import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
-  let params = useParams();
-
-  const [form] = Form.useForm();
 
   const [dataColumnInput, setDataColumnInput] = useState([]);
-
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -25,7 +21,7 @@ const CapexInputLogic = () => {
   const date = new Date();
   const year = date.getFullYear();
 
-  const columns = columnInputType1(year, year+1).map((col) => {
+  const columns = columnInputType1(year, year + 1).map((col) => {
     // console.log(`col => ${JSON.stringify(col)}`);
     if (!col.editable) {
       return col;
@@ -69,7 +65,7 @@ const CapexInputLogic = () => {
     },
   });
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const responseShow = (res) => {
     dispatch(
@@ -88,7 +84,7 @@ const CapexInputLogic = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     let fCodeCompany = code_company.split(" ");
@@ -98,7 +94,7 @@ const CapexInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let fPeriode = periode.split(" ")
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -106,7 +102,7 @@ const CapexInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0]
+    fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -126,7 +122,7 @@ const CapexInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode
+      periode: fPeriode,
     });
   };
 
@@ -153,11 +149,11 @@ const CapexInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    const list = []
+    const list = [];
 
     data.list.forEach((val, i) => {
-      list.push({...val, key: i})
-    })
+      list.push({ ...val, key: i });
+    });
 
     setDataColumnInput(list);
   };
@@ -201,7 +197,7 @@ const CapexInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
-      periode
+      periode,
     } = codeFilter;
     const year = periode;
     const month = row[`${keysEdit}-month`];
@@ -256,15 +252,14 @@ const CapexInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
       onSuccess();
-
     } catch (error) {
-      const err =  error.response
-      responseShow(err)
+      const err = error.response;
+      responseShow(err);
     }
 
     // navigate(0);
