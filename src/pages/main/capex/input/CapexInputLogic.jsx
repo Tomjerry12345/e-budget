@@ -10,7 +10,7 @@ import { log } from "../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
 
-  const [dataColumnInput, setDataColumnInput] = useState([]);
+  const [dataColumnInput, setDataColumnInput] = useState([]); 
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
