@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { columnOutputType1, columnOutputType2 } from "../../../../component/table/utils/TypeColumn";
+import {
+  columnOutputType1,
+  columnOutputType2,
+} from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
 import { log } from "../../../../values/Utilitas";
 
@@ -39,7 +42,7 @@ const LabaRugiLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let periode = "2023"
+    let periode = "2023";
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -47,6 +50,16 @@ const LabaRugiLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+
+    // setCodeFilter({
+    //   code_company: fCodeCompany,
+    //   code_dept: fCodeDept,
+    //   code_location: fCodeLocation,
+    //   code_product: fCodeProduct,
+    //   code_product: fCodeProduct,
+    //   code_icp: fCodeIcp,
+    //   code_project: fCodeProject,
+    // });
 
     loadData(
       fCodeCompany,
@@ -57,16 +70,6 @@ const LabaRugiLogic = () => {
       fCodeProject,
       periode
     );
-
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-    });
   };
 
   const loadData = async (
@@ -83,6 +86,16 @@ const LabaRugiLogic = () => {
     const { data } = await MainServices.get(url);
     log("res", data);
     getData(data.data);
+
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
+    });
   };
 
   const getData = (data) => {
@@ -106,13 +119,14 @@ const LabaRugiLogic = () => {
     // });
     setData(data.list);
     // setColumns(columnOutputType1(year_1, year_2));
-    const dt = new Date()
+    const dt = new Date();
 
     setColumns(columnOutputType2(dt.getFullYear(), dt.getFullYear() + 1));
     setLoading(false);
   };
 
   const downloadFile = () => {
+    log("codeFilter", codeFilter);
     const {
       code_company,
       code_product,
