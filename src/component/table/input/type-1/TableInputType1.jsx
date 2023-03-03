@@ -120,7 +120,13 @@ const EditableCell = ({
   return <td {...restProps}>{childNode}</td>;
 };
 
-const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
+const TableInputType1 = ({
+  dataSource,
+  columns,
+  loading,
+  listKeyParent,
+  scroll = null,
+}) => {
   const components = {
     body: {
       cell: EditableCell,
@@ -141,19 +147,14 @@ const TableInputType1 = ({ dataSource, columns, loading, listKeyParent }) => {
       {/* {dataSource.length > 1 ? ( */}
       <Table
         components={components}
-        rowClassName={(record, index) =>
-          record.parent ? "parent" : "child"
-        }
+        rowClassName={(record, index) => (record.parent ? "parent" : "child")}
         bordered
         dataSource={dataSource}
         columns={columns}
         pagination={false}
         loading={loading}
         size="small"
-        scroll={{
-          x: 2900,
-          y: size.y - 366,
-        }}
+        scroll={scroll === null ? { x: 2900, y: size.y - 300 } : scroll}
       />
       {/* ) : loading === true ? (
         <div className="style-progress">

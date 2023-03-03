@@ -1,11 +1,7 @@
 import {
-  DeleteOutlined,
+  ArrowDownOutlined,
   DownloadOutlined,
-  FilterOutlined,
   MoreOutlined,
-  ReloadOutlined,
-  SearchOutlined,
-  ToTopOutlined,
 } from "@ant-design/icons";
 import {
   Breadcrumb,
@@ -154,9 +150,12 @@ const HeaderComponentTypeInput = ({
         </Button> */}
         <Button
           className="btn-more"
-          icon={<MoreOutlined />}
+          // icon={<ArrowDownOutlined />}
+          
           onClick={func.onClickMore}
-        />
+        >
+          Action <ArrowDownOutlined />
+        </Button>
       </div>
 
       {/* <ModalFilter
