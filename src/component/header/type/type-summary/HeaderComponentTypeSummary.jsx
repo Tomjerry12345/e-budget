@@ -1,4 +1,5 @@
 import {
+  ArrowDownOutlined,
   DeleteOutlined,
   DownloadOutlined,
   FilterOutlined,
@@ -131,9 +132,12 @@ const HeaderComponentTypeSummary = ({
         </Button> */}
         <Button
           className="btn-more"
-          icon={<MoreOutlined />}
+          // icon={<ArrowDownOutlined />}
+          
           onClick={func.onClickMore}
-        />
+        >
+          Action <ArrowDownOutlined />
+        </Button>
       </div>
 
       <ModalFilter
