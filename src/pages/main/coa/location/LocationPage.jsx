@@ -77,7 +77,7 @@ const LocationPage = () => {
           loading={value.loading}
           scroll={{
             y: value.size.y - 140,
-            x: 900,
+            x: 1600,
           }}
           form={value.form}
         />
