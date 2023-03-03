@@ -4,10 +4,10 @@ import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import { getSizeScreen } from "../../../../values/Utilitas";
-import LabaRugiTestingLogic from "./LabaRugiLogic";
+import LabaRugiLogic from "./LabaRugiLogic";
 
 const LabaRugiPage = () => {
-  const { value, func } = LabaRugiTestingLogic();
+  const { value, func } = LabaRugiLogic();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
