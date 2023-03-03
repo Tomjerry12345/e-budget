@@ -16,7 +16,7 @@ const NotificationComponent = ({ status, message }) => {
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (placement) => {
     // var doc = new DOMParser().parseFromString(message, "text/xml");
-    if (status === 200) {
+    if (parseInt(status) === 200) {
       api.success({
         message: `Notifikasi`,
         description: <div style={{whiteSpace: "pre-line"}}>{message}</div>,

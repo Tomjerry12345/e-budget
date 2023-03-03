@@ -32,7 +32,6 @@ const DepartementPage = () => {
         }}
         onTambahData={func.onTambahData}
         onChangeTambahData={(set) => {
-          log("value.isTambah", value.isTambah);
           if (value.isTambah) {
             set(false);
             func.setIsTambah(null);
