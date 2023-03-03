@@ -131,3 +131,23 @@ export const inputTypeTable = (dataIndex) => {
 
   return inputType;
 };
+
+export const sumYearTotal = (data, keys) => {
+  const i = keys.slice(-1);
+  log("i", i);
+  log("keys", keys);
+  const sum =
+    parseInt(data[`jan${i}`]) +
+    parseInt(data[`feb${i}`]) +
+    parseInt(data[`mar${i}`]) +
+    parseInt(data[`apr${i}`]) +
+    parseInt(data[`mei${i}`]) +
+    parseInt(data[`jun${i}`]) +
+    parseInt(data[`jul${i}`]) +
+    parseInt(data[`agu${i}`]) +
+    parseInt(data[`sep${i}`]) +
+    parseInt(data[`okt${i}`]) +
+    parseInt(data[`nov${i}`]) +
+    parseInt(data[`des${i}`]);
+  return sum;
+};
