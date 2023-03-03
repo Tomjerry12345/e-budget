@@ -1,4 +1,5 @@
 import {
+  ArrowDownOutlined,
   DeleteOutlined,
   DownloadOutlined,
   FilterOutlined,
@@ -6,6 +7,7 @@ import {
   ReloadOutlined,
   SearchOutlined,
   ToTopOutlined,
+  VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import {
   Breadcrumb,
@@ -76,7 +78,7 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
       <Button
         className="btn"
         type="text"
-        icon={<ToTopOutlined />}
+        icon={<VerticalAlignBottomOutlined />}
         disabled={disabledImportExport}
         onClick={() => {
           onExport();
@@ -131,9 +133,12 @@ const HeaderComponentTypeSummary = ({
         </Button> */}
         <Button
           className="btn-more"
-          icon={<MoreOutlined />}
+          // icon={<ArrowDownOutlined />}
+          
           onClick={func.onClickMore}
-        />
+        >
+          Action <ArrowDownOutlined />
+        </Button>
       </div>
 
       <ModalFilter
