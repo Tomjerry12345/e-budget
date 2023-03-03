@@ -4,6 +4,7 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
   const [isImport, setImport] = useState(false);
   const [isTambahData, setIsTambahData] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
+  const [more, setMore] = useState(false);
 
   useEffect(() => {
     onChangeTambahData(setIsTambahData);
@@ -26,17 +27,28 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
     setIsTambahData(false);
   };
 
+  const onClickMore = () => {
+    setMore(true);
+  };
+
+  const onCloseMore = () => {
+    setMore(false);
+  };
+
   return {
     value: {
       isImport,
       isTambahData,
-      loadingUpload
+      loadingUpload,
+      more
     },
     func: {
       onClickImport,
       onCloseImport,
       onClickTambahData,
       onCloseTambahData,
+      onClickMore,
+      onCloseMore
     },
   };
 };
