@@ -53,6 +53,7 @@ const DepartementPage = () => {
           },
         ]}
         formTambah={value.formTambah}
+        onExport={func.onExport}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent

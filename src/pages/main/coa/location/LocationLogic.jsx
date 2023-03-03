@@ -460,6 +460,11 @@ const LocationLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/location/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     // setShowPopup(false);
   };
@@ -571,6 +576,7 @@ const LocationLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
+      onExport
     },
   };
 };

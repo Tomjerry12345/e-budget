@@ -336,6 +336,11 @@ const AkunLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/account/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     // setShowPopup(false);
   };
@@ -437,6 +442,7 @@ const AkunLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
+      onExport
     },
   };
 };

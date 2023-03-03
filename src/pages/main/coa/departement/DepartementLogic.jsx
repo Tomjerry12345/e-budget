@@ -334,6 +334,11 @@ const DepartementLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/dept/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     // setShowPopup(false);
   };
@@ -422,6 +427,7 @@ const DepartementLogic = () => {
       onSearch,
       onTambahData,
       setIsTambah,
+      onExport
     },
   };
 };

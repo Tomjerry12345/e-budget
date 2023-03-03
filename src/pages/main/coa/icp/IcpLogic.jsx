@@ -317,6 +317,11 @@ const IcpLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/icp/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     // setShowPopup(false);
   };
@@ -414,6 +419,7 @@ const IcpLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
+      onExport
     },
   };
 };

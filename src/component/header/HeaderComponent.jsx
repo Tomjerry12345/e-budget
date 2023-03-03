@@ -86,6 +86,7 @@ const HeaderComponent = ({
         formTambah={formTambah}
         valueTreeData={valueTreeData}
         onChangeLoadingUpload={onChangeLoadingUpload}
+        onExport={onExport}
       />
     );
   }

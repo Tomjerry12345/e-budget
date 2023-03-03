@@ -342,6 +342,11 @@ const CompanyLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/company/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     setShowPopup(false);
   };
@@ -473,6 +478,7 @@ const CompanyLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
+      onExport
     },
   };
 };
