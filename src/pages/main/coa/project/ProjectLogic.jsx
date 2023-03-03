@@ -78,7 +78,7 @@ const ProjectLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
-      width: "10px",
+      width: "8px",
       editable: true,
       fixed: "left",
     },
@@ -94,108 +94,147 @@ const ProjectLogic = () => {
       dataIndex: "HK",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "KIU",
       dataIndex: "KIU",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "GMM",
       dataIndex: "GMM",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "KIA",
       dataIndex: "KIA",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BJU",
       dataIndex: "BJU",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BLT",
       dataIndex: "BLT",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BLU",
       dataIndex: "BLU",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BK",
       dataIndex: "BK",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BSU",
       dataIndex: "BSU",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BSB",
       dataIndex: "BSB",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "KIK",
       dataIndex: "KIK",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "IKP",
       dataIndex: "IKP",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
     },
     {
       title: "BAND",
       dataIndex: "BAND",
       editable: true,
       align: "center",
-      width: "5px",
+      width: "8px",
+    },
+    {
+      title: "HSI",
+      dataIndex: "HSI",
+      editable: true,
+      align: "center",
+      width: "8px",
+    },
+    {
+      title: "Holding",
+      dataIndex: "Holding",
+      editable: true,
+      align: "center",
+      width: "8px",
+    },
+    {
+      title: "BBU",
+      dataIndex: "BBU",
+      editable: true,
+      align: "center",
+      width: "8px",
     },
     {
       title: "Created At",
       dataIndex: "created_at",
       editable: false,
-      width: "10px",
+      width: "12px",
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
       editable: false,
-      width: "10px",
+      width: "12px",
     },
+    // {
+    //   title: "Status",
+    //   dataIndex: "status",
+    //   width: "6px",
+    //   fixed: "right",
+    //   render: (_, record) => {
+    //     let rStatus = record.status;
+
+    //     return (
+    //       <Switch
+    //         size="small"
+    //         checked={rStatus === 1}
+    //         disabled={editingKey !== ""}
+    //         onChange={() => onActive(record)}
+    //       />
+    //     );
+    //   },
+    // },
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "9px",
+      width: "11px",
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -218,6 +257,12 @@ const ProjectLogic = () => {
             </Popconfirm>
           </span>
         ) : (
+          // <Typography.Link
+          //   disabled={editingKey !== ""}
+          //   onClick={() => edit(record)}
+          // >
+          //   Edit
+          // </Typography.Link>
           <Dropdown
             overlay={
               <DropdownMenu
@@ -317,6 +362,16 @@ const ProjectLogic = () => {
         row["IKP"] === true ? 1 : row["IKP"] === false ? 0 : row["IKP"];
       const band =
         row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
+      const hsi =
+        row["HSI"] === true ? 1 : row["HSI"] === false ? 0 : row["HSI"];
+      const holding =
+        row["Holding"] === true
+          ? 1
+          : row["Holding"] === false
+          ? 0
+          : row["Holding"];
+      const bbu =
+        row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
 
       const d = new FormData();
       d.append("uuid", record.uuid);
@@ -336,6 +391,9 @@ const ProjectLogic = () => {
       d.append("KIK", kik);
       d.append("IKP", ikp);
       d.append("BAND", band);
+      d.append("HSI", hsi);
+      d.append("Holding", holding);
+      d.append("BBU", bbu);
 
       const res = await MainServices.post("project/update", d);
 
@@ -421,7 +479,7 @@ const ProjectLogic = () => {
     let file1;
 
     setLoadingUpload(true);
-    
+
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
@@ -458,7 +516,7 @@ const ProjectLogic = () => {
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/project/export`;
     window.location.href = urlFile;
-  }
+  };
 
   const onClosePopupModal = () => {
     // setShowPopup(false);
@@ -571,7 +629,7 @@ const ProjectLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
-      onExport
+      onExport,
     },
   };
 };

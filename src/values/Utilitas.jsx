@@ -122,7 +122,10 @@ export const inputTypeTable = (dataIndex) => {
     dataIndex === "BSB" ||
     dataIndex === "KIK" ||
     dataIndex === "IKP" ||
-    dataIndex === "BAND"
+    dataIndex === "BAND" ||
+    dataIndex === "HSI" ||
+    dataIndex === "Holding" ||
+    dataIndex === "BBU"
       ? "checkbox"
       : "text";
 
