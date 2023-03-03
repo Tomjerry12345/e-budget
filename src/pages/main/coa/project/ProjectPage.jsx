@@ -68,6 +68,7 @@ const ProjectPage = () => {
         ]}
         formTambah={value.formTambah}
         valueTreeData={value.codeParent}
+        onExport={func.onExport}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent

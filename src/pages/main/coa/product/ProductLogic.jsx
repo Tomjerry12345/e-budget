@@ -477,6 +477,11 @@ const ProductLogic = () => {
     }
   };
 
+  const onExport = () => {
+    const urlFile = `https://apikalla.binaries.id/ebudget/product/export`;
+    window.location.href = urlFile;
+  }
+
   const onClosePopupModal = () => {
     // setShowPopup(false);
   };
@@ -589,6 +594,7 @@ const ProductLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
+      onExport
     },
   };
 };
