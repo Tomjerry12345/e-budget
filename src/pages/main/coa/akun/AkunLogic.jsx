@@ -302,17 +302,19 @@ const AkunLogic = () => {
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = () => {
+  const onUploadFile = async () => {
     let file1;
 
-    try {
-      acceptedFiles.forEach((file) => {
-        file1 = file;
-      });
-      let formData = new FormData();
-      formData.append("file", file1);
+    setLoadingUpload(true);
 
-      const res = MainServices.post("account/import", formData);
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    try {
+      const res = await MainServices.post("account/import", formData);
       log("res", res);
 
       dispatch(
@@ -339,7 +341,7 @@ const AkunLogic = () => {
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/account/export`;
     window.location.href = urlFile;
-  }
+  };
 
   const onClosePopupModal = () => {
     // setShowPopup(false);
@@ -377,13 +379,13 @@ const AkunLogic = () => {
     log("values", values);
     const { code_account, code_parent, type_account, description } = values;
 
-    try {
-      const f = new FormData();
-      f.append("code_account", code_account);
-      f.append("code_parent", code_parent);
-      f.append("type_account", type_account);
-      f.append("description", description);
+    const f = new FormData();
+    f.append("code_account", code_account);
+    f.append("code_parent", code_parent);
+    f.append("type_account", type_account);
+    f.append("description", description);
 
+    try {
       const res = await MainServices.post("account/add", f);
 
       log("res-tambah", res);
@@ -442,7 +444,7 @@ const AkunLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
-      onExport
+      onExport,
     },
   };
 };

@@ -15,11 +15,12 @@ const CompanyPage = () => {
         onChangeFilter={(set) => {
           set(value.filter);
         }}
-        onChangeLoadingUpload={(set, setImport) => {
+        onChangeLoadingUpload={(set, setImport, setMore) => {
           set(value.loadingUpload);
 
           if (value.uploadSucces === true) {
             setImport(false);
+            setMore(false)
             func.setUploadSucces(null);
           }
         }}
@@ -32,7 +33,6 @@ const CompanyPage = () => {
         }}
         onTambahData={func.onTambahData}
         onChangeTambahData={(set) => {
-          log("value.isTambah", value.isTambah);
           if (value.isTambah) {
             set(false);
             func.setIsTambah(null);

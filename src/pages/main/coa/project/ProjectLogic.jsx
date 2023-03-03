@@ -419,6 +419,9 @@ const ProjectLogic = () => {
 
   const onUploadFile = async () => {
     let file1;
+
+    setLoadingUpload(true);
+    
     acceptedFiles.forEach((file) => {
       file1 = file;
     });

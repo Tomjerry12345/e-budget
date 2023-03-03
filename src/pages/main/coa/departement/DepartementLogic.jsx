@@ -298,17 +298,20 @@ const DepartementLogic = () => {
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = () => {
+  const onUploadFile = async () => {
     let file1;
 
-    try {
-      acceptedFiles.forEach((file) => {
-        file1 = file;
-      });
-      let formData = new FormData();
-      formData.append("file", file1);
+    setLoadingUpload(true);
 
-      const res = MainServices.post("dept/import", formData);
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    try {
+
+      const res = await MainServices.post("dept/import", formData);
       log("res", res);
 
       // onCloseUploadModal();
@@ -326,6 +329,7 @@ const DepartementLogic = () => {
 
       onSetDataTable();
     } catch (error) {
+      log("err", err)
       const err = error.response.data;
       dispatch(
         val({ status: err.responseCode, message: err.responseDescription })
@@ -420,13 +424,17 @@ const DepartementLogic = () => {
       isSucces,
       isTambah,
       formTambah,
+      uploadSucces,
+      loadingUpload,
     },
     func: {
+      // onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
+      setUploadSucces,
       onExport
     },
   };

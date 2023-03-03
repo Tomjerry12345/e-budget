@@ -8,7 +8,7 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
 
   useEffect(() => {
     onChangeTambahData(setIsTambahData);
-    onChangeLoadingUpload(setLoadingUpload, setImport)
+    onChangeLoadingUpload(setLoadingUpload, setImport, setMore)
   }, [onChangeTambahData, onChangeLoadingUpload]);
 
   const onClickImport = () => {
