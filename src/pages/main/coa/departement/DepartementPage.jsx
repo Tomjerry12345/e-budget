@@ -15,11 +15,12 @@ const DepartementPage = () => {
         onChangeFilter={(set) => {
           set(value.filter);
         }}
-        onChangeLoadingUpload={(set, setImport) => {
+        onChangeLoadingUpload={(set, setImport, setMore) => {
           set(value.loadingUpload);
 
           if (value.uploadSucces === true) {
             setImport(false);
+            setMore(false)
             func.setUploadSucces(null);
           }
         }}
