@@ -6,11 +6,10 @@ import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log } from "../../../../values/Utilitas";
+import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
-
-  const [dataColumnInput, setDataColumnInput] = useState([]); 
+  const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -181,12 +180,18 @@ const CapexInputLogic = () => {
           parseInt(itemparent[`${keysEdit}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
+
+        itemparent.year1 = sumYearTotal(itemparent,  keysEdit[0])
+
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
         });
       }
     }
+
+    newData[index].year1 = sumYearTotal(newData[index],  keysEdit[0])
+
     setDataColumnInput(newData);
 
     let formData = new FormData();
@@ -222,6 +227,11 @@ const CapexInputLogic = () => {
     const response = await MainServices.post("capex/update", formData);
 
     log("response-update", response);
+
+    // log("keysEdit", keysEdit)
+    // log("valuesEdit", valuesEdit)
+    // log("row", row)
+    // log("month", month)
   };
 
   const onUploadFile = async () => {
