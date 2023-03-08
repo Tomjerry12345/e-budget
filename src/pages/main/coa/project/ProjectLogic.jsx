@@ -62,7 +62,7 @@ const ProjectLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
@@ -374,9 +374,9 @@ const ProjectLogic = () => {
         row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_project", code);
-      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("id", record.id);
+      d.append("code", code);
+      d.append("parent", record.parent === null ? "" : record.parent);
       d.append("description", description);
       d.append("HK", hk);
       d.append("KIU", kiu);
@@ -424,7 +424,7 @@ const ProjectLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -433,7 +433,7 @@ const ProjectLogic = () => {
 
     try {
       const res = await MainServices.delete("project/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -460,10 +460,6 @@ const ProjectLogic = () => {
     log("project/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
-
-    // setIsSucces(true);
-    // setDataColumn(dummyData);
-    // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
   const onOpenUploadModal = () => {
@@ -513,6 +509,45 @@ const ProjectLogic = () => {
     }
   };
 
+  const onUploadFile2 = async () => {
+    let file1;
+
+    setLoadingUpload(true);
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    try {
+      const res = await MainServices.post("projectcompany/import", formData);
+      log("res", res);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
+  };
+
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/project/export`;
     window.location.href = urlFile;
@@ -530,31 +565,31 @@ const ProjectLogic = () => {
       if (val !== "") {
         const res = await MainServices.get(`project/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code: val.code_project,
-            code_parent: val.code_parent,
-            description: val.description,
-            HK: val.HK,
-            KIU: val.KIU,
-            GMM: val.GMM,
-            KIA: val.KIA,
-            BJU: val.BJU,
-            BLT: val.BLT,
-            BLU: val.BLU,
-            BK: val.BK,
-            BSU: val.BSU,
-            BSB: val.BSB,
-            KIK: val.KIK,
-            IKP: val.IKP,
-            BAND: val.BAND,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code: val.code_project,
+        //     code_parent: val.code_parent,
+        //     description: val.description,
+        //     HK: val.HK,
+        //     KIU: val.KIU,
+        //     GMM: val.GMM,
+        //     KIA: val.KIA,
+        //     BJU: val.BJU,
+        //     BLT: val.BLT,
+        //     BLU: val.BLU,
+        //     BK: val.BK,
+        //     BSU: val.BSU,
+        //     BSB: val.BSB,
+        //     KIK: val.KIK,
+        //     IKP: val.IKP,
+        //     BAND: val.BAND,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
 
-        setDataColumn(list);
+        setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
@@ -568,8 +603,8 @@ const ProjectLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_project", code_project);
-      f.append("code_parent", code_parent);
+      f.append("code", code_project);
+      f.append("parent", code_parent);
       f.append("description", description);
 
       const res = await MainServices.post("project/add", f);
@@ -625,6 +660,7 @@ const ProjectLogic = () => {
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
+      onUploadFile2,
       onSearch,
       onTambahData,
       setIsTambah,

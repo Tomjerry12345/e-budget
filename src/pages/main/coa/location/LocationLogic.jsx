@@ -309,7 +309,7 @@ const LocationLogic = () => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
     onSetDataTable(); 
-    // onSetCodeParent();
+    onSetCodeParent();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
@@ -503,6 +503,45 @@ const LocationLogic = () => {
     }
   };
 
+  const onUploadFile2 = async () => {
+    let file1;
+
+    setLoadingUpload(true);
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    try {
+      const res = await MainServices.post("locationcompany/import", formData);
+      log("res", res);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
+  };
+
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/location/export`;
     window.location.href = urlFile;
@@ -620,6 +659,7 @@ const LocationLogic = () => {
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
+      onUploadFile2,
       onSearch,
       onTambahData,
       setIsTambah,

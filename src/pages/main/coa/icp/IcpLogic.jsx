@@ -42,9 +42,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const IcpLogic = () => {
-  const navigate = useNavigate();
-
-  const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
 
@@ -61,8 +58,6 @@ const IcpLogic = () => {
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
-  const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -274,10 +269,6 @@ const IcpLogic = () => {
     }
   };
 
-  // const onOpenUploadModal = () => {
-  //   setOpenUploadModal(true);
-  // };
-
   const onSuccess = () => {
     setUploadSucces(true);
     acceptedFiles.length = 0;
@@ -326,29 +317,12 @@ const IcpLogic = () => {
     window.location.href = urlFile;
   };
 
-  const onClosePopupModal = () => {
-    // setShowPopup(false);
-  };
-
   const onSearch = async (e) => {
     const val = e.target.value;
 
     try {
-      let list = [];
       if (val !== "") {
         const res = await MainServices.get(`icp/list?search=${val}`);
-
-        // res.data.data.forEach((val) => {
-        //   list.push({
-        //     uuid: val.uuid,
-        //     code_icp: val.code_icp,
-        //     code_parent: val.code_parent,
-        //     description: val.description,
-        //     status: val.status,
-        //     created_at: val.created_at,
-        //     updated_at: val.updated_at,
-        //   });
-        // });
 
         setDataColumn(res.data.data);
       } else {
@@ -401,7 +375,6 @@ const IcpLogic = () => {
   return {
     value: {
       dataColumn,
-      openUploadModal,
       getRootProps,
       getInputProps,
       acceptedFiles,
@@ -409,15 +382,12 @@ const IcpLogic = () => {
       loading,
       columns,
       form,
-      showPopup,
-      isSucces,
       isTambah,
       formTambah,
       uploadSucces,
       loadingUpload,
     },
     func: {
-      onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,

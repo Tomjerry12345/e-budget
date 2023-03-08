@@ -11,23 +11,26 @@ const ProductPage = () => {
   return (
     <>
       <HeaderComponent
-        type="coa"
+        type="coa-2"
         // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
-        onChangeLoadingUpload={(set, setImport, setMore) => {
+        onChangeLoadingUpload={(set, setImport, setImport2, setMore) => {
           set(value.loadingUpload);
 
           if (value.uploadSucces === true) {
             setImport(false);
-            setMore(false)
+            setMore(false);
+            setImport2(false);
             func.setUploadSucces(null);
           }
         }}
         onUploadFile={func.onUploadFile}
+        onUploadFile2={func.onUploadFile2}
         accesFile={value}
-        downloadFile="file/produk.xlsx"
+        downloadFile="file/product.xlsx"
+        downloadFile2="file/product-company.xlsx"
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,
@@ -68,6 +71,7 @@ const ProductPage = () => {
         formTambah={value.formTambah}
         valueTreeData={value.codeParent}
         onExport={func.onExport}
+        listMenuTitleMore={["Import Data Produk", "Import Produk Perusahaan"]}
       />
       <div className="custom-root-layout custom-root-coa">
         <TableComponent

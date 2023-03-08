@@ -204,9 +204,9 @@ const AkunLogic = () => {
       const row = await form.validateFields();
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_account", row.code);
-      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("id", record.id);
+      d.append("code", row.code);
+      d.append("parent", record.parent === null ? "" : record.parent);
       d.append("type_account", row.type_account);
       d.append("description", row.description);
 
@@ -255,7 +255,7 @@ const AkunLogic = () => {
 
     try {
       const res = await MainServices.delete("account/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -355,18 +355,18 @@ const AkunLogic = () => {
       if (val !== "") {
         const res = await MainServices.get(`account/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code: val.code_account,
-            code_parent: val.code_parent,
-            type_account: val.type_account,
-            description: val.description,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
-        setDataColumn(list);
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code: val.code_account,
+        //     code_parent: val.code_parent,
+        //     type_account: val.type_account,
+        //     description: val.description,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
+        setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
@@ -380,7 +380,7 @@ const AkunLogic = () => {
     const { code_account, code_parent, type_account, description } = values;
 
     const f = new FormData();
-    f.append("code_account", code_account);
+    f.append("code", code_account);
     f.append("code_parent", code_parent);
     f.append("type_account", type_account);
     f.append("description", description);
