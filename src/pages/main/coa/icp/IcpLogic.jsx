@@ -56,7 +56,7 @@ const IcpLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
@@ -71,7 +71,7 @@ const IcpLogic = () => {
   const constantTableColums = [
     {
       title: "Code",
-      dataIndex: "code_icp",
+      dataIndex: "code",
       width: 130,
       editable: true,
       fixed: "left",
@@ -183,8 +183,8 @@ const IcpLogic = () => {
       const row = await form.validateFields();
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_icp", row.code_icp);
+      d.append("id", record.id);
+      d.append("code", row.code);
       d.append("description", row.description);
 
       const res = await MainServices.post("icp/update", d);
@@ -223,7 +223,7 @@ const IcpLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -232,7 +232,7 @@ const IcpLogic = () => {
 
     try {
       const res = await MainServices.delete("icp/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -262,12 +262,16 @@ const IcpLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("icp/list");
-    log("icp/list", data.data);
-    setLoading(false);
-    setDataColumn(data.data);
 
-    // setIsSucces(true);
+    try {
+      const { data } = await MainServices.get("icp/list");
+      log("icp/list", data.data);
+      setLoading(false);
+      setDataColumn(data.data);
+    } catch (error) {
+      setLoading(false);
+      alert(error.message);
+    }
   };
 
   // const onOpenUploadModal = () => {
@@ -320,7 +324,7 @@ const IcpLogic = () => {
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/icp/export`;
     window.location.href = urlFile;
-  }
+  };
 
   const onClosePopupModal = () => {
     // setShowPopup(false);
@@ -334,19 +338,19 @@ const IcpLogic = () => {
       if (val !== "") {
         const res = await MainServices.get(`icp/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code_icp: val.code_icp,
-            code_parent: val.code_parent,
-            description: val.description,
-            status: val.status,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code_icp: val.code_icp,
+        //     code_parent: val.code_parent,
+        //     description: val.description,
+        //     status: val.status,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
 
-        setDataColumn(list);
+        setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
@@ -362,7 +366,7 @@ const IcpLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_icp", code_icp);
+      f.append("code", code_icp);
       // f.append("code_parent", code_parent);
       f.append("description", description);
 
@@ -419,7 +423,7 @@ const IcpLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
-      onExport
+      onExport,
     },
   };
 };

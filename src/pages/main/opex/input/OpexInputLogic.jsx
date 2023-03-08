@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log } from "../../../../values/Utilitas";
+import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const OpexInputLogic = () => {
   const [dataColumnInput, setDataColumnInput] = useState([]);
@@ -175,12 +175,18 @@ const OpexInputLogic = () => {
           parseInt(itemparent[`${keysEdit[0]}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
+
+        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
         });
       }
     }
+
+    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+
     setDataColumnInput(newData);
 
     let formData = new FormData();
@@ -267,7 +273,7 @@ const OpexInputLogic = () => {
         );
       }
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
@@ -275,7 +281,7 @@ const OpexInputLogic = () => {
     } catch (error) {
       const err = error.response;
       log("error", err);
-      responseShow(err)
+      responseShow(err);
     }
 
     // navigate(0);

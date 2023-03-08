@@ -112,7 +112,6 @@ const TambahDataCoaModal = ({
 }) => {
   const [isChecked, setIsChecked] = useState(false);
   const onChange = (e) => {
-    log("checked", e.target.checked);
     setIsChecked(e.target.checked);
   };
 

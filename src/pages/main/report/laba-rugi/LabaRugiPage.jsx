@@ -25,7 +25,7 @@ const LabaRugiPage = () => {
       code_product: "ALL",
       code_icp: "ALL",
       code_project: "ALL",
-      periode: "2022 - 2023",
+      periode: "2023 - 2024",
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
