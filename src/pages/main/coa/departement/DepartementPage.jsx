@@ -11,7 +11,6 @@ const DepartementPage = () => {
     <>
       <HeaderComponent
         type="coa"
-        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
@@ -26,7 +25,7 @@ const DepartementPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/departement.xlsx"
+        downloadFile="file/department.xlsx"
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,
@@ -40,7 +39,7 @@ const DepartementPage = () => {
         }}
         inputTambah={[
           {
-            label: "Code Dept",
+            label: "Code",
             name: "code_dept",
             type: "input",
             required: true

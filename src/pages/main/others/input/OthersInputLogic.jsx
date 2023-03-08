@@ -1,4 +1,4 @@
-import { Form, } from "antd";
+import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log } from "../../../../values/Utilitas";
+import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Input Direct Pendapatan Non Operasional": "othersPNO",
@@ -114,7 +114,7 @@ const OthersInputLogic = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     let fCodeCompany = code_company.split(" ");
@@ -132,7 +132,7 @@ const OthersInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0]
+    fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -152,7 +152,7 @@ const OthersInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode
+      periode: fPeriode,
     });
   };
 
@@ -178,11 +178,11 @@ const OthersInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    const list = []
+    const list = [];
 
     data.list.forEach((val, i) => {
-      list.push({...val, key: i})
-    })
+      list.push({ ...val, key: i });
+    });
 
     setDataColumnInput(list);
   };
@@ -210,12 +210,18 @@ const OthersInputLogic = () => {
           parseInt(itemparent[`${keysEdit}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
+
+        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
         });
       }
     }
+
+    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+
     setDataColumnInput(newData);
 
     let formData = new FormData();
@@ -226,9 +232,9 @@ const OthersInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
-      periode
+      periode,
     } = codeFilter;
-    const year = periode
+    const year = periode;
     const month = row[`${keysEdit}-month`];
     const uuid = row[`${keysEdit}-uuid`];
 
@@ -290,14 +296,14 @@ const OthersInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
       const err = error.response;
-      responseShow(err)
+      responseShow(err);
     }
 
     // navigate(0);

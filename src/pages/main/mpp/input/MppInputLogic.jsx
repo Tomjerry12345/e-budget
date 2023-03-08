@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log } from "../../../../values/Utilitas";
+import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const MppInputLogic = () => {
   let params = useParams();
@@ -23,7 +23,7 @@ const MppInputLogic = () => {
 
   const year = date.getFullYear();
 
-  const columns = columnInputType1(year, year+1).map((col) => {
+  const columns = columnInputType1(year, year + 1).map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -63,8 +63,8 @@ const MppInputLogic = () => {
       ],
     },
   });
-  
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
 
   const responseShow = (res) => {
     dispatch(
@@ -83,7 +83,7 @@ const MppInputLogic = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     // alert("test");
@@ -95,7 +95,7 @@ const MppInputLogic = () => {
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
 
-    let fPeriode = periode.split(" ")
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -103,7 +103,7 @@ const MppInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0]
+    fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -123,7 +123,7 @@ const MppInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode
+      periode: fPeriode,
     });
   };
 
@@ -150,11 +150,11 @@ const MppInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    const list = []
+    const list = [];
 
     data.list.forEach((val, i) => {
-      list.push({...val, key: i})
-    })
+      list.push({ ...val, key: i });
+    });
 
     setDataColumnInput(list);
   };
@@ -182,12 +182,18 @@ const MppInputLogic = () => {
           parseInt(itemparent[`${keysEdit}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
+
+        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
         });
       }
     }
+
+    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+
     setDataColumnInput(newData);
 
     let formData = new FormData();
@@ -198,7 +204,7 @@ const MppInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
-      periode
+      periode,
     } = codeFilter;
     const year = periode;
     const month = row[`${keysEdit[0]}-month`];
@@ -258,14 +264,14 @@ const MppInputLogic = () => {
         getData(code_company, code_product, code_location, code_dept);
       }
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
-      const err =  error.response
-      responseShow(err)
+      const err = error.response;
+      responseShow(err);
     }
 
     // navigate(0);

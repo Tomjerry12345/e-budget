@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
@@ -56,13 +56,11 @@ const DepartementLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
-  const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -71,7 +69,7 @@ const DepartementLogic = () => {
   const constantTableColums = [
     {
       title: "Code",
-      dataIndex: "code_dept",
+      dataIndex: "code",
       width: 130,
       editable: true,
       fixed: "left",
@@ -202,13 +200,13 @@ const DepartementLogic = () => {
       // const val = dataColumn[i];
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_dept", row.code_dept);
+      d.append("id", record.id);
+      d.append("code", row.code);
       d.append("description", row.description);
 
       // log("row", row);
 
-      const res = await MainServices.post("dept/update", d);
+      const res = await MainServices.post("department/update", d);
 
       // setIsSucces(false);
       // setShowPopup(true);
@@ -231,6 +229,7 @@ const DepartementLogic = () => {
       dispatch(
         val({ status: err.responseCode, message: err.responseDescription })
       );
+      setEditingKey("");
     }
   };
 
@@ -244,7 +243,7 @@ const DepartementLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -254,8 +253,8 @@ const DepartementLogic = () => {
     try {
       log("row-del", record);
 
-      const res = await MainServices.delete("dept/delete", {
-        uuid: record.uuid,
+      const res = await MainServices.delete("department/delete", {
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -285,12 +284,17 @@ const DepartementLogic = () => {
 
   const onSetDataTable = async () => {
     setLoading(true);
-    const { data } = await MainServices.get("dept/list");
-    log("dept/list-tree", data.data);
-    setLoading(false);
-    setDataColumn(data.data);
 
-    // setIsSucces(true);
+    try {
+      const { data } = await MainServices.get("department/list");
+      log("dept/list-tree", data.data);
+      setLoading(false);
+      setDataColumn(data.data);
+    } catch (error) {
+      setLoading(false);
+      alert(error.message);
+      log("error", error);
+    }
   };
 
   const onSuccess = () => {
@@ -310,8 +314,7 @@ const DepartementLogic = () => {
     formData.append("file", file1);
 
     try {
-
-      const res = await MainServices.post("dept/import", formData);
+      const res = await MainServices.post("departement/import", formData);
       log("res", res);
 
       // onCloseUploadModal();
@@ -329,8 +332,8 @@ const DepartementLogic = () => {
 
       onSetDataTable();
     } catch (error) {
-      log("err", err)
       const err = error.response.data;
+      log("err", err);
       dispatch(
         val({ status: err.responseCode, message: err.responseDescription })
       );
@@ -339,12 +342,8 @@ const DepartementLogic = () => {
   };
 
   const onExport = () => {
-    const urlFile = `https://apikalla.binaries.id/ebudget/dept/export`;
+    const urlFile = `https://apikalla.binaries.id/ebudget/department/export`;
     window.location.href = urlFile;
-  }
-
-  const onClosePopupModal = () => {
-    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -353,18 +352,18 @@ const DepartementLogic = () => {
     try {
       let list = [];
       if (val !== "") {
-        const res = await MainServices.get(`dept/list?search=${val}`);
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code_dept: val.code_dept,
-            description: val.description,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        const res = await MainServices.get(`department/list?search=${val}`);
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code_dept: val.code_dept,
+        //     description: val.description,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
 
-        setDataColumn(list);
+        setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
@@ -378,10 +377,10 @@ const DepartementLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_dept", code_dept);
+      f.append("code", code_dept);
       f.append("description", description);
 
-      const res = await MainServices.post("dept/add", f);
+      const res = await MainServices.post("department/add", f);
 
       log("res-tambah", res);
 
@@ -420,22 +419,18 @@ const DepartementLogic = () => {
       loading,
       columns,
       form,
-      showPopup,
-      isSucces,
       isTambah,
       formTambah,
       uploadSucces,
       loadingUpload,
     },
     func: {
-      // onOpenUploadModal,
-      onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,
       setIsTambah,
       setUploadSucces,
-      onExport
+      onExport,
     },
   };
 };

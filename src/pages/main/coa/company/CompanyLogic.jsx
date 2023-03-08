@@ -8,10 +8,9 @@ import {
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
@@ -42,7 +41,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const CompanyLogic = () => {
-  const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
@@ -63,7 +61,6 @@ const CompanyLogic = () => {
   const [formTambah] = Form.useForm();
 
   const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -291,8 +288,6 @@ const CompanyLogic = () => {
     log("company/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
-
-    // setIsSucces(true);
   };
 
   const onOpenUploadModal = () => {
@@ -359,19 +354,22 @@ const CompanyLogic = () => {
       if (val !== "") {
         const res = await MainServices.get(`company/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code: val.code_company,
-            code_parent: val.code_parent,
-            description: val.description,
-            status: val.status,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        log("res", res.data.data)
 
-        setDataColumn(list);
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code: val.code_company,
+        //     code_parent: val.code_parent,
+        //     description: val.description,
+        //     status: val.status,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
+
+        setDataColumn(res.data.data);
+        // setDataColumn(res.data.data)
       } else {
         onSetDataTable();
       }
@@ -464,7 +462,6 @@ const CompanyLogic = () => {
       columns,
       form,
       showPopup,
-      isSucces,
       isTambah,
       formTambah,
       uploadSucces,

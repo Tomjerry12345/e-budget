@@ -1,9 +1,7 @@
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
-import "../CoaStyle.scss";
-import PopupModal from "../../../../component/modal/popup/PopupModal";
-import { log } from "../../../../values/Utilitas";
 import LocationLogic from "./LocationLogic";
+import "../CoaStyle.scss";
 
 const LocationPage = () => {
   const { value, func } = LocationLogic();
@@ -82,14 +80,6 @@ const LocationPage = () => {
           form={value.form}
         />
       </div>
-
-      {/* <PopupModal
-        open={value.showPopup}
-        succes={value.isSucces}
-        onOk={func.onClosePopupModal}
-        textSucces="Sukses melakukan perubahan"
-        textProses="Silahkan tunggu..."
-      /> */}
     </>
   );
 };

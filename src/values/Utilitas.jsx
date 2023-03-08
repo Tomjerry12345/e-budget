@@ -93,7 +93,7 @@ export const cekToken = async (navigate) => {
     console.log("error", error.code);
 
     if (error.code === "ERR_BAD_RESPONSE") {
-      navigate("/login");
+      // navigate("/login");
     } else {
       alert("terjadi kesalahan");
     }

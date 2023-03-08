@@ -2,8 +2,6 @@ import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import CompanyLogic from "./CompanyLogic";
 import "../CoaStyle.scss";
-import PopupModal from "../../../../component/modal/popup/PopupModal";
-import { log } from "../../../../values/Utilitas";
 
 const CompanyPage = () => {
   const { value, func } = CompanyLogic();
@@ -81,14 +79,6 @@ const CompanyPage = () => {
           form={value.form}
         />
       </div>
-
-      {/* <PopupModal
-        open={value.showPopup}
-        succes={value.isSucces}
-        onOk={func.onClosePopupModal}
-        textSucces="Sukses melakukan perubahan"
-        textProses="Silahkan tunggu..."
-      /> */}
     </>
   );
 };

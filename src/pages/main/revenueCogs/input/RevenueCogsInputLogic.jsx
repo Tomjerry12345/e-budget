@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log } from "../../../../values/Utilitas";
+import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const RevenueCogsInputLogic = () => {
   const [dataColumnInput, setDataColumnInput] = useState([]);
@@ -391,7 +391,7 @@ const RevenueCogsInputLogic = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     // alert("test");
@@ -411,7 +411,7 @@ const RevenueCogsInputLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0]
+    fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -431,7 +431,7 @@ const RevenueCogsInputLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode
+      periode: fPeriode,
     });
   };
 
@@ -457,11 +457,11 @@ const RevenueCogsInputLogic = () => {
   const getDataTable = (response) => {
     const { data } = response;
 
-    const list = []
+    const list = [];
 
     data.list.forEach((val, i) => {
-      list.push({...val, key: i})
-    })
+      list.push({ ...val, key: i });
+    });
 
     setDataColumnInput(list);
   };
@@ -482,6 +482,7 @@ const RevenueCogsInputLogic = () => {
       ...item,
       ...row,
     });
+
     for (let x = index - 1; x >= 0; x--) {
       if (newData[x].parent === true) {
         const itemparent = newData[x];
@@ -490,12 +491,17 @@ const RevenueCogsInputLogic = () => {
           parseInt(itemparent[`${keysEdit}`]) +
           parseInt(valuesEdit) -
           parseInt(oldValue);
+
+        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+
         newData.splice(x, 1, {
           ...itemold,
           ...itemparent,
         });
       }
     }
+
+    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
 
     setDataColumnInput(newData);
 
@@ -507,7 +513,7 @@ const RevenueCogsInputLogic = () => {
       code_dept,
       code_icp,
       code_project,
-      periode
+      periode,
     } = codeFilter;
     const year = periode;
     const month = row[`${keysEdit}-month`];
@@ -568,14 +574,14 @@ const RevenueCogsInputLogic = () => {
         getData(code_company, code_project, code_location, code_dept);
       }
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
       onSuccess();
     } catch (error) {
       const err = error.response;
-      responseShow(err)
+      responseShow(err);
     }
 
     // navigate(0);

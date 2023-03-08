@@ -33,6 +33,7 @@ const LabaRugiLogic = () => {
       code_product,
       code_project,
       code_icp,
+      periode
     } = values;
 
     let fCodeCompany = code_company.split(" ");
@@ -41,8 +42,7 @@ const LabaRugiLogic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
-    let periode = "2023";
+    let fPeriode = periode.split(" ")
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -50,16 +50,7 @@ const LabaRugiLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-
-    // setCodeFilter({
-    //   code_company: fCodeCompany,
-    //   code_dept: fCodeDept,
-    //   code_location: fCodeLocation,
-    //   code_product: fCodeProduct,
-    //   code_product: fCodeProduct,
-    //   code_icp: fCodeIcp,
-    //   code_project: fCodeProject,
-    // });
+    fPeriode = fPeriode[0];
 
     loadData(
       fCodeCompany,
@@ -68,8 +59,19 @@ const LabaRugiLogic = () => {
       fCodeDept,
       fCodeIcp,
       fCodeProject,
-      periode
+      fPeriode
     );
+
+    setCodeFilter({
+      code_company: fCodeCompany,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
+      periode: fPeriode,
+    });
   };
 
   const loadData = async (

@@ -8,11 +8,9 @@ import {
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import {
-  cekNumber,
   getSizeScreen,
   inputTypeTable,
   log,
@@ -47,7 +45,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const LocationLogic = () => {
-  const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
@@ -67,8 +64,6 @@ const LocationLogic = () => {
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
-  const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -78,7 +73,7 @@ const LocationLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
-      width: "8px",
+      width: "16px",
       editable: true,
       fixed: "left",
     },
@@ -313,8 +308,8 @@ const LocationLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onSetDataTable();
-    onSetCodeParent();
+    onSetDataTable(); 
+    // onSetCodeParent();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
@@ -458,10 +453,6 @@ const LocationLogic = () => {
     log("location/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
-
-    // setIsSucces(true);
-    // setDataColumn(dummyData);
-    // dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
   const onOpenUploadModal = () => {
@@ -524,9 +515,11 @@ const LocationLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
+    setLoading(true)
+
     try {
-      let list = [];
       if (val !== "") {
+        let list = [];
         const res = await MainServices.get(`location/list?search=${val}`);
 
         res.data.data.forEach((val) => {
@@ -553,8 +546,13 @@ const LocationLogic = () => {
           });
         });
 
+        log("list-location", list);
+
         setDataColumn(list);
+
+        setLoading(false)
       } else {
+        log("error")
         onSetDataTable();
       }
     } catch (error) {
@@ -613,8 +611,6 @@ const LocationLogic = () => {
       loading,
       columns,
       form,
-      showPopup,
-      isSucces,
       isTambah,
       formTambah,
       uploadSucces,
