@@ -10,7 +10,7 @@ const DepartementPage = () => {
   return (
     <>
       <HeaderComponent
-        type="coa"
+        type="coa-1"
         onChangeFilter={(set) => {
           set(value.filter);
         }}

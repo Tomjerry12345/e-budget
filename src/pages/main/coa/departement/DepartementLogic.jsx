@@ -348,7 +348,7 @@ const DepartementLogic = () => {
 
   const onSearch = async (e) => {
     const val = e.target.value;
-
+ 
     try {
       let list = [];
       if (val !== "") {

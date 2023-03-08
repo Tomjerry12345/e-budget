@@ -55,7 +55,7 @@ const CompanyLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
@@ -216,9 +216,9 @@ const CompanyLogic = () => {
       log("record", record);
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_company", row.code);
-      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("id", record.id);
+      d.append("code", row.code);
+      d.append("parent", record.parent === null ? "" : record.parent);
       d.append("description", row.description);
 
       const res = await MainServices.post("company/update", d);
@@ -250,7 +250,7 @@ const CompanyLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -261,7 +261,7 @@ const CompanyLogic = () => {
       log("row-del", record);
 
       const res = await MainServices.delete("company/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -388,7 +388,7 @@ const CompanyLogic = () => {
 
     const f = new FormData();
 
-    f.append("uuid", record.uuid);
+    f.append("id", record.id);
 
     if (record.status === 0) {
       res = await MainServices.post("company/active", f);
@@ -415,8 +415,8 @@ const CompanyLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_company", code_company);
-      f.append("code_parent", code_parent);
+      f.append("code", code_company);
+      f.append("parent", code_parent);
       f.append("description", description);
 
       const res = await MainServices.post("company/add", f);

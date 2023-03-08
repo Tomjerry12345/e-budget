@@ -47,7 +47,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const ProductLogic = () => {
-  const navigate = useNavigate();
 
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
@@ -62,13 +61,11 @@ const ProductLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
-  const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -374,9 +371,9 @@ const ProductLogic = () => {
         row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_product", code);
-      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("id", record.id);
+      d.append("code", code);
+      d.append("parent", record.parent === null ? "" : record.parent);
       d.append("description", description);
       d.append("HK", hk);
       d.append("KIU", kiu);
@@ -424,7 +421,7 @@ const ProductLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -433,7 +430,7 @@ const ProductLogic = () => {
 
     try {
       const res = await MainServices.delete("product/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -512,6 +509,45 @@ const ProductLogic = () => {
     }
   };
 
+  const onUploadFile2 = async () => {
+    let file1;
+
+    setLoadingUpload(true);
+
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    let formData = new FormData();
+    formData.append("file", file1);
+
+    try {
+      const res = await MainServices.post("productcompany/import", formData);
+      log("res", res);
+
+      dispatch(
+        val({
+          status: res.data.responseCode,
+          message: res.data.responseDescription,
+        })
+      );
+
+      setLoadingUpload(false);
+
+      onSuccess();
+
+      onSetDataTable();
+
+      // navigate(0);
+    } catch (error) {
+      const err = error.response.data;
+      dispatch(
+        val({ status: err.responseCode, message: err.responseDescription })
+      );
+      log("error", err);
+    }
+  };
+
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/product/export`;
     window.location.href = urlFile;
@@ -529,31 +565,31 @@ const ProductLogic = () => {
       if (val !== "") {
         const res = await MainServices.get(`product/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code: val.code_product,
-            code_parent: val.code_parent,
-            description: val.description,
-            HK: val.HK,
-            KIU: val.KIU,
-            GMM: val.GMM,
-            KIA: val.KIA,
-            BJU: val.BJU,
-            BLT: val.BLT,
-            BLU: val.BLU,
-            BK: val.BK,
-            BSU: val.BSU,
-            BSB: val.BSB,
-            KIK: val.KIK,
-            IKP: val.IKP,
-            BAND: val.BAND,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        // res.data.data.forEach((val) => {
+        //   list.push({
+        //     uuid: val.uuid,
+        //     code: val.code_product,
+        //     code_parent: val.code_parent,
+        //     description: val.description,
+        //     HK: val.HK,
+        //     KIU: val.KIU,
+        //     GMM: val.GMM,
+        //     KIA: val.KIA,
+        //     BJU: val.BJU,
+        //     BLT: val.BLT,
+        //     BLU: val.BLU,
+        //     BK: val.BK,
+        //     BSU: val.BSU,
+        //     BSB: val.BSB,
+        //     KIK: val.KIK,
+        //     IKP: val.IKP,
+        //     BAND: val.BAND,
+        //     created_at: val.created_at,
+        //     updated_at: val.updated_at,
+        //   });
+        // });
 
-        setDataColumn(list);
+        setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
@@ -568,8 +604,8 @@ const ProductLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_product", code_product);
-      f.append("code_parent", code_parent);
+      f.append("code", code_product);
+      f.append("parent", code_parent);
       f.append("description", description);
 
       const res = await MainServices.post("product/add", f);
@@ -614,8 +650,6 @@ const ProductLogic = () => {
       loading,
       columns,
       form,
-      showPopup,
-      isSucces,
       isTambah,
       formTambah,
       uploadSucces,
@@ -625,6 +659,7 @@ const ProductLogic = () => {
       onOpenUploadModal,
       onClosePopupModal,
       onUploadFile,
+      onUploadFile2,
       onSearch,
       onTambahData,
       setIsTambah,

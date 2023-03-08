@@ -10,7 +10,7 @@ const AkunPage = () => {
   return (
     <>
       <HeaderComponent
-        type="coa"
+        type="coa-1"
         // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);

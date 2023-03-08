@@ -1,4 +1,5 @@
-import HeaderComponentTypeCoa from "./type/type-coa/HeaderComponentTypeCoa";
+import HeaderComponentTypeCoa1 from "./type/type-coa/type-1/HeaderComponentTypeCoa1";
+import HeaderComponentTypeCoa2 from "./type/type-coa/type-2/HeaderComponentTypeCoa2";
 import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput";
 import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan/HeaderComponentTypeRevenuePerusahaan";
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
@@ -9,9 +10,11 @@ const HeaderComponent = ({
   onChangeFilter,
   onChangeLoadingUpload,
   onUploadFile,
+  onUploadFile2,
   onChangeTambahData,
   accesFile = null,
   downloadFile,
+  downloadFile2,
   disabledImportExport,
   onChangeSelect,
   onExport,
@@ -24,7 +27,8 @@ const HeaderComponent = ({
   onTambahData,
   inputTambah,
   formTambah,
-  valueTreeData
+  valueTreeData,
+  listMenuTitleMore = ["", ""]
 }) => {
   let component;
 
@@ -73,11 +77,12 @@ const HeaderComponent = ({
         keyCodeProject={keyCodeProject}
       />
     );
-  } else if (type === "coa") {
+  } else if (type === "coa-1") {
     component = (
-      <HeaderComponentTypeCoa
+      <HeaderComponentTypeCoa1
         onUploadFile={onUploadFile}
         downloadFile={downloadFile}
+        downloadFile2={downloadFile2}
         accesFile={accesFile}
         inputSearch={inputSearch}
         onTambahData={onTambahData}
@@ -87,6 +92,25 @@ const HeaderComponent = ({
         valueTreeData={valueTreeData}
         onChangeLoadingUpload={onChangeLoadingUpload}
         onExport={onExport}
+      />
+    );
+  } else if (type === "coa-2") {
+    component = (
+      <HeaderComponentTypeCoa2
+        onUploadFile={onUploadFile}
+        onUploadFile2={onUploadFile2}
+        downloadFile={downloadFile}
+        downloadFile2={downloadFile2}
+        accesFile={accesFile}
+        inputSearch={inputSearch}
+        onTambahData={onTambahData}
+        onChangeTambahData={onChangeTambahData}
+        inputTambah={inputTambah}
+        formTambah={formTambah}
+        valueTreeData={valueTreeData}
+        onChangeLoadingUpload={onChangeLoadingUpload}
+        onExport={onExport}
+        listMenuTitleMore={listMenuTitleMore}
       />
     );
   }

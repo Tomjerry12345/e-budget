@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 
-const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload }) => {
+const HeaderComponentTypeCoa2Logic = ({ onChangeTambahData, onChangeLoadingUpload, accesFile }) => {
   const [isImport, setImport] = useState(false);
+  const [isImport2, setImport2] = useState(false);
   const [isTambahData, setIsTambahData] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [more, setMore] = useState(false);
 
   useEffect(() => {
     onChangeTambahData(setIsTambahData);
-    onChangeLoadingUpload(setLoadingUpload, setImport, setMore)
+    onChangeLoadingUpload(setLoadingUpload, setImport, setImport2, setMore)
   }, [onChangeTambahData, onChangeLoadingUpload]);
 
   const onClickImport = () => {
@@ -17,6 +18,18 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
 
   const onCloseImport = () => {
     setImport(false);
+    onCloseMore()
+    accesFile.acceptedFiles.length = 0;
+  };
+
+  const onClickImport2 = () => {
+    setImport2(true);
+  };
+
+  const onCloseImport2 = () => {
+    setImport2(false);
+    onCloseMore()
+    accesFile.acceptedFiles.length = 0;
   };
 
   const onClickTambahData = () => {
@@ -38,6 +51,7 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
   return {
     value: {
       isImport,
+      isImport2,
       isTambahData,
       loadingUpload,
       more
@@ -45,6 +59,8 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
     func: {
       onClickImport,
       onCloseImport,
+      onClickImport2,
+      onCloseImport2,
       onClickTambahData,
       onCloseTambahData,
       onClickMore,
@@ -53,4 +69,4 @@ const HeaderComponentTypeCoaLogic = ({ onChangeTambahData, onChangeLoadingUpload
   };
 };
 
-export default HeaderComponentTypeCoaLogic;
+export default HeaderComponentTypeCoa2Logic;

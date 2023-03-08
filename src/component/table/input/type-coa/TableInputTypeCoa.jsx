@@ -108,7 +108,7 @@ const TableInputTypeCoa = ({ dataSource, columns, loading, scroll, form }) => {
             scroll={scroll === null ? { y: size.y - 366, x: 1000 } : scroll}
             // showExpandColumn={false}
             defaultExpandAllRows={true}
-            rowKey="uuid"
+            rowKey="id"
           />
         </Form>
       ) : loading === true ? (

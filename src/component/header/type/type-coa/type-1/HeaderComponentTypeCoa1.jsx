@@ -6,12 +6,12 @@ import {
   VerticalAlignBottomOutlined
 } from "@ant-design/icons";
 import { Button, Input, Layout, Modal, Typography } from "antd";
-import { getLocal } from "../../../../values/Utilitas";
-import TambahDataCoaModal from "../../../modal/tambah-data-coa/TambahDataCoaModal";
-import UploadCoaModal from "../../../modal/upload-coa/UploadCoaModal";
-import HeaderComponentTypeCoaLogic from "./HeaderComponentTypeCoaLogic";
+import { getLocal } from "../../../../../values/Utilitas";
+import TambahDataCoaModal from "../../../../modal/tambah-data-coa/TambahDataCoaModal";
+import UploadCoaModal from "../../../../modal/upload-coa/UploadCoaModal";
+import HeaderComponentTypeCoa1Logic from "./HeaderComponentTypeCoa1Logic";
 
-import "./style.scss";
+import "../style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -19,7 +19,7 @@ const { Text } = Typography;
 const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClickImport }) => {
   return (
     <Modal
-      className="more-modal"
+      className="more-modal-type-coa"
       title={null}
       open={open}
       onCancel={onCancel}
@@ -59,7 +59,7 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClick
   );
 };
 
-const HeaderComponentTypeCoa = ({
+const HeaderComponentTypeCoa1 = ({
   onUploadFile,
   downloadFile,
   accesFile,
@@ -73,7 +73,7 @@ const HeaderComponentTypeCoa = ({
   disabledImportExport,
   onExport
 }) => {
-  const { value, func } = HeaderComponentTypeCoaLogic({
+  const { value, func } = HeaderComponentTypeCoa1Logic({
     onChangeTambahData,
     onChangeLoadingUpload,
   });
@@ -145,4 +145,4 @@ const HeaderComponentTypeCoa = ({
   );
 };
 
-export default HeaderComponentTypeCoa;
+export default HeaderComponentTypeCoa1;
