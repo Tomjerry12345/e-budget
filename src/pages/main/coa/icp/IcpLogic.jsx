@@ -4,14 +4,12 @@ import {
   Form,
   Menu,
   Popconfirm,
-  Switch,
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
+import {  getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
@@ -25,7 +23,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
       },
       {
         key: "2",
-        // label: "hapus",
         label: (
           <Popconfirm
             title="Sure to delete"
@@ -42,7 +39,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const IcpLogic = () => {
-
   const [dataColumn, setDataColumn] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -91,7 +87,7 @@ const IcpLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "7%",
+      width: 100,
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -114,12 +110,6 @@ const IcpLogic = () => {
             </Popconfirm>
           </span>
         ) : (
-          // <Typography.Link
-          //   disabled={editingKey !== ""}
-          //   onClick={() => edit(record)}
-          // >
-          //   Edit
-          // </Typography.Link>
           <Dropdown
             overlay={
               <DropdownMenu
@@ -173,6 +163,15 @@ const IcpLogic = () => {
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const save = async (record) => {
     try {
       const row = await form.validateFields();
@@ -184,27 +183,12 @@ const IcpLogic = () => {
 
       const res = await MainServices.post("icp/update", d);
 
-      console.log("res-edit", res);
-
-      // setIsSucces(false);
-      // setShowPopup(true);
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       onSetDataTable();
-
-      setEditingKey("");
+      cancel();
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -222,30 +206,16 @@ const IcpLogic = () => {
   };
 
   const onDelete = async (record) => {
-    // setIsSucces(false);
-    // setShowPopup(true);
-
     try {
       const res = await MainServices.delete("icp/delete", {
         id: record.id,
       });
 
-      console.log("res-hapus", res);
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       onSetDataTable();
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -265,7 +235,12 @@ const IcpLogic = () => {
       setDataColumn(data.data);
     } catch (error) {
       setLoading(false);
-      alert(error.message);
+      dispatch(
+        val({
+          status: 400,
+          message: "Data gagal di tangkap",
+        })
+      );
     }
   };
 
@@ -289,26 +264,13 @@ const IcpLogic = () => {
       const res = await MainServices.post("icp/import", formData);
       log("res", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       setLoadingUpload(false);
-
       onSuccess();
-
       onSetDataTable();
-
-      // navigate(0);
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -329,7 +291,8 @@ const IcpLogic = () => {
         onSetDataTable();
       }
     } catch (error) {
-      alert(error);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -345,30 +308,18 @@ const IcpLogic = () => {
       f.append("description", description);
 
       const res = await MainServices.post("icp/add", f);
-
-      log("res-tambah", res);
-
       onSetDataTable();
-
       setIsTambah(true);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       formTambah.setFieldsValue({
         code_icp: "",
         description: "",
       });
     } catch (error) {
-      const err = error.response.data;
-      log("error", err);
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
+      const err = error.response;
+      responseShow(err);
     }
   };
 

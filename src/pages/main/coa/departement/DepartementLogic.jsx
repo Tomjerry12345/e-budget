@@ -4,11 +4,9 @@ import {
   Form,
   Menu,
   Popconfirm,
-  Switch,
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import { getSizeScreen, log } from "../../../../values/Utilitas";
@@ -25,7 +23,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
       },
       {
         key: "2",
-        // label: "hapus",
         label: (
           <Popconfirm
             title="Sure to delete"
@@ -42,10 +39,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const DepartementLogic = () => {
-  const navigate = useNavigate();
-
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-
   const [dataColumn, setDataColumn] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -72,7 +65,6 @@ const DepartementLogic = () => {
       dataIndex: "code",
       width: 130,
       editable: true,
-      fixed: "left",
     },
     {
       title: "Description",
@@ -91,26 +83,10 @@ const DepartementLogic = () => {
       editable: false,
       width: 150,
     },
-    // {
-    //   title: "Status",
-    //   dataIndex: "status",
-    //   width: "5%",
-    //   render: (_, record) => {
-    //     let rStatus = record.status;
-
-    //     return (
-    //       <Switch
-    //         size="small"
-    //         checked={rStatus === 1}
-    //         onChange={() => onActive(record)}
-    //       />
-    //     );
-    //   },
-    // },
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "7%",
+      width: 100,
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -133,12 +109,6 @@ const DepartementLogic = () => {
             </Popconfirm>
           </span>
         ) : (
-          // <Typography.Link
-          //   disabled={editingKey !== ""}
-          //   onClick={() => edit(record)}
-          // >
-          //   Edit
-          // </Typography.Link>
           <Dropdown
             overlay={
               <DropdownMenu
@@ -192,44 +162,37 @@ const DepartementLogic = () => {
     onSetDataTable();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const save = async (record) => {
     try {
       const row = await form.validateFields();
-      // const i = dataColumn.findIndex((item) => key === item.code_dept);
-
-      // const val = dataColumn[i];
 
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", row.code);
       d.append("description", row.description);
 
-      // log("row", row);
-
       const res = await MainServices.post("department/update", d);
-
-      // setIsSucces(false);
-      // setShowPopup(true);
 
       console.log("res-edit", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       onSetDataTable();
 
-      setEditingKey("");
+      cancel();
     } catch (error) {
-      log("error", error);
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      setEditingKey("");
+      const err = error.response;
+      responseShow(err);
+      cancel();
     }
   };
 
@@ -259,20 +222,12 @@ const DepartementLogic = () => {
 
       console.log("res-hapus", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       onSetDataTable();
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -317,27 +272,13 @@ const DepartementLogic = () => {
       const res = await MainServices.post("departement/import", formData);
       log("res", res);
 
-      // onCloseUploadModal();
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       setLoadingUpload(false);
-
       onSuccess();
-
       onSetDataTable();
     } catch (error) {
-      const err = error.response.data;
-      log("err", err);
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -348,27 +289,17 @@ const DepartementLogic = () => {
 
   const onSearch = async (e) => {
     const val = e.target.value;
- 
+
     try {
-      let list = [];
       if (val !== "") {
         const res = await MainServices.get(`department/list?search=${val}`);
-        // res.data.data.forEach((val) => {
-        //   list.push({
-        //     uuid: val.uuid,
-        //     code_dept: val.code_dept,
-        //     description: val.description,
-        //     created_at: val.created_at,
-        //     updated_at: val.updated_at,
-        //   });
-        // });
-
         setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
     } catch (error) {
-      alert(error);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -388,30 +319,21 @@ const DepartementLogic = () => {
 
       setIsTambah(true);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       formTambah.setFieldsValue({
         code_dept: "",
         description: "",
       });
     } catch (error) {
-      const err = error.response.data;
-      log("error", err);
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
+      const err = error.response;
+      responseShow(err);
     }
   };
 
   return {
     value: {
       dataColumn,
-      openUploadModal,
       getRootProps,
       getInputProps,
       acceptedFiles,

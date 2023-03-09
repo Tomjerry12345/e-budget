@@ -1,0 +1,16 @@
+.btn-ok {
+  background-color: #008041;
+  border-radius: 8px;
+  width: 120px;
+  height: 41px;
+  border: none;
+}
+
+.root-list-perusahaan {
+  margin-top: 32px;
+  .children-list-perusahaan {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+}
