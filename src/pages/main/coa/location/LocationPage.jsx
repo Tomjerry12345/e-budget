@@ -2,6 +2,22 @@ import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import LocationLogic from "./LocationLogic";
 import "../CoaStyle.scss";
+import ModalListPerusahaan from "../../../../component/modal/list-perusahaan/ModalListPerusahaan";
+
+const data = [
+  {
+    id: "05c37cac-1cc5-4b08-83f6-414355799383",
+    code: "328",
+    description: "PT. Gowa Modern Motor",
+    status: 1,
+  },
+  {
+    id: "1706e23d-f9ca-4cb3-9ef0-9daec5e9a59a",
+    code: "329",
+    description: "PT. Hero",
+    status: 0,
+  },
+];
 
 const LocationPage = () => {
   const { value, func } = LocationLogic();
@@ -84,6 +100,8 @@ const LocationPage = () => {
           form={value.form}
         />
       </div>
+
+      <ModalListPerusahaan open={false} data={data}/>
     </>
   );
 };

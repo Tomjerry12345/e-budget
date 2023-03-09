@@ -1,17 +1,8 @@
-import {
-  Button,
-  Dropdown,
-  Form,
-  Menu,
-  Popconfirm,
-  Switch,
-  Typography,
-} from "antd";
+import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { cekNumber, getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
@@ -42,8 +33,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const AkunLogic = () => {
-  const navigate = useNavigate();
-
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
@@ -62,8 +51,6 @@ const AkunLogic = () => {
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
-  const [showPopup, setShowPopup] = useState(false);
-  const [isSucces, setIsSucces] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
 
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -73,16 +60,14 @@ const AkunLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
-      width: 130,
+      width: 170,
       editable: true,
-      fixed: "left",
     },
     {
       title: "Type Account",
       dataIndex: "type_account",
       width: 130,
       editable: true,
-      fixed: "left",
     },
     {
       title: "Description",
@@ -104,7 +89,7 @@ const AkunLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "7%",
+      width: 100,
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -127,12 +112,6 @@ const AkunLogic = () => {
             </Popconfirm>
           </span>
         ) : (
-          // <Typography.Link
-          //   disabled={editingKey !== ""}
-          //   onClick={() => edit(record)}
-          // >
-          //   Edit
-          // </Typography.Link>
           <Dropdown
             overlay={
               <DropdownMenu
@@ -193,6 +172,15 @@ const AkunLogic = () => {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  };
+
   const onSetCodeParent = async () => {
     const { data } = await MainServices.get("account/list-tree-option");
     log("company/list-tree-option", data);
@@ -211,28 +199,14 @@ const AkunLogic = () => {
       d.append("description", row.description);
 
       const res = await MainServices.post("account/update", d);
-
-      console.log("res-edit", res);
-
-      // setIsSucces(false);
-      // setShowPopup(true);
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       onSetDataTable();
 
-      setEditingKey("");
+      cancel();
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
+      cancel();
     }
   };
 
@@ -246,7 +220,7 @@ const AkunLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
@@ -260,20 +234,11 @@ const AkunLogic = () => {
 
       console.log("res-hapus", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       onSetDataTable();
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -289,8 +254,6 @@ const AkunLogic = () => {
     log("account/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
-
-    // setIsSucces(true);
   };
 
   const onOpenUploadModal = () => {
@@ -310,6 +273,7 @@ const AkunLogic = () => {
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
+
     let formData = new FormData();
     formData.append("file", file1);
 
@@ -317,24 +281,13 @@ const AkunLogic = () => {
       const res = await MainServices.post("account/import", formData);
       log("res", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res);
       setLoadingUpload(false);
-
       onSuccess();
-
       onSetDataTable();
     } catch (error) {
       const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      responseShow(err);
     }
   };
 
@@ -343,35 +296,19 @@ const AkunLogic = () => {
     window.location.href = urlFile;
   };
 
-  const onClosePopupModal = () => {
-    // setShowPopup(false);
-  };
-
   const onSearch = async (e) => {
     const val = e.target.value;
 
     try {
-      let list = [];
       if (val !== "") {
         const res = await MainServices.get(`account/list?search=${val}`);
-
-        // res.data.data.forEach((val) => {
-        //   list.push({
-        //     uuid: val.uuid,
-        //     code: val.code_account,
-        //     code_parent: val.code_parent,
-        //     type_account: val.type_account,
-        //     description: val.description,
-        //     created_at: val.created_at,
-        //     updated_at: val.updated_at,
-        //   });
-        // });
         setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
     } catch (error) {
-      alert(error);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -388,18 +325,9 @@ const AkunLogic = () => {
     try {
       const res = await MainServices.post("account/add", f);
 
-      log("res-tambah", res);
-
       onSetDataTable();
-
       setIsTambah(true);
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       formTambah.setFieldsValue({
         code_account: "",
@@ -409,11 +337,8 @@ const AkunLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -428,9 +353,7 @@ const AkunLogic = () => {
       size,
       loading,
       columns,
-      form,
-      showPopup,
-      isSucces,
+      form, 
       isTambah,
       formTambah,
       loadingUpload,
@@ -438,7 +361,6 @@ const AkunLogic = () => {
     },
     func: {
       onOpenUploadModal,
-      onClosePopupModal,
       onUploadFile,
       onSearch,
       onTambahData,

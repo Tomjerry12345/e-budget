@@ -24,7 +24,7 @@ const CompanyPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/perusahaan.xlsx"
+        downloadFile="file/company.xlsx"
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,
@@ -60,6 +60,12 @@ const CompanyPage = () => {
             name: "description",
             type: "textarea",
             required: true
+          },
+          {
+            label: "Alias",
+            name: "alias",
+            type: "input",
+            required: false
           },
         ]}
         formTambah={value.formTambah}

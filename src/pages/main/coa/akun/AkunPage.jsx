@@ -1,8 +1,6 @@
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
 import "../CoaStyle.scss";
-import PopupModal from "../../../../component/modal/popup/PopupModal";
-import { log } from "../../../../values/Utilitas";
 import DepartementLogic from "./AkunLogic";
 
 const AkunPage = () => {
@@ -26,7 +24,7 @@ const AkunPage = () => {
         }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/akun.xlsx"
+        downloadFile="file/account.xlsx"
         inputSearch={{
           title: "input kode / nama perusahaan",
           onChange: func.onSearch,

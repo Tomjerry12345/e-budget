@@ -45,11 +45,11 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const LocationLogic = () => {
-
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
   const [codeParent, setCodeParent] = useState([]);
+  const [listPerusahaan, setListPerusahaan] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ const LocationLogic = () => {
   });
 
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.uuid === editingKey;
+  const isEditing = (record) => record.id === editingKey;
 
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
@@ -73,14 +73,13 @@ const LocationLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
-      width: "16px",
+      width: 130,
       editable: true,
       fixed: "left",
     },
     {
       title: "Description",
       dataIndex: "description",
-      width: "20px",
       editable: true,
       fixed: "left",
     },
@@ -200,13 +199,13 @@ const LocationLogic = () => {
       title: "Created At",
       dataIndex: "created_at",
       editable: false,
-      width: "8px",
+      width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
       editable: false,
-      width: "8px",
+      width: 150,
     },
     // {
     //   title: "Status",
@@ -229,7 +228,7 @@ const LocationLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "4px",
+      width: 100,
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -308,8 +307,9 @@ const LocationLogic = () => {
   useEffect(() => {
     setDataColumn([]);
     window.onresize = getSizeScreen(setSize);
-    onSetDataTable(); 
+    onSetDataTable();
     onSetCodeParent();
+    onGetListPerusahaan();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
@@ -327,75 +327,78 @@ const LocationLogic = () => {
     setCodeParent(data.data);
   };
 
+  const onGetListPerusahaan = async () => {
+    const { data } = await MainServices.get("location/list-company");
+    log("location/list-company", data);
+    setListPerusahaan(data.data);
+  };
+
   const save = async (record) => {
     try {
       const row = await form.validateFields();
 
       const code = row["code"];
       const description = row["description"];
-      const hk = row["HK"] === true ? 1 : row["HK"] === false ? 0 : row["HK"];
-      const kiu =
-        row["KIU"] === true ? 1 : row["KIU"] === false ? 0 : row["KIU"];
-      const gmm =
-        row["GMM"] === true ? 1 : row["GMM"] === false ? 0 : row["GMM"];
-      const kia =
-        row["KIA"] === true ? 1 : row["KIA"] === false ? 0 : row["KIA"];
-      const bju =
-        row["BJU"] === true ? 1 : row["BJU"] === false ? 0 : row["BJU"];
-      const blt =
-        row["BLT"] === true ? 1 : row["BLT"] === false ? 0 : row["BLT"];
-      const blu =
-        row["BLU"] === true ? 1 : row["BLU"] === false ? 0 : row["BLU"];
-      const bk = row["BK"] === true ? 1 : row["BK"] === false ? 0 : row["BK"];
-      const bsu =
-        row["BSU"] === true ? 1 : row["BSU"] === false ? 0 : row["BSU"];
-      const bsb =
-        row["BSB"] === true ? 1 : row["BSB"] === false ? 0 : row["BSB"];
-      const kik =
-        row["KIK"] === true ? 1 : row["KIK"] === false ? 0 : row["KIK"];
-      const ikp =
-        row["IKP"] === true ? 1 : row["IKP"] === false ? 0 : row["IKP"];
-      const band =
-        row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
-      const hsi =
-        row["HSI"] === true ? 1 : row["HSI"] === false ? 0 : row["HSI"];
-      const holding =
-        row["Holding"] === true
-          ? 1
-          : row["Holding"] === false
-          ? 0
-          : row["Holding"];
-      const bbu =
-        row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
+      // const hk = row["HK"] === true ? 1 : row["HK"] === false ? 0 : row["HK"];
+      // const kiu =
+      //   row["KIU"] === true ? 1 : row["KIU"] === false ? 0 : row["KIU"];
+      // const gmm =
+      //   row["GMM"] === true ? 1 : row["GMM"] === false ? 0 : row["GMM"];
+      // const kia =
+      //   row["KIA"] === true ? 1 : row["KIA"] === false ? 0 : row["KIA"];
+      // const bju =
+      //   row["BJU"] === true ? 1 : row["BJU"] === false ? 0 : row["BJU"];
+      // const blt =
+      //   row["BLT"] === true ? 1 : row["BLT"] === false ? 0 : row["BLT"];
+      // const blu =
+      //   row["BLU"] === true ? 1 : row["BLU"] === false ? 0 : row["BLU"];
+      // const bk = row["BK"] === true ? 1 : row["BK"] === false ? 0 : row["BK"];
+      // const bsu =
+      //   row["BSU"] === true ? 1 : row["BSU"] === false ? 0 : row["BSU"];
+      // const bsb =
+      //   row["BSB"] === true ? 1 : row["BSB"] === false ? 0 : row["BSB"];
+      // const kik =
+      //   row["KIK"] === true ? 1 : row["KIK"] === false ? 0 : row["KIK"];
+      // const ikp =
+      //   row["IKP"] === true ? 1 : row["IKP"] === false ? 0 : row["IKP"];
+      // const band =
+      //   row["BAND"] === true ? 1 : row["BAND"] === false ? 0 : row["BAND"];
+      // const hsi =
+      //   row["HSI"] === true ? 1 : row["HSI"] === false ? 0 : row["HSI"];
+      // const holding =
+      //   row["Holding"] === true
+      //     ? 1
+      //     : row["Holding"] === false
+      //     ? 0
+      //     : row["Holding"];
+      // const bbu =
+      //   row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
 
       const d = new FormData();
-      d.append("uuid", record.uuid);
-      d.append("code_location", code);
-      d.append("code_parent", record.parent === null ? "" : record.parent);
+      d.append("id", record.id);
+      d.append("code", code);
+      d.append("parent", record.parent === null ? "" : record.parent);
       d.append("description", description);
-      d.append("HK", hk);
-      d.append("KIU", kiu);
-      d.append("GMM", gmm);
-      d.append("KIA", kia);
-      d.append("BJU", bju);
-      d.append("BLT", blt);
-      d.append("BLU", blu);
-      d.append("BK", bk);
-      d.append("BSU", bsu);
-      d.append("BSB", bsb);
-      d.append("KIK", kik);
-      d.append("IKP", ikp);
-      d.append("BAND", band);
-      d.append("HSI", hsi);
-      d.append("Holding", holding);
-      d.append("BBU", bbu);
+      // d.append("HK", hk);
+      // d.append("KIU", kiu);
+      // d.append("GMM", gmm);
+      // d.append("KIA", kia);
+      // d.append("BJU", bju);
+      // d.append("BLT", blt);
+      // d.append("BLU", blu);
+      // d.append("BK", bk);
+      // d.append("BSU", bsu);
+      // d.append("BSB", bsb);
+      // d.append("KIK", kik);
+      // d.append("IKP", ikp);
+      // d.append("BAND", band);
+      // d.append("HSI", hsi);
+      // d.append("Holding", holding);
+      // d.append("BBU", bbu);
 
       const res = await MainServices.post("location/update", d);
 
       console.log("res-edit", res);
-
-      // setIsSucces(false);
-      // setShowPopup(true);
 
       responseShow(res);
 
@@ -418,16 +421,14 @@ const LocationLogic = () => {
       description: "",
       ...record,
     });
-    setEditingKey(record.uuid);
+    setEditingKey(record.id);
   };
 
   const onDelete = async (record) => {
-    // setIsSucces(false);
-    // setShowPopup(true);
 
     try {
       const res = await MainServices.delete("location/delete", {
-        uuid: record.uuid,
+        id: record.id,
       });
 
       console.log("res-hapus", res);
@@ -554,48 +555,22 @@ const LocationLogic = () => {
   const onSearch = async (e) => {
     const val = e.target.value;
 
-    setLoading(true)
+    setLoading(true);
 
     try {
       if (val !== "") {
-        let list = [];
         const res = await MainServices.get(`location/list?search=${val}`);
 
-        res.data.data.forEach((val) => {
-          list.push({
-            uuid: val.uuid,
-            code: val.code_location,
-            code_parent: val.code_parent,
-            description: val.description,
-            HK: val.HK,
-            KIU: val.KIU,
-            GMM: val.GMM,
-            KIA: val.KIA,
-            BJU: val.BJU,
-            BLT: val.BLT,
-            BLU: val.BLU,
-            BK: val.BK,
-            BSU: val.BSU,
-            BSB: val.BSB,
-            KIK: val.KIK,
-            IKP: val.IKP,
-            BAND: val.BAND,
-            created_at: val.created_at,
-            updated_at: val.updated_at,
-          });
-        });
+        setDataColumn(res.data.data);
 
-        log("list-location", list);
-
-        setDataColumn(list);
-
-        setLoading(false)
+        setLoading(false);
       } else {
-        log("error")
+        log("error");
         onSetDataTable();
       }
     } catch (error) {
-      alert(error);
+      const err = error.response;
+      responseShow(err);
     }
   };
 

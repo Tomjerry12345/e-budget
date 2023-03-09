@@ -72,12 +72,17 @@ const CompanyLogic = () => {
       dataIndex: "code",
       width: 130,
       editable: true,
-      fixed: "left",
     },
     {
       title: "Description",
       dataIndex: "description",
       editable: true,
+    },
+    {
+      title: "Alias",
+      dataIndex: "alias",
+      editable: true,
+      width: 70
     },
     {
       title: "Created At",
@@ -92,12 +97,12 @@ const CompanyLogic = () => {
       width: 150,
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      width: "5%",
+      title: "Aktif",
+      // dataIndex: "status",
+      width: 50,
       render: (_, record) => {
-        let rStatus = record.status;
-        const editable = isEditing(record);
+        let rStatus = record.active;
+        // const editable = isEditing(record);
 
         return (
           <Switch
@@ -112,7 +117,7 @@ const CompanyLogic = () => {
     {
       dataIndex: "operation",
       fixed: "right",
-      width: "7%",
+      width: 100,
       align: "center",
       render: (_, record) => {
         const editable = isEditing(record);
@@ -220,23 +225,19 @@ const CompanyLogic = () => {
       d.append("code", row.code);
       d.append("parent", record.parent === null ? "" : record.parent);
       d.append("description", row.description);
+      d.append("alias", row.alias);
 
       const res = await MainServices.post("company/update", d);
       console.log("res-edit", res);
 
-      // setIsSucces(false);
-      // setShowPopup(true);
-
       responseShow(res);
-
       onSetDataTable();
-
       setEditingKey("");
     } catch (error) {
-      // setShowPopup(false);
       const err = error.response;
       responseShow(err);
-      log("error", err);
+      setEditingKey("");
+
     }
   };
 
@@ -314,12 +315,7 @@ const CompanyLogic = () => {
       const res = await MainServices.post("company/import", formData);
       log("res", res);
 
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res)
 
       setLoadingUpload(false);
 
@@ -329,10 +325,8 @@ const CompanyLogic = () => {
 
       // navigate(0);
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
+      const err = error.response;
+      responseShow(err)
       log("error", err);
     }
   };
@@ -350,53 +344,33 @@ const CompanyLogic = () => {
     const val = e.target.value;
 
     try {
-      let list = [];
       if (val !== "") {
         const res = await MainServices.get(`company/list?search=${val}`);
-
         log("res", res.data.data)
-
-        // res.data.data.forEach((val) => {
-        //   list.push({
-        //     uuid: val.uuid,
-        //     code: val.code_company,
-        //     code_parent: val.code_parent,
-        //     description: val.description,
-        //     status: val.status,
-        //     created_at: val.created_at,
-        //     updated_at: val.updated_at,
-        //   });
-        // });
-
         setDataColumn(res.data.data);
-        // setDataColumn(res.data.data)
       } else {
         onSetDataTable();
       }
     } catch (error) {
-      alert(error);
+      const err = error.response
+      responseShow(err);
     }
   };
 
   const onActive = async (record) => {
-    // setIsSucces(false);
-    // setShowPopup(true);
-
     let res;
-
-    log("record.status", record.status);
 
     const f = new FormData();
 
     f.append("id", record.id);
 
-    if (record.status === 0) {
+    if (record.active === 0) {
       res = await MainServices.post("company/active", f);
     } else {
       res = await MainServices.post("company/unactive", f);
     }
 
-    console.log("res-hapus", res);
+    console.log("res-active", res);
 
     dispatch(
       val({
@@ -409,15 +383,16 @@ const CompanyLogic = () => {
   };
 
   const onTambahData = async (values) => {
-    const { code_company, code_parent, description } = values;
+    const { code_company, code_parent, description, alias } = values;
 
     log("values", values);
 
     try {
       const f = new FormData();
       f.append("code", code_company);
-      f.append("parent", code_parent);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
+      f.append("alias", alias);
 
       const res = await MainServices.post("company/add", f);
 
@@ -441,11 +416,8 @@ const CompanyLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err = error.response.data;
-      log("error", err);
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
+      const err = error.response;
+      responseShow(err)
     }
   };
 
