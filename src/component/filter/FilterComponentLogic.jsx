@@ -7,7 +7,6 @@ const FilterComponentLogic = ({
   isCodeProduct,
   isCodeProject,
   isCodeIcp,
-  keyCodeProject,
   codeCompany,
   formGlobal,
   type,
@@ -131,7 +130,7 @@ const FilterComponentLogic = ({
         `location/list-by-com?code_company=${code[0]}`
       );
       const resDept = await MainServices.get(
-        `dept/list-dropdown?code_company=${code[0]}`
+        `department/list-dropdown?code_company=${code[0]}`
       );
       const resIcp =
         isCodeIcp === true
