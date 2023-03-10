@@ -20,7 +20,8 @@ const ModalListPerusahaan = ({ open, data, onOk, onChange }) => {
       className="modal-perusahaan"
       open={open}
       onCancel={onOk}
-      footer={<CustomFooterModal onOk={onOk} />}
+      // footer={<CustomFooterModal onOk={onOk} />}
+      footer={null}
     >
       <Title level={4}>List perusahaan</Title>
 
@@ -31,7 +32,7 @@ const ModalListPerusahaan = ({ open, data, onOk, onChange }) => {
               {val.code} - {val.description}
             </Typography.Text>
             <Switch
-              defaultChecked={val.status}
+              checked={val.status}
               onChange={() => onChange(val.id)}
             />
           </div>

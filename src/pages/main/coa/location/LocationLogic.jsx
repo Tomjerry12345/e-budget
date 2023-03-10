@@ -351,20 +351,22 @@ const LocationLogic = () => {
 
   const onCloseDetailPerusahaan = () => {
     setOpenDetailPerusahaan(false);
-    navigate(0)
   };
 
   const onUpdatePerusahaan = async (id) => {
-    log("id", id)
-    log("idRoot", idRoot)
-
     const d = new FormData();
 
     d.append("id_location", idRoot);
     d.append("id_company", id);
 
-    const res = await MainServices.post("location/update-company", d);
-    log("update/list-company", res);
+    await MainServices.post("location/update-company", d);
+    
+    const d1 = new FormData();
+
+    d1.append("id", idRoot);
+
+    const res1 = await MainServices.post("location/list-company", d1);
+    setListPerusahaan(res1.data.data);
   }
 
   const save = async (record) => {

@@ -357,11 +357,18 @@ const ProjectLogic = () => {
 
     const d = new FormData();
 
-    d.append("id_location", idRoot);
+    d.append("id_project", idRoot);
     d.append("id_company", id);
 
     const res = await MainServices.post("project/update-company", d);
     log("project/update-company", res);
+
+    const d1 = new FormData();
+
+    d1.append("id", idRoot);
+
+    const res1 = await MainServices.post("project/list-company", d1);
+    setListPerusahaan(res1.data.data);
   };
 
   const save = async (record) => {
