@@ -19,12 +19,11 @@ const eFile = {
 };
 
 const OthersInputLogic = () => {
+  const date = new Date();
   let params = useParams();
-
   const itemPage = params.item;
 
   const [form] = Form.useForm();
-
   const ref = createRef();
 
   const [dataColumnInput, setDataColumnInput] = useState([]);
@@ -34,42 +33,42 @@ const OthersInputLogic = () => {
   const [uploadSucces, setUploadSucces] = useState(null);
   const [filter, setFilter] = useState(false);
   const [tahun, setTahun] = useState();
+  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const date = new Date();
-  const year = date.getFullYear();
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map(
+    (col) => {
+      if (!col.editable) {
+        return col;
+      }
 
-  const columns = columnInputType1(year, year + 1).map((col) => {
-    if (!col.editable) {
-      return col;
+      let newCol = {
+        ...col,
+        onCell: (record) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+        }),
+      };
+
+      if (col.children) {
+        newCol.children = col.children.map((t) => {
+          return {
+            ...t,
+            onCell: (record) => ({
+              record,
+              editable: t.editable,
+              dataIndex: t.dataIndex,
+              title: t.title,
+              handleSave,
+            }),
+          };
+        });
+      }
+
+      return newCol;
     }
-
-    let newCol = {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-      }),
-    };
-
-    if (col.children) {
-      newCol.children = col.children.map((t) => {
-        return {
-          ...t,
-          onCell: (record) => ({
-            record,
-            editable: t.editable,
-            dataIndex: t.dataIndex,
-            title: t.title,
-            handleSave,
-          }),
-        };
-      });
-    }
-
-    return newCol;
-  });
+  );
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -123,7 +122,6 @@ const OthersInputLogic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
@@ -133,6 +131,8 @@ const OthersInputLogic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
+
+    setYearFilter(fPeriode);
 
     getData(
       fCodeCompany,
@@ -211,7 +211,13 @@ const OthersInputLogic = () => {
           parseInt(valuesEdit) -
           parseInt(oldValue);
 
-        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+        const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+
+        if (i == 1) {
+          itemparent.year1 = sum;
+        } else {
+          itemparent.year2 = sum;
+        }
 
         newData.splice(x, 1, {
           ...itemold,
@@ -220,7 +226,13 @@ const OthersInputLogic = () => {
       }
     }
 
-    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+    const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
+
+    if (i == 1) {
+      newData[index].year1 = sum;
+    } else {
+      newData[index].year2 = sum;
+    }
 
     setDataColumnInput(newData);
 
@@ -234,7 +246,8 @@ const OthersInputLogic = () => {
       code_project,
       periode,
     } = codeFilter;
-    const year = periode;
+
+    const year = i == 1 ? periode : parseInt(periode) + 1;
     const month = row[`${keysEdit}-month`];
     const uuid = row[`${keysEdit}-uuid`];
 
@@ -254,12 +267,7 @@ const OthersInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post(
-      `${endPoint[itemPage]}/update`,
-      formData
-    );
-
-    log("response-update", response);
+    await MainServices.post(`${endPoint[itemPage]}/update`, formData);
   };
 
   const onSuccess = () => {

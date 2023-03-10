@@ -8,8 +8,9 @@ import MainServices from "../../../../services/MainServices";
 import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const RevenueCogsInputLogic = () => {
-  const [dataColumnInput, setDataColumnInput] = useState([]);
+  const date = new Date();
 
+  const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
@@ -17,321 +18,9 @@ const RevenueCogsInputLogic = () => {
   const [filter, setFilter] = useState(false);
   const [tahun, setTahun] = useState();
 
-  const date = new Date();
-  const year = date.getFullYear();
+  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  // const constantTableColums = [
-  //   {
-  //     title: "Account",
-  //     dataIndex: "account",
-  //     width: "18%",
-  //     fixed: "left",
-  //   },
-  //   {
-  //     title: "Description",
-  //     dataIndex: "description",
-  //     width: "30%",
-  //     fixed: "left",
-  //   },
-  //   {
-  //     title: `Year ${year}`,
-  //     editable: true,
-  //     children: [
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Jan.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jan_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Feb.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "feb_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Mar.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "mar_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Apr.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "apr_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Mei.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "mei_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Jun.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jun_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Jul.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jul_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Aug.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "aug_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="act-styles">Actual</Typography.Text>
-  //             <Typography.Text>Sep.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "sep_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="for-styles">Forecast</Typography.Text>
-  //             <Typography.Text>Okt.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "okt_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="for-styles">Forecast</Typography.Text>
-  //             <Typography.Text>Nov.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "nov_1",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="for-styles">Forecast</Typography.Text>
-  //             <Typography.Text>Des.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "des_1",
-  //         editable: true,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Year total",
-  //     dataIndex: "year_total_1",
-  //     width: "14%",
-  //   },
-  //   {
-  //     title: `Year ${year + 1}`,
-  //     children: [
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Jan.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jan_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Feb.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "feb_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Mar.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "mar_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Apr.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "apr_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>May.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "mei_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Jun.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jun_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Jul.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "jul_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Aug.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "aug_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Sep.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "sep_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Okt.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 100,
-  //         dataIndex: "okt_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Nov.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "nov_2",
-  //         editable: true,
-  //       },
-  //       {
-  //         title: (
-  //           <div className="title-table">
-  //             <Typography.Text className="ebu-styles">Budget</Typography.Text>
-  //             <Typography.Text>Des.</Typography.Text>
-  //           </div>
-  //         ),
-  //         width: 110,
-  //         dataIndex: "des_2",
-  //         editable: true,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     title: "Year total",
-  //     dataIndex: "year_total_2",
-  //     width: "14%",
-  //   },
-  //   // {
-  //   //   dataIndex: "operation",
-  //   //   fixed: "right",
-  //   //   width: "5%",
-  //   //   render: (_, record) =>
-  //   //     dataColumn.length >= 1 ? (
-  //   //       <Dropdown overlay={menu} placement="bottom">
-  //   //         <Button icon={<MoreVertIcon />}></Button>
-  //   //       </Dropdown>
-  //   //     ) : null,
-  //   // },
-  // ];
-
-  const columns = columnInputType1(year, year + 1).map((col) => {
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -413,6 +102,8 @@ const RevenueCogsInputLogic = () => {
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
+    setYearFilter(fPeriode)
+
     getData(
       fCodeCompany,
       fCodeProduct,
@@ -492,7 +183,13 @@ const RevenueCogsInputLogic = () => {
           parseInt(valuesEdit) -
           parseInt(oldValue);
 
-        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+        const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+
+        if (i == 1) {
+          itemparent.year1 = sum;
+        } else {
+          itemparent.year2 = sum;
+        }
 
         newData.splice(x, 1, {
           ...itemold,
@@ -501,7 +198,13 @@ const RevenueCogsInputLogic = () => {
       }
     }
 
-    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+    const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
+
+    if (i == 1) {
+      newData[index].year1 = sum;
+    } else {
+      newData[index].year2 = sum;
+    }
 
     setDataColumnInput(newData);
 
@@ -515,7 +218,8 @@ const RevenueCogsInputLogic = () => {
       code_project,
       periode,
     } = codeFilter;
-    const year = periode;
+    
+    const year = i == 1 ? periode : parseInt(periode) + 1;
     const month = row[`${keysEdit}-month`];
     const uuid = row[`${keysEdit}-uuid`];
 

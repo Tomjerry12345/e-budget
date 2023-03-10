@@ -8,22 +8,20 @@ import MainServices from "../../../../services/MainServices";
 import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const MppInputLogic = () => {
+  const date = new Date();
+
   let params = useParams();
 
   const [dataColumnInput, setDataColumnInput] = useState([]);
-
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
   const [filter, setFilter] = useState(false);
   const [tahun, setTahun] = useState();
+  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const date = new Date();
-
-  const year = date.getFullYear();
-
-  const columns = columnInputType1(year, year + 1).map((col) => {
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -105,6 +103,8 @@ const MppInputLogic = () => {
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
+    setYearFilter(fPeriode);
+
     getData(
       fCodeCompany,
       fCodeProduct,
@@ -183,7 +183,13 @@ const MppInputLogic = () => {
           parseInt(valuesEdit) -
           parseInt(oldValue);
 
-        itemparent.year1 = sumYearTotal(itemparent, keysEdit[0]);
+        const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+
+        if (i == 1) {
+          itemparent.year1 = sum;
+        } else {
+          itemparent.year2 = sum;
+        }
 
         newData.splice(x, 1, {
           ...itemold,
@@ -192,7 +198,13 @@ const MppInputLogic = () => {
       }
     }
 
-    newData[index].year1 = sumYearTotal(newData[index], keysEdit[0]);
+    const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
+
+    if (i == 1) {
+      newData[index].year1 = sum;
+    } else {
+      newData[index].year2 = sum;
+    }
 
     setDataColumnInput(newData);
 
@@ -206,7 +218,8 @@ const MppInputLogic = () => {
       code_project,
       periode,
     } = codeFilter;
-    const year = periode;
+
+    const year = i == 1 ? periode : parseInt(periode) + 1;
     const month = row[`${keysEdit[0]}-month`];
     const uuid = row[`${keysEdit[0]}-uuid`];
 
@@ -226,9 +239,8 @@ const MppInputLogic = () => {
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post("mpp/update", formData);
-
-    log("response-update", response);
+    await MainServices.post("mpp/update", formData);
+    
   };
 
   const onSuccess = () => {

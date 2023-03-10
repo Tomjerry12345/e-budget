@@ -4,6 +4,7 @@ import "../CoaStyle.scss";
 import PopupModal from "../../../../component/modal/popup/PopupModal";
 import { log } from "../../../../values/Utilitas";
 import ProductLogic from "./ProductLogic";
+import ModalListPerusahaan from "../../../../component/modal/list-perusahaan/ModalListPerusahaan";
 
 
 const ProductPage = () => {
@@ -88,13 +89,12 @@ const ProductPage = () => {
         />
       </div>
 
-      {/* <PopupModal
-        open={value.showPopup}
-        succes={value.isSucces}
-        onOk={func.onClosePopupModal}
-        textSucces="Sukses melakukan perubahan"
-        textProses="Silahkan tunggu..."
-      /> */}
+      <ModalListPerusahaan
+        open={value.openDetailPerusahaan}
+        data={value.listPerusahaan}
+        onOk={func.onCloseDetailPerusahaan}
+        onChange={func.onUpdatePerusahaan}
+      />
     </>
   );
 };

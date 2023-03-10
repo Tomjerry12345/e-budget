@@ -8,7 +8,7 @@ export const getLocal = (key) => localStorage.getItem(key);
 
 export const getToken = () => localStorage.getItem("token");
 
-export const log = (tag, msg) => console.log(tag, msg);
+export const log = (tag, msg) => console.log(`[d] ${tag}`, msg);
 
 export const logObj = (tag, message) =>
   console.log(`${tag} => ${JSON.stringify(message)}`);
@@ -149,5 +149,5 @@ export const sumYearTotal = (data, keys) => {
     parseInt(data[`okt${i}`]) +
     parseInt(data[`nov${i}`]) +
     parseInt(data[`des${i}`]);
-  return sum;
+  return {sum, i};
 };
