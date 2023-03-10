@@ -390,9 +390,9 @@ const CompanyLogic = () => {
     try {
       const f = new FormData();
       f.append("code", code_company);
-      f.append("parent", code_parent ?? "");
+      f.append("parent", code_parent);
       f.append("description", description);
-      f.append("alias", alias);
+      f.append("alias", alias ?? "");
 
       const res = await MainServices.post("company/add", f);
 
@@ -413,6 +413,7 @@ const CompanyLogic = () => {
         code_company: "",
         code_parent: "",
         description: "",
+        alias: "",
         parent: false,
       });
     } catch (error) {
