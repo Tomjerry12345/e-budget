@@ -26,10 +26,14 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
     items={[
       {
         key: "1",
-        label: "edit",
+        label: "lihat perusahaan",
       },
       {
         key: "2",
+        label: "edit",
+      },
+      {
+        key: "3",
         // label: "hapus",
         label: (
           <Popconfirm
@@ -69,6 +73,10 @@ const ProjectLogic = () => {
 
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+
+  const [listPerusahaan, setListPerusahaan] = useState([]);
+  const [openDetailPerusahaan, setOpenDetailPerusahaan] = useState(false);
+  const [idRoot, setIdRoot] = useState();
 
   const constantTableColums = [
     {
@@ -327,6 +335,35 @@ const ProjectLogic = () => {
     setCodeParent(data.data);
   };
 
+  const onGetListPerusahaan = async (record) => {
+    const d = new FormData();
+
+    d.append("id", record.id);
+
+    const res = await MainServices.post("project/list-company", d);
+    log("project/list-company", res);
+    setListPerusahaan(res.data.data);
+    setOpenDetailPerusahaan(true);
+    setIdRoot(record.id);
+  };
+
+  const onCloseDetailPerusahaan = () => {
+    setOpenDetailPerusahaan(false);
+  };
+
+  const onUpdatePerusahaan = async (id) => {
+    log("id", id);
+    log("idRoot", idRoot);
+
+    const d = new FormData();
+
+    d.append("id_location", idRoot);
+    d.append("id_company", id);
+
+    const res = await MainServices.post("project/update-company", d);
+    log("project/update-company", res);
+  };
+
   const save = async (record) => {
     try {
       const row = await form.validateFields();
@@ -387,6 +424,8 @@ const ProjectLogic = () => {
 
   const onAction = (e, record) => {
     if (e.key === "1") {
+      onGetListPerusahaan(record);
+    } else if (e.key === "2") {
       edit(record);
     }
   };
@@ -536,6 +575,8 @@ const ProjectLogic = () => {
       formTambah,
       uploadSucces,
       loadingUpload,
+      listPerusahaan,
+      openDetailPerusahaan,
     },
     func: {
       onOpenUploadModal,
@@ -546,6 +587,8 @@ const ProjectLogic = () => {
       setIsTambah,
       setUploadSucces,
       onExport,
+      onCloseDetailPerusahaan,
+      onUpdatePerusahaan,
     },
   };
 };

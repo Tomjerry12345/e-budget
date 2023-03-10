@@ -18,16 +18,21 @@ import {
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
+import { useNavigate } from "react-router-dom";
 
 const DropdownMenu = ({ onAction, record, onDelete }) => (
   <Menu
     items={[
       {
         key: "1",
-        label: "edit",
+        label: "lihat perusahaan",
       },
       {
         key: "2",
+        label: "edit",
+      },
+      {
+        key: "3",
         // label: "hapus",
         label: (
           <Popconfirm
@@ -45,11 +50,13 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const LocationLogic = () => {
+
+  const navigate = useNavigate()
+
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
   const [codeParent, setCodeParent] = useState([]);
-  const [listPerusahaan, setListPerusahaan] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -68,6 +75,10 @@ const LocationLogic = () => {
 
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+
+  const [listPerusahaan, setListPerusahaan] = useState([]);
+  const [openDetailPerusahaan, setOpenDetailPerusahaan] = useState(false);
+  const [idRoot, setIdRoot] = useState()
 
   const constantTableColums = [
     {
@@ -309,7 +320,6 @@ const LocationLogic = () => {
     window.onresize = getSizeScreen(setSize);
     onSetDataTable();
     onSetCodeParent();
-    onGetListPerusahaan();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
@@ -327,11 +337,35 @@ const LocationLogic = () => {
     setCodeParent(data.data);
   };
 
-  const onGetListPerusahaan = async () => {
-    const { data } = await MainServices.get("location/list-company");
-    log("location/list-company", data);
-    setListPerusahaan(data.data);
+  const onGetListPerusahaan = async (id) => {
+    const d = new FormData();
+
+    d.append("id", id);
+
+    const res = await MainServices.post("location/list-company", d);
+    log("location/list-company", res);
+    setListPerusahaan(res.data.data);
+    setOpenDetailPerusahaan(true);
+    setIdRoot(id)
   };
+
+  const onCloseDetailPerusahaan = () => {
+    setOpenDetailPerusahaan(false);
+    navigate(0)
+  };
+
+  const onUpdatePerusahaan = async (id) => {
+    log("id", id)
+    log("idRoot", idRoot)
+
+    const d = new FormData();
+
+    d.append("id_location", idRoot);
+    d.append("id_company", id);
+
+    const res = await MainServices.post("location/update-company", d);
+    log("update/list-company", res);
+  }
 
   const save = async (record) => {
     try {
@@ -375,6 +409,7 @@ const LocationLogic = () => {
       //   row["BBU"] === true ? 1 : row["BBU"] === false ? 0 : row["BBU"];
 
       const d = new FormData();
+
       d.append("id", record.id);
       d.append("code", code);
       d.append("parent", record.parent === null ? "" : record.parent);
@@ -404,7 +439,7 @@ const LocationLogic = () => {
 
       onSetDataTable();
 
-      setEditingKey("");
+      cancel();
     } catch (error) {
       const err = error.response;
       responseShow(err);
@@ -425,7 +460,6 @@ const LocationLogic = () => {
   };
 
   const onDelete = async (record) => {
-
     try {
       const res = await MainServices.delete("location/delete", {
         id: record.id,
@@ -444,6 +478,8 @@ const LocationLogic = () => {
 
   const onAction = (e, record) => {
     if (e.key === "1") {
+      onGetListPerusahaan(record.id);
+    } else if (e.key === "2") {
       edit(record);
     }
   };
@@ -629,6 +665,8 @@ const LocationLogic = () => {
       formTambah,
       uploadSucces,
       loadingUpload,
+      listPerusahaan,
+      openDetailPerusahaan,
     },
     func: {
       onOpenUploadModal,
@@ -640,6 +678,8 @@ const LocationLogic = () => {
       setIsTambah,
       setUploadSucces,
       onExport,
+      onCloseDetailPerusahaan,
+      onUpdatePerusahaan
     },
   };
 };

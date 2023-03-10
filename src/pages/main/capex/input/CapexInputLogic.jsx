@@ -1,14 +1,14 @@
-import { Form } from "antd";
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
 import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
+  const date = new Date();
+
   const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
@@ -16,12 +16,9 @@ const CapexInputLogic = () => {
   const [filter, setFilter] = useState(false);
   const [tahun, setTahun] = useState();
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const date = new Date();
-  const year = date.getFullYear();
-
-  const columns = columnInputType1(year, year + 1).map((col) => {
-    // console.log(`col => ${JSON.stringify(col)}`);
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -33,7 +30,6 @@ const CapexInputLogic = () => {
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        // keyNotEditTable: keyParent,
       }),
     };
 
@@ -47,7 +43,6 @@ const CapexInputLogic = () => {
             dataIndex: t.dataIndex,
             title: t.title,
             handleSave,
-            // keyNotEditTable: keyParent,
           }),
         };
       });
@@ -102,6 +97,8 @@ const CapexInputLogic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
+
+    setYearFilter(fPeriode);
 
     getData(
       fCodeCompany,
@@ -181,7 +178,13 @@ const CapexInputLogic = () => {
           parseInt(valuesEdit) -
           parseInt(oldValue);
 
-        itemparent.year1 = sumYearTotal(itemparent,  keysEdit[0])
+        const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+
+        if (i == 1) {
+          itemparent.year1 = sum;
+        } else {
+          itemparent.year2 = sum;
+        }
 
         newData.splice(x, 1, {
           ...itemold,
@@ -190,7 +193,13 @@ const CapexInputLogic = () => {
       }
     }
 
-    newData[index].year1 = sumYearTotal(newData[index],  keysEdit[0])
+    const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
+
+    if (i == 1) {
+      newData[index].year1 = sum;
+    } else {
+      newData[index].year2 = sum;
+    }
 
     setDataColumnInput(newData);
 
@@ -204,7 +213,8 @@ const CapexInputLogic = () => {
       code_project,
       periode,
     } = codeFilter;
-    const year = periode;
+    
+    const year = i == 1 ? periode : parseInt(periode) + 1;
     const month = row[`${keysEdit}-month`];
     const uuid = row[`${keysEdit}-uuid`];
 

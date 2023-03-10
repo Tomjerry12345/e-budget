@@ -8,9 +8,16 @@
 
 .root-list-perusahaan {
   margin-top: 32px;
+  overflow: auto;
+  padding: 16px;
+  height: calc(100vh - 259px);
   .children-list-perusahaan {
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
   }
+}
+
+.modal-perusahaan {
+  top: 63px !important;
 }

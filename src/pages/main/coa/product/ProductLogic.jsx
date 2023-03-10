@@ -4,15 +4,12 @@ import {
   Form,
   Menu,
   Popconfirm,
-  Switch,
   Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
 import {
-  cekNumber,
   getSizeScreen,
   inputTypeTable,
   log,
@@ -26,10 +23,14 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
     items={[
       {
         key: "1",
-        label: "edit",
+        label: "lihat perusahaan",
       },
       {
         key: "2",
+        label: "edit",
+      },
+      {
+        key: "3",
         // label: "hapus",
         label: (
           <Popconfirm
@@ -69,6 +70,10 @@ const ProductLogic = () => {
 
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+
+  const [listPerusahaan, setListPerusahaan] = useState([]);
+  const [openDetailPerusahaan, setOpenDetailPerusahaan] = useState(false);
+  const [idRoot, setIdRoot] = useState()
 
   const constantTableColums = [
     {
@@ -327,6 +332,35 @@ const ProductLogic = () => {
     setCodeParent(data.data);
   };
 
+  const onGetListPerusahaan = async (record) => {
+    const d = new FormData();
+
+    d.append("id", record.id);
+
+    const res = await MainServices.post("product/list-company", d);
+    log("product/list-company", res);
+    setListPerusahaan(res.data.data);
+    setOpenDetailPerusahaan(true);
+    setIdRoot(record.id)
+  };
+
+  const onCloseDetailPerusahaan = () => {
+    setOpenDetailPerusahaan(false);
+  };
+
+  const onUpdatePerusahaan = async (id) => {
+    log("id", id)
+    log("idRoot", idRoot)
+
+    const d = new FormData();
+
+    d.append("id_location", idRoot);
+    d.append("id_company", id);
+
+    const res = await MainServices.post("product/update-company", d);
+    log("product/update-company", res);
+  }
+
   const save = async (record) => {
     try {
       const row = await form.validateFields();
@@ -385,6 +419,8 @@ const ProductLogic = () => {
 
   const onAction = (e, record) => {
     if (e.key === "1") {
+      onGetListPerusahaan(record);
+    } else if (e.key === "2") {
       edit(record);
     }
   };
@@ -547,6 +583,8 @@ const ProductLogic = () => {
       formTambah,
       uploadSucces,
       loadingUpload,
+      listPerusahaan,
+      openDetailPerusahaan,
     },
     func: {
       onOpenUploadModal,
@@ -557,6 +595,8 @@ const ProductLogic = () => {
       setIsTambah,
       setUploadSucces,
       onExport,
+      onCloseDetailPerusahaan,
+      onUpdatePerusahaan
     },
   };
 };

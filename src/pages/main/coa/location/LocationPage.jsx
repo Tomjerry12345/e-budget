@@ -35,7 +35,7 @@ const LocationPage = () => {
           if (value.uploadSucces === true) {
             setImport(false);
             setMore(false);
-            setImport2(false)
+            setImport2(false);
             func.setUploadSucces(null);
           }
         }}
@@ -101,7 +101,12 @@ const LocationPage = () => {
         />
       </div>
 
-      <ModalListPerusahaan open={false} data={data}/>
+      <ModalListPerusahaan
+        open={value.openDetailPerusahaan}
+        data={value.listPerusahaan}
+        onOk={func.onCloseDetailPerusahaan}
+        onChange={func.onUpdatePerusahaan}
+      />
     </>
   );
 };

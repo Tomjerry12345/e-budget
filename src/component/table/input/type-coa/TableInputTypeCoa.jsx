@@ -94,7 +94,11 @@ const TableInputTypeCoa = ({ dataSource, columns, loading, scroll, form }) => {
 
   return (
     <>
-      {dataSource.length > 0 ? (
+      {loading ? (
+        <div className="style-progress">
+          <Spin />
+        </div>
+      ) : (
         <Form form={form} component={false}>
           <Table
             components={components}
@@ -111,11 +115,7 @@ const TableInputTypeCoa = ({ dataSource, columns, loading, scroll, form }) => {
             rowKey="id"
           />
         </Form>
-      ) : loading === true ? (
-        <div className="style-progress">
-          <Spin />
-        </div>
-      ) : null}
+      )}
     </>
   );
 };
