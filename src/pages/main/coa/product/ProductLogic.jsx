@@ -349,16 +349,20 @@ const ProductLogic = () => {
   };
 
   const onUpdatePerusahaan = async (id) => {
-    log("id", id)
-    log("idRoot", idRoot)
-
     const d = new FormData();
 
-    d.append("id_location", idRoot);
+    d.append("id_product", idRoot);
     d.append("id_company", id);
 
     const res = await MainServices.post("product/update-company", d);
     log("product/update-company", res);
+
+    const d1 = new FormData();
+
+    d1.append("id", idRoot);
+
+    const res1 = await MainServices.post("product/list-company", d1);
+    setListPerusahaan(res1.data.data);
   }
 
   const save = async (record) => {
