@@ -65,7 +65,7 @@ const AkunLogic = () => {
     },
     {
       title: "Type Account",
-      dataIndex: "type_account",
+      dataIndex: "type",
       width: 130,
       editable: true,
     },
@@ -73,6 +73,12 @@ const AkunLogic = () => {
       title: "Description",
       dataIndex: "description",
       editable: true,
+    },
+    {
+      title: "Flag Report",
+      dataIndex: "flag_report",
+      editable: false,
+      width: 200
     },
     {
       title: "Created At",
@@ -195,7 +201,7 @@ const AkunLogic = () => {
       d.append("id", record.id);
       d.append("code", row.code);
       d.append("parent", record.parent === null ? "" : record.parent);
-      d.append("type_account", row.type_account);
+      d.append("type", row.type_account);
       d.append("description", row.description);
 
       const res = await MainServices.post("account/update", d);
@@ -319,7 +325,7 @@ const AkunLogic = () => {
     const f = new FormData();
     f.append("code", code_account);
     f.append("code_parent", code_parent);
-    f.append("type_account", type_account);
+    f.append("type", type_account);
     f.append("description", description);
 
     try {
