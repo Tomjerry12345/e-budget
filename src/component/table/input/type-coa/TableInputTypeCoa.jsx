@@ -27,11 +27,6 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  // const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-  // const inputNode = inputType === "checkbox" ? <CheckBox /> : <Input />;
-  //   if (inputType === "checkbox") {
-  // log("children", children);
-  //   }
   const inputNode = inputType === "checkbox" ? <Checkbox /> : <Input />;
   const component =
     inputType === "checkbox" ? (
@@ -53,7 +48,9 @@ const EditableCell = ({
             {inputNode}
             {/* <Input /> */}
           </Form.Item>
-        ) : (
+        ) :
+        
+         (
           <Form.Item
             name={dataIndex}
             style={{
@@ -61,7 +58,7 @@ const EditableCell = ({
             }}
             rules={[
               {
-                required: true,
+                required: dataIndex !== "alias",
                 message: `Please Input ${title}!`,
               },
             ]}
