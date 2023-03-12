@@ -165,13 +165,9 @@ const OthersInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const url = `${endPoint[itemPage]}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
+    const url = `${endPoint[itemPage]}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
-
-    log("data", data);
-
     getDataTable(data);
-
     setLoading(false);
   };
 
@@ -256,7 +252,7 @@ const OthersInputLogic = () => {
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
-      formData.append("code_dept", code_dept);
+      formData.append("code_department", code_dept);
       formData.append("code_icp", code_icp);
       formData.append("code_project", code_project);
       formData.append("month", month);
@@ -313,8 +309,6 @@ const OthersInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

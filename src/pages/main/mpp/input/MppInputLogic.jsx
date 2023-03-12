@@ -9,7 +9,6 @@ import { log, sumYearTotal } from "../../../../values/Utilitas";
 
 const MppInputLogic = () => {
   const date = new Date();
-
   let params = useParams();
 
   const [dataColumnInput, setDataColumnInput] = useState([]);
@@ -136,7 +135,7 @@ const MppInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const url = `mpp/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
+    const url = `mpp/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
 
     const { data } = await MainServices.get(url);
 
@@ -228,7 +227,7 @@ const MppInputLogic = () => {
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
-      formData.append("code_dept", code_dept);
+      formData.append("code_department", code_dept);
       formData.append("code_icp", code_icp);
       formData.append("code_project", code_project);
       formData.append("month", month);
@@ -286,11 +285,9 @@ const MppInputLogic = () => {
       responseShow(err);
     }
 
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {
-    console.log("tahun", e);
     setTahun(e);
   };
 

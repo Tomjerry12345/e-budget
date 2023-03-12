@@ -134,8 +134,6 @@ export const inputTypeTable = (dataIndex) => {
 
 export const sumYearTotal = (data, keys) => {
   const i = keys.slice(-1);
-  log("i", i);
-  log("keys", keys);
   const sum =
     parseInt(data[`jan${i}`]) +
     parseInt(data[`feb${i}`]) +

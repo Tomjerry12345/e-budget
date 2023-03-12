@@ -83,11 +83,9 @@ const LabaRugiLogic = () => {
     fCodeProject,
     periode
   ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
-    log("url", url);
+    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
-    log("res", data);
-    getData(data.data);
+    getData(data.data, periode);
 
     setCodeFilter({
       code_company: fCodeCompany,
@@ -100,35 +98,13 @@ const LabaRugiLogic = () => {
     });
   };
 
-  const getData = (data) => {
-    // let list = [];
-    // let year_1 = "";
-    // let year_2 = "";
-
-    // data?.list?.forEach((val) => {
-    //   year_1 = val.detail[0].year;
-    //   year_2 = val.detail[1].year;
-    //   const v1 = parseInt(val.detail[0].value).format(0, 3, ".", ",");
-    //   const v2 = parseInt(val.detail[1].value).format(0, 3, ".", ",");
-    //   list.push({
-    //     account: val.code,
-    //     description: val.description,
-    //     description: val.description,
-    //     type_row: val.type_row,
-    //     value_1: v1 === "NaN" ? "" : v1,
-    //     value_2: v2 === "NaN" ? "" : v2,
-    //   });
-    // });
+  const getData = (data, periode) => {
     setData(data.list);
-    // setColumns(columnOutputType1(year_1, year_2));
-    const dt = new Date();
-
-    setColumns(columnOutputType2(dt.getFullYear(), dt.getFullYear() + 1));
+    setColumns(columnOutputType2(periode, parseInt(periode) + 1));
     setLoading(false);
   };
 
   const downloadFile = () => {
-    log("codeFilter", codeFilter);
     const {
       code_company,
       code_product,

@@ -42,30 +42,26 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 
 const CompanyLogic = () => {
 
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-
-  const [dataColumn, setDataColumn] = useState([]);
-  const [codeParent, setCodeParent] = useState([]);
-
-  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
   });
-
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.id === editingKey;
-
-  const [form] = Form.useForm();
-  const [formTambah] = Form.useForm();
-
   const [showPopup, setShowPopup] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
-
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
+  const isEditing = (record) => record.id === editingKey;
+  const dispatch = useDispatch();
+  
   const constantTableColums = [
     {
       title: "Code",
@@ -191,7 +187,7 @@ const CompanyLogic = () => {
     },
   });
 
-  const dispatch = useDispatch();
+  
 
   useEffect(() => {
     setDataColumn([]);
