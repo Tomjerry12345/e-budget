@@ -584,8 +584,8 @@ const LocationLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_location", code_location);
-      f.append("code_parent", code_parent ?? "");
+      f.append("code", code_location);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
 
       const res = await MainServices.post("location/add", f);

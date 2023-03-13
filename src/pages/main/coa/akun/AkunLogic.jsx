@@ -315,7 +315,7 @@ const AkunLogic = () => {
 
     const f = new FormData();
     f.append("code", code_account);
-    f.append("code_parent", code_parent ?? "");
+    f.append("parent", code_parent ?? "");
     f.append("type", type_account);
     f.append("description", description);
 
