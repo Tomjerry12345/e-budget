@@ -219,7 +219,7 @@ const CompanyLogic = () => {
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", row.code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("description", row.description);
       d.append("alias", row.alias);
 
@@ -252,10 +252,6 @@ const CompanyLogic = () => {
 
   const onDelete = async (record) => {
     try {
-      // setIsSucces(false);
-      // setShowPopup(true);
-
-      log("row-del", record);
 
       const res = await MainServices.delete("company/delete", {
         id: record.id,
@@ -381,12 +377,10 @@ const CompanyLogic = () => {
   const onTambahData = async (values) => {
     const { code_company, code_parent, description, alias } = values;
 
-    log("values", values);
-
     try {
       const f = new FormData();
       f.append("code", code_company);
-      f.append("parent", code_parent);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
       f.append("alias", alias ?? "");
 

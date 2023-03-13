@@ -233,7 +233,7 @@ const MppInputLogic = () => {
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("idS", uuid);
     }
 
     formData.append("value", valuesEdit);
@@ -252,7 +252,6 @@ const MppInputLogic = () => {
 
     let file1;
     let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
-    console.log("tahun", tahun1);
 
     acceptedFiles.forEach((file) => {
       file1 = file;

@@ -225,7 +225,7 @@ const OpexInputLogic = () => {
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);

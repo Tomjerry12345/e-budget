@@ -375,7 +375,7 @@ const ProductLogic = () => {
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("description", description);
 
       const res = await MainServices.post("product/update", d);
@@ -549,7 +549,7 @@ const ProductLogic = () => {
     try {
       const f = new FormData();
       f.append("code", code_product);
-      f.append("parent", code_parent);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
 
       const res = await MainServices.post("product/add", f);

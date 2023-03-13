@@ -223,24 +223,16 @@ const CapexInputLogic = () => {
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post("capex/update", formData);
-
-    log("response-update", response);
-
-    // log("keysEdit", keysEdit)
-    // log("valuesEdit", valuesEdit)
-    // log("row", row)
-    // log("month", month)
+    await MainServices.post("capex/update", formData);
   };
 
   const onUploadFile = async () => {
     let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
-    console.log("tahun", tahun1);
     setLoadingUpload(true);
 
     let file1;
@@ -256,8 +248,6 @@ const CapexInputLogic = () => {
 
     try {
       const res = await MainServices.post("capex/import", formData);
-
-      log("res", res);
 
       if (codeFilter !== undefined) {
         const { code_company, code_dept, code_location, code_product } =
@@ -275,8 +265,6 @@ const CapexInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

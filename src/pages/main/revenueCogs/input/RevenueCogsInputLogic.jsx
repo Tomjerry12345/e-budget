@@ -82,9 +82,7 @@ const RevenueCogsInputLogic = () => {
       code_icp,
       periode,
     } = values;
-
-    // alert("test");
-
+    
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
@@ -230,7 +228,7 @@ const RevenueCogsInputLogic = () => {
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);
@@ -280,8 +278,6 @@ const RevenueCogsInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

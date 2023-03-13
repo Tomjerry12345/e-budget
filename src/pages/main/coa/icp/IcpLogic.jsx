@@ -299,12 +299,9 @@ const IcpLogic = () => {
   const onTambahData = async (values) => {
     const { code_icp, description } = values;
 
-    log("values", values);
-
     try {
       const f = new FormData();
       f.append("code", code_icp);
-      // f.append("code_parent", code_parent);
       f.append("description", description);
 
       const res = await MainServices.post("icp/add", f);
