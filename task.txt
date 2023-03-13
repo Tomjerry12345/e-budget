@@ -1,35 +1,3 @@
 version: v1.4.6 ✅ ❌
 
-fix:
-
-- value filter jadi split ❌ => ketika mecari tidak hilang hasil pencarian
-- pencarian master data klo value kosong ambil api list tree ✅
-- edit input direct tambah parameter icp dan project ✅
-- text hsi sesuaikan dengan api ✅
-
-- ketika centang parent tidak muncul input kode parent tambah data ✅
-- search filter tidak hilang, order pencarian paling atas
-- isian code parent di jadikan tree select ✅
-- type akun di kode produk dropdown ✅
-- buat page input direct all yg header nya cuman ada import data
-
-- ini mungkin bisa dikasi keterangan kalau data sudah ada biar bisa langsung dimengerti sama user ✅
-- dan hilangkan inputan sebelumnya ketika di klik lagi tambah data ✅
-- tambahkan informasi setelah klik tambah "sukses menambah data" ✅
-- import data tidak berfungsi ✅
-
-issue:
-
-- get summary opex bermasalah
-
-new: 
-
-- alert ubah jadi notifikasi ✅
-- kasi hilang semua tombol refresh ✅
-- autocomplete pada revenue perusahaan ubah jadi input text ✅
-- tombol eksport kasi hilang di input direct ✅
-- tombol clear data dihilangkan di summary direct ✅
-- proses import responnya dimasukkan ke notifikasi ✅
-- kasi hilang opsi produk di revenue perusahaan ✅
-- list parent ambil dari api ✅
-- update data yg di kirim di endpoint revenue perusahaan
+- panggilan dropdown satu kali saja di filter

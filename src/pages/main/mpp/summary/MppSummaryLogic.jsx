@@ -57,7 +57,7 @@ const MppSummaryLogic = () => {
     fPeriode = fPeriode[0];
 
     try {
-      const url = `mpp/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
+      const url = `mpp/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`;
       const { data } = await MainServices.get(url);
       getData(data.data, fPeriode);
     } catch (error) {
