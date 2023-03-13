@@ -18,38 +18,40 @@ const OpexInputLogic = () => {
   const [tahun, setTahun] = useState();
   const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
-    if (!col.editable) {
-      return col;
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map(
+    (col) => {
+      if (!col.editable) {
+        return col;
+      }
+
+      let newCol = {
+        ...col,
+        onCell: (record) => ({
+          record,
+          editable: col.editable,
+          dataIndex: col.dataIndex,
+          title: col.title,
+        }),
+      };
+
+      if (col.children) {
+        newCol.children = col.children.map((t) => {
+          return {
+            ...t,
+            onCell: (record) => ({
+              record,
+              editable: t.editable,
+              dataIndex: t.dataIndex,
+              title: t.title,
+              handleSave,
+            }),
+          };
+        });
+      }
+
+      return newCol;
     }
-
-    let newCol = {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-      }),
-    };
-
-    if (col.children) {
-      newCol.children = col.children.map((t) => {
-        return {
-          ...t,
-          onCell: (record) => ({
-            record,
-            editable: t.editable,
-            dataIndex: t.dataIndex,
-            title: t.title,
-            handleSave,
-          }),
-        };
-      });
-    }
-
-    return newCol;
-  });
+  );
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -130,13 +132,9 @@ const OpexInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const url = `opex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
+    const url = `opex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
-
-    log("data", data);
-
     getDataTable(data);
-
     setLoading(false);
   };
 
@@ -221,20 +219,18 @@ const OpexInputLogic = () => {
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
-      formData.append("code_dept", code_dept);
+      formData.append("code_department", code_dept);
       formData.append("code_icp", code_icp);
       formData.append("code_project", code_project);
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post("opex/update", formData);
-
-    log("response-update", response);
+    await MainServices.post("opex/update", formData);
   };
 
   const onSuccess = () => {
@@ -244,26 +240,20 @@ const OpexInputLogic = () => {
 
   const onUploadFile = async () => {
     let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
-    console.log("tahun", tahun1);
+    let file1;
+    let formData = new FormData();
 
     setLoadingUpload(true);
-
-    let file1;
 
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
-
-    let formData = new FormData();
 
     formData.append("file", file1);
     formData.append("year", tahun1);
 
     try {
       const res = await MainServices.post("opex/import", formData);
-
-      log("res", res);
-
       if (codeFilter !== undefined) {
         const {
           code_company,
@@ -285,19 +275,13 @@ const OpexInputLogic = () => {
           periode
         );
       }
-
       responseShow(res);
-
       setLoadingUpload(false);
-
       onSuccess();
     } catch (error) {
       const err = error.response;
-      log("error", err);
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

@@ -87,7 +87,6 @@ const CapexInputLogic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
@@ -131,14 +130,9 @@ const CapexInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const url = `capex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
-
+    const url = `capex/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
-
-    log("data", data);
-
     getDataTable(data);
-
     setLoading(false);
   };
 
@@ -223,30 +217,22 @@ const CapexInputLogic = () => {
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
-      formData.append("code_dept", code_dept);
+      formData.append("code_department", code_dept);
       formData.append("code_icp", code_icp);
       formData.append("code_project", code_project);
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);
 
-    const response = await MainServices.post("capex/update", formData);
-
-    log("response-update", response);
-
-    // log("keysEdit", keysEdit)
-    // log("valuesEdit", valuesEdit)
-    // log("row", row)
-    // log("month", month)
+    await MainServices.post("capex/update", formData);
   };
 
   const onUploadFile = async () => {
     let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
-    console.log("tahun", tahun1);
     setLoadingUpload(true);
 
     let file1;
@@ -262,8 +248,6 @@ const CapexInputLogic = () => {
 
     try {
       const res = await MainServices.post("capex/import", formData);
-
-      log("res", res);
 
       if (codeFilter !== undefined) {
         const { code_company, code_dept, code_location, code_product } =
@@ -281,8 +265,6 @@ const CapexInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

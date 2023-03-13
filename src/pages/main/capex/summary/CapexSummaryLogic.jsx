@@ -1,12 +1,11 @@
 import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
-import { getAsync } from "../../../../redux/main/main.thunks";
-import { loadStart } from "../../../../redux/response/response";
+import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen } from "../../../../values/Utilitas";
 
 const menuCapex = {
   "Summary Total Aset": "capexAset",
@@ -16,30 +15,20 @@ const menuCapex = {
 
 const CapexSummaryLogic = () => {
   let params = useParams();
-
   const ref = createRef();
-
   const [form] = Form.useForm();
-
   const dispatch = useDispatch();
-
-  const navigate = useNavigate();
-
   const itemPage = params.item;
-
-  const [tableColumn, setTableColumn] = useState(null);
-
-  const [dataColumn, setDataColumn] = useState([]);
+  const singleMenuCapex = menuCapex[itemPage];
 
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
   });
-
+  const [tableColumn, setTableColumn] = useState(null);
+  const [dataColumn, setDataColumn] = useState([]);
   const [loading, setLoading] = useState(false);
   const [codeFilter, setCodeFilter] = useState();
-
-  const singleMenuCapex = menuCapex[itemPage];
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
@@ -68,9 +57,13 @@ const CapexSummaryLogic = () => {
     });
   }, [itemPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onTambahData = () => {
-    dispatch(loadStart());
-    navigate(`/main/capex/Input/${itemPage}`);
+  const responseShow = (res) => {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
   };
 
   const onFinish = (values) => {
@@ -86,9 +79,8 @@ const CapexSummaryLogic = () => {
       code_product,
       code_icp,
       code_project,
+      periode,
     } = values;
-
-    let url;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
@@ -96,8 +88,7 @@ const CapexSummaryLogic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
-    let periode = "2023"
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -105,18 +96,16 @@ const CapexSummaryLogic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fPeriode = fPeriode[0];
 
-    log("fCodeProduct", fCodeProduct);
-
-    url = `${singleMenuCapex}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_dept=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${periode}`;
-
-    log("url", url);
-
-    const { data } = await MainServices.get(url);
-
-    log("data", data);
-
-    getData(data.data);
+    try {
+      const url = `${singleMenuCapex}/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`;
+      const { data } = await MainServices.get(url);
+      getData(data.data, fPeriode);
+    } catch (error) {
+      const err = error.response;
+      responseShow(err);
+    }
 
     setCodeFilter({
       code_company: fCodeCompany,
@@ -126,22 +115,27 @@ const CapexSummaryLogic = () => {
       code_product: fCodeProduct,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: periode
+      periode: fPeriode,
     });
   };
 
-  const getData = (data) => {
+  const getData = (data, periode) => {
     setDataColumn(data.list);
-
-    const dt = new Date()
-
-    setTableColumn(columnOutputType1(dt.getFullYear(), dt.getFullYear() + 1));
+    setTableColumn(columnOutputType1(periode, parseInt(periode) + 1));
     setLoading(false);
   };
 
   const downloadFile = () => {
-    const { code_company, code_dept, code_location, code_product } = codeFilter;
-    const urlFile = `https://apikalla.binaries.id/ebudget/report/tablereport?code_company=${code_company}&code_location=${code_location}&code_dept=${code_dept}&code_product=${code_product}`;
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_icp,
+      code_project,
+      periode,
+    } = codeFilter;
+    const urlFile = `https://apikalla.binaries.id/ebudget/report/tablereport?code_company=${code_company}&code_location=${code_location}&code_department=${code_dept}&code_product=${code_product}`;
     window.location.href = urlFile;
   };
 
@@ -156,7 +150,6 @@ const CapexSummaryLogic = () => {
       loading,
     },
     func: {
-      onTambahData,
       onFinish,
       downloadFile,
     },

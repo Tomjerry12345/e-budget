@@ -13,7 +13,6 @@ const MppSummary = () => {
     <>
       <HeaderComponent
         type="summary"
-        // onFinish={func.onFinish}
         onChangeFilter={(set) => {
           set(value.filter);
         }}
@@ -24,9 +23,6 @@ const MppSummary = () => {
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
-        {/* {value.dataColumn.length > 1 ? (
-          
-        ) : null} */}
         <TableComponent
           dataSource={value.dataColumn}
           columns={value.tableColumn}

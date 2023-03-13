@@ -331,7 +331,6 @@ const ProjectLogic = () => {
 
   const onSetCodeParent = async () => {
     const { data } = await MainServices.get("project/list-tree-option");
-    log("company/list-tree-option", data);
     setCodeParent(data.data);
   };
 
@@ -341,7 +340,6 @@ const ProjectLogic = () => {
     d.append("id", record.id);
 
     const res = await MainServices.post("project/list-company", d);
-    log("project/list-company", res);
     setListPerusahaan(res.data.data);
     setOpenDetailPerusahaan(true);
     setIdRoot(record.id);
@@ -352,9 +350,6 @@ const ProjectLogic = () => {
   };
 
   const onUpdatePerusahaan = async (id) => {
-    log("id", id);
-    log("idRoot", idRoot);
-
     const d = new FormData();
 
     d.append("id_project", idRoot);
@@ -381,17 +376,12 @@ const ProjectLogic = () => {
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("description", description);
 
       const res = await MainServices.post("project/update", d);
-
-      console.log("res-edit", res);
-
       responseShow(res);
-
       onSetDataTable();
-
       cancel();
     } catch (error) {
       const err = error.response;
@@ -417,11 +407,7 @@ const ProjectLogic = () => {
       const res = await MainServices.delete("project/delete", {
         id: record.id,
       });
-
-      console.log("res-hapus", res);
-
       responseShow(res);
-
       onSetDataTable();
     } catch (error) {
       const err = error.response;
@@ -440,7 +426,6 @@ const ProjectLogic = () => {
   const onSetDataTable = async () => {
     setLoading(true);
     const { data } = await MainServices.get("project/list-tree");
-    log("project/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
   };
@@ -467,8 +452,6 @@ const ProjectLogic = () => {
 
     try {
       const res = await MainServices.post("project/import", formData);
-      log("res", res);
-
       responseShow(res);
       setLoadingUpload(false);
       onSuccess();
@@ -493,28 +476,13 @@ const ProjectLogic = () => {
 
     try {
       const res = await MainServices.post("projectcompany/import", formData);
-      log("res", res);
-
-      dispatch(
-        val({
-          status: res.data.responseCode,
-          message: res.data.responseDescription,
-        })
-      );
-
+      responseShow(res)
       setLoadingUpload(false);
-
       onSuccess();
-
       onSetDataTable();
-
-      // navigate(0);
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err)
     }
   };
 
@@ -545,7 +513,7 @@ const ProjectLogic = () => {
     try {
       const f = new FormData();
       f.append("code", code_project);
-      f.append("parent", code_parent);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
 
       const res = await MainServices.post("project/add", f);
@@ -560,6 +528,7 @@ const ProjectLogic = () => {
         description: "",
         parent: false,
       });
+      
     } catch (error) {
       const err = error.response;
       responseShow(err);

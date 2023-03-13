@@ -42,30 +42,26 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 
 const CompanyLogic = () => {
 
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-
-  const [dataColumn, setDataColumn] = useState([]);
-  const [codeParent, setCodeParent] = useState([]);
-
-  const [loading, setLoading] = useState(false);
+  const [form] = Form.useForm();
+  const [formTambah] = Form.useForm();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
     y: window.innerHeight,
   });
-
+  const [openUploadModal, setOpenUploadModal] = useState(false);
+  const [dataColumn, setDataColumn] = useState([]);
+  const [codeParent, setCodeParent] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.id === editingKey;
-
-  const [form] = Form.useForm();
-  const [formTambah] = Form.useForm();
-
   const [showPopup, setShowPopup] = useState(false);
   const [isTambah, setIsTambah] = useState(null);
-
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
+  const isEditing = (record) => record.id === editingKey;
+  const dispatch = useDispatch();
+  
   const constantTableColums = [
     {
       title: "Code",
@@ -191,7 +187,7 @@ const CompanyLogic = () => {
     },
   });
 
-  const dispatch = useDispatch();
+  
 
   useEffect(() => {
     setDataColumn([]);
@@ -223,7 +219,7 @@ const CompanyLogic = () => {
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", row.code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("description", row.description);
       d.append("alias", row.alias);
 
@@ -256,10 +252,6 @@ const CompanyLogic = () => {
 
   const onDelete = async (record) => {
     try {
-      // setIsSucces(false);
-      // setShowPopup(true);
-
-      log("row-del", record);
 
       const res = await MainServices.delete("company/delete", {
         id: record.id,
@@ -385,12 +377,10 @@ const CompanyLogic = () => {
   const onTambahData = async (values) => {
     const { code_company, code_parent, description, alias } = values;
 
-    log("values", values);
-
     try {
       const f = new FormData();
       f.append("code", code_company);
-      f.append("parent", code_parent);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
       f.append("alias", alias ?? "");
 

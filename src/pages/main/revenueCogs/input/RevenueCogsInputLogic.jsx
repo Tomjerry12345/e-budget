@@ -82,9 +82,7 @@ const RevenueCogsInputLogic = () => {
       code_icp,
       periode,
     } = values;
-
-    // alert("test");
-
+    
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
@@ -135,13 +133,9 @@ const RevenueCogsInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_dept=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
+    const url = `revenueandcogs/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&periode=${periode}`;
     const { data } = await MainServices.get(url);
-
-    log("data", data);
-
     getDataTable(data);
-
     setLoading(false);
   };
 
@@ -228,13 +222,13 @@ const RevenueCogsInputLogic = () => {
       formData.append("code_company", code_company);
       formData.append("code_product", code_product);
       formData.append("code_location", code_location);
-      formData.append("code_dept", code_dept);
+      formData.append("code_department", code_dept);
       formData.append("code_icp", code_icp);
       formData.append("code_project", code_project);
       formData.append("month", month);
       formData.append("year", year);
     } else {
-      formData.append("uuid", uuid);
+      formData.append("id", uuid);
     }
 
     formData.append("value", valuesEdit);
@@ -251,7 +245,6 @@ const RevenueCogsInputLogic = () => {
 
   const onUploadFile = async () => {
     let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
-    console.log("tahun", tahun1);
 
     setLoadingUpload(true);
 
@@ -269,8 +262,6 @@ const RevenueCogsInputLogic = () => {
     try {
       const res = await MainServices.post("revenueandcogs/import", formData);
 
-      log("res", res);
-
       if (codeFilter !== undefined) {
         const { code_company, code_dept, code_location, code_project } =
           codeFilter;
@@ -287,8 +278,6 @@ const RevenueCogsInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
-    // navigate(0);
   };
 
   const onChangeTahun = (e) => {

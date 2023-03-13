@@ -200,7 +200,7 @@ const AkunLogic = () => {
       const d = new FormData();
       d.append("id", record.id);
       d.append("code", row.code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("type", row.type_account);
       d.append("description", row.description);
 
@@ -230,16 +230,10 @@ const AkunLogic = () => {
   };
 
   const onDelete = async (record) => {
-    // setIsSucces(false);
-    // setShowPopup(true);
-
     try {
       const res = await MainServices.delete("account/delete", {
         id: record.id,
       });
-
-      console.log("res-hapus", res);
-
       responseShow(res);
       onSetDataTable();
     } catch (error) {
@@ -257,7 +251,6 @@ const AkunLogic = () => {
   const onSetDataTable = async () => {
     setLoading(true);
     const { data } = await MainServices.get("account/list-tree");
-    log("account/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
   };
@@ -285,8 +278,6 @@ const AkunLogic = () => {
 
     try {
       const res = await MainServices.post("account/import", formData);
-      log("res", res);
-
       responseShow(res);
       setLoadingUpload(false);
       onSuccess();
@@ -324,7 +315,7 @@ const AkunLogic = () => {
 
     const f = new FormData();
     f.append("code", code_account);
-    f.append("code_parent", code_parent);
+    f.append("parent", code_parent ?? "");
     f.append("type", type_account);
     f.append("description", description);
 

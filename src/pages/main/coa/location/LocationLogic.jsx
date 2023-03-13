@@ -1,12 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  Form,
-  Menu,
-  Popconfirm,
-  Switch,
-  Typography,
-} from "antd";
+import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
@@ -50,9 +42,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const LocationLogic = () => {
-
-  const navigate = useNavigate()
-
   const [openUploadModal, setOpenUploadModal] = useState(false);
 
   const [dataColumn, setDataColumn] = useState([]);
@@ -78,7 +67,7 @@ const LocationLogic = () => {
 
   const [listPerusahaan, setListPerusahaan] = useState([]);
   const [openDetailPerusahaan, setOpenDetailPerusahaan] = useState(false);
-  const [idRoot, setIdRoot] = useState()
+  const [idRoot, setIdRoot] = useState();
 
   const constantTableColums = [
     {
@@ -346,7 +335,7 @@ const LocationLogic = () => {
     log("location/list-company", res);
     setListPerusahaan(res.data.data);
     setOpenDetailPerusahaan(true);
-    setIdRoot(id)
+    setIdRoot(id);
   };
 
   const onCloseDetailPerusahaan = () => {
@@ -360,14 +349,14 @@ const LocationLogic = () => {
     d.append("id_company", id);
 
     await MainServices.post("location/update-company", d);
-    
+
     const d1 = new FormData();
 
     d1.append("id", idRoot);
 
     const res1 = await MainServices.post("location/list-company", d1);
     setListPerusahaan(res1.data.data);
-  }
+  };
 
   const save = async (record) => {
     try {
@@ -414,7 +403,7 @@ const LocationLogic = () => {
 
       d.append("id", record.id);
       d.append("code", code);
-      d.append("parent", record.parent === null ? "" : record.parent);
+      d.append("parent", record.parent ?? "");
       d.append("description", description);
       // d.append("HK", hk);
       // d.append("KIU", kiu);
@@ -434,13 +423,8 @@ const LocationLogic = () => {
       // d.append("BBU", bbu);
 
       const res = await MainServices.post("location/update", d);
-
-      console.log("res-edit", res);
-
       responseShow(res);
-
       onSetDataTable();
-
       cancel();
     } catch (error) {
       const err = error.response;
@@ -489,7 +473,6 @@ const LocationLogic = () => {
   const onSetDataTable = async () => {
     setLoading(true);
     const { data } = await MainServices.get("location/list-tree");
-    log("location/list-tree", data.data);
     setLoading(false);
     setDataColumn(data.data);
   };
@@ -517,8 +500,6 @@ const LocationLogic = () => {
 
     try {
       const res = await MainServices.post("location/import", formData);
-      log("res", res);
-
       dispatch(
         val({
           status: res.data.responseCode,
@@ -527,18 +508,11 @@ const LocationLogic = () => {
       );
 
       setLoadingUpload(false);
-
       onSuccess();
-
       onSetDataTable();
-
-      // navigate(0);
     } catch (error) {
-      const err = error.response.data;
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
-      log("error", err);
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -570,24 +544,17 @@ const LocationLogic = () => {
       onSuccess();
 
       onSetDataTable();
-
-      // navigate(0);
     } catch (error) {
       const err = error.response.data;
       dispatch(
         val({ status: err.responseCode, message: err.responseDescription })
       );
-      log("error", err);
     }
   };
 
   const onExport = () => {
     const urlFile = `https://apikalla.binaries.id/ebudget/location/export`;
     window.location.href = urlFile;
-  };
-
-  const onClosePopupModal = () => {
-    // setShowPopup(false);
   };
 
   const onSearch = async (e) => {
@@ -617,24 +584,17 @@ const LocationLogic = () => {
 
     try {
       const f = new FormData();
-      f.append("code_location", code_location);
-      f.append("code_parent", code_parent);
+      f.append("code", code_location);
+      f.append("parent", code_parent ?? "");
       f.append("description", description);
 
       const res = await MainServices.post("location/add", f);
-
-      log("res-tambah", res);
 
       onSetDataTable();
 
       setIsTambah(true);
 
-      dispatch(
-        val({
-          status: parseInt(res.data.responseCode),
-          message: res.data.responseDescription,
-        })
-      );
+      responseShow(res);
 
       formTambah.setFieldsValue({
         code_location: "",
@@ -643,11 +603,8 @@ const LocationLogic = () => {
         parent: false,
       });
     } catch (error) {
-      const err = error.response.data;
-      log("error", err);
-      dispatch(
-        val({ status: err.responseCode, message: err.responseDescription })
-      );
+      const err = error.response;
+      responseShow(err);
     }
   };
 
@@ -672,7 +629,6 @@ const LocationLogic = () => {
     },
     func: {
       onOpenUploadModal,
-      onClosePopupModal,
       onUploadFile,
       onUploadFile2,
       onSearch,
@@ -681,7 +637,7 @@ const LocationLogic = () => {
       setUploadSucces,
       onExport,
       onCloseDetailPerusahaan,
-      onUpdatePerusahaan
+      onUpdatePerusahaan,
     },
   };
 };
