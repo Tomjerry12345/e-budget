@@ -1,12 +1,7 @@
 import apiClient from "../config/ApiClient";
 
 class MainServices {
-  get = async (endPoint) =>
-    await apiClient().get(`/ebudget/${endPoint}`, {
-      // headers: {
-      //   "EBUDGET-TOKEN": getToken(),
-      // },
-    });
+  get = async (endPoint) => await apiClient().get(`/ebudget/${endPoint}`, {});
   post = (endPoint, req) => apiClient().post(`/ebudget/${endPoint}`, req);
   delete = (endPoint, req) =>
     apiClient().delete(`/ebudget/${endPoint}`, {
