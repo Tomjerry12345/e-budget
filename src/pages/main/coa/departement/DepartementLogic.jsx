@@ -269,7 +269,7 @@ const DepartementLogic = () => {
     formData.append("file", file1);
 
     try {
-      const res = await MainServices.post("departement/import", formData);
+      const res = await MainServices.post("department/import", formData);
       log("res", res);
 
       responseShow(res);
