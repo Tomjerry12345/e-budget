@@ -2,29 +2,37 @@ import { Button, Dropdown, Menu } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { getAsync, postAsync, deleteAsync } from "../../../redux/main/main.thunks";
-import { constantActionCoa, constantGetCoa, constantUploadCoa } from "./ConstantCoa";
+import {
+  getAsync,
+  postAsync,
+  deleteAsync,
+} from "../../../redux/main/main.thunks";
+import {
+  constantActionCoa,
+  constantGetCoa,
+  constantUploadCoa,
+} from "./ConstantCoa";
 import { getSizeScreen, log, setLocal } from "../../../values/Utilitas";
 
 const endPoint = {
-  "Kode perusahaan": "company",
-  "Kode produk": "product",
-  "Kode lokasi": "location",
-  "Kode departemen": "dept",
-  "Kode akun": "account",
-  "Kode projek": "project",
-  "Kode ICP": "icp",
+  perusahaan: "company",
+  produk: "product",
+  lokasi: "location",
+  akun: "account",
+  project: "project",
+  icp: "icp",
 };
 
 const req = {
-  "Kode perusahaan": [
+  perusahaan: [
     { key: "code_company", placeholder: "Kode Perusahaan" },
     { key: "code_parent", placeholder: "Kode Parent" },
     { key: "description", placeholder: "Description" },
   ],
-  "Kode produk": [
+  produk: [
     { key: "code_product", placeholder: "Kode Produk" },
     { key: "description", placeholder: "Description" },
     { key: "HSI", placeholder: "HSI" },
@@ -42,22 +50,18 @@ const req = {
     { key: "BK", placeholder: "BK" },
     { key: "BBU", placeholder: "BBU" },
   ],
-  "Kode lokasi": [
+  lokasi: [
     { key: "code_location", placeholder: "Kode Lokasi" },
     { key: "code_parent", placeholder: "Kode Parent" },
     { key: "description", placeholder: "Description" },
   ],
-  "Kode departemen": [
-    { key: "code_dept", placeholder: "Kode Departement" },
-    { key: "description", placeholder: "Description" },
-  ],
-  "Kode akun": [
+  akun: [
     { key: "type_account", placeholder: "Tipe Akun" },
     { key: "code_account", placeholder: "Kode Akun" },
     { key: "code_parent", placeholder: "Kode Parent" },
     { key: "description", placeholder: "Description" },
   ],
-  "Kode projek": [
+  project: [
     { key: "code_project", placeholder: "Kode Projek" },
     { key: "description", placeholder: "Description" },
     { key: "BJU", placeholder: "BJU" },
@@ -65,7 +69,7 @@ const req = {
     { key: "KIK", placeholder: "KIK" },
     { key: "BARUGA", placeholder: "BARUGA" },
   ],
-  "Kode ICP": [
+  icp: [
     { key: "code_icp", placeholder: "Kode Departement" },
     { key: "description", placeholder: "Description" },
   ],
@@ -96,7 +100,9 @@ const CoaInputLogic = () => {
 
   const navigate = useNavigate();
 
-  const { isLoading, response, errorMessage, nameReducer } = useSelector((state) => state.reducer);
+  const { isLoading, response, errorMessage, nameReducer } = useSelector(
+    (state) => state.reducer
+  );
 
   const itemPage = params.item;
 
@@ -105,6 +111,8 @@ const CoaInputLogic = () => {
   const [tableColumn, setTableColumn] = useState([]);
 
   const [dataColumn, setDataColumn] = useState([]);
+
+  const [updateData, setUpdateData] = useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -120,340 +128,358 @@ const CoaInputLogic = () => {
     y: window.innerHeight,
   });
 
+  // const columns = [
+  //   {
+  //     title: "Code",
+  //     dataIndex: "code",
+  //     key: "code",
+  //     width: "150px",
+  //   },
+  //   {
+  //     title: "Description",
+  //     dataIndex: "description",
+  //     key: "description",
+  //   },
+  //   {
+  //     dataIndex: "operation",
+  //     fixed: "right",
+  //     width: "5%",
+  //     render: (_, record) => (
+  //       <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+  //         <Button className="more-style" icon={<MoreHorizIcon className="ic-more" />}></Button>
+  //       </Dropdown>
+  //     ),
+  //   },
+  // ];
+
   const constantTableColums = {
-    "Kode perusahaan": [
+    perusahaan: [
       {
-        title: "Kode Company",
-        dataIndex: "code_company",
-
-        width: "10%",
-        fixed: "left",
+        title: "Code",
+        dataIndex: "code",
+        key: "code",
+        width: "150px",
       },
-      {
-        title: "Kode Parent",
-        dataIndex: "code_parent",
-
-        width: "10%",
-      },
+      // {
+      //   title: "Kode Parent",
+      //   dataIndex: "code_parent",
+      //   width: "10%",
+      // },
       {
         title: "Description",
         dataIndex: "description",
+        key: "description",
       },
       {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
       },
     ],
-    "Kode produk": [
+    produk: [
       {
-        title: "Kode Produk",
-        dataIndex: "code_product",
-        width: "20%",
-
-        fixed: "left",
+        title: "Code",
+        dataIndex: "code",
+        key: "code",
+        width: "150px",
       },
-      {
-        title: "Kode Parent",
-        dataIndex: "code_parent",
-        width: "10%",
-      },
+      // {
+      //   title: "Kode Parent",
+      //   dataIndex: "code_parent",
+      //   width: "10%",
+      // },
       {
         title: "Description",
         dataIndex: "description",
-        width: "20%",
+        key: "description",
       },
+      // {
+      //   title: "HSI",
+      //   dataIndex: "HSI",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "HK",
+      //   dataIndex: "HK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSU",
+      //   dataIndex: "BSU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KIA",
+      //   dataIndex: "KIA",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BLT",
+      //   dataIndex: "BLT",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BJU",
+      //   dataIndex: "BJU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSB",
+      //   dataIndex: "BSB",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSD",
+      //   dataIndex: "BSD",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KIK",
+      //   dataIndex: "KIK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KKI",
+      //   dataIndex: "KKI",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BLU",
+      //   dataIndex: "BLU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "IKP",
+      //   dataIndex: "IKP",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BK",
+      //   dataIndex: "BK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BBU",
+      //   dataIndex: "BBU",
+      //   width: "5%",
+      // },
       {
-        title: "HSI",
-        dataIndex: "HSI",
+        dataIndex: "operation",
+        fixed: "right",
         width: "5%",
+        render: (_, record) => (
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
+    ],
+    lokasi: [
       {
-        title: "HK",
-        dataIndex: "HK",
-        width: "5%",
+        title: "Code",
+        dataIndex: "code",
+        key: "code",
+        width: "150px",
       },
+      // {
+      //   title: "Kode Parent",
+      //   dataIndex: "code_parent",
+      //   width: "10%",
+      // },
       {
-        title: "BSU",
-        dataIndex: "BSU",
-        width: "5%",
+        title: "Description",
+        dataIndex: "description",
+        key: "description",
       },
+      // {
+      //   title: "HSI",
+      //   dataIndex: "HSI",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "HK",
+      //   dataIndex: "HK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSU",
+      //   dataIndex: "BSU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KIA",
+      //   dataIndex: "KIA",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BLT",
+      //   dataIndex: "BLT",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BJU",
+      //   dataIndex: "BJU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSB",
+      //   dataIndex: "BSB",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BSD",
+      //   dataIndex: "BSD",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KIK",
+      //   dataIndex: "KIK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "KKI",
+      //   dataIndex: "KKI",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BLU",
+      //   dataIndex: "BLU",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "IKP",
+      //   dataIndex: "IKP",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BK",
+      //   dataIndex: "BK",
+      //   width: "5%",
+      // },
+      // {
+      //   title: "BBU",
+      //   dataIndex: "BBU",
+      //   width: "5%",
+      // },
       {
-        title: "KIA",
-        dataIndex: "KIA",
+        dataIndex: "operation",
+        fixed: "right",
         width: "5%",
+        render: (_, record) => (
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
+            <Button icon={<MoreVertIcon />}></Button>
+          </Dropdown>
+        ),
       },
+    ],
+    akun: [
       {
-        title: "BLT",
-        dataIndex: "BLT",
-        width: "5%",
+        title: "Code",
+        dataIndex: "code",
+        key: "code",
+        width: "150px",
       },
+      // {
+      //   title: "Kode Akun",
+      //   dataIndex: "code_account",
+      //   // width: 150
+      // },
+      // {
+      //   title: "Akun Induk",
+      //   dataIndex: "code_parent",
+      // },
       {
-        title: "BJU",
-        dataIndex: "BJU",
-        width: "5%",
-      },
-      {
-        title: "BSB",
-        dataIndex: "BSB",
-        width: "5%",
-      },
-      {
-        title: "BSD",
-        dataIndex: "BSD",
-        width: "5%",
-      },
-      {
-        title: "KIK",
-        dataIndex: "KIK",
-        width: "5%",
-      },
-      {
-        title: "KKI",
-        dataIndex: "KKI",
-        width: "5%",
-      },
-      {
-        title: "BLU",
-        dataIndex: "BLU",
-        width: "5%",
-      },
-      {
-        title: "IKP",
-        dataIndex: "IKP",
-        width: "5%",
-      },
-      {
-        title: "BK",
-        dataIndex: "BK",
-        width: "5%",
-      },
-      {
-        title: "BBU",
-        dataIndex: "BBU",
-        width: "5%",
+        title: "Description",
+        dataIndex: "description",
+        key: "description",
       },
       {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
       },
     ],
-    "Kode lokasi": [
+    project: [
       {
-        title: "Kode Lokasi",
-        dataIndex: "code_location",
-        width: "20%",
-
-        fixed: "left",
+        title: "Code",
+        dataIndex: "code",
+        key: "code",
+        width: "150px",
+        // fixed: "left",
       },
-      {
-        title: "Kode Parent",
-        dataIndex: "code_parent",
-        width: "10%",
-      },
+      // {
+      //   title: "Kode Parent",
+      //   dataIndex: "code_parent",
+      //   // width: "5%",
+      // },
       {
         title: "Description",
         dataIndex: "description",
-        width: "20%",
+        key: "description",
       },
-      {
-        title: "HSI",
-        dataIndex: "HSI",
-        width: "5%",
-      },
-      {
-        title: "HK",
-        dataIndex: "HK",
-        width: "5%",
-      },
-      {
-        title: "BSU",
-        dataIndex: "BSU",
-        width: "5%",
-      },
-      {
-        title: "KIA",
-        dataIndex: "KIA",
-        width: "5%",
-      },
-      {
-        title: "BLT",
-        dataIndex: "BLT",
-        width: "5%",
-      },
-      {
-        title: "BJU",
-        dataIndex: "BJU",
-        width: "5%",
-      },
-      {
-        title: "BSB",
-        dataIndex: "BSB",
-        width: "5%",
-      },
-      {
-        title: "BSD",
-        dataIndex: "BSD",
-        width: "5%",
-      },
-      {
-        title: "KIK",
-        dataIndex: "KIK",
-        width: "5%",
-      },
-      {
-        title: "KKI",
-        dataIndex: "KKI",
-        width: "5%",
-      },
-      {
-        title: "BLU",
-        dataIndex: "BLU",
-        width: "5%",
-      },
-      {
-        title: "IKP",
-        dataIndex: "IKP",
-        width: "5%",
-      },
-      {
-        title: "BK",
-        dataIndex: "BK",
-        width: "5%",
-      },
-      {
-        title: "BBU",
-        dataIndex: "BBU",
-        width: "5%",
-      },
+      // {
+      //   title: "BJU",
+      //   dataIndex: "bju",
+      // },
+      // {
+      //   title: "BSB",
+      //   dataIndex: "bsb",
+      // },
+      // {
+      //   title: "KIK",
+      //   dataIndex: "kik",
+      // },
+      // {
+      //   title: "BARUGA",
+      //   dataIndex: "baruga",
+      // },
       {
         dataIndex: "operation",
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
       },
     ],
-    "Kode departemen": [
+    icp: [
       {
-        title: "Kode Dept",
-        dataIndex: "code_dept",
-        width: "30%",
-
-        fixed: "left",
-      },
-      {
-        title: "Description",
-        dataIndex: "description",
-      },
-      {
-        dataIndex: "operation",
-        fixed: "right",
-        width: "5%",
-        render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
-            <Button icon={<MoreVertIcon />}></Button>
-          </Dropdown>
-        ),
-      },
-    ],
-    "Kode akun": [
-      {
-        title: "Type Akun",
-        dataIndex: "type_account",
-        // width: "30%",
-        // width: 150,
-        fixed: "left",
-      },
-      {
-        title: "Kode Akun",
-        dataIndex: "code_account",
-        // width: 150
-      },
-      {
-        title: "Akun Induk",
-        dataIndex: "code_parent",
-      },
-      {
-        title: "Description",
-        dataIndex: "description",
-      },
-      {
-        dataIndex: "operation",
-        fixed: "right",
-        width: "5%",
-        render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
-            <Button icon={<MoreVertIcon />}></Button>
-          </Dropdown>
-        ),
-      },
-    ],
-    "Kode projek": [
-      {
-        title: "Kode Project",
-        dataIndex: "kode_project",
-        // width: "20%",
-
-        fixed: "left",
-      },
-      {
-        title: "Kode Parent",
-        dataIndex: "kode_parent",
-        // width: "5%",
-      },
-      {
-        title: "Description",
-        dataIndex: "description",
-        width: "20%",
-      },
-      {
-        title: "BJU",
-        dataIndex: "bju",
-      },
-      {
-        title: "BSB",
-        dataIndex: "bsb",
-      },
-      {
-        title: "KIK",
-        dataIndex: "kik",
-      },
-      {
-        title: "BARUGA",
-        dataIndex: "baruga",
-      },
-      {
-        dataIndex: "operation",
-        fixed: "right",
-        width: "5%",
-        render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
-            <Button icon={<MoreVertIcon />}></Button>
-          </Dropdown>
-        ),
-      },
-    ],
-    "Kode ICP": [
-      {
-        title: "Kode ICP",
+        title: "Code",
         dataIndex: "code_icp",
-        width: "30%",
-
+        key: "code_icp",
+        width: "150px",
         fixed: "left",
       },
       {
@@ -465,7 +491,11 @@ const CoaInputLogic = () => {
         fixed: "right",
         width: "5%",
         render: (_, record) => (
-          <Dropdown overlay={<DropdownMenu onAction={onAction} record={record} />} placement="bottom" trigger={["click"]}>
+          <Dropdown
+            overlay={<DropdownMenu onAction={onAction} record={record} />}
+            placement="bottom"
+            trigger={["click"]}
+          >
             <Button icon={<MoreVertIcon />}></Button>
           </Dropdown>
         ),
@@ -473,9 +503,28 @@ const CoaInputLogic = () => {
     ],
   };
 
+  const columns = constantTableColums[itemPage].map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        handleSave,
+      }),
+    };
+  });
+
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -496,14 +545,20 @@ const CoaInputLogic = () => {
 
         if (data !== undefined) {
           log("data.length", data.length);
+          log("data", data);
 
           setDataColumn(data);
         }
       } else if (nameReducer === constantUploadCoa) {
         const { responseCode } = response;
-        if (responseCode === "200") {
-          setLocal("move-page", `/main/coa/${params.item}`);
-          navigate("/");
+        if (responseCode === 200) {
+          onCloseUploadModal();
+
+          // setLoading(true);
+          // setLocal("move-page", `/main/coa/${params.item}`);
+          navigate(0);
+        } else {
+          alert("terjadi kesalahan");
         }
       } else if (nameReducer === constantActionCoa) {
         onSetDataTable();
@@ -523,29 +578,12 @@ const CoaInputLogic = () => {
   };
 
   const onSetColumn = () => {
-    const columns = constantTableColums[itemPage].map((col) => {
-      if (!col.editable) {
-        return col;
-      }
-
-      return {
-        ...col,
-        onCell: (record) => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-          handleSave,
-        }),
-      };
-    });
-
     setTableColumn(columns);
   };
 
   const onSetDataTable = () => {
     setLoading(true);
-    dispatch(getAsync(`${endPoint[itemPage]}/list`, constantGetCoa));
+    dispatch(getAsync(`${endPoint[itemPage]}/list-tree`, constantGetCoa));
   };
 
   const handleSave = (row) => {
@@ -562,6 +600,7 @@ const CoaInputLogic = () => {
 
   const onCloseUploadModal = () => {
     setOpenUploadModal(false);
+    acceptedFiles.length = 0;
   };
 
   const onUploadFile = () => {
@@ -571,14 +610,22 @@ const CoaInputLogic = () => {
     });
     let formData = new FormData();
     formData.append("file", file1);
-    dispatch(postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa));
+    dispatch(
+      postAsync(`${endPoint[itemPage]}/import`, formData, constantUploadCoa)
+    );
   };
 
   const onDelete = () => {
     const { uuid } = selectedItem;
     setLoading(true);
     onCancel();
-    dispatch(deleteAsync(`${endPoint[itemPage]}/delete`, { uuid: uuid }, constantActionCoa));
+    dispatch(
+      deleteAsync(
+        `${endPoint[itemPage]}/delete`,
+        { uuid: uuid },
+        constantActionCoa
+      )
+    );
   };
 
   const onCancel = () => {
@@ -600,7 +647,9 @@ const CoaInputLogic = () => {
 
     setLoading(true);
     onCancel();
-    dispatch(postAsync(`${endPoint[itemPage]}/update`, formData, constantActionCoa));
+    dispatch(
+      postAsync(`${endPoint[itemPage]}/update`, formData, constantActionCoa)
+    );
   };
 
   return {
@@ -617,6 +666,7 @@ const CoaInputLogic = () => {
       loading,
       ref,
       req: req[itemPage],
+      columns,
     },
     func: {
       onCloseUploadModal,

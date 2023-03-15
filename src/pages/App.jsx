@@ -2,7 +2,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAsync } from "../redux/main/main.thunks";
-import { getLocal, getToken, log, logObj, logS } from "../values/Utilitas";
+import {
+  getLocal,
+  getToken,
+  log,
+  logObj,
+  logS,
+  setLocal,
+} from "../values/Utilitas";
 
 const App = () => {
   const navigate = useNavigate();
@@ -34,6 +41,9 @@ const App = () => {
       } else {
         // alert("400");
         if (auth === "true" && token !== null) {
+          setLocal("name-menu", "Dashboard");
+          setLocal("index-menu", 0);
+          setLocal("move-page", null);
           navigate("/main");
         } else {
           navigate("/login");
@@ -43,6 +53,8 @@ const App = () => {
       // alert(errorMessage);
       if (errorMessage === "Request failed with status code 500") {
         navigate("/login");
+      } else if (errorMessage === "Network Error") {
+        alert("jaringan tidak tersedia");
       }
 
       console.log(`error ${errorMessage}`);

@@ -1,4 +1,5 @@
 import MainServices from "../../services/MainServices";
+import { log } from "../../values/Utilitas";
 import { loadStart, loadSuccess, loadError } from "../response/response";
 
 const getAsync = (path, nameReducer, start) => (dispatch) => {

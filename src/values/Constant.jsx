@@ -5,7 +5,7 @@ export const allItemSummarySubMenu = [
   [
     "Revenue & COGS HK",
     "Revenue & COGS KIU",
-    "Revenue & COGS BTS",
+    "Revenue & COGS GMM",
     "Revenue & COGS KIA",
     "Revenue & COGS BJU",
     "Revenue & COGS BLT",
@@ -131,11 +131,26 @@ export const allItemSummarySubMenu = [
     "Summary MPP",
   ],
   // 6 Others
-  ["Input Direct Pendapatan Non Operasional", "Input Direct Biaya Non Operasional", "Input Direct All", "Summary Biaya Non Operasional", "Summary Pendapatan Non Operasional", "Input Asumsi"],
+  [
+    "Input Direct Pendapatan Non Operasional",
+    "Input Direct Biaya Non Operasional",
+    "Input Direct All",
+    "Summary Biaya Non Operasional",
+    "Summary Pendapatan Non Operasional",
+    "Input Asumsi",
+  ],
   // 7 Report
-  [],
+  ["Laba Rugi"],
   // 8 Master COA
-  ["Kode perusahaan", "Kode produk", "Kode lokasi", "Kode departemen", "Kode akun", "Kode projek", "Kode ICP"],
+  [
+    "Kode perusahaan",
+    "Kode produk",
+    "Kode lokasi",
+    "Kode departemen",
+    "Kode akun",
+    "Kode projek",
+    "Kode ICP",
+  ],
   // 9 Akun
   ["Profile", "Logout"],
 ];
@@ -144,7 +159,23 @@ export const disabledItemSummaryMenu = [
   // 1 Dashboard
   [],
   // 2 Revenue & COGS
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ],
   // 3 Opex
   [
     true,
@@ -201,13 +232,65 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 4 Capex
-  [true, true, true, false, true, true, true, true, true, true, true, true, true, false, false, false],
+  [
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    false,
+    false,
+  ],
   // 5 MPP
-  [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false],
+  [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+  ],
   // 6 Others
-  [false, false, true, false, false, false],
+  [false, false, false, false, false, true],
   // 7 Report
-  [],
+  [false],
   // 8 Master COA
   [false, false, false, false, false, false, false],
   // 9 Akun
@@ -215,3 +298,21 @@ export const disabledItemSummaryMenu = [
 ];
 
 export const endPointGetCoa = "";
+
+export const urlPageRevenue = {
+  "Revenue & COGS HK": "hk",
+  "Revenue & COGS KIU": "kiu",
+  "Revenue & COGS GMM": "gmm",
+  "Revenue & COGS KIA": "kia",
+  "Revenue & COGS BJU": "bju",
+  "Revenue & COGS BLT": "blt",
+  "Revenue & COGS BLU": "blu",
+  "Revenue & COGS BK": "bk",
+  "Revenue & COGS BSU": "bsu",
+  "Revenue & COGS BSB": "bsb",
+  "Revenue & COGS KIK": "kik",
+  "Revenue & COGS IKP": "ikp",
+  "Revenue & COGS BAND": "band",
+  "Input Direct Revenue & COGS": "input",
+  "Summary Revenue & COGS": "summary",
+};

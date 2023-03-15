@@ -16,14 +16,6 @@ import { UserOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
-// const getItem = (key, label, icon) => {
-//   return {
-//     key,
-//     icon,
-//     label,
-//   };
-// };
-
 const NavComponent = ({ func, value }) => {
   const isClickedMenu = (index) => {
     const iMenu = value.isListMenuActivated[index];
@@ -32,35 +24,16 @@ const NavComponent = ({ func, value }) => {
     else return "open";
   };
 
-  // const items = [
-  //   getItem(
-  //     0,
-  //     "Dashboar",
-  //     <GridViewRoundedIcon className={`colorIcon ${isClickedMenu(0)}`} />
-  //   ),
-  // ];
-
   return (
     <Sider collapsed={true} collapsedWidth={84}>
-      {/* <Menu
-        style={{
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-        }}
-        className="menuNav"
-        triggerSubMenuAction="click"
-        onClick={({ _, key }) => {
-          func.onClickedMenu(key, "menu");
-        }}
-        items={items}
-      /> */}
       <Menu
         style={{
           alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          backgroundColor: "#F5F7F9",
+          background:
+            "linear-gradient(4.31deg, #008041 71.9%, #17C770 107.48%)",
+          height: "100vh",
         }}
         className="menuNav"
         triggerSubMenuAction="click"

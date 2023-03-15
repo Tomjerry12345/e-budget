@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
 import {
   allItemSummarySubMenu,
   disabledItemSummaryMenu,
+  urlPageRevenue,
 } from "../../values/Constant";
-import { getLocal, getToken, log, setLocal } from "../../values/Utilitas";
+import { routingMasterCoa, routingOthers, routingReport } from "../../values/RoutingPage";
+import {
+  cekToken,
+  getLocal,
+  getToken,
+  log,
+  setLocal,
+} from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -17,46 +25,57 @@ const MainLogic = () => {
   const [item, setItem] = useState(0);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const dispatch = useDispatch();
-
-  const location = useLocation();
-  const pathName = location.pathname;
-
-  const spliter = pathName?.split("/");
-
-  const token = getToken();
-
-  // const [segmentedValue, setSegmentedValue] = useState("Input");
-
   const [isListMenuActivated, setListMenuActivated] = useState([
     2, 0, 0, 0, 0, 0, 0, 0, 0,
   ]);
+  const [header, setHeader] = useState("");
+  const [routerNewPage, setRouterNewPage] = useState("#");
+
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const pathName = location.pathname;
+  const spliter = pathName?.split("/");
+
+  const notifRedux = useSelector(state => state.notif)
 
   useEffect(() => {
     const movePage = getLocal("move-page");
 
-    if (token === null) {
-      navigate("/login");
-    }
+    cekToken(navigate);
+
     if (movePage !== "null") {
       navigate(movePage);
     }
 
+    if (spliter[2] === "") {
+      setLocal("index-menu", 0);
+      setLocal("name-menu", "Dashboard");
+      navigate("/main");
+    }
+
     onRefreshBrowser();
     onClosingTab();
-
-    setLocal("move-page", null);
+    onActivatedMenu();
+    // setLocal("move-page", null);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // useEffect(() => {
+  //   log("notifRedux", notifRedux)
+  // }, [notifRedux])
 
   const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-      let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
       console.info("This page is reloaded");
-      const index = getLocal("index-menu");
-      isActivated[index] = 2;
-      setiEmenu(index);
-      setListMenuActivated(isActivated);
+      onActivatedMenu();
     }
+  };
+
+  const onActivatedMenu = () => {
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const index = getLocal("index-menu");
+    isActivated[index] = 2;
+    setiEmenu(index);
+    setListMenuActivated(isActivated);
   };
 
   const onClosingTab = () => {
@@ -68,12 +87,19 @@ const MainLogic = () => {
 
   const alertUser = (event) => {
     // setLocal("index-menu", null);
-    setLocal("move-page", null);
+    // setLocal("move-page", null);
   };
 
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
-    isActivated[keyMenu] = 0;
+    const i = isActivated.findIndex((val) => val === 2);
+
+    if (i !== -1) {
+      isActivated[keyMenu] = 0;
+    } else {
+      isActivated[keyMenu] = 2;
+    }
+
     setListMenuActivated(isActivated);
     setShowMenu(false);
   };
@@ -89,26 +115,28 @@ const MainLogic = () => {
     }
   };
 
-  const onClickedMenu = (key, item, nameMenu, title) => {
+  const onClickedMenu = (key, item, nameMenu, title, e) => {
+    if (e !== undefined) e.preventDefault();
+
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-
     let pageNavigation = "";
-
-    setTitleMenu(title);
-
     const index = parseInt(key);
 
+    setTitleMenu(title);
     setKeyMenu(index);
 
     if (item === "menu") {
-      // setSegmentedValue("Input");
-
       if (index === 0) {
+        setHeader("Dashboard");
+
         isActivated[index] = 2;
         setLocal("index-menu", index);
+        setLocal("name-menu", "Dashboard");
         pageNavigation = "/";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
+
+        
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
@@ -116,44 +144,20 @@ const MainLogic = () => {
         isShowMenu();
       }
     } else {
+      cekToken(navigate);
       dispatch(loadStart());
       setLocal("index-menu", index);
+      setLocal("name-menu", nameMenu);
+
       setiEmenu(keyMenu);
       isActivated[index] = 2;
       setItem([]);
       setShowMenu(false);
       // setTitleHeader(title);
 
-      const name = nameMenu.split(" ");
-      const pathMove = name[0].toLowerCase();
-      const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
+      setHeader(nameMenu);
 
-      if (index === 1) {
-        if (
-          nameMenu === "Summary Revenue & COGS" ||
-          nameMenu === "Input Direct Revenue & COGS"
-        ) {
-          pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${nameMenu}`;
-        } else {
-          pageNavigation = `/main/revenue-cogs/others/${nameMenu}`;
-        }
-      } else if (index === 2) {
-        pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
-      } else if (index === 3) {
-        pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
-      } else if (index === 4) {
-        pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
-      } else if (index === 5) {
-        pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
-      } else if (index === 7) {
-        pageNavigation = `/main/coa/${nameMenu}`;
-      } else if (index === 8) {
-        log("nameMenu", nameMenu);
-
-        if (nameMenu === "Logout") {
-          pageNavigation = `/login`;
-        }
-      }
+      pageNavigation = onPageNavigation(index, nameMenu);
 
       navigate(pageNavigation);
 
@@ -163,10 +167,61 @@ const MainLogic = () => {
     setListMenuActivated(isActivated);
   };
 
-  // const onChangeSegmented = (value) => {
-  //   setSegmentedValue(value);
-  //   getSubmenu(keyMenu, value);
-  // };
+  const onMouseDownClickedMenu = (key, nameMenu) => {
+    log("nameMenu", nameMenu);
+    const index = parseInt(key);
+    let pageNavigation = onPageNavigation(index, nameMenu);
+    setRouterNewPage(pageNavigation);
+    setLocal("index-menu", index);
+    setLocal("name-menu", nameMenu);
+    setLocal("move-page", pageNavigation);
+  };
+
+  const onPageNavigation = (index, nameMenu) => {
+    let pageNavigation = "";
+    const name = nameMenu.split(" ");
+    const pathMove = name[0].toLowerCase();
+    const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
+
+    if (index === 1) {
+      if (
+        nameMenu === "Summary Revenue & COGS" ||
+        nameMenu === "Input Direct Revenue & COGS"
+      ) {
+        pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}`;
+      } else {
+        pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
+      }
+    } else if (index === 2) {
+      pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
+    } else if (index === 3) {
+      pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
+    } else if (index === 4) {
+      pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
+    } else if (index === 5) {
+      const routing = routingOthers[nameMenu];
+      pageNavigation = `/main/others/${inputOrSummary}/${routing}`;
+      // if (nameMenu === "Input Asumsi") {
+      //   pageNavigation = `/main/others/others-input/Input Asumsi`;
+      // } else {
+      //   pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
+      // }
+    } else if (index === 6) {
+      const routing = routingReport[nameMenu];
+      pageNavigation = `/main/report/${routing}`;
+    } else if (index === 7) {
+      const routing = routingMasterCoa[nameMenu];
+      pageNavigation = `/main/coa/${routing}`;
+    } else if (index === 8) {
+      log("nameMenu", nameMenu);
+
+      if (nameMenu === "Logout") {
+        pageNavigation = `/login`;
+      }
+    }
+
+    return pageNavigation;
+  };
 
   const getSubmenu = (index) => {
     setItem(allItemSummarySubMenu[index]);
@@ -176,8 +231,8 @@ const MainLogic = () => {
   return {
     func: {
       onClickedMenu,
-      // onChangeSegmented,
       handleCancel,
+      onMouseDownClickedMenu,
     },
     value: {
       item,
@@ -187,7 +242,10 @@ const MainLogic = () => {
       itemDisabledMenu,
       titleMenu,
       params,
-      // segmentedValue,
+      header,
+      routerNewPage,
+      navigate,
+      notifRedux
     },
   };
 };

@@ -1,64 +1,22 @@
 import { Breadcrumb, Button, Layout, List, Modal, Typography } from "antd";
 import React from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
-import { getLocal, log } from "../../values/Utilitas";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
 import "./SummaryStyle.scss";
+import NotificationComponent from "../../component/notification/NotificationComponent";
 
-const { Header, Content } = Layout;
-const { Text } = Typography;
-
-// const data = ["Kode produk", "Kode company"];
-
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-  "Akun",
-];
-
-const getPath = (pathName, item) => {
-  const spliter = pathName?.split("/");
-
-  let path = "";
-  if (typeof spliter[3] === "undefined") {
-    path = "Dashboard";
-  } else {
-    const path1 = spliter[3].charAt(0).toUpperCase() + spliter[3].slice(1);
-    const pathSplit = path1.split("%20").join(" ");
-    log(`path1 => ${pathSplit}`);
-
-    if (pathSplit === "Summary" || pathSplit === "Others") {
-      path = item;
-    } else if (pathSplit === "Input") {
-      path = `${path1} ${item}`;
-    } else {
-      path = pathSplit;
-    }
-  }
-
-  return path;
-};
+const { Content } = Layout;
 
 const MainPage = () => {
   const { func, value } = MainLogic();
-  const location = useLocation();
-  const pathName = location.pathname;
-  // const path = getPath(pathName, value.params.item);
+
+  // cekToken(value.navigate);
+
   return (
-    <Layout
-      style={{
-        minHeight: "100vh",
-      }}
-    >
+    <Layout>
       <NavComponent func={func} value={value} />
 
       <Modal
@@ -83,15 +41,20 @@ const MainPage = () => {
             renderItem={(item, i) => (
               <List.Item key={i}>
                 <Button
+                  href={value.routerNewPage}
                   type="text"
                   block
                   disabled={value.itemDisabledMenu[i]}
-                  onClick={() =>
+                  onMouseDown={(e) =>
+                    func.onMouseDownClickedMenu(value.keyMenu, item)
+                  }
+                  onClick={(e) =>
                     func.onClickedMenu(
                       value.keyMenu,
                       "submenu",
                       item,
-                      value.titleMenu
+                      value.titleMenu,
+                      e
                     )
                   }
                 >
@@ -108,31 +71,12 @@ const MainPage = () => {
           backgroundColor: "white",
         }}
       >
-        <Header className="custom-header">
-          <Breadcrumb className="custom-breadcrumb" separator=">">
-            <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
-            <Breadcrumb.Item>{value.params.item}</Breadcrumb.Item>
-          </Breadcrumb>
-
-          {
-            // value.params.item !== "" ? (
-            //   <Text className="header-title">
-            //     {path}
-            //     {/* {value.params.item} */}
-            //   </Text>
-            // ) : null
-
-            <Text className="header-title">
-              {value.params.item === undefined
-                ? "Dashboard"
-                : value.params.item}
-            </Text>
-          }
-        </Header>
         <Content>
           <Outlet />
         </Content>
       </Layout>
+
+      <NotificationComponent status={value.notifRedux.status} message={value.notifRedux.message}/>
     </Layout>
   );
 };
