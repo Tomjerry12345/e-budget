@@ -1,3 +1,5 @@
+import { getLocal } from "./Utilitas";
+
 export const allItemSummarySubMenu = [
   // 1 Dashboard
   [],
@@ -297,8 +299,6 @@ export const disabledItemSummaryMenu = [
   [false, false],
 ];
 
-export const endPointGetCoa = "";
-
 export const urlPageRevenue = {
   "Revenue & COGS HK": "hk",
   "Revenue & COGS KIU": "kiu",
@@ -316,3 +316,48 @@ export const urlPageRevenue = {
   "Input Direct Revenue & COGS": "input",
   "Summary Revenue & COGS": "summary",
 };
+
+export const selectionMenu = (i) => {
+  const user = getLocal("user_group");
+
+  if (user === "superadmin") {
+    return superAdmin(i)
+  } else if (user === "userbu") {
+    return userBu(i)
+  }
+}
+
+export const superAdmin = (i) => {
+  return {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i]
+  }
+}
+
+export const userBu = (i) => {
+  let v = {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i]
+  }
+
+  if (i === 1) {
+    const codeCompany = getLocal("code_company")
+
+    if (codeCompany === "211") {
+      v = {
+        ...v,
+        disabled: changeDisabled([13, 14])
+      }
+    }
+  }
+
+  return v
+}
+
+export const changeDisabled = (a = []) => {
+  let arr = [disabledItemSummaryMenu.map(_ => true)]
+
+  a.forEach(v => arr[v] = false)
+
+  return arr
+}

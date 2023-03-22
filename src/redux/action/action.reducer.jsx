@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { log } from '../../values/Utilitas'
 
 export const notifSlice = createSlice({
   name: 'notif',
@@ -16,6 +15,6 @@ export const notifSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { val} = notifSlice.actions
+export const { val } = notifSlice.actions
 
 export default notifSlice.reducer
