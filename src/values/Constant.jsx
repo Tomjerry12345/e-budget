@@ -1,3 +1,5 @@
+import { getLocal, log } from "./Utilitas";
+
 export const allItemSummarySubMenu = [
   // 1 Dashboard
   [],
@@ -297,8 +299,6 @@ export const disabledItemSummaryMenu = [
   [false, false],
 ];
 
-export const endPointGetCoa = "";
-
 export const urlPageRevenue = {
   "Revenue & COGS HK": "hk",
   "Revenue & COGS KIU": "kiu",
@@ -315,4 +315,66 @@ export const urlPageRevenue = {
   "Revenue & COGS BAND": "band",
   "Input Direct Revenue & COGS": "input",
   "Summary Revenue & COGS": "summary",
+};
+
+export const selectionMenu = (i) => {
+  const user = getLocal("user_group");
+
+  if (user === "superadmin") {
+    return superAdmin(i);
+  } else if (user === "usersbu") {
+    return userBu(i);
+  }
+};
+
+export const superAdmin = (i) => {
+  return {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+};
+
+export const userBu = (i) => {
+  let v = {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+
+  if (i === 1) {
+    const codeCompany = getLocal("code_company");
+
+    if (codeCompany === "412") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "326") {
+      return changeMenu(i, [1, 13, 14]);
+    }
+  }
+
+  return v;
+};
+
+export const changeMenu = (i, a = []) => {
+  let s = [];
+  let d = [];
+
+  a.forEach((item) => {
+    s.push(allItemSummarySubMenu[i][item]);
+    d.push(disabledItemSummaryMenu[i][item]);
+  });
+
+  log("s", s);
+  log("d", d);
+
+  return {
+    submenu: s,
+    disabled: d,
+  };
+};
+
+export const changeDisabled = (a = []) => {
+  let arr = [disabledItemSummaryMenu.map((_) => true)];
+
+  a.forEach((v) => (arr[v] = false));
+
+  return arr;
 };

@@ -3,6 +3,7 @@ import { Card } from "@mui/material";
 import FilterComponentLogic from "./FilterComponentLogic";
 import AutoCompleteElement from "../element/auto-complete/AutoCompleteElement";
 import "./Style.scss";
+import { getLocal } from "../../values/Utilitas";
 
 const { Panel } = Collapse;
 
@@ -23,7 +24,7 @@ const AutoCompleteFilter = ({
   isCodeProject,
   disabled,
   variant,
-  type = "default"
+  type = "default",
 }) => (
   <>
     <AutoCompleteElement
@@ -72,7 +73,7 @@ const AutoCompleteFilter = ({
       />
     ) : null}
 
-    <AutoCompleteElement label="Periode" name="periode" value={periode}/>
+    <AutoCompleteElement label="Periode" name="periode" value={periode} />
   </>
 );
 
@@ -101,15 +102,17 @@ const FilterComponent = ({
   type = "summary",
   typeCompany = "change",
 }) => {
+  const company = getLocal("code_company");
+
   const { value, func } = FilterComponentLogic({
     isCodeProduct,
     isCodeProject,
     isCodeIcp,
     keyCodeProject,
-    codeCompany,
+    codeCompany: company === "" ? codeCompany : company,
     formGlobal: form,
     type: type,
-    typeCompany,
+    typeCompany: company === "" ? typeCompany : "static",
   });
 
   return (
@@ -129,7 +132,7 @@ const FilterComponent = ({
                 isCodeProduct={isCodeProduct}
                 isCodeProject={isCodeProject}
                 isCodeIcp={isCodeIcp}
-                disabled={disabled}
+                disabled={company === "" ? disabled : true}
                 variant={variant}
               />
               <div style={{ display: "flex" }}>

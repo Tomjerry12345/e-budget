@@ -20,13 +20,7 @@ const CapexSummary = () => {
         // form={value.form}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        form={value.form}
-        isCodeIcp
-        isCodeProject
-        type="summary"
-      />
+      <FilterComponent form={value.form} onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
         <TableComponent

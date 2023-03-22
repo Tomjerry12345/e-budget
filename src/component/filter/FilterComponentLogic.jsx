@@ -1,7 +1,7 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
 import MainServices from "../../services/MainServices";
-import { log } from "../../values/Utilitas";
+import { getLocal, log } from "../../values/Utilitas";
 
 const FilterComponentLogic = ({
   isCodeProduct,
@@ -28,6 +28,7 @@ const FilterComponentLogic = ({
   // const [gCode, setGCode] = useState()
 
   useEffect(() => {
+    log("typeCOmpany", typeCompany);
     const fetchData = async () => {
       // const { data } = await MainServices.get("company/list-master");
       const { data } = await MainServices.get("company/list-child");
@@ -54,28 +55,29 @@ const FilterComponentLogic = ({
   }, [codeCompany]);
 
   useEffect(() => {
-    // log("codeCompany-11", codeCompany);
+    log("codeCompany-11", codeCompany);
 
     if (codeCompany !== null) {
-      getValueComboBox(codeCompany);
+      const company_names = getLocal("company_names");
+
+      if (company_names !== null) {
+        form.setFieldsValue({
+          code_company: `${codeCompany} - ${company_names}`,
+        });
+        getValueComboBox(codeCompany);
+      }
+
+      
     }
   }, [isLoad]);
 
   const onSelect = (e) => {
     if (e === "all") {
-      if (formGlobal !== null) {
-        formGlobal.setFieldsValue({
-          code_location: "all",
-          code_dept: "all",
-          code_product: "all",
-        });
-      } else {
-        form.setFieldsValue({
-          code_location: "all",
-          code_dept: "all",
-          code_product: "all",
-        });
-      }
+      form.setFieldsValue({
+        code_location: "all",
+        code_dept: "all",
+        code_product: "all",
+      });
     } else {
       getValueComboBox(e);
     }
@@ -98,27 +100,12 @@ const FilterComponentLogic = ({
     if (typeCompany === "change") {
       code = e.split(" ");
     } else {
-      code.push(e)
+      code.push(e);
     }
 
     log("code", code);
 
     if (code !== "0") {
-      // if (formGlobal !== null) {
-
-      //   formGlobal.setFieldsValue({
-      //     code_location: null,
-      //     code_dept: null,
-      //     code_product: null,
-      //   });
-      // } else {
-      //   form.setFieldsValue({
-      //     code_location: null,
-      //     code_dept: null,
-      //     code_product: null,
-      //   });
-      // }
-
       const resProduct =
         isCodeProduct === true
           ? await MainServices.get(
