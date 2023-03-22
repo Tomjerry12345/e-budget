@@ -1,3 +1,12 @@
 version: v1.4.6 ✅ ❌
 
 - panggilan dropdown satu kali saja di filter
+
+adminhk:
+    menu revenue yang tampil pt hk, input sama summary
+    semua yang filter langsung otomatis nama perusahaan 
+    menu master hilang
+
+- admin yang tidak memiliki menu perusahaan tampilkan saja input sama summary
+- reviewer input tidak bisa mengedit , hanya muncul menu dan filter sesuai dengan code company
+- hanya super admin yang muncul master
