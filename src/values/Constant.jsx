@@ -5,21 +5,21 @@ export const allItemSummarySubMenu = [
   [],
   // 2 Revenue & COGS
   [
-    "Revenue & COGS HK",
-    "Revenue & COGS KIU",
-    "Revenue & COGS GMM",
-    "Revenue & COGS KIA",
-    "Revenue & COGS BJU",
-    "Revenue & COGS BLT",
-    "Revenue & COGS BLU",
-    "Revenue & COGS BK",
-    "Revenue & COGS BSU",
-    "Revenue & COGS BSB",
-    "Revenue & COGS KIK",
-    "Revenue & COGS IKP",
-    "Revenue & COGS BAND",
-    "Input Direct Revenue & COGS",
-    "Summary Revenue & COGS",
+    "Revenue & COGS HK", // 0
+    "Revenue & COGS KIU", // 1
+    "Revenue & COGS GMM", // 2
+    "Revenue & COGS KIA", // 3
+    "Revenue & COGS BJU", // 4
+    "Revenue & COGS BLT", // 5
+    "Revenue & COGS BLU", // 6
+    "Revenue & COGS BK", // 7
+    "Revenue & COGS BSU", // 8
+    "Revenue & COGS BSB", // 9
+    "Revenue & COGS KIK", // 10
+    "Revenue & COGS IKP", // 11
+    "Revenue & COGS BAND", // 12
+    "Input Direct Revenue & COGS", // 13
+    "Summary Revenue & COGS", // 14
   ],
   // 3 Opex
   [
@@ -347,6 +347,32 @@ export const userBu = (i) => {
       return changeMenu(i, [13, 14]);
     } else if (codeCompany === "326") {
       return changeMenu(i, [1, 13, 14]);
+    } else if (codeCompany === "411") {
+      return changeMenu(i, [8, 13, 14]);
+    } else if (codeCompany === "422") {
+      return changeMenu(i, [6, 13, 14]);
+    } else if (codeCompany === "311") {
+      return changeMenu(i, [0, 13, 14]);
+    } else if (codeCompany === "312") {
+      return changeMenu(i, [4, 13, 14]);
+    } else if (codeCompany === "231") {
+      return changeMenu(i, [12, 13, 14]);
+    } else if (codeCompany === "328") {
+      return changeMenu(i, [2, 13, 14]);
+    } else if (codeCompany === "211") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "242") {
+      return changeMenu(i, [11, 13, 14]);
+    } else if (codeCompany === "241") {
+      return changeMenu(i, [10, 13, 14]);
+    } else if (codeCompany === "313") {
+      return changeMenu(i, [3, 13, 14]);
+    } else if (codeCompany === "421") {
+      return changeMenu(i, [5, 13, 14]);
+    } else if (codeCompany === "221") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "413") {
+      return changeMenu(i, [13, 14]);
     }
   }
 
