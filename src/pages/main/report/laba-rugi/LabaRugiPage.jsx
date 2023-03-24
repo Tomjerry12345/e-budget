@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import FilterComponent from "../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import TableComponent from "../../../../component/table/TableComponent";
-import { getSizeScreen } from "../../../../values/Utilitas";
+import { getLocal, getSizeScreen } from "../../../../values/Utilitas";
 import LabaRugiLogic from "./LabaRugiLogic";
 
 const LabaRugiPage = () => {
@@ -18,8 +18,10 @@ const LabaRugiPage = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    const company = getLocal("code_company");
+    const company_names = getLocal("company_names");
     form.setFieldsValue({
-      code_company: `211 - PT. Haka Sarana Investama`,
+      code_company: company === "" ? null : `${company} - ${company_names}`,
       code_location: "ALL",
       code_dept: "ALL",
       code_product: "ALL",

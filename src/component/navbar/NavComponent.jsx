@@ -13,6 +13,7 @@ import logo from "../../assets/img/logo.png";
 
 import "./NavStyles.scss";
 import { UserOutlined } from "@ant-design/icons";
+import { getLocal } from "../../values/Utilitas";
 
 const { Sider } = Layout;
 
@@ -144,18 +145,20 @@ const NavComponent = ({ func, value }) => {
           Report
         </Menu.Item>
 
-        <Menu.Item
-          key={"7-Master COA"}
-          className={`menuItem ${isClickedMenu(7)}`}
-          icon={
-            <Inventory2OutlinedIcon
-              className={`colorIcon ${isClickedMenu(7)}`}
-            />
-          }
-          // onClick={func.onClickedMenu}
-        >
-          Master COA
-        </Menu.Item>
+        {getLocal("user_group") === "superadmin" ? (
+          <Menu.Item
+            key={"7-Master COA"}
+            className={`menuItem ${isClickedMenu(7)}`}
+            icon={
+              <Inventory2OutlinedIcon
+                className={`colorIcon ${isClickedMenu(7)}`}
+              />
+            }
+            // onClick={func.onClickedMenu}
+          >
+            Master COA
+          </Menu.Item>
+        ) : null}
 
         <Menu.Item
           key={"8-Akun"}
