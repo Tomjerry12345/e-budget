@@ -324,17 +324,19 @@ export const selectionMenu = (i) => {
     return superAdmin(i);
   } else if (user === "usersbu") {
     return userBu(i);
+  } else {
+    return reviewer(i);
   }
 };
 
-export const superAdmin = (i) => {
+const superAdmin = (i) => {
   return {
     submenu: allItemSummarySubMenu[i],
     disabled: disabledItemSummaryMenu[i],
   };
 };
 
-export const userBu = (i) => {
+const userBu = (i) => {
   let v = {
     submenu: allItemSummarySubMenu[i],
     disabled: disabledItemSummaryMenu[i],
@@ -373,13 +375,37 @@ export const userBu = (i) => {
       return changeMenu(i, [13, 14]);
     } else if (codeCompany === "413") {
       return changeMenu(i, [9, 13, 14]);
+    } else if (codeCompany === "399") {
+      return changeMenu(i, [13, 14]);
     }
   }
 
   return v;
 };
 
-export const changeMenu = (i, a = []) => {
+const reviewer = (i) => {
+  let v = {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+
+  if (i === 1) {
+    const codeCompany = getLocal("code_company");
+    log("codeCompany", codeCompany)
+
+    if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
+      return changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]);
+    } else if (codeCompany === "231, 242, 241") {
+      return changeMenu(i, [10, 11, 12, 13, 14]);
+    } else if (codeCompany === "221, 413, 411") {
+      return changeMenu(i, [7, 8, 9, 13, 14]);
+    }
+  }
+
+  return v;
+};
+
+const changeMenu = (i, a = []) => {
   let s = [];
   let d = [];
 

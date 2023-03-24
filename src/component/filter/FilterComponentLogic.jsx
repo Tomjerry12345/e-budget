@@ -8,7 +8,6 @@ const FilterComponentLogic = ({
   isCodeProject,
   isCodeIcp,
   codeCompany,
-  formGlobal,
   type,
   typeCompany,
 }) => {
@@ -22,15 +21,15 @@ const FilterComponentLogic = ({
   });
 
   let [form] = Form.useForm();
-
   const [isLoad, setIsLoad] = useState(false);
 
-  // const [gCode, setGCode] = useState()
+  const userGroup = getLocal("user_group");
+  const company = getLocal("code_company");
+  const company_names = getLocal("company_names");
 
   useEffect(() => {
-    log("typeCOmpany", typeCompany);
+    log("typeCompany", typeCompany);
     const fetchData = async () => {
-      // const { data } = await MainServices.get("company/list-master");
       const { data } = await MainServices.get("company/list-child");
 
       if (data.responseCode === 200) {
@@ -46,28 +45,33 @@ const FilterComponentLogic = ({
     if (typeCompany === "change") {
       fetchData();
     }
-
-    // if (codeCompany === null) {
-    //   fetchData();
-    // } else {
-    //   getValueComboBox(codeCompany, true);
-    // }
   }, [codeCompany]);
 
   useEffect(() => {
-    log("codeCompany-11", codeCompany);
-
-    if (codeCompany !== null) {
-      const company_names = getLocal("company_names");
-
+    if (userGroup === "usersbu") {
       if (company_names !== null) {
         form.setFieldsValue({
-          code_company: `${codeCompany} - ${company_names}`,
+          code_company: `${company} - ${company_names}`,
         });
-        getValueComboBox(codeCompany);
+        getValueComboBox(company);
       }
+    } else if (userGroup === "reviewer") {
+      let dataCompany = [];
+      let companyNames = company_names.split(", ");
 
-      
+      company.split(", ").forEach((v, i) => {
+        dataCompany.push({
+          code: v,
+          description: `${v} - ${companyNames[i]}`,
+        });
+      });
+
+      log("dataCompany", dataCompany);
+
+      setState({
+        ...state,
+        code_company: dataCompany,
+      });
     }
   }, [isLoad]);
 
@@ -93,8 +97,6 @@ const FilterComponentLogic = ({
   };
 
   const getValueComboBox = async (e) => {
-    // const code = isNaN(e) ? e.replace(/[^0-9]/g, "") : e;
-
     let code = [];
 
     if (typeCompany === "change") {
@@ -105,42 +107,38 @@ const FilterComponentLogic = ({
 
     log("code", code);
 
-    if (code !== "0") {
-      const resProduct =
-        isCodeProduct === true
-          ? await MainServices.get(
-              `product/list-by-com?code_company=${code[0]}`
-            )
-          : null;
+    // if (code !== "0") {
+    const resProduct =
+      isCodeProduct === true
+        ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
+        : null;
 
-      const resLocation = await MainServices.get(
-        `location/list-by-com?code_company=${code[0]}`
-      );
-      const resDept = await MainServices.get(
-        `department/list-dropdown?code_company=${code[0]}`
-      );
-      const resIcp =
-        isCodeIcp === true
-          ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
-          : null;
-      const resProject =
-        isCodeProject === true
-          ? await MainServices.get(
-              `project/list-by-com?code_company=${code[0]}`
-            )
-          : null;
+    const resLocation = await MainServices.get(
+      `location/list-by-com?code_company=${code[0]}`
+    );
+    const resDept = await MainServices.get(
+      `department/list-dropdown?code_company=${code[0]}`
+    );
+    const resIcp =
+      isCodeIcp === true
+        ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
+        : null;
+    const resProject =
+      isCodeProject === true
+        ? await MainServices.get(`project/list-by-com?code_company=${code[0]}`)
+        : null;
 
-      if (resLocation.data.responseCode === 200) {
-        setState({
-          ...state,
-          code_product: resProduct !== null ? setProduct(resProduct) : [],
-          code_location: setLocation(resLocation),
-          code_dept: setDept(resDept),
-          code_icp: resIcp !== null ? setIcp(resIcp) : [],
-          code_project: resProject !== null ? setProject(resProject, code) : [],
-        });
-      }
+    if (resLocation.data.responseCode === 200) {
+      setState({
+        ...state,
+        code_product: resProduct !== null ? setProduct(resProduct) : [],
+        code_location: setLocation(resLocation),
+        code_dept: setDept(resDept),
+        code_icp: resIcp !== null ? setIcp(resIcp) : [],
+        code_project: resProject !== null ? setProject(resProject, code) : [],
+      });
     }
+    // }
   };
 
   const setProduct = (resProduct) => {

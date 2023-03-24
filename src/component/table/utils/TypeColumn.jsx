@@ -1,4 +1,5 @@
 import { Typography } from "antd";
+import { getLocal } from "../../../values/Utilitas";
 import "./style.scss";
 
 const columnOutputType1 = (year_1, year_2) => [
@@ -76,7 +77,7 @@ const columnInputType1 = (year_1, year_2) => [
   },
   {
     title: `Year ${year_1}`,
-    editable: true,
+    editable: getLocal("user_group") === "reviewer" ? false : true,
     children: [
       {
         title: (
@@ -87,7 +88,7 @@ const columnInputType1 = (year_1, year_2) => [
         ),
         width: 100,
         dataIndex: "jan1",
-        editable: true,
+        editable: getLocal("user_group") === "reviewer" ? false : true,
         align: "right"
       },
       {
@@ -232,7 +233,7 @@ const columnInputType1 = (year_1, year_2) => [
   },
   {
     title: `Year ${year_2}`,
-    editable: true,
+    editable: getLocal("user_group") === "reviewer" ? false : true,
     children: [
       {
         title: (
