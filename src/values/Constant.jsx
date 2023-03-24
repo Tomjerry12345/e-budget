@@ -372,7 +372,7 @@ export const userBu = (i) => {
     } else if (codeCompany === "221") {
       return changeMenu(i, [13, 14]);
     } else if (codeCompany === "413") {
-      return changeMenu(i, [13, 14]);
+      return changeMenu(i, [9, 13, 14]);
     }
   }
 
