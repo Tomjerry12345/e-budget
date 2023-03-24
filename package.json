@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.10.1",
     "@reduxjs/toolkit": "^1.9.2",
+    "@silevis/reactgrid": "^4.0.4",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
