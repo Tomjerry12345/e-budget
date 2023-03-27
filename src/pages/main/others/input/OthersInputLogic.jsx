@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { log, sumYearTotal } from "../../../../values/Utilitas";
+import { getLocal, log, sumYearTotal } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Input Direct Pendapatan Non Operasional": "othersPNO",
@@ -92,13 +92,14 @@ const OthersInputLogic = () => {
   };
 
   useEffect(() => {
-    setDataColumnInput([]);
+    const company = getLocal("code_company");
+    const company_names = getLocal("company_names");
 
     form.setFieldsValue({
       code_location: null,
       code_dept: null,
       code_product: null,
-      code_company: null,
+      code_company: company === "" ? null : `${company} - ${company_names}`,
       code_icp: null,
       code_project: null,
       periode: null,
