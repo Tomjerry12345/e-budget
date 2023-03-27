@@ -391,7 +391,6 @@ const reviewer = (i) => {
 
   if (i === 1) {
     const codeCompany = getLocal("code_company");
-    log("codeCompany", codeCompany)
 
     if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
       return changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]);
