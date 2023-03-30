@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../redux/action/action.reducer";
 import MainServices from "../../../../services/MainServices";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getLocal, getSizeScreen, log } from "../../../../values/Utilitas";
 
 const endPoint = {
   "Summary Pendapatan Non Operasional": "othersPNO",
@@ -29,11 +29,15 @@ const OthersSummaryLogic = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+
+    const company = getLocal("code_company");
+    const company_names = getLocal("company_names");
+
     form.setFieldsValue({
       code_location: null,
       code_dept: null,
       code_product: null,
-      code_company: null,
+      code_company: company === "" ? null : `${company} - ${company_names}`,
       code_icp: null,
       code_project: null,
       periode: null,

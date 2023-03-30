@@ -23,13 +23,26 @@ const LoginLogic = () => {
     setLocal("index-menu", 0);
     setLocal("move-page", null);
     setLocal("token", "");
+    setLocal("user_group", "");
+    setLocal("code_company", "");
+    setLocal("company_names", "");
 
     if (response !== null) {
-      const { responseCode, responseDescription, token } = response;
+      const {
+        responseCode,
+        responseDescription,
+        token,
+        user_group,
+        code_company,
+        company_names,
+      } = response;
       if (responseCode === "200") {
         log(`token => ${token}`);
         setLocal("auth", true);
         setLocal("token", token);
+        setLocal("user_group", user_group);
+        setLocal("code_company", code_company);
+        setLocal("company_names", company_names);
         navigate("/");
       } else {
         // setOpen(true);

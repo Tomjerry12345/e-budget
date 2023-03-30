@@ -1,23 +1,25 @@
+import { getLocal, log } from "./Utilitas";
+
 export const allItemSummarySubMenu = [
   // 1 Dashboard
   [],
   // 2 Revenue & COGS
   [
-    "Revenue & COGS HK",
-    "Revenue & COGS KIU",
-    "Revenue & COGS GMM",
-    "Revenue & COGS KIA",
-    "Revenue & COGS BJU",
-    "Revenue & COGS BLT",
-    "Revenue & COGS BLU",
-    "Revenue & COGS BK",
-    "Revenue & COGS BSU",
-    "Revenue & COGS BSB",
-    "Revenue & COGS KIK",
-    "Revenue & COGS IKP",
-    "Revenue & COGS BAND",
-    "Input Direct Revenue & COGS",
-    "Summary Revenue & COGS",
+    "Revenue & COGS HK", // 0
+    "Revenue & COGS KIU", // 1
+    "Revenue & COGS GMM", // 2
+    "Revenue & COGS KIA", // 3
+    "Revenue & COGS BJU", // 4
+    "Revenue & COGS BLT", // 5
+    "Revenue & COGS BLU", // 6
+    "Revenue & COGS BK", // 7
+    "Revenue & COGS BSU", // 8
+    "Revenue & COGS BSB", // 9
+    "Revenue & COGS KIK", // 10
+    "Revenue & COGS IKP", // 11
+    "Revenue & COGS BAND", // 12
+    "Input Direct Revenue & COGS", // 13
+    "Summary Revenue & COGS", // 14
   ],
   // 3 Opex
   [
@@ -297,8 +299,6 @@ export const disabledItemSummaryMenu = [
   [false, false],
 ];
 
-export const endPointGetCoa = "";
-
 export const urlPageRevenue = {
   "Revenue & COGS HK": "hk",
   "Revenue & COGS KIU": "kiu",
@@ -315,4 +315,117 @@ export const urlPageRevenue = {
   "Revenue & COGS BAND": "band",
   "Input Direct Revenue & COGS": "input",
   "Summary Revenue & COGS": "summary",
+};
+
+export const selectionMenu = (i) => {
+  const user = getLocal("user_group");
+
+  if (user === "superadmin") {
+    return superAdmin(i);
+  } else if (user === "usersbu") {
+    return userBu(i);
+  } else {
+    return reviewer(i);
+  }
+};
+
+const superAdmin = (i) => {
+  return {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+};
+
+const userBu = (i) => {
+  let v = {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+
+  if (i === 1) {
+    const codeCompany = getLocal("code_company");
+
+    if (codeCompany === "412") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "326") {
+      return changeMenu(i, [1, 13, 14]);
+    } else if (codeCompany === "411") {
+      return changeMenu(i, [8, 13, 14]);
+    } else if (codeCompany === "422") {
+      return changeMenu(i, [6, 13, 14]);
+    } else if (codeCompany === "311") {
+      return changeMenu(i, [0, 13, 14]);
+    } else if (codeCompany === "312") {
+      return changeMenu(i, [4, 13, 14]);
+    } else if (codeCompany === "231") {
+      return changeMenu(i, [12, 13, 14]);
+    } else if (codeCompany === "328") {
+      return changeMenu(i, [2, 13, 14]);
+    } else if (codeCompany === "211") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "242") {
+      return changeMenu(i, [11, 13, 14]);
+    } else if (codeCompany === "241") {
+      return changeMenu(i, [10, 13, 14]);
+    } else if (codeCompany === "313") {
+      return changeMenu(i, [3, 13, 14]);
+    } else if (codeCompany === "421") {
+      return changeMenu(i, [5, 13, 14]);
+    } else if (codeCompany === "221") {
+      return changeMenu(i, [13, 14]);
+    } else if (codeCompany === "413") {
+      return changeMenu(i, [9, 13, 14]);
+    } else if (codeCompany === "399") {
+      return changeMenu(i, [13, 14]);
+    }
+  }
+
+  return v;
+};
+
+const reviewer = (i) => {
+  let v = {
+    submenu: allItemSummarySubMenu[i],
+    disabled: disabledItemSummaryMenu[i],
+  };
+
+  if (i === 1) {
+    const codeCompany = getLocal("code_company");
+
+    if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
+      return changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]);
+    } else if (codeCompany === "231, 242, 241") {
+      return changeMenu(i, [10, 11, 12, 13, 14]);
+    } else if (codeCompany === "221, 413, 411") {
+      return changeMenu(i, [7, 8, 9, 13, 14]);
+    }
+  }
+
+  return v;
+};
+
+const changeMenu = (i, a = []) => {
+  let s = [];
+  let d = [];
+
+  a.forEach((item) => {
+    s.push(allItemSummarySubMenu[i][item]);
+    d.push(disabledItemSummaryMenu[i][item]);
+  });
+
+  log("s", s);
+  log("d", d);
+
+  return {
+    submenu: s,
+    disabled: d,
+  };
+};
+
+export const changeDisabled = (a = []) => {
+  let arr = [disabledItemSummaryMenu.map((_) => true)];
+
+  a.forEach((v) => (arr[v] = false));
+
+  return arr;
 };

@@ -5,6 +5,7 @@ import { loadStart } from "../../redux/response/response";
 import {
   allItemSummarySubMenu,
   disabledItemSummaryMenu,
+  selectionMenu,
   urlPageRevenue,
 } from "../../values/Constant";
 import { routingMasterCoa, routingOthers, routingReport } from "../../values/RoutingPage";
@@ -135,8 +136,6 @@ const MainLogic = () => {
         pageNavigation = "/";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
-
-        
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
@@ -224,8 +223,9 @@ const MainLogic = () => {
   };
 
   const getSubmenu = (index) => {
-    setItem(allItemSummarySubMenu[index]);
-    setitemDisabledMenu(disabledItemSummaryMenu[index]);
+    const sMenu = selectionMenu(index)
+    setItem(sMenu.submenu);
+    setitemDisabledMenu(sMenu.disabled);
   };
 
   return {
