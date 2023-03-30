@@ -167,7 +167,8 @@ const RoutersConfig = () => {
             {/* <Route path=":item" element={<CoaPage />} /> */}
           </Route>
         </Route>
-        <Route path="/testing" element={<TestingPages1 />} />
+        <Route path="/testing" element={<TestingPages />} />
+        <Route path="/testing1" element={<TestingPages1 />} />
       </Routes>
     </BrowserRouter>
   );

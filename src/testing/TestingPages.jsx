@@ -1,16 +1,13 @@
 import { ReactGrid } from "@silevis/reactgrid";
 import { useState } from "react";
 import "@silevis/reactgrid/styles.scss";
-import '@silevis/reactgrid/default-colors.scss';
-import '@silevis/reactgrid/default-sizing.scss';
-import '@silevis/reactgrid/cell-templates-default-colors.scss';
+import "@silevis/reactgrid/default-colors.scss";
+import "@silevis/reactgrid/default-sizing.scss";
+import "@silevis/reactgrid/cell-templates-default-colors.scss";
 
 const getPeople = () => [
   { name: "Thomas", surname: "Goldman" },
   { name: "Susie", surname: "Quattro" },
-  { name: {childreen: [
-    {name: "test"}
-  ]}, surname: "" },
 ];
 
 const getColumns = () => [
@@ -28,13 +25,38 @@ const headerRow = {
 
 const getRows = (people) => [
   headerRow,
-  ...people.map((person, idx) => ({
-    rowId: idx,
+  {
+    rowId: 1,
     cells: [
-      { type: "text", text: person.name },
-      { type: "text", text: person.surname },
-    ],
-  })),
+      {
+        type: "chevron",
+        text: "kerdil",
+        hasChildren: true
+      }
+    ]
+  },
+  {
+    rowId: 2,
+    cells: [
+      {
+        hasChildren: false,
+        indent: 1,
+        parentId: 1,
+        type: "chevron",
+        text: "andri"
+      }
+    ]
+  }
+  // ...people.map((person, idx) => ({
+  //   rowId: idx,
+  //   cells: [
+  //     {
+  //       type: "text",
+  //       text: person.name,
+  //     },
+  //     { type: "text", text: person.surname },
+  //   ],
+  // })),
 ];
 
 const applyChangesToPeople = (changes, prevPeople) => {
