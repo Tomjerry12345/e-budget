@@ -3,8 +3,8 @@ import { columns as dataColumns } from "./columns";
 import { rows as dataRows, headerRow } from "./rows";
 import { ReactGrid } from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
-import "./styles.css";
-import { log } from "../values/Utilitas";
+import "./styles.scss";
+import { log } from "../../values/Utilitas";
 
 /* 
   searches for a chevron cell in given row
