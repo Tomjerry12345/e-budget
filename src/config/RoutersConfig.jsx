@@ -63,8 +63,10 @@ import PenjualanIkpPage from "../pages/main/revenueCogs/ikp/tabs/penjualan/Penju
 import LainIkpPage from "../pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
 import PenjualanBandPage from "../pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
 import LainBandPage from "../pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
-import TestingPages from "../testing/TestingPages";
-import { TestingPages1 } from "../testing/TestingPages1";
+import TestingPages from "../testing/react-grid-testing/TestingPages";
+import { TestingPages1 } from "../testing/react-grid-testing/TestingPages1";
+import LiquidityPlanner from "../testing/sample-react-grid-liquid/LiquidityPlanner";
+import TestingRealProject from "../testing/sample-react-grid-real-project/TestingRealProject";
 
 const RoutersConfig = () => {
   return (
@@ -167,7 +169,10 @@ const RoutersConfig = () => {
             {/* <Route path=":item" element={<CoaPage />} /> */}
           </Route>
         </Route>
-        <Route path="/testing" element={<TestingPages1 />} />
+        <Route path="/testing" element={<TestingPages />} />
+        <Route path="/testing1" element={<TestingPages1 />} />
+        <Route path="/react-grid-liquid" element={<LiquidityPlanner />} />
+        <Route path="/real-testing" element={<TestingRealProject />} />
       </Routes>
     </BrowserRouter>
   );

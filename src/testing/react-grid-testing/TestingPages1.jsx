@@ -3,8 +3,8 @@ import { columns as dataColumns } from "./columns";
 import { rows as dataRows, headerRow } from "./rows";
 import { ReactGrid } from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
-import "./styles.css";
-import { log } from "../values/Utilitas";
+import "./styles.scss";
+import { log } from "../../values/Utilitas";
 
 /* 
   searches for a chevron cell in given row
@@ -65,6 +65,7 @@ const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
     if (foundChevronCell) {
       foundChevronCell.indent = indent;
       foundChevronCell.hasChildren = hasRowChildrens;
+      // log("foundChevronCell", foundChevronCell)
     }
     if (hasRowChildrens) assignIndentAndHasChildren(rows, row, indent);
   });
@@ -74,19 +75,23 @@ const buildTree = (rows) =>
   rows.map((row) => {
     // log("row", row)
     const foundChevronCell = findChevronCell(row);
-    log("foundChevronCell", foundChevronCell);
     if (foundChevronCell && !foundChevronCell.parentId) {
-      log("true");
       const hasRowChildrens = hasChildren(rows, row);
+      // foundChevronCell.hasChildren = hasRowChildrens;
       foundChevronCell.hasChildren = hasRowChildrens;
-      if (hasRowChildrens) assignIndentAndHasChildren(rows, row);
+      // log("foundChevronCell", foundChevronCell);
+      if (hasRowChildrens) {
+        assignIndentAndHasChildren(rows, row);
+      } 
     }
+    // row.hasChildren = true;
     return row;
   });
 
 export const TestingPages1 = () => {
   const [columns] = useState(() => dataColumns(true, false));
   const [rows, setRows] = useState(() => buildTree(dataRows(true)));
+  log("buildTree", buildTree(dataRows(true)))
   const [rowsToRender, setRowsToRender] = useState([
     headerRow,
     ...getExpandedRows(rows),
@@ -110,6 +115,7 @@ export const TestingPages1 = () => {
       rows={rowsToRender}
       columns={columns}
       onCellsChanged={handleChanges}
+      enableRangeSelection
     />
   );
 };
