@@ -62,6 +62,25 @@ export const noSideBorders = (cell) => ({
   },
 });
 
+export function rootHeaderCell(
+  title,
+  additionalClassNames = "",
+  background = "#107C41",
+  color = "white"
+) {
+  return nonEditable(
+    textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+      background: background,
+      color: color,
+      border: {
+        bottom: { style: "none" },
+        left: { style: "none" },
+        right: { style: "none" },
+      },
+    })
+  );
+}
+
 export function monthHeaderCell(month, additionalClassNames = "") {
   return nonEditable(
     textCell(month, `text-lg font-bold ${additionalClassNames}`, {
