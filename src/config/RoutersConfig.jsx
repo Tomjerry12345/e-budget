@@ -67,6 +67,7 @@ import TestingPages from "../testing/react-grid-testing/TestingPages";
 import { TestingPages1 } from "../testing/react-grid-testing/TestingPages1";
 import LiquidityPlanner from "../testing/sample-react-grid-liquid/LiquidityPlanner";
 import TestingRealProject from "../testing/sample-react-grid-real-project/TestingRealProject";
+import TestingUsingChatGpt1 from "../testing/using-chatgpt/TestingUsingChatGpt1";
 
 const RoutersConfig = () => {
   return (
@@ -173,6 +174,7 @@ const RoutersConfig = () => {
         <Route path="/testing1" element={<TestingPages1 />} />
         <Route path="/react-grid-liquid" element={<LiquidityPlanner />} />
         <Route path="/real-testing" element={<TestingRealProject />} />
+        <Route path="/testing/chatgpt/1" element={<TestingUsingChatGpt1 />} />
       </Routes>
     </BrowserRouter>
   );
