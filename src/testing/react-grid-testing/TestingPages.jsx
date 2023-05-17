@@ -125,7 +125,7 @@ const TestingPages = () => {
   };
 
   const onHide = () => {
-    const q = document.querySelectorAll('[data-cell-colidx="1"]');
+    const q = document.querySelectorAll('[data-cell-colidx="0"]');
     q.forEach((e) => {
       if (isShow) {
         e.classList.remove("hide");
@@ -139,7 +139,14 @@ const TestingPages = () => {
 
   return (
     <>
-      <Button onClick={onHide}>{isShow ? "Show Column" : "Hide Column"}</Button>
+      <Button
+        style={{
+          marginBottom: 16,
+        }}
+        onClick={onHide}
+      >
+        {isShow ? "Show Column" : "Hide Column"}
+      </Button>
       <ReactGrid
         ref={ref}
         rows={rows}

@@ -9,8 +9,7 @@ import { log } from "../../values/Utilitas";
 /* 
   searches for a chevron cell in given row
 */
-const findChevronCell = (row) =>
-  row.cells.find((cell) => cell.type === "chevron") || undefined;
+const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron") || undefined;
 
 /* 
   searches for a parent of given row
@@ -52,9 +51,7 @@ const getExpandedRows = (rows) =>
 const getDirectChildRows = (rows, parentRow) =>
   rows.filter(
     (row) =>
-      !!row.cells.find(
-        (cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId
-      )
+      !!row.cells.find((cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId)
   );
 
 const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
@@ -65,7 +62,6 @@ const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
     if (foundChevronCell) {
       foundChevronCell.indent = indent;
       foundChevronCell.hasChildren = hasRowChildrens;
-      // log("foundChevronCell", foundChevronCell)
     }
     if (hasRowChildrens) assignIndentAndHasChildren(rows, row, indent);
   });
@@ -73,37 +69,30 @@ const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
 
 const buildTree = (rows) =>
   rows.map((row) => {
-    // log("row", row)
     const foundChevronCell = findChevronCell(row);
     if (foundChevronCell && !foundChevronCell.parentId) {
       const hasRowChildrens = hasChildren(rows, row);
-      // foundChevronCell.hasChildren = hasRowChildrens;
       foundChevronCell.hasChildren = hasRowChildrens;
-      // log("foundChevronCell", foundChevronCell);
+      foundChevronCell.hasChildren = hasRowChildrens;
       if (hasRowChildrens) {
         assignIndentAndHasChildren(rows, row);
-      } 
+      }
     }
-    // row.hasChildren = true;
+    row.hasChildren = true;
     return row;
   });
 
 export const TestingPages1 = () => {
   const [columns] = useState(() => dataColumns(true, false));
   const [rows, setRows] = useState(() => buildTree(dataRows(true)));
-  log("buildTree", buildTree(dataRows(true)))
-  const [rowsToRender, setRowsToRender] = useState([
-    headerRow,
-    ...getExpandedRows(rows),
-  ]);
+  log("buildTree", buildTree(dataRows(true)));
+  const [rowsToRender, setRowsToRender] = useState([headerRow, ...getExpandedRows(rows)]);
 
   const handleChanges = (changes) => {
     const newRows = [...rows];
     changes.forEach((change) => {
       const changeRowIdx = rows.findIndex((el) => el.rowId === change.rowId);
-      const changeColumnIdx = columns.findIndex(
-        (el) => el.columnId === change.columnId
-      );
+      const changeColumnIdx = columns.findIndex((el) => el.columnId === change.columnId);
       newRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
     });
     setRows(buildTree(newRows));
