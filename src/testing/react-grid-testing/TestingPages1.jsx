@@ -1,37 +1,25 @@
 import React, { useState } from "react";
+import { render } from "react-dom";
 import { columns as dataColumns } from "./columns";
 import { rows as dataRows, headerRow } from "./rows";
-import { ReactGrid } from "@silevis/reactgrid";
+import { CellChange, ChevronCell, ReactGrid, Row } from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
-import "./styles.scss";
-import { log } from "../../values/Utilitas";
+// import "./styles.css";
 
-/* 
-  searches for a chevron cell in given row
-*/
-const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron") || undefined;
+const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron");
 
-/* 
-  searches for a parent of given row
-*/
 const findParentRow = (rows, row) =>
   rows.find((r) => {
     const foundChevronCell = findChevronCell(row);
     return foundChevronCell ? r.rowId === foundChevronCell.parentId : false;
   });
 
-/* 
-  check if the row has children
-*/
 const hasChildren = (rows, row) =>
   rows.some((r) => {
     const foundChevronCell = findChevronCell(r);
     return foundChevronCell ? foundChevronCell.parentId === row.rowId : false;
   });
 
-/* 
-  Checks is row expanded
-*/
 const isRowFullyExpanded = (rows, row) => {
   const parentRow = findParentRow(rows, row);
   if (parentRow) {
@@ -73,19 +61,14 @@ const buildTree = (rows) =>
     if (foundChevronCell && !foundChevronCell.parentId) {
       const hasRowChildrens = hasChildren(rows, row);
       foundChevronCell.hasChildren = hasRowChildrens;
-      foundChevronCell.hasChildren = hasRowChildrens;
-      if (hasRowChildrens) {
-        assignIndentAndHasChildren(rows, row);
-      }
+      if (hasRowChildrens) assignIndentAndHasChildren(rows, row);
     }
-    row.hasChildren = true;
     return row;
   });
 
-export const TestingPages1 = () => {
+const TestingPages1 = () => {
   const [columns] = useState(() => dataColumns(true, false));
   const [rows, setRows] = useState(() => buildTree(dataRows(true)));
-  log("buildTree", buildTree(dataRows(true)));
   const [rowsToRender, setRowsToRender] = useState([headerRow, ...getExpandedRows(rows)]);
 
   const handleChanges = (changes) => {
@@ -99,12 +82,7 @@ export const TestingPages1 = () => {
     setRowsToRender([headerRow, ...getExpandedRows(newRows)]);
   };
 
-  return (
-    <ReactGrid
-      rows={rowsToRender}
-      columns={columns}
-      onCellsChanged={handleChanges}
-      enableRangeSelection
-    />
-  );
+  return <ReactGrid rows={rowsToRender} columns={columns} onCellsChanged={handleChanges} />;
 };
+
+export default TestingPages1;
