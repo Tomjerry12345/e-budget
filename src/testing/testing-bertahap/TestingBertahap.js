@@ -36,14 +36,21 @@ const getRows = () => [
         isExpand: false,
         isExpanded: true,
       },
-      { type: "text", text: "1", expandText: "1", isExpand: false },
+      { type: "text", text: "1", expandText: "1", isExpand: false, nonEditable: false },
       { type: "text", text: "0" },
     ],
   },
   {
     rowId: 2,
     cells: [
-      { type: "chevron", text: "Roti", expandText: "Roti", isExpand: false, parentId: 1 },
+      {
+        type: "chevron",
+        text: "Roti",
+        expandText: "Roti",
+        isExpand: false,
+        parentId: 1,
+        nonEditable: false,
+      },
       { type: "text", text: "0", expandText: "0", isExpand: false },
       { type: "text", text: "1" },
     ],
@@ -110,6 +117,25 @@ const buildTree = (rows) =>
     return row;
   });
 
+const applyChange = (change) => (groups) =>
+  groups.map((group) =>
+    group.title === change.rowId
+      ? change.columnId <= 12
+        ? {
+            ...group,
+            year1: group.year1.map((value, idx) =>
+              change.columnId === idx + 1 ? change.newCell.value : value
+            ),
+          }
+        : {
+            ...group,
+            year2: group.year2.map((value, idx) =>
+              change.columnId === idx + 12 + 1 ? change.newCell.value : value
+            ),
+          }
+      : group
+  );
+
 function TestingBertahap() {
   const normalHeaderCell = (i, title) => ({
     type: "text",
@@ -172,6 +198,10 @@ function TestingBertahap() {
                 cell.text = "";
               } else {
                 cell.text = cell.expandText;
+              }
+
+              if (cell.nonEditable !== undefined) {
+                cell.nonEditable = cell.isExpand;
               }
             }
 
@@ -249,7 +279,13 @@ function TestingBertahap() {
 
   return (
     <div>
-      <ReactGrid rows={rows} columns={columns} onCellsChanged={handleChanges} ena />
+      <ReactGrid
+        rows={rows}
+        columns={columns}
+        onCellsChanged={handleChanges}
+        enableFillHandle
+        enableRangeSelection
+      />
     </div>
   );
 }
