@@ -2,27 +2,25 @@ import React, { useState } from "react";
 import { ReactGrid } from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
 import "./styles.css";
-import { log, logO } from "../../values/Utilitas";
+import { logO } from "../../values/Utilitas";
 
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Typography } from "antd";
 
 const col = [
-  { columnId: "produk", width: 100, reorderable: true, resizable: false },
-  { columnId: "jan1", width: 150, reorderable: true, resizable: false },
+  { columnId: "produk", width: 100, isExpand: false, reorderable: true, resizable: false },
+  { columnId: "jan1", width: 150, isExpand: false, reorderable: true, resizable: false },
   { columnId: "feb1", width: 150, reorderable: true, resizable: false },
-  { columnId: "action", width: 150, columnExpand: true },
 ];
 
 const headerRow = {
   rowId: "header",
   reorderable: false,
   cells: [
-    { type: "header", text: "Produk" },
-    { type: "header", text: "Januari 1" },
+    { type: "header", text: "Produk", isExpand: false, indexExpand: 0 },
+    { type: "header", text: "Januari 1", isExpand: false, indexExpand: 1 },
     { type: "header", text: "Februari 1" },
-    { type: "header", text: "", columnIndex: 3 },
   ],
 };
 
@@ -35,11 +33,11 @@ const getRows = () => [
         type: "chevron",
         text: "Ayam bakar",
         expandText: "Ayam bakar",
+        isExpand: false,
         isExpanded: true,
       },
-      { type: "text", text: "1" },
+      { type: "text", text: "1", expandText: "1", isExpand: false, nonEditable: false },
       { type: "text", text: "0" },
-      { type: "text", text: "Rp.100.000", nonEditable: false },
     ],
   },
   {
@@ -49,12 +47,12 @@ const getRows = () => [
         type: "chevron",
         text: "Roti",
         expandText: "Roti",
+        isExpand: false,
         parentId: 1,
         nonEditable: false,
       },
-      { type: "text", text: "0" },
+      { type: "text", text: "0", expandText: "0", isExpand: false, nonEditable: false },
       { type: "text", text: "1" },
-      { type: "text", text: "Rp.200.000", nonEditable: false },
     ],
   },
 ];
@@ -138,12 +136,11 @@ const applyChange = (change) => (groups) =>
       : group
   );
 
-function TestingBertahap() {
-  const normalHeaderCell = (i) => ({
+function TestingBertahap2() {
+  const normalHeaderCell = (i, title) => ({
     type: "text",
-    text: "2023",
-    nonEditable: false,
-    columnIndex: i,
+    text: title,
+    nonEditable: true,
     renderer: (text) => (
       <div
         style={{
@@ -151,22 +148,21 @@ function TestingBertahap() {
           display: "flex",
           justifyContent: "space-between",
           color: "white",
-          paddingRight: 8,
-          paddingLeft: 8,
           background: "green",
         }}
       >
+        <Typography.Text style={{ color: "white" }}>{text}</Typography.Text>
         <ChevronRightIcon onClick={() => onClickchevronHeader(i)} />
-        <Typography.Text style={{ color: "white" }}>{2023}</Typography.Text>
       </div>
     ),
+    isExpand: false,
+    indexExpand: i,
   });
 
   const newHeaderCell = (i) => ({
     type: "text",
-    text: "2024",
-    nonEditable: false,
-    columnIndex: i,
+    text: "",
+    nonEditable: true,
     renderer: (text) => (
       <div
         style={{
@@ -174,33 +170,39 @@ function TestingBertahap() {
           display: "flex",
           justifyContent: "space-between",
           color: "white",
-          background: "green",
-          paddingRight: 8,
-          paddingLeft: 8,
+          background: "blue",
         }}
+        onClick={() => onClickchevronHeader(i)}
       >
-        <ChevronLeftIcon onClick={() => onClickchevronHeader(i)} />
-        <Typography.Text style={{ color: "white" }}>{2024}</Typography.Text>
+        <ChevronLeftIcon />
       </div>
     ),
+    isExpand: true,
+    indexExpand: i,
   });
 
-  const expandedRowChecked = (nRow, col) => {
-    log("col", col.columnExpand);
+  const expandedRowChecked = (nRow) => {
     return nRow.map((d, i) => {
       return {
         ...d,
-        cells: d.cells.map((cell, j) => {
-          if (i === 0) {
-            if (j === cell.columnIndex) {
-              if (col.columnExpand === true) {
-                alert("true");
-                return newHeaderCell(cell.columnIndex);
+        cells: d.cells.map((cell) => {
+          if (cell.isExpand !== undefined) {
+            if (i === 0) {
+              if (cell.isExpand) {
+                return newHeaderCell(cell.indexExpand);
+              } else {
+                return normalHeaderCell(cell.indexExpand, cell.text);
+              }
+            } else {
+              if (cell.isExpand) {
+                cell.text = "";
+              } else {
+                cell.text = cell.expandText;
               }
 
-              alert("false");
-
-              return normalHeaderCell(cell.columnIndex);
+              if (cell.nonEditable !== undefined) {
+                cell.nonEditable = cell.isExpand;
+              }
             }
 
             return cell;
@@ -228,7 +230,7 @@ function TestingBertahap() {
   };
 
   const changeIsExpandedCol = (i, nCol) => {
-    nCol[i].columnExpand = !nCol[i].columnExpand;
+    nCol[i].isExpand = !nCol[i].isExpand;
     return nCol;
   };
 
@@ -240,48 +242,43 @@ function TestingBertahap() {
   };
 
   // const rowTree = buildTree(getRows());
-  // const [rowTree] = useState(() => buildTree(getRows()));
-  // const rowsToRender = [headerRow, ...getExpandedRows(rowTree)];
+  const [rowTree] = useState(() => buildTree(getRows()));
+  const rowsToRender = [headerRow, ...getExpandedRows(rowTree)];
 
-  const [eRow] = useState(() => expandedRowChecked([headerRow, ...getRows()], col[3]));
-  // const eCol = expandedColChecked(col);
+  const eRow = expandedRowChecked(rowsToRender);
+  const eCol = expandedColChecked(col);
 
   const [rows, setRows] = useState(eRow);
-  const [columns, setColumns] = useState(col);
+  const [columns, setColumns] = useState(eCol);
 
   const onClickchevronHeader = (i) => {
-    const newRows = [...rows];
-    logO({ newRows });
     const newCol = changeIsExpandedCol(i, columns);
+    const newRows = changeIsExpandedRow(i, rows);
 
-    // const cRows = changeIsExpandedRow(i, newRows);
+    const eCol = expandedColChecked(newCol);
+    const eRow = expandedRowChecked(newRows);
 
-    // const eCol = expandedColChecked(newCol);
-
-    const eRow = expandedRowChecked(newRows, newCol[i]);
-
-    logO({ eRow });
-
-    // setColumns(col);
+    setColumns(eCol);
     setRows(eRow);
   };
 
   const handleChanges = (changes) => {
-    // if (!changes[0].newCell.isExpand) {
-    //   const newRows = [...rowTree];
-    //   changes.forEach((change) => {
-    //     const changeRowIdx = rowTree.findIndex((el) => el.rowId === change.rowId);
-    //     const changeColumnIdx = columns.findIndex((el) => el.columnId === change.columnId);
-    //     newRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
-    //   });
-    //   const rToRender = [rows[0], ...getExpandedRows(newRows)];
-    //   setRows(rToRender);
-    // }
+    if (!changes[0].newCell.isExpand) {
+      const newRows = [...rowTree];
+      changes.forEach((change) => {
+        const changeRowIdx = rowTree.findIndex((el) => el.rowId === change.rowId);
+        const changeColumnIdx = columns.findIndex((el) => el.columnId === change.columnId);
+        newRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
+      });
+
+      const rToRender = [rows[0], ...getExpandedRows(newRows)];
+
+      setRows(rToRender);
+    }
   };
 
   return (
     <div>
-      <h6>{`${JSON.stringify(rows[0].cells[3])}`}</h6>
       <ReactGrid
         rows={rows}
         columns={columns}
@@ -293,4 +290,4 @@ function TestingBertahap() {
   );
 }
 
-export default TestingBertahap;
+export default TestingBertahap2;

@@ -18,7 +18,7 @@ const applyChange = (change) => (groups) =>
         : {
             ...group,
             year2: group.year2.map((value, idx) =>
-              change.columnId === (idx + 12) + 1 ? change.newCell.value : value
+              change.columnId === idx + 12 + 1 ? change.newCell.value : value
             ),
           }
       : group
@@ -29,35 +29,18 @@ const TestingRealProject = () => {
 
   const columns = getColumns();
 
-  //   const inputVariables = {
-  //     data,
-  //   };
-
-  //   const outputVariables = calculateOutputVariables(inputVariables);
-
-  //   const plannerData = {
-  //     ...inputVariables,
-  //     ...outputVariables,
-  //   };
-
   const rows = getRows({ data });
 
   const handleChanges = (changes) => {
     changes.forEach((change) => {
-      //   if (change.rowId === CASHBOXBANK_ROW_ID && change.columnId === 1) {
-      //     setOpeningBalance(change.newCell.value);
-      //   }
-      //   if (change.rowId === CREDITLINE_ROW_ID && change.columnId === 1) {
-      //     setCreditLine(change.newCell.value);
-      //   }
       setData((e) => applyChange(change)(e));
-      //   setCashOutflow((cashOutflow) => applyChange(change)(cashOutflow));
     });
   };
 
   return (
     <>
       <div style={{ width: 1700 }} className="liquidity-planner-app">
+        <h1>test</h1>
         <ReactGrid
           rows={rows}
           columns={columns}

@@ -4,6 +4,7 @@ import { columns as dataColumns } from "./columns";
 import { rows as dataRows, headerRow } from "./rows";
 import { CellChange, ChevronCell, ReactGrid, Row } from "@silevis/reactgrid";
 import "@silevis/reactgrid/styles.css";
+import { logO } from "../../values/Utilitas";
 // import "./styles.css";
 
 const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron");
@@ -55,8 +56,8 @@ const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
   });
 };
 
-const buildTree = (rows) =>
-  rows.map((row) => {
+const buildTree = (rows) => {
+  return rows.map((row) => {
     const foundChevronCell = findChevronCell(row);
     if (foundChevronCell && !foundChevronCell.parentId) {
       const hasRowChildrens = hasChildren(rows, row);
@@ -65,6 +66,7 @@ const buildTree = (rows) =>
     }
     return row;
   });
+};
 
 const TestingPages1 = () => {
   const [columns] = useState(() => dataColumns(true, false));
@@ -73,12 +75,16 @@ const TestingPages1 = () => {
 
   const handleChanges = (changes) => {
     const newRows = [...rows];
+
+    logO({ changes });
+    logO({ newRows });
+
     changes.forEach((change) => {
       const changeRowIdx = rows.findIndex((el) => el.rowId === change.rowId);
       const changeColumnIdx = columns.findIndex((el) => el.columnId === change.columnId);
       newRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
     });
-    setRows(buildTree(newRows));
+    // setRows(buildTree(newRows));
     setRowsToRender([headerRow, ...getExpandedRows(newRows)]);
   };
 
