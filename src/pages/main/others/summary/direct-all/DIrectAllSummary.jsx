@@ -25,7 +25,10 @@ const DirectAllSummary = () => {
 
       <div className="custom-root-layout">
         <div style={{ overflowX: "auto", overflowY: "auto" }}>
-          <div style={{ width: "100%", height: "495px" }} className="liquidity-planner-app">
+          <div
+            style={{ width: "100%", height: "calc(100vh - 239px)" }}
+            className="liquidity-planner-app"
+          >
             <ReactGrid
               rows={value.rows}
               columns={value.columns}
