@@ -137,6 +137,7 @@ export const allItemSummarySubMenu = [
     "Input Direct Pendapatan Non Operasional",
     "Input Direct Biaya Non Operasional",
     "Input Direct All",
+    "Summary Direct All",
     "Summary Biaya Non Operasional",
     "Summary Pendapatan Non Operasional",
     "Input Asumsi",
@@ -290,7 +291,7 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 6 Others
-  [false, false, false, false, false, true],
+  [false, false, false, false, false, false, true],
   // 7 Report
   [false],
   // 8 Master COA

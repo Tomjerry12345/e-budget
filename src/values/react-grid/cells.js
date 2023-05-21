@@ -12,6 +12,16 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
+export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
+  type: "chevron",
+  text,
+  isExpanded: false,
+  hasChildren,
+  parentId,
+  className,
+  style,
+});
+
 export const numberCell = (value, className = "", style) => ({
   type: "number",
   value,
@@ -61,6 +71,25 @@ export const noSideBorders = (cell) => ({
     },
   },
 });
+
+export function rootHeaderCell(
+  title,
+  additionalClassNames = "",
+  background = "#107C41",
+  color = "white"
+) {
+  return nonEditable(
+    textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+      background: background,
+      color: color,
+      border: {
+        bottom: { style: "none" },
+        left: { style: "none" },
+        right: { style: "none" },
+      },
+    })
+  );
+}
 
 export function monthHeaderCell(month, additionalClassNames = "") {
   return nonEditable(

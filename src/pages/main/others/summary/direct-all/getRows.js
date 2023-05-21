@@ -1,4 +1,3 @@
-import { months } from "../../values/react-grid/helpers";
 import {
   emptyTextCell,
   nonEditable,
@@ -9,7 +8,9 @@ import {
   showZero,
   noSideBorders,
   rootHeaderCell,
-} from "../../values/react-grid/cells";
+  chevronCell,
+} from "../../../../../values/react-grid/cells";
+import { months } from "../../../../../values/react-grid/helpers";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 export const HEADER_CHILD_ROW_ID = "header-child";
@@ -26,6 +27,7 @@ function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
+      nonEditable(emptyTextCell),
       nonEditable(emptyTextCell),
       noSideBorders(nonEditable(rootHeaderCell(""))),
       noSideBorders(nonEditable(rootHeaderCell(""))),
@@ -63,7 +65,9 @@ function getChildHeaderRow() {
     rowId: HEADER_CHILD_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(emptyTextCell),
+      nonEditable(textCell("Account", "justify-content-center")),
+      nonEditable(textCell("Description", "justify-content-center")),
+
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
@@ -77,6 +81,7 @@ function getChildHeaderRow() {
       nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Year`, "justify-content-end")),
+
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
@@ -94,24 +99,68 @@ function getChildHeaderRow() {
   };
 }
 
-function getGroupRows(title, groups) {
+function getGroupRows(groups) {
   return [
-    {
-      rowId: `${title}Header`,
-      height: HEADING_ROW_HEIGHT,
+    ...groups.map((d) => ({
+      rowId: d["account"],
+      height: ROW_HEIGHT,
       cells: [
-        bottomLine(
-          nonEditable(
-            textCell(
-              title,
-              `align-items-end text-lg font-bold text-${title === "Inflow" ? "green" : "blue"}`
-            )
-          )
-        ),
-        ...months().map((_) => noSideBorders(bottomLine(nonEditable(emptyTextCell)))),
-        bottomLine(nonEditable(emptyTextCell)),
+        // Tahun 1
+        // nonEditable(
+        //   chevronCell(d["account"], d["hasChildren"], d["parentId"], "padding-left-lg")
+        // ),
+        nonEditable(textCell(d["account"], "padding-left-lg")),
+        nonEditable(textCell(d["description"], "padding-left-lg")),
+        nonEditable(numberCell(d["jan1"], "padding-left-lg")),
+        nonEditable(numberCell(d["feb1"], "padding-left-lg")),
+        nonEditable(numberCell(d["mar1"], "padding-left-lg")),
+        nonEditable(numberCell(d["apr1"], "padding-left-lg")),
+        nonEditable(numberCell(d["mei1"], "padding-left-lg")),
+        nonEditable(numberCell(d["jun1"], "padding-left-lg")),
+        nonEditable(numberCell(d["jul1"], "padding-left-lg")),
+        nonEditable(numberCell(d["agu1"], "padding-left-lg")),
+        nonEditable(numberCell(d["sep1"], "padding-left-lg")),
+        nonEditable(numberCell(d["okt1"], "padding-left-lg")),
+        nonEditable(numberCell(d["nov1"], "padding-left-lg")),
+        nonEditable(numberCell(d["des1"], "padding-left-lg")),
+        nonEditable(numberCell(d["year1"], "padding-left-lg")),
+        // Tahun 2
+        nonEditable(numberCell(d["jan2"], "padding-left-lg")),
+        nonEditable(numberCell(d["feb2"], "padding-left-lg")),
+        nonEditable(numberCell(d["mar2"], "padding-left-lg")),
+        nonEditable(numberCell(d["apr2"], "padding-left-lg")),
+        nonEditable(numberCell(d["mei2"], "padding-left-lg")),
+        nonEditable(numberCell(d["jun2"], "padding-left-lg")),
+        nonEditable(numberCell(d["jul2"], "padding-left-lg")),
+        nonEditable(numberCell(d["agu2"], "padding-left-lg")),
+        nonEditable(numberCell(d["sep2"], "padding-left-lg")),
+        nonEditable(numberCell(d["okt2"], "padding-left-lg")),
+        nonEditable(numberCell(d["nov2"], "padding-left-lg")),
+        nonEditable(numberCell(d["des2"], "padding-left-lg")),
+        nonEditable(numberCell(d["year2"], "padding-left-lg")),
       ],
-    },
+    })),
+  ];
+}
+
+function getGroupRows1(title, groups) {
+  return [
+    // {
+    //   rowId: `${title}Header`,
+    //   height: HEADING_ROW_HEIGHT,
+    //   cells: [
+    //     bottomLine(
+    //       nonEditable(
+    //         textCell(
+    //           title,
+    //           `align-items-end text-lg font-bold text-${title === "Inflow" ? "green" : "blue"}`
+    //         )
+    //       )
+    //     ),
+    //     ...months().map((_) => noSideBorders(bottomLine(nonEditable(emptyTextCell)))),
+    //     bottomLine(nonEditable(emptyTextCell)),
+    //   ],
+    // },
     ...groups.map(({ title, year1, year2 }) => ({
       rowId: title,
       height: ROW_HEIGHT,
@@ -127,5 +176,9 @@ function getGroupRows(title, groups) {
 }
 
 export function getRows({ data }) {
-  return [getRootHeaderRow(), getChildHeaderRow(), ...getGroupRows("Inflow", data)];
+  return [getRootHeaderRow(), getChildHeaderRow(), ...getGroupRows(data)];
+}
+
+export function getRows1({ data }) {
+  return [getRootHeaderRow(), getChildHeaderRow(), ...getGroupRows1("Inflow", data)];
 }

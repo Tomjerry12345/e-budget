@@ -64,9 +64,12 @@ import LainIkpPage from "../pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage"
 import PenjualanBandPage from "../pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
 import LainBandPage from "../pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
 import TestingPages from "../testing/react-grid-testing/TestingPages";
-import { TestingPages1 } from "../testing/react-grid-testing/TestingPages1";
 import LiquidityPlanner from "../testing/sample-react-grid-liquid/LiquidityPlanner";
 import TestingRealProject from "../testing/sample-react-grid-real-project/TestingRealProject";
+import TestingPages1 from "../testing/react-grid-testing/TestingPages1";
+import TestingBertahap from "../testing/testing-bertahap/TestingBertahap";
+import TestingBertahap2 from "../testing/testing-bertahap/TestingBertahap2";
+import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllSummary";
 
 const RoutersConfig = () => {
   return (
@@ -146,11 +149,8 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            <Route
-              path="others-input/Input Asumsi"
-              element={<OthersInputAsumsiPage />}
-            />
-
+            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
+            <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
@@ -173,6 +173,8 @@ const RoutersConfig = () => {
         <Route path="/testing1" element={<TestingPages1 />} />
         <Route path="/react-grid-liquid" element={<LiquidityPlanner />} />
         <Route path="/real-testing" element={<TestingRealProject />} />
+        <Route path="/testing-bertahap" element={<TestingBertahap />} />
+        <Route path="/testing-bertahap2" element={<TestingBertahap2 />} />
       </Routes>
     </BrowserRouter>
   );
