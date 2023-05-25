@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { log, sumYearTotal } from "../../../../values/Utilitas";
+import { columnInputType1 } from "../../../../../component/table/utils/TypeColumn";
+import { val } from "../../../../../redux/action/action.reducer";
+import MainServices from "../../../../../services/MainServices";
+import { log, sumYearTotal } from "../../../../../values/Utilitas";
 
 const OpexInputLogic = () => {
   const date = new Date();
@@ -18,46 +18,42 @@ const OpexInputLogic = () => {
   const [tahun, setTahun] = useState();
   const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map(
-    (col) => {
-      if (!col.editable) {
-        return col;
-      }
-
-      let newCol = {
-        ...col,
-        onCell: (record) => ({
-          record,
-          editable: col.editable,
-          dataIndex: col.dataIndex,
-          title: col.title,
-        }),
-      };
-
-      if (col.children) {
-        newCol.children = col.children.map((t) => {
-          return {
-            ...t,
-            onCell: (record) => ({
-              record,
-              editable: t.editable,
-              dataIndex: t.dataIndex,
-              title: t.title,
-              handleSave,
-            }),
-          };
-        });
-      }
-
-      return newCol;
+  const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
+    if (!col.editable) {
+      return col;
     }
-  );
+
+    let newCol = {
+      ...col,
+      onCell: (record) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+      }),
+    };
+
+    if (col.children) {
+      newCol.children = col.children.map((t) => {
+        return {
+          ...t,
+          onCell: (record) => ({
+            record,
+            editable: t.editable,
+            dataIndex: t.dataIndex,
+            title: t.title,
+            handleSave,
+          }),
+        };
+      });
+    }
+
+    return newCol;
+  });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -170,9 +166,7 @@ const OpexInputLogic = () => {
         const itemparent = newData[x];
         const itemold = newData[x];
         itemparent[`${keysEdit[0]}`] =
-          parseInt(itemparent[`${keysEdit[0]}`]) +
-          parseInt(valuesEdit) -
-          parseInt(oldValue);
+          parseInt(itemparent[`${keysEdit[0]}`]) + parseInt(valuesEdit) - parseInt(oldValue);
 
         const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
 
@@ -191,7 +185,7 @@ const OpexInputLogic = () => {
 
     const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
 
-    if (i == 1) {
+    if (i === 1) {
       newData[index].year1 = sum;
     } else {
       newData[index].year2 = sum;

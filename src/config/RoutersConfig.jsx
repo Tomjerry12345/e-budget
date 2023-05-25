@@ -3,8 +3,6 @@ import LoginPage from "../pages/autentikasi/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
 import DashboardPage from "../pages/main/dashboard/DashboardPage";
 import CoaPage from "../pages/main/coa/CoaPage";
-import OpexInputPage from "../pages/main/opex/input/OpexInputPage";
-import OpexSummary from "../pages/main/opex/summary/OpexSummary";
 import App from "../pages/App";
 import CapexSummary from "../pages/main/capex/summary/CapexSummary";
 import RevenueCogsSummary from "../pages/main/revenueCogs/summary/RevenueCogsSummary";
@@ -70,6 +68,9 @@ import TestingPages1 from "../testing/react-grid-testing/TestingPages1";
 import TestingBertahap from "../testing/testing-bertahap/TestingBertahap";
 import TestingBertahap2 from "../testing/testing-bertahap/TestingBertahap2";
 import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllSummary";
+import IklanAdvertensiInputPage from "../pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
+import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
+import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
 
 const RoutersConfig = () => {
   return (
@@ -137,8 +138,9 @@ const RoutersConfig = () => {
             </Route>
           </Route>
           <Route path="opex">
-            <Route path="input/:item" element={<OpexInputPage />} />
-            <Route path="summary/:item" element={<OpexSummary />} />
+            <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
+            <Route path="input/opex" element={<OpexInputPage />} />
+            <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
             <Route path="input/:item" element={<CapexInputPage />} />

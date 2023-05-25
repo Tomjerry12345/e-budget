@@ -37,7 +37,7 @@ const MainPage = () => {
             size="large"
             header={null}
             footer={null}
-            dataSource={value.item}
+            dataSource={value.listSubmenu}
             renderItem={(item, i) => (
               <List.Item key={i}>
                 <Button
@@ -45,20 +45,12 @@ const MainPage = () => {
                   type="text"
                   block
                   disabled={value.itemDisabledMenu[i]}
-                  onMouseDown={(e) =>
-                    func.onMouseDownClickedMenu(value.keyMenu, item)
-                  }
+                  onMouseDown={(e) => func.onMouseDownClickedMenu(value.keyMenu, item)}
                   onClick={(e) =>
-                    func.onClickedMenu(
-                      value.keyMenu,
-                      "submenu",
-                      item,
-                      value.titleMenu,
-                      e
-                    )
+                    func.onClickedMenu(value.keyMenu, "submenu", item, value.titleMenu, e)
                   }
                 >
-                  {item}
+                  {item.description}
                 </Button>
               </List.Item>
             )}
@@ -69,6 +61,7 @@ const MainPage = () => {
       <Layout
         style={{
           backgroundColor: "white",
+          overflow: "auto",
         }}
       >
         <Content>
@@ -76,7 +69,10 @@ const MainPage = () => {
         </Content>
       </Layout>
 
-      <NotificationComponent status={value.notifRedux.status} message={value.notifRedux.message}/>
+      <NotificationComponent
+        status={value.notifRedux.status}
+        message={value.notifRedux.message}
+      />
     </Layout>
   );
 };

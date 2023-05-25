@@ -91,10 +91,10 @@ export function rootHeaderCell(
   );
 }
 
-export function monthHeaderCell(month, additionalClassNames = "") {
+export function monthHeaderCell(month, additionalClassNames = "", background = "#107C41") {
   return nonEditable(
     textCell(month, `text-lg font-bold ${additionalClassNames}`, {
-      background: "#107C41",
+      background: background,
       color: "white",
       border: {
         bottom: { style: "none" },

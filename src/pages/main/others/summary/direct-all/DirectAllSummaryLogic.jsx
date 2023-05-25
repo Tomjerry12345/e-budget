@@ -3,11 +3,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getLocal, logO } from "../../../../../values/Utilitas";
 import MainServices from "../../../../../services/MainServices";
-import { columnOutputType1 } from "../../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../../redux/action/action.reducer";
 import { getColumns } from "./getColumns";
-import { getRows, getRows1 } from "./getRows";
-import { data as emptyData } from "./rawData";
+import { getRows } from "./getRows";
 
 const DirectAllSummaryLogic = () => {
   const [form] = Form.useForm();

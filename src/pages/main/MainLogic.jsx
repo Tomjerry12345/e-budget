@@ -8,14 +8,13 @@ import {
   selectionMenu,
   urlPageRevenue,
 } from "../../values/Constant";
-import { routingMasterCoa, routingOthers, routingReport } from "../../values/RoutingPage";
 import {
-  cekToken,
-  getLocal,
-  getToken,
-  log,
-  setLocal,
-} from "../../values/Utilitas";
+  routingMasterCoa,
+  routingOpex,
+  routingOthers,
+  routingReport,
+} from "../../values/RoutingPage";
+import { cekToken, getLocal, getToken, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -23,12 +22,10 @@ const MainLogic = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [keyMenu, setKeyMenu] = useState(0);
   const [iEMenu, setiEmenu] = useState(0);
-  const [item, setItem] = useState(0);
+  const [listSubmenu, setListSubmenu] = useState([]);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const [isListMenuActivated, setListMenuActivated] = useState([
-    2, 0, 0, 0, 0, 0, 0, 0, 0,
-  ]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [header, setHeader] = useState("");
   const [routerNewPage, setRouterNewPage] = useState("#");
 
@@ -37,7 +34,7 @@ const MainLogic = () => {
   const pathName = location.pathname;
   const spliter = pathName?.split("/");
 
-  const notifRedux = useSelector(state => state.notif)
+  const notifRedux = useSelector((state) => state.notif);
 
   useEffect(() => {
     const movePage = getLocal("move-page");
@@ -116,7 +113,7 @@ const MainLogic = () => {
     }
   };
 
-  const onClickedMenu = (key, item, nameMenu, title, e) => {
+  const onClickedMenu = (key, item, subMenu, title, e) => {
     if (e !== undefined) e.preventDefault();
 
     let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -146,19 +143,23 @@ const MainLogic = () => {
       cekToken(navigate);
       dispatch(loadStart());
       setLocal("index-menu", index);
-      setLocal("name-menu", nameMenu);
+      setLocal("name-menu", subMenu.description);
 
       setiEmenu(keyMenu);
       isActivated[index] = 2;
-      setItem([]);
+      setListSubmenu([]);
       setShowMenu(false);
       // setTitleHeader(title);
 
-      setHeader(nameMenu);
+      setHeader(subMenu.description);
 
-      pageNavigation = onPageNavigation(index, nameMenu);
+      pageNavigation = onPageNavigation(index, subMenu);
 
-      navigate(pageNavigation);
+      navigate(pageNavigation, {
+        state: {
+          item: subMenu,
+        },
+      });
 
       setLocal("move-page", pageNavigation);
     }
@@ -166,33 +167,31 @@ const MainLogic = () => {
     setListMenuActivated(isActivated);
   };
 
-  const onMouseDownClickedMenu = (key, nameMenu) => {
-    log("nameMenu", nameMenu);
+  const onMouseDownClickedMenu = (key, subMenu) => {
     const index = parseInt(key);
-    let pageNavigation = onPageNavigation(index, nameMenu);
+    let pageNavigation = onPageNavigation(index, subMenu);
     setRouterNewPage(pageNavigation);
     setLocal("index-menu", index);
-    setLocal("name-menu", nameMenu);
+    setLocal("name-menu", subMenu.description);
     setLocal("move-page", pageNavigation);
   };
 
-  const onPageNavigation = (index, nameMenu) => {
+  const onPageNavigation = (index, subMenu) => {
     let pageNavigation = "";
+    const nameMenu = subMenu.description;
     const name = nameMenu.split(" ");
     const pathMove = name[0].toLowerCase();
     const inputOrSummary = pathMove !== "input" ? "summary" : pathMove;
 
     if (index === 1) {
-      if (
-        nameMenu === "Summary Revenue & COGS" ||
-        nameMenu === "Input Direct Revenue & COGS"
-      ) {
+      if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}`;
       } else {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
       }
     } else if (index === 2) {
-      pageNavigation = `/main/opex/${inputOrSummary}/${nameMenu}`;
+      const routing = routingOpex[nameMenu];
+      pageNavigation = `/main/opex/${inputOrSummary}/${routing}`;
     } else if (index === 3) {
       pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
     } else if (index === 4) {
@@ -222,9 +221,10 @@ const MainLogic = () => {
     return pageNavigation;
   };
 
-  const getSubmenu = (index) => {
-    const sMenu = selectionMenu(index)
-    setItem(sMenu.submenu);
+  const getSubmenu = async (index) => {
+    const sMenu = await selectionMenu(index);
+    log("sMenu.submenu", sMenu.submenu);
+    setListSubmenu(sMenu.submenu);
     setitemDisabledMenu(sMenu.disabled);
   };
 
@@ -235,7 +235,7 @@ const MainLogic = () => {
       onMouseDownClickedMenu,
     },
     value: {
-      item,
+      listSubmenu,
       isListMenuActivated,
       showMenu,
       keyMenu,
@@ -245,7 +245,7 @@ const MainLogic = () => {
       header,
       routerNewPage,
       navigate,
-      notifRedux
+      notifRedux,
     },
   };
 };

@@ -1,11 +1,10 @@
 import { Form } from "antd";
-import { createRef, useEffect, useState } from "react";
+import { createRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { getSizeScreen } from "../../../../values/Utilitas";
+import { val } from "../../../../../redux/action/action.reducer";
+import MainServices from "../../../../../services/MainServices";
+import { columnOutputType1 } from "../../../../../component/table/utils/TypeColumn";
 
 const OpexSummaryLogic = () => {
   let params = useParams();
@@ -13,17 +12,9 @@ const OpexSummaryLogic = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
   const [tableColumn, setTableColumn] = useState(null);
   const [dataColumn, setDataColumn] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
     dispatch(
@@ -87,7 +78,6 @@ const OpexSummaryLogic = () => {
       dataColumn,
       tableColumn,
       params,
-      size,
       ref,
       form,
       loading,
