@@ -1,7 +1,7 @@
 import React from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../component/table/TableComponent";
+import FilterComponent from "../../../../../component/filter/FilterComponent";
+import HeaderComponent from "../../../../../component/header/HeaderComponent";
+import TableComponent from "../../../../../component/table/TableComponent";
 import OpexInputLogic from "./OpexInputLogic";
 
 const OpexInputPage = () => {
@@ -30,12 +30,7 @@ const OpexInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
         <TableComponent
