@@ -307,7 +307,7 @@ const IklanAdvertensiInputLogic = () => {
     let tarif = newRows[i][rowIndex].cells[16].value;
 
     const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-      if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+      // if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
       if (i >= 3 && i <= 14) jumlahBulan += e.value;
       if (i === 15) e.value = jumlahBulan;
       if (i === 17) e.value = jumlahBulan * tarif;
