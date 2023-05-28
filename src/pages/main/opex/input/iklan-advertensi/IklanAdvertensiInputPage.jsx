@@ -1,9 +1,8 @@
 import React from "react";
 import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../../component/table/TableComponent";
 import IklanAdvertensiInputLogic from "./IklanAdvertensiInputLogic";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 
 const IklanAdvertensiInputPage = () => {
@@ -32,7 +31,12 @@ const IklanAdvertensiInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeIcp
+        isCodeProject
+        type="input"
+      />
 
       <div className="custom-root-layout">
         {/* <TableComponent
@@ -42,31 +46,40 @@ const IklanAdvertensiInputPage = () => {
           loading={value.loading}
           listKeyParent={value.listKeyParent}
         /> */}
+
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
+          <Typography.Text className="section-header-table">
+            Pemasaran
+          </Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
-              <div
-                style={{
-                  overflowX: "auto",
-                  overflowY: "auto",
-                  marginBottom: 16,
-                  paddingBottom: 16,
-                }}
-              >
+              <div style={{ margin: "10px" }}>
+                <Button className="btn-tambah-row" onClick={() => func.onTambahRow(i)}>
+                  Tambah Data
+                </Button>
+
                 <div
-                  style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
-                  className="liquidity-planner-app"
+                  style={{
+                    overflowX: "auto",
+                    overflowY: "auto",
+                    marginBottom: 16,
+                    paddingBottom: 16,
+                  }}
                 >
-                  <ReactGrid
-                    rows={e}
-                    columns={value.columns}
-                    stickyTopRows={1}
-                    stickyLeftColumns={1}
-                    onCellsChanged={(change) => func.onChangeTable(change, i)}
-                  />
+                  <div
+                    style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+                    className="liquidity-planner-app"
+                  >
+                    <ReactGrid
+                      rows={e}
+                      columns={value.columns}
+                      stickyTopRows={1}
+                      stickyLeftColumns={1}
+                      onCellsChanged={(change) => func.onChangeTable(change, i)}
+                    />
+                  </div>
                 </div>
               </div>
             ))

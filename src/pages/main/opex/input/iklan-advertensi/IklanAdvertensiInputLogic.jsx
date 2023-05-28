@@ -4,9 +4,14 @@ import { useDispatch } from "react-redux";
 import { columnInputType1 } from "../../../../../component/table/utils/TypeColumn";
 import { val } from "../../../../../redux/action/action.reducer";
 import MainServices from "../../../../../services/MainServices";
-import { log, logO, setLocal, sumYearTotal } from "../../../../../values/Utilitas";
+import {
+  log,
+  logO,
+  setLocal,
+  sumYearTotal,
+} from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getRows, testData } from "./getRows";
+import { getRows, reactgridNewRow, testData } from "./getRows";
 import { getColumns } from "./getColumns";
 
 const IklanAdvertensiInputLogic = () => {
@@ -28,42 +33,11 @@ const IklanAdvertensiInputLogic = () => {
     administrasi: [],
   });
 
-  // const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
-  //   if (!col.editable) {
-  //     return col;
-  //   }
-
-  //   let newCol = {
-  //     ...col,
-  //     onCell: (record) => ({
-  //       record,
-  //       editable: col.editable,
-  //       dataIndex: col.dataIndex,
-  //       title: col.title,
-  //     }),
-  //   };
-
-  //   if (col.children) {
-  //     newCol.children = col.children.map((t) => {
-  //       return {
-  //         ...t,
-  //         onCell: (record) => ({
-  //           record,
-  //           editable: t.editable,
-  //           dataIndex: t.dataIndex,
-  //           title: t.title,
-  //           handleSave,
-  //         }),
-  //       };
-  //     });
-  //   }
-
-  //   return newCol;
-  // });
-
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -163,16 +137,9 @@ const IklanAdvertensiInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const listTitleTotal = [
-      "Total Beban Promosi",
-      "Total Beban Penjualan",
-      "Total Beban Promosi",
-    ];
     const listPemasaran = [];
-    const listAdministrasi = [];
 
     const pemasaran = items.pemasaran;
-    const administrasi = items.administrasi;
 
     if (pemasaran.length > 0) {
       await Promise.all(
@@ -193,8 +160,6 @@ const IklanAdvertensiInputLogic = () => {
       );
     }
 
-    logO({ listPemasaran });
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -210,86 +175,34 @@ const IklanAdvertensiInputLogic = () => {
     onSetDataTable(values);
   };
 
-  // const handleSave = async (row, keysEdit, valuesEdit) => {
-  //   const newData = [...dataColumnInput];
-  //   const index = newData.findIndex((item) => row.key === item.key);
-  //   const item = newData[index];
-  //   const oldValue = item[`${keysEdit[0]}`];
-  //   newData.splice(index, 1, {
-  //     ...item,
-  //     ...row,
-  //   });
-  //   for (let x = index - 1; x >= 0; x--) {
-  //     if (newData[x].parent === true) {
-  //       const itemparent = newData[x];
-  //       const itemold = newData[x];
-  //       itemparent[`${keysEdit[0]}`] =
-  //         parseInt(itemparent[`${keysEdit[0]}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+  const onTambahRow = (i) => {
+    const newRows = [...rows.pemasaran];
+    const lastIndex = newRows[i].length - 1;
+    const id = lastIndex + 1;
+    const lastData = newRows[i][lastIndex];
 
-  //       const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+    newRows[i][lastIndex] = reactgridNewRow(id);
+    newRows[i].push(lastData);
 
-  //       if (i == 1) {
-  //         itemparent.year1 = sum;
-  //       } else {
-  //         itemparent.year2 = sum;
-  //       }
+    log("newRows[i][lastIndex]", `newRows[${i}][${lastIndex}]`);
 
-  //       newData.splice(x, 1, {
-  //         ...itemold,
-  //         ...itemparent,
-  //       });
-  //     }
-  //   }
+    logO({ newRows });
 
-  //   const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
+    setRows({
+      ...rows,
+      pemasaran: newRows,
+    });
 
-  //   if (i == 1) {
-  //     newData[index].year1 = sum;
-  //   } else {
-  //     newData[index].year2 = sum;
-  //   }
-
-  //   setDataColumnInput(newData);
-
-  //   let formData = new FormData();
-  //   const {
-  //     code_company,
-  //     code_product,
-  //     code_location,
-  //     code_dept,
-  //     code_icp,
-  //     code_project,
-  //     periode,
-  //   } = codeFilter;
-  //   const year = i == 1 ? periode : parseInt(periode) + 1;
-
-  //   const month = row[`${keysEdit[0]}-month`];
-  //   const uuid = row[`${keysEdit[0]}-uuid`];
-
-  //   if (uuid === null) {
-  //     formData.append("code", row.account);
-  //     formData.append("code_company", code_company);
-  //     formData.append("code_product", code_product);
-  //     formData.append("code_location", code_location);
-  //     formData.append("code_department", code_dept);
-  //     formData.append("code_icp", code_icp);
-  //     formData.append("code_project", code_project);
-  //     formData.append("month", month);
-  //     formData.append("year", year);
-  //   } else {
-  //     formData.append("id", uuid);
-  //   }
-
-  //   formData.append("value", valuesEdit);
-
-  //   await MainServices.post("opex/update", formData);
-  // };
+    showNotif(200, "Sukses tambah row");
+  };
 
   const onChangeTable = async (change, i) => {
     const newRows = [...rows.pemasaran];
     logO({ change });
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+    const columnIndex = columns.findIndex(
+      (j) => j.columnId === change[0].columnId
+    );
 
     const type = newRows[i][rowIndex].cells[columnIndex].type;
 
@@ -322,20 +235,59 @@ const IklanAdvertensiInputLogic = () => {
       const id = change[0].rowId;
       const column_id = change[0].columnId;
 
-      formData.append("id", id);
-      formData.append("column_id", column_id);
-      formData.append("value", value);
+      const isNewRow = newRows[i][rowIndex].newRow;
 
-      await MainServices.post("detailopex/template1/update", formData);
+      logO({ isNewRow });
 
-      setRows({
-        ...rows,
-        pemasaran: newRows,
-      });
+      if (isNewRow !== undefined) {
+        alert("new row");
+        const {
+          code_company,
+          code_dept,
+          code_location,
+          code_product,
+          code_project,
+          code_icp,
+          periode,
+        } = codeFilter;
+
+        formData.append("code_account", id);
+        formData.append("code_company", code_company);
+        formData.append("code_dept", code_dept);
+        formData.append("code_location", code_location);
+        formData.append("code_product", code_product);
+        formData.append("code_project", code_project);
+        formData.append("code_icp", code_icp);
+        formData.append("year", periode);
+        formData.append("name", value);
+      } else {
+        alert("not new row");
+        formData.append("id", id);
+        formData.append("column_id", column_id);
+        formData.append("value", value);
+      }
+
+      // await MainServices.post("detailopex/template1/update", formData);
+
+      // setRows({
+      //   ...rows,
+      //   pemasaran: newRows,
+      // });
+
+      // delete newRows[i][rowIndex].newRow
 
       showNotif(200, "Sukses update data");
+
+      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+        // if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+        if (i >= 1 && i <= 14 || i == 16) e.nonEditable = false;
+        return e;
+      });
+      newRows[i][rowIndex].cells = newCell;
+      
     } catch (e) {
-      showNotif(400, e);
+      logO({e})
+      // showNotif(400, e);
     }
   };
 
@@ -413,6 +365,7 @@ const IklanAdvertensiInputLogic = () => {
       onChangeTahun,
       setUploadSucces,
       onChangeTable,
+      onTambahRow,
     },
   };
 };
