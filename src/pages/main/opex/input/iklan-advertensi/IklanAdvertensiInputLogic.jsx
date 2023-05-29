@@ -1,65 +1,31 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch } from "react-redux";
-import { columnInputType1 } from "../../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../../redux/action/action.reducer";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "../../../../../redux/action/action.reducer";
 import MainServices from "../../../../../services/MainServices";
-import { log, logO, setLocal, sumYearTotal } from "../../../../../values/Utilitas";
+import { log, setLocal } from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getRows, testData } from "./getRows";
+import { getRows, reactgridNewRow } from "./getRows";
 import { getColumns } from "./getColumns";
+import { actionData } from "../../../../../redux/data-global/data.reducer";
 
 const IklanAdvertensiInputLogic = () => {
-  const date = new Date();
-
-  const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
-  const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
-  const [filter, setFilter] = useState(false);
-  const [tahun, setTahun] = useState();
-  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const [items, setItems] = useState();
+  const [items, setItems] = useState({
+    pemasaran: [],
+  });
   const columns = getColumns();
   const [rows, setRows] = useState({
     pemasaran: [],
     administrasi: [],
   });
-
-  // const columns = columnInputType1(yearFilter, parseInt(yearFilter) + 1).map((col) => {
-  //   if (!col.editable) {
-  //     return col;
-  //   }
-
-  //   let newCol = {
-  //     ...col,
-  //     onCell: (record) => ({
-  //       record,
-  //       editable: col.editable,
-  //       dataIndex: col.dataIndex,
-  //       title: col.title,
-  //     }),
-  //   };
-
-  //   if (col.children) {
-  //     newCol.children = col.children.map((t) => {
-  //       return {
-  //         ...t,
-  //         onCell: (record) => ({
-  //           record,
-  //           editable: t.editable,
-  //           dataIndex: t.dataIndex,
-  //           title: t.title,
-  //           handleSave,
-  //         }),
-  //       };
-  //     });
-  //   }
-
-  //   return newCol;
-  // });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -71,6 +37,8 @@ const IklanAdvertensiInputLogic = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const dataGlobalRedux = useSelector((state) => state.data);
+
   useEffect(() => {
     const state = location.state;
     if (state === null) {
@@ -81,7 +49,6 @@ const IklanAdvertensiInputLogic = () => {
       return;
     }
 
-    log("item", state.item);
     setItems(state.item);
   }, []);
 
@@ -92,6 +59,7 @@ const IklanAdvertensiInputLogic = () => {
         message: res.data.responseDescription,
       })
     );
+    dispatch(actionData({ loading: false }));
   };
 
   const showNotif = (status, message) => {
@@ -131,8 +99,6 @@ const IklanAdvertensiInputLogic = () => {
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    setYearFilter(fPeriode);
-
     getData(
       fCodeCompany,
       fCodeProduct,
@@ -163,16 +129,9 @@ const IklanAdvertensiInputLogic = () => {
     codeProject,
     periode
   ) => {
-    const listTitleTotal = [
-      "Total Beban Promosi",
-      "Total Beban Penjualan",
-      "Total Beban Promosi",
-    ];
     const listPemasaran = [];
-    const listAdministrasi = [];
 
     const pemasaran = items.pemasaran;
-    const administrasi = items.administrasi;
 
     if (pemasaran.length > 0) {
       await Promise.all(
@@ -180,7 +139,6 @@ const IklanAdvertensiInputLogic = () => {
           const codeAccount = p.code_account;
           const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           const { data } = await MainServices.get(url);
-          logO({ data });
 
           if (data.data.length > 0) {
             const r = getRows({
@@ -193,8 +151,6 @@ const IklanAdvertensiInputLogic = () => {
       );
     }
 
-    logO({ listPemasaran });
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -205,89 +161,30 @@ const IklanAdvertensiInputLogic = () => {
   };
 
   const onFinish = (values) => {
-    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
 
-  // const handleSave = async (row, keysEdit, valuesEdit) => {
-  //   const newData = [...dataColumnInput];
-  //   const index = newData.findIndex((item) => row.key === item.key);
-  //   const item = newData[index];
-  //   const oldValue = item[`${keysEdit[0]}`];
-  //   newData.splice(index, 1, {
-  //     ...item,
-  //     ...row,
-  //   });
-  //   for (let x = index - 1; x >= 0; x--) {
-  //     if (newData[x].parent === true) {
-  //       const itemparent = newData[x];
-  //       const itemold = newData[x];
-  //       itemparent[`${keysEdit[0]}`] =
-  //         parseInt(itemparent[`${keysEdit[0]}`]) + parseInt(valuesEdit) - parseInt(oldValue);
+  const onTambahRow = (i) => {
+    const newRows = [...rows.pemasaran];
+    const lastIndex = newRows[i].length - 1;
+    const id = lastIndex + 1;
+    const lastData = newRows[i][lastIndex];
 
-  //       const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
+    newRows[i][lastIndex] = reactgridNewRow(id);
+    newRows[i].push(lastData);
 
-  //       if (i == 1) {
-  //         itemparent.year1 = sum;
-  //       } else {
-  //         itemparent.year2 = sum;
-  //       }
+    setRows({
+      ...rows,
+      pemasaran: newRows,
+    });
 
-  //       newData.splice(x, 1, {
-  //         ...itemold,
-  //         ...itemparent,
-  //       });
-  //     }
-  //   }
-
-  //   const { sum, i } = sumYearTotal(newData[index], keysEdit[0]);
-
-  //   if (i == 1) {
-  //     newData[index].year1 = sum;
-  //   } else {
-  //     newData[index].year2 = sum;
-  //   }
-
-  //   setDataColumnInput(newData);
-
-  //   let formData = new FormData();
-  //   const {
-  //     code_company,
-  //     code_product,
-  //     code_location,
-  //     code_dept,
-  //     code_icp,
-  //     code_project,
-  //     periode,
-  //   } = codeFilter;
-  //   const year = i == 1 ? periode : parseInt(periode) + 1;
-
-  //   const month = row[`${keysEdit[0]}-month`];
-  //   const uuid = row[`${keysEdit[0]}-uuid`];
-
-  //   if (uuid === null) {
-  //     formData.append("code", row.account);
-  //     formData.append("code_company", code_company);
-  //     formData.append("code_product", code_product);
-  //     formData.append("code_location", code_location);
-  //     formData.append("code_department", code_dept);
-  //     formData.append("code_icp", code_icp);
-  //     formData.append("code_project", code_project);
-  //     formData.append("month", month);
-  //     formData.append("year", year);
-  //   } else {
-  //     formData.append("id", uuid);
-  //   }
-
-  //   formData.append("value", valuesEdit);
-
-  //   await MainServices.post("opex/update", formData);
-  // };
+    showNotif(200, "Sukses tambah row");
+  };
 
   const onChangeTable = async (change, i) => {
     const newRows = [...rows.pemasaran];
-    logO({ change });
+
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
     const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
 
@@ -306,11 +203,11 @@ const IklanAdvertensiInputLogic = () => {
     let jumlahBulan = 0;
     let tarif = newRows[i][rowIndex].cells[16].value;
 
-    const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-      // if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-      if (i >= 3 && i <= 14) jumlahBulan += e.value;
-      if (i === 15) e.value = jumlahBulan;
-      if (i === 17) e.value = jumlahBulan * tarif;
+    const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+      if (j >= 3 && j <= 14) jumlahBulan += e.value;
+      if (j === 15) e.value = jumlahBulan;
+      if (j === 17) e.value = jumlahBulan * tarif;
+      if (j >= 18) e.value = newRows[i][rowIndex].cells[j - 15].value * tarif;
       return e;
     });
 
@@ -321,68 +218,130 @@ const IklanAdvertensiInputLogic = () => {
 
       const id = change[0].rowId;
       const column_id = change[0].columnId;
+      const isNewRow = newRows[i][rowIndex].newRow;
 
-      formData.append("id", id);
-      formData.append("column_id", column_id);
-      formData.append("value", value);
+      if (isNewRow !== undefined) {
+        const {
+          code_company,
+          code_dept,
+          code_location,
+          code_product,
+          code_project,
+          code_icp,
+          periode,
+        } = codeFilter;
 
-      await MainServices.post("detailopex/template1/update", formData);
+        const codeAccount = items.pemasaran[i]["code_account"];
+
+        formData.append("code_account", codeAccount);
+        formData.append("code_company", code_company);
+        formData.append("code_department", code_dept);
+        formData.append("code_location", code_location);
+        formData.append("code_product", code_product);
+        formData.append("code_project", code_project);
+        formData.append("code_icp", code_icp);
+        formData.append("year", periode);
+        formData.append("name", value);
+
+        const res = await MainServices.post("detailopex/template1/update", formData);
+        const rowId = res.data.data.id;
+
+        newRows[i][rowIndex].rowId = rowId;
+      } else {
+        formData.append("id", id);
+        formData.append("column_id", column_id);
+        formData.append("value", value);
+
+        await MainServices.post("detailopex/template1/update", formData);
+      }
+
+      delete newRows[i][rowIndex].newRow;
+
+      showNotif(200, "Sukses update data");
+
+      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+        if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+        return e;
+      });
+      newRows[i][rowIndex].cells = newCell;
 
       setRows({
         ...rows,
         pemasaran: newRows,
       });
-
-      showNotif(200, "Sukses update data");
     } catch (e) {
-      showNotif(400, e);
+      log({ e });
+      // showNotif(400, e);
     }
   };
 
   const onSuccess = () => {
-    setUploadSucces(true);
+    dispatch(resetDataActionImport());
     acceptedFiles.length = 0;
   };
 
   const onUploadFile = async () => {
-    let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    // let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    dispatch(
+      actionImport({
+        loading: true,
+      })
+    );
+
+    const {
+      code_company,
+      code_product,
+      code_location,
+      code_dept,
+      code_icp,
+      code_project,
+      periode,
+    } = codeFilter;
+
+    const index = dataGlobalRedux.indexImport;
+    const codeAccount = items.pemasaran[index]["code_account"];
     let file1;
+
     let formData = new FormData();
 
-    setLoadingUpload(true);
+    // setLoadingUpload(true);
 
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
 
     formData.append("file", file1);
-    formData.append("year", tahun1);
+    formData.append("code_account", codeAccount);
+    formData.append("code_company", code_company);
+    formData.append("code_department", code_dept);
+    formData.append("code_location", code_location);
+    formData.append("code_product", code_product);
+    formData.append("code_project", code_project);
+    formData.append("code_icp", code_icp);
+    formData.append("year", periode);
 
     try {
-      const res = await MainServices.post("opex/import", formData);
-      if (codeFilter !== undefined) {
-        const {
-          code_company,
-          code_product,
-          code_location,
-          code_dept,
-          code_icp,
-          code_project,
-          periode,
-        } = codeFilter;
+      const res = await MainServices.post(`detailopex/template${index + 1}/import`, formData);
 
-        getData(
-          code_company,
-          code_product,
-          code_location,
-          code_dept,
-          code_icp,
-          code_project,
-          periode
-        );
-      }
+      const url = `detailopex/template1/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const { data } = await MainServices.get(url);
+
+      const r = getRows({
+        data: data.data,
+        titleTotal: "total harga",
+      });
+
+      const newRow = [...rows.pemasaran];
+
+      newRow[index] = r;
+
+      setRows({
+        ...rows,
+        pemasaran: newRow,
+      });
+
       responseShow(res);
-      setLoadingUpload(false);
+
       onSuccess();
     } catch (error) {
       const err = error.response;
@@ -390,29 +349,23 @@ const IklanAdvertensiInputLogic = () => {
     }
   };
 
-  const onChangeTahun = (e) => {
-    setTahun(e);
-  };
-
   return {
     value: {
-      dataColumnInput,
       columns,
       rows,
       loading,
-      filter,
-      loadingUpload,
       uploadSucces,
       getRootProps,
       getInputProps,
       acceptedFiles,
+      items,
     },
     func: {
       onFinish,
       onUploadFile,
-      onChangeTahun,
       setUploadSucces,
       onChangeTable,
+      onTambahRow,
     },
   };
 };

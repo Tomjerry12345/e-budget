@@ -20,7 +20,7 @@ function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
 
@@ -66,8 +66,8 @@ function getGroupRows(groups) {
       height: ROW_HEIGHT,
       cells: [
         textCell(d["name"], "padding-left-lg"),
-        textCell(d["activity"], "padding-left-lg"),
-        textCell(d["cost_driver"], "padding-left-lg"),
+        textCell(d["activity"] ?? "-", "padding-left-lg"),
+        textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
         numberCell(d["jan"], "padding-left-lg"),
         numberCell(d["feb"], "padding-left-lg"),
         numberCell(d["mar"], "padding-left-lg"),
@@ -159,4 +159,46 @@ function rowTotal(titleTotal) {
 
 export function getRows({ data, titleTotal }) {
   return [getRootHeaderRow(), ...getGroupRows(data), rowTotal(titleTotal)];
+}
+
+export function reactgridNewRow(id) {
+  return {
+    rowId: id,
+    newRow: true,
+    height: ROW_HEIGHT,
+    cells: [
+      textCell("", "padding-left-lg"),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      // Tahun 2
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+    ],
+  };
 }

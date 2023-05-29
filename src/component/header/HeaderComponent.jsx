@@ -1,6 +1,6 @@
 import HeaderComponentTypeCoa1 from "./type/type-coa/type-1/HeaderComponentTypeCoa1";
 import HeaderComponentTypeCoa2 from "./type/type-coa/type-2/HeaderComponentTypeCoa2";
-import HeaderComponentTypeInput from "./type/type-input/HeaderComponentTypeInput";
+import HeaderComponentTypeInput from "./type/type-input/type-1/HeaderComponentTypeInput";
 import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan/HeaderComponentTypeRevenuePerusahaan";
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
@@ -28,7 +28,8 @@ const HeaderComponent = ({
   inputTambah,
   formTambah,
   valueTreeData,
-  listMenuTitleMore = ["", ""]
+  listMenuTitleMore = ["", ""],
+  listMenuImport = [],
 }) => {
   let component;
 
@@ -44,6 +45,7 @@ const HeaderComponent = ({
         disabledImportExport={disabledImportExport}
         onChangeSelect={onChangeSelect}
         form={form}
+        listMenuImport={listMenuImport}
       />
     );
   } else if (type === "summary") {

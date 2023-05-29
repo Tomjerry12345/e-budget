@@ -8,7 +8,13 @@ export const getLocal = (key) => localStorage.getItem(key);
 
 export const getToken = () => localStorage.getItem("token");
 
-export const log = (tag, msg) => console.log(`[d] ${tag}`, msg);
+export const log = (tag, msg) => {
+  if (msg !== undefined) {
+    console.log(`[d] ${tag}`, msg);
+  } else {
+    logO(tag);
+  }
+};
 
 export const logO = (m) => {
   let name, value;
@@ -19,8 +25,7 @@ export const logO = (m) => {
   console.log(`[d] ${name}`, value);
 };
 
-export const logObj = (tag, message) =>
-  console.log(`${tag} => ${JSON.stringify(message)}`);
+export const logObj = (tag, message) => console.log(`${tag} => ${JSON.stringify(message)}`);
 
 export const logS = (tag, message) => console.log(`${tag} => ${message}`);
 
@@ -70,10 +75,7 @@ Number.prototype.format = function (n, x, s, c) {
   var re = "\\d(?=(\\d{" + (x || 3) + "})+" + (n > 0 ? "\\D" : "$") + ")",
     num = this.toFixed(Math.max(0, ~~n));
 
-  return (c ? num.replace(".", c) : num).replace(
-    new RegExp(re, "g"),
-    "$&" + (s || ",")
-  );
+  return (c ? num.replace(".", c) : num).replace(new RegExp(re, "g"), "$&" + (s || ","));
 }; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/
 
 export const slicing = (text, format, i) => {
