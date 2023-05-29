@@ -6,21 +6,51 @@ export const allItemSummarySubMenu = [
   [],
   // 2 Revenue & COGS
   [
-    "Revenue & COGS HK", // 0
-    "Revenue & COGS KIU", // 1
-    "Revenue & COGS GMM", // 2
-    "Revenue & COGS KIA", // 3
-    "Revenue & COGS BJU", // 4
-    "Revenue & COGS BLT", // 5
-    "Revenue & COGS BLU", // 6
-    "Revenue & COGS BK", // 7
-    "Revenue & COGS BSU", // 8
-    "Revenue & COGS BSB", // 9
-    "Revenue & COGS KIK", // 10
-    "Revenue & COGS IKP", // 11
-    "Revenue & COGS BAND", // 12
-    "Input Direct Revenue & COGS", // 13
-    "Summary Revenue & COGS", // 14
+    {
+      description: "Revenue & COGS HK",
+    },
+    {
+      description: "Revenue & COGS KIU",
+    },
+    {
+      description: "Revenue & COGS GMM",
+    },
+    {
+      description: "Revenue & COGS KIA",
+    },
+    {
+      description: "Revenue & COGS BJU",
+    },
+    {
+      description: "Revenue & COGS BLT",
+    },
+    {
+      description: "Revenue & COGS BLU",
+    },
+    {
+      description: "Revenue & COGS BK",
+    },
+    {
+      description: "Revenue & COGS BSU",
+    },
+    {
+      description: "Revenue & COGS BSB",
+    },
+    {
+      description: "Revenue & COGS KIK",
+    },
+    {
+      description: "Revenue & COGS IKP",
+    },
+    {
+      description: "Revenue & COGS BAND",
+    },
+    {
+      description: "Input Direct Revenue & COGS",
+    },
+    {
+      description: "Summary Revenue & COGS",
+    },
   ],
   // 3 Opex
   [
@@ -158,7 +188,11 @@ export const allItemSummarySubMenu = [
     },
   ],
   // 7 Report
-  ["Laba Rugi"],
+  [
+    {
+      description: "Laba Rugi",
+    },
+  ],
   // 8 Master COA
   [
     {

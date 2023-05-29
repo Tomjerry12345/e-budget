@@ -11,60 +11,45 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
     <Button className="btn-cancel" type="text" onClick={onCancel}>
       Cancel
     </Button>
-    <Button
-      className="btn-upload"
-      type="primary"
-      onClick={onOk}
-      loading={loading}
-    >
+    <Button className="btn-upload" type="primary" onClick={onOk} loading={loading}>
       Upload
     </Button>
   </>
 );
 
-const ImportInputModal = ({
-  open,
-  onCancel,
-  value,
-  onOk,
-  file,
-  loading,
-  onChangeSelect,
-}) => {
+const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, onChangeSelect }) => {
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
 
-  const dateNow = new Date().getFullYear();
+  // const dateNow = new Date().getFullYear();
 
-  const listTahun = [];
+  // const listTahun = [];
 
-  for (let i = dateNow - 2; i <= dateNow + 1; i++) {
-    listTahun.push({
-      label: i,
-      value: i,
-    });
-  }
+  // for (let i = dateNow - 2; i <= dateNow + 1; i++) {
+  //   listTahun.push({
+  //     label: i,
+  //     value: i,
+  //   });
+  // }
 
   return (
     <Modal
       open={open}
       className="custom-upload-modal"
-      footer={
-        <CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />
-      }
+      footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />}
       onCancel={onCancel}
     >
       <Title level={4}>Import</Title>
       <div className="root-content-upload">
         <Text className="title-upload">Tahun</Text>
-        <Select
+        {/* <Select
           className="select-style"
           onSelect={onChangeSelect}
           options={listTahun}
           // value={}
           defaultValue={dateNow}
-        />
+        /> */}
         <div {...value.getRootProps()}>
           <Text className="title-upload">Upload Dokumen Template</Text>
           <div className="layout-upload-file">

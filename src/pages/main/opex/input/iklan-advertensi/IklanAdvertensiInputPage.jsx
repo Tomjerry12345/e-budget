@@ -13,44 +13,19 @@ const IklanAdvertensiInputPage = () => {
       <HeaderComponent
         type="input"
         // onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onChangeLoadingUpload={(set, setImport) => {
-          set(value.loadingUpload);
-
-          if (value.uploadSucces === true) {
-            setImport(false);
-            func.setUploadSucces(null);
-          }
-        }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/opex.xlsx"
-        disabledImportExport={value.dataColumnInput.length <= 1}
+        downloadFile="file/detail-opex.xlsx"
+        disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
+        listMenuImport={value.items.pemasaran}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
-        {/* <TableComponent
-          variant="input"
-          dataSource={value.dataColumnInput}
-          columns={value.columns}
-          loading={value.loading}
-          listKeyParent={value.listKeyParent}
-        /> */}
-
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0

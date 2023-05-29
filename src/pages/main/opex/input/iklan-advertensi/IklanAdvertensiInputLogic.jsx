@@ -1,32 +1,26 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch } from "react-redux";
-import { columnInputType1 } from "../../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../../redux/action/action.reducer";
-import MainServices from "../../../../../services/MainServices";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  log,
-  logO,
-  setLocal,
-  sumYearTotal,
-} from "../../../../../values/Utilitas";
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "../../../../../redux/action/action.reducer";
+import MainServices from "../../../../../services/MainServices";
+import { log, setLocal } from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getRows, reactgridNewRow, testData } from "./getRows";
+import { getRows, reactgridNewRow } from "./getRows";
 import { getColumns } from "./getColumns";
+import { actionData } from "../../../../../redux/data-global/data.reducer";
 
 const IklanAdvertensiInputLogic = () => {
-  const date = new Date();
-
-  const [dataColumnInput, setDataColumnInput] = useState([]);
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
-  const [loadingUpload, setLoadingUpload] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
-  const [filter, setFilter] = useState(false);
-  const [tahun, setTahun] = useState();
-  const [yearFilter, setYearFilter] = useState(date.getFullYear());
 
-  const [items, setItems] = useState();
+  const [items, setItems] = useState({
+    pemasaran: [],
+  });
   const columns = getColumns();
   const [rows, setRows] = useState({
     pemasaran: [],
@@ -35,15 +29,15 @@ const IklanAdvertensiInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const dataGlobalRedux = useSelector((state) => state.data);
 
   useEffect(() => {
     const state = location.state;
@@ -55,7 +49,6 @@ const IklanAdvertensiInputLogic = () => {
       return;
     }
 
-    log("item", state.item);
     setItems(state.item);
   }, []);
 
@@ -66,6 +59,7 @@ const IklanAdvertensiInputLogic = () => {
         message: res.data.responseDescription,
       })
     );
+    dispatch(actionData({ loading: false }));
   };
 
   const showNotif = (status, message) => {
@@ -104,8 +98,6 @@ const IklanAdvertensiInputLogic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
-
-    setYearFilter(fPeriode);
 
     getData(
       fCodeCompany,
@@ -147,7 +139,6 @@ const IklanAdvertensiInputLogic = () => {
           const codeAccount = p.code_account;
           const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           const { data } = await MainServices.get(url);
-          logO({ data });
 
           if (data.data.length > 0) {
             const r = getRows({
@@ -170,7 +161,6 @@ const IklanAdvertensiInputLogic = () => {
   };
 
   const onFinish = (values) => {
-    setFilter(false);
     setLoading(true);
     onSetDataTable(values);
   };
@@ -184,10 +174,6 @@ const IklanAdvertensiInputLogic = () => {
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
 
-    log("newRows[i][lastIndex]", `newRows[${i}][${lastIndex}]`);
-
-    logO({ newRows });
-
     setRows({
       ...rows,
       pemasaran: newRows,
@@ -198,11 +184,9 @@ const IklanAdvertensiInputLogic = () => {
 
   const onChangeTable = async (change, i) => {
     const newRows = [...rows.pemasaran];
-    logO({ change });
+
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex(
-      (j) => j.columnId === change[0].columnId
-    );
+    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
 
     const type = newRows[i][rowIndex].cells[columnIndex].type;
 
@@ -219,11 +203,11 @@ const IklanAdvertensiInputLogic = () => {
     let jumlahBulan = 0;
     let tarif = newRows[i][rowIndex].cells[16].value;
 
-    const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-      // if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-      if (i >= 3 && i <= 14) jumlahBulan += e.value;
-      if (i === 15) e.value = jumlahBulan;
-      if (i === 17) e.value = jumlahBulan * tarif;
+    const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+      if (j >= 3 && j <= 14) jumlahBulan += e.value;
+      if (j === 15) e.value = jumlahBulan;
+      if (j === 17) e.value = jumlahBulan * tarif;
+      if (j >= 18) e.value = newRows[i][rowIndex].cells[j - 15].value * tarif;
       return e;
     });
 
@@ -234,13 +218,9 @@ const IklanAdvertensiInputLogic = () => {
 
       const id = change[0].rowId;
       const column_id = change[0].columnId;
-
       const isNewRow = newRows[i][rowIndex].newRow;
 
-      logO({ isNewRow });
-
       if (isNewRow !== undefined) {
-        alert("new row");
         const {
           code_company,
           code_dept,
@@ -251,90 +231,117 @@ const IklanAdvertensiInputLogic = () => {
           periode,
         } = codeFilter;
 
-        formData.append("code_account", id);
+        const codeAccount = items.pemasaran[i]["code_account"];
+
+        formData.append("code_account", codeAccount);
         formData.append("code_company", code_company);
-        formData.append("code_dept", code_dept);
+        formData.append("code_department", code_dept);
         formData.append("code_location", code_location);
         formData.append("code_product", code_product);
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
         formData.append("name", value);
+
+        const res = await MainServices.post("detailopex/template1/update", formData);
+        const rowId = res.data.data.id;
+
+        newRows[i][rowIndex].rowId = rowId;
       } else {
-        alert("not new row");
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
+
+        await MainServices.post("detailopex/template1/update", formData);
       }
 
-      // await MainServices.post("detailopex/template1/update", formData);
-
-      // setRows({
-      //   ...rows,
-      //   pemasaran: newRows,
-      // });
-
-      // delete newRows[i][rowIndex].newRow
+      delete newRows[i][rowIndex].newRow;
 
       showNotif(200, "Sukses update data");
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        // if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-        if (i >= 1 && i <= 14 || i == 16) e.nonEditable = false;
+        if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
         return e;
       });
       newRows[i][rowIndex].cells = newCell;
-      
+
+      setRows({
+        ...rows,
+        pemasaran: newRows,
+      });
     } catch (e) {
-      logO({e})
+      log({ e });
       // showNotif(400, e);
     }
   };
 
   const onSuccess = () => {
-    setUploadSucces(true);
+    dispatch(resetDataActionImport());
     acceptedFiles.length = 0;
   };
 
   const onUploadFile = async () => {
-    let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    // let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+    dispatch(
+      actionImport({
+        loading: true,
+      })
+    );
+
+    const {
+      code_company,
+      code_product,
+      code_location,
+      code_dept,
+      code_icp,
+      code_project,
+      periode,
+    } = codeFilter;
+
+    const index = dataGlobalRedux.indexImport;
+    const codeAccount = items.pemasaran[index]["code_account"];
     let file1;
+
     let formData = new FormData();
 
-    setLoadingUpload(true);
+    // setLoadingUpload(true);
 
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
 
     formData.append("file", file1);
-    formData.append("year", tahun1);
+    formData.append("code_account", codeAccount);
+    formData.append("code_company", code_company);
+    formData.append("code_department", code_dept);
+    formData.append("code_location", code_location);
+    formData.append("code_product", code_product);
+    formData.append("code_project", code_project);
+    formData.append("code_icp", code_icp);
+    formData.append("year", periode);
 
     try {
-      const res = await MainServices.post("opex/import", formData);
-      if (codeFilter !== undefined) {
-        const {
-          code_company,
-          code_product,
-          code_location,
-          code_dept,
-          code_icp,
-          code_project,
-          periode,
-        } = codeFilter;
+      const res = await MainServices.post(`detailopex/template${index + 1}/import`, formData);
 
-        getData(
-          code_company,
-          code_product,
-          code_location,
-          code_dept,
-          code_icp,
-          code_project,
-          periode
-        );
-      }
+      const url = `detailopex/template1/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const { data } = await MainServices.get(url);
+
+      const r = getRows({
+        data: data.data,
+        titleTotal: "total harga",
+      });
+
+      const newRow = [...rows.pemasaran];
+
+      newRow[index] = r;
+
+      setRows({
+        ...rows,
+        pemasaran: newRow,
+      });
+
       responseShow(res);
-      setLoadingUpload(false);
+
       onSuccess();
     } catch (error) {
       const err = error.response;
@@ -342,27 +349,20 @@ const IklanAdvertensiInputLogic = () => {
     }
   };
 
-  const onChangeTahun = (e) => {
-    setTahun(e);
-  };
-
   return {
     value: {
-      dataColumnInput,
       columns,
       rows,
       loading,
-      filter,
-      loadingUpload,
       uploadSucces,
       getRootProps,
       getInputProps,
       acceptedFiles,
+      items,
     },
     func: {
       onFinish,
       onUploadFile,
-      onChangeTahun,
       setUploadSucces,
       onChangeTable,
       onTambahRow,
