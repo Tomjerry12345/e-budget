@@ -98,29 +98,31 @@ function getRootHeaderRow() {
       nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
 
       nonEditable(
-        rootHeaderCell("Jumlah Bulan", "justify-content-center", COLOR_1)
+        textCell("Jumlah Bulan", "justify-content-center text-lg font-bold")
       ),
-      nonEditable(rootHeaderCell("Tarif", "justify-content-center", COLOR_1)),
+      nonEditable(
+        textCell("Tarif", "justify-content-center text-lg font-bold")
+      ),
       nonEditable(
         rootHeaderCell(
-          "Total Beban Iklan & Advertensi",
+          "Total Maintenance Cost",
           "justify-content-center",
           COLOR_2
         )
       ),
 
-      nonEditable(monthHeaderCell(`Jan`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Feb`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Mar`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Apr`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Mei`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Jun`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Jul`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Agu`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Sep`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Okt`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Nov`, "justify-content-center", COLOR_1)),
-      nonEditable(monthHeaderCell(`Des`, "justify-content-center", COLOR_1)),
+      nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Apr`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Mei`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Jun`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Jul`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Agu`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Sep`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Okt`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
     ],
   };
 }
