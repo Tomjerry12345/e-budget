@@ -6,7 +6,8 @@ export const routingOpex = {
   "Summary Budget Opex": "opex",
 };
 export const routingOthers = {
-  "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
+  "Input Direct Pendapatan Non Operasional":
+    "Input Direct Pendapatan Non Operasional",
   "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
   "Input Direct All": "direct-all",
   "Summary Direct All": "direct-all",
