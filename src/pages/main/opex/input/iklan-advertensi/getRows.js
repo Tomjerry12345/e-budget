@@ -1,3 +1,4 @@
+import { createArray, log } from "../../../../../values/Utilitas";
 import {
   emptyTextCell,
   nonEditable,
@@ -6,6 +7,7 @@ import {
   numberCell,
   noSideBorders,
   rootHeaderCell,
+  totalCell,
 } from "../../../../../values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
@@ -14,6 +16,20 @@ const ROW_HEIGHT = 32;
 
 const COLOR_1 = "#107C41";
 const COLOR_2 = "#107C41";
+
+const list = createArray(27);
+
+const firstLoadTotalRow = (data) => {
+  log({ data });
+
+  data.forEach((e) => {
+    list[0] += e["jan"];
+  });
+
+  log({ list });
+
+  return rowTotal("Total", list);
+};
 
 function getRootHeaderRow() {
   return {
@@ -102,7 +118,7 @@ function getGroupRows(groups) {
   ];
 }
 
-function rowTotal(titleTotal) {
+function rowTotal(titleTotal, total) {
   return {
     rowId: "row_total",
     height: ROW_HEIGHT,
@@ -124,41 +140,47 @@ function rowTotal(titleTotal) {
         })
       ),
 
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      ...total.map((e) => noSideBorders(totalCell(e, "", "beige"))),
 
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
 
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
-      noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
+      // noSideBorders(nonEditable(rootHeaderCell("", "", "beige"))),
     ],
   };
 }
 
-export function getRows({ data, titleTotal }) {
-  return [getRootHeaderRow(), ...getGroupRows(data), rowTotal(titleTotal)];
+export function getRows({ data }) {
+  return [getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
+}
+
+export function fullNewRow(id) {
+  return [getRootHeaderRow(), reactgridNewRow(id), rowTotal("Total", list)];
 }
 
 export function reactgridNewRow(id) {
