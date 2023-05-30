@@ -33,7 +33,7 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
-            onClickImport(i);
+            onClickImport(e.code_account);
             onCancel();
           }}
         >

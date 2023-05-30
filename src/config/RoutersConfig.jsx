@@ -69,6 +69,8 @@ import TestingBertahap from "../testing/testing-bertahap/TestingBertahap";
 import TestingBertahap2 from "../testing/testing-bertahap/TestingBertahap2";
 import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllSummary";
 import IklanAdvertensiInputPage from "../pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
+import PemeliharaanInputPage from "../pages/main/opex/input/pemeliharaan/PemeliharaanInputPage";
+import PerlengkapanKantorInputPage from "../pages/main/opex/input/perlengkapan-kantor/PerlengkapanKantorInputPage";
 import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
 import IklanAdvertensiSummaryPage from "../pages/main/opex/summary/iklan-advertensi/IklanAdvertensiSummaryPage";
@@ -142,6 +144,14 @@ const RoutersConfig = () => {
             <Route
               path="input/iklan-advertensi"
               element={<IklanAdvertensiInputPage />}
+            />
+            <Route
+              path="input/pemeliharaan"
+              element={<PemeliharaanInputPage />}
+            />
+            <Route
+              path="input/perlengkapan-kantor"
+              element={<PerlengkapanKantorInputPage />}
             />
             <Route path="input/opex" element={<OpexInputPage />} />
             <Route

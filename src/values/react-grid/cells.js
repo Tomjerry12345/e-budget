@@ -12,7 +12,13 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
-export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
+export const chevronCell = (
+  text,
+  hasChildren,
+  parentId,
+  className = "",
+  style
+) => ({
   type: "chevron",
   text,
   isExpanded: false,
@@ -110,11 +116,16 @@ export function totalCell(
   );
 }
 
-export function monthHeaderCell(month, additionalClassNames = "", background = "#107C41") {
+export function monthHeaderCell(
+  month,
+  additionalClassNames = "",
+  background = "#FFFFFF",
+  color = "#003421"
+) {
   return nonEditable(
     textCell(month, `text-lg font-bold ${additionalClassNames}`, {
       background: background,
-      color: "white",
+      color: color,
       border: {
         bottom: { style: "none" },
         left: { style: "none" },
