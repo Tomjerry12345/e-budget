@@ -9,12 +9,7 @@ import {
 import MainServices from "../../../../../services/MainServices";
 import { log, logO, setLocal } from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-  updateTotalRow,
-} from "./getRows";
+import { fullNewRow, getRows, reactgridNewRow, updateTotalRow } from "./getRows";
 import { getColumns } from "./getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 
@@ -25,6 +20,7 @@ const PemeliharaanInputLogic = () => {
 
   const [items, setItems] = useState({
     pemasaran: [],
+    administrasi: [],
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
@@ -34,9 +30,7 @@ const PemeliharaanInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -139,8 +133,18 @@ const PemeliharaanInputLogic = () => {
     periode
   ) => {
     const listPemasaran = [];
+    const listAdministrasi = [];
 
-    const pemasaran = items.pemasaran;
+    let pemasaran = items.pemasaran;
+    let administrasi = items.administrasi;
+
+    pemasaran = pemasaran.sort((p1, p2) =>
+      p1.code_account > p2.code_account ? 1 : p1.code_account < p2.code_account ? -1 : 0
+    );
+
+    administrasi = administrasi.sort((p1, p2) =>
+      p1.code_account > p2.code_account ? 1 : p1.code_account < p2.code_account ? -1 : 0
+    );
 
     if (pemasaran.length > 0) {
       await Promise.all(
@@ -162,13 +166,35 @@ const PemeliharaanInputLogic = () => {
           listPemasaran.push(r);
         })
       );
+
+      await Promise.all(
+        administrasi.map(async (p, i) => {
+          const codeAccount = p.code_account;
+          log({ codeAccount });
+          const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const { data } = await MainServices.get(url);
+          // log({ data });
+          let r;
+          if (data.data.length > 0) {
+            r = getRows({
+              data: data.data,
+            });
+          } else {
+            r = fullNewRow(i);
+          }
+
+          listAdministrasi.push(r);
+        })
+      );
     }
 
     log({ listPemasaran });
+    log({ listAdministrasi });
 
     setRows({
       ...rows,
       pemasaran: listPemasaran,
+      administrasi: listAdministrasi,
     });
 
     // getDataTable(data.data);
@@ -180,8 +206,11 @@ const PemeliharaanInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const onTambahRow = (i) => {
-    const newRows = [...rows.pemasaran];
+  const onTambahRow = (i, category) => {
+    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+
+    log({ i });
+    log({ category });
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
@@ -189,21 +218,21 @@ const PemeliharaanInputLogic = () => {
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
 
+    log({ newRows });
+
     setRows({
       ...rows,
-      pemasaran: newRows,
+      [category]: newRows,
     });
 
     showNotif(200, "Sukses tambah row");
   };
 
-  const onChangeTable = async (change, i) => {
-    const newRows = [...rows.pemasaran];
+  const onChangeTable = async (change, i, category) => {
+    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex(
-      (j) => j.columnId === change[0].columnId
-    );
+    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
 
     const type = newRows[i][rowIndex].cells[columnIndex].type;
 
@@ -250,7 +279,10 @@ const PemeliharaanInputLogic = () => {
           periode,
         } = codeFilter;
 
-        const codeAccount = items.pemasaran[i]["code_account"];
+        const codeAccount =
+          category === "pemasaran"
+            ? items.pemasaran[i]["code_account"]
+            : items.administrasi[i]["code_account"];
 
         formData.append("code_account", codeAccount);
         formData.append("code_company", code_company);
@@ -262,10 +294,7 @@ const PemeliharaanInputLogic = () => {
         formData.append("year", periode);
         formData.append("name", value);
 
-        const res = await MainServices.post(
-          "detailopex/template1/insert",
-          formData
-        );
+        const res = await MainServices.post("detailopex/template1/insert", formData);
 
         log({ res });
         const rowId = res.data.data.id;
@@ -294,7 +323,7 @@ const PemeliharaanInputLogic = () => {
 
       setRows({
         ...rows,
-        pemasaran: newRows,
+        [category]: newRows,
       });
     } catch (e) {
       log({ e });
@@ -325,11 +354,20 @@ const PemeliharaanInputLogic = () => {
       periode,
     } = codeFilter;
 
-    const index = dataGlobalRedux.indexImport;
-    const codeAccount = items.pemasaran[index]["code_account"];
     let file1;
 
-    log({ codeAccount });
+    const codeAccount = dataGlobalRedux.indexImport;
+    let index, category;
+
+    const checkItem = (items, cat) => {
+      items.forEach((e, i) => {
+        if (e.code_account === codeAccount) {
+          [index, category] = [i, cat];
+        }
+      });
+    };
+
+    checkItem(items.pemasaran, "pemasaran") || checkItem(items.administrasi, "administrasi");
 
     let formData = new FormData();
 
@@ -350,10 +388,7 @@ const PemeliharaanInputLogic = () => {
     formData.append("year", periode);
 
     try {
-      const res = await MainServices.post(
-        `detailopex/template1/import`,
-        formData
-      );
+      const res = await MainServices.post(`detailopex/template1/import`, formData);
 
       const url = `detailopex/template1/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
@@ -369,7 +404,7 @@ const PemeliharaanInputLogic = () => {
 
       setRows({
         ...rows,
-        pemasaran: newRow,
+        [category]: newRow,
       });
 
       responseShow(res);

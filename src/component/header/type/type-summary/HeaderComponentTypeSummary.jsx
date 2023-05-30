@@ -9,22 +9,13 @@ import {
   ToTopOutlined,
   VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
-import {
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Input,
-  Layout,
-  Menu,
-  Modal,
-  Typography,
-} from "antd";
+import { Breadcrumb, Button, Dropdown, Input, Layout, Menu, Modal, Typography } from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
 import UploadModal from "../../../modal/UploadModal";
 import HeaderComponentTypeSummaryLogic from "./HeaderComponentTypeSummaryLogic";
 
-import "./style.scss";
+import "../style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -120,7 +111,6 @@ const HeaderComponentTypeSummary = ({
       <Text className="header-title">{getLocal("name-menu")}</Text>
 
       <div className="container-menu">
-              
         {/* <Button
           className="btn-filter"
           icon={<FilterOutlined />}
@@ -134,7 +124,7 @@ const HeaderComponentTypeSummary = ({
         <Button
           className="btn-more"
           // icon={<ArrowDownOutlined />}
-          
+
           onClick={func.onClickMore}
         >
           Action <ArrowDownOutlined />

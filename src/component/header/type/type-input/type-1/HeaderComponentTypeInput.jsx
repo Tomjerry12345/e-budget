@@ -2,7 +2,7 @@ import { ArrowDownOutlined, DownloadOutlined } from "@ant-design/icons";
 import { Button, Layout, Modal, Typography } from "antd";
 import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
 
-import "../style.scss";
+import "../../style.scss";
 import { getLocal } from "../../../../../values/Utilitas";
 import ImportInputModal from "../../../../modal/import/ImportInputModal";
 
@@ -15,10 +15,11 @@ const ModalMenuMore = ({
   onClickImport,
   disabledImportExport,
   listMenuImport,
+  className,
 }) => {
   return (
     <Modal
-      className="more-modal"
+      className={`more-modal ${className}`}
       title={null}
       open={open}
       onCancel={onCancel}
@@ -53,6 +54,7 @@ const HeaderComponentTypeInput = ({
   disabledImportExport,
   onChangeSelect,
   listMenuImport,
+  className,
 }) => {
   const { value, func } = HeaderComponentTypeInputLogic({
     onChangeFilter,
@@ -68,6 +70,7 @@ const HeaderComponentTypeInput = ({
       </div>
 
       <ModalMenuMore
+        className={className}
         open={value.importRedux.openMore}
         onCancel={func.onCloseMore}
         onClickImport={func.onClickImport}

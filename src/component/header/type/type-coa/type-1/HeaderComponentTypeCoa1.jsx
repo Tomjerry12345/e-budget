@@ -3,7 +3,7 @@ import {
   FileAddOutlined,
   SearchOutlined,
   ToTopOutlined,
-  VerticalAlignBottomOutlined
+  VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Layout, Modal, Typography } from "antd";
 import { getLocal } from "../../../../../values/Utilitas";
@@ -11,7 +11,7 @@ import TambahDataCoaModal from "../../../../modal/tambah-data-coa/TambahDataCoaM
 import UploadCoaModal from "../../../../modal/upload-coa/UploadCoaModal";
 import HeaderComponentTypeCoa1Logic from "./HeaderComponentTypeCoa1Logic";
 
-import "../style.scss";
+import "../../style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -27,11 +27,7 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClick
       closable={false}
       mask={false}
     >
-      <Button
-        className="btn-import"
-        icon={<ToTopOutlined />}
-        onClick={onClickImport}
-      >
+      <Button className="btn-import" icon={<ToTopOutlined />} onClick={onClickImport}>
         Import Data
       </Button>
       <Button
@@ -71,7 +67,7 @@ const HeaderComponentTypeCoa1 = ({
   formTambah,
   valueTreeData,
   disabledImportExport,
-  onExport
+  onExport,
 }) => {
   const { value, func } = HeaderComponentTypeCoa1Logic({
     onChangeTambahData,
@@ -109,7 +105,7 @@ const HeaderComponentTypeCoa1 = ({
         <Button
           className="btn-more"
           // icon={<ArrowDownOutlined />}
-          
+
           onClick={func.onClickMore}
         >
           Action <ArrowDownOutlined />

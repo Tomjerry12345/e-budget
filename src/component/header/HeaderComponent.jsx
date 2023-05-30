@@ -5,6 +5,7 @@ import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
 const HeaderComponent = ({
+  className = "",
   onFinish,
   type,
   onChangeFilter,
@@ -36,6 +37,7 @@ const HeaderComponent = ({
   if (type === "input") {
     component = (
       <HeaderComponentTypeInput
+        className={className}
         onFinish={onFinish}
         onChangeFilter={onChangeFilter}
         onChangeLoadingUpload={onChangeLoadingUpload}
