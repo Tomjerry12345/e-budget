@@ -71,6 +71,7 @@ import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllS
 import IklanAdvertensiInputPage from "../pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
 import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
+import IklanAdvertensiSummaryPage from "../pages/main/opex/summary/iklan-advertensi/IklanAdvertensiSummaryPage";
 
 const RoutersConfig = () => {
   return (
@@ -138,8 +139,15 @@ const RoutersConfig = () => {
             </Route>
           </Route>
           <Route path="opex">
-            <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
+            <Route
+              path="input/iklan-advertensi"
+              element={<IklanAdvertensiInputPage />}
+            />
             <Route path="input/opex" element={<OpexInputPage />} />
+            <Route
+              path="summary/iklan-advertensi"
+              element={<IklanAdvertensiSummaryPage />}
+            />
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
@@ -151,7 +159,10 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
+            <Route
+              path="others-input/Input Asumsi"
+              element={<OthersInputAsumsiPage />}
+            />
             <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
