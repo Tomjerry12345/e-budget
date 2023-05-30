@@ -59,7 +59,7 @@ export const updateTotalRow = (data) => {
   const list = newData
     .map((e) => {
       const values = [];
-      for (let i = 3; i < 29; i++) {
+      for (let i = 3; i < 30; i++) {
         values.push(e.cells[i].value);
       }
       return values;

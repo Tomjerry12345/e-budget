@@ -21,19 +21,40 @@ const IklanAdvertensiInputPage = () => {
         listMenuImport={value.items.pemasaran}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeIcp
+        isCodeProject
+        type="input"
+      />
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
+          <Typography.Text className="section-header-table">
+            Pemasaran
+          </Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <Button className="btn-tambah-row" onClick={() => func.onTambahRow(i)}>
-                  Tambah Data
-                </Button>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography.Text>
+                    {value.items.pemasaran[i].description}
+                  </Typography.Text>
+                  <Button
+                    className="btn-tambah-row"
+                    onClick={() => func.onTambahRow(i)}
+                  >
+                    Tambah Data
+                  </Button>
+                </div>
 
                 <div
                   style={{
