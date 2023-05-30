@@ -2,7 +2,7 @@ import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
-import { getSizeScreen, log } from "../../../../values/Utilitas";
+import { getSizeScreen, log, logO } from "../../../../values/Utilitas";
 import MainServices from "../../../../services/MainServices";
 import { useDispatch } from "react-redux";
 import { val } from "../../../../redux/action/action.reducer";
@@ -60,35 +60,41 @@ const AkunLogic = () => {
     {
       title: "Code",
       dataIndex: "code",
+      type: "number",
       width: 170,
       editable: true,
     },
     {
       title: "Type Account",
       dataIndex: "type",
+      type: "text",
       width: 130,
       editable: true,
     },
     {
       title: "Description",
       dataIndex: "description",
+      type: "text",
       editable: true,
     },
     {
-      title: "Flag Report",
-      dataIndex: "flag_report",
-      editable: false,
-      width: 200
+      title: "Lock",
+      dataIndex: "lock",
+      type: "bool",
+      editable: true,
+      width: 200,
     },
     {
       title: "Created At",
       dataIndex: "created_at",
+      type: "text",
       editable: false,
       width: 150,
     },
     {
       title: "Update At",
       dataIndex: "updated_at",
+      type: "text",
       editable: false,
       width: 150,
     },
@@ -146,7 +152,7 @@ const AkunLogic = () => {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === "age" ? "number" : "text",
+        inputType: col.type,
         dataIndex: col.dataIndex,
         title: col.title,
         editing: isEditing(record),
@@ -251,6 +257,7 @@ const AkunLogic = () => {
   const onSetDataTable = async () => {
     setLoading(true);
     const { data } = await MainServices.get("account/list-tree");
+    logO({ data });
     setLoading(false);
     setDataColumn(data.data);
   };
@@ -350,7 +357,7 @@ const AkunLogic = () => {
       size,
       loading,
       columns,
-      form, 
+      form,
       isTambah,
       formTambah,
       loadingUpload,

@@ -3,8 +3,6 @@ import LoginPage from "../pages/autentikasi/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
 import DashboardPage from "../pages/main/dashboard/DashboardPage";
 import CoaPage from "../pages/main/coa/CoaPage";
-import OpexInputPage from "../pages/main/opex/input/OpexInputPage";
-import OpexSummary from "../pages/main/opex/summary/OpexSummary";
 import App from "../pages/App";
 import CapexSummary from "../pages/main/capex/summary/CapexSummary";
 import RevenueCogsSummary from "../pages/main/revenueCogs/summary/RevenueCogsSummary";
@@ -63,8 +61,16 @@ import PenjualanIkpPage from "../pages/main/revenueCogs/ikp/tabs/penjualan/Penju
 import LainIkpPage from "../pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
 import PenjualanBandPage from "../pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
 import LainBandPage from "../pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
-import TestingPages from "../testing/TestingPages";
-import { TestingPages1 } from "../testing/TestingPages1";
+import TestingPages from "../testing/react-grid-testing/TestingPages";
+import LiquidityPlanner from "../testing/sample-react-grid-liquid/LiquidityPlanner";
+import TestingRealProject from "../testing/sample-react-grid-real-project/TestingRealProject";
+import TestingPages1 from "../testing/react-grid-testing/TestingPages1";
+import TestingBertahap from "../testing/testing-bertahap/TestingBertahap";
+import TestingBertahap2 from "../testing/testing-bertahap/TestingBertahap2";
+import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllSummary";
+import IklanAdvertensiInputPage from "../pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
+import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
+import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
 
 const RoutersConfig = () => {
   return (
@@ -132,8 +138,9 @@ const RoutersConfig = () => {
             </Route>
           </Route>
           <Route path="opex">
-            <Route path="input/:item" element={<OpexInputPage />} />
-            <Route path="summary/:item" element={<OpexSummary />} />
+            <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
+            <Route path="input/opex" element={<OpexInputPage />} />
+            <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
             <Route path="input/:item" element={<CapexInputPage />} />
@@ -144,11 +151,8 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            <Route
-              path="others-input/Input Asumsi"
-              element={<OthersInputAsumsiPage />}
-            />
-
+            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
+            <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
             <Route path="summary/:item" element={<OthersSummary />} />
@@ -169,6 +173,10 @@ const RoutersConfig = () => {
         </Route>
         <Route path="/testing" element={<TestingPages />} />
         <Route path="/testing1" element={<TestingPages1 />} />
+        <Route path="/react-grid-liquid" element={<LiquidityPlanner />} />
+        <Route path="/real-testing" element={<TestingRealProject />} />
+        <Route path="/testing-bertahap" element={<TestingBertahap />} />
+        <Route path="/testing-bertahap2" element={<TestingBertahap2 />} />
       </Routes>
     </BrowserRouter>
   );

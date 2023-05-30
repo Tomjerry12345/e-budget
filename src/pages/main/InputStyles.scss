@@ -3,43 +3,39 @@
   padding: 1px 8px !important;
   font-size: 10px !important;
   font-weight: bold;
-
   td {
     padding: 2px 8px !important;
   }
 }
+
 .child {
   line-height: 14px !important;
   padding: 1px 8px !important;
   font-size: 10px !important;
 }
+
 .header-type {
   line-height: 14px !important;
   padding: 1px 8px !important;
   font-size: 10px !important;
   background-color: #d2d2d2;
   font-weight: bold;
-
   td {
     padding: 2px 8px !important;
   }
-
   .ant-table-cell-with-append {
     display: flex;
     align-items: center;
     height: 38px;
     // padding: 1px 8px;
-
     .ant-table-row-expand-icon {
       margin-top: 0px;
       transform: scale(0.6) !important;
     }
   }
-
   .more-style {
     border: none;
     height: 23px;
-
     .ic-more {
       height: 19px;
     }
@@ -52,27 +48,22 @@
   font-size: 10px !important;
   background-color: #d2ffd2;
   font-weight: bold;
-
   td {
     padding: 2px 8px !important;
   }
-
   .ant-table-cell-with-append {
     display: flex;
     align-items: center;
     height: 38px;
     // padding: 1px 8px;
-
     .ant-table-row-expand-icon {
       margin-top: 0px;
       transform: scale(0.6) !important;
     }
   }
-
   .more-style {
     border: none;
     height: 23px;
-
     .ic-more {
       height: 19px;
     }
@@ -83,27 +74,22 @@
   line-height: 14px !important;
   padding: 1px 8px !important;
   font-size: 10px !important;
-
   td {
     padding: 2px 8px !important;
   }
-
   .ant-table-cell-with-append {
     display: flex;
     align-items: center;
     height: 38px;
     // padding: 1px 8px;
-
     .ant-table-row-expand-icon {
       margin-top: 0px;
       transform: scale(0.6) !important;
     }
   }
-
   .more-style {
     border: none;
     height: 23px;
-
     .ic-more {
       height: 19px;
     }
@@ -162,7 +148,6 @@
   display: flex;
   justify-content: flex-end;
   margin-bottom: 16px;
-
   .btn-clear {
     margin-left: 8px;
     border-radius: 8px;
@@ -176,7 +161,6 @@
     border: none;
     background-color: #f5f7f9;
     color: black;
-
     .anticon {
       color: #008041;
     }
@@ -192,4 +176,25 @@
       color: #008041;
     }
   }
+}
+
+.section-header-table {
+  display: block;
+  width: 100%;
+  background: green;
+  color: white;
+  padding: 8px;
+}
+
+.btn-tambah-row {
+  // border: 1px solid #c6ced6;
+  background: #018142;
+  width: 106px;
+  border-radius: 8px;
+  align-items: center;
+  margin-top: 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 11px;
+  margin-bottom: 12px;
 }

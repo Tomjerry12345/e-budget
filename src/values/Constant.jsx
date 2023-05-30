@@ -1,25 +1,56 @@
-import { getLocal, log } from "./Utilitas";
+import MainServices from "../services/MainServices";
+import { getLocal, log, logO } from "./Utilitas";
 
 export const allItemSummarySubMenu = [
   // 1 Dashboard
   [],
   // 2 Revenue & COGS
   [
-    "Revenue & COGS HK", // 0
-    "Revenue & COGS KIU", // 1
-    "Revenue & COGS GMM", // 2
-    "Revenue & COGS KIA", // 3
-    "Revenue & COGS BJU", // 4
-    "Revenue & COGS BLT", // 5
-    "Revenue & COGS BLU", // 6
-    "Revenue & COGS BK", // 7
-    "Revenue & COGS BSU", // 8
-    "Revenue & COGS BSB", // 9
-    "Revenue & COGS KIK", // 10
-    "Revenue & COGS IKP", // 11
-    "Revenue & COGS BAND", // 12
-    "Input Direct Revenue & COGS", // 13
-    "Summary Revenue & COGS", // 14
+    {
+      description: "Revenue & COGS HK",
+    },
+    {
+      description: "Revenue & COGS KIU",
+    },
+    {
+      description: "Revenue & COGS GMM",
+    },
+    {
+      description: "Revenue & COGS KIA",
+    },
+    {
+      description: "Revenue & COGS BJU",
+    },
+    {
+      description: "Revenue & COGS BLT",
+    },
+    {
+      description: "Revenue & COGS BLU",
+    },
+    {
+      description: "Revenue & COGS BK",
+    },
+    {
+      description: "Revenue & COGS BSU",
+    },
+    {
+      description: "Revenue & COGS BSB",
+    },
+    {
+      description: "Revenue & COGS KIK",
+    },
+    {
+      description: "Revenue & COGS IKP",
+    },
+    {
+      description: "Revenue & COGS BAND",
+    },
+    {
+      description: "Input Direct Revenue & COGS",
+    },
+    {
+      description: "Summary Revenue & COGS",
+    },
   ],
   // 3 Opex
   [
@@ -134,24 +165,57 @@ export const allItemSummarySubMenu = [
   ],
   // 6 Others
   [
-    "Input Direct Pendapatan Non Operasional",
-    "Input Direct Biaya Non Operasional",
-    "Input Direct All",
-    "Summary Biaya Non Operasional",
-    "Summary Pendapatan Non Operasional",
-    "Input Asumsi",
+    {
+      description: "Input Direct Pendapatan Non Operasional",
+    },
+    {
+      description: "Input Direct Biaya Non Operasional",
+    },
+    {
+      description: "Input Direct All",
+    },
+    {
+      description: "Summary Direct All",
+    },
+    {
+      description: "Summary Biaya Non Operasional",
+    },
+    {
+      description: "Summary Pendapatan Non Operasional",
+    },
+    {
+      description: "Input Asumsi",
+    },
   ],
   // 7 Report
-  ["Laba Rugi"],
+  [
+    {
+      description: "Laba Rugi",
+    },
+  ],
   // 8 Master COA
   [
-    "Kode perusahaan",
-    "Kode produk",
-    "Kode lokasi",
-    "Kode departemen",
-    "Kode akun",
-    "Kode projek",
-    "Kode ICP",
+    {
+      description: "Kode perusahaan",
+    },
+    {
+      description: "Kode produk",
+    },
+    {
+      description: "Kode lokasi",
+    },
+    {
+      description: "Kode departemen",
+    },
+    {
+      description: "Kode akun",
+    },
+    {
+      description: "Kode projek",
+    },
+    {
+      description: "Kode ICP",
+    },
   ],
   // 9 Akun
   ["Profile", "Logout"],
@@ -180,6 +244,7 @@ export const disabledItemSummaryMenu = [
   ],
   // 3 Opex
   [
+    false,
     true,
     true,
     true,
@@ -290,7 +355,7 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 6 Others
-  [false, false, false, false, false, true],
+  [false, false, false, false, false, false, true],
   // 7 Report
   [false],
   // 8 Master COA
@@ -317,11 +382,13 @@ export const urlPageRevenue = {
   "Summary Revenue & COGS": "summary",
 };
 
-export const selectionMenu = (i) => {
+export const urlGetMenu = ["", "", "config/opex"];
+
+export const selectionMenu = async (i) => {
   const user = getLocal("user_group");
 
   if (user === "superadmin") {
-    return superAdmin(i);
+    return await superAdmin(i);
   } else if (user === "usersbu") {
     return userBu(i);
   } else {
@@ -330,10 +397,72 @@ export const selectionMenu = (i) => {
 };
 
 const superAdmin = (i) => {
-  return {
-    submenu: allItemSummarySubMenu[i],
-    disabled: disabledItemSummaryMenu[i],
-  };
+  return new Promise(async (resolve) => {
+    let listSubMenu = [];
+    if (i === 2) {
+      let listSubmenuInput = [];
+      let listSubmenuSummary = [];
+      const anotherMenuInput = [
+        {
+          description: "Input By Risiko",
+          children: [],
+        },
+
+        {
+          description: "Input By Operasional Lainnya",
+          children: [],
+        },
+
+        {
+          description: "Input By Opex Direct",
+          children: [],
+        },
+      ];
+
+      const anotherMenuSummary = [
+        {
+          description: "Summary By Risiko",
+          children: [],
+        },
+
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
+      ];
+
+      const res = await MainServices.get(urlGetMenu[i]);
+      logO({ res });
+      res.data.data.forEach((e) => {
+        listSubmenuInput.push({
+          ...e,
+          description: `Input By ${e.description}`,
+        });
+        listSubmenuSummary.push({
+          ...e,
+          description: `Summary By ${e.description}`,
+        });
+      });
+
+      listSubmenuInput = listSubmenuInput.concat(anotherMenuInput);
+      listSubmenuSummary = listSubmenuSummary.concat(anotherMenuSummary);
+
+      listSubMenu = listSubmenuInput.concat(listSubmenuSummary);
+    } else {
+      listSubMenu = allItemSummarySubMenu[i];
+    }
+
+    resolve({
+      submenu: listSubMenu,
+      disabled: disabledItemSummaryMenu[i],
+    });
+
+    // return {
+    //   fulldata: listFullDataSubMenu,
+    //   submenu: listSubMenu,
+    //   disabled: disabledItemSummaryMenu[i],
+    // };
+  });
 };
 
 const userBu = (i) => {

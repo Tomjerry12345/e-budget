@@ -5,7 +5,12 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { areEqual, getSizeScreen, log } from "../../../../values/Utilitas";
+import {
+  areEqual,
+  getSizeScreen,
+  log,
+  logO,
+} from "../../../../values/Utilitas";
 import {
   Table,
   Form,
@@ -31,9 +36,16 @@ const EditableCell = ({
   const component =
     inputType === "checkbox" ? (
       <Checkbox disabled checked={children[1] === 1} />
+    ) : inputType === "bool" ? (
+      children[1] == 1 ? (
+        "Ya"
+      ) : (
+        "Tidak"
+      )
     ) : (
       children
     );
+
   return (
     <td {...restProps}>
       {editing ? (
@@ -48,9 +60,7 @@ const EditableCell = ({
             {inputNode}
             {/* <Input /> */}
           </Form.Item>
-        ) :
-        
-         (
+        ) : (
           <Form.Item
             name={dataIndex}
             style={{

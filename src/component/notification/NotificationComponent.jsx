@@ -51,29 +51,9 @@ const NotificationComponent = ({ status, message }) => {
             openNotification("bottomRight");
 
             dispacth(val({ status: 0, message: "" }));
+
           }, 100)
         : null}
-      {/* <Space>
-        <Button type="primary" onClick={() => openNotification("topLeft")}>
-          <RadiusUpleftOutlined />
-          topLeft
-        </Button>
-        <Button type="primary" onClick={() => openNotification("topRight")}>
-          <RadiusUprightOutlined />
-          topRight
-        </Button>
-      </Space>
-      <Divider />
-      <Space>
-        <Button type="primary" onClick={() => openNotification("bottomLeft")}>
-          <RadiusBottomleftOutlined />
-          bottomLeft
-        </Button>
-        <Button type="primary" onClick={() => openNotification("bottomRight")}>
-          <RadiusBottomrightOutlined />
-          bottomRight
-        </Button>
-      </Space> */}
     </Context.Provider>
   );
 };

@@ -1,28 +1,34 @@
 import { Form } from "antd";
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { getSizeScreen } from "../../../../values/Utilitas";
+import { getLocal, logO } from "../../../../../values/Utilitas";
+import MainServices from "../../../../../services/MainServices";
+import { val } from "../../../../../redux/action/action.reducer";
+import { getColumns } from "./getColumns";
+import { getRows } from "./getRows";
 
-const OpexSummaryLogic = () => {
-  let params = useParams();
-  const ref = createRef();
+const DirectAllSummaryLogic = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
-  const [tableColumn, setTableColumn] = useState(null);
-  const [dataColumn, setDataColumn] = useState([]);
+  const columns = getColumns();
+  const [rows, setRows] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
+    const company = getLocal("code_company");
+    const company_names = getLocal("company_names");
+
+    form.setFieldsValue({
+      code_location: null,
+      code_dept: null,
+      code_product: null,
+      code_company: company === "" ? null : `${company} - ${company_names}`,
+      code_icp: null,
+      code_project: null,
+      periode: null,
+    });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const responseShow = (res) => {
@@ -62,9 +68,9 @@ const OpexSummaryLogic = () => {
     fPeriode = fPeriode[0];
 
     try {
-      const url = `opex/summary?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`;
+      const url = `directall/list?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`;
       const { data } = await MainServices.get(url);
-      getData(data.data, fPeriode);
+      getData(data.data.list, fPeriode);
     } catch (error) {
       const err = error.response;
       responseShow(err);
@@ -72,9 +78,11 @@ const OpexSummaryLogic = () => {
   };
 
   const getData = (data, periode) => {
-    setDataColumn(data.list);
-    setTableColumn(columnOutputType1(periode, parseInt(periode) + 1));
-    setLoading(false);
+    const newRows = getRows({ data });
+    // const slices = newRows.slice(0, 100);
+    // logO({ slices });
+    setRows(newRows);
+    // setLoading(false);
   };
 
   const onFinish = (values) => {
@@ -84,13 +92,10 @@ const OpexSummaryLogic = () => {
 
   return {
     value: {
-      dataColumn,
-      tableColumn,
-      params,
-      size,
-      ref,
       form,
       loading,
+      columns,
+      rows,
     },
     func: {
       onFinish,
@@ -98,4 +103,4 @@ const OpexSummaryLogic = () => {
   };
 };
 
-export default OpexSummaryLogic;
+export default DirectAllSummaryLogic;

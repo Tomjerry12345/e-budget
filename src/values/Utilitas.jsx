@@ -8,10 +8,24 @@ export const getLocal = (key) => localStorage.getItem(key);
 
 export const getToken = () => localStorage.getItem("token");
 
-export const log = (tag, msg) => console.log(`[d] ${tag}`, msg);
+export const log = (tag, msg) => {
+  if (msg !== undefined) {
+    console.log(`[d] ${tag}`, msg);
+  } else {
+    logO(tag);
+  }
+};
 
-export const logObj = (tag, message) =>
-  console.log(`${tag} => ${JSON.stringify(message)}`);
+export const logO = (m) => {
+  let name, value;
+  for (let v in m) {
+    name = v;
+    value = m[v];
+  }
+  console.log(`[d] ${name}`, value);
+};
+
+export const logObj = (tag, message) => console.log(`${tag} => ${JSON.stringify(message)}`);
 
 export const logS = (tag, message) => console.log(`${tag} => ${message}`);
 
@@ -61,10 +75,7 @@ Number.prototype.format = function (n, x, s, c) {
   var re = "\\d(?=(\\d{" + (x || 3) + "})+" + (n > 0 ? "\\D" : "$") + ")",
     num = this.toFixed(Math.max(0, ~~n));
 
-  return (c ? num.replace(".", c) : num).replace(
-    new RegExp(re, "g"),
-    "$&" + (s || ",")
-  );
+  return (c ? num.replace(".", c) : num).replace(new RegExp(re, "g"), "$&" + (s || ","));
 }; /*eslint no-extend-native: ["error", { "exceptions": ["Number"] }]*/
 
 export const slicing = (text, format, i) => {
@@ -147,5 +158,10 @@ export const sumYearTotal = (data, keys) => {
     parseInt(data[`okt${i}`]) +
     parseInt(data[`nov${i}`]) +
     parseInt(data[`des${i}`]);
-  return {sum, i};
+  return { sum, i };
+};
+
+export const createArray = (length) => {
+  const list = Array.from({ length }, () => 0);
+  return list;
 };
