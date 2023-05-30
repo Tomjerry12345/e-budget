@@ -11,7 +11,7 @@ import TambahDataCoaModal from "../../../../modal/tambah-data-coa/TambahDataCoaM
 import UploadCoaModal from "../../../../modal/upload-coa/UploadCoaModal";
 import HeaderComponentTypeCoa2Logic from "./HeaderComponentTypeCoa2Logic";
 
-import "../style.scss";
+import "../../style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;

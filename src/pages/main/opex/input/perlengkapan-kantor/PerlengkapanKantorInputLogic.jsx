@@ -18,13 +18,14 @@ import {
 import { getColumns } from "./getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 
-const IklanAdvertensiInputLogic = () => {
+const PerlengkapanKantorInputLogic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
+    administrasi: [],
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
@@ -139,8 +140,10 @@ const IklanAdvertensiInputLogic = () => {
     periode
   ) => {
     const listPemasaran = [];
+    const listAdministrasi = [];
 
     const pemasaran = items.pemasaran;
+    const administrasi = items.administrasi;
 
     if (pemasaran.length > 0) {
       await Promise.all(
@@ -163,12 +166,33 @@ const IklanAdvertensiInputLogic = () => {
         })
       );
     }
+    
+    if (administrasi.length > 0) {
+      await Promise.all(
+        administrasi.map(async (p, i) => {
+          const codeAccount = p.code_account;
+          log({ codeAccount });
+          const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const { data } = await MainServices.get(url);
+          // log({ data });
+          let r;
+          if (data.data.length > 0) {
+            r = getRows({
+              data: data.data,
+            });
+          } else {
+            r = fullNewRow(i);
+          }
 
-    log({ listPemasaran });
+          listAdministrasi.push(r);
+        })
+      );
+    }
 
     setRows({
       ...rows,
       pemasaran: listPemasaran,
+      administrasi: listAdministrasi,
     });
 
     // getDataTable(data.data);
@@ -180,8 +204,8 @@ const IklanAdvertensiInputLogic = () => {
     onSetDataTable(values);
   };
 
-  const onTambahRow = (i) => {
-    const newRows = [...rows.pemasaran];
+  const onTambahRow = (i, category) => {
+    const newRows = category === 'pemasaran' ? [...rows.pemasaran] : [...rows.administrasi];
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
@@ -189,118 +213,21 @@ const IklanAdvertensiInputLogic = () => {
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
 
-    setRows({
-      ...rows,
-      pemasaran: newRows,
-    });
+    if (category === 'pemasaran'){
+      setRows({
+        ...rows,
+        pemasaran: newRows,
+      });
+    }
+    if (category === 'administrasi'){
+      setRows({
+        ...rows,
+        administrasi: newRows,
+      });
+    }
 
     showNotif(200, "Sukses tambah row");
   };
-
-  // const onChangeTable = async (change, i) => {
-  //   const newRows = [...rows.pemasaran];
-
-  //   const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-  //   const columnIndex = columns.findIndex(
-  //     (j) => j.columnId === change[0].columnId
-  //   );
-
-  //   const type = newRows[i][rowIndex].cells[columnIndex].type;
-
-  //   const length = newRows[i].length;
-
-  //   let value;
-
-  //   if (type === "text") {
-  //     newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-  //     value = change[0].newCell.text;
-  //   } else {
-  //     newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-  //     value = change[0].newCell.value;
-  //   }
-
-  //   let jumlahBulan = 0;
-  //   let tarif = newRows[i][rowIndex].cells[16].value;
-
-  //   const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-  //     if (j >= 3 && j <= 14) jumlahBulan += e.value;
-  //     if (j === 15) e.value = jumlahBulan;
-  //     if (j === 17) e.value = jumlahBulan * tarif;
-  //     if (j >= 18) e.value = newRows[i][rowIndex].cells[j - 15].value * tarif;
-  //     return e;
-  //   });
-
-  //   newRows[i][rowIndex].cells = newCell;
-
-  //   try {
-  //     let formData = new FormData();
-
-  //     const id = change[0].rowId;
-  //     const column_id = change[0].columnId;
-  //     const isNewRow = newRows[i][rowIndex].newRow;
-
-  //     if (isNewRow !== undefined) {
-  //       const {
-  //         code_company,
-  //         code_dept,
-  //         code_location,
-  //         code_product,
-  //         code_project,
-  //         code_icp,
-  //         periode,
-  //       } = codeFilter;
-
-  //       const codeAccount = items.pemasaran[i]["code_account"];
-
-  //       formData.append("code_account", codeAccount);
-  //       formData.append("code_company", code_company);
-  //       formData.append("code_department", code_dept);
-  //       formData.append("code_location", code_location);
-  //       formData.append("code_product", code_product);
-  //       formData.append("code_project", code_project);
-  //       formData.append("code_icp", code_icp);
-  //       formData.append("year", periode);
-  //       formData.append("name", value);
-
-  //       const res = await MainServices.post(
-  //         "detailopex/template1/insert",
-  //         formData
-  //       );
-
-  //       log({ res });
-  //       const rowId = res.data.data.id;
-
-  //       newRows[i][rowIndex].rowId = rowId;
-  //     } else {
-  //       formData.append("id", id);
-  //       formData.append("column_id", column_id);
-  //       formData.append("value", value);
-
-  //       await MainServices.post("detailopex/template1/update", formData);
-  //     }
-
-  //     delete newRows[i][rowIndex].newRow;
-
-  //     showNotif(200, "Sukses update data");
-
-  //     const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-  //       if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-  //       return e;
-  //     });
-
-  //     newRows[i][rowIndex].cells = newCell;
-
-  //     newRows[i][length - 1] = updateTotalRow(newRows[i]);
-
-  //     setRows({
-  //       ...rows,
-  //       pemasaran: newRows,
-  //     });
-  //   } catch (e) {
-  //     log({ e });
-  //     // showNotif(400, e);
-  //   }
-  // };
 
   const onChangeTable = async (change, i) => {
     const newRows = [...rows.pemasaran];
@@ -507,4 +434,4 @@ const IklanAdvertensiInputLogic = () => {
   };
 };
 
-export default IklanAdvertensiInputLogic;
+export default PerlengkapanKantorInputLogic;

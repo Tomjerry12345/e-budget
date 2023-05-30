@@ -216,5 +216,11 @@
   .btn {
     width: 100%;
     display: flex;
+    align-items: center;
   }
+}
+
+.more-modal-width-type1 {
+  left: calc(100vw - 697px) !important;
+  max-width: 517px !important;
 }

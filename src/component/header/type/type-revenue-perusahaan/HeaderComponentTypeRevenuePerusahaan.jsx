@@ -1,27 +1,14 @@
 import {
   DeleteOutlined,
   DownloadOutlined,
-  FilterOutlined,
-  MoreOutlined,
-  ReloadOutlined,
-  SearchOutlined,
   ToTopOutlined,
 } from "@ant-design/icons";
-import {
-  Breadcrumb,
-  Button,
-  Dropdown,
-  Input,
-  Layout,
-  Menu,
-  Modal,
-  Typography,
-} from "antd";
+import {  Button,Layout, Menu, Modal, Typography } from "antd";
 import { getLocal } from "../../../../values/Utilitas";
 import FilterComponent from "../../../filter/FilterComponent";
 import ImportInputModal from "../../../modal/import/ImportInputModal";
 import HeaderComponentTypeRevenuePerusahaanLogic from "./HeaderComponentTypeRevenueIPerusahaanLogic";
-import "./style.scss";
+import "../style.scss";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -74,12 +61,7 @@ const ModalFilter = ({
   );
 };
 
-const ModalMenuMore = ({
-  open,
-  onCancel,
-  onClickImport,
-  disabledImportExport,
-}) => {
+const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) => {
   return (
     <Modal
       className="more-modal"

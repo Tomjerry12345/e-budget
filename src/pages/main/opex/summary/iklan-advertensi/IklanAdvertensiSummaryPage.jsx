@@ -1,61 +1,36 @@
 import React from "react";
 import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import IklanAdvertensiInputLogic from "./IklanAdvertensiInputLogic";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
+import IklanAdvertensiSummaryLogic from "./IklanAdvertensiSummaryLogic";
 
-const IklanAdvertensiInputPage = () => {
-  const { value, func } = IklanAdvertensiInputLogic();
+const IklanAdvertensiSummaryPage = () => {
+  const { value, func } = IklanAdvertensiSummaryLogic();
 
   return (
     <>
       <HeaderComponent
-        type="input"
+        type="summary"
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/detail-opex.xlsx"
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
-        listMenuImport={value.items.pemasaran}
+        listMenuImport={["export"]}
+        onChangeFilter={() => {}}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
-        {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
-        ) : null}
-
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography.Text>
-                    {value.items.pemasaran[i].description}
-                  </Typography.Text>
-                  <Button
-                    className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i)}
-                  >
-                    Tambah Data
-                  </Button>
-                </div>
-
+                <Typography.Text>
+                  {value.items.pemasaran[i].description}
+                </Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",
@@ -73,7 +48,7 @@ const IklanAdvertensiInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      onCellsChanged={(change) => func.onChangeTable(change, i)}
+                      // onCellsChanged={(change) => func.onChangeTable(change, i)}
                     />
                   </div>
                 </div>
@@ -85,4 +60,4 @@ const IklanAdvertensiInputPage = () => {
   );
 };
 
-export default IklanAdvertensiInputPage;
+export default IklanAdvertensiSummaryPage;

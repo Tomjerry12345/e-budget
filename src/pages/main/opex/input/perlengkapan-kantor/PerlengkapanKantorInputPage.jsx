@@ -1,12 +1,12 @@
 import React from "react";
 import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import IklanAdvertensiInputLogic from "./IklanAdvertensiInputLogic";
+import PerlengkapanKantorInputLogic from "./PerlengkapanKantorInputLogic";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 
-const IklanAdvertensiInputPage = () => {
-  const { value, func } = IklanAdvertensiInputLogic();
+const PerlengkapanKantorInputPage = () => {
+  const { value, func } = PerlengkapanKantorInputLogic();
 
   return (
     <>
@@ -50,7 +50,61 @@ const IklanAdvertensiInputPage = () => {
                   </Typography.Text>
                   <Button
                     className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i)}
+                    onClick={() => func.onTambahRow(i, 'pemasaran')}
+                  >
+                    Tambah Data
+                  </Button>
+                </div>
+
+                <div
+                  style={{
+                    overflowX: "auto",
+                    overflowY: "auto",
+                    marginBottom: 16,
+                    paddingBottom: 16,
+                  }}
+                >
+                  <div
+                    style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+                    className="liquidity-planner-app"
+                  >
+                    <ReactGrid
+                      rows={e}
+                      columns={value.columns}
+                      stickyTopRows={1}
+                      stickyLeftColumns={1}
+                      onCellsChanged={(change) => func.onChangeTable(change, i)}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))
+          : null}
+      </div>
+
+      <div className="custom-root-layout">
+        {value.rows.administrasi.length > 0 ? (
+          <Typography.Text className="section-header-table">
+            Administrasi
+          </Typography.Text>
+        ) : null}
+
+        {value.rows.administrasi.length > 0
+          ? value.rows.administrasi.map((e, i) => (
+              <div style={{ margin: "10px" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography.Text>
+                    {value.items.administrasi[i].description}
+                  </Typography.Text>
+                  <Button
+                    className="btn-tambah-row"
+                    onClick={() => func.onTambahRow(i, 'administrasi')}
                   >
                     Tambah Data
                   </Button>
@@ -85,4 +139,4 @@ const IklanAdvertensiInputPage = () => {
   );
 };
 
-export default IklanAdvertensiInputPage;
+export default PerlengkapanKantorInputPage;
