@@ -9,7 +9,12 @@ import {
 import MainServices from "../../../../../services/MainServices";
 import { log, logO, setLocal } from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fullNewRow, getRows, reactgridNewRow } from "./getRows";
+import {
+  fullNewRow,
+  getRows,
+  reactgridNewRow,
+  updateTotalRow,
+} from "./getRows";
 import { getColumns } from "./getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 
@@ -29,7 +34,9 @@ const IklanAdvertensiInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -190,9 +197,13 @@ const IklanAdvertensiInputLogic = () => {
     const newRows = [...rows.pemasaran];
 
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+    const columnIndex = columns.findIndex(
+      (j) => j.columnId === change[0].columnId
+    );
 
     const type = newRows[i][rowIndex].cells[columnIndex].type;
+
+    const length = newRows[i].length;
 
     let value;
 
@@ -225,7 +236,6 @@ const IklanAdvertensiInputLogic = () => {
       const isNewRow = newRows[i][rowIndex].newRow;
 
       if (isNewRow !== undefined) {
-        alert("new Row");
         const {
           code_company,
           code_dept,
@@ -248,7 +258,12 @@ const IklanAdvertensiInputLogic = () => {
         formData.append("year", periode);
         formData.append("name", value);
 
-        const res = await MainServices.post("detailopex/template1/update", formData);
+        const res = await MainServices.post(
+          "detailopex/template1/insert",
+          formData
+        );
+
+        log({ res });
         const rowId = res.data.data.id;
 
         newRows[i][rowIndex].rowId = rowId;
@@ -268,7 +283,10 @@ const IklanAdvertensiInputLogic = () => {
         if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
         return e;
       });
+
       newRows[i][rowIndex].cells = newCell;
+
+      newRows[i][length - 1] = updateTotalRow(newRows[i]);
 
       setRows({
         ...rows,
@@ -326,7 +344,10 @@ const IklanAdvertensiInputLogic = () => {
     formData.append("year", periode);
 
     try {
-      const res = await MainServices.post(`detailopex/template${index + 1}/import`, formData);
+      const res = await MainServices.post(
+        `detailopex/template${index + 1}/import`,
+        formData
+      );
 
       const url = `detailopex/template1/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
