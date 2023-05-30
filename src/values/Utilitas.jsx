@@ -160,3 +160,8 @@ export const sumYearTotal = (data, keys) => {
     parseInt(data[`des${i}`]);
   return { sum, i };
 };
+
+export const createArray = (length) => {
+  const list = Array.from({ length }, () => 0);
+  return list;
+};

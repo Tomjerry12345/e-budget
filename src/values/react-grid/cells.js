@@ -91,6 +91,25 @@ export function rootHeaderCell(
   );
 }
 
+export function totalCell(
+  title,
+  additionalClassNames = "",
+  background = "#107C41",
+  color = "black"
+) {
+  return nonEditable(
+    numberCell(title, `text-lg font-bold ${additionalClassNames}`, {
+      background: background,
+      color: color,
+      border: {
+        bottom: { style: "none" },
+        left: { style: "none" },
+        right: { style: "none" },
+      },
+    })
+  );
+}
+
 export function monthHeaderCell(month, additionalClassNames = "", background = "#107C41") {
   return nonEditable(
     textCell(month, `text-lg font-bold ${additionalClassNames}`, {
