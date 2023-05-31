@@ -85,6 +85,15 @@ import KontraktualRapatClearanceSummaryPage from "../pages/main/opex/summary/kon
 import TransportasiSummaryPage from "../pages/main/opex/summary/transportasi/TransportasiSummaryPage";
 import PerjalananDinasSummaryPage from "../pages/main/opex/summary/perjalanan-dinas/PerjalananDinasSummaryPage";
 import PajakParkirRestoSummaryPage from "../pages/main/opex/summary/pajak-parkir-resto/PajakParkirRestoSummaryPage";
+import PengirimanDokumenInputPage from "../pages/main/opex/input/pengiriman-dokumen/PengirimanDokumenInputPage";
+import FcCetakJilidInputPage from "../pages/main/opex/input/fc-cetak-jilid/FcCetakJilidInputPage";
+import SuratKabarInputPage from "../pages/main/opex/input/surat-kabar/SuratKabarInputPage";
+import PantriInputPage from "../pages/main/opex/input/pantri/PantriInputPage";
+import TenderInputPage from "../pages/main/opex/input/tender/TenderInputPage";
+import KontraktualRapatClearanceInputPage from "../pages/main/opex/input/kontraktual-rapat-clearance/KontraktualRapatClearanceInputPage";
+import TransportasiInputPage from "../pages/main/opex/input/transportasi/TransportasiInputPage";
+import PerjalananDinasInputPage from "../pages/main/opex/input/perjalanan-dinas/PerjalananDinasInputPage";
+import PajakParkirRestoInputPage from "../pages/main/opex/input/pajak-parkir-resto/PajakParkirRestoInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -152,27 +161,25 @@ const RoutersConfig = () => {
             </Route>
           </Route>
           <Route path="opex">
+            <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
+            <Route path="input/pemeliharaan" element={<PemeliharaanInputPage />} />
+            <Route path="input/perlengkapan-kantor" element={<PerlengkapanKantorInputPage />} />
+            <Route path="input/pengiriman-dokumen" element={<PengirimanDokumenInputPage />} />
+            <Route path="input/fc-cetak-jilid" element={<FcCetakJilidInputPage />} />
+            <Route path="input/surat-kabar" element={<SuratKabarInputPage />} />
+            <Route path="input/pantri" element={<PantriInputPage />} />
+            <Route path="input/tender" element={<TenderInputPage />} />
             <Route
-              path="input/iklan-advertensi"
-              element={<IklanAdvertensiInputPage />}
+              path="input/kontraktual-rapat-clearance"
+              element={<KontraktualRapatClearanceInputPage />}
             />
-            <Route
-              path="input/pemeliharaan"
-              element={<PemeliharaanInputPage />}
-            />
-            <Route
-              path="input/perlengkapan-kantor"
-              element={<PerlengkapanKantorInputPage />}
-            />
+            <Route path="input/transportasi" element={<TransportasiInputPage />} />
+            <Route path="input/perjalanan-dinas" element={<PerjalananDinasInputPage />} />
+            <Route path="input/pajak-parkir-resto" element={<PajakParkirRestoInputPage />} />
             <Route path="input/opex" element={<OpexInputPage />} />
-            <Route
-              path="summary/iklan-advertensi"
-              element={<IklanAdvertensiSummaryPage />}
-            />
-            <Route
-              path="summary/pemeliharaan"
-              element={<PemeliharaanSummaryPage />}
-            />
+
+            <Route path="summary/iklan-advertensi" element={<IklanAdvertensiSummaryPage />} />
+            <Route path="summary/pemeliharaan" element={<PemeliharaanSummaryPage />} />
             <Route
               path="summary/perlengkapan-kantor"
               element={<PerlengkapanKantorSummaryPage />}
@@ -181,34 +188,16 @@ const RoutersConfig = () => {
               path="summary/pengiriman-dokumen"
               element={<PengirimanDokumenSummaryPage />}
             />
-            <Route
-              path="summary/fc-cetak-jilid"
-              element={<FcCetakJilidSummaryPage />}
-            />
-            <Route
-              path="summary/surat-kabar"
-              element={<SuratKabarSummaryPage />}
-            />
-            <Route
-              path="summary/pantri"
-              element={<PantriSummaryPage />}
-            />
-            <Route
-              path="summary/tender"
-              element={<TenderSummaryPage />}
-            />
+            <Route path="summary/fc-cetak-jilid" element={<FcCetakJilidSummaryPage />} />
+            <Route path="summary/surat-kabar" element={<SuratKabarSummaryPage />} />
+            <Route path="summary/pantri" element={<PantriSummaryPage />} />
+            <Route path="summary/tender" element={<TenderSummaryPage />} />
             <Route
               path="summary/kontraktual-rapat-clearance"
               element={<KontraktualRapatClearanceSummaryPage />}
             />
-            <Route
-              path="summary/transportasi"
-              element={<TransportasiSummaryPage />}
-            />
-            <Route
-              path="summary/perjalanan-dinas"
-              element={<PerjalananDinasSummaryPage />}
-            />
+            <Route path="summary/transportasi" element={<TransportasiSummaryPage />} />
+            <Route path="summary/perjalanan-dinas" element={<PerjalananDinasSummaryPage />} />
             <Route
               path="summary/pajak-parkir-resto"
               element={<PajakParkirRestoSummaryPage />}
@@ -224,10 +213,7 @@ const RoutersConfig = () => {
             <Route path="summary/:item" element={<MppSummary />} />
           </Route>
           <Route path="others">
-            <Route
-              path="others-input/Input Asumsi"
-              element={<OthersInputAsumsiPage />}
-            />
+            <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
             <Route path="input/:item" element={<OthersInputPage />} />
