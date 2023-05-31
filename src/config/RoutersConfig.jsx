@@ -74,6 +74,17 @@ import PerlengkapanKantorInputPage from "../pages/main/opex/input/perlengkapan-k
 import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
 import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
 import IklanAdvertensiSummaryPage from "../pages/main/opex/summary/iklan-advertensi/IklanAdvertensiSummaryPage";
+import PemeliharaanSummaryPage from "../pages/main/opex/summary/pemeliharaan/PemeliharaanSummaryPage";
+import PerlengkapanKantorSummaryPage from "../pages/main/opex/summary/perlengkapan-kantor/PerlengkapanKantorSummaryPage";
+import PengirimanDokumenSummaryPage from "../pages/main/opex/summary/pengiriman-dokumen/PengirimanDokumenSummaryPage";
+import FcCetakJilidSummaryPage from "../pages/main/opex/summary/fc-cetak-jilid/FcCetakJilidSummaryPage";
+import SuratKabarSummaryPage from "../pages/main/opex/summary/surat-kabar/SuratKabarSummaryPage";
+import PantriSummaryPage from "../pages/main/opex/summary/pantri/PantriSummaryPage";
+import TenderSummaryPage from "../pages/main/opex/summary/tender/TenderSummaryPage";
+import KontraktualRapatClearanceSummaryPage from "../pages/main/opex/summary/kontraktual-rapat-clearance/KontraktualRapatClearanceSummaryPage";
+import TransportasiSummaryPage from "../pages/main/opex/summary/transportasi/TransportasiSummaryPage";
+import PerjalananDinasSummaryPage from "../pages/main/opex/summary/perjalanan-dinas/PerjalananDinasSummaryPage";
+import PajakParkirRestoSummaryPage from "../pages/main/opex/summary/pajak-parkir-resto/PajakParkirRestoSummaryPage";
 
 const RoutersConfig = () => {
   return (
@@ -157,6 +168,50 @@ const RoutersConfig = () => {
             <Route
               path="summary/iklan-advertensi"
               element={<IklanAdvertensiSummaryPage />}
+            />
+            <Route
+              path="summary/pemeliharaan"
+              element={<PemeliharaanSummaryPage />}
+            />
+            <Route
+              path="summary/perlengkapan-kantor"
+              element={<PerlengkapanKantorSummaryPage />}
+            />
+            <Route
+              path="summary/pengiriman-dokumen"
+              element={<PengirimanDokumenSummaryPage />}
+            />
+            <Route
+              path="summary/fc-cetak-jilid"
+              element={<FcCetakJilidSummaryPage />}
+            />
+            <Route
+              path="summary/surat-kabar"
+              element={<SuratKabarSummaryPage />}
+            />
+            <Route
+              path="summary/pantri"
+              element={<PantriSummaryPage />}
+            />
+            <Route
+              path="summary/tender"
+              element={<TenderSummaryPage />}
+            />
+            <Route
+              path="summary/kontraktual-rapat-clearance"
+              element={<KontraktualRapatClearanceSummaryPage />}
+            />
+            <Route
+              path="summary/transportasi"
+              element={<TransportasiSummaryPage />}
+            />
+            <Route
+              path="summary/perjalanan-dinas"
+              element={<PerjalananDinasSummaryPage />}
+            />
+            <Route
+              path="summary/pajak-parkir-resto"
+              element={<PajakParkirRestoSummaryPage />}
             />
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
