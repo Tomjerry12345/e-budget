@@ -269,30 +269,28 @@ export const disabledItemSummaryMenu = [
     true,
     true,
     true,
+    false,
+    false,
+    true,
+    true,
+    false,
+    false,
+    false,
+    false,
     true,
     false,
     false,
     true,
     true,
     true,
+    false,
+    false,
+    true,
+    false,
+    false,
     true,
     true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
+    false,
     true,
     true,
     true,
@@ -404,11 +402,6 @@ const superAdmin = (i) => {
       let listSubmenuSummary = [];
       const anotherMenuInput = [
         {
-          description: "Input By Risiko",
-          children: [],
-        },
-
-        {
           description: "Input By Operasional Lainnya",
           children: [],
         },
@@ -420,11 +413,6 @@ const superAdmin = (i) => {
       ];
 
       const anotherMenuSummary = [
-        {
-          description: "Summary By Risiko",
-          children: [],
-        },
-
         {
           description: "Summary Budget Opex",
           children: [],
