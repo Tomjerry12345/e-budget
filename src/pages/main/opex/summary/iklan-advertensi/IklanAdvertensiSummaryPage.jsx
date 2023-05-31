@@ -12,11 +12,9 @@ const IklanAdvertensiSummaryPage = () => {
     <>
       <HeaderComponent
         type="summary"
-        // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/detail-opex.xlsx"
-        disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={["export"]}
         onChangeFilter={() => {}}
@@ -25,6 +23,12 @@ const IklanAdvertensiSummaryPage = () => {
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
 
       <div className="custom-root-layout">
+        {value.rows.pemasaran.length > 0 ? (
+          <Typography.Text className="section-header-table">
+            Pemasaran
+          </Typography.Text>
+        ) : null}
+        
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
@@ -48,7 +52,6 @@ const IklanAdvertensiSummaryPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      // onCellsChanged={(change) => func.onChangeTable(change, i)}
                     />
                   </div>
                 </div>

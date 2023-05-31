@@ -43,7 +43,7 @@ const firstLoadTotalRow = (data) => {
 };
 
 export const updateTotalRow = (data) => {
-  const newData = data.slice(1, data.length - 1);
+  const newData = data.slice(FIRST_TOTAL, data.length - FIRST_TOTAL);
 
   const list = newData
     .map((e) => {
@@ -53,7 +53,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -64,7 +67,10 @@ function getRootHeaderRow() {
     height: ROW_HEIGHT,
     cells: [
       nonEditable(
-        textCell("Total By Iklan & Advertensi", "justify-content-center text-lg font-bold")
+        textCell(
+          "Total By Iklan & Advertensi",
+          "justify-content-center text-lg font-bold"
+        )
       ),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
@@ -129,7 +135,11 @@ export function getRows({ data }) {
 }
 
 export function fullNewRow(id) {
-  return [getRootHeaderRow(), reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    getRootHeaderRow(),
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

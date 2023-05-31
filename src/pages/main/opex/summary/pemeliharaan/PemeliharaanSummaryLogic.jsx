@@ -18,13 +18,14 @@ import {
 import { getColumns } from "./getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 
-const IklanAdvertensiInputLogic = () => {
+const PemeliharaanSummaryLogic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
+    administrasi: []
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
@@ -139,8 +140,10 @@ const IklanAdvertensiInputLogic = () => {
     periode
   ) => {
     const listPemasaran = [];
+    const listAdministrasi = [];
 
     const pemasaran = items.pemasaran;
+    const administrasi = items.administrasi;
 
     if (pemasaran.length > 0) {
       await Promise.all(
@@ -164,11 +167,32 @@ const IklanAdvertensiInputLogic = () => {
       );
     }
 
-    log({ listPemasaran });
+    if (administrasi.length > 0) {
+      await Promise.all(
+        administrasi.map(async (p, i) => {
+          const codeAccount = p.code_account;
+          log({ codeAccount });
+          const url = `detailopex/template1/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const { data } = await MainServices.get(url);
+          // log({ data });
+          let r;
+          if (data.data.length > 0) {
+            r = getRows({
+              data: data.data,
+            });
+          } else {
+            r = fullNewRow(i);
+          }
+
+          listAdministrasi.push(r);
+        })
+      );
+    }
 
     setRows({
       ...rows,
       pemasaran: listPemasaran,
+      administrasi: listAdministrasi,
     });
 
     // getDataTable(data.data);
@@ -203,4 +227,4 @@ const IklanAdvertensiInputLogic = () => {
   };
 };
 
-export default IklanAdvertensiInputLogic;
+export default PemeliharaanSummaryLogic;
