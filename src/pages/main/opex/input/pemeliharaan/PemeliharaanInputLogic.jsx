@@ -138,58 +138,55 @@ const PemeliharaanInputLogic = () => {
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
 
-    pemasaran = pemasaran.sort((p1, p2) =>
-      p1.code_account > p2.code_account ? 1 : p1.code_account < p2.code_account ? -1 : 0
-    );
-
-    administrasi = administrasi.sort((p1, p2) =>
-      p1.code_account > p2.code_account ? 1 : p1.code_account < p2.code_account ? -1 : 0
-    );
-
     if (pemasaran.length > 0) {
-      await Promise.all(
+      await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
           log({ codeAccount });
           const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          const { data } = await MainServices.get(url);
-          // log({ data });
-          let r;
-          if (data.data.length > 0) {
-            r = getRows({
-              data: data.data,
-            });
-          } else {
-            r = fullNewRow(i);
+          try {
+            const { data } = await MainServices.get(url);
+            let r;
+            if (data.data.length > 0) {
+              r = getRows({
+                data: data.data,
+              });
+            } else {
+              r = fullNewRow(i);
+            }
+            listPemasaran[i] = r;
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data for code account ${codeAccount}`, error);
+            listPemasaran[i] = fullNewRow(i);
           }
-
-          listPemasaran.push(r);
         })
       );
 
-      await Promise.all(
+      await Promise.allSettled(
         administrasi.map(async (p, i) => {
           const codeAccount = p.code_account;
           log({ codeAccount });
           const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          const { data } = await MainServices.get(url);
-          // log({ data });
-          let r;
-          if (data.data.length > 0) {
-            r = getRows({
-              data: data.data,
-            });
-          } else {
-            r = fullNewRow(i);
+          try {
+            const { data } = await MainServices.get(url);
+            let r;
+            if (data.data.length > 0) {
+              r = getRows({
+                data: data.data,
+              });
+            } else {
+              r = fullNewRow(i);
+            }
+            listAdministrasi[i] = r;
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data for code account ${codeAccount}`, error);
+            listAdministrasi[i] = fullNewRow(i);
           }
-
-          listAdministrasi.push(r);
         })
       );
     }
-
-    log({ listPemasaran });
-    log({ listAdministrasi });
 
     setRows({
       ...rows,
