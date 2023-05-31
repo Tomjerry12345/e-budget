@@ -89,7 +89,7 @@ function getGroupRows(groups) {
       rowId: i,
       height: ROW_HEIGHT,
       cells: [
-        nonEditable(textCell(d["location_description"], "padding-left-lg")),
+        nonEditable(textCell(d["location"], "padding-left-lg")),
         nonEditable(numberCell(d["jan"], "padding-left-lg")),
         nonEditable(numberCell(d["feb"], "padding-left-lg")),
         nonEditable(numberCell(d["mar"], "padding-left-lg")),

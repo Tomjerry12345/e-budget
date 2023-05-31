@@ -1,13 +1,13 @@
 export const routingOpex = {
   "Input By Iklan & Advertensi": "iklan-advertensi",
+  "Summary By Iklan & Advertensi": "iklan-advertensi",
   "Input By Pemeliharaan": "pemeliharaan",
   "Input By Perlengkapan Kantor": "perlengkapan-kantor",
   "Input By Opex Direct": "opex",
   "Summary Budget Opex": "opex",
 };
 export const routingOthers = {
-  "Input Direct Pendapatan Non Operasional":
-    "Input Direct Pendapatan Non Operasional",
+  "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
   "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
   "Input Direct All": "direct-all",
   "Summary Direct All": "direct-all",

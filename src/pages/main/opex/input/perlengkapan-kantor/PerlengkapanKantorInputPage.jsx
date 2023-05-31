@@ -1,9 +1,9 @@
 import React from "react";
 import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import PerlengkapanKantorInputLogic from "./PerlengkapanKantorInputLogic";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
+import PerlengkapanKantorInputLogic from "./PerlengkapanKantorInputLogic";
 
 const PerlengkapanKantorInputPage = () => {
   const { value, func } = PerlengkapanKantorInputLogic();
@@ -11,6 +11,7 @@ const PerlengkapanKantorInputPage = () => {
   return (
     <>
       <HeaderComponent
+        className="more-modal-width-type1"
         type="input"
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
@@ -18,21 +19,14 @@ const PerlengkapanKantorInputPage = () => {
         downloadFile="file/detail-opex.xlsx"
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
-        listMenuImport={value.items.pemasaran}
+        listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0
@@ -45,12 +39,10 @@ const PerlengkapanKantorInputPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text>
-                    {value.items.pemasaran[i].description}
-                  </Typography.Text>
+                  <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
                   <Button
                     className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, 'pemasaran')}
+                    onClick={() => func.onTambahRow(i, "pemasaran")}
                   >
                     Tambah Data
                   </Button>
@@ -73,20 +65,16 @@ const PerlengkapanKantorInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      onCellsChanged={(change) => func.onChangeTable(change, i)}
+                      onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
                 </div>
               </div>
             ))
           : null}
-      </div>
 
-      <div className="custom-root-layout">
-        {value.rows.administrasi.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Administrasi
-          </Typography.Text>
+        {value.rows.pemasaran.length > 0 ? (
+          <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
         {value.rows.administrasi.length > 0
@@ -99,12 +87,10 @@ const PerlengkapanKantorInputPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text>
-                    {value.items.administrasi[i].description}
-                  </Typography.Text>
+                  <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
                   <Button
                     className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, 'administrasi')}
+                    onClick={() => func.onTambahRow(i, "administrasi")}
                   >
                     Tambah Data
                   </Button>
@@ -127,7 +113,7 @@ const PerlengkapanKantorInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      onCellsChanged={(change) => func.onChangeTable(change, i)}
+                      onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
                 </div>
