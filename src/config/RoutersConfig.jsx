@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../pages/autentikasi/login/LoginPage";
 import MainPage from "../pages/main/MainPage";
 import DashboardPage from "../pages/main/dashboard/DashboardPage";
-import CoaPage from "../pages/main/coa/CoaPage";
 import App from "../pages/App";
 import CapexSummary from "../pages/main/capex/summary/CapexSummary";
 import RevenueCogsSummary from "../pages/main/revenueCogs/summary/RevenueCogsSummary";
@@ -94,6 +93,9 @@ import KontraktualRapatClearanceInputPage from "../pages/main/opex/input/kontrak
 import TransportasiInputPage from "../pages/main/opex/input/transportasi/TransportasiInputPage";
 import PerjalananDinasInputPage from "../pages/main/opex/input/perjalanan-dinas/PerjalananDinasInputPage";
 import PajakParkirRestoInputPage from "../pages/main/opex/input/pajak-parkir-resto/PajakParkirRestoInputPage";
+import PajakKendaraanInputPage from "../pages/main/opex/input/pajak-kendaraan/PajakKendaraanInputPage";
+import PajakInputPage from "pages/main/opex/input/pajak/PajakInputPage";
+import IzinKonsultanInputPage from "pages/main/opex/input/izin-konsutan/IzinKonsultanInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -175,7 +177,10 @@ const RoutersConfig = () => {
             />
             <Route path="input/transportasi" element={<TransportasiInputPage />} />
             <Route path="input/perjalanan-dinas" element={<PerjalananDinasInputPage />} />
+            <Route path="input/pajak-kendaraan" element={<PajakKendaraanInputPage />} />
+            <Route path="input/pajak" element={<PajakInputPage />} />
             <Route path="input/pajak-parkir-resto" element={<PajakParkirRestoInputPage />} />
+            <Route path="input/izin-konsultan" element={<IzinKonsultanInputPage />} />
             <Route path="input/opex" element={<OpexInputPage />} />
 
             <Route path="summary/iklan-advertensi" element={<IklanAdvertensiSummaryPage />} />

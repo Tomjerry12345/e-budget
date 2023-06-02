@@ -9,11 +9,17 @@ import {
 import MainServices from "../../../../../services/MainServices";
 import { log, setLocal } from "../../../../../values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fullNewRow, getRows, reactgridNewRow, updateTotalRow } from "./getRows";
-import { getColumns } from "./getColumns";
+import {
+  fullNewRow,
+  getRows,
+  reactgridNewRow,
+  updateTotalRow,
+} from "values/react-grid/rows/input/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/input/template-1/getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
+import { getRootHeaderRow } from "./getRows";
 
-const FcCetakJilidInputLogic = () => {
+const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -149,16 +155,17 @@ const FcCetakJilidInputLogic = () => {
             let r;
             if (data.data.length > 0) {
               r = getRows({
+                header: getRootHeaderRow(),
                 data: data.data,
               });
             } else {
-              r = fullNewRow(i);
+              r = fullNewRow(getRootHeaderRow(), i);
             }
             listPemasaran[i] = r;
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listPemasaran[i] = fullNewRow(i);
+            listPemasaran[i] = fullNewRow(getRootHeaderRow(), i);
           }
         })
       );
@@ -173,16 +180,17 @@ const FcCetakJilidInputLogic = () => {
             let r;
             if (data.data.length > 0) {
               r = getRows({
+                header: getRootHeaderRow(),
                 data: data.data,
               });
             } else {
-              r = fullNewRow(i);
+              r = fullNewRow(getRootHeaderRow(), i);
             }
             listAdministrasi[i] = r;
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listAdministrasi[i] = fullNewRow(i);
+            listAdministrasi[i] = fullNewRow(getRootHeaderRow(), i);
           }
         })
       );
@@ -434,4 +442,4 @@ const FcCetakJilidInputLogic = () => {
   };
 };
 
-export default FcCetakJilidInputLogic;
+export default Logic;

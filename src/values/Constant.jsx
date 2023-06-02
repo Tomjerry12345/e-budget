@@ -262,10 +262,10 @@ export const disabledItemSummaryMenu = [
     true,
     false,
     false,
-    true,
-    true,
     false,
-    true,
+    false,
+    false,
+    false,
     true,
     true,
     true,
@@ -545,4 +545,11 @@ export const changeDisabled = (a = []) => {
   a.forEach((v) => (arr[v] = false));
 
   return arr;
+};
+
+export const constantExcellFile = {
+  opex: {
+    "template-1": "file/detail-opex.xlsx",
+    "template-2": "file/detail-opex-2.xlsx",
+  },
 };
