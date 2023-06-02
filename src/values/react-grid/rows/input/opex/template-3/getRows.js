@@ -1,37 +1,44 @@
-import { createArray } from "../../../../Utilitas";
-import { nonEditable, textCell, numberCell, noSideBorders, totalCell } from "../../../cells";
+import { createArray } from "values/Utilitas";
+import {
+  nonEditable,
+  textCell,
+  numberCell,
+  noSideBorders,
+  totalCell,
+} from "values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
-const TOTAL_DATA = 12;
-const FIRST_TOTAL = 2;
+const TOTAL_DATA = 13;
+const FIRST_TOTAL = 1;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["jan_rates"];
-    list[1] += e["feb_rates"];
-    list[2] += e["mar_rates"];
-    list[3] += e["apr_rates"];
-    list[4] += e["mei_rates"];
-    list[5] += e["jun_rates"];
-    list[6] += e["jul_rates"];
-    list[7] += e["agu_rates"];
-    list[8] += e["sep_rates"];
-    list[9] += e["okt_rates"];
-    list[10] += e["nov_rates"];
-    list[11] += e["des_rates"];
+    list[0] += e["jan"];
+    list[1] += e["feb"];
+    list[2] += e["mar"];
+    list[3] += e["apr"];
+    list[4] += e["mei"];
+    list[5] += e["jun"];
+    list[6] += e["jul"];
+    list[7] += e["agu"];
+    list[8] += e["sep"];
+    list[9] += e["okt"];
+    list[10] += e["nov"];
+    list[11] += e["des"];
+    list[12] += e["total_qty"];
   });
 
   return rowTotal("Total", list);
 };
 
 export const updateTotalRow = (data) => {
-  const newData = data.slice(FIRST_TOTAL, TOTAL_DATA - 1);
+  const newData = data.slice(1, data.length - 1);
 
   const list = newData
     .map((e) => {
@@ -52,20 +59,22 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["name"], "padding-left-lg"),
-        textCell(d["activity"] ?? "-", "padding-left-lg"),
-        nonEditable(numberCell(d["jan_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["feb_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["mar_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["apr_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["mei_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["jun_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["jul_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["agu_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["sep_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["okt_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["nov_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["des_rates"], "padding-left-lg")),
+        textCell(d["description"] ?? "-", "padding-left-lg"),
+
+        numberCell(d["jan"], "padding-left-lg"),
+        numberCell(d["feb"], "padding-left-lg"),
+        numberCell(d["mar"], "padding-left-lg"),
+        numberCell(d["apr"], "padding-left-lg"),
+        numberCell(d["mei"], "padding-left-lg"),
+        numberCell(d["jun"], "padding-left-lg"),
+        numberCell(d["jul"], "padding-left-lg"),
+        numberCell(d["agu"], "padding-left-lg"),
+        numberCell(d["sep"], "padding-left-lg"),
+        numberCell(d["okt"], "padding-left-lg"),
+        numberCell(d["nov"], "padding-left-lg"),
+        numberCell(d["des"], "padding-left-lg"),
+
+        nonEditable(numberCell(d["total_qty"], "padding-left-lg")),
       ],
     })),
   ];
@@ -80,11 +89,6 @@ function rowTotal(titleTotal, total) {
         textCell(titleTotal, "padding-left-lg", {
           background: "beige",
           fontWeight: "bold",
-        })
-      ),
-      nonEditable(
-        textCell("", "padding-left-lg", {
-          background: "beige",
         })
       ),
 
@@ -108,7 +112,6 @@ export function reactgridNewRow(id) {
     height: ROW_HEIGHT,
     cells: [
       textCell("", "padding-left-lg"),
-      nonEditable(textCell("", "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
@@ -121,6 +124,8 @@ export function reactgridNewRow(id) {
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+
       nonEditable(numberCell(0, "padding-left-lg")),
     ],
   };

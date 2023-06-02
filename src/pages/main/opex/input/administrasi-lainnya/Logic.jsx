@@ -10,8 +10,8 @@ import {
   getRows,
   reactgridNewRow,
   updateTotalRow,
-} from "values/react-grid/rows/input/opex/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/input/opex/template-2/getColumns";
+} from "values/react-grid/rows/input/opex/template-3/getRows";
+import { getColumns } from "values/react-grid/rows/input/opex/template-3/getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { getRootHeaderRow } from "./getRows";
 
@@ -42,7 +42,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detailopex/template2";
+  const ENDPOINT_URL = "detailopex/template3";
 
   useEffect(() => {
     const state = location.state;
@@ -53,8 +53,6 @@ const Logic = () => {
       navigate("/");
       return;
     }
-
-    log("state.item", state.item);
 
     setItems(state.item);
   }, []);
@@ -142,11 +140,13 @@ const Logic = () => {
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
 
+    log({ pemasaran });
+    log({ administrasi });
+
     if (pemasaran.length > 0) {
       await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
           const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
@@ -167,11 +167,12 @@ const Logic = () => {
           }
         })
       );
+    }
 
+    if (administrasi.length > 0) {
       await Promise.allSettled(
         administrasi.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
           const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
@@ -193,7 +194,6 @@ const Logic = () => {
         })
       );
     }
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -212,16 +212,12 @@ const Logic = () => {
   const onTambahRow = (i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    log({ i });
-    log({ category });
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
 
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
-
-    log({ newRows });
 
     setRows({
       ...rows,
@@ -250,26 +246,11 @@ const Logic = () => {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
 
-      let satuan = newRows[i][rowIndex].cells[3].value;
-      let tarif = newRows[i][rowIndex].cells[4].value;
-      let periodeBayar = newRows[i][rowIndex].cells[6].value;
-
-      let grandTotal = satuan * tarif;
-
-      log({ tarif });
-      log({ satuan });
-      log({ grandTotal });
-      log({ periodeBayar });
-
-      newRows[i][rowIndex].cells[5].value = grandTotal;
-      // newRows[i][rowIndex].cells[periodeBayar + 6].value = grandTotal;
+      let jumlah = 0;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j > 6) {
-          if (j === periodeBayar + 6) e.value = grandTotal;
-          else e.value = 0;
-        }
-
+        if (j >= 1) jumlah += e.value;
+        if (j === 13) e.value = jumlah;
         return e;
       });
 
@@ -307,7 +288,7 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("name", value);
+        formData.append("description", value);
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -328,7 +309,7 @@ const Logic = () => {
       showNotif(200, "Sukses update data");
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if ((i >= 1 && i <= 4) || i === 6) e.nonEditable = false;
+        if (i >= 1) e.nonEditable = false;
         return e;
       });
 

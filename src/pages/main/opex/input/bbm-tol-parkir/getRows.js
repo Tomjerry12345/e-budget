@@ -16,9 +16,12 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Name", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Cost driver", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Satuan", "justify-content-center text-lg font-bold")),
+
+      nonEditable(textCell("Jumlah Kendaraan", "justify-content-center text-lg font-bold")),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -33,9 +36,9 @@ export function getRootHeaderRow() {
       nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
 
-      nonEditable(textCell("Jumlah Bulan", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tarif", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell("Total Maintenance Cost", "justify-content-center", COLOR_1)),
+      nonEditable(monthHeaderCell(`Total`, "justify-content-center")),
+      nonEditable(monthHeaderCell(`Tarif`, "justify-content-center")),
+      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),

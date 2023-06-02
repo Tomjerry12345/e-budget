@@ -14,8 +14,8 @@ import {
   getRows,
   reactgridNewRow,
   updateTotalRow,
-} from "values/react-grid/rows/input/template-1/getRows";
-import { getColumns } from "values/react-grid/rows/input/template-1/getColumns";
+} from "values/react-grid/rows/input/opex/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 import { getRootHeaderRow } from "./getRows";
 

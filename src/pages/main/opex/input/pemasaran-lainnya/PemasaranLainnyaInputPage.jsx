@@ -1,12 +1,12 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
 
-const PajakKendaraanInputPage = () => {
+const PemasaranLainnyaInputPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -17,7 +17,7 @@ const PajakKendaraanInputPage = () => {
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile={constantExcellFile["opex"]["template-2"]}
+        downloadFile={constantExcellFile["opex"]["template-3"]}
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
@@ -126,4 +126,4 @@ const PajakKendaraanInputPage = () => {
   );
 };
 
-export default PajakKendaraanInputPage;
+export default PemasaranLainnyaInputPage;

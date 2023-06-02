@@ -10,8 +10,8 @@ import {
   getRows,
   reactgridNewRow,
   updateTotalRow,
-} from "values/react-grid/rows/input/opex/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/input/opex/template-2/getColumns";
+} from "values/react-grid/rows/input/opex/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { getRootHeaderRow } from "./getRows";
 
@@ -22,7 +22,6 @@ const Logic = () => {
 
   const [items, setItems] = useState({
     pemasaran: [],
-    administrasi: [],
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
@@ -41,8 +40,7 @@ const Logic = () => {
   const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-
-  const ENDPOINT_URL = "detailopex/template2";
+  const ENDPOINT_URL = "detailopex/template1";
 
   useEffect(() => {
     const state = location.state;
@@ -142,11 +140,13 @@ const Logic = () => {
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
 
+    log({ pemasaran });
+    log({ administrasi });
+
     if (pemasaran.length > 0) {
       await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
           const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
@@ -167,11 +167,12 @@ const Logic = () => {
           }
         })
       );
+    }
 
+    if (administrasi.length > 0) {
       await Promise.allSettled(
         administrasi.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
           const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
@@ -193,15 +194,11 @@ const Logic = () => {
         })
       );
     }
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
-
-    // getDataTable(data.data);
-    // setLoading(false);
   };
 
   const onFinish = (values) => {
@@ -209,11 +206,8 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const onTambahRow = (i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-
-    log({ i });
-    log({ category });
+  const onTambahRow = (i) => {
+    const newRows = [...rows.pemasaran];
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
@@ -221,18 +215,16 @@ const Logic = () => {
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
 
-    log({ newRows });
-
     setRows({
       ...rows,
-      [category]: newRows,
+      pemasaran: newRows,
     });
 
     showNotif(200, "Sukses tambah row");
   };
 
-  const onChangeTable = async (change, i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+  const onChangeTable = async (change, i) => {
+    const newRows = [...rows.pemasaran];
 
     const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
     const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
@@ -250,26 +242,14 @@ const Logic = () => {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
 
-      let satuan = newRows[i][rowIndex].cells[3].value;
-      let tarif = newRows[i][rowIndex].cells[4].value;
-      let periodeBayar = newRows[i][rowIndex].cells[6].value;
-
-      let grandTotal = satuan * tarif;
-
-      log({ tarif });
-      log({ satuan });
-      log({ grandTotal });
-      log({ periodeBayar });
-
-      newRows[i][rowIndex].cells[5].value = grandTotal;
-      // newRows[i][rowIndex].cells[periodeBayar + 6].value = grandTotal;
+      let jumlahBulan = 0;
+      let tarif = newRows[i][rowIndex].cells[16].value;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j > 6) {
-          if (j === periodeBayar + 6) e.value = grandTotal;
-          else e.value = 0;
-        }
-
+        if (j >= 3 && j <= 14) jumlahBulan += e.value;
+        if (j === 15) e.value = jumlahBulan;
+        if (j === 17) e.value = jumlahBulan * tarif;
+        if (j >= 18) e.value = newRows[i][rowIndex].cells[j - 15].value * tarif;
         return e;
       });
 
@@ -294,10 +274,7 @@ const Logic = () => {
           periode,
         } = codeFilter;
 
-        const codeAccount =
-          category === "pemasaran"
-            ? items.pemasaran[i]["code_account"]
-            : items.administrasi[i]["code_account"];
+        const codeAccount = items.pemasaran[i]["code_account"];
 
         formData.append("code_account", codeAccount);
         formData.append("code_company", code_company);
@@ -328,7 +305,7 @@ const Logic = () => {
       showNotif(200, "Sukses update data");
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if ((i >= 1 && i <= 4) || i === 6) e.nonEditable = false;
+        if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
         return e;
       });
 
@@ -338,7 +315,7 @@ const Logic = () => {
 
       setRows({
         ...rows,
-        [category]: newRows,
+        pemasaran: newRows,
       });
     } catch (e) {
       log({ e });
@@ -369,24 +346,11 @@ const Logic = () => {
       periode,
     } = codeFilter;
 
+    const index = dataGlobalRedux.indexImport;
+    const codeAccount = items.pemasaran[index]["code_account"];
     let file1;
 
-    const codeAccount = dataGlobalRedux.indexImport;
-    let index, category;
-
-    const checkItem = (items, cat) => {
-      items.forEach((e, i) => {
-        if (e.code_account === codeAccount) {
-          [index, category] = [i, cat];
-        }
-      });
-    };
-
-    checkItem(items.pemasaran, "pemasaran") || checkItem(items.administrasi, "administrasi");
-
     let formData = new FormData();
-
-    // setLoadingUpload(true);
 
     acceptedFiles.forEach((file) => {
       file1 = file;
@@ -403,14 +367,14 @@ const Logic = () => {
     formData.append("year", periode);
 
     try {
-      const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
+      const res = await MainServices.post(`detailopex/template1/import`, formData);
 
       const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
 
       const r = getRows({
-        header: getRootHeaderRow(),
         data: data.data,
+        titleTotal: "total harga",
       });
 
       const newRow = [...rows.pemasaran];
@@ -419,7 +383,7 @@ const Logic = () => {
 
       setRows({
         ...rows,
-        [category]: newRow,
+        pemasaran: newRow,
       });
 
       responseShow(res);

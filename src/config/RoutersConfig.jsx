@@ -1,101 +1,104 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginPage from "../pages/autentikasi/login/LoginPage";
-import MainPage from "../pages/main/MainPage";
-import DashboardPage from "../pages/main/dashboard/DashboardPage";
-import App from "../pages/App";
-import CapexSummary from "../pages/main/capex/summary/CapexSummary";
-import RevenueCogsSummary from "../pages/main/revenueCogs/summary/RevenueCogsSummary";
-import MppSummary from "../pages/main/mpp/summary/MppSummary";
-import CapexInputPage from "../pages/main/capex/input/CapexInputPage";
-import MppInputPage from "../pages/main/mpp/input/MppInputPage";
-import RevenueCogsInputPage from "../pages/main/revenueCogs/input/RevenueCogsInputPage";
-import OthersSummary from "../pages/main/others/summary/OthersSummary";
-import OthersInputPage from "../pages/main/others/input/OthersInputPage";
-import OthersInputAsumsiPage from "../pages/main/others/asumsi/OthersInputAsumsiPage";
-import LabaRugiPage from "../pages/main/report/laba-rugi/LabaRugiPage";
-import HkPage from "../pages/main/revenueCogs/hk/HkPage";
-import KiuPage from "../pages/main/revenueCogs/kiu/KiuPage";
-import KiaPage from "../pages/main/revenueCogs/kia/KiaPage";
-import BjuPage from "../pages/main/revenueCogs/bju/BjuPage";
-import BltPage from "../pages/main/revenueCogs/blt/BltPage";
-import BluPage from "../pages/main/revenueCogs/blu/BluPage";
-import BkPage from "../pages/main/revenueCogs/bk/BkPage";
-import BsuPage from "../pages/main/revenueCogs/bsu/BsuPage";
-import BsbPage from "../pages/main/revenueCogs/bsb/BsbPage";
-import KikPage from "../pages/main/revenueCogs/kik/KikPage";
-import IkpPage from "../pages/main/revenueCogs/ikp/IkpPage";
-import BandPage from "../pages/main/revenueCogs/band/BandPage";
-import PenjualanHkPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
-import LainHkPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
-import PenjualanBjuPage from "../pages/main/revenueCogs/bju/tabs/penjualan/PenjualanBjuPage";
-import LainBjuPage from "../pages/main/revenueCogs/bju/tabs/hpplain/LainBjuPage";
-import PenjualanBkPage from "../pages/main/revenueCogs/bk/tabs/penjualan/PenjualanBkPage";
-import LainBkPage from "../pages/main/revenueCogs/bk/tabs/hpplain/LainBkPage";
-import CompanyPage from "../pages/main/coa/company/CompanyPage";
-import ProductPage from "../pages/main/coa/product/ProductPage";
-import DepartementPage from "../pages/main/coa/departement/DepartementPage";
-import AkunPage from "../pages/main/coa/akun/AkunPage";
-import ProjectPage from "../pages/main/coa/project/ProjectPage";
-import IcpPage from "../pages/main/coa/icp/IcpPage";
-import LocationPage from "../pages/main/coa/location/LocationPage";
-import InputDirectAllPage from "../pages/main/others/input/direct-all/InputDirectAllPage";
-import GmmPage from "../pages/main/revenueCogs/gmm/GmmPage";
-import PenjualanKiuPage from "../pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
-import LainKiuPage from "../pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
-import PenjualanGmmPage from "../pages/main/revenueCogs/gmm/tabs/penjualan/PenjualanGmmPage";
-import LainGmmPage from "../pages/main/revenueCogs/gmm/tabs/hpplain/LainGmmPage";
-import PenjualanKiaPage from "../pages/main/revenueCogs/kia/tabs/penjualan/PenjualanKiaPage";
-import LainKiaPage from "../pages/main/revenueCogs/kia/tabs/hpplain/LainKiaPage";
-import PenjualanBltPage from "../pages/main/revenueCogs/blt/tabs/penjualan/PenjualanBltPage";
-import LainBltPage from "../pages/main/revenueCogs/blt/tabs/hpplain/LainBltPage";
-import PenjualanBluPage from "../pages/main/revenueCogs/blu/tabs/penjualan/PenjualanBluPage";
-import LainBluPage from "../pages/main/revenueCogs/blu/tabs/hpplain/LainBluPage";
-import PenjualanBsuPage from "../pages/main/revenueCogs/bsu/tabs/penjualan/PenjualanBsuPage";
-import LainBsuPage from "../pages/main/revenueCogs/bsu/tabs/hpplain/LainBsuPage";
-import PenjualanBsbPage from "../pages/main/revenueCogs/bsb/tabs/penjualan/PenjualanBsbPage";
-import LainBsbPage from "../pages/main/revenueCogs/bsb/tabs/hpplain/LainBsbPage";
-import PenjualanKikPage from "../pages/main/revenueCogs/kik/tabs/penjualan/PenjualanKikPage";
-import LainKikPage from "../pages/main/revenueCogs/kik/tabs/hpplain/LainKikPage";
-import PenjualanIkpPage from "../pages/main/revenueCogs/ikp/tabs/penjualan/PenjualanIkpPage";
-import LainIkpPage from "../pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
-import PenjualanBandPage from "../pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
-import LainBandPage from "../pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
-import TestingPages from "../testing/react-grid-testing/TestingPages";
-import LiquidityPlanner from "../testing/sample-react-grid-liquid/LiquidityPlanner";
-import TestingRealProject from "../testing/sample-react-grid-real-project/TestingRealProject";
-import TestingPages1 from "../testing/react-grid-testing/TestingPages1";
-import TestingBertahap from "../testing/testing-bertahap/TestingBertahap";
-import TestingBertahap2 from "../testing/testing-bertahap/TestingBertahap2";
-import DirectAllSummary from "../pages/main/others/summary/direct-all/DIrectAllSummary";
-import IklanAdvertensiInputPage from "../pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
-import PemeliharaanInputPage from "../pages/main/opex/input/pemeliharaan/PemeliharaanInputPage";
-import PerlengkapanKantorInputPage from "../pages/main/opex/input/perlengkapan-kantor/PerlengkapanKantorInputPage";
-import OpexInputPage from "../pages/main/opex/input/input-opex/OpexInputPage";
-import OpexSummary from "../pages/main/opex/summary/summary-opex/OpexSummary";
-import IklanAdvertensiSummaryPage from "../pages/main/opex/summary/iklan-advertensi/IklanAdvertensiSummaryPage";
-import PemeliharaanSummaryPage from "../pages/main/opex/summary/pemeliharaan/PemeliharaanSummaryPage";
-import PerlengkapanKantorSummaryPage from "../pages/main/opex/summary/perlengkapan-kantor/PerlengkapanKantorSummaryPage";
-import PengirimanDokumenSummaryPage from "../pages/main/opex/summary/pengiriman-dokumen/PengirimanDokumenSummaryPage";
-import FcCetakJilidSummaryPage from "../pages/main/opex/summary/fc-cetak-jilid/FcCetakJilidSummaryPage";
-import SuratKabarSummaryPage from "../pages/main/opex/summary/surat-kabar/SuratKabarSummaryPage";
-import PantriSummaryPage from "../pages/main/opex/summary/pantri/PantriSummaryPage";
-import TenderSummaryPage from "../pages/main/opex/summary/tender/TenderSummaryPage";
-import KontraktualRapatClearanceSummaryPage from "../pages/main/opex/summary/kontraktual-rapat-clearance/KontraktualRapatClearanceSummaryPage";
-import TransportasiSummaryPage from "../pages/main/opex/summary/transportasi/TransportasiSummaryPage";
-import PerjalananDinasSummaryPage from "../pages/main/opex/summary/perjalanan-dinas/PerjalananDinasSummaryPage";
-import PajakParkirRestoSummaryPage from "../pages/main/opex/summary/pajak-parkir-resto/PajakParkirRestoSummaryPage";
-import PengirimanDokumenInputPage from "../pages/main/opex/input/pengiriman-dokumen/PengirimanDokumenInputPage";
-import FcCetakJilidInputPage from "../pages/main/opex/input/fc-cetak-jilid/FcCetakJilidInputPage";
-import SuratKabarInputPage from "../pages/main/opex/input/surat-kabar/SuratKabarInputPage";
-import PantriInputPage from "../pages/main/opex/input/pantri/PantriInputPage";
-import TenderInputPage from "../pages/main/opex/input/tender/TenderInputPage";
-import KontraktualRapatClearanceInputPage from "../pages/main/opex/input/kontraktual-rapat-clearance/KontraktualRapatClearanceInputPage";
-import TransportasiInputPage from "../pages/main/opex/input/transportasi/TransportasiInputPage";
-import PerjalananDinasInputPage from "../pages/main/opex/input/perjalanan-dinas/PerjalananDinasInputPage";
-import PajakParkirRestoInputPage from "../pages/main/opex/input/pajak-parkir-resto/PajakParkirRestoInputPage";
-import PajakKendaraanInputPage from "../pages/main/opex/input/pajak-kendaraan/PajakKendaraanInputPage";
+import LoginPage from "pages/autentikasi/login/LoginPage";
+import MainPage from "pages/main/MainPage";
+import DashboardPage from "pages/main/dashboard/DashboardPage";
+import App from "pages/App";
+import CapexSummary from "pages/main/capex/summary/CapexSummary";
+import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
+import MppSummary from "pages/main/mpp/summary/MppSummary";
+import CapexInputPage from "pages/main/capex/input/CapexInputPage";
+import MppInputPage from "pages/main/mpp/input/MppInputPage";
+import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
+import OthersSummary from "pages/main/others/summary/OthersSummary";
+import OthersInputPage from "pages/main/others/input/OthersInputPage";
+import OthersInputAsumsiPage from "pages/main/others/asumsi/OthersInputAsumsiPage";
+import LabaRugiPage from "pages/main/report/laba-rugi/LabaRugiPage";
+import HkPage from "pages/main/revenueCogs/hk/HkPage";
+import KiuPage from "pages/main/revenueCogs/kiu/KiuPage";
+import KiaPage from "pages/main/revenueCogs/kia/KiaPage";
+import BjuPage from "pages/main/revenueCogs/bju/BjuPage";
+import BltPage from "pages/main/revenueCogs/blt/BltPage";
+import BluPage from "pages/main/revenueCogs/blu/BluPage";
+import BkPage from "pages/main/revenueCogs/bk/BkPage";
+import BsuPage from "pages/main/revenueCogs/bsu/BsuPage";
+import BsbPage from "pages/main/revenueCogs/bsb/BsbPage";
+import KikPage from "pages/main/revenueCogs/kik/KikPage";
+import IkpPage from "pages/main/revenueCogs/ikp/IkpPage";
+import BandPage from "pages/main/revenueCogs/band/BandPage";
+import PenjualanHkPage from "pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
+import LainHkPage from "pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
+import PenjualanBjuPage from "pages/main/revenueCogs/bju/tabs/penjualan/PenjualanBjuPage";
+import LainBjuPage from "pages/main/revenueCogs/bju/tabs/hpplain/LainBjuPage";
+import PenjualanBkPage from "pages/main/revenueCogs/bk/tabs/penjualan/PenjualanBkPage";
+import LainBkPage from "pages/main/revenueCogs/bk/tabs/hpplain/LainBkPage";
+import CompanyPage from "pages/main/coa/company/CompanyPage";
+import ProductPage from "pages/main/coa/product/ProductPage";
+import DepartementPage from "pages/main/coa/departement/DepartementPage";
+import AkunPage from "pages/main/coa/akun/AkunPage";
+import ProjectPage from "pages/main/coa/project/ProjectPage";
+import IcpPage from "pages/main/coa/icp/IcpPage";
+import LocationPage from "pages/main/coa/location/LocationPage";
+import InputDirectAllPage from "pages/main/others/input/direct-all/InputDirectAllPage";
+import GmmPage from "pages/main/revenueCogs/gmm/GmmPage";
+import PenjualanKiuPage from "pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
+import LainKiuPage from "pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
+import PenjualanGmmPage from "pages/main/revenueCogs/gmm/tabs/penjualan/PenjualanGmmPage";
+import LainGmmPage from "pages/main/revenueCogs/gmm/tabs/hpplain/LainGmmPage";
+import PenjualanKiaPage from "pages/main/revenueCogs/kia/tabs/penjualan/PenjualanKiaPage";
+import LainKiaPage from "pages/main/revenueCogs/kia/tabs/hpplain/LainKiaPage";
+import PenjualanBltPage from "pages/main/revenueCogs/blt/tabs/penjualan/PenjualanBltPage";
+import LainBltPage from "pages/main/revenueCogs/blt/tabs/hpplain/LainBltPage";
+import PenjualanBluPage from "pages/main/revenueCogs/blu/tabs/penjualan/PenjualanBluPage";
+import LainBluPage from "pages/main/revenueCogs/blu/tabs/hpplain/LainBluPage";
+import PenjualanBsuPage from "pages/main/revenueCogs/bsu/tabs/penjualan/PenjualanBsuPage";
+import LainBsuPage from "pages/main/revenueCogs/bsu/tabs/hpplain/LainBsuPage";
+import PenjualanBsbPage from "pages/main/revenueCogs/bsb/tabs/penjualan/PenjualanBsbPage";
+import LainBsbPage from "pages/main/revenueCogs/bsb/tabs/hpplain/LainBsbPage";
+import PenjualanKikPage from "pages/main/revenueCogs/kik/tabs/penjualan/PenjualanKikPage";
+import LainKikPage from "pages/main/revenueCogs/kik/tabs/hpplain/LainKikPage";
+import PenjualanIkpPage from "pages/main/revenueCogs/ikp/tabs/penjualan/PenjualanIkpPage";
+import LainIkpPage from "pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
+import PenjualanBandPage from "pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
+import LainBandPage from "pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
+import TestingPages from "testing/react-grid-testing/TestingPages";
+import LiquidityPlanner from "testing/sample-react-grid-liquid/LiquidityPlanner";
+import TestingRealProject from "testing/sample-react-grid-real-project/TestingRealProject";
+import TestingPages1 from "testing/react-grid-testing/TestingPages1";
+import TestingBertahap from "testing/testing-bertahap/TestingBertahap";
+import TestingBertahap2 from "testing/testing-bertahap/TestingBertahap2";
+import DirectAllSummary from "pages/main/others/summary/direct-all/DIrectAllSummary";
+import IklanAdvertensiInputPage from "pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
+import PemeliharaanInputPage from "pages/main/opex/input/pemeliharaan/PemeliharaanInputPage";
+import PerlengkapanKantorInputPage from "pages/main/opex/input/perlengkapan-kantor/PerlengkapanKantorInputPage";
+import OpexInputPage from "pages/main/opex/input/input-opex/OpexInputPage";
+import OpexSummary from "pages/main/opex/summary/summary-opex/OpexSummary";
+import IklanAdvertensiSummaryPage from "pages/main/opex/summary/iklan-advertensi/IklanAdvertensiSummaryPage";
+import PemeliharaanSummaryPage from "pages/main/opex/summary/pemeliharaan/PemeliharaanSummaryPage";
+import PerlengkapanKantorSummaryPage from "pages/main/opex/summary/perlengkapan-kantor/PerlengkapanKantorSummaryPage";
+import PengirimanDokumenSummaryPage from "pages/main/opex/summary/pengiriman-dokumen/PengirimanDokumenSummaryPage";
+import FcCetakJilidSummaryPage from "pages/main/opex/summary/fc-cetak-jilid/FcCetakJilidSummaryPage";
+import SuratKabarSummaryPage from "pages/main/opex/summary/surat-kabar/SuratKabarSummaryPage";
+import PantriSummaryPage from "pages/main/opex/summary/pantri/PantriSummaryPage";
+import TenderSummaryPage from "pages/main/opex/summary/tender/TenderSummaryPage";
+import KontraktualRapatClearanceSummaryPage from "pages/main/opex/summary/kontraktual-rapat-clearance/KontraktualRapatClearanceSummaryPage";
+import TransportasiSummaryPage from "pages/main/opex/summary/transportasi/TransportasiSummaryPage";
+import PerjalananDinasSummaryPage from "pages/main/opex/summary/perjalanan-dinas/PerjalananDinasSummaryPage";
+import PajakParkirRestoSummaryPage from "pages/main/opex/summary/pajak-parkir-resto/PajakParkirRestoSummaryPage";
+import PengirimanDokumenInputPage from "pages/main/opex/input/pengiriman-dokumen/PengirimanDokumenInputPage";
+import FcCetakJilidInputPage from "pages/main/opex/input/fc-cetak-jilid/FcCetakJilidInputPage";
+import SuratKabarInputPage from "pages/main/opex/input/surat-kabar/SuratKabarInputPage";
+import PantriInputPage from "pages/main/opex/input/pantri/PantriInputPage";
+import TenderInputPage from "pages/main/opex/input/tender/TenderInputPage";
+import KontraktualRapatClearanceInputPage from "pages/main/opex/input/kontraktual-rapat-clearance/KontraktualRapatClearanceInputPage";
+import TransportasiInputPage from "pages/main/opex/input/transportasi/TransportasiInputPage";
+import PerjalananDinasInputPage from "pages/main/opex/input/perjalanan-dinas/PerjalananDinasInputPage";
+import PajakParkirRestoInputPage from "pages/main/opex/input/pajak-parkir-resto/PajakParkirRestoInputPage";
+import PajakKendaraanInputPage from "pages/main/opex/input/pajak-kendaraan/PajakKendaraanInputPage";
 import PajakInputPage from "pages/main/opex/input/pajak/PajakInputPage";
 import IzinKonsultanInputPage from "pages/main/opex/input/izin-konsutan/IzinKonsultanInputPage";
+import PemasaranLainnyaInputPage from "pages/main/opex/input/pemasaran-lainnya/PemasaranLainnyaInputPage";
+import AdministrasiLainnyaInputPage from "pages/main/opex/input/administrasi-lainnya/AdministrasiLainnyaInputPage";
+import BbmTolParkirInputPage from "pages/main/opex/input/bbm-tol-parkir/BbmTolParkirInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -164,6 +167,7 @@ const RoutersConfig = () => {
           </Route>
           <Route path="opex">
             <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
+            <Route path="input/pemasaran-lainnya" element={<PemasaranLainnyaInputPage />} />
             <Route path="input/pemeliharaan" element={<PemeliharaanInputPage />} />
             <Route path="input/perlengkapan-kantor" element={<PerlengkapanKantorInputPage />} />
             <Route path="input/pengiriman-dokumen" element={<PengirimanDokumenInputPage />} />
@@ -175,12 +179,20 @@ const RoutersConfig = () => {
               path="input/kontraktual-rapat-clearance"
               element={<KontraktualRapatClearanceInputPage />}
             />
+            <Route
+              path="input/bbm-tol-parkir"
+              element={<BbmTolParkirInputPage />}
+            />
             <Route path="input/transportasi" element={<TransportasiInputPage />} />
             <Route path="input/perjalanan-dinas" element={<PerjalananDinasInputPage />} />
             <Route path="input/pajak-kendaraan" element={<PajakKendaraanInputPage />} />
             <Route path="input/pajak" element={<PajakInputPage />} />
             <Route path="input/pajak-parkir-resto" element={<PajakParkirRestoInputPage />} />
             <Route path="input/izin-konsultan" element={<IzinKonsultanInputPage />} />
+            <Route
+              path="input/administrasi-lainnya"
+              element={<AdministrasiLainnyaInputPage />}
+            />
             <Route path="input/opex" element={<OpexInputPage />} />
 
             <Route path="summary/iklan-advertensi" element={<IklanAdvertensiSummaryPage />} />

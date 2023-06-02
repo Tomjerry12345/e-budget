@@ -14,6 +14,14 @@ export function getColumns() {
       columnId: "cost_driver",
       width: 200,
     },
+    {
+      columnId: "unit",
+      width: 200,
+    },
+    {
+      columnId: "amount",
+      width: 200,
+    },
 
     { columnId: "jan", width: COL_WIDTH },
     { columnId: "feb", width: COL_WIDTH },
@@ -27,18 +35,10 @@ export function getColumns() {
     { columnId: "okt", width: COL_WIDTH },
     { columnId: "nov", width: COL_WIDTH },
     { columnId: "des", width: COL_WIDTH },
-    {
-      columnId: "total_qty",
-      width: 120,
-    },
-    {
-      columnId: "rates",
-      width: 120,
-    },
-    {
-      columnId: "total",
-      width: 250,
-    },
+
+    { columnId: "total_quantity", width: COL_WIDTH },
+    { columnId: "rates", width: COL_WIDTH },
+    { columnId: "grand_total", width: COL_WIDTH },
 
     { columnId: "jan_rates", width: COL_WIDTH },
     { columnId: "feb_rates", width: COL_WIDTH },

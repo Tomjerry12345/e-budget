@@ -1,18 +1,18 @@
-import { createArray } from "../../../../../values/Utilitas";
+import { createArray } from "values/Utilitas";
 import {
   nonEditable,
   textCell,
   numberCell,
   noSideBorders,
   totalCell,
-} from "../../../../../values/react-grid/cells";
+} from "values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
 const TOTAL_DATA = 16;
-const FIRST_TOTAL = 3;
+const FIRST_TOTAL = 2;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 const firstLoadTotalRow = (data) => {
@@ -41,7 +41,7 @@ const firstLoadTotalRow = (data) => {
 };
 
 export const updateTotalRow = (data) => {
-  const newData = data.slice(FIRST_TOTAL, TOTAL_DATA - 1);
+  const newData = data.slice(1, data.length - 1);
 
   const list = newData
     .map((e) => {
@@ -66,9 +66,9 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
         numberCell(d["unit"], "padding-left-lg"),
-        numberCell(d["rates"], "padding-left-lg", null, false),
+        numberCell(d["rates"], "padding-left-lg"),
         nonEditable(numberCell(d["total"], "padding-left-lg")),
-        numberCell(d["pay_period"], "padding-left-lg", null, false),
+        numberCell(d["pay_period"], "padding-left-lg"),
         nonEditable(numberCell(d["jan_rates"], "padding-left-lg")),
         nonEditable(numberCell(d["feb_rates"], "padding-left-lg")),
         nonEditable(numberCell(d["mar_rates"], "padding-left-lg")),
@@ -108,9 +108,7 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) =>
-        noSideBorders(totalCell(e, "", "beige", "", !(i === 1 || i === 3)))
-      ),
+      ...total.map((e) => noSideBorders(totalCell(e, "", "beige"))),
     ],
   };
 }
@@ -134,9 +132,9 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
