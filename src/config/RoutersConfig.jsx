@@ -99,6 +99,16 @@ import IzinKonsultanInputPage from "pages/main/opex/input/izin-konsutan/IzinKons
 import PemasaranLainnyaInputPage from "pages/main/opex/input/pemasaran-lainnya/PemasaranLainnyaInputPage";
 import AdministrasiLainnyaInputPage from "pages/main/opex/input/administrasi-lainnya/AdministrasiLainnyaInputPage";
 import BbmTolParkirInputPage from "pages/main/opex/input/bbm-tol-parkir/BbmTolParkirInputPage";
+import PajakKendaraanSummaryPage from "pages/main/opex/summary/pajak-kendaraan/PajakKendaraanSummaryPage";
+import PajakSummaryPage from "pages/main/opex/summary/pajak/PajakSummaryPage";
+import IzinkonsultanSummaryPage from "pages/main/opex/summary/izin-konsultan/IzinkonsultanSummaryPage";
+import PemasaranLainnyaSummaryPage from "pages/main/opex/summary/pemasaran-lainnya/PemasaranLainnyaSummaryPage";
+import AdministrasiLainnyaSummaryPage from "pages/main/opex/summary/administrasi-lainnya/AdministrasiLainnyaSummaryPage";
+import SewaSummaryPage from "pages/main/opex/summary/sewa/SewaSummaryPage";
+import ListrikAirTelefonSummaryPage from "pages/main/opex/summary/listrik-air-telefon/ListrikAirTelefonSummaryPage";
+import AsuransiSummaryPage from "pages/main/opex/summary/asuransi/AsuransiSummaryPage";
+import KeamananKebersihanSummaryPage from "pages/main/opex/summary/keamanan-kebersihan/KeamananKebersihanSummaryPage";
+import BbmTolParkirSummaryPage from "pages/main/opex/summary/bbm-tol-parkir/BbmTolParkirSummaryPage";
 
 const RoutersConfig = () => {
   return (
@@ -179,10 +189,7 @@ const RoutersConfig = () => {
               path="input/kontraktual-rapat-clearance"
               element={<KontraktualRapatClearanceInputPage />}
             />
-            <Route
-              path="input/bbm-tol-parkir"
-              element={<BbmTolParkirInputPage />}
-            />
+            <Route path="input/bbm-tol-parkir" element={<BbmTolParkirInputPage />} />
             <Route path="input/transportasi" element={<TransportasiInputPage />} />
             <Route path="input/perjalanan-dinas" element={<PerjalananDinasInputPage />} />
             <Route path="input/pajak-kendaraan" element={<PajakKendaraanInputPage />} />
@@ -196,6 +203,8 @@ const RoutersConfig = () => {
             <Route path="input/opex" element={<OpexInputPage />} />
 
             <Route path="summary/iklan-advertensi" element={<IklanAdvertensiSummaryPage />} />
+            <Route path="summary/sewa" element={<SewaSummaryPage />} />
+            <Route path="summary/pemasaran-lainnya" element={<PemasaranLainnyaSummaryPage />} />
             <Route path="summary/pemeliharaan" element={<PemeliharaanSummaryPage />} />
             <Route
               path="summary/perlengkapan-kantor"
@@ -206,18 +215,35 @@ const RoutersConfig = () => {
               element={<PengirimanDokumenSummaryPage />}
             />
             <Route path="summary/fc-cetak-jilid" element={<FcCetakJilidSummaryPage />} />
+            <Route
+              path="summary/listrik-air-telefon"
+              element={<ListrikAirTelefonSummaryPage />}
+            />
             <Route path="summary/surat-kabar" element={<SuratKabarSummaryPage />} />
             <Route path="summary/pantri" element={<PantriSummaryPage />} />
+            <Route path="summary/asuransi" element={<AsuransiSummaryPage />} />
+            <Route
+              path="summary/keamanan-kebersihan"
+              element={<KeamananKebersihanSummaryPage />}
+            />
             <Route path="summary/tender" element={<TenderSummaryPage />} />
             <Route
               path="summary/kontraktual-rapat-clearance"
               element={<KontraktualRapatClearanceSummaryPage />}
             />
+            <Route path="summary/bbm-tol-parkir" element={<BbmTolParkirSummaryPage />} />
             <Route path="summary/transportasi" element={<TransportasiSummaryPage />} />
             <Route path="summary/perjalanan-dinas" element={<PerjalananDinasSummaryPage />} />
+            <Route path="summary/pajak-kendaraan" element={<PajakKendaraanSummaryPage />} />
+            <Route path="summary/pajak" element={<PajakSummaryPage />} />
             <Route
               path="summary/pajak-parkir-resto"
               element={<PajakParkirRestoSummaryPage />}
+            />
+            <Route path="summary/izin-konsultan" element={<IzinkonsultanSummaryPage />} />
+            <Route
+              path="summary/administrasi-lainnya"
+              element={<AdministrasiLainnyaSummaryPage />}
             />
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>

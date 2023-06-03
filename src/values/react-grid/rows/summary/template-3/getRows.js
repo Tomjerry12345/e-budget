@@ -11,27 +11,26 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
-const TOTAL_DATA = 13;
-const FIRST_TOTAL = 2;
+const TOTAL_DATA = 12;
+const FIRST_TOTAL = 1;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["total"];
-    list[1] += e["jan"];
-    list[2] += e["feb"];
-    list[3] += e["mar"];
-    list[4] += e["apr"];
-    list[5] += e["mei"];
-    list[6] += e["jun"];
-    list[7] += e["jul"];
-    list[8] += e["agu"];
-    list[9] += e["sep"];
-    list[10] += e["okt"];
-    list[11] += e["nov"];
-    list[12] += e["des"];
+    list[0] += e["jan"];
+    list[1] += e["feb"];
+    list[2] += e["mar"];
+    list[3] += e["apr"];
+    list[4] += e["mei"];
+    list[5] += e["jun"];
+    list[6] += e["jul"];
+    list[7] += e["agu"];
+    list[8] += e["sep"];
+    list[9] += e["okt"];
+    list[10] += e["nov"];
+    list[11] += e["des"];
   });
 
   return rowTotal("Total", list);
@@ -60,7 +59,6 @@ function getGroupRows(groups) {
       height: ROW_HEIGHT,
       cells: [
         nonEditable(textCell(d["location"], "padding-left-lg")),
-        nonEditable(numberCell(d["total"], "padding-left-lg")),
         nonEditable(numberCell(d["jan"], "padding-left-lg")),
         nonEditable(numberCell(d["feb"], "padding-left-lg")),
         nonEditable(numberCell(d["mar"], "padding-left-lg")),
@@ -110,8 +108,6 @@ export function reactgridNewRow(id) {
     height: ROW_HEIGHT,
     cells: [
       textCell("", "padding-left-lg"),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),

@@ -6,10 +6,6 @@ export function getColumns() {
       columnId: "location",
       width: 300,
     },
-    {
-      columnId: "total",
-      width: 200,
-    },
     { columnId: "jan", width: COL_WIDTH },
     { columnId: "feb", width: COL_WIDTH },
     { columnId: "mar", width: COL_WIDTH },

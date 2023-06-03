@@ -140,9 +140,6 @@ const Logic = () => {
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
 
-    log({ pemasaran });
-    log({ administrasi });
-
     if (pemasaran.length > 0) {
       await Promise.allSettled(
         pemasaran.map(async (p, i) => {
