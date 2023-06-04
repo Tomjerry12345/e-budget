@@ -1,12 +1,13 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import IklanAdvertensiInputLogic from "./IklanAdvertensiInputLogic";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import Logic from "./Logic";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
+import { constantExcellFile } from "values/Constant";
 
 const IklanAdvertensiInputPage = () => {
-  const { value, func } = IklanAdvertensiInputLogic();
+  const { value, func } = Logic();
 
   return (
     <>
@@ -15,24 +16,17 @@ const IklanAdvertensiInputPage = () => {
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/detail-opex.xlsx"
+        downloadFile={constantExcellFile["opex"]["template-1"]}
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0
@@ -45,13 +39,8 @@ const IklanAdvertensiInputPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text>
-                    {value.items.pemasaran[i].description}
-                  </Typography.Text>
-                  <Button
-                    className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i)}
-                  >
+                  <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
+                  <Button className="btn-tambah-row" onClick={() => func.onTambahRow(i)}>
                     Tambah Data
                   </Button>
                 </div>

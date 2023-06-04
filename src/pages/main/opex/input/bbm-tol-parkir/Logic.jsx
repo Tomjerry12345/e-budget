@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "../../../../../redux/action/action.reducer";
-import MainServices from "../../../../../services/MainServices";
-import { log, setLocal } from "../../../../../values/Utilitas";
+import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import MainServices from "services/MainServices";
+import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fullNewRow, getRows, reactgridNewRow, updateTotalRow } from "./getRows";
-import { getColumns } from "./getColumns";
-import { actionData } from "../../../../../redux/data-global/data.reducer";
+import {
+  fullNewRow,
+  getRows,
+  reactgridNewRow,
+  updateTotalRow,
+} from "values/react-grid/rows/input/opex/template-5/getRows";
+import { getColumns } from "values/react-grid/rows/input/opex/template-5/getColumns";
+import { actionData } from "redux/data-global/data.reducer";
+import { getRootHeaderRow } from "./getRows";
 
-const FcCetakJilidInputLogic = () => {
+const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -40,6 +42,8 @@ const FcCetakJilidInputLogic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
+  const ENDPOINT_URL = "detailopex/template5";
+
   useEffect(() => {
     const state = location.state;
     if (state === null) {
@@ -49,8 +53,6 @@ const FcCetakJilidInputLogic = () => {
       navigate("/");
       return;
     }
-
-    log("state.item", state.item);
 
     setItems(state.item);
   }, []);
@@ -142,60 +144,58 @@ const FcCetakJilidInputLogic = () => {
       await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
-          const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
               r = getRows({
+                header: getRootHeaderRow(),
                 data: data.data,
               });
             } else {
-              r = fullNewRow(i);
+              r = fullNewRow(getRootHeaderRow(), i);
             }
             listPemasaran[i] = r;
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listPemasaran[i] = fullNewRow(i);
-          }
-        })
-      );
-
-      await Promise.allSettled(
-        administrasi.map(async (p, i) => {
-          const codeAccount = p.code_account;
-          log({ codeAccount });
-          const url = `detailopex/template1/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          try {
-            const { data } = await MainServices.get(url);
-            let r;
-            if (data.data.length > 0) {
-              r = getRows({
-                data: data.data,
-              });
-            } else {
-              r = fullNewRow(i);
-            }
-            listAdministrasi[i] = r;
-          } catch (error) {
-            // Tangani error jika ada
-            console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listAdministrasi[i] = fullNewRow(i);
+            listPemasaran[i] = fullNewRow(getRootHeaderRow(), i);
           }
         })
       );
     }
 
+    if (administrasi.length > 0) {
+      await Promise.allSettled(
+        administrasi.map(async (p, i) => {
+          const codeAccount = p.code_account;
+          const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          try {
+            const { data } = await MainServices.get(url);
+            let r;
+            if (data.data.length > 0) {
+              r = getRows({
+                header: getRootHeaderRow(),
+                data: data.data,
+              });
+            } else {
+              r = fullNewRow(getRootHeaderRow(), i);
+            }
+            listAdministrasi[i] = r;
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data for code account ${codeAccount}`, error);
+            listAdministrasi[i] = fullNewRow(getRootHeaderRow(), i);
+          }
+        })
+      );
+    }
     setRows({
       ...rows,
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
-
-    // getDataTable(data.data);
-    // setLoading(false);
   };
 
   const onFinish = (values) => {
@@ -206,16 +206,12 @@ const FcCetakJilidInputLogic = () => {
   const onTambahRow = (i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    log({ i });
-    log({ category });
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
 
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
-
-    log({ newRows });
 
     setRows({
       ...rows,
@@ -243,20 +239,26 @@ const FcCetakJilidInputLogic = () => {
     } else {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
+
+      let total = 0;
+      let grandTotal = 0;
+      let jumlahKendaraan = newRows[i][rowIndex].cells[4].value;
+      let tarif = newRows[i][rowIndex].cells[18].value;
+
+      const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+        if (j >= 5 && j <= 16) total += e.value;
+        if (j === 17) e.value = total;
+        if (j >= 20) {
+          e.value = jumlahKendaraan * tarif * newRows[i][rowIndex].cells[j - 15].value;
+          grandTotal += e.value;
+        }
+        return e;
+      });
+
+      newRows[i][rowIndex].cells[19].value = grandTotal;
+
+      newRows[i][rowIndex].cells = newCell;
     }
-
-    let jumlahBulan = 0;
-    let tarif = newRows[i][rowIndex].cells[16].value;
-
-    const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-      if (j >= 3 && j <= 14) jumlahBulan += e.value;
-      if (j === 15) e.value = jumlahBulan;
-      if (j === 17) e.value = jumlahBulan * tarif;
-      if (j >= 18) e.value = newRows[i][rowIndex].cells[j - 15].value * tarif;
-      return e;
-    });
-
-    newRows[i][rowIndex].cells = newCell;
 
     try {
       let formData = new FormData();
@@ -289,9 +291,9 @@ const FcCetakJilidInputLogic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("name", value);
+        formData.append("description", value);
 
-        const res = await MainServices.post("detailopex/template1/insert", formData);
+        const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
         log({ res });
         const rowId = res.data.data.id;
@@ -302,7 +304,7 @@ const FcCetakJilidInputLogic = () => {
         formData.append("column_id", column_id);
         formData.append("value", value);
 
-        await MainServices.post("detailopex/template1/update", formData);
+        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }
 
       delete newRows[i][rowIndex].newRow;
@@ -310,13 +312,16 @@ const FcCetakJilidInputLogic = () => {
       showNotif(200, "Sukses update data");
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+        if (i >= 1 && i <= 16) e.nonEditable = false;
+        if (i === 18) e.nonEditable = false;
         return e;
       });
 
       newRows[i][rowIndex].cells = newCell;
 
       newRows[i][length - 1] = updateTotalRow(newRows[i]);
+
+      // log({ newRows });
 
       setRows({
         ...rows,
@@ -385,14 +390,14 @@ const FcCetakJilidInputLogic = () => {
     formData.append("year", periode);
 
     try {
-      const res = await MainServices.post(`detailopex/template1/import`, formData);
+      const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
-      const url = `detailopex/template1/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
 
       const r = getRows({
+        header: getRootHeaderRow(),
         data: data.data,
-        titleTotal: "total harga",
       });
 
       const newRow = [...rows.pemasaran];
@@ -434,4 +439,4 @@ const FcCetakJilidInputLogic = () => {
   };
 };
 
-export default FcCetakJilidInputLogic;
+export default Logic;

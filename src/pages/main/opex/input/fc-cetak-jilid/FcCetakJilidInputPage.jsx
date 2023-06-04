@@ -3,10 +3,10 @@ import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import FcCetakJilidInputLogic from "./FcCetakJilidInputLogic";
+import Logic from "./Logic";
 
 const FcCetakJilidInputPage = () => {
-  const { value, func } = FcCetakJilidInputLogic();
+  const { value, func } = Logic();
 
   return (
     <>
