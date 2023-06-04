@@ -99,20 +99,30 @@ export function totalCell(
   isFormat = true
 ) {
   return nonEditable(
-    numberCell(
-      title,
-      `text-lg font-bold ${additionalClassNames}`,
-      {
-        background: background,
-        color: color,
-        border: {
-          bottom: { style: "none" },
-          left: { style: "none" },
-          right: { style: "none" },
-        },
-      },
-      isFormat
-    )
+    title !== ""
+      ? numberCell(
+          title,
+          `text-lg font-bold ${additionalClassNames}`,
+          {
+            background: background,
+            color: color,
+            border: {
+              bottom: { style: "none" },
+              left: { style: "none" },
+              right: { style: "none" },
+            },
+          },
+          isFormat
+        )
+      : textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+          background: background,
+          color: color,
+          border: {
+            bottom: { style: "none" },
+            left: { style: "none" },
+            right: { style: "none" },
+          },
+        })
   );
 }
 

@@ -109,6 +109,10 @@ import ListrikAirTelefonSummaryPage from "pages/main/opex/summary/listrik-air-te
 import AsuransiSummaryPage from "pages/main/opex/summary/asuransi/AsuransiSummaryPage";
 import KeamananKebersihanSummaryPage from "pages/main/opex/summary/keamanan-kebersihan/KeamananKebersihanSummaryPage";
 import BbmTolParkirSummaryPage from "pages/main/opex/summary/bbm-tol-parkir/BbmTolParkirSummaryPage";
+import SewaInputPage from "pages/main/opex/input/sewa/SewaInputPage";
+import ListrikAirTeleponInputPage from "pages/main/opex/input/listrik-air-telepon/ListrikAirTeleponInputPage";
+import AsuransiInputPage from "pages/main/opex/input/asuransi/AsuransiInputPage";
+import KeamananKebersihanInputPage from "pages/main/opex/input/keamanan-kebersihan/KeamananKebersihanInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -178,12 +182,16 @@ const RoutersConfig = () => {
           <Route path="opex">
             <Route path="input/iklan-advertensi" element={<IklanAdvertensiInputPage />} />
             <Route path="input/pemasaran-lainnya" element={<PemasaranLainnyaInputPage />} />
+            <Route path="input/sewa" element={<SewaInputPage />} />
             <Route path="input/pemeliharaan" element={<PemeliharaanInputPage />} />
             <Route path="input/perlengkapan-kantor" element={<PerlengkapanKantorInputPage />} />
             <Route path="input/pengiriman-dokumen" element={<PengirimanDokumenInputPage />} />
             <Route path="input/fc-cetak-jilid" element={<FcCetakJilidInputPage />} />
+            <Route path="input/listrik-air-telefon" element={<ListrikAirTeleponInputPage />} />
             <Route path="input/surat-kabar" element={<SuratKabarInputPage />} />
             <Route path="input/pantri" element={<PantriInputPage />} />
+            <Route path="input/asuransi" element={<AsuransiInputPage />} />
+            <Route path="input/keamanan-kebersihan" element={<KeamananKebersihanInputPage />} />
             <Route path="input/tender" element={<TenderInputPage />} />
             <Route
               path="input/kontraktual-rapat-clearance"
