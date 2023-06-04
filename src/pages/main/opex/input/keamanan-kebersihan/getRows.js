@@ -28,11 +28,11 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
 
-      nonEditable(textCell("Jumlah", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tarif Asuransi", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Total Asuransi", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Lama Asuransi", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Mulai Asuransi", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Manpower", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Nilai Kontrak", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Total Kontrak", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Lama Kontrak", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Mulai Kontrak", "justify-content-center text-lg font-bold")),
       nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),

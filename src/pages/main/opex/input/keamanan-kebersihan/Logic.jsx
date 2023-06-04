@@ -240,20 +240,20 @@ const Logic = () => {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
 
-      let jumlah = newRows[i][rowIndex].cells[3].value;
-      let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+      let manPower = newRows[i][rowIndex].cells[3].value;
+      let nilaiKontrak = newRows[i][rowIndex].cells[4].value;
 
-      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+      let lamaKontrak = parseInt(newRows[i][rowIndex].cells[6].value);
+      let mulaiKontrak = parseInt(newRows[i][rowIndex].cells[7].value);
 
-      let totalAsuransi = jumlah * tarifAsuransi;
+      let totalKontrak = manPower * nilaiKontrak;
 
       let grandTotal = 0;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 5) e.value = totalAsuransi;
-        if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
-          e.value = totalAsuransi;
+        if (j === 5) e.value = totalKontrak;
+        if (j >= mulaiKontrak + 8 && j <= lamaKontrak + 8) {
+          e.value = totalKontrak;
           grandTotal += e.value;
         }
         return e;
