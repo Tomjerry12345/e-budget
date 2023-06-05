@@ -1,12 +1,12 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import { Button, Typography } from "antd";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import IklanAdvertensiSummaryLogic from "./IklanAdvertensiSummaryLogic";
+import Logic from "./Logic";
 
 const IklanAdvertensiSummaryPage = () => {
-  const { value, func } = IklanAdvertensiSummaryLogic();
+  const { value, func } = Logic();
 
   return (
     <>
@@ -24,17 +24,13 @@ const IklanAdvertensiSummaryPage = () => {
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
         ) : null}
-        
+
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <Typography.Text>
-                  {value.items.pemasaran[i].description}
-                </Typography.Text>
+                <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",
