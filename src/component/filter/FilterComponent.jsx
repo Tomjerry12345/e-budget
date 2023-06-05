@@ -51,18 +51,10 @@ const AutoCompleteFilter = ({
       value={value.state.code_location}
     />
 
-    <AutoCompleteElement
-      label="Departemen"
-      name="code_dept"
-      value={value.state.code_dept}
-    />
+    <AutoCompleteElement label="Departemen" name="code_dept" value={value.state.code_dept} />
 
     {isCodeIcp ? (
-      <AutoCompleteElement
-        label="ICP"
-        name="code_icp"
-        value={value.state.code_icp}
-      />
+      <AutoCompleteElement label="ICP" name="code_icp" value={value.state.code_icp} />
     ) : null}
 
     {isCodeProject === true ? (
@@ -115,6 +107,7 @@ const FilterComponent = ({
     formGlobal: form,
     type: type,
     typeCompany: usersGroup === "usersbu" ? "static" : typeCompany,
+    codeCompany,
   });
 
   return (
@@ -135,11 +128,7 @@ const FilterComponent = ({
                 isCodeProject={isCodeProject}
                 isCodeIcp={isCodeIcp}
                 disabled={
-                  usersGroup === "usersbu"
-                    ? true
-                    : usersGroup === "reviewer"
-                    ? false
-                    : disabled
+                  usersGroup === "usersbu" ? true : usersGroup === "reviewer" ? false : disabled
                 }
                 // disabled={false}
                 variant={variant}

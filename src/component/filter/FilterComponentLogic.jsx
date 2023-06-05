@@ -28,7 +28,6 @@ const FilterComponentLogic = ({
   const company_names = getLocal("company_names");
 
   useEffect(() => {
-    log("typeCompany", typeCompany);
     const fetchData = async () => {
       const { data } = await MainServices.get("company/list-child");
 
@@ -45,7 +44,11 @@ const FilterComponentLogic = ({
     if (typeCompany === "change") {
       fetchData();
     }
-  }, [codeCompany]);
+
+    if (codeCompany !== undefined) {
+      getValueComboBox(codeCompany);
+    }
+  }, []);
 
   useEffect(() => {
     if (userGroup === "usersbu") {
@@ -113,12 +116,8 @@ const FilterComponentLogic = ({
         ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
         : null;
 
-    const resLocation = await MainServices.get(
-      `location/list-by-com?code_company=${code[0]}`
-    );
-    const resDept = await MainServices.get(
-      `department/list-dropdown?code_company=${code[0]}`
-    );
+    const resLocation = await MainServices.get(`location/list-by-com?code_company=${code[0]}`);
+    const resDept = await MainServices.get(`department/list-dropdown?code_company=${code[0]}`);
     const resIcp =
       isCodeIcp === true
         ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
