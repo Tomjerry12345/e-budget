@@ -12,13 +12,7 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
-export const chevronCell = (
-  text,
-  hasChildren,
-  parentId,
-  className = "",
-  style
-) => ({
+export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
   type: "chevron",
   text,
   isExpanded: false,
@@ -28,12 +22,12 @@ export const chevronCell = (
   style,
 });
 
-export const numberCell = (value, className = "", style) => ({
+export const numberCell = (value, className = "", style, isFormat = true) => ({
   type: "number",
   value,
   className,
   style,
-  format: numberFormat,
+  format: isFormat ? numberFormat : null,
 });
 
 export const nonEditable = (cell) => ({
@@ -101,18 +95,34 @@ export function totalCell(
   title,
   additionalClassNames = "",
   background = "#107C41",
-  color = "black"
+  color = "black",
+  isFormat = true
 ) {
   return nonEditable(
-    numberCell(title, `text-lg font-bold ${additionalClassNames}`, {
-      background: background,
-      color: color,
-      border: {
-        bottom: { style: "none" },
-        left: { style: "none" },
-        right: { style: "none" },
-      },
-    })
+    title !== ""
+      ? numberCell(
+          title,
+          `text-lg font-bold ${additionalClassNames}`,
+          {
+            background: background,
+            color: color,
+            border: {
+              bottom: { style: "none" },
+              left: { style: "none" },
+              right: { style: "none" },
+            },
+          },
+          isFormat
+        )
+      : textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+          background: background,
+          color: color,
+          border: {
+            bottom: { style: "none" },
+            left: { style: "none" },
+            right: { style: "none" },
+          },
+        })
   );
 }
 

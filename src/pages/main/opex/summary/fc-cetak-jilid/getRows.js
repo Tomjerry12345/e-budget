@@ -17,7 +17,7 @@ const ROW_HEIGHT = 32;
 const COLOR_1 = "#107C41";
 const COLOR_2 = "#107C41";
 
-const TOTAL_DATA = 12;
+const TOTAL_DATA = 13;
 const FIRST_TOTAL = 1;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
@@ -25,18 +25,19 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["jan"];
-    list[1] += e["feb"];
-    list[2] += e["mar"];
-    list[3] += e["apr"];
-    list[4] += e["mei"];
-    list[5] += e["jun"];
-    list[6] += e["jul"];
-    list[7] += e["agu"];
-    list[8] += e["sep"];
-    list[9] += e["okt"];
-    list[10] += e["nov"];
-    list[11] += e["des"];
+    list[0] += e["total"];
+    list[1] += e["jan"];
+    list[2] += e["feb"];
+    list[3] += e["mar"];
+    list[4] += e["apr"];
+    list[5] += e["mei"];
+    list[6] += e["jun"];
+    list[7] += e["jul"];
+    list[8] += e["agu"];
+    list[9] += e["sep"];
+    list[10] += e["okt"];
+    list[11] += e["nov"];
+    list[12] += e["des"];
   });
 
   return rowTotal("Total", list);
@@ -53,10 +54,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   return rowTotal("Total", list);
 };
@@ -67,12 +65,10 @@ function getRootHeaderRow() {
     height: ROW_HEIGHT,
     cells: [
       nonEditable(
-        textCell(
-          "Total By Iklan & Advertensi",
-          "justify-content-center text-lg font-bold"
-        )
+        textCell("Total By Iklan & Advertensi", "justify-content-center text-lg font-bold")
       ),
 
+      nonEditable(monthHeaderCell(`Total`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
@@ -96,6 +92,7 @@ function getGroupRows(groups) {
       height: ROW_HEIGHT,
       cells: [
         nonEditable(textCell(d["location"], "padding-left-lg")),
+        nonEditable(textCell(d["total"], "padding-left-lg")),
         nonEditable(numberCell(d["jan"], "padding-left-lg")),
         nonEditable(numberCell(d["feb"], "padding-left-lg")),
         nonEditable(numberCell(d["mar"], "padding-left-lg")),
@@ -135,11 +132,7 @@ export function getRows({ data }) {
 }
 
 export function fullNewRow(id) {
-  return [
-    getRootHeaderRow(),
-    reactgridNewRow(id),
-    rowTotal("Total", createArray(TOTAL_DATA)),
-  ];
+  return [getRootHeaderRow(), reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
 }
 
 export function reactgridNewRow(id) {
@@ -149,6 +142,7 @@ export function reactgridNewRow(id) {
     height: ROW_HEIGHT,
     cells: [
       nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
