@@ -16,6 +16,13 @@ import {
 } from "./getRows";
 import { dataDummy } from "./rawData";
 
+const listUrl = [
+  {
+    description: "Stok Awal",
+    endpoint: "detailrevenue/firststock",
+  },
+];
+
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
@@ -91,22 +98,22 @@ const Logic = () => {
       periode,
     } = values;
 
-    let fCodeCompany = code_company.split(" ");
-    let fCodeProduct = code_product.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
+    let fCodeCompany = code_company;
+    let fCodeProduct = code_product;
+    let fCodeLocation = code_location;
+    let fCodeDept = code_dept;
+    let fCodeIcp = code_icp;
+    let fCodeProject = code_project;
 
-    let fPeriode = periode.split(" ");
+    let fPeriode = periode;
 
-    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0];
+    // fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    // fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    // fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    // fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    // fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    // fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    // fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
@@ -138,89 +145,58 @@ const Logic = () => {
     codeProject,
     periode
   ) => {
-    const listPemasaran = [];
-    const listAdministrasi = [];
+    const listRows = [];
 
-    let pemasaran = items.pemasaran;
-    let administrasi = items.administrasi;
-
-    if (pemasaran.length > 0) {
-      await Promise.allSettled(
-        pemasaran.map(async (p, i) => {
-          const codeAccount = p.code_account;
-          const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          try {
-            const { data } = await MainServices.get(url);
-            let r;
-            if (data.data.length > 0) {
-              r = getRows({
-                header: getRootHeaderRow(),
-                data: data.data,
-              });
-            } else {
-              r = fullNewRow(getRootHeaderRow(), i);
-            }
-            listPemasaran[i] = r;
-          } catch (error) {
-            // Tangani error jika ada
-            console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listPemasaran[i] = fullNewRow(getRootHeaderRow(), i);
+    await Promise.allSettled(
+      listUrl.map(async (p, i) => {
+        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        try {
+          const { data } = await MainServices.get(url);
+          let r;
+          if (data.data.length > 0) {
+            r = getRows({
+              header: getRootHeaderRow(),
+              data: data.data,
+            });
+          } else {
+            r = fullNewRow(getRootHeaderRow(), i);
           }
-        })
-      );
-    }
-
-    if (administrasi.length > 0) {
-      await Promise.allSettled(
-        administrasi.map(async (p, i) => {
-          const codeAccount = p.code_account;
-          const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          try {
-            const { data } = await MainServices.get(url);
-            let r;
-            if (data.data.length > 0) {
-              r = getRows({
-                header: getRootHeaderRow(),
-                data: data.data,
-              });
-            } else {
-              r = fullNewRow(getRootHeaderRow(), i);
-            }
-            listAdministrasi[i] = r;
-          } catch (error) {
-            // Tangani error jika ada
-            console.error(`Error fetching data for code account ${codeAccount}`, error);
-            listAdministrasi[i] = fullNewRow(getRootHeaderRow(), i);
-          }
-        })
-      );
-    }
-    setRows({
-      ...rows,
-      pemasaran: listPemasaran,
-      administrasi: listAdministrasi,
-    });
+          listRows[i] = {
+            description: p.description,
+            data: r,
+          };
+        } catch (error) {
+          // Tangani error jika ada
+          console.error(`Error fetching data ${p.description}`, error);
+          listRows[i] = {
+            description: p.description,
+            data: fullNewRow(getRootHeaderRow(), i),
+          };
+        }
+      })
+    );
+    setRows(listRows);
   };
 
   const onFinish = (values) => {
     setLoading(true);
-    // onSetDataTable(values);
+    onSetDataTable(values);
 
-    const l = [];
+    // const l = [];
 
-    dataDummy.list.map((e, i) => {
-      const r = getRows({
-        header: getRootHeaderRow(),
-        data: e.data,
-      });
+    // dataDummy.list.map((e, i) => {
+    //   const r = getRows({
+    //     header: getRootHeaderRow(),
+    //     data: e.data,
+    //   });
 
-      l.push({
-        title: e.title,
-        data: r,
-      });
-    });
+    //   l.push({
+    //     title: e.title,
+    //     data: r,
+    //   });
+    // });
 
-    setRows(l);
+    // setRows(l);
   };
 
   const onTambahRow = (i, category) => {
