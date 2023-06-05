@@ -1,31 +1,23 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "../../../../../redux/action/action.reducer";
-import MainServices from "../../../../../services/MainServices";
-import { log, logO, setLocal } from "../../../../../values/Utilitas";
+import { useDispatch } from "react-redux";
+import { resetDataActionImport, val } from "redux/action/action.reducer";
+import MainServices from "services/MainServices";
+import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-  updateTotalRow,
-} from "./getRows";
-import { getColumns } from "./getColumns";
-import { actionData } from "../../../../../redux/data-global/data.reducer";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/summary/template-1/getColumns";
+import { getRootHeaderRow } from "./getRows";
+import { actionData } from "redux/data-global/data.reducer";
 
-const TenderSummaryLogic = () => {
+const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
-    administrasi: []
+    administrasi: [],
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
@@ -35,9 +27,7 @@ const TenderSummaryLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -45,7 +35,7 @@ const TenderSummaryLogic = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const dataGlobalRedux = useSelector((state) => state.data);
+  const ENDPOINT_URL = "detailopex/template1";
 
   useEffect(() => {
     const state = location.state;
@@ -146,45 +136,53 @@ const TenderSummaryLogic = () => {
     const administrasi = items.administrasi;
 
     if (pemasaran.length > 0) {
-      await Promise.all(
+      await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
-          const url = `detailopex/template1/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          const { data } = await MainServices.get(url);
-          // log({ data });
-          let r;
-          if (data.data.length > 0) {
-            r = getRows({
-              data: data.data,
-            });
-          } else {
-            r = fullNewRow(i);
+          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          try {
+            const { data } = await MainServices.get(url);
+            let r;
+            if (data.data.length > 0) {
+              r = getRows({
+                header: getRootHeaderRow(),
+                data: data.data,
+              });
+            } else {
+              r = fullNewRow(getRootHeaderRow(), i);
+            }
+            listPemasaran[i] = r;
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data for code account ${codeAccount}`, error);
+            listPemasaran[i] = fullNewRow(getRootHeaderRow(), i);
           }
-
-          listPemasaran.push(r);
         })
       );
     }
 
     if (administrasi.length > 0) {
-      await Promise.all(
+      await Promise.allSettled(
         administrasi.map(async (p, i) => {
           const codeAccount = p.code_account;
-          log({ codeAccount });
-          const url = `detailopex/template1/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
-          const { data } = await MainServices.get(url);
-          // log({ data });
-          let r;
-          if (data.data.length > 0) {
-            r = getRows({
-              data: data.data,
-            });
-          } else {
-            r = fullNewRow(i);
+          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          try {
+            const { data } = await MainServices.get(url);
+            let r;
+            if (data.data.length > 0) {
+              r = getRows({
+                header: getRootHeaderRow(),
+                data: data.data,
+              });
+            } else {
+              r = fullNewRow(getRootHeaderRow(), i);
+            }
+            listAdministrasi[i] = r;
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data for code account ${codeAccount}`, error);
+            listAdministrasi[i] = fullNewRow(getRootHeaderRow(), i);
           }
-
-          listAdministrasi.push(r);
         })
       );
     }
@@ -227,4 +225,4 @@ const TenderSummaryLogic = () => {
   };
 };
 
-export default TenderSummaryLogic;
+export default Logic;

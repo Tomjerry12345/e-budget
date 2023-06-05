@@ -1,11 +1,12 @@
-const COL_WIDTH = 110;
+const COL_WIDTH = 200;
 
 export function getColumns() {
   return [
     {
-      columnId: "total_by_iklan",
+      columnId: "location",
       width: 300,
     },
+    { columnId: "total", width: COL_WIDTH },
     { columnId: "jan", width: COL_WIDTH },
     { columnId: "feb", width: COL_WIDTH },
     { columnId: "mar", width: COL_WIDTH },
