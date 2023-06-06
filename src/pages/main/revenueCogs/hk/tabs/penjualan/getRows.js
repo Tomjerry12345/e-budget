@@ -13,8 +13,8 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
-const TOTAL_DATA = 13;
-const FIRST_TOTAL = 3;
+const TOTAL_DATA = 12;
+const FIRST_TOTAL = 2;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 const COLOR_1 = "#107C41";
@@ -24,7 +24,8 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Name", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Code", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -38,8 +39,6 @@ export function getRootHeaderRow() {
       nonEditable(monthHeaderCell(`Okt`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
-
-      nonEditable(rootHeaderCell(`Total`, "justify-content-center", COLOR_1)),
     ],
   };
 }
@@ -48,19 +47,18 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["jan_actual"] ?? 0;
-    list[1] += e["feb_actual"] ?? 0;
-    list[2] += e["mar_actual"] ?? 0;
-    list[3] += e["apr_actual"] ?? 0;
-    list[4] += e["mei_actual"] ?? 0;
-    list[5] += e["jun_actual"] ?? 0;
-    list[6] += e["jul_actual"] ?? 0;
-    list[7] += e["agu_actual"] ?? 0;
-    list[8] += e["sep_actual"] ?? 0;
-    list[9] += e["okt_actual"] ?? 0;
-    list[10] += e["nov_forecast"] ?? 0;
-    list[11] += e["des_forecast"] ?? 0;
-    list[12] += e["total"] ?? 0;
+    list[0] += e["jan"] ?? 0;
+    list[1] += e["feb"] ?? 0;
+    list[2] += e["mar"] ?? 0;
+    list[3] += e["apr"] ?? 0;
+    list[4] += e["mei"] ?? 0;
+    list[5] += e["jun"] ?? 0;
+    list[6] += e["jul"] ?? 0;
+    list[7] += e["agu"] ?? 0;
+    list[8] += e["sep"] ?? 0;
+    list[9] += e["okt"] ?? 0;
+    list[10] += e["nov"] ?? 0;
+    list[11] += e["des"] ?? 0;
   });
 
   return rowTotal("Total", list);
@@ -89,22 +87,21 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["description"], "padding-left-lg"),
+        textCell(d["product_code"], "padding-left-lg"),
+        textCell(d["product_description"], "padding-left-lg"),
 
-        nonEditable(numberCell(d["jan_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["feb_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["mar_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["apr_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["mei_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["jun_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["jul_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["agu_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["sep_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["okt_actual"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["nov_forecast"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["des_forecast"] ?? 0, "padding-left-lg")),
-
-        nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jan"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["feb"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["mar"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["apr"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["mei"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jun"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jul"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["agu"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["sep"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["okt"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["nov"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["des"] ?? 0, "padding-left-lg")),
       ],
     })),
   ];
@@ -121,6 +118,12 @@ function rowTotal(titleTotal, total) {
           fontWeight: "bold",
         })
       ),
+      nonEditable(
+        textCell("", "padding-left-lg", {
+          background: "beige",
+          fontWeight: "bold",
+        })
+      ),
 
       ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
     ],
@@ -133,7 +136,6 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  list[5] = "";
   return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 
@@ -143,6 +145,7 @@ export function reactgridNewRow(id) {
     newRow: true,
     height: ROW_HEIGHT,
     cells: [
+      textCell("", "padding-left-lg"),
       textCell("", "padding-left-lg"),
 
       nonEditable(numberCell(0, "padding-left-lg")),
@@ -156,8 +159,6 @@ export function reactgridNewRow(id) {
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-
       nonEditable(numberCell(0, "padding-left-lg")),
     ],
   };
