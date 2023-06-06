@@ -40,3 +40,18 @@ export const importSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { actionImport, resetDataActionImport } = importSlice.actions;
+
+export const revenueSlice = createSlice({
+  name: "notif",
+  initialState: {
+    clicked: false,
+  },
+  reducers: {
+    actionRevenue: (state, action) => {
+      state.clicked = action.payload.clicked;
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const { actionRevenue } = revenueSlice.actions;

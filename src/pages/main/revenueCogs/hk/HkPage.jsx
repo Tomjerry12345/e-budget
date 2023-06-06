@@ -5,14 +5,17 @@ import { Form, Tabs } from "antd";
 import HeaderComponent from "../../../../component/header/HeaderComponent";
 import { log } from "../../../../values/Utilitas";
 import FilterComponent from "../../../../component/filter/FilterComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { actionRevenue } from "redux/action/action.reducer";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
-  const [isClickFinish, setIsClickFinish] = useState(null);
   const [isMoveTabs, setIsMoveTabs] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { clicked } = useSelector((state) => state.revenue);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -79,8 +82,11 @@ const HkPage = () => {
         `/main/revenue-cogs/hk/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
-
-    setIsClickFinish(false);
+    dispatch(
+      actionRevenue({
+        clicked: !clicked,
+      })
+    );
   };
 
   return (
@@ -88,9 +94,7 @@ const HkPage = () => {
       <HeaderComponent
         type="revenue-perusahaan"
         // onFinish={onFinish}
-        onChangeFilter={(set) => {
-          set(isClickFinish);
-        }}
+        onChangeFilter={(set) => {}}
         // onChangeLoadingUpload={(set, setImport) => {
         //   set(value.loadingUpload);
 
@@ -130,7 +134,7 @@ const HkPage = () => {
           isCodeProject
           isCodeProduct={false}
           type="input"
-          codeCompany={211}
+          codeCompany={311}
           form={form}
           disabled
           typeCompany="static"

@@ -3,8 +3,12 @@ const COL_WIDTH = 110;
 export function getColumns() {
   return [
     {
-      columnId: "total_by_iklan",
-      width: 300,
+      columnId: "product_code",
+      width: 200,
+    },
+    {
+      columnId: "product_description",
+      width: 200,
     },
     { columnId: "jan", width: COL_WIDTH },
     { columnId: "feb", width: COL_WIDTH },

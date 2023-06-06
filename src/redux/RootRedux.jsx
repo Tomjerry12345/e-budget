@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import reducer from "./reducer";
-import { importSlice, notifSlice } from "./action/action.reducer";
+import { importSlice, notifSlice, revenueSlice } from "./action/action.reducer";
 import { dataGlobalSlice } from "./data-global/data.reducer";
 
 const RootRedux = () =>
@@ -9,6 +9,7 @@ const RootRedux = () =>
     notif: notifSlice.reducer,
     import: importSlice.reducer,
     data: dataGlobalSlice.reducer,
+    revenue: revenueSlice.reducer,
   });
 
 export default RootRedux;

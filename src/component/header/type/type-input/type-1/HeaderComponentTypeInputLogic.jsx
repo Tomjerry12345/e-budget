@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { actionData } from "../../../../../redux/data-global/data.reducer";
 import { actionImport } from "../../../../../redux/action/action.reducer";
@@ -7,10 +6,6 @@ import { log } from "../../../../../values/Utilitas";
 const HeaderComponentTypeInputLogic = () => {
   const dispatch = useDispatch();
   const importRedux = useSelector((state) => state.import);
-
-  useEffect(() => {
-    log({ importRedux });
-  }, [importRedux]);
 
   const onClickMore = () => {
     dispatch(

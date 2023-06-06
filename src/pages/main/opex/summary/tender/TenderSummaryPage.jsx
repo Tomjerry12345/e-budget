@@ -1,12 +1,12 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import { Button, Typography } from "antd";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import TenderSummaryLogic from "./TenderSummaryLogic";
+import Logic from "./Logic";
 
 const TenderSummaryPage = () => {
-  const { value, func } = TenderSummaryLogic();
+  const { value, func } = Logic();
 
   return (
     <>
@@ -24,17 +24,13 @@ const TenderSummaryPage = () => {
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Pemasaran
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
         ) : null}
 
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <Typography.Text>
-                  {value.items.pemasaran[i].description}
-                </Typography.Text>
+                <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",
@@ -60,17 +56,13 @@ const TenderSummaryPage = () => {
           : null}
 
         {value.rows.administrasi.length > 0 ? (
-          <Typography.Text className="section-header-table">
-            Administrasi
-          </Typography.Text>
+          <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
         {value.rows.administrasi.length > 0
           ? value.rows.administrasi.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <Typography.Text>
-                  {value.items.administrasi[i].description}
-                </Typography.Text>
+                <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",

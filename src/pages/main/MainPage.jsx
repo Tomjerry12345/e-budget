@@ -60,7 +60,7 @@ const MainPage = () => {
 
       <Layout
         style={{
-          backgroundColor: "white",
+          backgroundColor: "#f5f7f9",
           overflow: "auto",
         }}
       >
