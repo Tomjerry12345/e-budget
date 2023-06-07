@@ -3,14 +3,13 @@ import {
   textCell,
   monthHeaderCell,
   rootHeaderCell,
-} from "../../../../../values/react-grid/cells";
+} from "values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
 const COLOR_1 = "#107C41";
-const COLOR_2 = "#107C41";
 
 export function getRootHeaderRow() {
   return {
@@ -36,7 +35,7 @@ export function getRootHeaderRow() {
 
       nonEditable(textCell("Jumlah Bulan", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Tarif", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell("Total Maintenance Cost", "justify-content-center", COLOR_2)),
+      nonEditable(rootHeaderCell("Total Maintenance Cost", "justify-content-center", COLOR_1)),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),

@@ -11,8 +11,12 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
+const TOTAL_DATA = 27;
+const FIRST_TOTAL = 3;
+const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
+
 const firstLoadTotalRow = (data) => {
-  const list = createArray(27);
+  const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
     list[0] += e["jan"];
@@ -53,12 +57,12 @@ export const updateTotalRow = (data) => {
   const list = newData
     .map((e) => {
       const values = [];
-      for (let i = 3; i < 30; i++) {
+      for (let i = FIRST_TOTAL; i < END_TOTAL; i++) {
         values.push(e.cells[i].value);
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(27));
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   return rowTotal("Total", list);
 };
@@ -138,7 +142,7 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(27))];
+  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
 }
 
 export function reactgridNewRow(id) {

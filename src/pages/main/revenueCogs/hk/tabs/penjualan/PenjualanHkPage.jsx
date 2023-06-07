@@ -22,10 +22,15 @@ const PenjualanHkPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography.Text>{e.title}</Typography.Text>
-                <Button className="btn-tambah-row" onClick={() => func.onTambahRow(i, e.title)}>
-                  Tambah Data
-                </Button>
+                <Typography.Text>{e.description}</Typography.Text>
+                {e.insert ? (
+                  <Button
+                    className="btn-tambah-row"
+                    onClick={() => func.onTambahRow(i, e.description)}
+                  >
+                    Tambah Data
+                  </Button>
+                ) : null}
               </div>
 
               <div
@@ -42,10 +47,10 @@ const PenjualanHkPage = () => {
                 >
                   <ReactGrid
                     rows={e.data}
-                    columns={value.columns}
+                    columns={value.columns[e.description]}
                     stickyTopRows={1}
                     stickyLeftColumns={1}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e.title)}
+                    onCellsChanged={(change) => func.onChangeTable(change, i, e.description)}
                   />
                 </div>
               </div>

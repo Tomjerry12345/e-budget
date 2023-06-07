@@ -1,6 +1,6 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
@@ -65,6 +65,7 @@ const FcCetakJilidInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -113,6 +114,7 @@ const FcCetakJilidInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
