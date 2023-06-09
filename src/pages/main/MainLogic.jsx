@@ -15,6 +15,7 @@ import {
   routingReport,
 } from "../../values/RoutingPage";
 import { cekToken, getLocal, getToken, log, setLocal } from "../../values/Utilitas";
+import { addSubmenu } from "redux/data-global/data.submenu.reducer";
 
 const MainLogic = () => {
   let params = useParams();
@@ -155,6 +156,12 @@ const MainLogic = () => {
 
       pageNavigation = onPageNavigation(index, subMenu);
 
+      dispatch(
+        addSubmenu({
+          submenu: subMenu,
+        })
+      );
+
       navigate(pageNavigation, {
         state: {
           item: subMenu,
@@ -170,6 +177,12 @@ const MainLogic = () => {
   const onMouseDownClickedMenu = (key, subMenu) => {
     const index = parseInt(key);
     let pageNavigation = onPageNavigation(index, subMenu);
+    dispatch(
+      addSubmenu({
+        submenu: subMenu,
+      })
+    );
+    log({ subMenu });
     setRouterNewPage(pageNavigation);
     setLocal("index-menu", index);
     setLocal("name-menu", subMenu.description);

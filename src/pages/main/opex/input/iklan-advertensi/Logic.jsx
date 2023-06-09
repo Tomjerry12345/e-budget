@@ -40,9 +40,11 @@ const Logic = () => {
   const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
+  const dataGlobalSubmenu = useSelector((state) => state.submenu);
   const ENDPOINT_URL = "detailopex/template1";
 
   useEffect(() => {
+    // const item = dataGlobalSubmenu.submenu;
     const state = location.state;
     if (state === null) {
       setLocal("index-menu", 0);
