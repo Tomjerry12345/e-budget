@@ -6,6 +6,7 @@ import { getLocal, log } from "../../values/Utilitas";
 const FilterComponentLogic = ({
   isCodeProduct,
   isCodeProject,
+  isCodeLocation,
   isCodeIcp,
   codeCompany,
   type,
@@ -117,9 +118,10 @@ const FilterComponentLogic = ({
           ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
           : null;
 
-      const resLocation = await MainServices.get(
-        `location/list-by-com?code_company=${code[0]}`
-      );
+      const resLocation =
+        isCodeLocation === true
+          ? await MainServices.get(`location/list-by-com?code_company=${code[0]}`)
+          : null;
       const resDept = await MainServices.get(
         `department/list-dropdown?code_company=${code[0]}`
       );
@@ -132,16 +134,14 @@ const FilterComponentLogic = ({
           ? await MainServices.get(`project/list-by-com?code_company=${code[0]}`)
           : null;
 
-      if (resLocation.data.responseCode === 200) {
-        setState({
-          ...state,
-          code_product: resProduct !== null ? setProduct(resProduct) : [],
-          code_location: setLocation(resLocation),
-          code_dept: setDept(resDept),
-          code_icp: resIcp !== null ? setIcp(resIcp) : [],
-          code_project: resProject !== null ? setProject(resProject, code) : [],
-        });
-      }
+      setState({
+        ...state,
+        code_product: resProduct !== null ? setProduct(resProduct) : [],
+        code_location: resLocation !== null ? setLocation(resLocation) : [],
+        code_dept: setDept(resDept),
+        code_icp: resIcp !== null ? setIcp(resIcp) : [],
+        code_project: resProject !== null ? setProject(resProject, code) : [],
+      });
     } catch (err) {
       log({ err });
     }

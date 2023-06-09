@@ -20,7 +20,7 @@ const KontraktualRapatClearanceSummaryPage = () => {
         onChangeFilter={() => {}}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject />
+      <FilterComponent onFinish={func.onFinish} isCodeLocation={false} />
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (

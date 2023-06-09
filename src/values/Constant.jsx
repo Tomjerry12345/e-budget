@@ -560,3 +560,37 @@ export const constantExcellFile = {
     "template-5": "file/detail-opex-5.xlsx",
   },
 };
+
+export const urlRevenue = [
+  {
+    description: "Stok Awal",
+    endpoint: "detailrevenue/firststock",
+    insert: true,
+  },
+  {
+    description: "Asumsi unit beli",
+    endpoint: "detailrevenue/purchaseunitassumption",
+    insert: true,
+  },
+  {
+    description: "Harga beli per unit",
+    endpoint: "detailrevenue/purchasepriceunit",
+    insert: true,
+  },
+  {
+    description: "Stok akhir",
+    endpoint: "detailrevenue/laststock",
+    insert: false,
+  },
+  {
+    description: "Asumsi unit jual",
+    endpoint: "detailrevenue/sellingunitassumption",
+    insert: true,
+  },
+
+  {
+    description: "Penjualan",
+    endpoint: "detailrevenue/selling",
+    insert: true,
+  },
+];

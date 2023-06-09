@@ -66,6 +66,7 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -74,7 +75,7 @@ const PemasaranLainnyaInputPage = () => {
             ))
           : null}
 
-        {value.rows.pemasaran.length > 0 ? (
+        {value.rows.administrasi.length > 0 ? (
           <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
@@ -114,6 +115,7 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>

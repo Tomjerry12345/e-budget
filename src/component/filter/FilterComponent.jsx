@@ -22,6 +22,7 @@ const AutoCompleteFilter = ({
   isCodeProduct,
   isCodeIcp,
   isCodeProject,
+  isCodeLocation,
   disabled,
   variant,
   type = "default",
@@ -45,11 +46,13 @@ const AutoCompleteFilter = ({
       />
     ) : null}
 
-    <AutoCompleteElement
-      label="Lokasi"
-      name="code_location"
-      value={value.state.code_location}
-    />
+    {isCodeLocation === true ? (
+      <AutoCompleteElement
+        label="Lokasi"
+        name="code_location"
+        value={value.state.code_location}
+      />
+    ) : null}
 
     <AutoCompleteElement label="Departemen" name="code_dept" value={value.state.code_dept} />
 
@@ -75,6 +78,7 @@ const AutoCompleteFilter = ({
  * keyCodeProject: "default" | "BJU";
  * isCodeProject: true | false;
  * isCodeIcp: true | false;
+ * isCodeLocation: true | false;
  * onFinish: const function = () => {};
  * type: "summary" | "input";
  * }} props Props for the component
@@ -84,8 +88,9 @@ const AutoCompleteFilter = ({
 const FilterComponent = ({
   onFinish,
   isCodeProduct = true,
-  isCodeProject = false,
-  isCodeIcp = false,
+  isCodeProject = true,
+  isCodeLocation = true,
+  isCodeIcp = true,
   keyCodeProject = null,
   form = null,
   codeCompany = null,
@@ -102,6 +107,7 @@ const FilterComponent = ({
   const { value, func } = FilterComponentLogic({
     isCodeProduct,
     isCodeProject,
+    isCodeLocation,
     isCodeIcp,
     keyCodeProject,
     formGlobal: form,
@@ -126,6 +132,7 @@ const FilterComponent = ({
                 func={func}
                 isCodeProduct={isCodeProduct}
                 isCodeProject={isCodeProject}
+                isCodeLocation={isCodeLocation}
                 isCodeIcp={isCodeIcp}
                 disabled={
                   usersGroup === "usersbu" ? true : usersGroup === "reviewer" ? false : disabled

@@ -7,21 +7,10 @@ import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import {
-  getRootHeaderRow,
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-  updateTotalRow,
-} from "./getRows";
-import { dataDummy } from "./rawData";
-
-const listUrl = [
-  {
-    description: "Stok Awal",
-    endpoint: "detailrevenue/firststock",
-  },
-];
+import { fullNewRow, getRows } from "./getRows";
+import { urlRevenue } from "values/Constant";
+import { reactgridNewRow } from "./reactgridNewRow";
+import { getHeaderRow } from "./getHeaderRow";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -29,7 +18,7 @@ const Logic = () => {
   const [uploadSucces, setUploadSucces] = useState(null);
 
   const [items, setItems] = useState();
-  const columns = getColumns();
+  const columns = getColumns;
   const [rows, setRows] = useState();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -148,29 +137,34 @@ const Logic = () => {
     const listRows = [];
 
     await Promise.allSettled(
-      listUrl.map(async (p, i) => {
+      urlRevenue.map(async (p, i) => {
+        const desc = p.description;
         const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
         try {
           const { data } = await MainServices.get(url);
           let r;
           if (data.data.length > 0) {
             r = getRows({
-              header: getRootHeaderRow(),
+              header: getHeaderRow[desc],
               data: data.data,
+              key: desc,
             });
           } else {
-            r = fullNewRow(getRootHeaderRow(), i);
+            r = fullNewRow(getHeaderRow[desc], i, desc);
           }
+
           listRows[i] = {
-            description: p.description,
+            description: desc,
+            insert: p.insert,
             data: r,
           };
         } catch (error) {
           // Tangani error jika ada
-          console.error(`Error fetching data ${p.description}`, error);
+          console.error(`Error fetching data ${desc}`, error);
           listRows[i] = {
-            description: p.description,
-            data: fullNewRow(getRootHeaderRow(), i),
+            description: desc,
+            insert: p.insert,
+            data: fullNewRow(getHeaderRow[desc], i, desc),
           };
         }
       })
@@ -186,7 +180,7 @@ const Logic = () => {
 
     // dataDummy.list.map((e, i) => {
     //   const r = getRows({
-    //     header: getRootHeaderRow(),
+    //     header: getHeaderRow[p.description],
     //     data: e.data,
     //   });
 
@@ -199,139 +193,125 @@ const Logic = () => {
     // setRows(l);
   };
 
-  const onTambahRow = (i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+  const onTambahRow = (i, key) => {
+    const fullRows = [...rows];
+    const newRows = [...rows[i].data];
 
-    const lastIndex = newRows[i].length - 1;
+    log({ newRows });
+
+    const lastIndex = newRows.length - 1;
     const id = lastIndex + 1;
-    const lastData = newRows[i][lastIndex];
+    const lastData = newRows[lastIndex];
 
-    newRows[i][lastIndex] = reactgridNewRow(id);
-    newRows[i].push(lastData);
+    newRows[lastIndex] = reactgridNewRow(id, key);
+    newRows.push(lastData);
 
-    setRows({
-      ...rows,
-      [category]: newRows,
-    });
+    fullRows[i].data = newRows;
+
+    setRows(fullRows);
 
     showNotif(200, "Sukses tambah row");
   };
 
-  const onChangeTable = async (change, i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+  const stokAkhir = () => {};
 
-    const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+  const penjualan = () => {};
 
-    const type = newRows[i][rowIndex].cells[columnIndex].type;
+  const onChangeTable = async (change, i, key) => {
+    const newRows = [...rows];
 
-    const length = newRows[i].length;
+    for (const c of change) {
+      const rowIndex = newRows[i].data.findIndex((j) => j.rowId === c.rowId);
+      const columnIndex = columns[key].findIndex((j) => j.columnId === c.columnId);
 
-    let value;
+      const type = newRows[i].data[rowIndex].cells[columnIndex].type;
 
-    if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
-    } else {
-      newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-      value = change[0].newCell.value;
+      const length = newRows[i].data.length;
 
-      let jumlah = newRows[i][rowIndex].cells[3].value;
-      let satuan = newRows[i][rowIndex].cells[4].value;
-      let tarifSewa = newRows[i][rowIndex].cells[5].value;
+      let value;
 
-      let lamaSewa = parseInt(newRows[i][rowIndex].cells[7].value);
-      let mulaiSewa = parseInt(newRows[i][rowIndex].cells[9].value);
-
-      let totalSewa = jumlah * satuan * tarifSewa;
-
-      let grandTotal = 0;
-
-      const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 6) e.value = totalSewa;
-        if (j >= mulaiSewa + 10 && j <= lamaSewa + 10) {
-          e.value = totalSewa;
-          grandTotal += e.value;
-        }
-        return e;
-      });
-
-      newRows[i][rowIndex].cells[10].value = grandTotal;
-
-      newRows[i][rowIndex].cells = newCell;
-    }
-
-    try {
-      let formData = new FormData();
-
-      const id = change[0].rowId;
-      const column_id = change[0].columnId;
-      const isNewRow = newRows[i][rowIndex].newRow;
-
-      if (isNewRow !== undefined) {
-        const {
-          code_company,
-          code_dept,
-          code_location,
-          code_product,
-          code_project,
-          code_icp,
-          periode,
-        } = codeFilter;
-
-        const codeAccount =
-          category === "pemasaran"
-            ? items.pemasaran[i]["code_account"]
-            : items.administrasi[i]["code_account"];
-
-        formData.append("code_account", codeAccount);
-        formData.append("code_company", code_company);
-        formData.append("code_department", code_dept);
-        formData.append("code_location", code_location);
-        formData.append("code_product", code_product);
-        formData.append("code_project", code_project);
-        formData.append("code_icp", code_icp);
-        formData.append("year", periode);
-        formData.append("description", value);
-
-        const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-        log({ res });
-        const rowId = res.data.data.id;
-
-        newRows[i][rowIndex].rowId = rowId;
+      if (type === "text") {
+        newRows[i].data[rowIndex].cells[columnIndex].text = c.newCell.text;
+        value = c.newCell.text;
       } else {
-        formData.append("id", id);
-        formData.append("column_id", column_id);
-        formData.append("value", value);
+        newRows[i].data[rowIndex].cells[columnIndex].value = c.newCell.value;
+        value = c.newCell.value;
 
-        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+        let jumlahBulan = 0;
+        let tarif = newRows[i].data[rowIndex].cells[16].value;
+
+        const newCell = newRows[i].data[rowIndex].cells.map((e, j) => {
+          if (j >= 3 && j <= 14) jumlahBulan += e.value;
+          if (j === 15) e.value = jumlahBulan;
+          if (j === 17) e.value = jumlahBulan * tarif;
+          if (j >= 18) e.value = newRows[i].data[rowIndex].cells[j - 15].value * tarif;
+          return e;
+        });
+
+        newRows[i].data[rowIndex].cells = newCell;
       }
 
-      delete newRows[i][rowIndex].newRow;
+      // try {
+      //   let formData = new FormData();
 
-      showNotif(200, "Sukses update data");
+      //   const id = c.rowId;
+      //   const column_id = c.columnId;
+      //   const isNewRow = newRows[i].data[rowIndex].newRow;
 
-      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
-        return e;
-      });
+      //   if (isNewRow !== undefined) {
+      //     const {
+      //       code_company,
+      //       code_dept,
+      //       code_location,
+      //       code_product,
+      //       code_project,
+      //       code_icp,
+      //       periode,
+      //     } = codeFilter;
 
-      newRows[i][rowIndex].cells = newCell;
+      //     const codeAccount = items.pemasaran[rowIndex]["code_account"];
 
-      newRows[i][length - 1] = updateTotalRow(newRows[i]);
+      //     formData.append("code_account", codeAccount);
+      //     formData.append("code_company", code_company);
+      //     formData.append("code_department", code_dept);
+      //     formData.append("code_location", code_location);
+      //     formData.append("code_product", code_product);
+      //     formData.append("code_project", code_project);
+      //     formData.append("code_icp", code_icp);
+      //     formData.append("year", periode);
+      //     formData.append("name", value);
 
-      // log({ newRows });
+      //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
-      setRows({
-        ...rows,
-        [category]: newRows,
-      });
-    } catch (e) {
-      log({ e });
-      // showNotif(400, e);
+      //     log({ res });
+      //     const rowId = res.data.data.id;
+
+      //     newRows[i].data[rowIndex].rowId = rowId;
+      //   } else {
+      //     formData.append("id", id);
+      //     formData.append("column_id", column_id);
+      //     formData.append("value", value);
+
+      //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+      //   }
+
+      //   delete newRows[i].data[rowIndex].newRow;
+      //   const newCell = newRows[i].data[rowIndex].cells.map((e, i) => {
+      //     if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+      //     return e;
+      //   });
+
+      //   newRows[i].data[rowIndex].cells = newCell;
+
+      //   newRows[i].data[length - 1] = updateTotalRow(newRows[i]);
+      // } catch (e) {
+      //   log({ e });
+      // }
     }
+
+    showNotif(200, "Sukses update data");
+
+    setRows(newRows);
   };
 
   const onSuccess = () => {
@@ -397,7 +377,7 @@ const Logic = () => {
       const { data } = await MainServices.get(url);
 
       const r = getRows({
-        header: getRootHeaderRow(),
+        header: getHeaderRow["key"],
         data: data.data,
       });
 

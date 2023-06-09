@@ -49,7 +49,7 @@ const Logic = () => {
     const {
       code_company,
       code_dept,
-      code_location,
+      // code_location,
       code_product,
       code_project,
       code_icp,
@@ -58,7 +58,6 @@ const Logic = () => {
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
-    let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
@@ -67,32 +66,15 @@ const Logic = () => {
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
+    getData(fCodeCompany, fCodeProduct, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
   };
 
-  const getData = async (
-    codeCompany,
-    codeProduct,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
+  const getData = async (codeCompany, codeProduct, codeDept, codeIcp, codeProject, periode) => {
     const listPemasaran = [];
     const listAdministrasi = [];
 
@@ -103,7 +85,7 @@ const Logic = () => {
       await Promise.allSettled(
         pemasaran.map(async (p, i) => {
           const codeAccount = p.code_account;
-          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
             let r;
@@ -129,7 +111,7 @@ const Logic = () => {
       await Promise.allSettled(
         administrasi.map(async (p, i) => {
           const codeAccount = p.code_account;
-          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
+          const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
             let r;

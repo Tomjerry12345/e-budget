@@ -76,7 +76,7 @@ const AdministrasiLainnyaInputPage = () => {
             ))
           : null}
 
-        {value.rows.pemasaran.length > 0 ? (
+        {value.rows.administrasi.length > 0 ? (
           <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 

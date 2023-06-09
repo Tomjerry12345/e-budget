@@ -1,12 +1,12 @@
 import React from "react";
 import FilterComponent from "../../../../../component/filter/FilterComponent";
 import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import PemeliharaanInputLogic from "./PemeliharaanInputLogic";
+import Logic from "./Logic";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 
 const PemeliharaanInputPage = () => {
-  const { value, func } = PemeliharaanInputLogic();
+  const { value, func } = Logic();
 
   return (
     <>
@@ -65,6 +65,7 @@ const PemeliharaanInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -73,7 +74,7 @@ const PemeliharaanInputPage = () => {
             ))
           : null}
 
-        {value.rows.pemasaran.length > 0 ? (
+        {value.rows.administrasi.length > 0 ? (
           <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
@@ -113,6 +114,7 @@ const PemeliharaanInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
