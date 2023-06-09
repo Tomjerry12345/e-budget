@@ -38,7 +38,7 @@ const ModalMenuMore = ({
             onCancel();
           }}
         >
-          {e.description}
+          import {e.description}
         </Button>
       ))}
     </Modal>

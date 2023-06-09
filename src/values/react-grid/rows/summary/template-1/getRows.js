@@ -19,19 +19,19 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["jan"];
-    list[1] += e["jan"];
-    list[2] += e["feb"];
-    list[3] += e["mar"];
-    list[4] += e["apr"];
-    list[5] += e["mei"];
-    list[6] += e["jun"];
-    list[7] += e["jul"];
-    list[8] += e["agu"];
-    list[9] += e["sep"];
-    list[10] += e["okt"];
-    list[11] += e["nov"];
-    list[12] += e["des"];
+    list[0] += e["jan"] ?? 0;
+    list[1] += e["jan"] ?? 0;
+    list[2] += e["feb"] ?? 0;
+    list[3] += e["mar"] ?? 0;
+    list[4] += e["apr"] ?? 0;
+    list[5] += e["mei"] ?? 0;
+    list[6] += e["jun"] ?? 0;
+    list[7] += e["jul"] ?? 0;
+    list[8] += e["agu"] ?? 0;
+    list[9] += e["sep"] ?? 0;
+    list[10] += e["okt" ?? 0];
+    list[11] += e["nov" ?? 0];
+    list[12] += e["des" ?? 0];
   });
 
   return rowTotal("Total", list);
@@ -59,20 +59,20 @@ function getGroupRows(groups) {
       rowId: i,
       height: ROW_HEIGHT,
       cells: [
-        nonEditable(textCell(d["location"], "padding-left-lg")),
-        nonEditable(textCell(d["total"], "padding-left-lg")),
-        nonEditable(numberCell(d["jan"], "padding-left-lg")),
-        nonEditable(numberCell(d["feb"], "padding-left-lg")),
-        nonEditable(numberCell(d["mar"], "padding-left-lg")),
-        nonEditable(numberCell(d["apr"], "padding-left-lg")),
-        nonEditable(numberCell(d["mei"], "padding-left-lg")),
-        nonEditable(numberCell(d["jun"], "padding-left-lg")),
-        nonEditable(numberCell(d["jul"], "padding-left-lg")),
-        nonEditable(numberCell(d["agu"], "padding-left-lg")),
-        nonEditable(numberCell(d["sep"], "padding-left-lg")),
-        nonEditable(numberCell(d["okt"], "padding-left-lg")),
-        nonEditable(numberCell(d["nov"], "padding-left-lg")),
-        nonEditable(numberCell(d["des"], "padding-left-lg")),
+        nonEditable(textCell(d["location"] ?? "-", "padding-left-lg")),
+        nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jan"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["feb"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["mar"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["apr"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["mei"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jun"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["jul"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["agu"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["sep"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["okt"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["nov"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["des"] ?? 0, "padding-left-lg")),
       ],
     })),
   ];
