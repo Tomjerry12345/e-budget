@@ -2,6 +2,11 @@ version: v1.4.6 ✅ ❌
 
 - panggilan dropdown satu kali saja di filter
 
+- masalah open new tab ✅
+- pas klik tampilkan tabel hilang dlu terus tampilkan loading
+- ubah semua name jadi description
+- setiap bulan ada potongan nya di potongan penjualan
+
 adminhk:
     menu revenue yang tampil pt hk, input sama summary
     semua yang filter langsung otomatis nama perusahaan 

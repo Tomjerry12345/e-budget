@@ -2,20 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
-import {
-  allItemSummarySubMenu,
-  disabledItemSummaryMenu,
-  selectionMenu,
-  urlPageRevenue,
-} from "../../values/Constant";
+import { selectionMenu, urlPageRevenue } from "../../values/Constant";
 import {
   routingMasterCoa,
   routingOpex,
   routingOthers,
   routingReport,
 } from "../../values/RoutingPage";
-import { cekToken, getLocal, getToken, log, setLocal } from "../../values/Utilitas";
-import { addSubmenu } from "redux/data-global/data.submenu.reducer";
+import { cekToken, getLocal, log, setLocal } from "../../values/Utilitas";
 
 const MainLogic = () => {
   let params = useParams();
@@ -156,17 +150,7 @@ const MainLogic = () => {
 
       pageNavigation = onPageNavigation(index, subMenu);
 
-      dispatch(
-        addSubmenu({
-          submenu: subMenu,
-        })
-      );
-
-      navigate(pageNavigation, {
-        state: {
-          item: subMenu,
-        },
-      });
+      navigate(pageNavigation);
 
       setLocal("move-page", pageNavigation);
     }
@@ -177,12 +161,6 @@ const MainLogic = () => {
   const onMouseDownClickedMenu = (key, subMenu) => {
     const index = parseInt(key);
     let pageNavigation = onPageNavigation(index, subMenu);
-    dispatch(
-      addSubmenu({
-        submenu: subMenu,
-      })
-    );
-    log({ subMenu });
     setRouterNewPage(pageNavigation);
     setLocal("index-menu", index);
     setLocal("name-menu", subMenu.description);
