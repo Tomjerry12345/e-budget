@@ -108,7 +108,8 @@ const HeaderComponentTypeSummary = ({
         <Breadcrumb.Item>Test</Breadcrumb.Item>
       </Breadcrumb> */}
 
-      <Text className="header-title">{getLocal("name-menu")}</Text>
+      {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
+      <Text className="header-title">{value.header}</Text>
 
       <div className="container-menu">
         {/* <Button

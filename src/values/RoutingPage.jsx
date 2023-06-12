@@ -67,3 +67,10 @@ export const routingMasterCoa = {
   "Kode projek": "project",
   "Kode ICP": "icp",
 };
+
+export const allRouting = {
+  opex: routingOpex,
+  others: routingOthers,
+  report: routingReport,
+  coa: routingMasterCoa,
+};

@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { allRouting } from "values/RoutingPage";
+import { getKeyByValue } from "values/Utilitas";
 
-const HeaderComponentTypeSummaryLogic = ({
-  onChangeFilter,
-  onChangeLoadingUpload,
-}) => {
+const HeaderComponentTypeSummaryLogic = ({ onChangeFilter, onChangeLoadingUpload }) => {
   const [filter, setFilter] = useState(false);
   const [more, setMore] = useState(false);
   const [isImport, setImport] = useState(false);
+  const [header, setHeader] = useState("");
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const split = location.pathname.split("/");
+    const q = split[split.length - 1];
+
+    const h = getKeyByValue(allRouting[split[2]], q);
+
+    setHeader(h[1]);
+  }, []);
 
   useEffect(() => {
     onChangeFilter(setFilter);
@@ -41,6 +53,7 @@ const HeaderComponentTypeSummaryLogic = ({
       more,
       filter,
       isImport,
+      header,
     },
     func: {
       onCilckFilter,

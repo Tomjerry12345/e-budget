@@ -62,7 +62,8 @@ const HeaderComponentTypeInput = ({
   });
   return (
     <Header className="custom-header">
-      <Text className="header-title">{getLocal("name-menu")}</Text>
+      {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
+      <Text className="header-title">{value.header}</Text>
       <div className="container-menu">
         <Button className="btn-more" onClick={func.onClickMore}>
           Action <ArrowDownOutlined />
