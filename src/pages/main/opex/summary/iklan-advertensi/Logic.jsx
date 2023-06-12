@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, logO, setLocal } from "values/Utilitas";
+import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getRootHeaderRow } from "./getRows";
 import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-2/getRows";
@@ -11,7 +11,6 @@ import { getColumns } from "values/react-grid/rows/summary/template-1/getColumns
 import { actionData } from "redux/data-global/data.reducer";
 
 const Logic = () => {
-  const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
@@ -32,25 +31,25 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
   const ENDPOINT_URL = "detailopex/template1";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    log("state.item", state.item);
-
-    setItems(state.item);
+    getDataAccount();
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const responseShow = (res) => {
     dispatch(

@@ -45,19 +45,20 @@ const Logic = () => {
   const ENDPOINT_URL = "detailopex/template2";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    log("state.item", state.item);
-
-    setItems(state.item);
+    getDataAccount();
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const responseShow = (res) => {
     dispatch(

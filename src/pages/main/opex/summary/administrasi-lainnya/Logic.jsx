@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import MainServices from "services/MainServices";
-import { setLocal } from "values/Utilitas";
+import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
 import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-3/getRows";
 import { getColumns } from "values/react-grid/rows/summary/template-3/getColumns";
@@ -28,22 +28,24 @@ const Logic = () => {
   });
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   const ENDPOINT_URL = "detailopex/template3";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    setItems(state.item);
+    getDataAccount();
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const onSetDataTable = (values) => {
     const {
