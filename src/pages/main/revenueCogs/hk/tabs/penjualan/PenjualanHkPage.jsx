@@ -1,10 +1,7 @@
 import React from "react";
-import FilterComponent from "component/filter/FilterComponent";
-import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 
 const PenjualanHkPage = () => {
   const { value, func } = Logic();
@@ -23,14 +20,6 @@ const PenjualanHkPage = () => {
                 }}
               >
                 <Typography.Text>{e.description}</Typography.Text>
-                {e.insert ? (
-                  <Button
-                    className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, e.description)}
-                  >
-                    Tambah Data
-                  </Button>
-                ) : null}
               </div>
 
               <div

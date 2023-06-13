@@ -3,8 +3,8 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import {
@@ -243,25 +243,21 @@ const Logic = () => {
       value = change[0].newCell.value;
 
       let jumlah = newRows[i][rowIndex].cells[3].value;
-      let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
 
-      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
-
-      let totalAsuransi = jumlah * tarifAsuransi;
+      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[4].value);
+      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[5].value);
 
       let grandTotal = 0;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 5) e.value = totalAsuransi;
-        if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
-          e.value = totalAsuransi;
+        if (j >= mulaiAsuransi + 6 && j <= lamaAsuransi + 6) {
+          e.value = jumlah;
           grandTotal += e.value;
         }
         return e;
       });
 
-      newRows[i][rowIndex].cells[8].value = grandTotal;
+      newRows[i][rowIndex].cells[6].value = grandTotal;
 
       newRows[i][rowIndex].cells = newCell;
     }
@@ -298,7 +294,7 @@ const Logic = () => {
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
         formData.append("name", value);
-        formData.append("type", "asuransi");
+        formData.append("type", "internet");
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -310,7 +306,7 @@ const Logic = () => {
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
-        formData.append("type", "asuransi");
+        formData.append("type", "internet");
 
         await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }
@@ -396,7 +392,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
-    formData.append("type", "asuransi");
+    formData.append("type", "internet");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);

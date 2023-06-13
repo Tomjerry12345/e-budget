@@ -13,7 +13,7 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
-const TOTAL_DATA = 20;
+const TOTAL_DATA = 16;
 const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
@@ -24,18 +24,14 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Name", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
 
-      nonEditable(textCell("Jumlah", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Satuan", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tarif Sewa", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Total Sewa", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Lama Sewa", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tipe Pembayaran", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Mulai Sewa", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
+      nonEditable(textCell("Tarif Per bulan", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Lama Langganan", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Mulai Langganan", "justify-content-center text-lg font-bold")),
+      nonEditable(rootHeaderCell(`Total Biaya Internet`, "justify-content-center", COLOR_1)),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -57,26 +53,22 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["amount"] ?? 0;
-    list[1] += e["unit"] ?? 0;
-    list[2] += e["rates"] ?? 0;
-    list[3] += e["total"] ?? 0;
-    list[4] += e["month_duration"] ?? 0;
-    list[5] = "";
-    list[6] += e["month_start"] ?? 0;
-    list[7] += e["grand_total"] ?? 0;
-    list[8] += e["jan_rates"] ?? 0;
-    list[9] += e["feb_rates"] ?? 0;
-    list[10] += e["mar_rates"] ?? 0;
-    list[11] += e["apr_rates"] ?? 0;
-    list[12] += e["mei_rates"] ?? 0;
-    list[13] += e["jun_rates"] ?? 0;
-    list[14] += e["jul_rates"] ?? 0;
-    list[15] += e["agu_rates"] ?? 0;
-    list[16] += e["sep_rates"] ?? 0;
-    list[17] += e["okt_rates"] ?? 0;
-    list[18] += e["nov_rates"] ?? 0;
-    list[19] += e["des_rates"] ?? 0;
+    list[0] += e["rates"] ?? 0;
+    list[1] += e["month_duration"] ?? 0;
+    list[2] += e["month_start"] ?? 0;
+    list[3] += e["grand_total"] ?? 0;
+    list[4] += e["jan_rates"] ?? 0;
+    list[5] += e["feb_rates"] ?? 0;
+    list[6] += e["mar_rates"] ?? 0;
+    list[7] += e["apr_rates"] ?? 0;
+    list[8] += e["mei_rates"] ?? 0;
+    list[9] += e["jun_rates"] ?? 0;
+    list[10] += e["jul_rates"] ?? 0;
+    list[11] += e["agu_rates"] ?? 0;
+    list[12] += e["sep_rates"] ?? 0;
+    list[13] += e["okt_rates"] ?? 0;
+    list[14] += e["nov_rates"] ?? 0;
+    list[15] += e["des_rates"] ?? 0;
   });
 
   return rowTotal("Total", list);
@@ -109,15 +101,9 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"], "padding-left-lg"),
-        numberCell(d["unit"], "padding-left-lg", null, false),
-        numberCell(d["rates"], "padding-left-lg"),
-        nonEditable(numberCell(d["total"], "padding-left-lg")),
-        numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
-
-        textCell(d["pay_type"] ?? "", "padding-left-lg"),
-
-        numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["rates"] ?? 0, "padding-left-lg"),
+        numberCell(d["month_duration"] ?? 0, "padding-left-lg"),
+        numberCell(d["month_start"] ?? 0, "padding-left-lg"),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
@@ -159,7 +145,9 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) =>
+        noSideBorders(totalCell(e, "", "beige", "", !(i === 1 || i === 2)))
+      ),
     ],
   };
 }
@@ -186,12 +174,6 @@ export function reactgridNewRow(id) {
 
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-
-      nonEditable(textCell("", "padding-left-lg")),
-
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
 

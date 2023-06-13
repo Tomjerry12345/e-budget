@@ -3,11 +3,11 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getRootHeaderRow } from "./getRows";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/summary/template-1/getColumns";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/opex/getRows";
+import { getColumns } from "values/react-grid/rows/summary/opex/getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 
 const Logic = () => {

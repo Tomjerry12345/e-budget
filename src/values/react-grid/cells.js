@@ -102,7 +102,7 @@ export function totalCell(
     title !== ""
       ? numberCell(
           title,
-          `text-lg font-bold ${additionalClassNames}`,
+          `font-bold ${additionalClassNames}`,
           {
             background: background,
             color: color,
@@ -114,7 +114,7 @@ export function totalCell(
           },
           isFormat
         )
-      : textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+      : textCell(title, `font-bold ${additionalClassNames}`, {
           background: background,
           color: color,
           border: {

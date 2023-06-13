@@ -193,6 +193,7 @@ const Logic = () => {
         })
       );
     }
+
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -284,7 +285,7 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
