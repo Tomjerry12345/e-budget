@@ -6,19 +6,21 @@ import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
 
-const PemasaranLainnyaInputPage = () => {
+const InternetInputPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
-        className="more-modal"
+        className="more-modal-width-type1"
         type="input"
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile={constantExcellFile["opex"]["template-3"]}
-        disabledImportExport={value.rows.pemasaran.length === 0}
+        downloadFile={constantExcellFile["opex"]["template-5"]}
+        disabledImportExport={
+          value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
+        }
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
       />
@@ -66,7 +68,6 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -115,7 +116,6 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
@@ -128,4 +128,4 @@ const PemasaranLainnyaInputPage = () => {
   );
 };
 
-export default PemasaranLainnyaInputPage;
+export default InternetInputPage;

@@ -36,9 +36,9 @@ const MainLogic = () => {
 
     cekToken(navigate);
 
-    if (movePage !== "null") {
-      navigate(movePage);
-    }
+    // if (movePage !== "null") {
+    //   navigate(movePage);
+    // }
 
     if (spliter[2] === "") {
       setLocal("index-menu", 0);

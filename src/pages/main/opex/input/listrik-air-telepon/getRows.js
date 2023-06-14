@@ -24,7 +24,7 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Name", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
       nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
 
@@ -57,7 +57,7 @@ const firstLoadTotalRow = (data) => {
     list[0] += e["amount"] ?? 0;
     list[1] += e["rates"] ?? 0;
     list[2] += e["total"] ?? 0;
-    list[3] = e["pay_type"];
+    list[3] = "";
     list[4] += e["grand_total"] ?? 0;
     list[5] += e["jan_rates"] ?? 0;
     list[6] += e["feb_rates"] ?? 0;
@@ -103,9 +103,9 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"], "padding-left-lg"),
-        numberCell(d["rates"], "padding-left-lg", null, false),
-        nonEditable(numberCell(d["total"], "padding-left-lg")),
+        numberCell(d["amount"], "padding-left-lg") ?? 0,
+        numberCell(d["rates"], "padding-left-lg") ?? 0,
+        nonEditable(numberCell(d["total"], "padding-left-lg")) ?? 0,
 
         textCell(d["pay_type"] ?? "", "padding-left-lg"),
 
@@ -161,11 +161,7 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  return [
-    header,
-    // reactgridNewRow(id),
-    // rowTotal("Total", list)
-  ];
+  return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 
 export function reactgridNewRow(id) {

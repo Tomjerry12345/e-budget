@@ -3,8 +3,8 @@ import { useDropzone } from "react-dropzone";
 import MainServices from "services/MainServices";
 import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-3/getRows";
-import { getColumns } from "values/react-grid/rows/summary/template-3/getColumns";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/opex/getRows";
+import { getColumns } from "values/react-grid/rows/summary/opex/getColumns";
 import { getRootHeaderRow } from "./getRows";
 
 const Logic = () => {

@@ -294,7 +294,8 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
+        formData.append("type", "listrik");
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -306,6 +307,7 @@ const Logic = () => {
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
+        formData.append("type", "listrik");
 
         await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }

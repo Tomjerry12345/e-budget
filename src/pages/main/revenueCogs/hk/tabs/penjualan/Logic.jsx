@@ -3,13 +3,12 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { log } from "values/Utilitas";
+import {useSearchParams } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { fullNewRow, getRows } from "./getRows";
 import { urlRevenue } from "values/Constant";
-import { reactgridNewRow } from "./reactgridNewRow";
 import { getHeaderRow } from "./getHeaderRow";
 
 const Logic = () => {
@@ -28,9 +27,7 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
 
   const dataGlobalRedux = useSelector((state) => state.data);
   const { clicked } = useSelector((state) => state.revenue);
@@ -38,17 +35,6 @@ const Logic = () => {
   const ENDPOINT_URL = "detailopex/template4";
 
   useEffect(() => {
-    // const state = location.state;
-    // if (state === null) {
-    //   setLocal("index-menu", 0);
-    //   setLocal("name-menu", "Dashboard");
-    //   setLocal("move-page", "/");
-    //   navigate("/");
-    //   return;
-    // }
-    // setItems(state.item);
-    log({ clicked });
-
     if (searchParams.size > 0) {
       log("searchParams", searchParams);
       const currentParams = Object.fromEntries([...searchParams]);
@@ -114,15 +100,7 @@ const Logic = () => {
       fPeriode
     );
 
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-      periode: fPeriode,
-    });
+    setCodeFilter(values);
   };
 
   const getData = async (
@@ -157,6 +135,7 @@ const Logic = () => {
             description: desc,
             insert: p.insert,
             data: r,
+            apiData: data.data,
           };
         } catch (error) {
           // Tangani error jika ada
@@ -165,6 +144,7 @@ const Logic = () => {
             description: desc,
             insert: p.insert,
             data: fullNewRow(getHeaderRow[desc], i, desc),
+            apiData: [],
           };
         }
       })
@@ -191,26 +171,6 @@ const Logic = () => {
     // });
 
     // setRows(l);
-  };
-
-  const onTambahRow = (i, key) => {
-    const fullRows = [...rows];
-    const newRows = [...rows[i].data];
-
-    log({ newRows });
-
-    const lastIndex = newRows.length - 1;
-    const id = lastIndex + 1;
-    const lastData = newRows[lastIndex];
-
-    newRows[lastIndex] = reactgridNewRow(id, key);
-    newRows.push(lastData);
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
-
-    showNotif(200, "Sukses tambah row");
   };
 
   const stokAkhir = () => {};
@@ -420,7 +380,6 @@ const Logic = () => {
       onUploadFile,
       setUploadSucces,
       onChangeTable,
-      onTambahRow,
     },
   };
 };

@@ -25,134 +25,129 @@
     width: 100%;
     justify-content: flex-end;
 
-    .input-search {
-      width: 200px;
-      margin-right: 8px;
-      border-radius: 8px;
-      border-color: grey;
-      background-color: #f5f7f9;
+    // .input-search {
+    //   width: 200px;
+    //   margin-right: 8px;
+    //   border-radius: 8px;
+    //   border-color: grey;
+    //   background-color: #f5f7f9;
 
-      input {
-        background-color: #f5f7f9;
-        &::placeholder {
-          color: #8b8c8d;
-        }
-      }
+    //   input {
+    //     background-color: #f5f7f9;
+    //     &::placeholder {
+    //       color: #8b8c8d;
+    //     }
+    //   }
 
-      &:hover {
-        border-color: #018142;
-      }
-    }
+    //   &:hover {
+    //     border-color: #018142;
+    //   }
+    // }
 
-    .btn-filter {
-      margin-right: 8px;
-      border-radius: 8px;
+    // .btn-filter {
+    //   margin-right: 8px;
+    //   border-radius: 8px;
 
-      &:hover {
-        border-color: #018142;
-        color: #018142;
-      }
-    }
+    //   &:hover {
+    //     border-color: #018142;
+    //     color: #018142;
+    //   }
+    // }
 
-    .btn-refresh {
-      margin-right: 8px;
-      border-radius: 8px;
-      background-color: #f5f7f9;
-    }
+    // .btn-refresh {
+    //   margin-right: 8px;
+    //   border-radius: 8px;
+    //   background-color: #f5f7f9;
+    // }
 
-    .btn-more {
-      border-radius: 4px;
-      background-color: #f5f7f9;
-      border-color: grey;
+    // .btn-more {
+    //   border-radius: 4px;
+    //   background-color: #f5f7f9;
+    //   border-color: grey;
 
-      &:hover {
-        border-color: #018142;
-        color: #018142;
-      }
-    }
+    //   &:hover {
+    //     border-color: #018142;
+    //     color: #018142;
+    //   }
+    // }
   }
 }
 
-.filter-modal-input {
-  top: 62px;
-  bottom: 8px;
-  left: calc(100vw - 617px);
-  max-width: 341px;
-  margin: 0px;
-  padding-bottom: 0;
-  height: calc(100vh - 16px);
-  border-radius: 8px;
-  .ant-modal-content {
-    border-radius: 8px;
-    .ant-modal-header {
-      border-radius: 8px 8px 0px 0px;
-      border-bottom: 0px;
-      .ant-modal-title {
-        font-weight: 600;
-        font-size: 18px;
-      }
-    }
-    .ant-modal-body {
-      //   height: calc(100vh - 70px);
-      padding: 0px 0px 8px 0px;
-      .scrollableDiv {
-        padding-left: 16px;
-        padding-bottom: 8px;
-        height: 100%;
-        overflow: auto;
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-        &::-webkit-scrollbar-track {
-          background: none;
-          border-radius: 15px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #c4c4c4;
-          border-radius: 15px;
-          height: 10px;
-        }
-      }
-      .scroll-shadows {
-        background:
-      /* Shadow covers */ linear-gradient(
-            #ffffff 30%,
-            rgba(255, 255, 255, 0)
-          ),
-          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
-            100%,
-          /* Shadows */
-            radial-gradient(
-              farthest-side at 50% 0,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            ),
-          radial-gradient(
-              farthest-side at 50% 100%,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            )
-            0 100%;
-        background-repeat: no-repeat;
-        background-color: white;
-        background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
-        background-attachment: local, local, scroll, scroll;
-      }
-    }
-  }
-}
+// .filter-modal-input {
+//   top: 62px;
+//   bottom: 8px;
+//   left: calc(100vw - 617px);
+//   max-width: 341px;
+//   margin: 0px;
+//   padding-bottom: 0;
+//   height: calc(100vh - 16px);
+//   border-radius: 8px;
+//   .ant-modal-content {
+//     border-radius: 8px;
+//     .ant-modal-header {
+//       border-radius: 8px 8px 0px 0px;
+//       border-bottom: 0px;
+//       .ant-modal-title {
+//         font-weight: 600;
+//         font-size: 18px;
+//       }
+//     }
+//     .ant-modal-body {
+//       //   height: calc(100vh - 70px);
+//       padding: 0px 0px 8px 0px;
+//       .scrollableDiv {
+//         padding-left: 16px;
+//         padding-bottom: 8px;
+//         height: 100%;
+//         overflow: auto;
+//         &::-webkit-scrollbar {
+//           width: 6px;
+//         }
+//         &::-webkit-scrollbar-track {
+//           background: none;
+//           border-radius: 15px;
+//         }
+//         &::-webkit-scrollbar-thumb {
+//           background: #c4c4c4;
+//           border-radius: 15px;
+//           height: 10px;
+//         }
+//       }
+//       .scroll-shadows {
+//         background:
+//       /* Shadow covers */ linear-gradient(
+//             #ffffff 30%,
+//             rgba(255, 255, 255, 0)
+//           ),
+//           linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+//             100%,
+//           /* Shadows */
+//             radial-gradient(
+//               farthest-side at 50% 0,
+//               rgba(0, 0, 0, 40%),
+//               rgba(0, 0, 0, 0)
+//             ),
+//           radial-gradient(
+//               farthest-side at 50% 100%,
+//               rgba(0, 0, 0, 40%),
+//               rgba(0, 0, 0, 0)
+//             )
+//             0 100%;
+//         background-repeat: no-repeat;
+//         background-color: white;
+//         background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
+//         background-attachment: local, local, scroll, scroll;
+//       }
+//     }
+//   }
+// }
 
 .more-modal {
   top: 62px;
-  bottom: 8px;
-  left: calc(100vw - 398px);
-  max-width: 308px;
-  margin: 0px;
-  padding-bottom: 0;
-  height: calc(100vh - 596px);
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
+  width: auto !important;
+  position: absolute;
+  right: 0;
+  margin-right: 16px;
   .ant-modal-content {
     border-radius: 8px;
 
@@ -165,51 +160,51 @@
       }
     }
     .ant-modal-body {
-      //   height: calc(100vh - 70px);
-      padding: 0px 0px 8px 0px;
-      .scrollableDiv {
-        padding-left: 16px;
-        padding-bottom: 8px;
         height: 100%;
-        overflow: auto;
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-        &::-webkit-scrollbar-track {
-          background: none;
-          border-radius: 15px;
-        }
-        &::-webkit-scrollbar-thumb {
-          background: #c4c4c4;
-          border-radius: 15px;
-          height: 10px;
-        }
-      }
-      .scroll-shadows {
-        background:
-      /* Shadow covers */ linear-gradient(
-            #ffffff 30%,
-            rgba(255, 255, 255, 0)
-          ),
-          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
-            100%,
-          /* Shadows */
-            radial-gradient(
-              farthest-side at 50% 0,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            ),
-          radial-gradient(
-              farthest-side at 50% 100%,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            )
-            0 100%;
-        background-repeat: no-repeat;
-        background-color: white;
-        background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
-        background-attachment: local, local, scroll, scroll;
-      }
+      padding: 0px 0px 8px 0px;
+      // .scrollableDiv {
+      //   padding-left: 16px;
+      //   padding-bottom: 8px;
+      //   height: 100%;
+      //   overflow: auto;
+      //   &::-webkit-scrollbar {
+      //     width: 6px;
+      //   }
+      //   &::-webkit-scrollbar-track {
+      //     background: none;
+      //     border-radius: 15px;
+      //   }
+      //   &::-webkit-scrollbar-thumb {
+      //     background: #c4c4c4;
+      //     border-radius: 15px;
+      //     height: 10px;
+      //   }
+      // }
+      // .scroll-shadows {
+      //   background:
+      // /* Shadow covers */ linear-gradient(
+      //       #ffffff 30%,
+      //       rgba(255, 255, 255, 0)
+      //     ),
+      //     linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+      //       100%,
+      //     /* Shadows */
+      //       radial-gradient(
+      //         farthest-side at 50% 0,
+      //         rgba(0, 0, 0, 40%),
+      //         rgba(0, 0, 0, 0)
+      //       ),
+      //     radial-gradient(
+      //         farthest-side at 50% 100%,
+      //         rgba(0, 0, 0, 40%),
+      //         rgba(0, 0, 0, 0)
+      //       )
+      //       0 100%;
+      //   background-repeat: no-repeat;
+      //   background-color: white;
+      //   background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
+      //   background-attachment: local, local, scroll, scroll;
+      // }
     }
   }
 
@@ -218,9 +213,4 @@
     display: flex;
     align-items: center;
   }
-}
-
-.more-modal-width-type1 {
-  left: calc(100vw - 697px) !important;
-  max-width: 517px !important;
 }

@@ -1,3 +1,7 @@
+export const routingRevenue = {
+  hk: "Revenue & COGS HK",
+};
+
 export const routingOpex = {
   "Input By Iklan & Advertensi": "iklan-advertensi",
   "Input By Pemasaran Lainnya": "pemasaran-lainnya",
@@ -11,6 +15,7 @@ export const routingOpex = {
   "Input By Pantri": "pantri",
   "Input By Asuransi": "asuransi",
   "Input By Keamanan & Kebersihan": "keamanan-kebersihan",
+  "Input By Internet": "internet",
   "Input By Tender": "tender",
   "Input By Kontraktual, Rapat, Clearance": "kontraktual-rapat-clearance",
   "Input By BBM, Tol, Parkir": "bbm-tol-parkir",
@@ -34,6 +39,7 @@ export const routingOpex = {
   "Summary By Pantri": "pantri",
   "Summary By Asuransi": "asuransi",
   "Summary By Keamanan & Kebersihan": "keamanan-kebersihan",
+  "Summary By Internet": "internet",
   "Summary By Tender": "tender",
   "Summary By Kontraktual, Rapat, Clearance": "kontraktual-rapat-clearance",
   "Summary By BBM, Tol, Parkir": "bbm-tol-parkir",
@@ -66,4 +72,12 @@ export const routingMasterCoa = {
   "Kode akun": "akun",
   "Kode projek": "project",
   "Kode ICP": "icp",
+};
+
+export const allRouting = {
+  "revenue-cogs": routingRevenue,
+  opex: routingOpex,
+  others: routingOthers,
+  report: routingReport,
+  coa: routingMasterCoa,
 };

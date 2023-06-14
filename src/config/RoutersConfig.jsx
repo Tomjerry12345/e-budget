@@ -113,6 +113,8 @@ import SewaInputPage from "pages/main/opex/input/sewa/SewaInputPage";
 import ListrikAirTeleponInputPage from "pages/main/opex/input/listrik-air-telepon/ListrikAirTeleponInputPage";
 import AsuransiInputPage from "pages/main/opex/input/asuransi/AsuransiInputPage";
 import KeamananKebersihanInputPage from "pages/main/opex/input/keamanan-kebersihan/KeamananKebersihanInputPage";
+import InternetInputPage from "pages/main/opex/input/internet/InternetInputPage";
+import InternetSummaryPage from "pages/main/opex/summary/internet/InternetSummaryPage";
 
 const RoutersConfig = () => {
   return (
@@ -192,6 +194,7 @@ const RoutersConfig = () => {
             <Route path="input/pantri" element={<PantriInputPage />} />
             <Route path="input/asuransi" element={<AsuransiInputPage />} />
             <Route path="input/keamanan-kebersihan" element={<KeamananKebersihanInputPage />} />
+            <Route path="input/internet" element={<InternetInputPage />} />
             <Route path="input/tender" element={<TenderInputPage />} />
             <Route
               path="input/kontraktual-rapat-clearance"
@@ -234,6 +237,7 @@ const RoutersConfig = () => {
               path="summary/keamanan-kebersihan"
               element={<KeamananKebersihanSummaryPage />}
             />
+            <Route path="summary/internet" element={<InternetSummaryPage />} />
             <Route path="summary/tender" element={<TenderSummaryPage />} />
             <Route
               path="summary/kontraktual-rapat-clearance"

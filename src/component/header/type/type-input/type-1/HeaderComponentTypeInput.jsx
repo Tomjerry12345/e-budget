@@ -1,10 +1,9 @@
-import { ArrowDownOutlined, DownloadOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined } from "@ant-design/icons";
 import { Button, Layout, Modal, Typography } from "antd";
 import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
 
 import "../../style.scss";
-import { getLocal } from "../../../../../values/Utilitas";
-import ImportInputModal from "../../../../modal/import/ImportInputModal";
+import ImportInputModal from "component/modal/import/ImportInputModal";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -15,11 +14,10 @@ const ModalMenuMore = ({
   onClickImport,
   disabledImportExport,
   listMenuImport,
-  className,
 }) => {
   return (
     <Modal
-      className={`more-modal ${className}`}
+      className={`more-modal`}
       title={null}
       open={open}
       onCancel={onCancel}
@@ -38,7 +36,7 @@ const ModalMenuMore = ({
             onCancel();
           }}
         >
-          import {e.description}
+          Import {e.description}
         </Button>
       ))}
     </Modal>
@@ -62,7 +60,8 @@ const HeaderComponentTypeInput = ({
   });
   return (
     <Header className="custom-header">
-      <Text className="header-title">{getLocal("name-menu")}</Text>
+      {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
+      <Text className="header-title">{value.header}</Text>
       <div className="container-menu">
         <Button className="btn-more" onClick={func.onClickMore}>
           Action <ArrowDownOutlined />

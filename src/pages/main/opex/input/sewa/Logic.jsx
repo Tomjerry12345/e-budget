@@ -298,7 +298,8 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
+        formData.append("type", "sewa");
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -310,6 +311,7 @@ const Logic = () => {
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
+        formData.append("type", "sewa");
 
         await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }
@@ -320,7 +322,7 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
         if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
+        if (i >= 7 && i <= 8) e.nonEditable = false;
         return e;
       });
 
@@ -395,6 +397,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
+    formData.append("type", "sewa");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);

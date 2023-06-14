@@ -5,8 +5,8 @@ import { resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log, setLocal } from "values/Utilitas";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/template-1/getRows";
-import { getColumns } from "values/react-grid/rows/summary/template-1/getColumns";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/opex/getRows";
+import { getColumns } from "values/react-grid/rows/summary/opex/getColumns";
 import { getRootHeaderRow } from "./getRows";
 import { actionData } from "redux/data-global/data.reducer";
 

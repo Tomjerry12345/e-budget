@@ -3,7 +3,7 @@ const COL_WIDTH = 110;
 export function getColumns() {
   return [
     {
-      columnId: "description",
+      columnId: "name",
       width: 300,
     },
     { columnId: "jan", width: COL_WIDTH },

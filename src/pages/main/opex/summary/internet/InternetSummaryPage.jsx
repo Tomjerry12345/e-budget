@@ -1,29 +1,26 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 
-const PemasaranLainnyaInputPage = () => {
+const InternetSummaryPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
-        className="more-modal"
-        type="input"
-        // onFinish={func.onFinish}
+        type="summary"
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile={constantExcellFile["opex"]["template-3"]}
-        disabledImportExport={value.rows.pemasaran.length === 0}
+        downloadFile="file/detail-opex.xlsx"
         onChangeSelect={func.onChangeTahun}
-        listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        listMenuImport={["export"]}
+        onChangeFilter={() => {}}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent onFinish={func.onFinish} isCodeLocation={false} />
 
       <div className="custom-root-layout">
         {value.rows.pemasaran.length > 0 ? (
@@ -33,22 +30,7 @@ const PemasaranLainnyaInputPage = () => {
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
-                  <Button
-                    className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, "pemasaran")}
-                  >
-                    Tambah Data
-                  </Button>
-                </div>
-
+                <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",
@@ -66,8 +48,6 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      enableRangeSelection
-                      onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
                 </div>
@@ -82,22 +62,7 @@ const PemasaranLainnyaInputPage = () => {
         {value.rows.administrasi.length > 0
           ? value.rows.administrasi.map((e, i) => (
               <div style={{ margin: "10px" }}>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
-                  <Button
-                    className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, "administrasi")}
-                  >
-                    Tambah Data
-                  </Button>
-                </div>
-
+                <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
                 <div
                   style={{
                     overflowX: "auto",
@@ -115,8 +80,6 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
-                      enableRangeSelection
-                      onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
                 </div>
@@ -128,4 +91,4 @@ const PemasaranLainnyaInputPage = () => {
   );
 };
 
-export default PemasaranLainnyaInputPage;
+export default InternetSummaryPage;
