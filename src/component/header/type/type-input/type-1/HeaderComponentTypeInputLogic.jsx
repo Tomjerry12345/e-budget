@@ -4,7 +4,7 @@ import { actionImport } from "redux/action/action.reducer";
 import { getKeyByValue, log } from "values/Utilitas";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { allRouting, routingOpex } from "values/RoutingPage";
+import { allRouting } from "values/RoutingPage";
 
 const HeaderComponentTypeInputLogic = () => {
   const dispatch = useDispatch();

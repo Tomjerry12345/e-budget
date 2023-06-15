@@ -15,7 +15,9 @@ const HkPage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { clicked } = useSelector((state) => state.revenue);
+  const dataGlobalRedux = useSelector((state) => state.data);
 
   useEffect(() => {
     form.setFieldsValue({
@@ -93,21 +95,9 @@ const HkPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        // onFinish={onFinish}
-        onChangeFilter={(set) => {}}
-        // onChangeLoadingUpload={(set, setImport) => {
-        //   set(value.loadingUpload);
-
-        //   if (value.uploadSucces === true) {
-        //     setImport(false);
-        //   }
-        // }}
-        // onUploadFile={func.onUploadFile}
-        // accesFile={value}
-        // downloadFile="file/capex.xlsx"
-        // disabledImportExport={value.dataColumnInput.length <= 1}
-        // onChangeSelect={func.onChangeTahun}
-        form={form}
+        listMenuImport={[""]}
+        // disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
+        disabledImportExport={false}
       />
       <div className="custom-root-layout">
         <Tabs

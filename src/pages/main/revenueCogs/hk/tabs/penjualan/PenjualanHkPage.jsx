@@ -39,7 +39,7 @@ const PenjualanHkPage = () => {
                     columns={value.columns[e.description]}
                     stickyTopRows={1}
                     stickyLeftColumns={1}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e.description)}
+                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
                   />
                 </div>
               </div>

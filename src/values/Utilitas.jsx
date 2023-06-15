@@ -165,3 +165,15 @@ export const createArray = (length) => {
   const list = Array.from({ length }, () => 0);
   return list;
 };
+
+export const getTimeStamp = () => Math.floor(Date.now() / 1000);
+
+export const generateUID = () => {
+  // I generate the UID from two parts here
+  // to ensure the random number provide enough bits.
+  var firstPart = (Math.random() * 46656) | 0;
+  var secondPart = (Math.random() * 46656) | 0;
+  firstPart = ("000" + firstPart.toString(36)).slice(-3);
+  secondPart = ("000" + secondPart.toString(36)).slice(-3);
+  return firstPart + secondPart;
+};

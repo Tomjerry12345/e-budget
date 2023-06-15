@@ -44,20 +44,15 @@ const ModalMenuMore = ({
 };
 
 const HeaderComponentTypeInput = ({
-  onChangeFilter,
   onUploadFile,
   downloadFile,
-  onChangeLoadingUpload,
   accesFile,
   disabledImportExport,
   onChangeSelect,
   listMenuImport,
   className,
 }) => {
-  const { value, func } = HeaderComponentTypeInputLogic({
-    onChangeFilter,
-    onChangeLoadingUpload,
-  });
+  const { value, func } = HeaderComponentTypeInputLogic();
   return (
     <Header className="custom-header">
       {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}

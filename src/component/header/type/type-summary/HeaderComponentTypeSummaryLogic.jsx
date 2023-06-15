@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { allRouting } from "values/RoutingPage";
 import { getKeyByValue } from "values/Utilitas";
 
-const HeaderComponentTypeSummaryLogic = ({ onChangeFilter, onChangeLoadingUpload }) => {
+const HeaderComponentTypeSummaryLogic = () => {
   const [filter, setFilter] = useState(false);
   const [more, setMore] = useState(false);
   const [isImport, setImport] = useState(false);
@@ -19,10 +19,6 @@ const HeaderComponentTypeSummaryLogic = ({ onChangeFilter, onChangeLoadingUpload
 
     setHeader(h[1]);
   }, []);
-
-  useEffect(() => {
-    onChangeFilter(setFilter);
-  }, [onChangeFilter]);
 
   const onCilckFilter = () => {
     setFilter(true);

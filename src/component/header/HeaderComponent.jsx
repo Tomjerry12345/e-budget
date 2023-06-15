@@ -37,16 +37,12 @@ const HeaderComponent = ({
   if (type === "input") {
     component = (
       <HeaderComponentTypeInput
-        className={className}
         onFinish={onFinish}
-        onChangeFilter={onChangeFilter}
-        onChangeLoadingUpload={onChangeLoadingUpload}
         onUploadFile={onUploadFile}
         accesFile={accesFile}
         downloadFile={downloadFile}
         disabledImportExport={disabledImportExport}
         onChangeSelect={onChangeSelect}
-        form={form}
         listMenuImport={listMenuImport}
       />
     );
@@ -67,18 +63,11 @@ const HeaderComponent = ({
     component = (
       <HeaderComponentTypeRevenuePerusahaan
         onFinish={onFinish}
-        onChangeFilter={onChangeFilter}
-        onChangeLoadingUpload={onChangeLoadingUpload}
         onUploadFile={onUploadFile}
-        accesFile={accesFile}
         downloadFile={downloadFile}
         disabledImportExport={disabledImportExport}
         onChangeSelect={onChangeSelect}
-        form={form}
-        codeCompany={codeCompany}
-        isCodeProject={isCodeProject}
-        disabled={disabled}
-        keyCodeProject={keyCodeProject}
+        listMenuImport={listMenuImport}
       />
     );
   } else if (type === "coa-1") {
