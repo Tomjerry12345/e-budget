@@ -34,27 +34,6 @@ const title = [
   "Akun",
 ];
 
-const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
-  return (
-    <Modal
-      className="filter-modal"
-      title="Filter"
-      open={filter}
-      onCancel={onCloseFilter}
-      footer={null}
-      mask={false}
-    >
-      <FilterComponent
-        type={2}
-        isCodeProduct={true}
-        onFinish={onFinish}
-        variant="summary"
-        form={form}
-      />
-    </Modal>
-  );
-};
-
 const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
   return (
     <Modal
@@ -91,16 +70,8 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
   );
 };
 
-const HeaderComponentTypeSummary = ({
-  onFinish,
-  onChangeFilter,
-  disabledImportExport,
-  onExport,
-  form,
-}) => {
-  const { value, func } = HeaderComponentTypeSummaryLogic({
-    onChangeFilter,
-  });
+const HeaderComponentTypeSummary = ({ onFinish, disabledImportExport, onExport }) => {
+  const { value, func } = HeaderComponentTypeSummaryLogic();
   return (
     <Header className="custom-header">
       {/* <Breadcrumb className="custom-breadcrumb" separator=">">
@@ -131,13 +102,6 @@ const HeaderComponentTypeSummary = ({
           Action <ArrowDownOutlined />
         </Button>
       </div>
-
-      <ModalFilter
-        filter={value.filter}
-        onCloseFilter={func.onCloseFilter}
-        onFinish={onFinish}
-        form={form}
-      />
 
       <ModalMenuMore
         open={value.more}

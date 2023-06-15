@@ -569,22 +569,22 @@ export const urlRevenue = [
   },
   {
     description: "Asumsi unit beli",
-    endpoint: "detailrevenue/purchaseunitassumption",
+    endpoint: "detailrevenue/purchase-unit-assumption",
     insert: true,
   },
   {
     description: "Harga beli per unit",
-    endpoint: "detailrevenue/purchasepriceunit",
+    endpoint: "detailrevenue/purchase-price-unit",
     insert: true,
   },
   {
     description: "Stok akhir",
-    endpoint: "detailrevenue/laststock",
+    endpoint: "detailrevenue/last-stock",
     insert: false,
   },
   {
     description: "Asumsi unit jual",
-    endpoint: "detailrevenue/sellingunitassumption",
+    endpoint: "detailrevenue/selling-unit-assumption",
     insert: true,
   },
 

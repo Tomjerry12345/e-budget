@@ -246,7 +246,6 @@ const Logic = () => {
         value = c.newCell.text;
         isChange = true;
       } else {
-        log("cells", newRows[i][rowIndex].cells);
         value = c.newCell.value;
         if (!isNaN(value)) {
           newRows[i][rowIndex].cells[columnIndex].value = value;

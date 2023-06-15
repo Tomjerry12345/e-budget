@@ -1,10 +1,11 @@
+import { generateUID } from "values/Utilitas";
 import { ROW_HEIGHT } from "./Constant";
 
 const { nonEditable, textCell, numberCell } = require("values/react-grid/cells");
 
-function type1(id) {
+function type1() {
   return {
-    rowId: id,
+    rowId: generateUID(),
     newRow: true,
     height: ROW_HEIGHT,
     cells: [
@@ -27,9 +28,9 @@ function type1(id) {
   };
 }
 
-function type2(id) {
+function type2() {
   return {
-    rowId: id,
+    rowId: generateUID(),
     newRow: true,
     height: ROW_HEIGHT,
     cells: [
@@ -69,9 +70,9 @@ function type2(id) {
   };
 }
 
-function type3(id) {
+function type3() {
   return {
-    rowId: id,
+    rowId: generateUID(),
     newRow: true,
     height: ROW_HEIGHT,
     cells: [
@@ -99,14 +100,14 @@ function type3(id) {
 
 export const reactgridNewRow = (id, key) => {
   const l = {
-    "Stok Awal": type2(id),
-    "Asumsi unit beli": type2(id),
-    "Harga beli per unit": type2(id),
-    "Stok akhir": type2(id),
-    "Asumsi unit jual": type1(id),
-    "Harga jual per unit": type1(id),
-    Penjualan: type1(id),
-    "Potongan penjualan": type3(id),
+    "Stok Awal": type2(),
+    "Asumsi unit beli": type2(),
+    "Harga beli per unit": type2(),
+    "Stok akhir": type2(),
+    "Asumsi unit jual": type1(),
+    "Harga jual per unit": type1(),
+    Penjualan: type1(),
+    "Potongan penjualan": type3(),
   };
   return l[key];
 };

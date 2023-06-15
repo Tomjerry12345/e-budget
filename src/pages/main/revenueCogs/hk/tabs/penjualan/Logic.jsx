@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
-import {useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { fullNewRow, getRows } from "./getRows";
+import { fullNewRow, getRows, updateTotalRow } from "./getRows";
 import { urlRevenue } from "values/Constant";
 import { getHeaderRow } from "./getHeaderRow";
 
@@ -32,7 +32,7 @@ const Logic = () => {
   const dataGlobalRedux = useSelector((state) => state.data);
   const { clicked } = useSelector((state) => state.revenue);
 
-  const ENDPOINT_URL = "detailopex/template4";
+  const ENDPOINT_URL = "detailrevenue/firststock";
 
   useEffect(() => {
     if (searchParams.size > 0) {
@@ -117,7 +117,7 @@ const Logic = () => {
     await Promise.allSettled(
       urlRevenue.map(async (p, i) => {
         const desc = p.description;
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
         try {
           const { data } = await MainServices.get(url);
           let r;
@@ -127,15 +127,14 @@ const Logic = () => {
               data: data.data,
               key: desc,
             });
-          } else {
-            r = fullNewRow(getHeaderRow[desc], i, desc);
           }
 
           listRows[i] = {
             description: desc,
             insert: p.insert,
+            endpoint: p.endpoint,
             data: r,
-            apiData: data.data,
+            // apiData: data.data,
           };
         } catch (error) {
           // Tangani error jika ada
@@ -143,12 +142,15 @@ const Logic = () => {
           listRows[i] = {
             description: desc,
             insert: p.insert,
+            endpoint: p.endpoint,
             data: fullNewRow(getHeaderRow[desc], i, desc),
-            apiData: [],
+            // apiData: [],
           };
         }
       })
     );
+    log({ listRows });
+    dispatch(actionData({ sizeDataRevenue: 1 }));
     setRows(listRows);
   };
 
@@ -177,101 +179,110 @@ const Logic = () => {
 
   const penjualan = () => {};
 
-  const onChangeTable = async (change, i, key) => {
-    const newRows = [...rows];
+  const onChangeTable = async (change, i, item) => {
+    const fullRows = [...rows];
+    const newRows = [...rows[i].data];
+    let isChange;
 
     for (const c of change) {
-      const rowIndex = newRows[i].data.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = columns[key].findIndex((j) => j.columnId === c.columnId);
+      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+      const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
 
-      const type = newRows[i].data[rowIndex].cells[columnIndex].type;
-
-      const length = newRows[i].data.length;
+      const type = newRows[rowIndex].cells[columnIndex].type;
+      const length = newRows.length;
 
       let value;
 
       if (type === "text") {
-        newRows[i].data[rowIndex].cells[columnIndex].text = c.newCell.text;
+        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
         value = c.newCell.text;
+        isChange = true;
       } else {
-        newRows[i].data[rowIndex].cells[columnIndex].value = c.newCell.value;
+        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
         value = c.newCell.value;
 
-        let jumlahBulan = 0;
-        let tarif = newRows[i].data[rowIndex].cells[16].value;
+        value = c.newCell.value;
+        if (!isNaN(value)) {
+          newRows[rowIndex].cells[columnIndex].value = value;
 
-        const newCell = newRows[i].data[rowIndex].cells.map((e, j) => {
-          if (j >= 3 && j <= 14) jumlahBulan += e.value;
-          if (j === 15) e.value = jumlahBulan;
-          if (j === 17) e.value = jumlahBulan * tarif;
-          if (j >= 18) e.value = newRows[i].data[rowIndex].cells[j - 15].value * tarif;
-          return e;
-        });
+          let total1 = 0;
+          let total2 = 0;
 
-        newRows[i].data[rowIndex].cells = newCell;
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= 2 && j <= 13) total1 += e.value;
+            if (j === 14) e.value = total1;
+            if (j >= 15 && j <= 27) total2 += e.value;
+            if (j === 28) e.value = total2;
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          isChange = true;
+        } else {
+          isChange = false;
+        }
       }
 
-      // try {
-      //   let formData = new FormData();
+      if (isChange) {
+        try {
+          let formData = new FormData();
 
-      //   const id = c.rowId;
-      //   const column_id = c.columnId;
-      //   const isNewRow = newRows[i].data[rowIndex].newRow;
+          const id = c.rowId;
+          const column_id = c.columnId;
+          const isNewRow = newRows[rowIndex].newRow;
 
-      //   if (isNewRow !== undefined) {
-      //     const {
-      //       code_company,
-      //       code_dept,
-      //       code_location,
-      //       code_product,
-      //       code_project,
-      //       code_icp,
-      //       periode,
-      //     } = codeFilter;
+          const codeProduct = newRows[rowIndex].cells[0].text;
 
-      //     const codeAccount = items.pemasaran[rowIndex]["code_account"];
+          const key = columns[item.description][columnIndex].columnId;
 
-      //     formData.append("code_account", codeAccount);
-      //     formData.append("code_company", code_company);
-      //     formData.append("code_department", code_dept);
-      //     formData.append("code_location", code_location);
-      //     formData.append("code_product", code_product);
-      //     formData.append("code_project", code_project);
-      //     formData.append("code_icp", code_icp);
-      //     formData.append("year", periode);
-      //     formData.append("name", value);
+          log({ key });
 
-      //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+          if (isNewRow) {
+            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
+              codeFilter;
 
-      //     log({ res });
-      //     const rowId = res.data.data.id;
+            formData.append("code_company", code_company);
+            formData.append("code_department", code_dept);
+            formData.append("code_location", code_location);
+            formData.append("code_product", codeProduct);
+            formData.append("code_project", code_project);
+            formData.append("code_icp", code_icp);
+            formData.append("year", periode);
+            formData.append(key, value);
 
-      //     newRows[i].data[rowIndex].rowId = rowId;
-      //   } else {
-      //     formData.append("id", id);
-      //     formData.append("column_id", column_id);
-      //     formData.append("value", value);
+            const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-      //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-      //   }
+            log({ res });
+            const rowId = res.data.data.id;
 
-      //   delete newRows[i].data[rowIndex].newRow;
-      //   const newCell = newRows[i].data[rowIndex].cells.map((e, i) => {
-      //     if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-      //     return e;
-      //   });
+            newRows[rowIndex].rowId = rowId;
+          } else {
+            formData.append("id", id);
+            formData.append("column_id", column_id);
+            formData.append("value", value);
 
-      //   newRows[i].data[rowIndex].cells = newCell;
+            await MainServices.post(`${item.endpoint}/update`, formData);
+          }
 
-      //   newRows[i].data[length - 1] = updateTotalRow(newRows[i]);
-      // } catch (e) {
-      //   log({ e });
-      // }
+          // const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+          //   if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+          //   return e;
+          // });
+
+          // newRows[i][rowIndex].cells = newCell;
+          newRows[i][length - 1] = updateTotalRow(newRows);
+        } catch (e) {
+          log({ e });
+        }
+      }
     }
 
     showNotif(200, "Sukses update data");
 
-    setRows(newRows);
+    fullRows[i].data = newRows;
+
+    setRows(fullRows);
   };
 
   const onSuccess = () => {
