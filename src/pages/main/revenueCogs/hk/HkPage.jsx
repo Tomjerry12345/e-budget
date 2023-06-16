@@ -95,9 +95,14 @@ const HkPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        listMenuImport={[""]}
-        // disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
-        disabledImportExport={false}
+        listMenuImport={[
+          "Stok Awal",
+          "Asumsi unit beli",
+          "Harga beli per unit",
+          "Asumsi unit jual",
+          "Penjualan",
+        ]}
+        disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
       />
       <div className="custom-root-layout">
         <Tabs

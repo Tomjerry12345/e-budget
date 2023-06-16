@@ -1,20 +1,8 @@
-import { Card } from "@mui/material";
-import { Table, Form, Input, Select, Button, Spin } from "antd";
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { areEqual, log } from "../../../../values/Utilitas";
+import React from "react";
 import OthersInputLogic from "./OthersInputLogic";
-import { useParams } from "react-router-dom";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import TableComponent from "../../../../component/table/TableComponent";
-import { UploadOutlined } from "@ant-design/icons";
-import UploadModal from "../../../../component/modal/UploadModal";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import TableComponent from "component/table/TableComponent";
+import HeaderComponent from "component/header/HeaderComponent";
 
 const othersInputPage = () => {
   const { value, func } = OthersInputLogic();
@@ -60,13 +48,6 @@ const othersInputPage = () => {
           listKeyParent={value.listKeyParent}
         />
       </div>
-      <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-        file={`file/${value.endPFile}`}
-      />
     </>
   );
 };

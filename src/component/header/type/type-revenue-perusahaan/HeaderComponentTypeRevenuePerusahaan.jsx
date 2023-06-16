@@ -38,11 +38,11 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
-            onClickImport(e.code_account);
+            onClickImport(e);
             onCancel();
           }}
         >
-          Import {e.description}
+          Import {e}
         </Button>
       ))}
     </Modal>
@@ -80,8 +80,8 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         open={value.importRedux.openImport}
         onCancel={func.onCloseImport}
         value={value}
-        onOk={onUploadFile}
-        file={downloadFile}
+        onOk={func.onUploadFile}
+        file={value.file}
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
       />

@@ -98,12 +98,54 @@ function type3() {
   };
 }
 
+function type4() {
+  return {
+    rowId: generateUID(),
+    newRow: true,
+    height: ROW_HEIGHT,
+    cells: [
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+    ],
+  };
+}
+
 export const reactgridNewRow = (id, key) => {
   const l = {
     "Stok Awal": type2(),
     "Asumsi unit beli": type2(),
     "Harga beli per unit": type2(),
-    "Stok akhir": type2(),
+    "Stok akhir": type4(),
     "Asumsi unit jual": type1(),
     "Harga jual per unit": type1(),
     Penjualan: type1(),
