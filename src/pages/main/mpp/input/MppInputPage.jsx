@@ -1,10 +1,7 @@
-import { UploadOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import React from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import UploadModal from "../../../../component/modal/UploadModal";
-import TableComponent from "../../../../component/table/TableComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import TableComponent from "component/table/TableComponent";
 import MppInputLogic from "./MppInputLogic";
 
 const MppInputPage = () => {
@@ -33,12 +30,7 @@ const MppInputPage = () => {
         onChangeSelect={func.onChangeTahun}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
         <TableComponent

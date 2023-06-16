@@ -559,6 +559,14 @@ export const constantExcellFile = {
     "template-4-sewa": "file/detail-opex-4-sewa.xlsx",
     "template-5": "file/detail-opex-5.xlsx",
   },
+
+  revenue: {
+    "Stok Awal": "file/revenue-sample firststock.xlsx",
+    "Asumsi unit beli": "file/revenue-sample purchasing assumption.xlsx",
+    "Harga beli per unit": "file/revenue-sample purchasing price.xlsx",
+    "Asumsi unit jual": "file/revenue-sample selling assumption.xlsx",
+    Penjualan: "file/revenue-sample selling price.xlsx",
+  },
 };
 
 export const urlRevenue = [

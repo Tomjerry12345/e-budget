@@ -7,6 +7,7 @@ function type1(data) {
   return [
     ...data.map((d) => ({
       rowId: d["id"] ?? generateUID(),
+      newRow: d["id"] === null,
       height: ROW_HEIGHT,
       cells: [
         textCell(d["product_code"], "padding-left-lg"),

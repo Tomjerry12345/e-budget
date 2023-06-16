@@ -29,6 +29,6 @@ export function getRows({ header, data, key }) {
 }
 
 export function fullNewRow(header, id, key) {
-  const list = createArray(TOTAL_DATA);
+  const list = createArray(TOTAL_DATA[key]);
   return [header, reactgridNewRow(id, key), rowTotal("Total", list, key)];
 }

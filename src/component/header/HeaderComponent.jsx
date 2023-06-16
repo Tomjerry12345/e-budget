@@ -62,11 +62,7 @@ const HeaderComponent = ({
   } else if (type === "revenue-perusahaan") {
     component = (
       <HeaderComponentTypeRevenuePerusahaan
-        onFinish={onFinish}
-        onUploadFile={onUploadFile}
-        downloadFile={downloadFile}
         disabledImportExport={disabledImportExport}
-        onChangeSelect={onChangeSelect}
         listMenuImport={listMenuImport}
       />
     );

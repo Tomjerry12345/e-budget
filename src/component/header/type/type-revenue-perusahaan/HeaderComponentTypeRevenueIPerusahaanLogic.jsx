@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { actionData } from "redux/data-global/data.reducer";
 import { actionImport } from "redux/action/action.reducer";
-import { getKeyByValue, log } from "values/Utilitas";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { allRouting } from "values/RoutingPage";
 import { useDropzone } from "react-dropzone";
+import { constantExcellFile } from "values/Constant";
 
 const HeaderComponentTypeRevenuePerusahaanLogic = () => {
   const dispatch = useDispatch();
@@ -19,19 +19,22 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
   });
 
   const [header, setHeader] = useState("");
+  const [file, setFile] = useState("");
 
   useEffect(() => {
     const split = location.pathname.split("/");
     const q = split[split.length - 2];
 
-    log({ q });
-    log("split", split[2]);
-
     const h = allRouting[split[2]][q];
-    log({ h });
 
     setHeader(h);
   }, []);
+
+  useEffect(() => {
+    if (importRedux.file === null) {
+      acceptedFiles.length = 0;
+    }
+  }, [importRedux.file]);
 
   const onClickMore = () => {
     dispatch(
@@ -49,20 +52,35 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
     );
   };
 
-  const onClickImport = (i) => {
-    log({ i });
+  const onClickImport = (d) => {
     dispatch(
       actionImport({
         openImport: true,
       })
     );
-    dispatch(actionData({ indexImport: i }));
+    dispatch(actionData({ indexImport: d }));
+    const f = constantExcellFile["revenue"][d];
+
+    setFile(f);
   };
 
   const onCloseImport = () => {
     dispatch(
       actionImport({
         openImport: false,
+      })
+    );
+  };
+
+  const onUploadFile = () => {
+    let file1;
+    acceptedFiles.forEach((file) => {
+      file1 = file;
+    });
+
+    dispatch(
+      actionImport({
+        file: file1,
       })
     );
   };
@@ -74,12 +92,14 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
       acceptedFiles,
       getRootProps,
       getInputProps,
+      file,
     },
     func: {
       onClickMore,
       onCloseMore,
       onClickImport,
       onCloseImport,
+      onUploadFile,
     },
   };
 };

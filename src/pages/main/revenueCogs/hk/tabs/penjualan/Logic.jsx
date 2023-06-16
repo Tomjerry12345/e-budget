@@ -31,6 +31,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
   const { clicked } = useSelector((state) => state.revenue);
+  const importRedux = useSelector((state) => state.import);
 
   const ENDPOINT_URL = "detailrevenue/firststock";
 
@@ -42,6 +43,12 @@ const Logic = () => {
       onFinish(currentParams);
     }
   }, [clicked]);
+
+  useEffect(() => {
+    if (importRedux.file !== null) {
+      onUploadFile(importRedux.file);
+    }
+  }, [importRedux.file]);
 
   const responseShow = (res) => {
     dispatch(
@@ -63,49 +70,22 @@ const Logic = () => {
   };
 
   const onSetDataTable = (values) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-      periode,
-    } = values;
+    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
     let fCodeCompany = code_company;
-    let fCodeProduct = code_product;
     let fCodeLocation = code_location;
     let fCodeDept = code_dept;
     let fCodeIcp = code_icp;
     let fCodeProject = code_project;
-
     let fPeriode = periode;
 
-    // fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    // fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    // fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    // fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    // fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    // fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    // fPeriode = fPeriode[0];
-
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
+    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
 
     setCodeFilter(values);
   };
 
   const getData = async (
     codeCompany,
-    codeProduct,
     codeLocation,
     codeDept,
     codeIcp,
@@ -157,22 +137,6 @@ const Logic = () => {
   const onFinish = (values) => {
     setLoading(true);
     onSetDataTable(values);
-
-    // const l = [];
-
-    // dataDummy.list.map((e, i) => {
-    //   const r = getRows({
-    //     header: getHeaderRow[p.description],
-    //     data: e.data,
-    //   });
-
-    //   l.push({
-    //     title: e.title,
-    //     data: r,
-    //   });
-    // });
-
-    // setRows(l);
   };
 
   const stokAkhir = () => {};
@@ -287,79 +251,56 @@ const Logic = () => {
 
   const onSuccess = () => {
     dispatch(resetDataActionImport());
-    acceptedFiles.length = 0;
   };
 
-  const onUploadFile = async () => {
-    // let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
+  const onUploadFile = async (file) => {
     dispatch(
       actionImport({
         loading: true,
       })
     );
 
-    const {
-      code_company,
-      code_product,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-      periode,
-    } = codeFilter;
+    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
+      codeFilter;
 
-    let file1;
+    const desc = dataGlobalRedux.indexImport;
+    const index = rows.findIndex((item) => item.description === desc);
+    const endpoint = rows[index].endpoint;
 
-    const codeAccount = dataGlobalRedux.indexImport;
-    let index, category;
-
-    const checkItem = (items, cat) => {
-      items.forEach((e, i) => {
-        if (e.code_account === codeAccount) {
-          [index, category] = [i, cat];
-        }
-      });
-    };
-
-    checkItem(items.pemasaran, "pemasaran") || checkItem(items.administrasi, "administrasi");
+    log({ file });
+    log({ desc });
+    log({ rows });
+    log({ index });
+    log({ endpoint });
 
     let formData = new FormData();
 
-    // setLoadingUpload(true);
+    formData.append("file", file);
 
-    acceptedFiles.forEach((file) => {
-      file1 = file;
-    });
-
-    formData.append("file", file1);
-    formData.append("code_account", codeAccount);
     formData.append("code_company", code_company);
     formData.append("code_department", code_dept);
     formData.append("code_location", code_location);
-    formData.append("code_product", code_product);
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
 
     try {
-      const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
+      const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const url = `${endpoint}/list?code_company=${code_company}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}`;
       const { data } = await MainServices.get(url);
 
       const r = getRows({
-        header: getHeaderRow["key"],
+        header: getHeaderRow[desc],
         data: data.data,
+        key: desc,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = [...rows];
 
-      newRow[index] = r;
+      newRow[index].data = r;
 
-      setRows({
-        ...rows,
-        [category]: newRow,
-      });
+      setRows(newRow);
 
       responseShow(res);
 
