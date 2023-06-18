@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import { log } from "../../../../values/Utilitas";
-import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import { log } from "values/Utilitas";
+import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
+import { getPerusahaan } from "values/Constant";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
@@ -19,9 +20,17 @@ const HkPage = () => {
   const { clicked } = useSelector((state) => state.revenue);
   const dataGlobalRedux = useSelector((state) => state.data);
 
+  const location = useLocation();
+  const split = location.pathname.split("/");
+  const q = split[split.length - 2];
+
+  log({ q });
+
+  const perusahaan = getPerusahaan(q);
+
   useEffect(() => {
     form.setFieldsValue({
-      code_company: `311 - PT. Hadji Kalla`,
+      code_company: `${perusahaan.code} - ${perusahaan.description}`,
       code_product: null,
       code_location: null,
       code_dept: null,
@@ -73,15 +82,15 @@ const HkPage = () => {
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    log("key", key);
+    log({ q });
 
     if (key === 1) {
       navigate(
-        `/main/revenue-cogs/hk/penjualan?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+        `/main/revenue-cogs/${q}/penjualan?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     } else if (key === 2) {
       navigate(
-        `/main/revenue-cogs/hk/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
+        `/main/revenue-cogs/${q}/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
       );
     }
     dispatch(
@@ -115,9 +124,9 @@ const HkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/hk/penjualan`);
+              navigate(`/main/revenue-cogs/${q}/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/hk/hpplain`);
+              navigate(`/main/revenue-cogs/${q}/hpplain`);
             }
 
             setIsMoveTabs(!isMoveTabs);
@@ -129,7 +138,7 @@ const HkPage = () => {
           isCodeProject
           isCodeProduct={false}
           type="input"
-          codeCompany={311}
+          codeCompany={perusahaan.code}
           form={form}
           disabled
           typeCompany="static"
