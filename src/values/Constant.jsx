@@ -602,3 +602,62 @@ export const urlRevenue = [
     insert: true,
   },
 ];
+
+export const getPerusahaan =  (q) => {
+  const listPerusahaan = {
+    hk: {
+      code: 311,
+      description: "PT. Hadji Kalla",
+    },
+    kiu: {
+      code: 326,
+      description: "PT. Kars Inti Utama",
+    },
+    gmm: {
+      code: 328,
+      description: "PT. Gowa Modern Motor",
+    },
+    kia: {
+      code: 313,
+      description: "PT. Kars Inti Amanah",
+    },
+    bju: {
+      code: 312,
+      description: "PT. Bumi Jasa Utama",
+    },
+    blt: {
+      code: 421,
+      description: "PT. Bumi Lintas Tama",
+    },
+    blu: {
+      code: 422,
+      description: "PT. Bumi Logistik Utama",
+    },
+    bk: {
+      code: 221,
+      description: "PT. Bumi Karsa",
+    },
+    bsu: {
+      code: 411,
+      description: "PT. Bumi Sarana Utama",
+    },
+    bsb: {
+      code: 413,
+      description: "PT. Bumi Sarana Beton",
+    },
+    kik: {
+      code: 241,
+      description: "PT. Kalla Inti Karsa",
+    },
+    ikp: {
+      code: 242,
+      description: "PT. Inti Karsa Persada",
+    },
+    band: {
+      code: 231,
+      description: "PT. Baruga Asrinusa Development",
+    },
+  };
+
+  return listPerusahaan[q];
+};

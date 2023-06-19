@@ -1,5 +1,17 @@
 export const routingRevenue = {
   hk: "Revenue & COGS HK",
+  kiu: "Revenue & COGS KIU",
+  gmm: "Revenue & COGS GMM",
+  kia: "Revenue & COGS KIA",
+  bju: "Revenue & COGS BJU",
+  blt: "Revenue & COGS BLT",
+  blu: "Revenue & COGS BLU",
+  bk: "Revenue & COGS BK",
+  bsu: "Revenue & COGS BSU",
+  bsb: "Revenue & COGS BSB",
+  kik: "Revenue & COGS KIK",
+  ikp: "Revenue & COGS IKP",
+  band: "Revenue & COGS BAND",
 };
 
 export const routingOpex = {
