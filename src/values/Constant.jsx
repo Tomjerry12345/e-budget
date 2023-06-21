@@ -109,22 +109,26 @@ export const allItemSummarySubMenu = [
   ],
   // 4 Capex
   [
-    "Load Saldo Awal",
-    "Input New Aset",
-    "Retired Aset",
-    "Input Direct Capex",
-    "Summary Existing Aset",
-    "Summary Penyusutan Existing Aset",
-    "Summary Saldo Awal Akumulasi Penyusutan",
-    "Summary New Aset",
-    "Summary Penyusutan New Aset",
-    "Summary Akumulasi Penyusutan New Aset",
-    "Summary Disposal Aset",
-    "Summary Penyusutan Disposal Aset",
-    "Summary Akumulasi Penyusutan Disposal Aset",
-    "Summary Total Aset",
-    "Summary Total Penyusutan",
-    "Summary Total Akumulasi Penyusutan",
+    {
+      description: "Existing aset",
+    },
+    {
+      description: "Input New Aset",
+    },
+    // "Retired Aset",
+    // "Input Direct Capex",
+    // "Summary Existing Aset",
+    // "Summary Penyusutan Existing Aset",
+    // "Summary Saldo Awal Akumulasi Penyusutan",
+    // "Summary New Aset",
+    // "Summary Penyusutan New Aset",
+    // "Summary Akumulasi Penyusutan New Aset",
+    // "Summary Disposal Aset",
+    // "Summary Penyusutan Disposal Aset",
+    // "Summary Akumulasi Penyusutan Disposal Aset",
+    // "Summary Total Aset",
+    // "Summary Total Penyusutan",
+    // "Summary Total Akumulasi Penyusutan",
   ],
   // 5 MPP
   [
@@ -300,7 +304,7 @@ export const disabledItemSummaryMenu = [
   // 4 Capex
   [
     true,
-    true,
+    false,
     true,
     false,
     true,
@@ -595,7 +599,6 @@ export const urlRevenue = [
     endpoint: "detailrevenue/selling-unit-assumption",
     insert: true,
   },
-
   {
     description: "Penjualan",
     endpoint: "detailrevenue/selling",
@@ -603,7 +606,7 @@ export const urlRevenue = [
   },
 ];
 
-export const getPerusahaan =  (q) => {
+export const getPerusahaan = (q) => {
   const listPerusahaan = {
     hk: {
       code: 311,

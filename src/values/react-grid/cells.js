@@ -30,6 +30,26 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
   format: isFormat ? numberFormat : null,
 });
 
+export const dropdownCell = ({
+  text,
+  selectedValue,
+  values,
+  isDisabled,
+  isOpen,
+  inputValue,
+  className = "",
+  style,
+}) => ({
+  type: "dropdown",
+  selectedValue,
+  values,
+  isDisabled,
+  isOpen,
+  inputValue,
+  className,
+  style,
+});
+
 export const nonEditable = (cell) => ({
   ...cell,
   nonEditable: true,

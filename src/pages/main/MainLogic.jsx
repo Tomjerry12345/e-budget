@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
 import { selectionMenu, urlPageRevenue } from "../../values/Constant";
 import {
+  routingCapex,
   routingMasterCoa,
   routingOpex,
   routingOthers,
@@ -184,7 +185,8 @@ const MainLogic = () => {
       const routing = routingOpex[nameMenu];
       pageNavigation = `/main/opex/${inputOrSummary}/${routing}`;
     } else if (index === 3) {
-      pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
+      const routing = routingCapex[nameMenu];
+      pageNavigation = `/main/capex/${inputOrSummary}/${routing}`;
     } else if (index === 4) {
       pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
     } else if (index === 5) {

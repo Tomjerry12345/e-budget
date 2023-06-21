@@ -82,7 +82,7 @@ function getGroupRows(groups) {
         textCell(d["name"], "padding-left-lg"),
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
-        textCell(d["unit"], "padding-left-lg"),
+        textCell(d["unit"] ?? "-", "padding-left-lg"),
         numberCell(d["amount"], "padding-left-lg", "", false),
 
         numberCell(d["jan"], "padding-left-lg"),
