@@ -30,24 +30,13 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
   format: isFormat ? numberFormat : null,
 });
 
-export const dropdownCell = ({
-  text,
-  selectedValue,
-  values,
-  isDisabled,
-  isOpen,
-  inputValue,
-  className = "",
-  style,
-}) => ({
+export const dropDownCell = (value, selectedValue, className = "", style, isOpen) => ({
   type: "dropdown",
+  values: value,
   selectedValue,
-  values,
-  isDisabled,
-  isOpen,
-  inputValue,
   className,
   style,
+  isOpen,
 });
 
 export const nonEditable = (cell) => ({
@@ -99,7 +88,7 @@ export function rootHeaderCell(
   color = "white"
 ) {
   return nonEditable(
-    textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(title, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {
@@ -153,7 +142,7 @@ export function monthHeaderCell(
   color = "#003421"
 ) {
   return nonEditable(
-    textCell(month, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(month, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {
