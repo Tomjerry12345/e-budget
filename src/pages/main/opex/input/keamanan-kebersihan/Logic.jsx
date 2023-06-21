@@ -254,10 +254,14 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
         if (j === 5) e.value = totalKontrak;
-        if (j >= mulaiKontrak + 8 && j <= lamaKontrak + 8) {
+        if (mulaiKontrak < 1) mulaiKontrak = 1;
+        if (lamaKontrak > 12) lamaKontrak = 12;
+        if (j >= 8 && j <= mulaiKontrak + 8) e.value = 0;
+        if (j >= mulaiKontrak + 8 && j < lamaKontrak + 8 + mulaiKontrak) {
           e.value = totalKontrak;
           grandTotal += e.value;
         }
+        if (j >= lamaKontrak + 8 + mulaiKontrak && j <= 20) e.value = 0;
         return e;
       });
 

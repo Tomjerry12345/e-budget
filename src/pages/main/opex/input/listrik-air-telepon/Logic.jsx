@@ -258,7 +258,7 @@ const Logic = () => {
         return e;
       });
 
-      newRows[i][rowIndex].cells[6].value = grandTotal;
+      newRows[i][rowIndex].cells[7].value = grandTotal;
 
       newRows[i][rowIndex].cells = newCell;
     }

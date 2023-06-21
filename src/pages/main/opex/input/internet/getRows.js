@@ -102,8 +102,8 @@ function getGroupRows(groups) {
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
         numberCell(d["rates"] ?? 0, "padding-left-lg"),
-        numberCell(d["month_duration"] ?? 0, "padding-left-lg"),
-        numberCell(d["month_start"] ?? 0, "padding-left-lg"),
+        numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
