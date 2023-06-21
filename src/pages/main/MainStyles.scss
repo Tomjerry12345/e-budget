@@ -148,3 +148,15 @@
   max-height: 200px;
   overflow: auto;
 }
+
+.rg-text-celleditor{
+  input{
+    border: none;
+    padding-left: 9px !important;
+  }
+}
+.rg-number-celleditor{
+  input{
+    border: none;
+  }
+}

@@ -12,7 +12,13 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
-export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
+export const chevronCell = (
+  text,
+  hasChildren,
+  parentId,
+  className = "",
+  style
+) => ({
   type: "chevron",
   text,
   isExpanded: false,
@@ -28,6 +34,21 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
   className,
   style,
   format: isFormat ? numberFormat : null,
+});
+
+export const dropDownCell = (
+  value,
+  selectedValue,
+  className = "",
+  style,
+  isOpen
+) => ({
+  type: "dropdown",
+  values: value,
+  selectedValue,
+  className,
+  style,
+  isOpen,
 });
 
 export const nonEditable = (cell) => ({
@@ -79,7 +100,7 @@ export function rootHeaderCell(
   color = "white"
 ) {
   return nonEditable(
-    textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(title, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {
@@ -133,7 +154,7 @@ export function monthHeaderCell(
   color = "#003421"
 ) {
   return nonEditable(
-    textCell(month, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(month, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {

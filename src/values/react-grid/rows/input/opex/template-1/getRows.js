@@ -62,7 +62,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -73,38 +76,38 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["name"], "padding-left-lg"),
-        textCell(d["activity"] ?? "-", "padding-left-lg"),
+        textCell(d["name"], "padding-left-lg border-none"),
+        textCell(d["activity"] ?? "-", "padding-left-lg border-none"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
-        numberCell(d["jan"], "padding-left-lg"),
-        numberCell(d["feb"], "padding-left-lg"),
-        numberCell(d["mar"], "padding-left-lg"),
-        numberCell(d["apr"], "padding-left-lg"),
-        numberCell(d["mei"], "padding-left-lg"),
-        numberCell(d["jun"], "padding-left-lg"),
-        numberCell(d["jul"], "padding-left-lg"),
-        numberCell(d["agu"], "padding-left-lg"),
-        numberCell(d["sep"], "padding-left-lg"),
-        numberCell(d["okt"], "padding-left-lg"),
-        numberCell(d["nov"], "padding-left-lg"),
-        numberCell(d["des"], "padding-left-lg"),
+        numberCell(d["jan"], "padding-left-lg", null, false),
+        numberCell(d["feb"], "padding-left-lg", null, false),
+        numberCell(d["mar"], "padding-left-lg", null, false),
+        numberCell(d["apr"], "padding-left-lg", null, false),
+        numberCell(d["mei"], "padding-left-lg", null, false),
+        numberCell(d["jun"], "padding-left-lg", null, false),
+        numberCell(d["jul"], "padding-left-lg", null, false),
+        numberCell(d["agu"], "padding-left-lg", null, false),
+        numberCell(d["sep"], "padding-left-lg", null, false),
+        numberCell(d["okt"], "padding-left-lg", null, false),
+        numberCell(d["nov"], "padding-left-lg", null, false),
+        numberCell(d["des"], "padding-left-lg", null, false),
 
-        nonEditable(numberCell(d["total_qty"], "padding-left-lg")),
-        numberCell(d["rates"], "padding-left-lg"),
-        nonEditable(numberCell(d["total"], "padding-left-lg")),
+        nonEditable(numberCell(d["total_qty"], "padding-left-lg", null, false)),
+        numberCell(d["rates"], "padding-left-lg", null, false),
+        nonEditable(numberCell(d["total"], "padding-left-lg", null, false)),
         // Tahun 2
-        nonEditable(numberCell(d["jan_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["feb_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["mar_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["apr_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["mei_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["jun_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["jul_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["agu_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["sep_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["okt_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["nov_rates"], "padding-left-lg")),
-        nonEditable(numberCell(d["des_rates"], "padding-left-lg")),
+        nonEditable(numberCell(d["jan_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["feb_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["mar_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["apr_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["mei_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["jun_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["jul_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["agu_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["sep_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["okt_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["nov_rates"], "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["des_rates"], "padding-left-lg", null, false)),
       ],
     })),
   ];
@@ -132,7 +135,9 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e) => noSideBorders(totalCell(e, "", "beige"))),
+      ...total.map((e, i) =>
+        noSideBorders(totalCell(e, "", "beige", "", !(i >= 0)))
+      ),
     ],
   };
 }
@@ -142,7 +147,11 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    header,
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

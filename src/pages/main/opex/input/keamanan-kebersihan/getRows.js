@@ -6,6 +6,7 @@ import {
   numberCell,
   noSideBorders,
   totalCell,
+  dropDownCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
 
@@ -24,16 +25,34 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
+      nonEditable(
+        textCell("Description", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Aktivitas", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Cost Driver", "justify-content-center text-lg font-bold")
+      ),
 
-      nonEditable(textCell("Manpower", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Nilai Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Total Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Lama Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Mulai Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
+      nonEditable(
+        textCell("Manpower", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Nilai Kontrak", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Total Kontrak", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Lama Kontrak", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        textCell("Mulai Kontrak", "justify-content-center text-lg font-bold")
+      ),
+      nonEditable(
+        rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)
+      ),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -54,12 +73,14 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
+  list[3] = "";
+  list[4] = "";
   data.forEach((e) => {
     list[0] += e["amount"] ?? 0;
     list[1] += e["rates"] ?? 0;
     list[2] += e["total"] ?? 0;
-    list[3] += e["month_duration"] ?? 0;
-    list[4] += e["month_start"] ?? 0;
+    // list[3] += e["month_duration"] ?? 0;
+    // list[4] += e["month_start"] ?? 0;
     list[5] += e["grand_total"] ?? 0;
     list[6] += e["jan_rates"] ?? 0;
     list[7] += e["feb_rates"] ?? 0;
@@ -89,7 +110,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
@@ -109,6 +133,24 @@ function getGroupRows(groups) {
         numberCell(d["rates"] ?? 0, "padding-left-lg", null, false),
         nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
         numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
+        // dropDownCell(
+        //   [
+        //     { value: 1, label: "1" },
+        //     { value: 2, label: "2" },
+        //     { value: 3, label: "3" },
+        //     { value: 4, label: "4" },
+        //     { value: 5, label: "5" },
+        //     { value: 6, label: "6" },
+        //     { value: 7, label: "7" },
+        //     { value: 8, label: "8" },
+        //     { value: 9, label: "9" },
+        //     { value: 10, label: "10" },
+        //     { value: 11, label: "11" },
+        //     { value: 12, label: "12" },
+        //   ],
+        //   d["month_duration"].toString(),
+        //   "padding-left-lg"
+        // ),
         numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
