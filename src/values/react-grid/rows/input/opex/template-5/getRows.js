@@ -68,7 +68,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -82,7 +85,7 @@ function getGroupRows(groups) {
         textCell(d["name"], "padding-left-lg"),
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
-        textCell(d["unit"], "padding-left-lg"),
+        textCell(d["unit"] ?? "-", "padding-left-lg"),
         numberCell(d["amount"], "padding-left-lg", "", false),
 
         numberCell(d["jan"], "padding-left-lg"),
@@ -98,7 +101,9 @@ function getGroupRows(groups) {
         numberCell(d["nov"], "padding-left-lg"),
         numberCell(d["des"], "padding-left-lg"),
 
-        nonEditable(numberCell(d["total_quantity"], "padding-left-lg", "", false)),
+        nonEditable(
+          numberCell(d["total_quantity"], "padding-left-lg", "", false)
+        ),
         numberCell(d["rates"], "padding-left-lg"),
         nonEditable(numberCell(d["grand_total"], "padding-left-lg")),
 
@@ -158,7 +163,11 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    header,
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

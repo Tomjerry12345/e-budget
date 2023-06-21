@@ -35,7 +35,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detailopex/template4";
+  const ENDPOINT_URL = "detailopex/template5";
 
   useEffect(() => {
     getDataAccount();

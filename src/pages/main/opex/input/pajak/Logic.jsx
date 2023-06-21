@@ -151,9 +151,15 @@ const Logic = () => {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
+              const newRow = data.data.map((d) => {
+                return {
+                  ...d,
+                  rates: d.rates * 100,
+                }
+              })
               r = getRows({
                 header: getRootHeaderRow(),
-                data: data.data,
+                data: newRow,
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
@@ -243,12 +249,13 @@ const Logic = () => {
     } else {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
+      if (change[0].columnId === 'rates') value /= 100
 
       let satuan = newRows[i][rowIndex].cells[3].value;
       let tarif = newRows[i][rowIndex].cells[4].value;
       let periodeBayar = newRows[i][rowIndex].cells[6].value;
 
-      let grandTotal = satuan * tarif;
+      let grandTotal = satuan * (tarif / 100);
 
       log({ tarif });
       log({ satuan });

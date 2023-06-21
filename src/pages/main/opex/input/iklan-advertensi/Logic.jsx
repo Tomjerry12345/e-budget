@@ -288,7 +288,7 @@ const Logic = () => {
               periode,
             } = codeFilter;
 
-            const codeAccount = items.pemasaran[rowIndex]["code_account"];
+            const codeAccount = items.pemasaran[i]["code_account"];
 
             formData.append("code_account", codeAccount);
             formData.append("code_company", code_company);
