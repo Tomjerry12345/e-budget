@@ -156,8 +156,8 @@ const Logic = () => {
                 return {
                   ...d,
                   rates: d.rates * 100,
-                }
-              })
+                };
+              });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: newRow,
@@ -255,7 +255,7 @@ const Logic = () => {
     } else {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
-      if (change[0].columnId === 'rates') value /= 100
+      if (change[0].columnId === "rates") value /= 100;
 
       let satuan = newRows[i][rowIndex].cells[3].value;
       let tarif = newRows[i][rowIndex].cells[4].value;
@@ -420,7 +420,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 

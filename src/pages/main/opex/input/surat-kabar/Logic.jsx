@@ -404,11 +404,11 @@ const Logic = () => {
       const { data } = await MainServices.get(url);
 
       const r = getRows({
+        header: getRootHeaderRow(),
         data: data.data,
-        titleTotal: "total harga",
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 

@@ -591,10 +591,15 @@ export const urlRevenue = [
     insert: true,
   },
   {
-    description: "Penjualan",
-    endpoint: "detailrevenue/selling",
+    description: "Harga jual per unit",
+    endpoint: "detailrevenue/selling-price-unit",
     insert: true,
   },
+  // {
+  //   description: "Penjualan",
+  //   endpoint: "detailrevenue/selling",
+  //   insert: true,
+  // },
 ];
 
 export const getPerusahaan = (q) => {

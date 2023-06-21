@@ -6,7 +6,7 @@ import {
   numberCell,
   noSideBorders,
   totalCell,
-  dropdownCell,
+  dropDownCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
 
@@ -177,7 +177,7 @@ export function reactgridNewRow(id) {
       textCell("", "padding-left-lg"),
       nonEditable(textCell("", "padding-left-lg")),
       // nonEditable(textCell("", "padding-left-lg")),
-      dropdownCell({
+      dropDownCell({
         values: [{ label: "test", value: "test" }],
         isOpen: true,
       }),

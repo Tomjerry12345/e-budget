@@ -54,15 +54,7 @@ const HkPage = () => {
   ];
 
   const onFinish = (values) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-      periode,
-    } = values;
+    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
     // alert("test");
 
@@ -109,7 +101,7 @@ const HkPage = () => {
           "Asumsi unit beli",
           "Harga beli per unit",
           "Asumsi unit jual",
-          "Penjualan",
+          "Harga jual per unit",
         ]}
         disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
       />
