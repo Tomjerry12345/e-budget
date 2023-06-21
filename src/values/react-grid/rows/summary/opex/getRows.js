@@ -19,7 +19,7 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    list[0] += e["jan"] ?? 0;
+    list[0] += e["total"] ?? 0;
     list[1] += e["jan"] ?? 0;
     list[2] += e["feb"] ?? 0;
     list[3] += e["mar"] ?? 0;
@@ -29,9 +29,9 @@ const firstLoadTotalRow = (data) => {
     list[7] += e["jul"] ?? 0;
     list[8] += e["agu"] ?? 0;
     list[9] += e["sep"] ?? 0;
-    list[10] += e["okt" ?? 0];
-    list[11] += e["nov" ?? 0];
-    list[12] += e["des" ?? 0];
+    list[10] += e["okt"] ?? 0;
+    list[11] += e["nov"] ?? 0;
+    list[12] += e["des"] ?? 0;
   });
 
   return rowTotal("Total", list);
@@ -48,7 +48,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -100,7 +103,11 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    header,
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

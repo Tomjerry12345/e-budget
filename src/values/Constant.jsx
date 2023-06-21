@@ -77,8 +77,6 @@ export const allItemSummarySubMenu = [
     "Input By Pajak Parkir & Resto",
     "Input By Izin & Konsultan",
     "Input By Administrasi Lainnya",
-    "Input By Risiko",
-    "Input By Operasional Lainnya",
     "Input By Opex Direct",
     "Summary By Iklan & Advertensi",
     "Summary By Pemasaran Lainnya",
@@ -103,8 +101,6 @@ export const allItemSummarySubMenu = [
     "Summary By Pajak Parkir & Resto",
     "Summary By Izin & Konsultan",
     "Summary By Administrasi Lainnya",
-    "Summary By Risiko",
-    "Summary By Operasional Lainnya",
     "Summary Budget Opex",
   ],
   // 4 Capex
@@ -402,11 +398,6 @@ const superAdmin = (i) => {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
       const anotherMenuInput = [
-        {
-          description: "Input By Operasional Lainnya",
-          children: [],
-        },
-
         {
           description: "Input By Opex Direct",
           children: [],
