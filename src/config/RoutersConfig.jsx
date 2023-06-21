@@ -6,7 +6,6 @@ import App from "pages/App";
 import CapexSummary from "pages/main/capex/summary/CapexSummary";
 import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
 import MppSummary from "pages/main/mpp/summary/MppSummary";
-import CapexInputPage from "pages/main/capex/input/CapexInputPage";
 import MppInputPage from "pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "pages/main/others/summary/OthersSummary";
@@ -115,6 +114,8 @@ import AsuransiInputPage from "pages/main/opex/input/asuransi/AsuransiInputPage"
 import KeamananKebersihanInputPage from "pages/main/opex/input/keamanan-kebersihan/KeamananKebersihanInputPage";
 import InternetInputPage from "pages/main/opex/input/internet/InternetInputPage";
 import InternetSummaryPage from "pages/main/opex/summary/internet/InternetSummaryPage";
+import CapexInputPage from "pages/main/capex/input/input-capex/CapexInputPage";
+import NewAsetInputPage from "pages/main/capex/input/new-aset/NewAsetInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -260,6 +261,7 @@ const RoutersConfig = () => {
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
+            <Route path="input/new-aset" element={<NewAsetInputPage />} />
             <Route path="input/:item" element={<CapexInputPage />} />
             <Route path="summary/:item" element={<CapexSummary />} />
           </Route>

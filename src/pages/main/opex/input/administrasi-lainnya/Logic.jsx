@@ -391,7 +391,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 

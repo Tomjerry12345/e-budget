@@ -360,8 +360,20 @@ const Logic = () => {
       periode,
     } = codeFilter;
 
-    const index = dataGlobalRedux.indexImport;
-    const codeAccount = items.pemasaran[index]["code_account"];
+    const codeAccount = dataGlobalRedux.indexImport;
+    let index, category;
+
+    const checkItem = (items, cat) => {
+      items.forEach((e, i) => {
+        if (e.code_account === codeAccount) {
+          [index, category] = [i, cat];
+          return;
+        }
+      });
+    };
+
+    checkItem(items.pemasaran, "pemasaran");
+
     let file1;
 
     let formData = new FormData();
@@ -387,17 +399,22 @@ const Logic = () => {
       const { data } = await MainServices.get(url);
 
       const r = getRows({
+        header: getRootHeaderRow(),
         data: data.data,
-        titleTotal: "total harga",
       });
 
       const newRow = [...rows.pemasaran];
+
+      log("pemasaran", rows.pemasaran);
+      log({ index });
+
+      log({ newRow });
 
       newRow[index] = r;
 
       setRows({
         ...rows,
-        pemasaran: newRow,
+        [category]: newRow,
       });
 
       responseShow(res);

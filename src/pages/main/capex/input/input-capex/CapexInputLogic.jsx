@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
-import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { log, sumYearTotal } from "../../../../values/Utilitas";
+import { columnInputType1 } from "../../../../../component/table/utils/TypeColumn";
+import { val } from "../../../../../redux/action/action.reducer";
+import MainServices from "../../../../../services/MainServices";
+import { log, sumYearTotal } from "../../../../../values/Utilitas";
 
 const CapexInputLogic = () => {
   const date = new Date();
@@ -53,9 +53,7 @@ const CapexInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -168,9 +166,7 @@ const CapexInputLogic = () => {
         const itemparent = newData[x];
         const itemold = newData[x];
         itemparent[`${keysEdit}`] =
-          parseInt(itemparent[`${keysEdit}`]) +
-          parseInt(valuesEdit) -
-          parseInt(oldValue);
+          parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
 
         const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
 
@@ -207,7 +203,7 @@ const CapexInputLogic = () => {
       code_project,
       periode,
     } = codeFilter;
-    
+
     const year = i == 1 ? periode : parseInt(periode) + 1;
     const month = row[`${keysEdit}-month`];
     const uuid = row[`${keysEdit}-uuid`];
@@ -250,8 +246,7 @@ const CapexInputLogic = () => {
       const res = await MainServices.post("capex/import", formData);
 
       if (codeFilter !== undefined) {
-        const { code_company, code_dept, code_location, code_product } =
-          codeFilter;
+        const { code_company, code_dept, code_location, code_product } = codeFilter;
 
         getData(code_company, code_product, code_location, code_dept);
       }

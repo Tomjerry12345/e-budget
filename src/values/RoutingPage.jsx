@@ -64,6 +64,9 @@ export const routingOpex = {
   "Summary By Administrasi Lainnya": "administrasi-lainnya",
   "Summary Budget Opex": "opex",
 };
+export const routingCapex = {
+  "Input New Aset": "new-aset",
+};
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
   "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
@@ -89,6 +92,7 @@ export const routingMasterCoa = {
 export const allRouting = {
   "revenue-cogs": routingRevenue,
   opex: routingOpex,
+  capex: routingCapex,
   others: routingOthers,
   report: routingReport,
   coa: routingMasterCoa,

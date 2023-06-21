@@ -45,13 +45,19 @@ const Logic = () => {
 
   useEffect(() => {
     getDataAccount();
+    setRows({
+      ...rows,
+      pemasaran: [fullNewRow(getRootHeaderRow(), 1)],
+      // administrasi: listAdministrasi,
+    });
   }, []);
 
   const getDataAccount = async () => {
     try {
       const split = location.pathname.split("/");
       const q = split[split.length - 1];
-      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      // const res = await MainServices.get(`config/opex/byalias/${q}`);
+      const res = await MainServices.get(`config/opex/byalias/administrasi-lainnya`);
       log({ res });
       setItems(res.data.data[0]);
     } catch (e) {
@@ -202,6 +208,7 @@ const Logic = () => {
 
   const onFinish = (values) => {
     setLoading(true);
+
     onSetDataTable(values);
   };
 
@@ -224,121 +231,93 @@ const Logic = () => {
   };
 
   const onChangeTable = async (change, i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-
-    const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
-
-    const type = newRows[i][rowIndex].cells[columnIndex].type;
-
-    const length = newRows[i].length;
-
-    let value;
-
-    if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
-    } else {
-      newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-      value = change[0].newCell.value;
-
-      let manPower = newRows[i][rowIndex].cells[3].value;
-      let nilaiKontrak = newRows[i][rowIndex].cells[4].value;
-
-      let lamaKontrak = parseInt(newRows[i][rowIndex].cells[6].value);
-      let mulaiKontrak = parseInt(newRows[i][rowIndex].cells[7].value);
-
-      let totalKontrak = manPower * nilaiKontrak;
-
-      let grandTotal = 0;
-
-      const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 5) e.value = totalKontrak;
-        if (j >= mulaiKontrak + 8 && j <= lamaKontrak + 8) {
-          e.value = totalKontrak;
-          grandTotal += e.value;
-        }
-        return e;
-      });
-
-      newRows[i][rowIndex].cells[8].value = grandTotal;
-
-      newRows[i][rowIndex].cells = newCell;
-    }
-
-    try {
-      let formData = new FormData();
-
-      const id = change[0].rowId;
-      const column_id = change[0].columnId;
-      const isNewRow = newRows[i][rowIndex].newRow;
-
-      if (isNewRow !== undefined) {
-        const {
-          code_company,
-          code_dept,
-          code_location,
-          code_product,
-          code_project,
-          code_icp,
-          periode,
-        } = codeFilter;
-
-        const codeAccount =
-          category === "pemasaran"
-            ? items.pemasaran[i]["code_account"]
-            : items.administrasi[i]["code_account"];
-
-        formData.append("code_account", codeAccount);
-        formData.append("code_company", code_company);
-        formData.append("code_department", code_dept);
-        formData.append("code_location", code_location);
-        formData.append("code_product", code_product);
-        formData.append("code_project", code_project);
-        formData.append("code_icp", code_icp);
-        formData.append("year", periode);
-        formData.append("name", value);
-        formData.append("type", "keamanan");
-
-        const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-        log({ res });
-        const rowId = res.data.data.id;
-
-        newRows[i][rowIndex].rowId = rowId;
-      } else {
-        formData.append("id", id);
-        formData.append("column_id", column_id);
-        formData.append("value", value);
-        formData.append("type", "keamanan");
-
-        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-      }
-
-      delete newRows[i][rowIndex].newRow;
-
-      showNotif(200, "Sukses update data");
-
-      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
-        return e;
-      });
-
-      newRows[i][rowIndex].cells = newCell;
-
-      newRows[i][length - 1] = updateTotalRow(newRows[i]);
-
-      // log({ newRows });
-
-      setRows({
-        ...rows,
-        [category]: newRows,
-      });
-    } catch (e) {
-      log({ e });
-      // showNotif(400, e);
-    }
+    // const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+    // const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
+    // const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+    // const type = newRows[i][rowIndex].cells[columnIndex].type;
+    // const length = newRows[i].length;
+    // let value;
+    // if (type === "text") {
+    //   newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
+    //   value = change[0].newCell.text;
+    // } else {
+    //   newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
+    //   value = change[0].newCell.value;
+    //   let jumlah = newRows[i][rowIndex].cells[3].value;
+    //   let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+    //   let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
+    //   let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+    //   let totalAsuransi = jumlah * tarifAsuransi;
+    //   let grandTotal = 0;
+    //   const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+    //     if (j === 5) e.value = totalAsuransi;
+    //     if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
+    //       e.value = totalAsuransi;
+    //       grandTotal += e.value;
+    //     }
+    //     return e;
+    //   });
+    //   newRows[i][rowIndex].cells[8].value = grandTotal;
+    //   newRows[i][rowIndex].cells = newCell;
+    // }
+    // try {
+    //   let formData = new FormData();
+    //   const id = change[0].rowId;
+    //   const column_id = change[0].columnId;
+    //   const isNewRow = newRows[i][rowIndex].newRow;
+    //   if (isNewRow !== undefined) {
+    //     const {
+    //       code_company,
+    //       code_dept,
+    //       code_location,
+    //       code_product,
+    //       code_project,
+    //       code_icp,
+    //       periode,
+    //     } = codeFilter;
+    //     const codeAccount =
+    //       category === "pemasaran"
+    //         ? items.pemasaran[i]["code_account"]
+    //         : items.administrasi[i]["code_account"];
+    //     formData.append("code_account", codeAccount);
+    //     formData.append("code_company", code_company);
+    //     formData.append("code_department", code_dept);
+    //     formData.append("code_location", code_location);
+    //     formData.append("code_product", code_product);
+    //     formData.append("code_project", code_project);
+    //     formData.append("code_icp", code_icp);
+    //     formData.append("year", periode);
+    //     formData.append("name", value);
+    //     formData.append("type", "asuransi");
+    //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+    //     log({ res });
+    //     const rowId = res.data.data.id;
+    //     newRows[i][rowIndex].rowId = rowId;
+    //   } else {
+    //     formData.append("id", id);
+    //     formData.append("column_id", column_id);
+    //     formData.append("value", value);
+    //     formData.append("type", "asuransi");
+    //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+    //   }
+    //   delete newRows[i][rowIndex].newRow;
+    //   showNotif(200, "Sukses update data");
+    //   const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+    //     if (i >= 1 && i <= 5) e.nonEditable = false;
+    //     if (i >= 6 && i <= 8) e.nonEditable = false;
+    //     return e;
+    //   });
+    //   newRows[i][rowIndex].cells = newCell;
+    //   newRows[i][length - 1] = updateTotalRow(newRows[i]);
+    //   // log({ newRows });
+    //   setRows({
+    //     ...rows,
+    //     [category]: newRows,
+    //   });
+    // } catch (e) {
+    //   log({ e });
+    //   // showNotif(400, e);
+    // }
   };
 
   const onSuccess = () => {
@@ -396,7 +375,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
-    formData.append("type", "keamanan");
+    formData.append("type", "asuransi");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -409,7 +388,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+      const newRow = [...rows.pemasaran];
 
       newRow[index] = r;
 

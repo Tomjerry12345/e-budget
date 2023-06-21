@@ -12,13 +12,7 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
-export const chevronCell = (
-  text,
-  hasChildren,
-  parentId,
-  className = "",
-  style
-) => ({
+export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
   type: "chevron",
   text,
   isExpanded: false,
@@ -36,13 +30,7 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
   format: isFormat ? numberFormat : null,
 });
 
-export const dropDownCell = (
-  value,
-  selectedValue,
-  className = "",
-  style,
-  isOpen
-) => ({
+export const dropDownCell = (value, selectedValue, className = "", style, isOpen) => ({
   type: "dropdown",
   values: value,
   selectedValue,

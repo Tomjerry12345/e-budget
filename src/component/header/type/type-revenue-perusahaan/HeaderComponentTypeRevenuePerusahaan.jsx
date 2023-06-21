@@ -1,13 +1,6 @@
-import {
-  ArrowDownOutlined,
-  DeleteOutlined,
-  DownloadOutlined,
-  ToTopOutlined,
-} from "@ant-design/icons";
-import { Button, Layout, Menu, Modal, Typography } from "antd";
-import { getLocal } from "../../../../values/Utilitas";
-import FilterComponent from "../../../filter/FilterComponent";
-import ImportInputModal from "../../../modal/import/ImportInputModal";
+import { ArrowDownOutlined } from "@ant-design/icons";
+import { Button, Layout, Modal, Typography } from "antd";
+import ImportInputModal from "component/modal/import/ImportInputModal";
 import HeaderComponentTypeRevenuePerusahaanLogic from "./HeaderComponentTypeRevenueIPerusahaanLogic";
 import "../style.scss";
 
