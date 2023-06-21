@@ -242,18 +242,22 @@ const Logic = () => {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
 
-      let jumlah = newRows[i][rowIndex].cells[3].value;
+      let tarif = newRows[i][rowIndex].cells[3].value;
 
-      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[4].value);
-      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[5].value);
+      let lamaLangganan = parseInt(newRows[i][rowIndex].cells[4].value);
+      let mulaiLangganan = parseInt(newRows[i][rowIndex].cells[5].value);
 
       let grandTotal = 0;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j >= mulaiAsuransi + 6 && j <= lamaAsuransi + 6) {
-          e.value = jumlah;
+        if (mulaiLangganan < 1) mulaiLangganan = 1;
+        if (lamaLangganan > 12) lamaLangganan = 12;
+        if (j >= 6 && j <= mulaiLangganan + 6) e.value = 0;
+        if (j >= mulaiLangganan + 6 && j < lamaLangganan + 6 + mulaiLangganan) {
+          e.value = tarif;
           grandTotal += e.value;
         }
+        if (j >= lamaLangganan + 6 + mulaiLangganan && j <= 18) e.value = 0;
         return e;
       });
 
@@ -317,7 +321,6 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
         if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
         return e;
       });
 

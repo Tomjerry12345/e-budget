@@ -254,10 +254,14 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
         if (j === 5) e.value = totalAsuransi;
-        if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
+        if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+        if (lamaAsuransi > 12) lamaAsuransi = 12;
+        if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+        if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
           e.value = totalAsuransi;
           grandTotal += e.value;
         }
+        if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
         return e;
       });
 

@@ -255,10 +255,14 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
         if (j === 6) e.value = totalSewa;
-        if (j >= mulaiSewa + 10 && j <= lamaSewa + 10) {
+        if (mulaiSewa < 1) mulaiSewa = 1;
+        if (lamaSewa > 12) lamaSewa = 12;
+        if (j >= 10 && j <= mulaiSewa + 10) e.value = 0;
+        if (j >= mulaiSewa + 10 && j < lamaSewa + 10 + mulaiSewa) {
           e.value = totalSewa;
           grandTotal += e.value;
         }
+        if (j >= lamaSewa + 10 + mulaiSewa && j <= 22) e.value = 0;
         return e;
       });
 
