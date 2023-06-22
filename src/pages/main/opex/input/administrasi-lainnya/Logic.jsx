@@ -246,7 +246,7 @@ const Logic = () => {
       let jumlah = 0;
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j >= 1) jumlah += e.value;
+        if (j >= 1 && j <= 12) jumlah += e.value;
         if (j === 13) e.value = jumlah;
         return e;
       });

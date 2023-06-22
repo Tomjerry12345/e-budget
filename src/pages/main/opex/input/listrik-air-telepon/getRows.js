@@ -24,15 +24,21 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center font-bold")),
+      nonEditable(textCell("Aktivitas", "justify-content-center font-bold")),
+      nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
 
-      nonEditable(textCell("Total Pemakaian", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tarif", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Total Biaya", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Tipe Pembayaran", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
+      nonEditable(
+        textCell("Total Pemakaian", "justify-content-center font-bold")
+      ),
+      nonEditable(textCell("Tarif", "justify-content-center font-bold")),
+      nonEditable(textCell("Total Biaya", "justify-content-center font-bold")),
+      nonEditable(
+        textCell("Tipe Pembayaran", "justify-content-center font-bold")
+      ),
+      nonEditable(
+        rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)
+      ),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -87,7 +93,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);

@@ -25,30 +25,20 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(
-        textCell("Description", "justify-content-center text-lg font-bold")
-      ),
-      nonEditable(
-        textCell("Aktivitas", "justify-content-center text-lg font-bold")
-      ),
-      nonEditable(
-        textCell("Cost Driver", "justify-content-center text-lg font-bold")
-      ),
+      nonEditable(textCell("Description", "justify-content-center font-bold")),
+      nonEditable(textCell("Aktivitas", "justify-content-center font-bold")),
+      nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
 
+      nonEditable(textCell("Manpower", "justify-content-center font-bold")),
       nonEditable(
-        textCell("Manpower", "justify-content-center text-lg font-bold")
+        textCell("Nilai Kontrak", "justify-content-center font-bold")
       ),
       nonEditable(
-        textCell("Nilai Kontrak", "justify-content-center text-lg font-bold")
+        textCell("Total Kontrak", "justify-content-center font-bold")
       ),
+      nonEditable(textCell("Lama Kontrak", "justify-content-center font-bold")),
       nonEditable(
-        textCell("Total Kontrak", "justify-content-center text-lg font-bold")
-      ),
-      nonEditable(
-        textCell("Lama Kontrak", "justify-content-center text-lg font-bold")
-      ),
-      nonEditable(
-        textCell("Mulai Kontrak", "justify-content-center text-lg font-bold")
+        textCell("Mulai Kontrak", "justify-content-center font-bold")
       ),
       nonEditable(
         rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)

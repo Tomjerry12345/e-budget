@@ -1,4 +1,8 @@
-const { nonEditable, textCell, monthHeaderCell } = require("values/react-grid/cells");
+const {
+  nonEditable,
+  textCell,
+  monthHeaderCell,
+} = require("values/react-grid/cells");
 
 const ROW_HEIGHT = 32;
 const HEADER_ROOT_ROW_ID = "header-root";
@@ -7,8 +11,8 @@ const type1 = {
   rowId: HEADER_ROOT_ROW_ID,
   height: ROW_HEIGHT,
   cells: [
-    nonEditable(textCell("Code", "justify-content-center text-lg font-bold")),
-    nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+    nonEditable(textCell("Code", "justify-content-center font-bold")),
+    nonEditable(textCell("Description", "justify-content-center font-bold")),
 
     nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
     nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -31,8 +35,8 @@ const type2 = {
   rowId: HEADER_ROOT_ROW_ID,
   height: ROW_HEIGHT,
   cells: [
-    nonEditable(textCell("Code", "justify-content-center text-lg font-bold")),
-    nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+    nonEditable(textCell("Code", "justify-content-center font-bold")),
+    nonEditable(textCell("Description", "justify-content-center font-bold")),
 
     nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
     nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -70,9 +74,9 @@ const type3 = {
   rowId: HEADER_ROOT_ROW_ID,
   height: ROW_HEIGHT,
   cells: [
-    nonEditable(textCell("Potongan", "justify-content-center text-lg font-bold")),
-    nonEditable(textCell("Code", "justify-content-center text-lg font-bold")),
-    nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+    nonEditable(textCell("Potongan", "justify-content-center font-bold")),
+    nonEditable(textCell("Code", "justify-content-center font-bold")),
+    nonEditable(textCell("Description", "justify-content-center font-bold")),
 
     nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
     nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),

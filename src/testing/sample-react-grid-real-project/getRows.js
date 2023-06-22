@@ -18,7 +18,9 @@ const ROW_HEIGHT = 32;
 const HEADING_ROW_HEIGHT = 40;
 
 function sumGroupValues(values) {
-  return values.reduce((prev, curr) => (isNaN(prev) ? 0 : prev) + (isNaN(curr) ? 0 : curr));
+  return values.reduce(
+    (prev, curr) => (isNaN(prev) ? 0 : prev) + (isNaN(curr) ? 0 : curr)
+  );
 }
 
 function getRootHeaderRow() {
@@ -104,11 +106,15 @@ function getGroupRows(title, groups) {
           nonEditable(
             textCell(
               title,
-              `align-items-end text-lg font-bold text-${title === "Inflow" ? "green" : "blue"}`
+              `align-items-end font-bold text-${
+                title === "Inflow" ? "green" : "blue"
+              }`
             )
           )
         ),
-        ...months().map((_) => noSideBorders(bottomLine(nonEditable(emptyTextCell)))),
+        ...months().map((_) =>
+          noSideBorders(bottomLine(nonEditable(emptyTextCell)))
+        ),
         bottomLine(nonEditable(emptyTextCell)),
       ],
     },
@@ -118,14 +124,22 @@ function getGroupRows(title, groups) {
       cells: [
         nonEditable(textCell(title, "padding-left-lg")),
         ...year1.map((_, idx) => numberCell(year1[idx])),
-        nonEditable(showZero(numberCell(sumGroupValues(year1), "font-bold disabled"))),
+        nonEditable(
+          showZero(numberCell(sumGroupValues(year1), "font-bold disabled"))
+        ),
         ...year2.map((_, idx) => numberCell(year2[idx])),
-        nonEditable(showZero(numberCell(sumGroupValues(year2), "font-bold disabled"))),
+        nonEditable(
+          showZero(numberCell(sumGroupValues(year2), "font-bold disabled"))
+        ),
       ],
     })),
   ];
 }
 
 export function getRows({ data }) {
-  return [getRootHeaderRow(), getChildHeaderRow(), ...getGroupRows("Inflow", data)];
+  return [
+    getRootHeaderRow(),
+    getChildHeaderRow(),
+    ...getGroupRows("Inflow", data),
+  ];
 }
