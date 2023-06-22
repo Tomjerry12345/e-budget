@@ -66,6 +66,7 @@ const PajakKendaraanInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>

@@ -13,9 +13,7 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(
-        textCell("Location", "justify-content-center text-lg font-bold")
-      ),
+      nonEditable(textCell("Location", "justify-content-center font-bold")),
 
       nonEditable(monthHeaderCell(`Total`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
