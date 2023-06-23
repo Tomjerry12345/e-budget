@@ -16,7 +16,7 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-const ImportInputModal = ({ open, onCancel, value, onOk, file, loading }) => {
+const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, title }) => {
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
@@ -28,7 +28,7 @@ const ImportInputModal = ({ open, onCancel, value, onOk, file, loading }) => {
       footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />}
       onCancel={onCancel}
     >
-      <Title level={4}>Import</Title>
+      <Title level={4}>{title}</Title>
       <div className="root-content-upload">
         <div {...value.getRootProps()}>
           <Text className="title-upload">Upload Dokumen Template</Text>
@@ -51,6 +51,7 @@ const ImportInputModal = ({ open, onCancel, value, onOk, file, loading }) => {
             <Text className="txt-belum-mempunyai-template">
               Anda Belum Mempunyai Template ?
             </Text>
+            <Text>{file}</Text>
             <Button
               className="btn-download-template"
               type="primary"

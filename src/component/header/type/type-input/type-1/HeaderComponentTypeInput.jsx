@@ -4,6 +4,7 @@ import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
 
 import "../../style.scss";
 import ImportInputModal from "component/modal/import/ImportInputModal";
+import { useState } from "react";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -14,6 +15,9 @@ const ModalMenuMore = ({
   onClickImport,
   disabledImportExport,
   listMenuImport,
+  setModalTitle,
+  setFileName,
+  dynamicFile,
 }) => {
   return (
     <Modal
@@ -32,7 +36,9 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
+            setModalTitle('Import ' + e.description);
             onClickImport(e.code_account);
+            if (dynamicFile === true) setFileName(e.filename);
             onCancel();
           }}
         >
@@ -51,8 +57,12 @@ const HeaderComponentTypeInput = ({
   onChangeSelect,
   listMenuImport,
   className,
+  dynamicFile,
 }) => {
   const { value, func } = HeaderComponentTypeInputLogic();
+  const [modalTitle, setModalTitle] = useState('Import');
+  const [fileName, setFileName] = useState(null);
+
   return (
     <Header className="custom-header">
       {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
@@ -70,6 +80,9 @@ const HeaderComponentTypeInput = ({
         onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
         listMenuImport={listMenuImport}
+        setModalTitle={setModalTitle}
+        setFileName={setFileName}
+        dynamicFile={dynamicFile}
       />
 
       <ImportInputModal
@@ -77,9 +90,10 @@ const HeaderComponentTypeInput = ({
         onCancel={func.onCloseImport}
         value={accesFile}
         onOk={onUploadFile}
-        file={downloadFile}
+        file={dynamicFile === true ? fileName : downloadFile}
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
+        title={modalTitle}
       />
     </Header>
   );
