@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
@@ -20,6 +20,7 @@ const PenjualanHkPage = () => {
                 }}
               >
                 <Typography.Text>{e.description}</Typography.Text>
+                <Typography.Text>{value.testData}</Typography.Text>
               </div>
 
               <div
@@ -39,7 +40,10 @@ const PenjualanHkPage = () => {
                     columns={value.columns[e.description]}
                     stickyTopRows={1}
                     stickyLeftColumns={1}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
+                    enableRangeSelection
+                    onCellsChanged={(change) => {
+                      func.onChangeTable(change, i, e);
+                    }}
                   />
                 </div>
               </div>

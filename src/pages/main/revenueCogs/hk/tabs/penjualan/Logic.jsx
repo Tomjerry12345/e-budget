@@ -22,6 +22,7 @@ const Logic = () => {
 
   const columns = getColumns;
   const [rows, setRows] = useState();
+  const [testData, setTestData] = useState('coba');
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -152,6 +153,8 @@ const Logic = () => {
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
       const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
+
+      setTestData('row idx: ' + rowIndex + ', column idx: ' + columnIndex);
 
       const type = newRows[rowIndex].cells[columnIndex].type;
       const length = newRows.length;
@@ -320,6 +323,7 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
+      testData,
     },
     func: {
       onFinish,
