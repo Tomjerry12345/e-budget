@@ -31,6 +31,7 @@ const HeaderComponent = ({
   valueTreeData,
   listMenuTitleMore = ["", ""],
   listMenuImport = [],
+  dynamicFile = false
 }) => {
   let component;
 
@@ -44,6 +45,7 @@ const HeaderComponent = ({
         disabledImportExport={disabledImportExport}
         onChangeSelect={onChangeSelect}
         listMenuImport={listMenuImport}
+        dynamicFile={dynamicFile}
       />
     );
   } else if (type === "summary") {

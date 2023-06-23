@@ -23,6 +23,7 @@ const ListrikAirTeleponInputPage = () => {
         }
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
