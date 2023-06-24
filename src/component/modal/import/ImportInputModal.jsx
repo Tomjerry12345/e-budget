@@ -51,7 +51,6 @@ const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, title })
             <Text className="txt-belum-mempunyai-template">
               Anda Belum Mempunyai Template ?
             </Text>
-            <Text>{file}</Text>
             <Button
               className="btn-download-template"
               type="primary"
