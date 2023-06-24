@@ -393,6 +393,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
+    formData.append("type", "listrik");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
