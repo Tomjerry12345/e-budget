@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
-import { useSearchParams } from "react-router-dom";
 import { actionData } from "redux/data-global/data.reducer";
 import { urlRevenue } from "values/Constant";
 import {
@@ -22,7 +22,6 @@ const Logic = () => {
 
   const columns = getColumns;
   const [rows, setRows] = useState();
-  const [testData, setTestData] = useState('coba');
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -31,20 +30,16 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
-  let [searchParams] = useSearchParams();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { clicked } = useSelector((state) => state.revenue);
+  const { filterValues } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    if (searchParams.size > 0) {
-      log("searchParams", searchParams);
-      const currentParams = Object.fromEntries([...searchParams]);
-      log("currentParams", currentParams);
-      onFinish(currentParams);
+    if (filterValues !== null) {
+      onFinish(filterValues);
     }
-  }, [clicked]);
+  }, [filterValues]);
 
   useEffect(() => {
     if (importRedux.file !== null) {
@@ -74,12 +69,21 @@ const Logic = () => {
   const onSetDataTable = (values) => {
     const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
-    let fCodeCompany = code_company;
-    let fCodeLocation = code_location;
-    let fCodeDept = code_dept;
-    let fCodeIcp = code_icp;
-    let fCodeProject = code_project;
-    let fPeriode = periode;
+    let fCodeCompany = code_company.split(" ");
+    // let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
+
+    let fPeriode = periode.split(" ");
+
+    fCodeCompany = fCodeCompany[0];
+    fCodeLocation = fCodeLocation[0];
+    fCodeDept = fCodeDept[0];
+    fCodeIcp = fCodeIcp[0];
+    fCodeProject = fCodeProject[0];
+    fPeriode = fPeriode[0];
 
     getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
 
@@ -131,7 +135,6 @@ const Logic = () => {
         }
       })
     );
-    log({ listRows });
     dispatch(actionData({ sizeDataRevenue: 1 }));
     setRows(listRows);
   };
@@ -141,10 +144,6 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const stokAkhir = () => {};
-
-  const penjualan = () => {};
-
   const onChangeTable = async (change, i, item) => {
     const fullRows = [...rows];
     const newRows = [...rows[i].data];
@@ -153,8 +152,6 @@ const Logic = () => {
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
       const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
-
-      setTestData('row idx: ' + rowIndex + ', column idx: ' + columnIndex);
 
       const type = newRows[rowIndex].cells[columnIndex].type;
       const length = newRows.length;
@@ -204,8 +201,6 @@ const Logic = () => {
 
           const key = columns[item.description][columnIndex].columnId;
 
-          log({ key });
-
           if (isNewRow) {
             const { code_company, code_dept, code_location, code_project, code_icp, periode } =
               codeFilter;
@@ -233,7 +228,43 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          newRows[i][length - 1] = updateTotalRow(newRows);
+          newRows[length - 1] = updateTotalRow(newRows, item.description);
+          log("newRows", newRows);
+
+          // stok akhir
+          if (type === "number") {
+            if (i === 0 || i === 1 || i === 2) {
+              const lengthStockAkhir = fullRows[3].data.length;
+              const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
+              const hargaBeliPerUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+
+              log({ lengthStockAkhir });
+              log("item.description", item.description);
+              log("fullRows[3].data[lengthStockAkhir - 1]", fullRows[3].data);
+
+              fullRows[3].data[rowIndex].cells[columnIndex].value =
+                stockAwal + asumsiUnitBeli + hargaBeliPerUnit;
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 27) total2 += e.value;
+                if (j === 28) e.value = total2;
+                return e;
+              });
+
+              fullRows[3].data[rowIndex].cells = newCellStockAkhir;
+
+              fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
+                fullRows[3].data,
+                item.description
+              );
+            }
+          }
         } catch (e) {
           log({ e });
         }
@@ -264,12 +295,6 @@ const Logic = () => {
     const desc = dataGlobalRedux.indexImport;
     const index = rows.findIndex((item) => item.description === desc);
     const endpoint = rows[index].endpoint;
-
-    log({ file });
-    log({ desc });
-    log({ rows });
-    log({ index });
-    log({ endpoint });
 
     let formData = new FormData();
 
@@ -323,7 +348,6 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
-      testData,
     },
     func: {
       onFinish,

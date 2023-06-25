@@ -582,7 +582,7 @@ export const urlRevenue = [
   },
   {
     description: "Stok akhir",
-    endpoint: "detailrevenue/last-stock",
+    endpoint: "detailrevenue/last-stock/list",
     insert: false,
   },
   {

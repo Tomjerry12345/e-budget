@@ -1,4 +1,4 @@
-import { createArray, log } from "values/Utilitas";
+import { createArray } from "values/Utilitas";
 import { getGroupRows } from "./getGroupRows";
 import { firstLoadTotalRow } from "./firstLoadTotalRow";
 import { END_TOTAL, FIRST_TOTAL, TOTAL_DATA } from "./Constant";
@@ -13,14 +13,14 @@ export const updateTotalRow = (data, key) => {
   const list = newData
     .map((e) => {
       const values = [];
-      for (let i = FIRST_TOTAL[key]; i < END_TOTAL[key]; i++) {
+      for (let i = FIRST_TOTAL[key]; i < END_TOTAL(key); i++) {
         values.push(e.cells[i].value);
       }
+
       return values;
     })
     .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
 
-  log({ list });
   return rowTotal("Total", list, key);
 };
 
