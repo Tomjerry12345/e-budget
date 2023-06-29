@@ -17,7 +17,7 @@ const PajakParkirRestoInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/detail-opex.xlsx"
-        disabledImportExport={value.rows.pemasaran.length === 0}
+        disabledImportExport={value.rows.administrasi.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
         dynamicFile={true}
