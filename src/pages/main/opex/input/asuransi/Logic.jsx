@@ -3,8 +3,8 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import {
@@ -19,6 +19,8 @@ const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [openMDuration, setOpenMDuration] = useState(false);
+  const [openMStart, setOpenMStart] = useState(false);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -45,6 +47,7 @@ const Logic = () => {
 
   useEffect(() => {
     getDataAccount();
+    // eslint-disable-next-line
   }, []);
 
   const getDataAccount = async () => {
@@ -446,6 +449,8 @@ const Logic = () => {
       getInputProps,
       acceptedFiles,
       items,
+      openMDuration,
+      openMStart,
     },
     func: {
       onFinish,
@@ -453,6 +458,8 @@ const Logic = () => {
       setUploadSucces,
       onChangeTable,
       onTambahRow,
+      setOpenMDuration,
+      setOpenMStart,
     },
   };
 };

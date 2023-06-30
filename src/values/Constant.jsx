@@ -660,3 +660,111 @@ export const getPerusahaan = (q) => {
 
   return listPerusahaan[q];
 };
+
+export const getMonthDuration = () => {
+  const listDuration = [
+    {
+      value: 1,
+      text: "1",
+    },
+    {
+      value: 2,
+      text: "2",
+    },
+    {
+      value: 3,
+      text: "3",
+    },
+    {
+      value: 4,
+      text: "4",
+    },
+    {
+      value: 5,
+      text: "5",
+    },
+    {
+      value: 6,
+      text: "6",
+    },
+    {
+      value: 7,
+      text: "7",
+    },
+    {
+      value: 8,
+      text: "8",
+    },
+    {
+      value: 9,
+      text: "9",
+    },
+    {
+      value: 10,
+      text: "10",
+    },
+    {
+      value: 11,
+      text: "11",
+    },
+    {
+      value: 12,
+      text: "12",
+    },
+  ]
+  return listDuration
+}
+
+export const getMonthName = () => {
+  const listMonth = [
+    {
+      value: 1,
+      text: "Januari",
+    },
+    {
+      value: 2,
+      text: "Februari",
+    },
+    {
+      value: 3,
+      text: "Maret",
+    },
+    {
+      value: 4,
+      text: "April",
+    },
+    {
+      value: 5,
+      text: "Mei",
+    },
+    {
+      value: 6,
+      text: "Juni",
+    },
+    {
+      value: 7,
+      text: "Juli",
+    },
+    {
+      value: 8,
+      text: "Agustus",
+    },
+    {
+      value: 9,
+      text: "September",
+    },
+    {
+      value: 10,
+      text: "Oktober",
+    },
+    {
+      value: 11,
+      text: "November",
+    },
+    {
+      value: 12,
+      text: "Desember",
+    },
+  ]
+  return listMonth
+}
