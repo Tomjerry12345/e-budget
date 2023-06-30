@@ -4,10 +4,11 @@ import {
   monthHeaderCell,
   rootHeaderCell,
   numberCell,
-  noSideBorders,
   totalCell,
+  dropDownCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
+import { getMonthDuration, getMonthName } from "values/Constant";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -118,10 +119,11 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"] ?? 0, "padding-left-lg"),
-        numberCell(d["rates"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["amount"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["rates"] ?? 0, "padding-left-lg"),
         nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
         numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
+        // dropDownCell(getMonthDuration(), d["month_duration"], "padding-left-lg", null, ),
         numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
@@ -164,7 +166,19 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => {
+        if (i === 0) {
+          return totalCell(e, "", "beige", "", false);
+        } else if (i === 3 || i === 4) {
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        } else {
+          return totalCell(e, "", "beige", "");
+        }
+      }),
     ],
   };
 }
