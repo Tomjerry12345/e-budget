@@ -4,7 +4,6 @@ import {
   monthHeaderCell,
   rootHeaderCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
@@ -32,7 +31,9 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Satuan", "justify-content-center font-bold")),
       nonEditable(textCell("Tarif Sewa", "justify-content-center font-bold")),
       nonEditable(textCell("Total Sewa", "justify-content-center font-bold")),
-      nonEditable(textCell("Lama Sewa", "justify-content-center font-bold")),
+      nonEditable(
+        textCell("Lama Sewa (bulan)", "justify-content-center font-bold")
+      ),
       nonEditable(
         textCell("Tipe Pembayaran", "justify-content-center font-bold")
       ),
@@ -65,9 +66,6 @@ const firstLoadTotalRow = (data) => {
     list[1] += e["unit"] ?? 0;
     list[2] += e["rates"] ?? 0;
     list[3] += e["total"] ?? 0;
-    list[4] += e["month_duration"] ?? 0;
-    list[5] = "";
-    list[6] += e["month_start"] ?? 0;
     list[7] += e["grand_total"] ?? 0;
     list[8] += e["jan_rates"] ?? 0;
     list[9] += e["feb_rates"] ?? 0;
@@ -116,7 +114,7 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"], "padding-left-lg"),
+        numberCell(d["amount"], "padding-left-lg", null, false),
         numberCell(d["unit"], "padding-left-lg", null, false),
         numberCell(d["rates"], "padding-left-lg"),
         nonEditable(numberCell(d["total"], "padding-left-lg")),
@@ -166,7 +164,15 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => {
+        if (i >= 4 && i <= 6)
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        else return totalCell(e, "", "beige", "", !(i === 0 || i === 1));
+      }),
     ],
   };
 }
@@ -177,7 +183,6 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  list[5] = "";
   return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 
@@ -191,7 +196,7 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
 
-      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),

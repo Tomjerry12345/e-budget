@@ -4,7 +4,6 @@ import {
   monthHeaderCell,
   rootHeaderCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
@@ -112,7 +111,7 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"], "padding-left-lg") ?? 0,
+        numberCell(d["amount"], "padding-left-lg", null, false) ?? 0,
         numberCell(d["rates"], "padding-left-lg") ?? 0,
         nonEditable(numberCell(d["total"], "padding-left-lg")) ?? 0,
 
@@ -159,7 +158,15 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => {
+        if (i === 3)
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        else return totalCell(e, "", "beige", "", !(i === 0));
+      }),
     ],
   };
 }
@@ -183,7 +190,7 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
 
-      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
 

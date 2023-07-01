@@ -32,7 +32,7 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Jumlah", "justify-content-center font-bold")),
       nonEditable(textCell("Tarif Asuransi", "justify-content-center font-bold")),
       nonEditable(textCell("Total Asuransi", "justify-content-center font-bold")),
-      nonEditable(textCell("Lama Asuransi", "justify-content-center font-bold")),
+      nonEditable(textCell("Lama Asuransi (bulan)", "justify-content-center font-bold")),
       nonEditable(textCell("Mulai Asuransi", "justify-content-center font-bold")),
       nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
 
@@ -59,8 +59,6 @@ const firstLoadTotalRow = (data) => {
     list[0] += e["amount"] ?? 0;
     list[1] += e["rates"] ?? 0;
     list[2] += e["total"] ?? 0;
-    list[3] += e["month_duration"] ?? 0;
-    list[4] += e["month_start"] ?? 0;
     list[5] += e["grand_total"] ?? 0;
     list[6] += e["jan_rates"] ?? 0;
     list[7] += e["feb_rates"] ?? 0;
@@ -160,17 +158,13 @@ function rowTotal(titleTotal, total) {
       ),
 
       ...total.map((e, i) => {
-        if (i === 0) {
-          return totalCell(e, "", "beige", "", false);
-        } else if (i === 3 || i === 4) {
+        if (i === 3 || i === 4)
           return nonEditable(
             textCell("", "padding-left-lg", {
               background: "beige",
             })
           );
-        } else {
-          return totalCell(e, "", "beige", "");
-        }
+        else return totalCell(e, "", "beige", "", !(i === 0));
       }),
     ],
   };
@@ -182,7 +176,6 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  list[5] = "";
   return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 
