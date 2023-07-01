@@ -3,7 +3,6 @@ import {
   nonEditable,
   textCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 
@@ -22,7 +21,6 @@ const firstLoadTotalRow = (data) => {
     list[0] += e["unit"];
     list[1] += e["rates"];
     list[2] += e["total"];
-    list[3] += e["pay_period"];
     list[4] += e["jan_rates"];
     list[5] += e["feb_rates"];
     list[6] += e["mar_rates"];
@@ -69,7 +67,7 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
         numberCell(d["unit"], "padding-left-lg"),
-        numberCell(d["rates"], "padding-left-lg"),
+        numberCell(d["rates"], "padding-left-lg", null, false),
         nonEditable(numberCell(d["total"], "padding-left-lg")),
         numberCell(d["pay_period"], "padding-left-lg", null, false),
         nonEditable(numberCell(d["jan_rates"], "padding-left-lg")),
@@ -111,9 +109,15 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) =>
-        noSideBorders(totalCell(e, "", "beige", "", !(i === 3)))
-      ),
+      ...total.map((e, i) => {
+        if (i === 1 || i === 3)
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        else return totalCell(e, "", "beige", "");
+      }),
     ],
   };
 }
@@ -141,7 +145,7 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
 

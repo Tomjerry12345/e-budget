@@ -4,7 +4,6 @@ import {
   monthHeaderCell,
   rootHeaderCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
@@ -32,7 +31,7 @@ export function getRootHeaderRow() {
         textCell("Tarif Per bulan", "justify-content-center font-bold")
       ),
       nonEditable(
-        textCell("Lama Langganan", "justify-content-center font-bold")
+        textCell("Lama Langganan (bulan)", "justify-content-center font-bold")
       ),
       nonEditable(
         textCell("Mulai Langganan", "justify-content-center font-bold")
@@ -66,8 +65,6 @@ const firstLoadTotalRow = (data) => {
 
   data.forEach((e) => {
     list[0] += e["rates"] ?? 0;
-    list[1] += e["month_duration"] ?? 0;
-    list[2] += e["month_start"] ?? 0;
     list[3] += e["grand_total"] ?? 0;
     list[4] += e["jan_rates"] ?? 0;
     list[5] += e["feb_rates"] ?? 0;
@@ -160,9 +157,15 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) =>
-        noSideBorders(totalCell(e, "", "beige", "", !(i === 1 || i === 2)))
-      ),
+      ...total.map((e, i) => {
+        if (i === 1 || i === 2)
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        else return totalCell(e, "", "beige", "");
+      }),
     ],
   };
 }
@@ -173,7 +176,6 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  list[5] = "";
   return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 

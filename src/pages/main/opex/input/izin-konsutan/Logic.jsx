@@ -3,17 +3,16 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
-import {
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
+import { getColumns } from "values/react-grid/rows/input/opex/template-2/getColumns";
+import { actionData } from "redux/data-global/data.reducer";
+import { 
+  getRootHeaderRow, 
   fullNewRow,
   getRows,
   reactgridNewRow,
-  updateTotalRow,
-} from "values/react-grid/rows/input/opex/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/input/opex/template-2/getColumns";
-import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow } from "./getRows";
+  updateTotalRow, } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -38,7 +37,6 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
@@ -46,6 +44,7 @@ const Logic = () => {
 
   useEffect(() => {
     getDataAccount();
+    // eslint-disable-next-line
   }, []);
 
   const getDataAccount = async () => {

@@ -9,7 +9,6 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 
 const ROW_HEIGHT = 32;
 
-const COLOR_1 = "#107C41";
 const COLOR_2 = "#107C41";
 
 export function getRootHeaderRow() {
@@ -21,12 +20,12 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Aktivitas", "justify-content-center font-bold")),
       nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
       nonEditable(textCell("Satuan", "justify-content-center font-bold")),
-      nonEditable(textCell("Tarif", "justify-content-center font-bold")),
+      nonEditable(textCell("Tarif (%)", "justify-content-center font-bold")),
       nonEditable(
         rootHeaderCell("Grand Total", "justify-content-center", COLOR_2)
       ),
       nonEditable(
-        textCell("Periode Pembayaran", "justify-content-center font-bold")
+        textCell("Periode Bayar", "justify-content-center font-bold")
       ),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),

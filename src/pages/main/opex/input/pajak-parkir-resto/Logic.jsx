@@ -3,17 +3,16 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { actionData } from "redux/data-global/data.reducer";
 import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
-import {
+import { 
+  getRootHeaderRow,
   fullNewRow,
   getRows,
   reactgridNewRow,
-  updateTotalRow,
-} from "values/react-grid/rows/input/opex/template-1/getRows";
-import { getRootHeaderRow } from "./getRows";
+  updateTotalRow, } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -45,6 +44,7 @@ const Logic = () => {
 
   useEffect(() => {
     getDataAccount();
+    // eslint-disable-next-line
   }, []);
 
   const getDataAccount = async () => {
