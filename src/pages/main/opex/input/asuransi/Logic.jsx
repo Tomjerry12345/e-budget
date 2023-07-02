@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
@@ -21,6 +21,8 @@ const Logic = () => {
   const [uploadSucces, setUploadSucces] = useState(null);
   const [openMDuration, setOpenMDuration] = useState(false);
   const [openMStart, setOpenMStart] = useState(false);
+
+  const isFunctionExecuted = useRef(0);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -226,126 +228,284 @@ const Logic = () => {
     showNotif(200, "Sukses tambah row");
   };
 
+  // const onChangeTable = async (change, i, category) => {
+  //   const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+
+  //   const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
+  //   const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+
+  //   const type = newRows[i][rowIndex].cells[columnIndex].type;
+
+  //   const length = newRows[i].length;
+
+  //   log("change[0].newCell", change[0].newCell);
+
+  //   let value;
+
+  //   if (type === "text") {
+  //     newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
+  //     value = change[0].newCell.text;
+  //   } else {
+  //     if (type === "dropdown") {
+  //       newRows[i][rowIndex].cells[columnIndex].isOpen = change[0].newCell.isOpen;
+
+  //       setRows({
+  //         ...rows,
+  //         [category]: newRows,
+  //       });
+
+  //       return;
+  //     }
+
+  //     // newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
+  //     // value = change[0].newCell.value;
+
+  //     // let jumlah = newRows[i][rowIndex].cells[3].value;
+  //     // let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+
+  //     // let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
+  //     // let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+
+  //     // let totalAsuransi = jumlah * tarifAsuransi;
+
+  //     // let grandTotal = 0;
+
+  //     // const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+  //     //   if (j === 5) e.value = totalAsuransi;
+  //     //   if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+  //     //   if (lamaAsuransi > 12) lamaAsuransi = 12;
+  //     //   if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+  //     //   if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+  //     //     e.value = totalAsuransi;
+  //     //     grandTotal += e.value;
+  //     //   }
+  //     //   if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+  //     //   return e;
+  //     // });
+
+  //     // newRows[i][rowIndex].cells[8].value = grandTotal;
+
+  //     // newRows[i][rowIndex].cells = newCell;
+  //   }
+
+  //   // try {
+  //   //   let formData = new FormData();
+
+  //   //   const id = change[0].rowId;
+  //   //   const column_id = change[0].columnId;
+  //   //   const isNewRow = newRows[i][rowIndex].newRow;
+
+  //   //   if (isNewRow !== undefined) {
+  //   //     const {
+  //   //       code_company,
+  //   //       code_dept,
+  //   //       code_location,
+  //   //       code_product,
+  //   //       code_project,
+  //   //       code_icp,
+  //   //       periode,
+  //   //     } = codeFilter;
+
+  //   //     const codeAccount =
+  //   //       category === "pemasaran"
+  //   //         ? items.pemasaran[i]["code_account"]
+  //   //         : items.administrasi[i]["code_account"];
+
+  //   //     formData.append("code_account", codeAccount);
+  //   //     formData.append("code_company", code_company);
+  //   //     formData.append("code_department", code_dept);
+  //   //     formData.append("code_location", code_location);
+  //   //     formData.append("code_product", code_product);
+  //   //     formData.append("code_project", code_project);
+  //   //     formData.append("code_icp", code_icp);
+  //   //     formData.append("year", periode);
+  //   //     formData.append("name", value);
+  //   //     formData.append("type", "asuransi");
+
+  //   //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+
+  //   //     log({ res });
+  //   //     const rowId = res.data.data.id;
+
+  //   //     newRows[i][rowIndex].rowId = rowId;
+  //   //   } else {
+  //   //     formData.append("id", id);
+  //   //     formData.append("column_id", column_id);
+  //   //     formData.append("value", value);
+  //   //     formData.append("type", "asuransi");
+
+  //   //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+  //   //   }
+
+  //   //   delete newRows[i][rowIndex].newRow;
+
+  //   //   showNotif(200, "Sukses update data");
+
+  //   //   const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+  //   //     if (i >= 1 && i <= 5) e.nonEditable = false;
+  //   //     if (i >= 6 && i <= 8) e.nonEditable = false;
+  //   //     return e;
+  //   //   });
+
+  //   //   newRows[i][rowIndex].cells = newCell;
+
+  //   //   newRows[i][length - 1] = updateTotalRow(newRows[i]);
+
+  //   //   // log({ newRows });
+
+  //   //   setRows({
+  //   //     ...rows,
+  //   //     [category]: newRows,
+  //   //   });
+  //   // } catch (e) {
+  //   //   log({ e });
+  //   //   // showNotif(400, e);
+  //   // }
+  // };
+
   const onChangeTable = async (change, i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+    let isChange;
 
-    const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+    isFunctionExecuted.current++;
 
-    const type = newRows[i][rowIndex].cells[columnIndex].type;
+    if (isFunctionExecuted.current >= 3) {
+      for (const c of change) {
+        const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+        const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
-    const length = newRows[i].length;
+        const type = c.newCell.type;
 
-    let value;
+        const length = newRows[i].length;
 
-    if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
-    } else {
-      newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-      value = change[0].newCell.value;
+        let value;
 
-      let jumlah = newRows[i][rowIndex].cells[3].value;
-      let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+        if (type === "text") {
+          newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
+          isChange = true;
+        } else if (type === "dropdown") {
+          const isOpen = c.newCell.isOpen;
+          newRows[i][rowIndex].cells[columnIndex].isOpen = isOpen;
 
-      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+          isChange = !isOpen;
 
-      let totalAsuransi = jumlah * tarifAsuransi;
+          setRows({
+            ...rows,
+            [category]: newRows,
+          });
 
-      let grandTotal = 0;
+          log({ isOpen });
+        } else if (type === "number") {
+          value = c.newCell.value;
+          newRows[i][rowIndex].cells[columnIndex].value = value;
 
-      const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 5) e.value = totalAsuransi;
-        if (mulaiAsuransi < 1) mulaiAsuransi = 1;
-        if (lamaAsuransi > 12) lamaAsuransi = 12;
-        if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
-        if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
-          e.value = totalAsuransi;
-          grandTotal += e.value;
+          let jumlah = newRows[i][rowIndex].cells[3].value;
+          let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+
+          let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
+          let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+
+          let totalAsuransi = jumlah * tarifAsuransi;
+
+          let grandTotal = 0;
+
+          const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+            if (j === 5) e.value = totalAsuransi;
+            if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+            if (lamaAsuransi > 12) lamaAsuransi = 12;
+            if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+            if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+              e.value = totalAsuransi;
+              grandTotal += e.value;
+            }
+            if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+            return e;
+          });
+
+          newRows[i][rowIndex].cells[8].value = grandTotal;
+          newRows[i][rowIndex].cells = newCell;
+
+          isChange = true;
         }
-        if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
-        return e;
-      });
 
-      newRows[i][rowIndex].cells[8].value = grandTotal;
+        if (isChange) {
+          try {
+            let formData = new FormData();
 
-      newRows[i][rowIndex].cells = newCell;
-    }
+            const id = c.rowId;
+            const column_id = c.columnId;
+            const isNewRow = newRows[i][rowIndex].newRow;
 
-    try {
-      let formData = new FormData();
+            if (isNewRow !== undefined) {
+              const {
+                code_company,
+                code_dept,
+                code_location,
+                code_product,
+                code_project,
+                code_icp,
+                periode,
+              } = codeFilter;
 
-      const id = change[0].rowId;
-      const column_id = change[0].columnId;
-      const isNewRow = newRows[i][rowIndex].newRow;
+              const codeAccount = items.pemasaran[i]["code_account"];
 
-      if (isNewRow !== undefined) {
-        const {
-          code_company,
-          code_dept,
-          code_location,
-          code_product,
-          code_project,
-          code_icp,
-          periode,
-        } = codeFilter;
+              formData.append("code_account", codeAccount);
+              formData.append("code_company", code_company);
+              formData.append("code_department", code_dept);
+              formData.append("code_location", code_location);
+              formData.append("code_product", code_product);
+              formData.append("code_project", code_project);
+              formData.append("code_icp", code_icp);
+              formData.append("year", periode);
+              formData.append("name", value);
 
-        const codeAccount =
-          category === "pemasaran"
-            ? items.pemasaran[i]["code_account"]
-            : items.administrasi[i]["code_account"];
+              const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
-        formData.append("code_account", codeAccount);
-        formData.append("code_company", code_company);
-        formData.append("code_department", code_dept);
-        formData.append("code_location", code_location);
-        formData.append("code_product", code_product);
-        formData.append("code_project", code_project);
-        formData.append("code_icp", code_icp);
-        formData.append("year", periode);
-        formData.append("name", value);
-        formData.append("type", "asuransi");
+              log({ res });
+              const rowId = res.data.data.id;
 
-        const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+              newRows[i][rowIndex].rowId = rowId;
+            } else {
+              formData.append("id", id);
+              formData.append("column_id", column_id);
+              formData.append("value", value);
 
-        log({ res });
-        const rowId = res.data.data.id;
+              await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+            }
 
-        newRows[i][rowIndex].rowId = rowId;
-      } else {
-        formData.append("id", id);
-        formData.append("column_id", column_id);
-        formData.append("value", value);
-        formData.append("type", "asuransi");
+            delete newRows[i][rowIndex].newRow;
+            const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+              if (i >= 1 && i <= 5) e.nonEditable = false;
+              if (i >= 6 && i <= 8) e.nonEditable = false;
+              return e;
+            });
 
-        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+            newRows[i][rowIndex].cells = newCell;
+
+            newRows[i][length - 1] = updateTotalRow(newRows[i]);
+          } catch (e) {
+            log({ e });
+          }
+        }
       }
 
-      delete newRows[i][rowIndex].newRow;
+      log({ isChange });
 
-      showNotif(200, "Sukses update data");
+      if (isChange) {
+        showNotif(200, "Sukses update data");
 
-      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-        if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
-        return e;
-      });
+        setRows({
+          ...rows,
+          [category]: newRows,
+        });
+      }
 
-      newRows[i][rowIndex].cells = newCell;
-
-      newRows[i][length - 1] = updateTotalRow(newRows[i]);
-
-      // log({ newRows });
-
-      setRows({
-        ...rows,
-        [category]: newRows,
-      });
-    } catch (e) {
-      log({ e });
-      // showNotif(400, e);
+      isFunctionExecuted.current = 0;
     }
+
+    log("test", isFunctionExecuted.current);
+    return;
   };
 
   const onSuccess = () => {

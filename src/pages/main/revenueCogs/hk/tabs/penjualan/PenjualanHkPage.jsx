@@ -20,7 +20,6 @@ const PenjualanHkPage = () => {
                 }}
               >
                 <Typography.Text>{e.description}</Typography.Text>
-                <Typography.Text>{value.testData}</Typography.Text>
               </div>
 
               <div

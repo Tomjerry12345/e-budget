@@ -45,13 +45,13 @@ export const importSlice = createSlice({
 export const { actionImport, resetDataActionImport } = importSlice.actions;
 
 export const revenueSlice = createSlice({
-  name: "notif",
+  name: "revenue",
   initialState: {
-    clicked: false,
+    filterValues: null,
   },
   reducers: {
     actionRevenue: (state, action) => {
-      state.clicked = action.payload.clicked;
+      state.filterValues = action.payload.filterValues;
     },
   },
 });

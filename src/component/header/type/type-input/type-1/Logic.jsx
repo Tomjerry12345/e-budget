@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { allRouting } from "values/RoutingPage";
 
-const HeaderComponentTypeInputLogic = () => {
+const Logic = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const importRedux = useSelector((state) => state.import);
@@ -70,4 +70,4 @@ const HeaderComponentTypeInputLogic = () => {
   };
 };
 
-export default HeaderComponentTypeInputLogic;
+export default Logic;

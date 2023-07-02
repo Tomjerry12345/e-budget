@@ -30,21 +30,11 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
 
       nonEditable(textCell("Jumlah", "justify-content-center font-bold")),
-      nonEditable(
-        textCell("Tarif Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Total Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Lama Asuransi (bulan)", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Mulai Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)
-      ),
+      nonEditable(textCell("Tarif Asuransi", "justify-content-center font-bold")),
+      nonEditable(textCell("Total Asuransi", "justify-content-center font-bold")),
+      nonEditable(textCell("Lama Asuransi (bulan)", "justify-content-center font-bold")),
+      nonEditable(textCell("Mulai Asuransi", "justify-content-center font-bold")),
+      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -98,10 +88,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   log({ list });
   return rowTotal("Total", list);
@@ -109,7 +96,7 @@ export const updateTotalRow = (data) => {
 
 function getGroupRows(groups) {
   return [
-    ...groups.map((d) => ({
+    ...groups.map((d, i) => ({
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
@@ -120,8 +107,14 @@ function getGroupRows(groups) {
         numberCell(d["amount"] ?? 0, "padding-left-lg", null, false),
         numberCell(d["rates"] ?? 0, "padding-left-lg"),
         nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
-        numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
-        // dropDownCell(getMonthDuration(), d["month_duration"], "padding-left-lg", null, ),
+        // numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
+        dropDownCell(
+          getMonthDuration(),
+          d["month_duration"] ?? 0,
+          "padding-left-lg",
+          null,
+          false
+        ),
         numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 

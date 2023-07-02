@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { fullNewRow, getRows } from "values/react-grid/rows/summary/opex/getRows";
 import { getColumns } from "values/react-grid/rows/summary/opex/getColumns";
 import { getRootHeaderRow } from "./getRows";
 
 const Logic = () => {
   const [loading, setLoading] = useState(false);
-  const [uploadSucces, setUploadSucces] = useState(null);
+  const [linkExport, setLinkExport] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -19,12 +18,6 @@ const Logic = () => {
   const [rows, setRows] = useState({
     pemasaran: [],
     administrasi: [],
-  });
-
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-    },
   });
 
   const location = useLocation();
@@ -126,11 +119,16 @@ const Logic = () => {
         })
       );
     }
+
     setRows({
       ...rows,
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
+
+    setLinkExport(
+      `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
+    );
   };
 
   const onFinish = (values) => {
@@ -143,15 +141,11 @@ const Logic = () => {
       columns,
       rows,
       loading,
-      uploadSucces,
-      getRootProps,
-      getInputProps,
-      acceptedFiles,
       items,
+      linkExport,
     },
     func: {
       onFinish,
-      setUploadSucces,
     },
   };
 };

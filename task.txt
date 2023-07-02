@@ -5,12 +5,26 @@ version: v1.4.6 ✅ ❌
 - ubah semua name jadi description ❌
 - setiap bulan ada potongan nya di potongan penjualan ❌
 
-- administrasi lainnya ✅
-- surat kabar ✅
-- listrik air dan telepon ✅
-- sewa ✅
-- internet ❌
-- asuransi ✅
+- modal import kasi jelas apa yg mau diimport
+- filename setiap import mau dibuat berbeda
+- pajak parkir tdk brfungsi tombol import
+- import internet
+
+import 
+1. input listrik air, telpon ( datanya tidak tampil setelah di upload dan klik tampilkan)  
+tapi di summary tampil ( contoh filter BK )
+2. Keamanan dan kebersihan data tidak tampil begitupun summary nya 
+( cek template nya  kemungkinan salah ) 
+3. By internet (template ) 
+4. BBM toll dan parkir tdk tampil datanya ✅
+5. input pajak hasil import total di summary beda dengan yang diinput ✅
+6.input pajak parkir resto tombol importnya tidak bisa di klik   --- evidence di bawah
+7.https://abc-dev.kallagroup.co.id/main/opex/input/iklan-advertensi  --- eror
+8. input asuransi (cek templatenya )
+9. izin dan konsultan ( import bisa tapi hasilnya tidak tampil di summary )
+10. cek total by kontraktual
+
+11.pada form import label disamakan dgn nama file template yg didowload
 
 adminhk:
     menu revenue yang tampil pt hk, input sama summary

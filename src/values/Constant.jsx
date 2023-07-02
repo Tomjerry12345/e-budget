@@ -582,7 +582,7 @@ export const urlRevenue = [
   },
   {
     description: "Stok akhir",
-    endpoint: "detailrevenue/last-stock",
+    endpoint: "detailrevenue/last-stock/list",
     insert: false,
   },
   {
@@ -664,107 +664,107 @@ export const getPerusahaan = (q) => {
 export const getMonthDuration = () => {
   const listDuration = [
     {
-      value: 1,
-      text: "1",
+      value: "1",
+      label: "1",
     },
     {
-      value: 2,
-      text: "2",
+      value: "2",
+      label: "2",
     },
     {
-      value: 3,
-      text: "3",
+      value: "3",
+      label: "3",
     },
     {
-      value: 4,
-      text: "4",
+      value: "4",
+      label: "4",
     },
     {
-      value: 5,
-      text: "5",
+      value: "5",
+      label: "5",
     },
     {
-      value: 6,
-      text: "6",
+      value: "6",
+      label: "6",
     },
     {
-      value: 7,
-      text: "7",
+      value: "7",
+      label: "7",
     },
     {
-      value: 8,
-      text: "8",
+      value: "8",
+      label: "8",
     },
     {
-      value: 9,
-      text: "9",
+      value: "9",
+      label: "9",
     },
     {
-      value: 10,
-      text: "10",
+      value: "10",
+      label: "10",
     },
     {
-      value: 11,
-      text: "11",
+      value: "11",
+      label: "11",
     },
     {
-      value: 12,
-      text: "12",
+      value: "12",
+      label: "12",
     },
-  ]
-  return listDuration
-}
+  ];
+  return listDuration;
+};
 
 export const getMonthName = () => {
   const listMonth = [
     {
       value: 1,
-      text: "Januari",
+      label: "Januari",
     },
     {
       value: 2,
-      text: "Februari",
+      label: "Februari",
     },
     {
       value: 3,
-      text: "Maret",
+      label: "Maret",
     },
     {
       value: 4,
-      text: "April",
+      label: "April",
     },
     {
       value: 5,
-      text: "Mei",
+      label: "Mei",
     },
     {
       value: 6,
-      text: "Juni",
+      label: "Juni",
     },
     {
       value: 7,
-      text: "Juli",
+      label: "Juli",
     },
     {
       value: 8,
-      text: "Agustus",
+      label: "Agustus",
     },
     {
       value: 9,
-      text: "September",
+      label: "September",
     },
     {
       value: 10,
-      text: "Oktober",
+      label: "Oktober",
     },
     {
       value: 11,
-      text: "November",
+      label: "November",
     },
     {
       value: 12,
-      text: "Desember",
+      label: "Desember",
     },
-  ]
-  return listMonth
-}
+  ];
+  return listMonth;
+};
