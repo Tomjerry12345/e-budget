@@ -5,10 +5,8 @@ import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
 const HeaderComponent = ({
-  className = "",
   onFinish,
   type,
-  onChangeFilter,
   onChangeLoadingUpload,
   onUploadFile,
   onUploadFile2,
@@ -16,14 +14,8 @@ const HeaderComponent = ({
   accesFile = null,
   downloadFile,
   downloadFile2,
-  disabledImportExport,
   onChangeSelect,
   onExport,
-  form,
-  codeCompany,
-  isCodeProject = false,
-  disabled = false,
-  keyCodeProject,
   inputSearch,
   onTambahData,
   inputTambah,
@@ -31,7 +23,11 @@ const HeaderComponent = ({
   valueTreeData,
   listMenuTitleMore = ["", ""],
   listMenuImport = [],
-  dynamicFile = false
+  disabledImportExport,
+  listMenu = [],
+  disabledMenu,
+  linkExport,
+  dynamicFile = false,
 }) => {
   let component;
 
@@ -51,14 +47,9 @@ const HeaderComponent = ({
   } else if (type === "summary") {
     component = (
       <HeaderComponentTypeSummary
-        onFinish={onFinish}
-        onChangeFilter={onChangeFilter}
-        onUploadFile={onUploadFile}
-        accesFile={accesFile}
-        downloadFile={downloadFile}
-        disabledImportExport={disabledImportExport}
-        onExport={onExport}
-        form={form}
+        listMenu={listMenu}
+        disabledMenu={disabledMenu}
+        linkExport={linkExport}
       />
     );
   } else if (type === "revenue-perusahaan") {

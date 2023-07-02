@@ -1,18 +1,14 @@
 import { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
-import { resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
 import { fullNewRow, getRows } from "values/react-grid/rows/summary/opex/getRows";
 import { getColumns } from "values/react-grid/rows/summary/opex/getColumns";
-import { actionData } from "redux/data-global/data.reducer";
 import { getRootHeaderRow } from "./getRows";
 
 const Logic = () => {
   const [loading, setLoading] = useState(false);
-  const [uploadSucces, setUploadSucces] = useState(null);
+  const [linkExport, setLinkExport] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -24,16 +20,7 @@ const Logic = () => {
     administrasi: [],
   });
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-    },
-  });
-
-  const dispatch = useDispatch();
   const location = useLocation();
-
-  const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailopex/template4";
 
@@ -51,25 +38,6 @@ const Logic = () => {
     } catch (e) {
       log({ e });
     }
-  };
-
-  const responseShow = (res) => {
-    dispatch(
-      val({
-        status: res.data.responseCode,
-        message: res.data.responseDescription,
-      })
-    );
-    dispatch(actionData({ loading: false }));
-  };
-
-  const showNotif = (status, message) => {
-    dispatch(
-      val({
-        status: status,
-        message: message,
-      })
-    );
   };
 
   const onSetDataTable = (values) => {
@@ -156,6 +124,10 @@ const Logic = () => {
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
+
+    setLinkExport(
+      `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
+    );
   };
 
   const onFinish = (values) => {
@@ -163,25 +135,16 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const onSuccess = () => {
-    dispatch(resetDataActionImport());
-    acceptedFiles.length = 0;
-  };
-
   return {
     value: {
       columns,
       rows,
       loading,
-      uploadSucces,
-      getRootProps,
-      getInputProps,
-      acceptedFiles,
       items,
+      linkExport,
     },
     func: {
       onFinish,
-      setUploadSucces,
     },
   };
 };

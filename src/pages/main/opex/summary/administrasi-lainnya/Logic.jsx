@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useDropzone } from "react-dropzone";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
@@ -9,7 +8,7 @@ import { getRootHeaderRow } from "./getRows";
 
 const Logic = () => {
   const [loading, setLoading] = useState(false);
-  const [uploadSucces, setUploadSucces] = useState(null);
+  const [linkExport, setLinkExport] = useState(null);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -21,18 +20,13 @@ const Logic = () => {
     administrasi: [],
   });
 
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
-    },
-  });
-
   const location = useLocation();
 
   const ENDPOINT_URL = "detailopex/template3";
 
   useEffect(() => {
     getDataAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataAccount = async () => {
@@ -40,8 +34,10 @@ const Logic = () => {
       const split = location.pathname.split("/");
       const q = split[split.length - 1];
       const res = await MainServices.get(`config/opex/byalias/${q}`);
-      log({ res });
-      setItems(res.data.data[0]);
+
+      const data = res.data.data[0];
+      log({ data });
+      setItems(data);
     } catch (e) {
       log({ e });
     }
@@ -139,6 +135,10 @@ const Logic = () => {
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
+
+    setLinkExport(
+      `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
+    );
   };
 
   const onFinish = (values) => {
@@ -151,15 +151,11 @@ const Logic = () => {
       columns,
       rows,
       loading,
-      uploadSucces,
-      getRootProps,
-      getInputProps,
-      acceptedFiles,
       items,
+      linkExport,
     },
     func: {
       onFinish,
-      setUploadSucces,
     },
   };
 };

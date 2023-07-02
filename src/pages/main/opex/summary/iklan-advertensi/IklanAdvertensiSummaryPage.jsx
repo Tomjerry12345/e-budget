@@ -12,12 +12,10 @@ const IklanAdvertensiSummaryPage = () => {
     <>
       <HeaderComponent
         type="summary"
-        onUploadFile={func.onUploadFile}
-        accesFile={value}
-        downloadFile="file/detail-opex.xlsx"
-        onChangeSelect={func.onChangeTahun}
-        listMenuImport={["export"]}
-        onChangeFilter={() => {}}
+        disabledImportExport={value.rows.pemasaran.length === 0}
+        listMenu={value.items.pemasaran}
+        disabledMenu={value.rows.pemasaran.length === 0}
+        linkExport={value.linkExport}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeLocation={false} />

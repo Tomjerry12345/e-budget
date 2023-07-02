@@ -1,6 +1,6 @@
 import { ArrowDownOutlined } from "@ant-design/icons";
 import { Button, Layout, Modal, Typography } from "antd";
-import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
+import Logic from "./Logic";
 
 import "../../style.scss";
 import ImportInputModal from "component/modal/import/ImportInputModal";
@@ -36,7 +36,7 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
-            setModalTitle('Import ' + e.description);
+            setModalTitle("Import " + e.description);
             onClickImport(e.code_account);
             if (dynamicFile === true) setFileName(e.filename);
             onCancel();
@@ -59,8 +59,8 @@ const HeaderComponentTypeInput = ({
   className,
   dynamicFile,
 }) => {
-  const { value, func } = HeaderComponentTypeInputLogic();
-  const [modalTitle, setModalTitle] = useState('Import');
+  const { value, func } = Logic();
+  const [modalTitle, setModalTitle] = useState("Import");
   const [fileName, setFileName] = useState(null);
 
   return (

@@ -12,12 +12,12 @@ const PajakSummaryPage = () => {
     <>
       <HeaderComponent
         type="summary"
-        onUploadFile={func.onUploadFile}
-        accesFile={value}
-        downloadFile="file/detail-opex.xlsx"
-        onChangeSelect={func.onChangeTahun}
-        listMenuImport={["export"]}
-        onChangeFilter={() => {}}
+        disabledImportExport={
+          value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
+        }
+        listMenu={value.items.pemasaran.concat(value.items.administrasi)}
+        disabledMenu={value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0}
+        linkExport={value.linkExport}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeLocation={false} />

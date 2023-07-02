@@ -1,17 +1,15 @@
-import {
-  ArrowDownOutlined,
-  VerticalAlignBottomOutlined,
-} from "@ant-design/icons";
-import { Button,  Layout, Modal, Typography } from "antd";
-import HeaderComponentTypeSummaryLogic from "./HeaderComponentTypeSummaryLogic";
+import { ArrowDownOutlined, VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { Button, Layout, Modal, Typography } from "antd";
+import Logic from "./Logic";
 
 import "../style.scss";
+import { log } from "values/Utilitas";
 
 const { Header } = Layout;
 const { Text } = Typography;
 
-
-const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
+const ModalMenuMore = ({ open, onCancel, listMenu, disabledMenu, onExport, linkExport }) => {
+  log({ listMenu });
   return (
     <Modal
       className="more-modal"
@@ -22,43 +20,33 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
       closable={false}
       mask={false}
     >
-      <Button
-        className="btn"
-        type="text"
-        icon={<VerticalAlignBottomOutlined />}
-        disabled={disabledImportExport}
-        onClick={() => {
-          onExport();
-          onCancel();
-        }}
-      >
-        Export
-      </Button>
-      {/* <Button
-        className="btn"
-        type="text"
-        icon={<DeleteOutlined />}
-        style={{ color: "red" }}
-        disabled={disabledImportExport}
-      >
-        Clear Data
-      </Button> */}
+      {listMenu.map((e) => (
+        <Button
+          className="btn"
+          type="text"
+          // icon={<DownloadOutlined />}
+          disabled={disabledMenu}
+          onClick={() => {
+            onExport(e, linkExport);
+            onCancel();
+          }}
+        >
+          Export {e.description}
+        </Button>
+      ))}
     </Modal>
   );
 };
 
-const HeaderComponentTypeSummary = ({ onFinish, disabledImportExport, onExport }) => {
-  const { value, func } = HeaderComponentTypeSummaryLogic();
+const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport }) => {
+  const { value, func } = Logic();
+
   return (
     <Header className="custom-header">
       <Text className="header-title">{value.header}</Text>
 
       <div className="container-menu">
-        <Button
-          className="btn-more"
-
-          onClick={func.onClickMore}
-        >
+        <Button className="btn-more" onClick={func.onClickMore}>
           Action <ArrowDownOutlined />
         </Button>
       </div>
@@ -66,8 +54,10 @@ const HeaderComponentTypeSummary = ({ onFinish, disabledImportExport, onExport }
       <ModalMenuMore
         open={value.more}
         onCancel={func.onCloseMore}
-        disabledImportExport={disabledImportExport}
-        onExport={onExport}
+        listMenu={listMenu}
+        onExport={func.onExport}
+        disabledMenu={disabledMenu}
+        linkExport={linkExport}
       />
     </Header>
   );
