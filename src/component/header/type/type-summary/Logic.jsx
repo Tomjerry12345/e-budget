@@ -44,7 +44,7 @@ const Logic = () => {
       const fileURL = URL.createObjectURL(res.data);
       const link = document.createElement("a");
       link.href = fileURL;
-      link.download = filename;
+      link.download = `summary_${filename}`;
       link.click();
     } catch (e) {
       responseShow({
