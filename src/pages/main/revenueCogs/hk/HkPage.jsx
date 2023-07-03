@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
@@ -35,6 +34,7 @@ const HkPage = () => {
       code_project: null,
       periode: null,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
   const tabItemParent = [

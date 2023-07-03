@@ -1,10 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log } from "values/Utilitas";
-import { useSearchParams } from "react-router-dom";
+import { log, showNotif } from "values/Utilitas";
 import { actionData } from "redux/data-global/data.reducer";
 import { urlRevenue } from "values/Constant";
 import {
@@ -30,20 +30,16 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
-  let [searchParams] = useSearchParams();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { clicked } = useSelector((state) => state.revenue);
+  const { filterValues } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    if (searchParams.size > 0) {
-      log("searchParams", searchParams);
-      const currentParams = Object.fromEntries([...searchParams]);
-      log("currentParams", currentParams);
-      onFinish(currentParams);
+    if (filterValues !== null) {
+      onFinish(filterValues);
     }
-  }, [clicked]);
+  }, [filterValues]);
 
   useEffect(() => {
     if (importRedux.file !== null) {
@@ -51,34 +47,24 @@ const Logic = () => {
     }
   }, [importRedux.file]);
 
-  const responseShow = (res) => {
-    dispatch(
-      val({
-        status: res.data.responseCode,
-        message: res.data.responseDescription,
-      })
-    );
-    dispatch(actionData({ loading: false }));
-  };
-
-  const showNotif = (status, message) => {
-    dispatch(
-      val({
-        status: status,
-        message: message,
-      })
-    );
-  };
-
   const onSetDataTable = (values) => {
     const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
-    let fCodeCompany = code_company;
-    let fCodeLocation = code_location;
-    let fCodeDept = code_dept;
-    let fCodeIcp = code_icp;
-    let fCodeProject = code_project;
-    let fPeriode = periode;
+    let fCodeCompany = code_company.split(" ");
+    // let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
+
+    let fPeriode = periode.split(" ");
+
+    fCodeCompany = fCodeCompany[0];
+    fCodeLocation = fCodeLocation[0];
+    fCodeDept = fCodeDept[0];
+    fCodeIcp = fCodeIcp[0];
+    fCodeProject = fCodeProject[0];
+    fPeriode = fPeriode[0];
 
     getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
 
@@ -130,7 +116,6 @@ const Logic = () => {
         }
       })
     );
-    log({ listRows });
     dispatch(actionData({ sizeDataRevenue: 1 }));
     setRows(listRows);
   };
@@ -139,10 +124,6 @@ const Logic = () => {
     setLoading(true);
     onSetDataTable(values);
   };
-
-  const stokAkhir = () => {};
-
-  const penjualan = () => {};
 
   const onChangeTable = async (change, i, item) => {
     const fullRows = [...rows];
@@ -201,8 +182,6 @@ const Logic = () => {
 
           const key = columns[item.description][columnIndex].columnId;
 
-          log({ key });
-
           if (isNewRow) {
             const { code_company, code_dept, code_location, code_project, code_icp, periode } =
               codeFilter;
@@ -230,14 +209,52 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          newRows[i][length - 1] = updateTotalRow(newRows);
+          newRows[length - 1] = updateTotalRow(newRows, item.description);
+          log("newRows", newRows);
+
+          // stok akhir
+          if (type === "number") {
+            if (i === 0 || i === 1 || i === 2) {
+              const lengthStockAkhir = fullRows[3].data.length;
+              const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
+              const hargaBeliPerUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+
+              log({ lengthStockAkhir });
+              log("item.description", item.description);
+              log("fullRows[3].data[lengthStockAkhir - 1]", fullRows[3].data);
+
+              fullRows[3].data[rowIndex].cells[columnIndex].value =
+                stockAwal + asumsiUnitBeli + hargaBeliPerUnit;
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 27) total2 += e.value;
+                if (j === 28) e.value = total2;
+                return e;
+              });
+
+              fullRows[3].data[rowIndex].cells = newCellStockAkhir;
+
+              fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
+                fullRows[3].data,
+                item.description
+              );
+            }
+          }
         } catch (e) {
           log({ e });
         }
       }
     }
 
-    showNotif(200, "Sukses update data");
+
+
+    showNotif(dispatch, { status: 200, message: "Sukses update data" })
 
     fullRows[i].data = newRows;
 
@@ -246,6 +263,7 @@ const Logic = () => {
 
   const onSuccess = () => {
     dispatch(resetDataActionImport());
+    dispatch(actionData({ loading: false }));
   };
 
   const onUploadFile = async (file) => {
@@ -258,31 +276,40 @@ const Logic = () => {
     const { code_company, code_location, code_dept, code_icp, code_project, periode } =
       codeFilter;
 
+    let fCodeCompany = code_company.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
+
+    let fPeriode = periode.split(" ");
+
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fPeriode = fPeriode[0];
+
     const desc = dataGlobalRedux.indexImport;
     const index = rows.findIndex((item) => item.description === desc);
     const endpoint = rows[index].endpoint;
-
-    log({ file });
-    log({ desc });
-    log({ rows });
-    log({ index });
-    log({ endpoint });
 
     let formData = new FormData();
 
     formData.append("file", file);
 
-    formData.append("code_company", code_company);
-    formData.append("code_department", code_dept);
-    formData.append("code_location", code_location);
-    formData.append("code_project", code_project);
-    formData.append("code_icp", code_icp);
-    formData.append("year", periode);
+    formData.append("code_company", fCodeCompany);
+    formData.append("code_location", fCodeLocation);
+    formData.append("code_department", fCodeDept);
+    formData.append("code_icp", fCodeIcp);
+    formData.append("code_project", fCodeProject);
+    formData.append("year", fPeriode);
 
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${endpoint}/list?code_company=${code_company}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}`;
+      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
 
       const r = getRows({
@@ -297,12 +324,15 @@ const Logic = () => {
 
       setRows(newRow);
 
-      responseShow(res);
+      // responseShow(res);
+      showNotif(dispatch, { res: res })
 
       onSuccess();
     } catch (error) {
       const err = error.response;
-      responseShow(err);
+
+      showNotif(dispatch, { res: err })
+
       dispatch(
         actionImport({
           loading: false,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
