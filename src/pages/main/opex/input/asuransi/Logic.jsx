@@ -19,8 +19,6 @@ const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
-  const [openMDuration, setOpenMDuration] = useState(false);
-  const [openMStart, setOpenMStart] = useState(false);
 
   const isFunctionExecuted = useRef(0);
 
@@ -33,6 +31,10 @@ const Logic = () => {
     pemasaran: [],
     administrasi: [],
   });
+  const [open1, setOpen1] = useState({
+    pemasaran: [],
+    administrasi: [],
+  })
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -146,6 +148,7 @@ const Logic = () => {
 
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
+    log({open1});
 
     if (pemasaran.length > 0) {
       await Promise.allSettled(
@@ -156,9 +159,18 @@ const Logic = () => {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
+              let tmp1 = [];
+              for (let x = 0; x < data.data.length; x++) tmp1.push(false);
+              let newData = open1.pemasaran;
+              newData[i] = tmp1;
+              setOpen1({
+                ...open1,
+                pemasaran: newData,
+              });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
+                dd1: open1.pemasaran[i],
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
@@ -172,6 +184,7 @@ const Logic = () => {
         })
       );
     }
+    log({open1});
 
     if (administrasi.length > 0) {
       await Promise.allSettled(
@@ -182,9 +195,18 @@ const Logic = () => {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
+              let tmp1 = [];
+              for (let x = 0; x < data.data.length; x++) tmp1.push(false);
+              let newData = open1.administrasi;
+              newData[i] = tmp1;
+              setOpen1({
+                ...open1,
+                administrasi: newData,
+              });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
+                dd1: open1.administrasi[i],
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
@@ -198,6 +220,7 @@ const Logic = () => {
         })
       );
     }
+    log({open1});
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -609,8 +632,7 @@ const Logic = () => {
       getInputProps,
       acceptedFiles,
       items,
-      openMDuration,
-      openMStart,
+      open1,
     },
     func: {
       onFinish,
@@ -618,8 +640,7 @@ const Logic = () => {
       setUploadSucces,
       onChangeTable,
       onTambahRow,
-      setOpenMDuration,
-      setOpenMStart,
+      setOpen1,
     },
   };
 };
