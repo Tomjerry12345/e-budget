@@ -1,7 +1,7 @@
 import { ArrowDownOutlined } from "@ant-design/icons";
 import { Button, Layout, Modal, Typography } from "antd";
 import ImportInputModal from "component/modal/import/ImportInputModal";
-import HeaderComponentTypeRevenuePerusahaanLogic from "./HeaderComponentTypeRevenueIPerusahaanLogic";
+import HeaderComponentTypeRevenuePerusahaanLogic from "./Logic";
 import "../style.scss";
 
 const { Header } = Layout;
@@ -35,7 +35,7 @@ const ModalMenuMore = ({
             onCancel();
           }}
         >
-          Import {e}
+          Import {e.description}
         </Button>
       ))}
     </Modal>

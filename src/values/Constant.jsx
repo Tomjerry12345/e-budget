@@ -569,16 +569,19 @@ export const urlRevenue = [
     description: "Stok Awal",
     endpoint: "detailrevenue/firststock",
     insert: true,
+    file: "stock_awal.xlsx",
   },
   {
     description: "Asumsi unit beli",
     endpoint: "detailrevenue/purchase-unit-assumption",
     insert: true,
+    file: "asumsi_unit_beli.xlsx",
   },
   {
     description: "Harga beli per unit",
     endpoint: "detailrevenue/purchase-price-unit",
     insert: true,
+    file: "harga_beli_unit.xlsx",
   },
   {
     description: "Stok akhir",
@@ -589,11 +592,13 @@ export const urlRevenue = [
     description: "Asumsi unit jual",
     endpoint: "detailrevenue/selling-unit-assumption",
     insert: true,
+    file: "asumsi_unit_jual.xlsx",
   },
   {
     description: "Harga jual per unit",
     endpoint: "detailrevenue/selling-price-unit",
     insert: true,
+    file: "harga_jual_unit.xlsx",
   },
   // {
   //   description: "Penjualan",

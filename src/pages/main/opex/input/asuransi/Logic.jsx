@@ -22,7 +22,7 @@ const Logic = () => {
   const [openMDuration, setOpenMDuration] = useState(false);
   const [openMStart, setOpenMStart] = useState(false);
 
-  const isFunctionExecuted = useRef(0);
+  const numFunctionRunning = useRef(0);
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -364,148 +364,166 @@ const Logic = () => {
   // };
 
   const onChangeTable = async (change, i, category) => {
+    log("numFunctionRunning", numFunctionRunning.current);
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
     let isChange;
 
-    isFunctionExecuted.current++;
+    for (const c of change) {
+      const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
-    if (isFunctionExecuted.current >= 3) {
-      for (const c of change) {
-        const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
-        const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+      const type = c.newCell.type;
 
-        const type = c.newCell.type;
+      const length = newRows[i].length;
 
-        const length = newRows[i].length;
+      let value;
 
-        let value;
+      if (type === "dropdown") {
+        const pCell = c.previousCell;
+        const nCell = c.newCell;
 
-        if (type === "text") {
-          newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
-          value = c.newCell.text;
-          isChange = true;
-        } else if (type === "dropdown") {
-          const isOpen = c.newCell.isOpen;
-          newRows[i][rowIndex].cells[columnIndex].isOpen = isOpen;
+        log("pCell.value", pCell);
+        log("nCell.value", nCell);
 
-          isChange = !isOpen;
+        if (pCell.inputValue !== nCell.inputValue) {
+          log("not same", "...");
+          newRows[i][rowIndex].cells[columnIndex].inputValue = nCell.inputValue;
+          setRows({
+            ...rows,
+            [category]: newRows,
+          });
+        }
 
+        if (numFunctionRunning.current === 0) {
+          newRows[i][rowIndex].cells[columnIndex].isOpen = nCell.isOpen;
+          setRows({
+            ...rows,
+            [category]: newRows,
+          });
+        }
+
+        if (numFunctionRunning.current === 5) {
+          newRows[i][rowIndex].cells[columnIndex].isOpen = nCell.isOpen;
           setRows({
             ...rows,
             [category]: newRows,
           });
 
-          log({ isOpen });
-        } else if (type === "number") {
-          value = c.newCell.value;
-          newRows[i][rowIndex].cells[columnIndex].value = value;
+          numFunctionRunning.current = 0;
 
-          let jumlah = newRows[i][rowIndex].cells[3].value;
-          let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+          return;
+        }
 
-          let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-          let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+        numFunctionRunning.current++;
 
-          let totalAsuransi = jumlah * tarifAsuransi;
+        return;
+      }
 
-          let grandTotal = 0;
+      if (type === "text") {
+        newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+        value = c.newCell.text;
+        isChange = true;
+      } else if (type === "number") {
+        value = c.newCell.value;
+        newRows[i][rowIndex].cells[columnIndex].value = value;
 
-          const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-            if (j === 5) e.value = totalAsuransi;
-            if (mulaiAsuransi < 1) mulaiAsuransi = 1;
-            if (lamaAsuransi > 12) lamaAsuransi = 12;
-            if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
-            if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
-              e.value = totalAsuransi;
-              grandTotal += e.value;
-            }
-            if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+        let jumlah = newRows[i][rowIndex].cells[3].value;
+        let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+
+        let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
+        let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+
+        let totalAsuransi = jumlah * tarifAsuransi;
+
+        let grandTotal = 0;
+
+        const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+          if (j === 5) e.value = totalAsuransi;
+          if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+          if (lamaAsuransi > 12) lamaAsuransi = 12;
+          if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+          if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+            e.value = totalAsuransi;
+            grandTotal += e.value;
+          }
+          if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+          return e;
+        });
+
+        newRows[i][rowIndex].cells[8].value = grandTotal;
+        newRows[i][rowIndex].cells = newCell;
+
+        isChange = true;
+      }
+
+      if (isChange) {
+        try {
+          let formData = new FormData();
+
+          const id = c.rowId;
+          const column_id = c.columnId;
+          const isNewRow = newRows[i][rowIndex].newRow;
+
+          if (isNewRow !== undefined) {
+            const {
+              code_company,
+              code_dept,
+              code_location,
+              code_product,
+              code_project,
+              code_icp,
+              periode,
+            } = codeFilter;
+
+            const codeAccount = items.pemasaran[i]["code_account"];
+
+            formData.append("code_account", codeAccount);
+            formData.append("code_company", code_company);
+            formData.append("code_department", code_dept);
+            formData.append("code_location", code_location);
+            formData.append("code_product", code_product);
+            formData.append("code_project", code_project);
+            formData.append("code_icp", code_icp);
+            formData.append("year", periode);
+            formData.append("name", value);
+
+            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+            const rowId = res.data.data.id;
+
+            newRows[i][rowIndex].rowId = rowId;
+          } else {
+            formData.append("id", id);
+            formData.append("column_id", column_id);
+            formData.append("value", value);
+
+            await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+          }
+
+          delete newRows[i][rowIndex].newRow;
+          const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+            if (i >= 1 && i <= 5) e.nonEditable = false;
+            if (i >= 6 && i <= 8) e.nonEditable = false;
             return e;
           });
 
-          newRows[i][rowIndex].cells[8].value = grandTotal;
           newRows[i][rowIndex].cells = newCell;
 
-          isChange = true;
-        }
-
-        if (isChange) {
-          try {
-            let formData = new FormData();
-
-            const id = c.rowId;
-            const column_id = c.columnId;
-            const isNewRow = newRows[i][rowIndex].newRow;
-
-            if (isNewRow !== undefined) {
-              const {
-                code_company,
-                code_dept,
-                code_location,
-                code_product,
-                code_project,
-                code_icp,
-                periode,
-              } = codeFilter;
-
-              const codeAccount = items.pemasaran[i]["code_account"];
-
-              formData.append("code_account", codeAccount);
-              formData.append("code_company", code_company);
-              formData.append("code_department", code_dept);
-              formData.append("code_location", code_location);
-              formData.append("code_product", code_product);
-              formData.append("code_project", code_project);
-              formData.append("code_icp", code_icp);
-              formData.append("year", periode);
-              formData.append("name", value);
-
-              const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-              log({ res });
-              const rowId = res.data.data.id;
-
-              newRows[i][rowIndex].rowId = rowId;
-            } else {
-              formData.append("id", id);
-              formData.append("column_id", column_id);
-              formData.append("value", value);
-
-              await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-            }
-
-            delete newRows[i][rowIndex].newRow;
-            const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-              if (i >= 1 && i <= 5) e.nonEditable = false;
-              if (i >= 6 && i <= 8) e.nonEditable = false;
-              return e;
-            });
-
-            newRows[i][rowIndex].cells = newCell;
-
-            newRows[i][length - 1] = updateTotalRow(newRows[i]);
-          } catch (e) {
-            log({ e });
-          }
+          newRows[i][length - 1] = updateTotalRow(newRows[i]);
+        } catch (e) {
+          log({ e });
         }
       }
-
-      log({ isChange });
-
-      if (isChange) {
-        showNotif(200, "Sukses update data");
-
-        setRows({
-          ...rows,
-          [category]: newRows,
-        });
-      }
-
-      isFunctionExecuted.current = 0;
     }
 
-    log("test", isFunctionExecuted.current);
-    return;
+    // if (isChange) {
+    //   showNotif(200, "Sukses update data");
+
+    //   setRows({
+    //     ...rows,
+    //     [category]: newRows,
+    //   });
+    // }
+    // return;
   };
 
   const onSuccess = () => {
