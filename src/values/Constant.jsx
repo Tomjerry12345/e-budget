@@ -600,11 +600,6 @@ export const urlRevenue = [
     insert: true,
     file: "harga_jual_unit.xlsx",
   },
-  // {
-  //   description: "Penjualan",
-  //   endpoint: "detailrevenue/selling",
-  //   insert: true,
-  // },
 ];
 
 export const getPerusahaan = (q) => {

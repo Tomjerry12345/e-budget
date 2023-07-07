@@ -88,13 +88,11 @@ const Logic = () => {
         try {
           const { data } = await MainServices.get(url);
           let r;
-          if (data.data.length > 0) {
-            r = getRows({
-              header: getHeaderRow[desc],
-              data: data.data,
-              key: desc,
-            });
-          }
+          r = getRows({
+            header: getHeaderRow[desc],
+            data: data.data,
+            key: desc,
+          });
 
           listRows[i] = {
             description: desc,
@@ -252,9 +250,7 @@ const Logic = () => {
       }
     }
 
-
-
-    showNotif(dispatch, { status: 200, message: "Sukses update data" })
+    showNotif(dispatch, { status: 200, message: "Sukses update data" });
 
     fullRows[i].data = newRows;
 
@@ -325,13 +321,13 @@ const Logic = () => {
       setRows(newRow);
 
       // responseShow(res);
-      showNotif(dispatch, { res: res })
+      showNotif(dispatch, { res: res });
 
       onSuccess();
     } catch (error) {
       const err = error.response;
 
-      showNotif(dispatch, { res: err })
+      showNotif(dispatch, { res: err });
 
       dispatch(
         actionImport({
