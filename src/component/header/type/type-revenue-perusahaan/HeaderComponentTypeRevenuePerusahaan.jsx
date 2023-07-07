@@ -3,6 +3,7 @@ import { Button, Layout, Modal, Typography } from "antd";
 import ImportInputModal from "component/modal/import/ImportInputModal";
 import HeaderComponentTypeRevenuePerusahaanLogic from "./Logic";
 import "../style.scss";
+import { useState } from "react";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -13,6 +14,7 @@ const ModalMenuMore = ({
   onClickImport,
   disabledImportExport,
   listMenuImport,
+  setModalTitle,
 }) => {
   return (
     <Modal
@@ -31,6 +33,7 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
+            setModalTitle("Import " + e.description);
             onClickImport(e);
             onCancel();
           }}
@@ -51,6 +54,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
   listMenuImport,
 }) => {
   const { value, func } = HeaderComponentTypeRevenuePerusahaanLogic();
+  const [modalTitle, setModalTitle] = useState("Import");
   return (
     <Header className="custom-header">
       {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
@@ -67,6 +71,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
         listMenuImport={listMenuImport}
+        setModalTitle={setModalTitle}
       />
 
       <ImportInputModal
@@ -77,6 +82,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         file={value.file}
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
+        title={modalTitle}
       />
     </Header>
   );
