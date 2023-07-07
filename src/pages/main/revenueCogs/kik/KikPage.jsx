@@ -6,12 +6,13 @@ import HeaderComponent from "component/header/HeaderComponent";
 import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
-import { getPerusahaan } from "values/Constant";
+import { getPerusahaan, urlRevenue } from "values/Constant";
 
 const KikPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
   const [isMoveTabs, setIsMoveTabs] = useState(false);
+  const [listMenu, setListMenu] = useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,7 +35,10 @@ const KikPage = () => {
       code_project: null,
       periode: null,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const l = urlRevenue.filter((e) => e.file !== undefined);
+    setListMenu(l);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
   const tabItemParent = [
@@ -67,13 +71,7 @@ const KikPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        listMenuImport={[
-          "Stok Awal",
-          "Asumsi unit beli",
-          "Harga beli per unit",
-          "Asumsi unit jual",
-          "Penjualan",
-        ]}
+        listMenuImport={listMenu}
         disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
       />
       <div className="custom-root-layout">
