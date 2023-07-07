@@ -124,6 +124,7 @@ function getGroupRows(groups) {
         dropDownCell(
           getMonthDuration(),
           d["month_duration"] ?? 0,
+
           "padding-left-lg",
           null,
           false

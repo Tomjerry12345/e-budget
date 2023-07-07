@@ -33,6 +33,7 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
 export const dropDownCell = (value, selectedValue, className = "", style, isOpen) => ({
   type: "dropdown",
   values: value,
+  inputValue: `${selectedValue}`,
   selectedValue: `${selectedValue}`,
   // className,
   // style,

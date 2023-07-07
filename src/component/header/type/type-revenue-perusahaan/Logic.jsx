@@ -6,8 +6,9 @@ import { useLocation } from "react-router-dom";
 import { allRouting } from "values/RoutingPage";
 import { useDropzone } from "react-dropzone";
 import { constantExcellFile } from "values/Constant";
+import { log } from "values/Utilitas";
 
-const HeaderComponentTypeRevenuePerusahaanLogic = () => {
+const Logic = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const importRedux = useSelector((state) => state.import);
@@ -21,9 +22,15 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
   const [header, setHeader] = useState("");
   const [file, setFile] = useState("");
 
+  const [perusahaan, setPerusahaan] = useState("");
+
   useEffect(() => {
     const split = location.pathname.split("/");
     const q = split[split.length - 2];
+
+    log({ q });
+
+    setPerusahaan(q);
 
     const h = allRouting[split[2]][q];
 
@@ -58,8 +65,10 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
         openImport: true,
       })
     );
-    dispatch(actionData({ indexImport: d }));
-    const f = constantExcellFile["revenue"][d];
+    // dispatch(actionData({ indexImport: d }));
+    const f = `file/revenue-cogs/${perusahaan}_${d.file}`;
+
+    log({ f });
 
     setFile(f);
   };
@@ -104,4 +113,4 @@ const HeaderComponentTypeRevenuePerusahaanLogic = () => {
   };
 };
 
-export default HeaderComponentTypeRevenuePerusahaanLogic;
+export default Logic;
