@@ -34,7 +34,7 @@ const Logic = () => {
   const [open1, setOpen1] = useState({
     pemasaran: [],
     administrasi: [],
-  })
+  });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -148,7 +148,7 @@ const Logic = () => {
 
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
-    log({open1});
+    log({ open1 });
 
     if (pemasaran.length > 0) {
       await Promise.allSettled(
@@ -184,7 +184,7 @@ const Logic = () => {
         })
       );
     }
-    log({open1});
+    log({ open1 });
 
     if (administrasi.length > 0) {
       await Promise.allSettled(
@@ -220,7 +220,7 @@ const Logic = () => {
         })
       );
     }
-    log({open1});
+    log({ open1 });
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -386,10 +386,112 @@ const Logic = () => {
   //   // }
   // };
 
+  const updateDropdownValue = (newRows) => {
+    let jumlah = newRows.cells[3].value;
+    let tarifAsuransi = newRows.cells[4].value;
+
+    let lamaAsuransi = parseInt(newRows.cells[6].value);
+    // let lamaAsuransi =
+    //   lamaAsuransiDropdown.current !== 0
+    //     ? lamaAsuransiDropdown.current
+    //     : parseInt(newRows.cells[6].value);
+    let mulaiAsuransi = parseInt(newRows.cells[7].value);
+
+    let totalAsuransi = jumlah * tarifAsuransi;
+
+    let grandTotal = 0;
+
+    log({ lamaAsuransi });
+
+    const newCell = newRows.cells.map((e, j) => {
+      if (j === 5) e.value = totalAsuransi;
+      if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+      if (lamaAsuransi > 12) lamaAsuransi = 12;
+      if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+      if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+        e.value = totalAsuransi;
+        grandTotal += e.value;
+      }
+      if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+      return e;
+    });
+
+    newRows.cells[8].value = grandTotal;
+    newRows.cells = newCell;
+  };
+
+  const sendData = async (newRows, c, i, rowIndex, value, category) => {
+    try {
+      const length = newRows[i].length;
+
+      let formData = new FormData();
+
+      const id = c.rowId;
+      const column_id = c.columnId;
+      const isNewRow = newRows[i][rowIndex].newRow;
+
+      if (isNewRow !== undefined) {
+        const {
+          code_company,
+          code_dept,
+          code_location,
+          code_product,
+          code_project,
+          code_icp,
+          periode,
+        } = codeFilter;
+
+        const codeAccount =
+          category === "pemasaran"
+            ? items.pemasaran[i]["code_account"]
+            : items.pemasaran[i]["code_account"];
+
+        formData.append("code_account", codeAccount);
+        formData.append("code_company", code_company);
+        formData.append("code_department", code_dept);
+        formData.append("code_location", code_location);
+        formData.append("code_product", code_product);
+        formData.append("code_project", code_project);
+        formData.append("code_icp", code_icp);
+        formData.append("year", periode);
+        formData.append("name", value);
+
+        const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+        const rowId = res.data.data.id;
+
+        newRows[i][rowIndex].rowId = rowId;
+      } else {
+        formData.append("id", id);
+        formData.append("column_id", column_id);
+        formData.append("value", value);
+
+        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+      }
+
+      delete newRows[i][rowIndex].newRow;
+      const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+        if (i >= 1 && i <= 5) e.nonEditable = false;
+        if (i >= 6 && i <= 8) e.nonEditable = false;
+        return e;
+      });
+
+      newRows[i][rowIndex].cells = newCell;
+
+      newRows[i][length - 1] = updateTotalRow(newRows[i]);
+
+      setRows({
+        ...rows,
+        [category]: newRows,
+      });
+
+      showNotif(200, "Sukses update data");
+    } catch (e) {
+      log({ e });
+    }
+  };
+
   const onChangeTable = async (change, i, category) => {
-    log("numFunctionRunning", numFunctionRunning.current);
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-    let isChange;
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
@@ -397,43 +499,35 @@ const Logic = () => {
 
       const type = c.newCell.type;
 
-      const length = newRows[i].length;
-
       let value;
 
       if (type === "dropdown") {
-        const pCell = c.previousCell;
         const nCell = c.newCell;
 
-        log("pCell.value", pCell);
-        log("nCell.value", nCell);
-
-        if (pCell.inputValue !== nCell.inputValue) {
-          log("not same", "...");
-          newRows[i][rowIndex].cells[columnIndex].inputValue = nCell.inputValue;
-          setRows({
-            ...rows,
-            [category]: newRows,
-          });
-        }
-
         if (numFunctionRunning.current === 0) {
-          newRows[i][rowIndex].cells[columnIndex].isOpen = nCell.isOpen;
+          newRows[i][rowIndex].cells[columnIndex].isOpen = true;
           setRows({
             ...rows,
             [category]: newRows,
           });
         }
 
-        if (numFunctionRunning.current === 5) {
-          newRows[i][rowIndex].cells[columnIndex].isOpen = nCell.isOpen;
-          setRows({
-            ...rows,
-            [category]: newRows,
-          });
+        log("numFunctionRunning.current", numFunctionRunning.current);
+
+        if (numFunctionRunning.current === 4) {
+          newRows[i][rowIndex].cells[columnIndex].value = nCell.value;
+        }
+
+        if (numFunctionRunning.current >= 5) {
+          newRows[i][rowIndex].cells[columnIndex].isOpen = false;
+
+          const value = newRows[i][rowIndex].cells[columnIndex].value;
+
+          updateDropdownValue(newRows[i][rowIndex]);
+
+          sendData(newRows, c, i, rowIndex, value, category);
 
           numFunctionRunning.current = 0;
-
           return;
         }
 
@@ -445,108 +539,18 @@ const Logic = () => {
       if (type === "text") {
         newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
         value = c.newCell.text;
-        isChange = true;
-      } else if (type === "number") {
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
+      }
+
+      if (type === "number") {
         value = c.newCell.value;
         newRows[i][rowIndex].cells[columnIndex].value = value;
-
-        let jumlah = newRows[i][rowIndex].cells[3].value;
-        let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
-
-        let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-        let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
-
-        let totalAsuransi = jumlah * tarifAsuransi;
-
-        let grandTotal = 0;
-
-        const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-          if (j === 5) e.value = totalAsuransi;
-          if (mulaiAsuransi < 1) mulaiAsuransi = 1;
-          if (lamaAsuransi > 12) lamaAsuransi = 12;
-          if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
-          if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
-            e.value = totalAsuransi;
-            grandTotal += e.value;
-          }
-          if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
-          return e;
-        });
-
-        newRows[i][rowIndex].cells[8].value = grandTotal;
-        newRows[i][rowIndex].cells = newCell;
-
-        isChange = true;
-      }
-
-      if (isChange) {
-        try {
-          let formData = new FormData();
-
-          const id = c.rowId;
-          const column_id = c.columnId;
-          const isNewRow = newRows[i][rowIndex].newRow;
-
-          if (isNewRow !== undefined) {
-            const {
-              code_company,
-              code_dept,
-              code_location,
-              code_product,
-              code_project,
-              code_icp,
-              periode,
-            } = codeFilter;
-
-            const codeAccount = items.pemasaran[i]["code_account"];
-
-            formData.append("code_account", codeAccount);
-            formData.append("code_company", code_company);
-            formData.append("code_department", code_dept);
-            formData.append("code_location", code_location);
-            formData.append("code_product", code_product);
-            formData.append("code_project", code_project);
-            formData.append("code_icp", code_icp);
-            formData.append("year", periode);
-            formData.append("name", value);
-
-            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-            const rowId = res.data.data.id;
-
-            newRows[i][rowIndex].rowId = rowId;
-          } else {
-            formData.append("id", id);
-            formData.append("column_id", column_id);
-            formData.append("value", value);
-
-            await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-          }
-
-          delete newRows[i][rowIndex].newRow;
-          const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-            if (i >= 1 && i <= 5) e.nonEditable = false;
-            if (i >= 6 && i <= 8) e.nonEditable = false;
-            return e;
-          });
-
-          newRows[i][rowIndex].cells = newCell;
-
-          newRows[i][length - 1] = updateTotalRow(newRows[i]);
-        } catch (e) {
-          log({ e });
-        }
+        updateDropdownValue(newRows[i][rowIndex]);
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
       }
     }
-
-    // if (isChange) {
-    //   showNotif(200, "Sukses update data");
-
-    //   setRows({
-    //     ...rows,
-    //     [category]: newRows,
-    //   });
-    // }
-    // return;
   };
 
   const onSuccess = () => {

@@ -290,6 +290,7 @@ const Logic = () => {
 
     const desc = dataGlobalRedux.indexImport;
     const index = rows.findIndex((item) => item.description === desc);
+    log("row[index]", rows[index]);
     const endpoint = rows[index].endpoint;
 
     let formData = new FormData();
