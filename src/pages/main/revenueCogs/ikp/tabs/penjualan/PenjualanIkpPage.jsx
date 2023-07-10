@@ -39,6 +39,7 @@ const PenjualanIkpPage = () => {
                     columns={value.columns[e.description]}
                     stickyTopRows={1}
                     stickyLeftColumns={1}
+                    enableRangeSelection
                     onCellsChanged={(change) => func.onChangeTable(change, i, e)}
                   />
                 </div>

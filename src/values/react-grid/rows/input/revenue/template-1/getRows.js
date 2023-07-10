@@ -19,7 +19,10 @@ export const updateTotalRow = (data, key) => {
 
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA[key])
+    );
 
   return rowTotal("Total", list, key);
 };
