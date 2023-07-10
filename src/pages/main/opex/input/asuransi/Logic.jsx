@@ -34,7 +34,7 @@ const Logic = () => {
   const [open1, setOpen1] = useState({
     pemasaran: [],
     administrasi: [],
-  })
+  });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -148,7 +148,7 @@ const Logic = () => {
 
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
-    log({open1});
+    log({ open1 });
 
     if (pemasaran.length > 0) {
       await Promise.allSettled(
@@ -184,7 +184,7 @@ const Logic = () => {
         })
       );
     }
-    log({open1});
+    log({ open1 });
 
     if (administrasi.length > 0) {
       await Promise.allSettled(
@@ -220,7 +220,7 @@ const Logic = () => {
         })
       );
     }
-    log({open1});
+    log({ open1 });
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -441,7 +441,10 @@ const Logic = () => {
           periode,
         } = codeFilter;
 
-        const codeAccount = items.pemasaran[i]["code_account"];
+        const codeAccount =
+          category === "pemasaran"
+            ? items.pemasaran[i]["code_account"]
+            : items.pemasaran[i]["code_account"];
 
         formData.append("code_account", codeAccount);
         formData.append("code_company", code_company);
@@ -480,6 +483,8 @@ const Logic = () => {
         ...rows,
         [category]: newRows,
       });
+
+      showNotif(200, "Sukses update data");
     } catch (e) {
       log({ e });
     }
@@ -487,7 +492,6 @@ const Logic = () => {
 
   const onChangeTable = async (change, i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-    let isChange;
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
@@ -509,7 +513,6 @@ const Logic = () => {
         }
 
         log("numFunctionRunning.current", numFunctionRunning.current);
-        log({ nCell });
 
         if (numFunctionRunning.current === 4) {
           newRows[i][rowIndex].cells[columnIndex].value = nCell.value;
@@ -536,22 +539,18 @@ const Logic = () => {
       if (type === "text") {
         newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
         value = c.newCell.text;
-        isChange = true;
-      } else if (type === "number") {
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
+      }
+
+      if (type === "number") {
         value = c.newCell.value;
         newRows[i][rowIndex].cells[columnIndex].value = value;
+        updateDropdownValue(newRows[i][rowIndex]);
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
       }
     }
-
-    // if (isChange) {
-    //   showNotif(200, "Sukses update data");
-
-    //   setRows({
-    //     ...rows,
-    //     [category]: newRows,
-    //   });
-    // }
-    // return;
   };
 
   const onSuccess = () => {

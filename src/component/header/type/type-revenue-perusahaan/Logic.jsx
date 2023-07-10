@@ -65,7 +65,7 @@ const Logic = () => {
         openImport: true,
       })
     );
-    // dispatch(actionData({ indexImport: d }));
+    dispatch(actionData({ indexImport: d.description }));
     const f = `file/revenue-cogs/${perusahaan}_${d.file}`;
 
     log({ f });
