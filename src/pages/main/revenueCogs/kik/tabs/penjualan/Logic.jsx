@@ -212,18 +212,18 @@ const Logic = () => {
 
           // stok akhir
           if (type === "number") {
-            if (i === 0 || i === 1 || i === 2) {
+            if (i === 0 || i === 1 || i === 4) {
               const lengthStockAkhir = fullRows[3].data.length;
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const hargaBeliPerUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
 
               log({ lengthStockAkhir });
               log("item.description", item.description);
               log("fullRows[3].data[lengthStockAkhir - 1]", fullRows[3].data);
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli + hargaBeliPerUnit;
+                stockAwal + asumsiUnitBeli - asumsiUnitJual;
 
               let total1 = 0;
               let total2 = 0;
