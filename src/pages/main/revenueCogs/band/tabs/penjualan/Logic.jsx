@@ -48,35 +48,34 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
+    const { code_company, code_product, code_dept, code_location, code_icp, periode } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
+    let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
 
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0];
     fCodeLocation = fCodeLocation[0];
     fCodeDept = fCodeDept[0];
     fCodeIcp = fCodeIcp[0];
-    fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
+    getData(fCodeCompany, fCodeProduct, fCodeLocation, fCodeDept, fCodeIcp, fPeriode);
 
     setCodeFilter(values);
   };
 
   const getData = async (
     codeCompany,
+    codeProduct,
     codeLocation,
     codeDept,
     codeIcp,
-    codeProject,
     periode
   ) => {
     const listRows = [];
@@ -84,7 +83,7 @@ const Logic = () => {
     await Promise.allSettled(
       urlRevenue.map(async (p, i) => {
         const desc = p.description;
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_project=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&year=${periode}`;
         try {
           const { data } = await MainServices.get(url);
           let r;

@@ -33,7 +33,7 @@ const BandPage = () => {
       code_location: null,
       code_dept: null,
       code_icp: null,
-      code_project: null,
+      // code_project: null,
       periode: null,
     });
     const l = urlRevenue.filter((e) => e.file !== undefined);
@@ -96,8 +96,8 @@ const BandPage = () => {
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
-          isCodeProject
-          isCodeProduct={false}
+          isCodeProject={false}
+          isCodeProduct
           type="input"
           codeCompany={perusahaan.code}
           form={form}
