@@ -2,6 +2,7 @@ import React from "react";
 import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
+import { capitalize } from "values/react-grid/helpers";
 
 const PenjualanHkPage = () => {
   const { value, func } = Logic();
@@ -19,7 +20,7 @@ const PenjualanHkPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography.Text>{e.description}</Typography.Text>
+                <Typography.Text>{capitalize(e.description)}</Typography.Text>
               </div>
 
               <div

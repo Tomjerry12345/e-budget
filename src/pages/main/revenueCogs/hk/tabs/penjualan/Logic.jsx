@@ -309,8 +309,9 @@ const Logic = () => {
 
       const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
+      console.log("first stock : ", data);
 
-      const r = getRows({
+      let r = getRows({
         header: getHeaderRow[desc],
         data: data.data,
         key: desc,
@@ -319,6 +320,21 @@ const Logic = () => {
       const newRow = [...rows];
 
       newRow[index].data = r;
+
+      if (index === 0 || index === 1 || index === 4){
+        const epLastStock = rows[3].endpoint;
+        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+        const { data } = await MainServices.get(urlLastStock);
+  
+        console.log("last stock : ", data);
+        r = getRows({
+          header: getHeaderRow[desc],
+          data: data.data,
+          key: desc,
+        });
+  
+        newRow[3].data = r;
+      }
 
       setRows(newRow);
 

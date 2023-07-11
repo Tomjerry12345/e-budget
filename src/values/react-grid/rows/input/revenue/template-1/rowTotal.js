@@ -1,6 +1,11 @@
 import { ROW_HEIGHT } from "./Constant";
 
-const { nonEditable, textCell, noSideBorders, totalCell } = require("values/react-grid/cells");
+const {
+  nonEditable,
+  textCell,
+  noSideBorders,
+  totalCell,
+} = require("values/react-grid/cells");
 
 function type1(titleTotal, total) {
   return {
@@ -62,8 +67,8 @@ export const rowTotal = (titleTotal, data, key) => {
     "Stok akhir": type1(titleTotal, data),
     "Asumsi unit jual": type1(titleTotal, data),
     "Harga jual per unit": type1(titleTotal, data),
-    Penjualan: type1(titleTotal, data),
-    "Potongan penjualan": type2(titleTotal, data),
+    // Penjualan: type1(titleTotal, data),
+    // "Potongan penjualan": type2(titleTotal, data),
   };
 
   return l[key];

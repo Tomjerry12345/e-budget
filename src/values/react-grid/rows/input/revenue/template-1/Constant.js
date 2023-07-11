@@ -18,9 +18,9 @@ export const TOTAL_DATA = {
   "Asumsi unit beli": 26,
   "Harga beli per unit": 26,
   "Stok akhir": 26,
-  "Asumsi unit jual": 13,
-  "Harga jual per unit": 13,
-  Penjualan: 13,
+  "Asumsi unit jual": 26,
+  "Harga jual per unit": 26,
+  Penjualan: 26,
   "Potongan penjualan": 12,
 };
 
