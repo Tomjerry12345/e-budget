@@ -28,8 +28,6 @@ const Logic = () => {
     const split = location.pathname.split("/");
     const q = split[split.length - 2];
 
-    log({ q });
-
     setPerusahaan(q);
 
     const h = allRouting[split[2]][q];
