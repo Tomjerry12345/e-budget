@@ -25,6 +25,7 @@ const type1 = (data, key) => {
 };
 
 const type2 = (data, key) => {
+  if (key === "Asumsi unit jual") console.log("data:", data);
   const list = createArray(TOTAL_DATA[key]);
 
   data.forEach((e) => {
@@ -54,6 +55,8 @@ const type2 = (data, key) => {
     list[23] += e["nov_p"] ?? 0;
     list[24] += e["des_p"] ?? 0;
     list[25] += e["total_2"] ?? 0;
+    if (key === "Asumsi unit jual") console.log("e:", e);
+    if (key === "Asumsi unit jual") console.log("list:", list);
   });
 
   return rowTotal("Total", list, key);
@@ -88,10 +91,10 @@ export const firstLoadTotalRow = (data, key) => {
     "Asumsi unit beli": type2(data, key),
     "Harga beli per unit": type2(data, key),
     "Stok akhir": type2(data, key),
-    "Asumsi unit jual": type1(data, key),
-    "Harga jual per unit": type1(data, key),
-    Penjualan: type1(data, key),
-    "Potongan penjualan": type3(data, key),
+    "Asumsi unit jual": type2(data, key),
+    "Harga jual per unit": type2(data, key),
+    // Penjualan: type1(data, key),
+    // "Potongan penjualan": type3(data, key),
   };
 
   return l[key];

@@ -28,6 +28,21 @@ const type1 = {
     nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
 
     nonEditable(monthHeaderCell(`Total`, "justify-content-center")),
+
+    nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Apr`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Mei`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Jun`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Jul`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Agu`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Sep`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Okt`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
+    nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
+
+    nonEditable(monthHeaderCell(`Total`, "justify-content-center")),
   ],
 };
 
@@ -96,12 +111,12 @@ const type3 = {
 };
 
 export const getHeaderRow = {
-  "Stok Awal": type2,
-  "Asumsi unit beli": type2,
-  "Harga beli per unit": type2,
-  "Stok akhir": type2,
+  "Stok Awal": type1,
+  "Asumsi unit beli": type1,
+  "Harga beli per unit": type1,
+  "Stok akhir": type1,
   "Asumsi unit jual": type1,
   "Harga jual per unit": type1,
-  Penjualan: type1,
-  "Potongan penjualan": type3,
+  // Penjualan: type4,
+  // "Potongan penjualan": type5,
 };
