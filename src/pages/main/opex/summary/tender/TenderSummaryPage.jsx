@@ -15,7 +15,8 @@ const TenderSummaryPage = () => {
         disabledImportExport={
           value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
         }
-        listMenu={value.items.pemasaran.concat(value.items.administrasi)}
+        // listMenu={value.items.pemasaran.concat(value.items.administrasi)}
+        listMenu={value.listMenu}
         disabledMenu={value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0}
         linkExport={value.linkExport}
       />
