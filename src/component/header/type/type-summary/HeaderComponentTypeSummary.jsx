@@ -25,7 +25,7 @@ const ModalMenuMore = ({ open, onCancel, listMenu, disabledMenu, onExport, linkE
           className="btn"
           type="text"
           // icon={<DownloadOutlined />}
-          disabled={disabledMenu}
+          disabled={e.disabled}
           onClick={() => {
             onExport(e, linkExport);
             onCancel();

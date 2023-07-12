@@ -13,7 +13,8 @@ const IklanAdvertensiSummaryPage = () => {
       <HeaderComponent
         type="summary"
         disabledImportExport={value.rows.pemasaran.length === 0}
-        listMenu={value.items.pemasaran}
+        // listMenu={value.items.pemasaran}
+        listMenu={value.listMenu}
         disabledMenu={value.rows.pemasaran.length === 0}
         linkExport={value.linkExport}
       />

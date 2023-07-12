@@ -12,6 +12,7 @@ import { getRootHeaderRow } from "./getRows";
 const Logic = () => {
   const [loading, setLoading] = useState(false);
   const [linkExport, setLinkExport] = useState(null);
+  const [listMenu, setListMenu] = useState();
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -68,6 +69,7 @@ const Logic = () => {
   const getData = async (codeCompany, codeProduct, codeDept, codeIcp, codeProject, periode) => {
     const listPemasaran = [];
     const listAdministrasi = [];
+    let lMenu = [];
 
     const pemasaran = items.pemasaran;
     const administrasi = items.administrasi;
@@ -79,20 +81,31 @@ const Logic = () => {
           const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
-            let r;
+            let r, d;
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
               });
+
+              d = false;
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
+              d = true;
             }
             listPemasaran[i] = r;
+            lMenu.push({
+              ...p,
+              disabled: d,
+            });
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data for code account ${codeAccount}`, error);
             listPemasaran[i] = fullNewRow(getRootHeaderRow(), i);
+            lMenu.push({
+              ...p,
+              disabled: true,
+            });
           }
         })
       );
@@ -105,25 +118,35 @@ const Logic = () => {
           const url = `${ENDPOINT_URL}/summary?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}&code_account=${codeAccount}`;
           try {
             const { data } = await MainServices.get(url);
-            let r;
+            let r, d;
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
               });
+              d = false;
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
+              d = true;
             }
+
             listAdministrasi[i] = r;
+            lMenu.push({
+              ...p,
+              disabled: d,
+            });
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data for code account ${codeAccount}`, error);
             listAdministrasi[i] = fullNewRow(getRootHeaderRow(), i);
+            lMenu.push({
+              ...p,
+              disabled: true,
+            });
           }
         })
       );
     }
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -133,6 +156,8 @@ const Logic = () => {
     setLinkExport(
       `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
     );
+
+    setListMenu(lMenu);
   };
 
   const onFinish = (values) => {
@@ -147,6 +172,7 @@ const Logic = () => {
       loading,
       items,
       linkExport,
+      listMenu,
     },
     func: {
       onFinish,
