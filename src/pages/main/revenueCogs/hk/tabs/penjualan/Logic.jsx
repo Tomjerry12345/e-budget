@@ -185,13 +185,28 @@ const Logic = () => {
             const { code_company, code_dept, code_location, code_project, code_icp, periode } =
               codeFilter;
 
-            formData.append("code_company", code_company);
-            formData.append("code_department", code_dept);
-            formData.append("code_location", code_location);
+            let fCodeCompany = code_company.split(" ");
+            let fCodeLocation = code_location.split(" ");
+            let fCodeDept = code_dept.split(" ");
+            let fCodeIcp = code_icp.split(" ");
+            let fCodeProject = code_project.split(" ");
+
+            let fPeriode = periode.split(" ");
+
+            fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+            fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+            fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+            fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+            fPeriode = fPeriode[0];
+
+            formData.append("code_company", fCodeCompany);
+            formData.append("code_department", fCodeDept);
+            formData.append("code_location", fCodeLocation);
             formData.append("code_product", codeProduct);
-            formData.append("code_project", code_project);
-            formData.append("code_icp", code_icp);
-            formData.append("year", periode);
+            formData.append("code_project", fCodeProject);
+            formData.append("code_icp", fCodeIcp);
+            formData.append("year", fPeriode);
             formData.append(key, value);
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
@@ -208,6 +223,7 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
+          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
           log("newRows", newRows);
 
@@ -218,10 +234,6 @@ const Logic = () => {
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
-
-              log({ lengthStockAkhir });
-              log("item.description", item.description);
-              log("fullRows[3].data[lengthStockAkhir - 1]", fullRows[3].data);
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
                 stockAwal + asumsiUnitBeli - asumsiUnitJual;
@@ -241,6 +253,33 @@ const Logic = () => {
 
               fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
                 fullRows[3].data,
+                item.description
+              );
+            }
+
+            if (i === 2 || i === 5) {
+              const lengthStockAkhir = fullRows[6].data.length;
+              const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+              const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
+
+              fullRows[6].data[rowIndex].cells[columnIndex].value =
+                hargaBeliUnit * hargaJualUnit;
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 27) total2 += e.value;
+                if (j === 28) e.value = total2;
+                return e;
+              });
+
+              fullRows[6].data[rowIndex].cells = newCellStockAkhir;
+
+              fullRows[6].data[lengthStockAkhir - 1] = updateTotalRow(
+                fullRows[6].data,
                 item.description
               );
             }
@@ -321,19 +360,34 @@ const Logic = () => {
 
       newRow[index].data = r;
 
-      if (index === 0 || index === 1 || index === 4){
+      if (index === 0 || index === 1 || index === 4) {
         const epLastStock = rows[3].endpoint;
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
-  
+
         console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
           key: desc,
         });
-  
+
         newRow[3].data = r;
+      }
+
+      if (index === 2 || index === 5) {
+        const epLastStock = rows[6].endpoint;
+        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+        const { data } = await MainServices.get(urlLastStock);
+
+        console.log("last stock : ", data);
+        r = getRows({
+          header: getHeaderRow[desc],
+          data: data.data,
+          key: desc,
+        });
+
+        newRow[6].data = r;
       }
 
       setRows(newRow);

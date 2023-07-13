@@ -1,8 +1,4 @@
-const {
-  nonEditable,
-  textCell,
-  monthHeaderCell,
-} = require("values/react-grid/cells");
+const { nonEditable, textCell, monthHeaderCell } = require("values/react-grid/cells");
 
 const ROW_HEIGHT = 32;
 const HEADER_ROOT_ROW_ID = "header-root";
@@ -117,6 +113,6 @@ export const getHeaderRow = {
   "Stok akhir": type1,
   "Asumsi unit jual": type1,
   "Harga jual per unit": type1,
-  // Penjualan: type4,
+  Penjualan: type1,
   // "Potongan penjualan": type5,
 };
