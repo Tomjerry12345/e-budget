@@ -208,6 +208,6 @@ export const getColumns = {
   "Stok akhir": type2,
   "Asumsi unit jual": type1,
   "Harga jual per unit": type3,
-  // Penjualan: type4,
+  Penjualan: type2,
   // "Potongan penjualan": type5,
 };

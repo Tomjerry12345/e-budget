@@ -93,7 +93,7 @@ export const firstLoadTotalRow = (data, key) => {
     "Stok akhir": type2(data, key),
     "Asumsi unit jual": type2(data, key),
     "Harga jual per unit": type2(data, key),
-    // Penjualan: type1(data, key),
+    Penjualan: type2(data, key),
     // "Potongan penjualan": type3(data, key),
   };
 

@@ -1,11 +1,7 @@
 import { generateUID } from "values/Utilitas";
 import { ROW_HEIGHT } from "./Constant";
 
-const {
-  nonEditable,
-  textCell,
-  numberCell,
-} = require("values/react-grid/cells");
+const { nonEditable, textCell, numberCell } = require("values/react-grid/cells");
 
 function type1() {
   return {
@@ -152,7 +148,7 @@ export const reactgridNewRow = (id, key) => {
     "Stok akhir": type2(),
     "Asumsi unit jual": type2(),
     "Harga jual per unit": type2(),
-    // Penjualan: type1(),
+    Penjualan: type2(),
     // "Potongan penjualan": type3(),
   };
   return l[key];
