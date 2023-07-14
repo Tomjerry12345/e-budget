@@ -3,7 +3,7 @@ import LoginPage from "pages/autentikasi/login/LoginPage";
 import MainPage from "pages/main/MainPage";
 import DashboardPage from "pages/main/dashboard/DashboardPage";
 import App from "pages/App";
-import CapexSummary from "pages/main/capex/summary/CapexSummary";
+import CapexSummary from "pages/main/capex/summary/capex-summary/CapexSummary";
 import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
 import MppSummary from "pages/main/mpp/summary/MppSummary";
 import MppInputPage from "pages/main/mpp/input/MppInputPage";
@@ -117,7 +117,24 @@ import InternetSummaryPage from "pages/main/opex/summary/internet/InternetSummar
 import CapexInputPage from "pages/main/capex/input/input-capex/CapexInputPage";
 import NewAsetInputPage from "pages/main/capex/input/new-aset/NewAsetInputPage";
 
+import { routingCapex } from "values/RoutingPage";
+import LoadSaldoAwalPage from "pages/main/capex/input/load-saldo-awal/LoadSaldoAwalPage";
+import ExistingAsetSummaryPage from "pages/main/capex/summary/existing-aset/ExistingAsetSummaryPage";
+import PenyusutanExistingAsetSummaryPage from "pages/main/capex/summary/penyusutan-existing-aset/PenyusutanExistingAsetSummaryPage";
+import SaldoAwalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/saldo-awal-akumulasi-penyusutan/SaldoAwalAkumulasiPenyusutanSummaryPage";
+import NewAsetSummaryPage from "pages/main/capex/summary/new-aset/NewAsetSummaryPage";
+import PenyusutanNewAsetSummaryPage from "pages/main/capex/summary/penyusutan-new-aset/PenyusutanNewAsetSummaryPage";
+import AkumulasiPenyusutanNewAsetSummaryPage from "pages/main/capex/summary/akumulasi-penyusutan-new-aset/AkumulasiPenyusutanNewAsetSummaryPage";
+import DisposalAsetSummaryPage from "pages/main/capex/summary/disposal-aset/DisposalAsetSummaryPage";
+import NilaiJualAsetSummaryPage from "pages/main/capex/summary/nilai-jual-aset/NilaiJualAsetSummaryPage";
+import PenyusutanDisposalAsetSummaryPage from "pages/main/capex/summary/penyusutan-disposal-aset/PenyusutanDisposalAsetSummaryPage";
+import AkumulasiPenyusutanDisposalAsetSummaryPage from "pages/main/capex/summary/akumulasi-penyusutan-disposal-aset/AkumulasiPenyusutanDisposalAsetSummaryPage";
+import TotalAsetSummaryPage from "pages/main/capex/summary/total-aset/TotalAsetSummaryPage";
+import TotalPenyusutanSummaryPage from "pages/main/capex/summary/total-penyusutan/TotalPenyusutanSummaryPage";
+import TotalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/total-akumulasi-penyusutan/TotalAkumulasiPenyusutanSummaryPage";
+
 const RoutersConfig = () => {
+  const rCapex = Object.keys(routingCapex);
   return (
     <BrowserRouter>
       <Routes>
@@ -261,9 +278,44 @@ const RoutersConfig = () => {
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
+            <Route path="input/load-saldo-awal" element={<LoadSaldoAwalPage />} />
             <Route path="input/new-aset" element={<NewAsetInputPage />} />
-            <Route path="input/:item" element={<CapexInputPage />} />
-            <Route path="summary/:item" element={<CapexSummary />} />
+            <Route path="input/direct-capex" element={<CapexInputPage />} />
+            <Route path="summary/existing-aset" element={<ExistingAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-existing-aset"
+              element={<PenyusutanExistingAsetSummaryPage />}
+            />
+            <Route
+              path="summary/saldo-awal-akumulasi-penyusutan"
+              element={<SaldoAwalAkumulasiPenyusutanSummaryPage />}
+            />
+            <Route path="summary/new-aset" element={<NewAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-new-aset"
+              element={<PenyusutanNewAsetSummaryPage />}
+            />
+            <Route
+              path="summary/akumulasi-penyusutan-new-aset"
+              element={<AkumulasiPenyusutanNewAsetSummaryPage />}
+            />
+            <Route path="summary/disposal-aset" element={<DisposalAsetSummaryPage />} />
+            <Route path="summary/nilai-jual-aset" element={<NilaiJualAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-disposal-aset"
+              element={<PenyusutanDisposalAsetSummaryPage />}
+            />
+            <Route
+              path="summary/akumulasi-penyusutan-disposal-aset"
+              element={<AkumulasiPenyusutanDisposalAsetSummaryPage />}
+            />
+            <Route path="summary/total-aset" element={<TotalAsetSummaryPage />} />
+            <Route path="summary/total-penyusutan" element={<TotalPenyusutanSummaryPage />} />
+            <Route
+              path="summary/total-akumulasi-penyusutan"
+              element={<TotalAkumulasiPenyusutanSummaryPage />}
+            />
+            {/* <Route path="summary/:item" element={<CapexSummary />} /> */}
           </Route>
           <Route path="mpp">
             <Route path="input/:item" element={<MppInputPage />} />

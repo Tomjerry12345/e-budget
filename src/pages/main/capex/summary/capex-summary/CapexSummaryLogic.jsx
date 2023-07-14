@@ -2,10 +2,10 @@ import { Form } from "antd";
 import { createRef, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { columnOutputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { getLocal, getSizeScreen } from "../../../../values/Utilitas";
+import { columnOutputType1 } from "component/table/utils/TypeColumn";
+import { val } from "redux/action/action.reducer";
+import MainServices from "services/MainServices";
+import { getLocal, getSizeScreen } from "values/Utilitas";
 
 const menuCapex = {
   "Summary Total Aset": "capexAset",

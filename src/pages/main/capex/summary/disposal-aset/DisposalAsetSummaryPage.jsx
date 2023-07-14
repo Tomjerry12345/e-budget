@@ -3,26 +3,13 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 
-const NewAsetInputPage = () => {
+const DisposalAsetSummaryPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
-      <HeaderComponent
-        className="more-modal-width-type1"
-        type="input"
-        // onFinish={func.onFinish}
-        onUploadFile={func.onUploadFile}
-        accesFile={value}
-        downloadFile={constantExcellFile["opex"]["template-5"]}
-        // disabledImportExport={
-        //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
-        // }
-        onChangeSelect={func.onChangeTahun}
-        // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
-      />
+      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
 
       <FilterComponent
         onFinish={func.onFinish}
@@ -31,7 +18,6 @@ const NewAsetInputPage = () => {
         isCodeLocation={false}
         isCodeIcp={false}
         isCodeDept={false}
-        type="input"
       />
 
       <div className="custom-root-layout">
@@ -53,7 +39,6 @@ const NewAsetInputPage = () => {
                 columns={value.columns}
                 stickyTopRows={1}
                 stickyLeftColumns={1}
-                onCellsChanged={(change) => func.onChangeTable(change, "administrasi")}
               />
             </div>
           </div>
@@ -63,4 +48,4 @@ const NewAsetInputPage = () => {
   );
 };
 
-export default NewAsetInputPage;
+export default DisposalAsetSummaryPage;

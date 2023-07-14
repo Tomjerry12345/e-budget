@@ -1,25 +1,43 @@
-const COL_WIDTH = 110;
-
 export function getColumns() {
   return [
     {
-      columnId: "name",
+      columnId: "description",
       width: 300,
     },
     {
-      columnId: "activity",
+      columnId: "qty",
       width: 200,
     },
     {
-      columnId: "cost_driver",
+      columnId: "price",
       width: 200,
     },
     {
-      columnId: "amount",
+      columnId: "asset_category",
       width: 200,
     },
     {
-      columnId: "rates",
+      columnId: "purchase_date_month",
+      width: 200,
+    },
+    {
+      columnId: "purchase_date_year",
+      width: 200,
+    },
+    {
+      columnId: "depreciation_date_monthly",
+      width: 200,
+    },
+    {
+      columnId: "depreciation_date_yearly",
+      width: 200,
+    },
+    {
+      columnId: "asset_life",
+      width: 200,
+    },
+    {
+      columnId: "salvage_value",
       width: 200,
     },
     {
@@ -27,28 +45,20 @@ export function getColumns() {
       width: 200,
     },
     {
-      columnId: "month_duration",
+      columnId: "depreciation_amount_monthly",
       width: 200,
     },
     {
-      columnId: "month_start",
+      columnId: "depreciation_amount_yearly",
       width: 200,
     },
     {
-      columnId: "grand_total",
+      columnId: "accumulated_account",
       width: 200,
     },
-    { columnId: "jan_rates", width: COL_WIDTH },
-    { columnId: "feb_rates", width: COL_WIDTH },
-    { columnId: "mar_rates", width: COL_WIDTH },
-    { columnId: "apr_rates", width: COL_WIDTH },
-    { columnId: "mei_rates", width: COL_WIDTH },
-    { columnId: "jun_rates", width: COL_WIDTH },
-    { columnId: "jul_rates", width: COL_WIDTH },
-    { columnId: "agu_rates", width: COL_WIDTH },
-    { columnId: "sep_rates", width: COL_WIDTH },
-    { columnId: "okt_rates", width: COL_WIDTH },
-    { columnId: "nov_rates", width: COL_WIDTH },
-    { columnId: "des_rates", width: COL_WIDTH },
+    {
+      columnId: "depreciation_account",
+      width: 200,
+    },
   ];
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import CapexSummaryLogic from "./CapexSummaryLogic";
-import TableComponent from "../../../../component/table/TableComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import FilterComponent from "../../../../component/filter/FilterComponent";
+import TableComponent from "component/table/TableComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
 
 const CapexSummary = () => {
   const { value, func } = CapexSummaryLogic();
