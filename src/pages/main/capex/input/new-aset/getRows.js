@@ -18,46 +18,26 @@ const TOTAL_DATA = 18;
 const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
-const COLOR_1 = "#107C41";
-
 export function getRootHeaderRow() {
   return {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
       nonEditable(textCell("Description", "justify-content-center font-bold")),
-      nonEditable(textCell("Aktivitas", "justify-content-center font-bold")),
-      nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
-
-      nonEditable(textCell("Jumlah", "justify-content-center font-bold")),
-      nonEditable(
-        textCell("Tarif Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Total Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Lama Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        textCell("Mulai Asuransi", "justify-content-center font-bold")
-      ),
-      nonEditable(
-        rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)
-      ),
-
-      nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Mar`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Apr`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Mei`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Jun`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Jul`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Agu`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Sep`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Okt`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Nov`, "justify-content-center")),
-      nonEditable(monthHeaderCell(`Des`, "justify-content-center")),
+      nonEditable(textCell("Qty", "justify-content-center font-bold")),
+      nonEditable(textCell("Price", "justify-content-center font-bold")),
+      nonEditable(textCell("Asset Category", "justify-content-center font-bold")),
+      nonEditable(textCell("Purchase Date Month", "justify-content-center font-bold")),
+      nonEditable(textCell("Purchase Date Year", "justify-content-center font-bold")),
+      nonEditable(textCell("Depreciation Date Month", "justify-content-center font-bold")),
+      nonEditable(textCell("Depreciation Date Year", "justify-content-center font-bold")),
+      nonEditable(textCell("Asset Life (In Years)", "justify-content-center font-bold")),
+      nonEditable(textCell("Salvage Value", "justify-content-center font-bold")),
+      nonEditable(textCell("Total", "justify-content-center font-bold")),
+      nonEditable(textCell("Depreciation Amount Monthly", "justify-content-center font-bold")),
+      nonEditable(textCell("Depreciation Amount Yearly", "justify-content-center font-bold")),
+      nonEditable(textCell("Accumulated Account", "justify-content-center font-bold")),
+      nonEditable(textCell("Depreciation Account", "justify-content-center font-bold")),
     ],
   };
 }
@@ -100,10 +80,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   log({ list });
   return rowTotal("Total", list);
@@ -171,13 +148,17 @@ function rowTotal(titleTotal, total) {
   };
 }
 
-export function getRows({ header, data }) {
-  return [header, ...getGroupRows(data), firstLoadTotalRow(data)];
+export function getRows({ data }) {
+  return [getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
 }
 
-export function fullNewRow(header, id) {
+export function fullNewRow({ id }) {
   const list = createArray(TOTAL_DATA);
-  return [header, reactgridNewRow(id), rowTotal("Total", list)];
+  return [
+    getRootHeaderRow(),
+    reactgridNewRow(id),
+    // rowTotal("Total", list)
+  ];
 }
 
 export function reactgridNewRow(id) {
@@ -186,33 +167,21 @@ export function reactgridNewRow(id) {
     newRow: true,
     height: ROW_HEIGHT,
     cells: [
-      textCell("", "padding-left-lg"),
       nonEditable(textCell("", "padding-left-lg")),
-      // nonEditable(textCell("", "padding-left-lg")),
-      dropDownCell({
-        values: [{ label: "test", value: "test" }],
-        isOpen: true,
-      }),
-
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(textCell("", "padding-left-lg")),
     ],
   };
 }

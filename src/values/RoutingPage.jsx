@@ -65,7 +65,22 @@ export const routingOpex = {
   "Summary Budget Opex": "opex",
 };
 export const routingCapex = {
+  "Input Load Saldo Awal": "load-saldo-awal",
   "Input New Aset": "new-aset",
+  "Input Direct Capex": "direct-capex",
+  "Summary Existing Aset": "existing-aset",
+  "Summary Penyusutan Existing Aset": "penyusutan-existing-aset",
+  "Summary Saldo Awal Akumulasi Penyusutan": "saldo-awal-akumulasi-penyusutan",
+  "Summary New Aset": "new-aset",
+  "Summary Penyusutan New Aset": "penyusutan-new-aset",
+  "Summary Akumulasi Penyusutan New Aset": "akumulasi-penyusutan-new-aset",
+  "Summary Disposal Aset": "disposal-aset",
+  "Summary Nilai Jual Aset": "nilai-jual-aset",
+  "Summary Penyusutan Disposal Aset": "penyusutan-disposal-aset",
+  "Summary Akumulasi Penyusutan Disposal Aset": "akumulasi-penyusutan-disposal-aset",
+  "Summary Total Aset": "total-aset",
+  "Summary Total Penyusutan": "total-penyusutan",
+  "Summary Total Akumulasi Penyusutan": "total-akumulasi-penyusutan",
 };
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",

@@ -16,6 +16,8 @@ const periode = [
   { description: `${date.getFullYear() + 1} - ${date.getFullYear() + 2}` },
 ];
 
+const status = [{ description: `All` }, { description: `Actived` }, { description: `Retired` }];
+
 const AutoCompleteFilter = ({
   value,
   func,
@@ -23,6 +25,8 @@ const AutoCompleteFilter = ({
   isCodeIcp,
   isCodeProject,
   isCodeLocation,
+  isCodeDept,
+  isStatus,
   disabled,
   variant,
   type = "default",
@@ -53,8 +57,9 @@ const AutoCompleteFilter = ({
         value={value.state.code_location}
       />
     ) : null}
-
-    <AutoCompleteElement label="Departemen" name="code_dept" value={value.state.code_dept} />
+    {isCodeDept === true ? (
+      <AutoCompleteElement label="Departemen" name="code_dept" value={value.state.code_dept} />
+    ) : null}
 
     {isCodeIcp ? (
       <AutoCompleteElement label="ICP" name="code_icp" value={value.state.code_icp} />
@@ -69,17 +74,23 @@ const AutoCompleteFilter = ({
     ) : null}
 
     <AutoCompleteElement label="Periode" name="periode" value={periode} />
+
+    {isStatus === true ? (
+      <AutoCompleteElement label="Status" name="status" value={status} />
+    ) : null}
   </>
 );
 
 /**
  *
  * @param {{
- * keyCodeProject: "default" | "BJU";
+ * onFinish: const function = () => {};
+ * isCodeProduct: true | false;
  * isCodeProject: true | false;
+ * isCodeLocation: true | false;
  * isCodeIcp: true | false;
  * isCodeLocation: true | false;
- * onFinish: const function = () => {};
+ * keyCodeProject: "default" | "BJU";
  * type: "summary" | "input";
  * }} props Props for the component
  *
@@ -91,6 +102,8 @@ const FilterComponent = ({
   isCodeProject = true,
   isCodeLocation = true,
   isCodeIcp = true,
+  isCodeDept = true,
+  isStatus = false,
   keyCodeProject = null,
   form = null,
   codeCompany = null,
@@ -109,6 +122,7 @@ const FilterComponent = ({
     isCodeProject,
     isCodeLocation,
     isCodeIcp,
+    isCodeDept,
     keyCodeProject,
     formGlobal: form,
     type: type,
@@ -134,6 +148,8 @@ const FilterComponent = ({
                 isCodeProject={isCodeProject}
                 isCodeLocation={isCodeLocation}
                 isCodeIcp={isCodeIcp}
+                isCodeDept={isCodeDept}
+                isStatus={isStatus}
                 disabled={
                   usersGroup === "usersbu" ? true : usersGroup === "reviewer" ? false : disabled
                 }

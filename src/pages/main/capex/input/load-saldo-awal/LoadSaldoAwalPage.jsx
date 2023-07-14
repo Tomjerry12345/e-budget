@@ -1,11 +1,12 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
+import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
 
-const NewAsetInputPage = () => {
+const LoadSaldoAwalPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -31,6 +32,7 @@ const NewAsetInputPage = () => {
         isCodeLocation={false}
         isCodeIcp={false}
         isCodeDept={false}
+        isStatus={true}
         type="input"
       />
 
@@ -63,4 +65,4 @@ const NewAsetInputPage = () => {
   );
 };
 
-export default NewAsetInputPage;
+export default LoadSaldoAwalPage;

@@ -19,7 +19,9 @@ const Logic = () => {
 
     const h = getKeyByValue(allRouting[split[2]], q);
 
-    setHeader(h[1]);
+    log({ h });
+
+    setHeader(h[1] === undefined ? h[0] : split[3] === "input" ? h[0] : h[1]);
   }, []);
 
   const onClickMore = () => {

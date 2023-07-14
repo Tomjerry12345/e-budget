@@ -8,6 +8,7 @@ const FilterComponentLogic = ({
   isCodeProject,
   isCodeLocation,
   isCodeIcp,
+  isCodeDept,
   codeCompany,
   type,
   typeCompany,
@@ -122,9 +123,10 @@ const FilterComponentLogic = ({
         isCodeLocation === true
           ? await MainServices.get(`location/list-by-com?code_company=${code[0]}`)
           : null;
-      const resDept = await MainServices.get(
-        `department/list-dropdown?code_company=${code[0]}`
-      );
+      const resDept =
+        isCodeDept === true
+          ? await MainServices.get(`department/list-dropdown?code_company=${code[0]}`)
+          : null;
       const resIcp =
         isCodeIcp === true
           ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
@@ -138,7 +140,7 @@ const FilterComponentLogic = ({
         ...state,
         code_product: resProduct !== null ? setProduct(resProduct) : [],
         code_location: resLocation !== null ? setLocation(resLocation) : [],
-        code_dept: setDept(resDept),
+        code_dept: resDept !== null ? setDept(resDept) : [],
         code_icp: resIcp !== null ? setIcp(resIcp) : [],
         code_project: resProject !== null ? setProject(resProject, code) : [],
       });
