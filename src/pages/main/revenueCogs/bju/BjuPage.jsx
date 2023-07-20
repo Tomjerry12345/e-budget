@@ -96,8 +96,8 @@ const BjuPage = () => {
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
-          isCodeProject
-          isCodeProduct={false}
+          isCodeProject={false}
+          isCodeProduct
           type="input"
           codeCompany={perusahaan.code}
           form={form}

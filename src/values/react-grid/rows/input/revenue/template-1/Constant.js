@@ -1,5 +1,3 @@
-import { log } from "values/Utilitas";
-
 export const ROW_HEIGHT = 32;
 
 export const FIRST_TOTAL = {
@@ -10,7 +8,7 @@ export const FIRST_TOTAL = {
   "Asumsi unit jual": 2,
   "Harga jual per unit": 2,
   Penjualan: 2,
-  "Potongan penjualan": 12,
+  "Potongan penjualan": 2,
 };
 
 export const TOTAL_DATA = {
@@ -21,7 +19,7 @@ export const TOTAL_DATA = {
   "Asumsi unit jual": 26,
   "Harga jual per unit": 26,
   Penjualan: 26,
-  "Potongan penjualan": 12,
+  "Potongan penjualan": 26,
 };
 
 export const END_TOTAL = (key) => FIRST_TOTAL[key] + TOTAL_DATA[key];

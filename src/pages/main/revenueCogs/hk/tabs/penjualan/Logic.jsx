@@ -156,8 +156,8 @@ const Logic = () => {
           const newCell = newRows[rowIndex].cells.map((e, j) => {
             if (j >= 2 && j <= 13) total1 += e.value;
             if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 27) total2 += e.value;
-            if (j === 28) e.value = total2;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
             return e;
           });
 
@@ -244,8 +244,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -271,8 +271,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -282,6 +282,29 @@ const Logic = () => {
                 fullRows[6].data,
                 item.description
               );
+            }
+
+            if (i === 7) {
+              const length = fullRows[7].data.length;
+              const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+
+              fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
+                vPenjualan * (value / 100);
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellStockAkhir = fullRows[7].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
+
+              fullRows[7].data[rowIndex].cells = newCellStockAkhir;
+
+              fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
             }
           }
         } catch (e) {

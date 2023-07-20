@@ -48,14 +48,13 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
+    const { code_company, code_product, code_dept, code_location, code_icp, periode } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
+    let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
 
     let fPeriode = periode.split(" ");
 
@@ -63,10 +62,10 @@ const Logic = () => {
     fCodeLocation = fCodeLocation[0];
     fCodeDept = fCodeDept[0];
     fCodeIcp = fCodeIcp[0];
-    fCodeProject = fCodeProject[0];
+    fCodeProduct = fCodeProduct[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
+    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProduct, fPeriode);
 
     setCodeFilter(values);
   };
@@ -76,7 +75,7 @@ const Logic = () => {
     codeLocation,
     codeDept,
     codeIcp,
-    codeProject,
+    codeProduct,
     periode
   ) => {
     const listRows = [];
@@ -84,7 +83,7 @@ const Logic = () => {
     await Promise.allSettled(
       urlRevenue.map(async (p, i) => {
         const desc = p.description;
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_product=${codeProduct}&year=${periode}`;
         try {
           const { data } = await MainServices.get(url);
           let r;
@@ -156,8 +155,8 @@ const Logic = () => {
           const newCell = newRows[rowIndex].cells.map((e, j) => {
             if (j >= 2 && j <= 13) total1 += e.value;
             if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 27) total2 += e.value;
-            if (j === 28) e.value = total2;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 26) e.value = total2;
             return e;
           });
 
@@ -182,14 +181,14 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
+            const { code_company, code_dept, code_location, code_product, code_icp, periode } =
               codeFilter;
 
             let fCodeCompany = code_company.split(" ");
             let fCodeLocation = code_location.split(" ");
             let fCodeDept = code_dept.split(" ");
             let fCodeIcp = code_icp.split(" ");
-            let fCodeProject = code_project.split(" ");
+            let fCodeProduct = code_product.split(" ");
 
             let fPeriode = periode.split(" ");
 
@@ -197,14 +196,14 @@ const Logic = () => {
             fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
             fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
             fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-            fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+            fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
             fPeriode = fPeriode[0];
 
             formData.append("code_company", fCodeCompany);
             formData.append("code_department", fCodeDept);
             formData.append("code_location", fCodeLocation);
             formData.append("code_product", codeProduct);
-            formData.append("code_project", fCodeProject);
+            formData.append("code_product", fCodeProduct);
             formData.append("code_icp", fCodeIcp);
             formData.append("year", fPeriode);
             formData.append(key, value);
@@ -244,8 +243,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -271,8 +270,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -309,14 +308,14 @@ const Logic = () => {
       })
     );
 
-    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
+    const { code_company, code_location, code_dept, code_icp, code_product, periode } =
       codeFilter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
+    let fCodeProduct = code_product.split(" ");
 
     let fPeriode = periode.split(" ");
 
@@ -324,7 +323,7 @@ const Logic = () => {
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     fPeriode = fPeriode[0];
 
     const desc = dataGlobalRedux.indexImport;
@@ -340,13 +339,13 @@ const Logic = () => {
     formData.append("code_location", fCodeLocation);
     formData.append("code_department", fCodeDept);
     formData.append("code_icp", fCodeIcp);
-    formData.append("code_project", fCodeProject);
+    formData.append("code_product", fCodeProduct);
     formData.append("year", fPeriode);
 
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_product=${fCodeProduct}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
       console.log("first stock : ", data);
 
@@ -362,7 +361,7 @@ const Logic = () => {
 
       if (index === 0 || index === 1 || index === 4) {
         const epLastStock = rows[3].endpoint;
-        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_product=${fCodeProduct}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
         console.log("last stock : ", data);
@@ -377,7 +376,7 @@ const Logic = () => {
 
       if (index === 2 || index === 5) {
         const epLastStock = rows[6].endpoint;
-        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_product=${fCodeProduct}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
         console.log("last stock : ", data);

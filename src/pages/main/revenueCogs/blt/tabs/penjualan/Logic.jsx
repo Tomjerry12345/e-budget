@@ -115,7 +115,6 @@ const Logic = () => {
     );
     dispatch(actionData({ sizeDataRevenue: 1 }));
 
-    log({ listRows });
     setRows(listRows);
   };
 
@@ -156,8 +155,8 @@ const Logic = () => {
           const newCell = newRows[rowIndex].cells.map((e, j) => {
             if (j >= 2 && j <= 13) total1 += e.value;
             if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 27) total2 += e.value;
-            if (j === 28) e.value = total2;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
             return e;
           });
 
@@ -244,8 +243,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -271,8 +270,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 

@@ -631,6 +631,12 @@ export const urlRevenue = [
     file: "penjualan.xlsx",
     insert: false,
   },
+  {
+    description: "Potongan penjualan",
+    endpoint: "detailrevenue/sale-discount",
+    file: "penjualan.xlsx",
+    insert: false,
+  },
 ];
 
 export const getPerusahaan = (q) => {

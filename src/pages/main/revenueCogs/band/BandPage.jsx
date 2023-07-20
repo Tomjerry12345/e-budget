@@ -96,8 +96,8 @@ const BandPage = () => {
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
-          isCodeProject={false}
-          isCodeProduct
+          isCodeProject
+          isCodeProduct={false}
           type="input"
           codeCompany={perusahaan.code}
           form={form}

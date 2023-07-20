@@ -51,7 +51,6 @@ const Logic = () => {
     const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
@@ -156,8 +155,8 @@ const Logic = () => {
           const newCell = newRows[rowIndex].cells.map((e, j) => {
             if (j >= 2 && j <= 13) total1 += e.value;
             if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 27) total2 += e.value;
-            if (j === 28) e.value = total2;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
             return e;
           });
 
@@ -244,8 +243,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -271,8 +270,8 @@ const Logic = () => {
               const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 27) total2 += e.value;
-                if (j === 28) e.value = total2;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
                 return e;
               });
 
@@ -329,7 +328,6 @@ const Logic = () => {
 
     const desc = dataGlobalRedux.indexImport;
     const index = rows.findIndex((item) => item.description === desc);
-    log("row[index]", rows[index]);
     const endpoint = rows[index].endpoint;
 
     let formData = new FormData();
@@ -348,7 +346,6 @@ const Logic = () => {
 
       const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
-      console.log("first stock : ", data);
 
       let r = getRows({
         header: getHeaderRow[desc],
@@ -365,7 +362,6 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
-        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
@@ -380,7 +376,6 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
-        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
