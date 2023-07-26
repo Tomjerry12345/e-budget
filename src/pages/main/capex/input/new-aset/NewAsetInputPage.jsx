@@ -26,11 +26,11 @@ const NewAsetInputPage = () => {
 
       <FilterComponent
         onFinish={func.onFinish}
-        isCodeProduct={false}
-        isCodeProject={false}
-        isCodeLocation={false}
-        isCodeIcp={false}
-        isCodeDept={false}
+        isCodeProduct
+        isCodeProject
+        isCodeLocation
+        isCodeIcp
+        isCodeDept
         type="input"
       />
 

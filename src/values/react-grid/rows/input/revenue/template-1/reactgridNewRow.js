@@ -24,6 +24,23 @@ function type1() {
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+
+      nonEditable(numberCell(0, "padding-left-lg")),
     ],
   };
 }
@@ -49,9 +66,6 @@ function type2() {
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
@@ -65,74 +79,6 @@ function type2() {
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
 
-      nonEditable(numberCell(0, "padding-left-lg")),
-    ],
-  };
-}
-
-function type3() {
-  return {
-    rowId: generateUID(),
-    newRow: true,
-    height: ROW_HEIGHT,
-    cells: [
-      nonEditable(numberCell(0, "padding-left-lg")),
-      textCell("", "padding-left-lg"),
-      textCell("", "padding-left-lg"),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-    ],
-  };
-}
-
-function type4() {
-  return {
-    rowId: generateUID(),
-    newRow: true,
-    height: ROW_HEIGHT,
-    cells: [
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
@@ -142,14 +88,20 @@ function type4() {
 
 export const reactgridNewRow = (id, key) => {
   const l = {
-    "Stok Awal": type2(),
-    "Asumsi unit beli": type2(),
-    "Harga beli per unit": type2(),
-    "Stok akhir": type2(),
-    "Asumsi unit jual": type2(),
-    "Harga jual per unit": type2(),
-    Penjualan: type2(),
-    // "Potongan penjualan": type3(),
+    "Stok Awal": type1(),
+    "Asumsi unit beli": type1(),
+    "Harga beli per unit": type1(),
+    "Stok akhir": type1(),
+    "Asumsi unit jual": type1(),
+    "Harga jual per unit": type1(),
+    "Volume / Unit": type1(),
+    Tarif: type1(),
+    "Asumsi trip": type1(),
+    Penjualan: type1(),
+    "Potongan penjualan": type2(),
+    "Pendapatan Operasional Lainnya": type1(),
+    "HPP Variable": type2(),
+    "HPP Lainnya": type1(),
   };
   return l[key];
 };

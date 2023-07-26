@@ -3,10 +3,7 @@ import LoginPage from "pages/autentikasi/login/LoginPage";
 import MainPage from "pages/main/MainPage";
 import DashboardPage from "pages/main/dashboard/DashboardPage";
 import App from "pages/App";
-import CapexSummary from "pages/main/capex/summary/capex-summary/CapexSummary";
 import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
-import MppSummary from "pages/main/mpp/summary/MppSummary";
-import MppInputPage from "pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "pages/main/others/summary/OthersSummary";
 import OthersInputPage from "pages/main/others/input/OthersInputPage";
@@ -117,7 +114,6 @@ import InternetSummaryPage from "pages/main/opex/summary/internet/InternetSummar
 import CapexInputPage from "pages/main/capex/input/input-capex/CapexInputPage";
 import NewAsetInputPage from "pages/main/capex/input/new-aset/NewAsetInputPage";
 
-import { routingCapex } from "values/RoutingPage";
 import LoadSaldoAwalPage from "pages/main/capex/input/load-saldo-awal/LoadSaldoAwalPage";
 import ExistingAsetSummaryPage from "pages/main/capex/summary/existing-aset/ExistingAsetSummaryPage";
 import PenyusutanExistingAsetSummaryPage from "pages/main/capex/summary/penyusutan-existing-aset/PenyusutanExistingAsetSummaryPage";
@@ -132,9 +128,9 @@ import AkumulasiPenyusutanDisposalAsetSummaryPage from "pages/main/capex/summary
 import TotalAsetSummaryPage from "pages/main/capex/summary/total-aset/TotalAsetSummaryPage";
 import TotalPenyusutanSummaryPage from "pages/main/capex/summary/total-penyusutan/TotalPenyusutanSummaryPage";
 import TotalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/total-akumulasi-penyusutan/TotalAkumulasiPenyusutanSummaryPage";
+import RateAsumptionPage from "pages/main/mpp/input/rate-asumption/RateAsumptionPage";
 
 const RoutersConfig = () => {
-  const rCapex = Object.keys(routingCapex);
   return (
     <BrowserRouter>
       <Routes>
@@ -318,8 +314,7 @@ const RoutersConfig = () => {
             {/* <Route path="summary/:item" element={<CapexSummary />} /> */}
           </Route>
           <Route path="mpp">
-            <Route path="input/:item" element={<MppInputPage />} />
-            <Route path="summary/:item" element={<MppSummary />} />
+            <Route path="input/rate-asumption" element={<RateAsumptionPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />

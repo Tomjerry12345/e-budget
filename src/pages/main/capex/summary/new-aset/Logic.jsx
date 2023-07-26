@@ -17,43 +17,33 @@ const Logic = () => {
 
   const ENDPOINT_URL = "summary_capex/new_asset";
 
-  // useEffect(() => {
-  //   getDataAccount();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // const getDataAccount = async () => {
-  //   try {
-  //     const split = location.pathname.split("/");
-  //     const q = split[split.length - 1];
-  //     const res = await MainServices.get(`config/opex/byalias/${q}`);
-  //     log({ res });
-  //     setItems(res.data.data[0]);
-  //   } catch (e) {
-  //     log({ e });
-  //   }
-  // };
-
   const onSetDataTable = (values) => {
     const { code_company, code_dept, code_product, code_project, code_icp, periode } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
-    // let fCodeDept = code_dept.split(" ");
-    // let fCodeIcp = code_icp.split(" ");
-    // let fCodeProject = code_project.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    // fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    // fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    // fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    // fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
     // getData(fCodeCompany, fCodeProduct, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
-    getData({ codeCompany: fCodeCompany, periode: fPeriode });
+    getData({
+      codeCompany: fCodeCompany,
+      codeProduct: fCodeProduct,
+      codeDept: fCodeDept,
+      codeIcp: fCodeIcp,
+      codeProject: fCodeProject,
+      periode: fPeriode,
+    });
   };
 
   const getData = async ({
@@ -64,7 +54,7 @@ const Logic = () => {
     codeProject,
     periode,
   }) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&year=${periode}`;
+    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
       log("data.data", data.data.length);

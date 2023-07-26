@@ -13,11 +13,11 @@ const PenyusutanExistingAsetSummaryPage = () => {
 
       <FilterComponent
         onFinish={func.onFinish}
-        isCodeProduct={false}
-        isCodeProject={false}
-        isCodeLocation={false}
-        isCodeIcp={false}
-        isCodeDept={false}
+        isCodeProduct
+        isCodeProject
+        isCodeLocation
+        isCodeIcp
+        isCodeDept
       />
 
       <div className="custom-root-layout">

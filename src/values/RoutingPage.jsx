@@ -82,6 +82,10 @@ export const routingCapex = {
   "Summary Total Penyusutan": "total-penyusutan",
   "Summary Total Akumulasi Penyusutan": "total-akumulasi-penyusutan",
 };
+
+export const routingMpp = {
+  "Input Rate Assumption": "rate-asumption",
+};
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
   "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
@@ -108,6 +112,7 @@ export const allRouting = {
   "revenue-cogs": routingRevenue,
   opex: routingOpex,
   capex: routingCapex,
+  mpp: routingMpp,
   others: routingOthers,
   report: routingReport,
   coa: routingMasterCoa,

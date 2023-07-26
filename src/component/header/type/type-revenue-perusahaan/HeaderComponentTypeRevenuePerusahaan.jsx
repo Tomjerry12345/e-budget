@@ -28,6 +28,7 @@ const ModalMenuMore = ({
     >
       {listMenuImport.map((e, i) => (
         <Button
+          key={i}
           className="btn"
           type="text"
           // icon={<DownloadOutlined />}
@@ -83,6 +84,7 @@ const HeaderComponentTypeRevenuePerusahaan = ({
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
         title={modalTitle}
+        type={true}
       />
     </Header>
   );

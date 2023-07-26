@@ -1,41 +1,34 @@
 version: v1.4.6 ✅ ❌
 
-- masalah open new tab ✅
-- pas klik tampilkan tabel hilang dlu terus tampilkan loading ❌
-- ubah semua name jadi description ❌
-- setiap bulan ada potongan nya di potongan penjualan ❌
+REVENUE
 
-- modal import kasi jelas apa yg mau diimport
-- filename setiap import mau dibuat berbeda
-- pajak parkir tdk brfungsi tombol import
-- import internet
+* tabel data
+- BLT (tambah tabel asumsi trip, penamaan asumsi unit jual ->
+  Volume / Unit, penamaan harga jual per unit -> Tarif) 🔥 ✅
 
-import 
-1. input listrik air, telpon ( datanya tidak tampil setelah di upload dan klik tampilkan)  
-tapi di summary tampil ( contoh filter BK )
-2. Keamanan dan kebersihan data tidak tampil begitupun summary nya 
-( cek template nya  kemungkinan salah ) 
-3. By internet (template ) 
-4. BBM toll dan parkir tdk tampil datanya ✅
-5. input pajak hasil import total di summary beda dengan yang diinput ✅
-6.input pajak parkir resto tombol importnya tidak bisa di klik   --- evidence di bawah
-7.https://abc-dev.kallagroup.co.id/main/opex/input/iklan-advertensi  --- eror
-8. input asuransi (cek templatenya )
-9. izin dan konsultan ( import bisa tapi hasilnya tidak tampil di summary )
-10. cek total by kontraktual
+- BSU (tabel perhitungan penjualan)
+- BK (hilangkan filter project & product, table perhitungan 
+  penjualan berdasarkan project & product)
 
-11.pada form import label disamakan dgn nama file template yg didowload
+- BLU (penamaan asumsi unit jual -> Volume / Unit, penamaan 
+  harga jual per unit -> Tarif) 🔥 ✅
 
-adminhk:
-    menu revenue yang tampil pt hk, input sama summary
-    semua yang filter langsung otomatis nama perusahaan 
-    menu master hilang
+* Dropdown import
+- hilangkan import penjualan 🔥 ✅
+- pindah tab hpp lainnya ganti isian dropdown jadi Import Pendapatan 
+  lainnya dan import HPP lainnya 🔥 ✅
 
-- admin yang tidak memiliki menu perusahaan tampilkan saja input sama summary
-- reviewer input tidak bisa mengedit , hanya muncul menu dan filter sesuai dengan code company
-- hanya super admin yang muncul master
+* filter
+- untuk hpp lainnya munculkan semua filter 🔥 ❌ ✅
 
-task:
-- buat menu opex iklan
-- di bagian menu import sesuai dengan jumlah item nya
-- pisah bagian nya setiap tabel
+* proses import
+- file import diganti jadi satu tahun 🔥 ✅
+- tambah input pilihan radio "Actual - Forecast" dan "Budget" dgn field type 🔥 ✅
+
+capex
+ 
+- semua filter di capex di tambahkan code-code akun yg lainnya 🔥 ❌
+- preview load saldo awal, data dari import excel kolom date brmasalah
+- pagination di halaman load saldo awal
+- preview load saldo awal, tambah kolom action, yg ada button retire, 
+  muncul popup modal untk isi bulan, thn & harga jual retired aset
