@@ -10,49 +10,40 @@ const SaldoAwalAkumulasiPenyusutanSummaryPage = () => {
 
   return (
     <>
-      <HeaderComponent
-        type="summary"
-        disabledImportExport={value.rows.pemasaran.length === 0}
-        // listMenu={value.items.pemasaran}
-        listMenu={value.listMenu}
-        disabledMenu={value.rows.pemasaran.length === 0}
-        linkExport={value.linkExport}
+      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
+
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeProduct
+        isCodeProject
+        isCodeLocation
+        isCodeIcp
+        isCodeDept
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeLocation={false} />
-
       <div className="custom-root-layout">
-        {value.rows.pemasaran.length > 0 ? (
-          <Typography.Text className="section-header-table">Pemasaran</Typography.Text>
-        ) : null}
-
-        {value.rows.pemasaran.length > 0
-          ? value.rows.pemasaran.map((e, i) => (
-              <div style={{ margin: "10px" }}>
-                <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
-                <div
-                  style={{
-                    overflowX: "auto",
-                    overflowY: "auto",
-                    marginBottom: 16,
-                    paddingBottom: 16,
-                  }}
-                >
-                  <div
-                    style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
-                    className="liquidity-planner-app"
-                  >
-                    <ReactGrid
-                      rows={e}
-                      columns={value.columns}
-                      stickyTopRows={1}
-                      stickyLeftColumns={1}
-                    />
-                  </div>
-                </div>
-              </div>
-            ))
-          : null}
+        <div style={{ margin: "10px" }}>
+          <div
+            style={{
+              overflowX: "auto",
+              overflowY: "auto",
+              marginBottom: 16,
+              paddingBottom: 16,
+            }}
+          >
+            <div
+              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              className="liquidity-planner-app"
+            >
+              <ReactGrid
+                rows={value.rows}
+                columns={value.columns}
+                stickyTopRows={1}
+                stickyLeftColumns={1}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

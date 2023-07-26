@@ -93,53 +93,53 @@ const Logic = () => {
     } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
-    // let fCodeLocation = code_location.split(" ");
-    // let fCodeDept = code_dept.split(" ");
-    // let fCodeIcp = code_icp.split(" ");
-    // let fCodeProject = code_project.split(" ");
+    let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
+    let fCodeDept = code_dept.split(" ");
+    let fCodeIcp = code_icp.split(" ");
+    let fCodeProject = code_project.split(" ");
 
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    // fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    // fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    // fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    // fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    // fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
     getData(
       fCodeCompany,
-      // fCodeProduct,
-      // fCodeLocation,
-      // fCodeDept,
-      // fCodeIcp,
-      // fCodeProject,
+      fCodeProduct,
+      fCodeLocation,
+      fCodeDept,
+      fCodeIcp,
+      fCodeProject,
       fPeriode
     );
 
     setCodeFilter({
       code_company: fCodeCompany,
-      // code_dept: fCodeDept,
-      // code_location: fCodeLocation,
-      // code_product: fCodeProduct,
-      // code_icp: fCodeIcp,
-      // code_project: fCodeProject,
+      code_dept: fCodeDept,
+      code_location: fCodeLocation,
+      code_product: fCodeProduct,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
       periode: fPeriode,
     });
   };
 
   const getData = async (
     codeCompany,
-    // codeProduct,
-    // codeLocation,
-    // codeDept,
-    // codeIcp,
-    // codeProject,
+    codeProduct,
+    codeLocation,
+    codeDept,
+    codeIcp,
+    codeProject,
     periode
   ) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&year=${periode}`;
+    const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
       log("data.data", data.data.data);
@@ -162,24 +162,6 @@ const Logic = () => {
     setLoading(true);
 
     onSetDataTable(values);
-  };
-
-  const onTambahRow = (i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-
-    const lastIndex = newRows[i].length - 1;
-    const id = lastIndex + 1;
-    const lastData = newRows[i][lastIndex];
-
-    newRows[i][lastIndex] = reactgridNewRow(id);
-    newRows[i].push(lastData);
-
-    setRows({
-      ...rows,
-      [category]: newRows,
-    });
-
-    showNotif(200, "Sukses tambah row");
   };
 
   const onChangeTable = async (change, category) => {
@@ -379,7 +361,6 @@ const Logic = () => {
       onUploadFile,
       setUploadSucces,
       onChangeTable,
-      onTambahRow,
     },
   };
 };
