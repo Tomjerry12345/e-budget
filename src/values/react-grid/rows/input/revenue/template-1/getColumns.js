@@ -168,6 +168,12 @@ export const getColumns = {
   "Stok akhir": type2,
   "Asumsi unit jual": type1,
   "Harga jual per unit": type3,
+  "Volume / Unit": type1,
+  Tarif: type3,
+  "Asumsi trip": type3,
   Penjualan: type2,
   "Potongan penjualan": type4,
+  "Pendapatan Operasional Lainnya": type1,
+  "HPP Variable": type4,
+  "HPP Lainnya": type1,
 };

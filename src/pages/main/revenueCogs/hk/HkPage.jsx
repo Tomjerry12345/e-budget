@@ -6,7 +6,8 @@ import HeaderComponent from "component/header/HeaderComponent";
 import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
-import { getPerusahaan, urlRevenue } from "values/Constant";
+import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
+import { log } from "values/Utilitas";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
@@ -26,6 +27,9 @@ const HkPage = () => {
   const perusahaan = getPerusahaan(q);
 
   useEffect(() => {
+    if (key === 1) {
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
+    }
     form.setFieldsValue({
       code_company: `${perusahaan.code} - ${perusahaan.description}`,
       code_product: null,
@@ -36,8 +40,11 @@ const HkPage = () => {
       periode: null,
     });
 
-    const l = urlRevenue.filter((e) => e.file !== undefined);
+    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+      (e) => e.file !== undefined
+    );
     setListMenu(l);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
@@ -97,7 +104,7 @@ const HkPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
-          isCodeProduct={false}
+          isCodeProduct={key !== 1}
           type="input"
           codeCompany={perusahaan.code}
           form={form}

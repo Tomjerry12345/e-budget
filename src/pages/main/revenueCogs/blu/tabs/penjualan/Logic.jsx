@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log, showNotif } from "values/Utilitas";
-import { actionData } from "redux/data-global/data.reducer";
-import { urlRevenue } from "values/Constant";
+import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import {
   fullNewRow,
   getRows,
@@ -14,6 +13,8 @@ import {
 } from "values/react-grid/rows/input/revenue/template-1/getRows";
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
+import { tableList } from "../../TableConstant";
+import { keyRevenueTab } from "values/Constant";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -37,7 +38,7 @@ const Logic = () => {
 
   useEffect(() => {
     if (filterValues !== null) {
-      onFinish(filterValues);
+      if (filterValues.code_product === undefined) onFinish(filterValues);
     }
   }, [filterValues]);
 
@@ -82,7 +83,7 @@ const Logic = () => {
     const listRows = [];
 
     await Promise.allSettled(
-      urlRevenue.map(async (p, i) => {
+      tableList[keyRevenueTab[0]].map(async (p, i) => {
         const desc = p.description;
         const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
         try {
@@ -299,7 +300,8 @@ const Logic = () => {
 
   const onSuccess = () => {
     dispatch(resetDataActionImport());
-    dispatch(actionData({ loading: false }));
+    dispatch(actionImport({ loading: false }));
+    dispatch(resetTypeRevenueImport());
   };
 
   const onUploadFile = async (file) => {
@@ -328,27 +330,26 @@ const Logic = () => {
     fPeriode = fPeriode[0];
 
     const desc = dataGlobalRedux.indexImport;
+    const type = dataGlobalRedux.typeRevenueImport ?? "actual";
     const index = rows.findIndex((item) => item.description === desc);
-    log("row[index]", rows[index]);
     const endpoint = rows[index].endpoint;
 
     let formData = new FormData();
 
     formData.append("file", file);
-
     formData.append("code_company", fCodeCompany);
     formData.append("code_location", fCodeLocation);
     formData.append("code_department", fCodeDept);
     formData.append("code_icp", fCodeIcp);
     formData.append("code_project", fCodeProject);
     formData.append("year", fPeriode);
+    formData.append("type", type);
 
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
       const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
-      console.log("first stock : ", data);
 
       let r = getRows({
         header: getHeaderRow[desc],
@@ -365,7 +366,6 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
-        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
@@ -380,7 +380,6 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
-        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,

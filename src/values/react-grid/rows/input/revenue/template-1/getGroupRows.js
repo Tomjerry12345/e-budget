@@ -179,6 +179,50 @@ function type4(data) {
   ];
 }
 
+function type5(data) {
+  return [
+    ...data.map((d) => ({
+      rowId: d["id"] ?? generateUID(),
+      newRow: d["id"] === null,
+      height: ROW_HEIGHT,
+      cells: [
+        textCell(d["code_account"], "padding-left-lg"),
+        textCell(d["description"], "padding-left-lg"),
+
+        numberCell(d["jan"] ?? 0, "padding-left-lg"),
+        numberCell(d["feb"] ?? 0, "padding-left-lg"),
+        numberCell(d["mar"] ?? 0, "padding-left-lg"),
+        numberCell(d["apr"] ?? 0, "padding-left-lg"),
+        numberCell(d["mei"] ?? 0, "padding-left-lg"),
+        numberCell(d["jun"] ?? 0, "padding-left-lg"),
+        numberCell(d["jul"] ?? 0, "padding-left-lg"),
+        numberCell(d["agu"] ?? 0, "padding-left-lg"),
+        numberCell(d["sep"] ?? 0, "padding-left-lg"),
+        numberCell(d["okt"] ?? 0, "padding-left-lg"),
+        numberCell(d["nov"] ?? 0, "padding-left-lg"),
+        numberCell(d["des"] ?? 0, "padding-left-lg"),
+
+        nonEditable(numberCell(d["total_1"] ?? 0, "padding-left-lg")),
+
+        numberCell(d["jan_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["feb_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["mar_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["apr_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["mei_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["jun_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["jul_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["agu_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["sep_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["okt_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["nov_p"] ?? 0, "padding-left-lg"),
+        numberCell(d["des_p"] ?? 0, "padding-left-lg"),
+
+        nonEditable(numberCell(d["total_2"] ?? 0, "padding-left-lg")),
+      ],
+    })),
+  ];
+}
+
 export const getGroupRows = (data, key) => {
   const l = {
     "Stok Awal": type1(data),
@@ -187,8 +231,14 @@ export const getGroupRows = (data, key) => {
     "Stok akhir": type2(data),
     "Asumsi unit jual": type1(data),
     "Harga jual per unit": type3(data),
+    "Volume / Unit": type1(data),
+    Tarif: type3(data),
+    "Asumsi trip": type3(data),
     Penjualan: type2(data),
     "Potongan penjualan": type4(data),
+    "Pendapatan Operasional Lainnya": type5(data),
+    "HPP Variable": type4(data),
+    "HPP Lainnya": type5(data),
   };
   return l[key];
 };

@@ -82,8 +82,14 @@ export const firstLoadTotalRow = (data, key) => {
     "Stok akhir": type1(data, key),
     "Asumsi unit jual": type1(data, key),
     "Harga jual per unit": type1(data, key),
+    "Volume / Unit": type1(data, key),
+    Tarif: type1(data, key),
+    "Asumsi trip": type1(data, key),
     Penjualan: type1(data, key),
     "Potongan penjualan": type2(data, key),
+    "Pendapatan Operasional Lainnya": type1(data, key),
+    "HPP Variable": type2(data, key),
+    "HPP Lainnya": type1(data, key),
   };
 
   return l[key];

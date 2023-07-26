@@ -2,10 +2,10 @@ import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import TableComponent from "component/table/TableComponent";
-import MppInputLogic from "./MppInputLogic";
+import Logic from "./Logic";
 
 const MppInputPage = () => {
-  const { value, func } = MppInputLogic();
+  const { value, func } = Logic();
 
   return (
     <>

@@ -113,11 +113,11 @@ const FilterComponentLogic = ({
 
       log("code", code);
 
-      // if (code !== "0") {
-      const resProduct =
-        isCodeProduct === true
-          ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
-          : null;
+      // const resProduct =
+      //   isCodeProduct === true
+      //     ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
+      //     : null;
+      const resProduct = await MainServices.get(`product/list-by-com?code_company=${code[0]}`);
 
       const resLocation =
         isCodeLocation === true
@@ -138,7 +138,7 @@ const FilterComponentLogic = ({
 
       setState({
         ...state,
-        code_product: resProduct !== null ? setProduct(resProduct) : [],
+        code_product: setProduct(resProduct),
         code_location: resLocation !== null ? setLocation(resLocation) : [],
         code_dept: resDept !== null ? setDept(resDept) : [],
         code_icp: resIcp !== null ? setIcp(resIcp) : [],

@@ -7,7 +7,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
 import { log } from "values/Utilitas";
-import { getPerusahaan, urlRevenue } from "values/Constant";
+import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
 
 const BandPage = () => {
   const [key, setKey] = useState(1);
@@ -27,6 +27,9 @@ const BandPage = () => {
   const perusahaan = getPerusahaan(q);
 
   useEffect(() => {
+    if (key === 1) {
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
+    }
     form.setFieldsValue({
       code_company: `${perusahaan.code} - ${perusahaan.description}`,
       code_product: null,
@@ -36,8 +39,15 @@ const BandPage = () => {
       // code_project: null,
       periode: null,
     });
-    const l = urlRevenue.filter((e) => e.file !== undefined);
+    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+      (e) => e.file !== undefined
+    );
     setListMenu(l);
+    dispatch(
+      actionRevenue({
+        filterValues: null,
+      })
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
@@ -97,7 +107,7 @@ const BandPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
-          isCodeProduct={false}
+          isCodeProduct={key !== 1}
           type="input"
           codeCompany={perusahaan.code}
           form={form}

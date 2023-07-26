@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { allRouting } from "values/RoutingPage";
 import { useDropzone } from "react-dropzone";
-import { constantExcellFile } from "values/Constant";
 import { log } from "values/Utilitas";
 
 const Logic = () => {

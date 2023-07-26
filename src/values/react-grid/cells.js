@@ -12,6 +12,15 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
+export const headerCell = ({ text, className = "", style, colspan, rowspan }) => ({
+  type: "header",
+  text,
+  className,
+  style,
+  colspan,
+  rowspan,
+});
+
 export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
   type: "chevron",
   text,

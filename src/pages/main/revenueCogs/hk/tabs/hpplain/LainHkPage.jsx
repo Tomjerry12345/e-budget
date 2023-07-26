@@ -1,50 +1,56 @@
 import { Typography } from "antd";
-import FilterComponent from "../../../../../../component/filter/FilterComponent";
-import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
-import LainRevenueCogsLogic from "./LainHkLogic";
+import Logic from "./Logic";
+import { capitalize } from "values/react-grid/helpers";
+import { ReactGrid } from "@silevis/reactgrid";
 
-const LainKiuPage = () => {
-  const { value, func } = LainRevenueCogsLogic();
-
-  const data1 = [
-    {
-      title: "Pendapatan Operasional Lainnya",
-      name: "listPendapatanLain",
-    },
-    {
-      title: "HPP Variable",
-      name: "listHppVariable",
-    },
-    {
-      title: "Hpp Lainnya",
-      name: "listHppLain",
-    },
-  ];
-
-  const codeCompany = `${value.filterCompany.title} (${value.filterCompany.code})`;
+const LainHkPage = () => {
+  const { value, func } = Logic();
 
   return (
     <>
-      {/* <FilterComponent
-        codeCompany={codeCompany}
-        type={2}
-        isCodeProduct={false}
-        form={value.form}
-        onFinish={func.onFinish}
-        disabled={true}
-      /> */}
-      {data1.map((val) => (
-        <>
-          <Typography.Text className="title">{val.title}</Typography.Text>
-          <ChildRevenueCogsComponent
-            className="child-revenue"
-            value={value}
-            name={val.name}
-          />
-        </>
-      ))}
+      <div className="section-table">
+        {value.rows &&
+          value.rows.map((e, i) => (
+            <div style={{ margin: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography.Text>{capitalize(e.description)}</Typography.Text>
+              </div>
+
+              <div
+                style={{
+                  overflowX: "auto",
+                  overflowY: "auto",
+                  marginBottom: 16,
+                  paddingBottom: 16,
+                }}
+              >
+                <div
+                  style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+                  className="liquidity-planner-app"
+                >
+                  <ReactGrid
+                    rows={e.data}
+                    columns={value.columns[e.description]}
+                    stickyTopRows={1}
+                    stickyLeftColumns={1}
+                    enableRangeSelection
+                    onCellsChanged={(change) => {
+                      func.onChangeTable(change, i, e);
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
     </>
   );
 };
 
-export default LainKiuPage;
+export default LainHkPage;

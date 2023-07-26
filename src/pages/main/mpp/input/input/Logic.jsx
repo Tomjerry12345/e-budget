@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { columnInputType1 } from "../../../../component/table/utils/TypeColumn";
-import { val } from "../../../../redux/action/action.reducer";
-import MainServices from "../../../../services/MainServices";
-import { log, sumYearTotal } from "../../../../values/Utilitas";
+import { columnInputType1 } from "component/table/utils/TypeColumn";
+import { val } from "redux/action/action.reducer";
+import MainServices from "services/MainServices";
+import { log, sumYearTotal } from "values/Utilitas";
 
-const MppInputLogic = () => {
+const Logic = () => {
   const date = new Date();
   let params = useParams();
 
@@ -55,9 +55,7 @@ const MppInputLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -178,9 +176,7 @@ const MppInputLogic = () => {
         const itemparent = newData[x];
         const itemold = newData[x];
         itemparent[`${keysEdit}`] =
-          parseInt(itemparent[`${keysEdit}`]) +
-          parseInt(valuesEdit) -
-          parseInt(oldValue);
+          parseInt(itemparent[`${keysEdit}`]) + parseInt(valuesEdit) - parseInt(oldValue);
 
         const { sum, i } = sumYearTotal(itemparent, keysEdit[0]);
 
@@ -239,7 +235,6 @@ const MppInputLogic = () => {
     formData.append("value", valuesEdit);
 
     await MainServices.post("mpp/update", formData);
-    
   };
 
   const onSuccess = () => {
@@ -268,8 +263,7 @@ const MppInputLogic = () => {
       log("res", res);
 
       if (codeFilter !== undefined) {
-        const { code_company, code_dept, code_location, code_product } =
-          codeFilter;
+        const { code_company, code_dept, code_location, code_product } = codeFilter;
 
         getData(code_company, code_product, code_location, code_dept);
       }
@@ -283,7 +277,6 @@ const MppInputLogic = () => {
       const err = error.response;
       responseShow(err);
     }
-
   };
 
   const onChangeTahun = (e) => {
@@ -313,4 +306,4 @@ const MppInputLogic = () => {
   };
 };
 
-export default MppInputLogic;
+export default Logic;

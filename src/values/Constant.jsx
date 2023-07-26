@@ -153,40 +153,109 @@ export const allItemSummarySubMenu = [
   ],
   // 5 MPP
   [
-    "MPP General Asumption",
-    "Input Rate Assumption",
-    "Input Rate Salary",
-    "Input Headcount Salary",
-    "Input Headcount Assumption",
-    "Input Days",
-    "Input Jam Lembur",
-    "Input by lembur",
-    "Input Biaya Pengobatan",
-    "Input Biaya PPh 21",
-    "Input Biaya BPJS TK",
-    "Input Biaya BPJS Kesehatan",
-    "Input Biaya Pendidikan & Latihan",
-    "Input Biaya Rekrutment & Assessment",
-    "Input Biaya Uniform & Safety",
-    "Input Biaya DPLK",
-    "Input Biaya MPP Lainnya",
-    "Input MPP Direct",
-    "Summary Gaji",
-    "Summary By THR",
-    "Summary By Lembur",
-    "Summary By Makan dan Minum",
-    "Summary By Pengobatan",
-    "Summary By PPh Pasal 21",
-    "Summary By BPJS TK",
-    "Summary By BPJS Kesehatan",
-    "Summary By Transportasi",
-    "Summary By Komunikasi",
-    "Summary By Pendidikan & Pelatihan",
-    "Summary By Rekrutment & Assessment",
-    "Summary By Uniform & Safety",
-    "Summary By DPLK",
-    "Summary By MPP Lainnya",
-    "Summary MPP",
+    {
+      description: "MPP General Asumption",
+    },
+    {
+      description: "Input Rate Assumption",
+    },
+    {
+      description: "Input Rate Salary",
+    },
+
+    {
+      description: "Input Headcount Salary",
+    },
+    {
+      description: "Input Headcount Assumption",
+    },
+    {
+      description: "Input Days",
+    },
+    {
+      description: "Input Jam Lembur",
+    },
+    {
+      description: "Input by lembur",
+    },
+    {
+      description: "Input Biaya Pengobatan",
+    },
+    {
+      description: "Input Biaya PPh 21",
+    },
+    {
+      description: "Input Biaya BPJS TK",
+    },
+    {
+      description: "Input Biaya BPJS Kesehatan",
+    },
+    {
+      description: "Input Biaya Pendidikan & Latihan",
+    },
+    {
+      description: "Input Biaya Rekrutment & Assessment",
+    },
+    {
+      description: "Input Biaya Uniform & Safety",
+    },
+    {
+      description: "Input Biaya DPLK",
+    },
+    {
+      description: "Input Biaya MPP Lainnya",
+    },
+    {
+      description: "Input MPP Direct",
+    },
+    {
+      description: "Summary Gaji",
+    },
+    {
+      description: "Summary By THR",
+    },
+    {
+      description: "Summary By Lembur",
+    },
+    {
+      description: "Summary By Makan dan Minum",
+    },
+    {
+      description: "Summary By Pengobatan",
+    },
+    {
+      description: "Summary By PPh Pasal 21",
+    },
+    {
+      description: "Summary By BPJS TK",
+    },
+    {
+      description: "Summary By BPJS Kesehatan",
+    },
+    {
+      description: "Summary By Transportasi",
+    },
+    {
+      description: "Summary By Komunikasi",
+    },
+    {
+      description: "Summary By Pendidikan & Pelatihan",
+    },
+    {
+      description: "Summary By Rekrutment & Assessment",
+    },
+    {
+      description: "Summary By Uniform & Safety",
+    },
+    {
+      description: "Summary By DPLK",
+    },
+    {
+      description: "Summary By MPP Lainnya",
+    },
+    {
+      description: "Summary MPP",
+    },
   ],
   // 6 Others
   [
@@ -344,23 +413,23 @@ export const disabledItemSummaryMenu = [
   // 5 MPP
   [
     true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
     false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
     true,
     true,
     true,
@@ -589,55 +658,81 @@ export const constantExcellFile = {
   },
 };
 
-export const urlRevenue = [
-  {
-    description: "Stok Awal",
-    endpoint: "detailrevenue/firststock",
-    insert: true,
-    file: "stock_awal.xlsx",
-  },
-  {
-    description: "Asumsi unit beli",
-    endpoint: "detailrevenue/purchase-unit-assumption",
-    insert: true,
-    file: "asumsi_unit_beli.xlsx",
-  },
-  {
-    description: "Harga beli per unit",
-    endpoint: "detailrevenue/purchase-price-unit",
-    insert: true,
-    file: "harga_beli_unit.xlsx",
-  },
-  {
-    description: "Stok akhir",
-    endpoint: "detailrevenue/last-stock",
-    insert: false,
-  },
-  {
-    description: "Asumsi unit jual",
-    endpoint: "detailrevenue/selling-unit-assumption",
-    insert: true,
-    file: "asumsi_unit_jual.xlsx",
-  },
-  {
-    description: "Harga jual per unit",
-    endpoint: "detailrevenue/selling-price-unit",
-    insert: true,
-    file: "harga_jual_unit.xlsx",
-  },
-  {
-    description: "Penjualan",
-    endpoint: "detailrevenue/selling",
-    file: "penjualan.xlsx",
-    insert: false,
-  },
-  {
-    description: "Potongan penjualan",
-    endpoint: "detailrevenue/sale-discount",
-    file: "penjualan.xlsx",
-    insert: false,
-  },
+export const keyRevenueTab = [
+  "Input Penjualan dan Potongan penjualan",
+  "Input HPP dan pendapatan lainnya",
 ];
+
+export const urlRevenue = {
+  "Input Penjualan dan Potongan penjualan": [
+    {
+      description: "Stok Awal",
+      endpoint: "detailrevenue/firststock",
+      insert: true,
+      file: "stock_awal.xlsx",
+    },
+    {
+      description: "Asumsi unit beli",
+      endpoint: "detailrevenue/purchase-unit-assumption",
+      insert: true,
+      file: "asumsi_unit_beli.xlsx",
+    },
+    {
+      description: "Harga beli per unit",
+      endpoint: "detailrevenue/purchase-price-unit",
+      insert: true,
+      file: "harga_beli_unit.xlsx",
+    },
+    {
+      description: "Stok akhir",
+      endpoint: "detailrevenue/last-stock",
+      insert: false,
+    },
+    {
+      description: "Asumsi unit jual",
+      endpoint: "detailrevenue/selling-unit-assumption",
+      insert: true,
+      file: "asumsi_unit_jual.xlsx",
+    },
+    {
+      description: "Harga jual per unit",
+      endpoint: "detailrevenue/selling-price-unit",
+      insert: true,
+      file: "harga_jual_unit.xlsx",
+    },
+    {
+      description: "Penjualan",
+      endpoint: "detailrevenue/selling",
+      insert: false,
+    },
+    {
+      description: "Potongan penjualan",
+      endpoint: "detailrevenue/sale-discount",
+      insert: false,
+    },
+  ],
+
+  "Input HPP dan pendapatan lainnya": [
+    {
+      description: "Pendapatan Operasional Lainnya",
+      endpoint: "detailrevenueother/pendapatan-lainnya",
+      insert: true,
+      file: "pendapatan_lainnya.xlsx",
+    },
+    {
+      description: "HPP Variable",
+      endpoint: "detailrevenueother/hpp-variable",
+      insert: true,
+      file: "hpp_variable.xlsx",
+    },
+    {
+      description: "HPP Lainnya",
+      endpoint: "detailrevenueother/hpp-lainnya",
+      insert: true,
+      file: "hpp_lainnya.xlsx",
+    },
+  ],
+};
 
 export const getPerusahaan = (q) => {
   const listPerusahaan = {
