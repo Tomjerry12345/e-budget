@@ -154,7 +154,7 @@ export const allItemSummarySubMenu = [
   // 5 MPP
   [
     {
-      description: "MPP General Asumption",
+      description: "Input MPP General Asumption",
     },
     {
       description: "Input Rate Assumption",
@@ -176,16 +176,10 @@ export const allItemSummarySubMenu = [
       description: "Input Jam Lembur",
     },
     {
-      description: "Input by lembur",
-    },
-    {
       description: "Input Biaya Pengobatan",
     },
     {
       description: "Input Biaya PPh 21",
-    },
-    {
-      description: "Input Biaya BPJS TK",
     },
     {
       description: "Input Biaya BPJS Kesehatan",
@@ -412,16 +406,16 @@ export const disabledItemSummaryMenu = [
   ],
   // 5 MPP
   [
-    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
     false,
     true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
+    false,
+    false,
     true,
     true,
     true,

@@ -86,8 +86,10 @@ function getGroupRows(groups) {
         cells: [
           headerCell({ text: grade.grade, rowspan }),
           headerCell({ text: sub_grade.sub_grade }),
-          numberCell(forecast),
-          numberCell(budget),
+          textCell(`${forecast}%`),
+          textCell(`${budget}%`),
+          // numberCell(forecast, "", null, false),
+          // numberCell(budget, "", null, false),
         ],
       };
     }),

@@ -17,7 +17,7 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 const ROW_HEIGHT = 32;
 
 const TOTAL_DATA = 2;
-const FIRST_TOTAL = 2;
+const FIRST_TOTAL = 1;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 export function getRootHeaderRow() {
@@ -25,8 +25,7 @@ export function getRootHeaderRow() {
     {
       rowId: "header",
       cells: [
-        headerCell({ text: "Grade" }),
-        headerCell({ text: "" }),
+        headerCell({ text: "Asumsi" }),
         headerCell({ text: "Forecast" }),
         headerCell({ text: "Budget" }),
       ],
@@ -37,11 +36,12 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
-  data.forEach((e) => {
-    const { forecast, budget } = e;
-    list[0] += forecast ?? 0;
-    list[1] += budget ?? 0;
-  });
+  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = data;
+
+  list[0] = jht ?? 0 + thr_period ?? 0 + bonus_period ?? 0;
+  list[1] = jht_p ?? 0 + thr_period_p ?? 0 + bonus_period_p ?? 0;
+
+  log({ list });
 
   return rowTotal("Total", list);
 };
@@ -64,33 +64,42 @@ export const updateTotalRow = (data) => {
 };
 
 function getGroupRows(groups) {
-  let currentGrade = null;
-  let rowspan = 0;
+  const { id, jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = groups;
 
   return [
-    ...groups.map((item) => {
-      const { id, grade, sub_grade, forecast, budget } = item;
-
-      if (grade.grade !== currentGrade) {
-        currentGrade = grade.grade;
-        rowspan = 4; // Set rowspan to 4 for the first occurrence of a grade
-      } else {
-        rowspan = 1; // Set rowspan to 1 for subsequent occurrences of the same grade
-      }
-
-      return {
-        rowId: id ?? generateUID(),
-        newRow: id === null,
-        gradeId: grade.id,
-        subGradeId: sub_grade.id,
-        cells: [
-          headerCell({ text: grade.grade, rowspan }),
-          headerCell({ text: sub_grade.sub_grade }),
-          numberCell(forecast),
-          numberCell(budget),
-        ],
-      };
-    }),
+    {
+      rowId: generateUID(),
+      newRow: id === null,
+      forecast: "jht",
+      budget: "jht_p",
+      cells: [
+        headerCell({ text: "BPJSTK JHT - Pemberi Kerja" }),
+        numberCell(jht ?? 0),
+        numberCell(jht_p ?? 0),
+      ],
+    },
+    {
+      rowId: generateUID(),
+      newRow: id === null,
+      forecast: "thr_period",
+      budget: "thr_period_p",
+      cells: [
+        headerCell({ text: "Periode Pembayaran THR" }),
+        numberCell(thr_period ?? 0),
+        numberCell(thr_period_p ?? 0),
+      ],
+    },
+    {
+      rowId: generateUID(),
+      newRow: id === null,
+      forecast: "bonus_period",
+      budget: "bonus_period_p",
+      cells: [
+        headerCell({ text: "Periode Pembayaran Bonus" }),
+        numberCell(bonus_period ?? 0),
+        numberCell(bonus_period_p ?? 0),
+      ],
+    },
   ];
 }
 
@@ -103,11 +112,6 @@ function rowTotal(titleTotal, total) {
         textCell(titleTotal, "padding-left-lg", {
           background: "beige",
           fontWeight: "bold",
-        })
-      ),
-      nonEditable(
-        textCell("", "padding-left-lg", {
-          background: "beige",
         })
       ),
 
@@ -126,22 +130,18 @@ export function getRows({ data }) {
   return [...getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
 }
 
-export function fullNewRow() {
-  const list = createArray(TOTAL_DATA);
-  return [...getRootHeaderRow(), reactgridNewRow(), rowTotal("Total", list)];
-}
-
-export function reactgridNewRow() {
-  return {
-    rowId: generateUID(),
-    newRow: true,
-    height: ROW_HEIGHT,
-    cells: [
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg")),
-    ],
-  };
-}
+export const updateNewRow = (data) => {
+  const firstData = data[0];
+  const lastData = data[data.length - 1];
+  const newData = data.slice(1, data.length - 1);
+  return [
+    firstData,
+    ...newData.map((e) => {
+      return {
+        ...e,
+        newRow: false,
+      };
+    }),
+    lastData,
+  ];
+};

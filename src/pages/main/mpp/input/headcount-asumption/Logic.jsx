@@ -26,7 +26,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detail-mpp/rate-assumption";
+  const ENDPOINT_URL = "detail-mpp/headcount-assumption";
 
   const responseShow = (res) => {
     dispatch(

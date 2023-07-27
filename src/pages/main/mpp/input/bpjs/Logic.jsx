@@ -26,7 +26,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detail-mpp/rate-assumption";
+  const ENDPOINT_URL = "detail-mpp/bpjs";
 
   const responseShow = (res) => {
     dispatch(
@@ -143,7 +143,7 @@ const Logic = () => {
       let value;
 
       if (type === "text") {
-        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+        newRows[rowIndex].cells[columnIndex].text = `${c.newCell.text}%`;
         value = c.newCell.text;
         isChange = true;
       } else {
