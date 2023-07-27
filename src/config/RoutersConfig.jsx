@@ -129,6 +129,14 @@ import TotalAsetSummaryPage from "pages/main/capex/summary/total-aset/TotalAsetS
 import TotalPenyusutanSummaryPage from "pages/main/capex/summary/total-penyusutan/TotalPenyusutanSummaryPage";
 import TotalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/total-akumulasi-penyusutan/TotalAkumulasiPenyusutanSummaryPage";
 import RateAsumptionPage from "pages/main/mpp/input/rate-asumption/RateAsumptionPage";
+import GeneralAsumptionPage from "pages/main/mpp/input/general-asumption/GeneralAsumptionPage";
+import RateSalaryPage from "pages/main/mpp/input/rate-salary/RateSalaryPage";
+import HeadcountSalaryPage from "pages/main/mpp/input/headcount-salary/HeadcountSalaryPage";
+import HeadcountAsumptionPage from "pages/main/mpp/input/headcount-asumption/HeadcountAsumptionPage";
+import BiayaPph21Page from "pages/main/mpp/input/biaya-pph21/BiayaPph21Page";
+import BpjsPage from "pages/main/mpp/input/bpjs/BpjsPage";
+import DaysPage from "pages/main/mpp/input/days/DaysPage";
+import JamLemburPage from "pages/main/mpp/input/jam-lembur/JamLemburPage";
 
 const RoutersConfig = () => {
   return (
@@ -314,7 +322,15 @@ const RoutersConfig = () => {
             {/* <Route path="summary/:item" element={<CapexSummary />} /> */}
           </Route>
           <Route path="mpp">
+            <Route path="input/general-asumption" element={<GeneralAsumptionPage />} />
             <Route path="input/rate-asumption" element={<RateAsumptionPage />} />
+            <Route path="input/rate-salary" element={<RateSalaryPage />} />
+            <Route path="input/headcount-salary" element={<HeadcountSalaryPage />} />
+            <Route path="input/headcount-asumption" element={<HeadcountAsumptionPage />} />
+            <Route path="input/days" element={<DaysPage />} />
+            <Route path="input/jam-lembur" element={<JamLemburPage />} />
+            <Route path="input/biaya-pph21" element={<BiayaPph21Page />} />
+            <Route path="input/bpjs-kesehatan" element={<BpjsPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />

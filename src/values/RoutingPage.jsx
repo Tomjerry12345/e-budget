@@ -84,7 +84,15 @@ export const routingCapex = {
 };
 
 export const routingMpp = {
+  "Input MPP General Asumption": "general-asumption",
   "Input Rate Assumption": "rate-asumption",
+  "Input Rate Salary": "rate-salary",
+  "Input Headcount Salary": "headcount-salary",
+  "Input Headcount Assumption": "headcount-asumption",
+  "Input Days": "days",
+  "Input Jam Lembur": "jam-lembur",
+  "Input Biaya PPh 21": "biaya-pph21",
+  "Input Biaya BPJS Kesehatan": "bpjs-kesehatan",
 };
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",

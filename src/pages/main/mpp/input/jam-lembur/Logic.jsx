@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
@@ -26,7 +26,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detail-mpp/rate-assumption";
+  const ENDPOINT_URL = "detail-mpp/overtime";
 
   const responseShow = (res) => {
     dispatch(
@@ -179,6 +179,7 @@ const Logic = () => {
           const isNewRow = newRows[rowIndex].newRow;
           const gradeId = newRows[rowIndex].gradeId;
           const subGradeId = newRows[rowIndex].subGradeId;
+          const levelId = newRows[rowIndex].levelId;
 
           if (isNewRow) {
             const {
@@ -200,6 +201,7 @@ const Logic = () => {
             formData.append("year", periode);
             formData.append("grade_id", gradeId);
             formData.append("sub_grade_id", subGradeId);
+            formData.append("level", levelId);
             formData.append(column_id, parseInt(value));
             // formData.append("name", value);
 

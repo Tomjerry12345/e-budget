@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
@@ -6,7 +6,7 @@ import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, fullNewRow, getRows, updateTotalRow } from "./getRows";
+import { getRootHeaderRow, getRows, updateId, updateNewRow, updateTotalRow } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -26,7 +26,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detail-mpp/rate-assumption";
+  const ENDPOINT_URL = "detail-mpp/general-assumption";
 
   const responseShow = (res) => {
     dispatch(
@@ -109,13 +109,9 @@ const Logic = () => {
     try {
       const { data } = await MainServices.get(url);
       let r;
-      if (data.data.length > 0) {
-        r = getRows({
-          data: data.data,
-        });
-      } else {
-        r = fullNewRow();
-      }
+      r = getRows({
+        data: data.data,
+      });
       setRows(r);
     } catch (error) {
       // Tangani error jika ada
@@ -129,7 +125,7 @@ const Logic = () => {
   };
 
   const onChangeTable = async (change) => {
-    const newRows = [...rows];
+    let newRows = [...rows];
     let isChange;
 
     for (const c of change) {
@@ -177,8 +173,7 @@ const Logic = () => {
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
-          const gradeId = newRows[rowIndex].gradeId;
-          const subGradeId = newRows[rowIndex].subGradeId;
+          const key = newRows[rowIndex][column_id];
 
           if (isNewRow) {
             const {
@@ -191,6 +186,9 @@ const Logic = () => {
               periode,
             } = codeFilter;
 
+            const codeAccount = "";
+
+            formData.append("code_account", codeAccount);
             formData.append("code_company", code_company);
             formData.append("code_department", code_dept);
             formData.append("code_location", code_location);
@@ -198,24 +196,30 @@ const Logic = () => {
             formData.append("code_project", code_project);
             formData.append("code_icp", code_icp);
             formData.append("year", periode);
-            formData.append("grade_id", gradeId);
-            formData.append("sub_grade_id", subGradeId);
-            formData.append(column_id, parseInt(value));
+            formData.append(key, parseInt(value));
             // formData.append("name", value);
 
-            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+            await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
-            const rowId = res.data.data.id;
+            // const rowId = res.data.data.id;
 
-            newRows[rowIndex].rowId = rowId;
-            newRows[rowIndex].newRow = false;
+            const newR = updateNewRow(newRows);
+            log({ newR });
+            newRows = newR;
           } else {
             formData.append("id", id);
-            formData.append("column_id", column_id);
+            formData.append("column_id", key);
             formData.append("value", value);
 
             await MainServices.post(`${ENDPOINT_URL}/update`, formData);
           }
+
+          // delete newRows[rowIndex].newRow;
+          //   if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
+          //   return e;
+          // });
+
+          // newRows[rowIndex].cells = newCell;
 
           newRows[length - 1] = updateTotalRow(newRows);
         } catch (e) {

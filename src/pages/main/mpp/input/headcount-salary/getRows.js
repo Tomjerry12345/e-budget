@@ -26,9 +26,44 @@ export function getRootHeaderRow() {
       rowId: "header",
       cells: [
         headerCell({ text: "Grade" }),
+        headerCell({ text: "Sub grade" }),
+        headerCell({ text: "level" }),
+
+        headerCell({
+          text: "Forecast",
+          colspan: 3,
+          style: {
+            justifyContent: "center",
+          },
+        }),
         headerCell({ text: "" }),
-        headerCell({ text: "Forecast" }),
-        headerCell({ text: "Budget" }),
+        headerCell({ text: "" }),
+
+        headerCell({
+          text: "Budget",
+          colspan: 3,
+          style: {
+            justifyContent: "center",
+          },
+        }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+      ],
+    },
+    {
+      rowId: "sub-header",
+      cells: [
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({ text: "Person Grade" }),
+        headerCell({ text: "job Grade" }),
+        headerCell({ text: "Komparatif" }),
+
+        headerCell({ text: "Person Grade" }),
+        headerCell({ text: "job Grade" }),
+        headerCell({ text: "Komparatif" }),
       ],
     },
   ];
@@ -65,17 +100,37 @@ export const updateTotalRow = (data) => {
 
 function getGroupRows(groups) {
   let currentGrade = null;
-  let rowspan = 0;
+  let currentSubGrade = null;
+  let rowspanGrade = 0;
+  let rowspanSubGrade = 0;
 
   return [
     ...groups.map((item) => {
-      const { id, grade, sub_grade, forecast, budget } = item;
+      const {
+        id,
+        grade,
+        sub_grade,
+        level,
+        person_grade,
+        job_grade,
+        comparative,
+        person_grade_p,
+        job_grade_p,
+        comparative_p,
+      } = item;
 
       if (grade.grade !== currentGrade) {
         currentGrade = grade.grade;
-        rowspan = 4; // Set rowspan to 4 for the first occurrence of a grade
+        rowspanGrade = 12; // Set rowspan to 4 for the first occurrence of a grade
       } else {
-        rowspan = 1; // Set rowspan to 1 for subsequent occurrences of the same grade
+        rowspanGrade = 1; // Set rowspan to 1 for subsequent occurrences of the same grade
+      }
+
+      if (sub_grade.sub_grade !== currentSubGrade) {
+        currentSubGrade = sub_grade.sub_grade;
+        rowspanSubGrade = 3; // Set rowspan to 4 for the first occurrence of a grade
+      } else {
+        rowspanSubGrade = 1; // Set rowspan to 1 for subsequent occurrences of the same grade
       }
 
       return {
@@ -83,11 +138,19 @@ function getGroupRows(groups) {
         newRow: id === null,
         gradeId: grade.id,
         subGradeId: sub_grade.id,
+        levelId: level.id,
         cells: [
-          headerCell({ text: grade.grade, rowspan }),
-          headerCell({ text: sub_grade.sub_grade }),
-          numberCell(forecast),
-          numberCell(budget),
+          headerCell({ text: grade.grade, rowspan: rowspanGrade }),
+          headerCell({ text: sub_grade.sub_grade, rowspan: rowspanSubGrade }),
+          headerCell({ text: level.level }),
+
+          numberCell(person_grade),
+          numberCell(job_grade),
+          numberCell(comparative),
+
+          numberCell(person_grade_p),
+          numberCell(job_grade_p),
+          numberCell(comparative_p),
         ],
       };
     }),
@@ -123,7 +186,11 @@ function rowTotal(titleTotal, total) {
 }
 
 export function getRows({ data }) {
-  return [...getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
+  return [
+    ...getRootHeaderRow(),
+    ...getGroupRows(data),
+    // firstLoadTotalRow(data)
+  ];
 }
 
 export function fullNewRow() {

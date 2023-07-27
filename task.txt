@@ -32,3 +32,19 @@ capex
 - pagination di halaman load saldo awal
 - preview load saldo awal, tambah kolom action, yg ada button retire, 
   muncul popup modal untk isi bulan, thn & harga jual retired aset
+
+mpp
+
+- General Assumption ✅ / load total awal bermasalah karena beda tipe respons
+- Rate Assumption ✅
+- Rate Salary ✅ / gagal insert di be
+- Headcount Salary ❌
+- Headcount Assumption ❌
+- Day ❌
+- Treatment cost ❌
+- PPH 21 ✅
+- BPJS ✅
+- Education & Training ❌
+- Assestment & Recruitment ❌
+- Uniform & Safety ❌
+- Overtime ❌
