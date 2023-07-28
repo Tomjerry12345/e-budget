@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import {
@@ -20,12 +20,18 @@ const Logic = () => {
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
+  const numFunctionRunning = useRef(0);
+
   const [items, setItems] = useState({
     pemasaran: [],
     administrasi: [],
   });
   const columns = getColumns();
   const [rows, setRows] = useState({
+    pemasaran: [],
+    administrasi: [],
+  });
+  const [open1, setOpen1] = useState({
     pemasaran: [],
     administrasi: [],
   });
@@ -38,24 +44,27 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailopex/template4";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    setItems(state.item);
+    getDataAccount();
+    // eslint-disable-next-line
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const responseShow = (res) => {
     dispatch(
@@ -139,6 +148,7 @@ const Logic = () => {
 
     let pemasaran = items.pemasaran;
     let administrasi = items.administrasi;
+    log({ open1 });
 
     if (pemasaran.length > 0) {
       await Promise.allSettled(
@@ -149,9 +159,18 @@ const Logic = () => {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
+              let tmp1 = [];
+              for (let x = 0; x < data.data.length; x++) tmp1.push(false);
+              let newData = open1.pemasaran;
+              newData[i] = tmp1;
+              setOpen1({
+                ...open1,
+                pemasaran: newData,
+              });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
+                dd1: open1.pemasaran[i],
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
@@ -165,6 +184,7 @@ const Logic = () => {
         })
       );
     }
+    log({ open1 });
 
     if (administrasi.length > 0) {
       await Promise.allSettled(
@@ -175,9 +195,18 @@ const Logic = () => {
             const { data } = await MainServices.get(url);
             let r;
             if (data.data.length > 0) {
+              let tmp1 = [];
+              for (let x = 0; x < data.data.length; x++) tmp1.push(false);
+              let newData = open1.administrasi;
+              newData[i] = tmp1;
+              setOpen1({
+                ...open1,
+                administrasi: newData,
+              });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: data.data,
+                dd1: open1.administrasi[i],
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
@@ -191,6 +220,7 @@ const Logic = () => {
         })
       );
     }
+    log({ open1 });
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -221,54 +251,183 @@ const Logic = () => {
     showNotif(200, "Sukses tambah row");
   };
 
-  const onChangeTable = async (change, i, category) => {
-    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+  // const onChangeTable = async (change, i, category) => {
+  //   const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
+  //   const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
+  //   const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
 
-    const type = newRows[i][rowIndex].cells[columnIndex].type;
+  //   const type = newRows[i][rowIndex].cells[columnIndex].type;
 
-    const length = newRows[i].length;
+  //   const length = newRows[i].length;
 
-    let value;
+  //   log("change[0].newCell", change[0].newCell);
 
-    if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
-    } else {
-      newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-      value = change[0].newCell.value;
+  //   let value;
 
-      let jumlah = newRows[i][rowIndex].cells[3].value;
-      let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
+  //   if (type === "text") {
+  //     newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
+  //     value = change[0].newCell.text;
+  //   } else {
+  //     if (type === "dropdown") {
+  //       newRows[i][rowIndex].cells[columnIndex].isOpen = change[0].newCell.isOpen;
 
-      let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-      let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
+  //       setRows({
+  //         ...rows,
+  //         [category]: newRows,
+  //       });
 
-      let totalAsuransi = jumlah * tarifAsuransi;
+  //       return;
+  //     }
 
-      let grandTotal = 0;
+  //     // newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
+  //     // value = change[0].newCell.value;
 
-      const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-        if (j === 5) e.value = totalAsuransi;
-        if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
-          e.value = totalAsuransi;
-          grandTotal += e.value;
-        }
-        return e;
-      });
+  //     // let jumlah = newRows[i][rowIndex].cells[3].value;
+  //     // let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
 
-      newRows[i][rowIndex].cells[8].value = grandTotal;
+  //     // let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
+  //     // let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
 
-      newRows[i][rowIndex].cells = newCell;
-    }
+  //     // let totalAsuransi = jumlah * tarifAsuransi;
 
+  //     // let grandTotal = 0;
+
+  //     // const newCell = newRows[i][rowIndex].cells.map((e, j) => {
+  //     //   if (j === 5) e.value = totalAsuransi;
+  //     //   if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+  //     //   if (lamaAsuransi > 12) lamaAsuransi = 12;
+  //     //   if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+  //     //   if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+  //     //     e.value = totalAsuransi;
+  //     //     grandTotal += e.value;
+  //     //   }
+  //     //   if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+  //     //   return e;
+  //     // });
+
+  //     // newRows[i][rowIndex].cells[8].value = grandTotal;
+
+  //     // newRows[i][rowIndex].cells = newCell;
+  //   }
+
+  //   // try {
+  //   //   let formData = new FormData();
+
+  //   //   const id = change[0].rowId;
+  //   //   const column_id = change[0].columnId;
+  //   //   const isNewRow = newRows[i][rowIndex].newRow;
+
+  //   //   if (isNewRow !== undefined) {
+  //   //     const {
+  //   //       code_company,
+  //   //       code_dept,
+  //   //       code_location,
+  //   //       code_product,
+  //   //       code_project,
+  //   //       code_icp,
+  //   //       periode,
+  //   //     } = codeFilter;
+
+  //   //     const codeAccount =
+  //   //       category === "pemasaran"
+  //   //         ? items.pemasaran[i]["code_account"]
+  //   //         : items.administrasi[i]["code_account"];
+
+  //   //     formData.append("code_account", codeAccount);
+  //   //     formData.append("code_company", code_company);
+  //   //     formData.append("code_department", code_dept);
+  //   //     formData.append("code_location", code_location);
+  //   //     formData.append("code_product", code_product);
+  //   //     formData.append("code_project", code_project);
+  //   //     formData.append("code_icp", code_icp);
+  //   //     formData.append("year", periode);
+  //   //     formData.append("name", value);
+  //   //     formData.append("type", "asuransi");
+
+  //   //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+
+  //   //     log({ res });
+  //   //     const rowId = res.data.data.id;
+
+  //   //     newRows[i][rowIndex].rowId = rowId;
+  //   //   } else {
+  //   //     formData.append("id", id);
+  //   //     formData.append("column_id", column_id);
+  //   //     formData.append("value", value);
+  //   //     formData.append("type", "asuransi");
+
+  //   //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+  //   //   }
+
+  //   //   delete newRows[i][rowIndex].newRow;
+
+  //   //   showNotif(200, "Sukses update data");
+
+  //   //   const newCell = newRows[i][rowIndex].cells.map((e, i) => {
+  //   //     if (i >= 1 && i <= 5) e.nonEditable = false;
+  //   //     if (i >= 6 && i <= 8) e.nonEditable = false;
+  //   //     return e;
+  //   //   });
+
+  //   //   newRows[i][rowIndex].cells = newCell;
+
+  //   //   newRows[i][length - 1] = updateTotalRow(newRows[i]);
+
+  //   //   // log({ newRows });
+
+  //   //   setRows({
+  //   //     ...rows,
+  //   //     [category]: newRows,
+  //   //   });
+  //   // } catch (e) {
+  //   //   log({ e });
+  //   //   // showNotif(400, e);
+  //   // }
+  // };
+
+  const updateDropdownValue = (newRows) => {
+    let jumlah = newRows.cells[3].value;
+    let tarifAsuransi = newRows.cells[4].value;
+
+    let lamaAsuransi = parseInt(newRows.cells[6].value);
+    // let lamaAsuransi =
+    //   lamaAsuransiDropdown.current !== 0
+    //     ? lamaAsuransiDropdown.current
+    //     : parseInt(newRows.cells[6].value);
+    let mulaiAsuransi = parseInt(newRows.cells[7].value);
+
+    let totalAsuransi = jumlah * tarifAsuransi;
+
+    let grandTotal = 0;
+
+    log({ lamaAsuransi });
+
+    const newCell = newRows.cells.map((e, j) => {
+      if (j === 5) e.value = totalAsuransi;
+      if (mulaiAsuransi < 1) mulaiAsuransi = 1;
+      if (lamaAsuransi > 12) lamaAsuransi = 12;
+      if (j >= 8 && j <= mulaiAsuransi + 8) e.value = 0;
+      if (j >= mulaiAsuransi + 8 && j < lamaAsuransi + 8 + mulaiAsuransi) {
+        e.value = totalAsuransi;
+        grandTotal += e.value;
+      }
+      if (j >= lamaAsuransi + 8 + mulaiAsuransi && j <= 20) e.value = 0;
+      return e;
+    });
+
+    newRows.cells[8].value = grandTotal;
+    newRows.cells = newCell;
+  };
+
+  const sendData = async (newRows, c, i, rowIndex, value, category) => {
     try {
+      const length = newRows[i].length;
+
       let formData = new FormData();
 
-      const id = change[0].rowId;
-      const column_id = change[0].columnId;
+      const id = c.rowId;
+      const column_id = c.columnId;
       const isNewRow = newRows[i][rowIndex].newRow;
 
       if (isNewRow !== undefined) {
@@ -285,7 +444,7 @@ const Logic = () => {
         const codeAccount =
           category === "pemasaran"
             ? items.pemasaran[i]["code_account"]
-            : items.administrasi[i]["code_account"];
+            : items.pemasaran[i]["code_account"];
 
         formData.append("code_account", codeAccount);
         formData.append("code_company", code_company);
@@ -295,11 +454,9 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-        log({ res });
         const rowId = res.data.data.id;
 
         newRows[i][rowIndex].rowId = rowId;
@@ -312,9 +469,6 @@ const Logic = () => {
       }
 
       delete newRows[i][rowIndex].newRow;
-
-      showNotif(200, "Sukses update data");
-
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
         if (i >= 1 && i <= 5) e.nonEditable = false;
         if (i >= 6 && i <= 8) e.nonEditable = false;
@@ -325,15 +479,77 @@ const Logic = () => {
 
       newRows[i][length - 1] = updateTotalRow(newRows[i]);
 
-      // log({ newRows });
-
       setRows({
         ...rows,
         [category]: newRows,
       });
+
+      showNotif(200, "Sukses update data");
     } catch (e) {
       log({ e });
-      // showNotif(400, e);
+    }
+  };
+
+  const onChangeTable = async (change, i, category) => {
+    const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
+
+    for (const c of change) {
+      const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+
+      const type = c.newCell.type;
+
+      let value;
+
+      if (type === "dropdown") {
+        const nCell = c.newCell;
+
+        if (numFunctionRunning.current === 0) {
+          newRows[i][rowIndex].cells[columnIndex].isOpen = true;
+          setRows({
+            ...rows,
+            [category]: newRows,
+          });
+        }
+
+        log("numFunctionRunning.current", numFunctionRunning.current);
+
+        if (numFunctionRunning.current === 4) {
+          newRows[i][rowIndex].cells[columnIndex].value = nCell.value;
+        }
+
+        if (numFunctionRunning.current >= 5) {
+          newRows[i][rowIndex].cells[columnIndex].isOpen = false;
+
+          const value = newRows[i][rowIndex].cells[columnIndex].value;
+
+          updateDropdownValue(newRows[i][rowIndex]);
+
+          sendData(newRows, c, i, rowIndex, value, category);
+
+          numFunctionRunning.current = 0;
+          return;
+        }
+
+        numFunctionRunning.current++;
+
+        return;
+      }
+
+      if (type === "text") {
+        newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+        value = c.newCell.text;
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
+      }
+
+      if (type === "number") {
+        value = c.newCell.value;
+        newRows[i][rowIndex].cells[columnIndex].value = value;
+        updateDropdownValue(newRows[i][rowIndex]);
+        sendData(newRows, c, i, rowIndex, value, category);
+        return;
+      }
     }
   };
 
@@ -392,6 +608,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
+    formData.append("type", "asuransi");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -404,7 +621,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 
@@ -437,6 +654,7 @@ const Logic = () => {
       getInputProps,
       acceptedFiles,
       items,
+      open1,
     },
     func: {
       onFinish,
@@ -444,6 +662,7 @@ const Logic = () => {
       setUploadSucces,
       onChangeTable,
       onTambahRow,
+      setOpen1,
     },
   };
 };

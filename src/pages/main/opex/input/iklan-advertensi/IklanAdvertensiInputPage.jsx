@@ -20,6 +20,7 @@ const IklanAdvertensiInputPage = () => {
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran}
+        dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
@@ -62,6 +63,7 @@ const IklanAdvertensiInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i)}
                     />
                   </div>

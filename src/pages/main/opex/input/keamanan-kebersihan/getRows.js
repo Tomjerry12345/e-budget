@@ -4,7 +4,6 @@ import {
   monthHeaderCell,
   rootHeaderCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
@@ -24,16 +23,26 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Name", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Aktivitas", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Cost Driver", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center font-bold")),
+      nonEditable(textCell("Aktivitas", "justify-content-center font-bold")),
+      nonEditable(textCell("Cost Driver", "justify-content-center font-bold")),
 
-      nonEditable(textCell("Manpower", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Nilai Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Total Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Lama Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(textCell("Mulai Kontrak", "justify-content-center text-lg font-bold")),
-      nonEditable(rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)),
+      nonEditable(textCell("Manpower", "justify-content-center font-bold")),
+      nonEditable(
+        textCell("Nilai Kontrak", "justify-content-center font-bold")
+      ),
+      nonEditable(
+        textCell("Total Kontrak", "justify-content-center font-bold")
+      ),
+      nonEditable(
+        textCell("Lama Kontrak (bulan)", "justify-content-center font-bold")
+      ),
+      nonEditable(
+        textCell("Mulai Kontrak", "justify-content-center font-bold")
+      ),
+      nonEditable(
+        rootHeaderCell(`Grand Total`, "justify-content-center", COLOR_1)
+      ),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),
@@ -54,12 +63,12 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
+  list[3] = "";
+  list[4] = "";
   data.forEach((e) => {
     list[0] += e["amount"] ?? 0;
     list[1] += e["rates"] ?? 0;
     list[2] += e["total"] ?? 0;
-    list[3] += e["month_duration"] ?? 0;
-    list[4] += e["month_start"] ?? 0;
     list[5] += e["grand_total"] ?? 0;
     list[6] += e["jan_rates"] ?? 0;
     list[7] += e["feb_rates"] ?? 0;
@@ -89,7 +98,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
@@ -105,8 +117,8 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"] ?? 0, "padding-left-lg"),
-        numberCell(d["rates"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["amount"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["rates"] ?? 0, "padding-left-lg"),
         nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
         numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
         numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
@@ -151,7 +163,7 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => totalCell(e, "", "beige", "", !(i === 0))),
     ],
   };
 }
@@ -162,7 +174,6 @@ export function getRows({ header, data }) {
 
 export function fullNewRow(header, id) {
   const list = createArray(TOTAL_DATA);
-  list[5] = "";
   return [header, reactgridNewRow(id), rowTotal("Total", list)];
 }
 

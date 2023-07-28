@@ -3,11 +3,7 @@ import LoginPage from "pages/autentikasi/login/LoginPage";
 import MainPage from "pages/main/MainPage";
 import DashboardPage from "pages/main/dashboard/DashboardPage";
 import App from "pages/App";
-import CapexSummary from "pages/main/capex/summary/CapexSummary";
 import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
-import MppSummary from "pages/main/mpp/summary/MppSummary";
-import CapexInputPage from "pages/main/capex/input/CapexInputPage";
-import MppInputPage from "pages/main/mpp/input/MppInputPage";
 import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersSummary from "pages/main/others/summary/OthersSummary";
 import OthersInputPage from "pages/main/others/input/OthersInputPage";
@@ -113,6 +109,34 @@ import SewaInputPage from "pages/main/opex/input/sewa/SewaInputPage";
 import ListrikAirTeleponInputPage from "pages/main/opex/input/listrik-air-telepon/ListrikAirTeleponInputPage";
 import AsuransiInputPage from "pages/main/opex/input/asuransi/AsuransiInputPage";
 import KeamananKebersihanInputPage from "pages/main/opex/input/keamanan-kebersihan/KeamananKebersihanInputPage";
+import InternetInputPage from "pages/main/opex/input/internet/InternetInputPage";
+import InternetSummaryPage from "pages/main/opex/summary/internet/InternetSummaryPage";
+import CapexInputPage from "pages/main/capex/input/input-capex/CapexInputPage";
+import NewAsetInputPage from "pages/main/capex/input/new-aset/NewAsetInputPage";
+
+import LoadSaldoAwalPage from "pages/main/capex/input/load-saldo-awal/LoadSaldoAwalPage";
+import ExistingAsetSummaryPage from "pages/main/capex/summary/existing-aset/ExistingAsetSummaryPage";
+import PenyusutanExistingAsetSummaryPage from "pages/main/capex/summary/penyusutan-existing-aset/PenyusutanExistingAsetSummaryPage";
+import SaldoAwalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/saldo-awal-akumulasi-penyusutan/SaldoAwalAkumulasiPenyusutanSummaryPage";
+import NewAsetSummaryPage from "pages/main/capex/summary/new-aset/NewAsetSummaryPage";
+import PenyusutanNewAsetSummaryPage from "pages/main/capex/summary/penyusutan-new-aset/PenyusutanNewAsetSummaryPage";
+import AkumulasiPenyusutanNewAsetSummaryPage from "pages/main/capex/summary/akumulasi-penyusutan-new-aset/AkumulasiPenyusutanNewAsetSummaryPage";
+import DisposalAsetSummaryPage from "pages/main/capex/summary/disposal-aset/DisposalAsetSummaryPage";
+import NilaiJualAsetSummaryPage from "pages/main/capex/summary/nilai-jual-aset/NilaiJualAsetSummaryPage";
+import PenyusutanDisposalAsetSummaryPage from "pages/main/capex/summary/penyusutan-disposal-aset/PenyusutanDisposalAsetSummaryPage";
+import AkumulasiPenyusutanDisposalAsetSummaryPage from "pages/main/capex/summary/akumulasi-penyusutan-disposal-aset/AkumulasiPenyusutanDisposalAsetSummaryPage";
+import TotalAsetSummaryPage from "pages/main/capex/summary/total-aset/TotalAsetSummaryPage";
+import TotalPenyusutanSummaryPage from "pages/main/capex/summary/total-penyusutan/TotalPenyusutanSummaryPage";
+import TotalAkumulasiPenyusutanSummaryPage from "pages/main/capex/summary/total-akumulasi-penyusutan/TotalAkumulasiPenyusutanSummaryPage";
+import RateAsumptionPage from "pages/main/mpp/input/rate-asumption/RateAsumptionPage";
+import GeneralAsumptionPage from "pages/main/mpp/input/general-asumption/GeneralAsumptionPage";
+import RateSalaryPage from "pages/main/mpp/input/rate-salary/RateSalaryPage";
+import HeadcountSalaryPage from "pages/main/mpp/input/headcount-salary/HeadcountSalaryPage";
+import HeadcountAsumptionPage from "pages/main/mpp/input/headcount-asumption/HeadcountAsumptionPage";
+import BiayaPph21Page from "pages/main/mpp/input/biaya-pph21/BiayaPph21Page";
+import BpjsPage from "pages/main/mpp/input/bpjs/BpjsPage";
+import DaysPage from "pages/main/mpp/input/days/DaysPage";
+import JamLemburPage from "pages/main/mpp/input/jam-lembur/JamLemburPage";
 
 const RoutersConfig = () => {
   return (
@@ -192,6 +216,7 @@ const RoutersConfig = () => {
             <Route path="input/pantri" element={<PantriInputPage />} />
             <Route path="input/asuransi" element={<AsuransiInputPage />} />
             <Route path="input/keamanan-kebersihan" element={<KeamananKebersihanInputPage />} />
+            <Route path="input/internet" element={<InternetInputPage />} />
             <Route path="input/tender" element={<TenderInputPage />} />
             <Route
               path="input/kontraktual-rapat-clearance"
@@ -234,6 +259,7 @@ const RoutersConfig = () => {
               path="summary/keamanan-kebersihan"
               element={<KeamananKebersihanSummaryPage />}
             />
+            <Route path="summary/internet" element={<InternetSummaryPage />} />
             <Route path="summary/tender" element={<TenderSummaryPage />} />
             <Route
               path="summary/kontraktual-rapat-clearance"
@@ -256,12 +282,55 @@ const RoutersConfig = () => {
             <Route path="summary/opex" element={<OpexSummary />} />
           </Route>
           <Route path="capex">
-            <Route path="input/:item" element={<CapexInputPage />} />
-            <Route path="summary/:item" element={<CapexSummary />} />
+            <Route path="input/load-saldo-awal" element={<LoadSaldoAwalPage />} />
+            <Route path="input/new-aset" element={<NewAsetInputPage />} />
+            <Route path="input/direct-capex" element={<CapexInputPage />} />
+            <Route path="summary/existing-aset" element={<ExistingAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-existing-aset"
+              element={<PenyusutanExistingAsetSummaryPage />}
+            />
+            <Route
+              path="summary/saldo-awal-akumulasi-penyusutan"
+              element={<SaldoAwalAkumulasiPenyusutanSummaryPage />}
+            />
+            <Route path="summary/new-aset" element={<NewAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-new-aset"
+              element={<PenyusutanNewAsetSummaryPage />}
+            />
+            <Route
+              path="summary/akumulasi-penyusutan-new-aset"
+              element={<AkumulasiPenyusutanNewAsetSummaryPage />}
+            />
+            <Route path="summary/disposal-aset" element={<DisposalAsetSummaryPage />} />
+            <Route path="summary/nilai-jual-aset" element={<NilaiJualAsetSummaryPage />} />
+            <Route
+              path="summary/penyusutan-disposal-aset"
+              element={<PenyusutanDisposalAsetSummaryPage />}
+            />
+            <Route
+              path="summary/akumulasi-penyusutan-disposal-aset"
+              element={<AkumulasiPenyusutanDisposalAsetSummaryPage />}
+            />
+            <Route path="summary/total-aset" element={<TotalAsetSummaryPage />} />
+            <Route path="summary/total-penyusutan" element={<TotalPenyusutanSummaryPage />} />
+            <Route
+              path="summary/total-akumulasi-penyusutan"
+              element={<TotalAkumulasiPenyusutanSummaryPage />}
+            />
+            {/* <Route path="summary/:item" element={<CapexSummary />} /> */}
           </Route>
           <Route path="mpp">
-            <Route path="input/:item" element={<MppInputPage />} />
-            <Route path="summary/:item" element={<MppSummary />} />
+            <Route path="input/general-asumption" element={<GeneralAsumptionPage />} />
+            <Route path="input/rate-asumption" element={<RateAsumptionPage />} />
+            <Route path="input/rate-salary" element={<RateSalaryPage />} />
+            <Route path="input/headcount-salary" element={<HeadcountSalaryPage />} />
+            <Route path="input/headcount-asumption" element={<HeadcountAsumptionPage />} />
+            <Route path="input/days" element={<DaysPage />} />
+            <Route path="input/jam-lembur" element={<JamLemburPage />} />
+            <Route path="input/biaya-pph21" element={<BiayaPph21Page />} />
+            <Route path="input/bpjs-kesehatan" element={<BpjsPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />

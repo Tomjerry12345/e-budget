@@ -1,8 +1,10 @@
 import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Select, Typography } from "antd";
+import { Button, Radio, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
-import { useEffect } from "react";
 import "./style.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { actionData } from "redux/data-global/data.reducer";
+import { log } from "values/Utilitas";
 
 const { Title, Text } = Typography;
 
@@ -17,21 +19,26 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, onChangeSelect }) => {
+const ImportInputModal = ({
+  open,
+  onCancel,
+  value,
+  onOk,
+  file,
+  loading,
+  title,
+  type = false,
+}) => {
+  const dispatch = useDispatch();
+  const dataGlobalRedux = useSelector((state) => state.data);
+
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
 
-  // const dateNow = new Date().getFullYear();
-
-  // const listTahun = [];
-
-  // for (let i = dateNow - 2; i <= dateNow + 1; i++) {
-  //   listTahun.push({
-  //     label: i,
-  //     value: i,
-  //   });
-  // }
+  const onChange = (e) => {
+    dispatch(actionData({ typeRevenueImport: e.target.value }));
+  };
 
   return (
     <Modal
@@ -40,16 +47,8 @@ const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, onChange
       footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} loading={loading} />}
       onCancel={onCancel}
     >
-      <Title level={4}>Import</Title>
+      <Title level={4}>{title}</Title>
       <div className="root-content-upload">
-        <Text className="title-upload">Tahun</Text>
-        {/* <Select
-          className="select-style"
-          onSelect={onChangeSelect}
-          options={listTahun}
-          // value={}
-          defaultValue={dateNow}
-        /> */}
         <div {...value.getRootProps()}>
           <Text className="title-upload">Upload Dokumen Template</Text>
           <div className="layout-upload-file">
@@ -65,21 +64,30 @@ const ImportInputModal = ({ open, onCancel, value, onOk, file, loading, onChange
               </Text>
             ))}
           </div>
+        </div>
 
-          <div className="layout-download-template">
-            <Text className="txt-accepted">Accepted File Type .xlsx</Text>
-            <Text className="txt-belum-mempunyai-template">
-              Anda Belum Mempunyai Template ?
-            </Text>
-            <Button
-              className="btn-download-template"
-              type="primary"
-              onClick={downloadFile}
-              icon={<UploadOutlined className="custom-icon" />}
-            >
-              Download Template
-            </Button>
-          </div>
+        {type ? (
+          <Radio.Group
+            className="type-style"
+            onChange={onChange}
+            value={dataGlobalRedux.typeRevenueImport ?? "actual"}
+          >
+            <Radio value="actual">Actual - Forecast</Radio>
+            <Radio value="budget">Budget</Radio>
+          </Radio.Group>
+        ) : null}
+
+        <div className="layout-download-template">
+          <Text className="txt-accepted">Accepted File Type .xlsx</Text>
+          <Text className="txt-belum-mempunyai-template">Anda Belum Mempunyai Template ?</Text>
+          <Button
+            className="btn-download-template"
+            type="primary"
+            onClick={downloadFile}
+            icon={<UploadOutlined className="custom-icon" />}
+          >
+            Download Template
+          </Button>
         </div>
       </div>
     </Modal>

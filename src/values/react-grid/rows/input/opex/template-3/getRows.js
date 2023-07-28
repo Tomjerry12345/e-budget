@@ -17,7 +17,7 @@ const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
-
+  console.log("list: " + list);
   data.forEach((e) => {
     list[0] += e["jan"];
     list[1] += e["feb"];
@@ -48,7 +48,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -59,7 +62,7 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["description"] ?? "-", "padding-left-lg"),
+        textCell(d["name"] ?? "-", "padding-left-lg"),
 
         numberCell(d["jan"], "padding-left-lg"),
         numberCell(d["feb"], "padding-left-lg"),
@@ -102,7 +105,11 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    header,
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

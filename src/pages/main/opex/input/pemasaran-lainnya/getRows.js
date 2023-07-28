@@ -1,4 +1,8 @@
-import { nonEditable, textCell, monthHeaderCell } from "values/react-grid/cells";
+import {
+  nonEditable,
+  textCell,
+  monthHeaderCell,
+} from "values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -9,7 +13,7 @@ export function getRootHeaderRow() {
     rowId: HEADER_ROOT_ROW_ID,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("Description", "justify-content-center text-lg font-bold")),
+      nonEditable(textCell("Description", "justify-content-center font-bold")),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),

@@ -54,114 +54,202 @@ export const allItemSummarySubMenu = [
   ],
   // 3 Opex
   [
-    "Input By Iklan & Advertensi",
-    "Input By Pemasaran Lainnya",
-    "Input By Sewa",
-    "Input By Pemeliharaan",
-    "Input By Perlengkapan Kantor",
-    "Input By Pengiriman Dokumen",
-    "Input By FC, Cetakan & Jilid",
-    "Input By Listrik, Air & Telepon",
-    "Input By Surat Kabar",
-    "Input By Pantri",
-    "Input By Asuransi",
-    "Input By Keamanan & Kebersihan",
-    "Input By Internet",
-    "Input By Tender",
-    "Input By Kontraktual, Rapat, Clearance",
-    "Input By BBM, Tol, Parkir",
-    "Input By Transportasi",
-    "Input By Perjalanan Dinas",
-    "Input By Pajak Kendaraan",
-    "Input By Pajak",
-    "Input By Pajak Parkir & Resto",
-    "Input By Izin & Konsultan",
-    "Input By Administrasi Lainnya",
-    "Input By Risiko",
-    "Input By Operasional Lainnya",
-    "Input By Opex Direct",
-    "Summary By Iklan & Advertensi",
-    "Summary By Pemasaran Lainnya",
-    "Summary By Sewa",
-    "Summary By Pemeliharaan",
-    "Summary By Perlengkapan Kantor",
-    "Summary By Pengiriman Dokumen",
-    "Summary By FC, Cetakan & Jilid",
-    "Summary By Listrik, Air & Telepon",
-    "Summary By Surat Kabar",
-    "Summary By Pantri",
-    "Summary By Asuransi",
-    "Summary By Keamanan & Kebersihan",
-    "Summary By Internet",
-    "Summary By Tender",
-    "Summary By Kontraktual, Rapat, Clearance",
-    "Summary By BBM, Tol, Parkir",
-    "Summary By Transportasi",
-    "Summary By Perjalanan Dinas",
-    "Summary By Pajak Kendaraan",
-    "Summary By Pajak",
-    "Summary By Pajak Parkir & Resto",
-    "Summary By Izin & Konsultan",
-    "Summary By Administrasi Lainnya",
-    "Summary By Risiko",
-    "Summary By Operasional Lainnya",
-    "Summary Budget Opex",
+    // "Input By Iklan & Advertensi",
+    // "Input By Pemasaran Lainnya",
+    // "Input By Sewa",
+    // "Input By Pemeliharaan",
+    // "Input By Perlengkapan Kantor",
+    // "Input By Pengiriman Dokumen",
+    // "Input By FC, Cetakan & Jilid",
+    // "Input By Listrik, Air & Telepon",
+    // "Input By Surat Kabar",
+    // "Input By Pantri",
+    // "Input By Asuransi",
+    // "Input By Keamanan & Kebersihan",
+    // "Input By Internet",
+    // "Input By Tender",
+    // "Input By Kontraktual, Rapat, Clearance",
+    // "Input By BBM, Tol, Parkir",
+    // "Input By Transportasi",
+    // "Input By Perjalanan Dinas",
+    // "Input By Pajak Kendaraan",
+    // "Input By Pajak",
+    // "Input By Pajak Parkir & Resto",
+    // "Input By Izin & Konsultan",
+    // "Input By Administrasi Lainnya",
+    // "Input By Opex Direct",
+    // "Summary By Iklan & Advertensi",
+    // "Summary By Pemasaran Lainnya",
+    // "Summary By Sewa",
+    // "Summary By Pemeliharaan",
+    // "Summary By Perlengkapan Kantor",
+    // "Summary By Pengiriman Dokumen",
+    // "Summary By FC, Cetakan & Jilid",
+    // "Summary By Listrik, Air & Telepon",
+    // "Summary By Surat Kabar",
+    // "Summary By Pantri",
+    // "Summary By Asuransi",
+    // "Summary By Keamanan & Kebersihan",
+    // "Summary By Internet",
+    // "Summary By Tender",
+    // "Summary By Kontraktual, Rapat, Clearance",
+    // "Summary By BBM, Tol, Parkir",
+    // "Summary By Transportasi",
+    // "Summary By Perjalanan Dinas",
+    // "Summary By Pajak Kendaraan",
+    // "Summary By Pajak",
+    // "Summary By Pajak Parkir & Resto",
+    // "Summary By Izin & Konsultan",
+    // "Summary By Administrasi Lainnya",
+    // "Summary Budget Opex",
   ],
   // 4 Capex
   [
-    "Load Saldo Awal",
-    "Input New Aset",
-    "Retired Aset",
-    "Input Direct Capex",
-    "Summary Existing Aset",
-    "Summary Penyusutan Existing Aset",
-    "Summary Saldo Awal Akumulasi Penyusutan",
-    "Summary New Aset",
-    "Summary Penyusutan New Aset",
-    "Summary Akumulasi Penyusutan New Aset",
-    "Summary Disposal Aset",
-    "Summary Penyusutan Disposal Aset",
-    "Summary Akumulasi Penyusutan Disposal Aset",
-    "Summary Total Aset",
-    "Summary Total Penyusutan",
-    "Summary Total Akumulasi Penyusutan",
+    {
+      description: "Input Load Saldo Awal",
+    },
+    {
+      description: "Input New Aset",
+    },
+    {
+      description: "Input Direct Capex",
+    },
+    {
+      description: "Summary Existing Aset",
+    },
+    {
+      description: "Summary Penyusutan Existing Aset",
+    },
+    {
+      description: "Summary Saldo Awal Akumulasi Penyusutan",
+    },
+    {
+      description: "Summary New Aset",
+    },
+    {
+      description: "Summary Penyusutan New Aset",
+    },
+    {
+      description: "Summary Akumulasi Penyusutan New Aset",
+    },
+    {
+      description: "Summary Disposal Aset",
+    },
+    {
+      description: "Summary Penyusutan Disposal Aset",
+    },
+    {
+      description: "Summary Akumulasi Penyusutan Disposal Aset",
+    },
+    {
+      description: "Summary Total Aset",
+    },
+    {
+      description: "Summary Total Penyusutan",
+    },
+    {
+      description: "Summary Total Akumulasi Penyusutan",
+    },
   ],
   // 5 MPP
   [
-    "MPP General Asumption",
-    "Input Rate Assumption",
-    "Input Rate Salary",
-    "Input Headcount Salary",
-    "Input Headcount Assumption",
-    "Input Days",
-    "Input Jam Lembur",
-    "Input by lembur",
-    "Input Biaya Pengobatan",
-    "Input Biaya PPh 21",
-    "Input Biaya BPJS TK",
-    "Input Biaya BPJS Kesehatan",
-    "Input Biaya Pendidikan & Latihan",
-    "Input Biaya Rekrutment & Assessment",
-    "Input Biaya Uniform & Safety",
-    "Input Biaya DPLK",
-    "Input Biaya MPP Lainnya",
-    "Input MPP Direct",
-    "Summary Gaji",
-    "Summary By THR",
-    "Summary By Lembur",
-    "Summary By Makan dan Minum",
-    "Summary By Pengobatan",
-    "Summary By PPh Pasal 21",
-    "Summary By BPJS TK",
-    "Summary By BPJS Kesehatan",
-    "Summary By Transportasi",
-    "Summary By Komunikasi",
-    "Summary By Pendidikan & Pelatihan",
-    "Summary By Rekrutment & Assessment",
-    "Summary By Uniform & Safety",
-    "Summary By DPLK",
-    "Summary By MPP Lainnya",
-    "Summary MPP",
+    {
+      description: "Input MPP General Asumption",
+    },
+    {
+      description: "Input Rate Assumption",
+    },
+    {
+      description: "Input Rate Salary",
+    },
+
+    {
+      description: "Input Headcount Salary",
+    },
+    {
+      description: "Input Headcount Assumption",
+    },
+    {
+      description: "Input Days",
+    },
+    {
+      description: "Input Jam Lembur",
+    },
+    {
+      description: "Input Biaya Pengobatan",
+    },
+    {
+      description: "Input Biaya PPh 21",
+    },
+    {
+      description: "Input Biaya BPJS Kesehatan",
+    },
+    {
+      description: "Input Biaya Pendidikan & Latihan",
+    },
+    {
+      description: "Input Biaya Rekrutment & Assessment",
+    },
+    {
+      description: "Input Biaya Uniform & Safety",
+    },
+    {
+      description: "Input Biaya DPLK",
+    },
+    {
+      description: "Input Biaya MPP Lainnya",
+    },
+    {
+      description: "Input MPP Direct",
+    },
+    {
+      description: "Summary Gaji",
+    },
+    {
+      description: "Summary By THR",
+    },
+    {
+      description: "Summary By Lembur",
+    },
+    {
+      description: "Summary By Makan dan Minum",
+    },
+    {
+      description: "Summary By Pengobatan",
+    },
+    {
+      description: "Summary By PPh Pasal 21",
+    },
+    {
+      description: "Summary By BPJS TK",
+    },
+    {
+      description: "Summary By BPJS Kesehatan",
+    },
+    {
+      description: "Summary By Transportasi",
+    },
+    {
+      description: "Summary By Komunikasi",
+    },
+    {
+      description: "Summary By Pendidikan & Pelatihan",
+    },
+    {
+      description: "Summary By Rekrutment & Assessment",
+    },
+    {
+      description: "Summary By Uniform & Safety",
+    },
+    {
+      description: "Summary By DPLK",
+    },
+    {
+      description: "Summary By MPP Lainnya",
+    },
+    {
+      description: "Summary MPP",
+    },
   ],
   // 6 Others
   [
@@ -299,43 +387,43 @@ export const disabledItemSummaryMenu = [
   ],
   // 4 Capex
   [
-    true,
-    true,
-    true,
     false,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
     false,
     false,
     false,
   ],
   // 5 MPP
   [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
     true,
     false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
     true,
     true,
     true,
@@ -402,11 +490,6 @@ const superAdmin = (i) => {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
       const anotherMenuInput = [
-        {
-          description: "Input By Operasional Lainnya",
-          children: [],
-        },
-
         {
           description: "Input By Opex Direct",
           children: [],
@@ -559,4 +642,255 @@ export const constantExcellFile = {
     "template-4-sewa": "file/detail-opex-4-sewa.xlsx",
     "template-5": "file/detail-opex-5.xlsx",
   },
+
+  revenue: {
+    "Stok Awal": "file/revenue-sample firststock.xlsx",
+    "Asumsi unit beli": "file/revenue-sample purchasing assumption.xlsx",
+    "Harga beli per unit": "file/revenue-sample purchasing price.xlsx",
+    "Asumsi unit jual": "file/revenue-sample selling assumption.xlsx",
+    Penjualan: "file/revenue-sample selling price.xlsx",
+  },
+};
+
+export const keyRevenueTab = [
+  "Input Penjualan dan Potongan penjualan",
+  "Input HPP dan pendapatan lainnya",
+];
+
+export const urlRevenue = {
+  "Input Penjualan dan Potongan penjualan": [
+    {
+      description: "Stok Awal",
+      endpoint: "detailrevenue/firststock",
+      insert: true,
+      file: "stock_awal.xlsx",
+    },
+    {
+      description: "Asumsi unit beli",
+      endpoint: "detailrevenue/purchase-unit-assumption",
+      insert: true,
+      file: "asumsi_unit_beli.xlsx",
+    },
+    {
+      description: "Harga beli per unit",
+      endpoint: "detailrevenue/purchase-price-unit",
+      insert: true,
+      file: "harga_beli_unit.xlsx",
+    },
+    {
+      description: "Stok akhir",
+      endpoint: "detailrevenue/last-stock",
+      insert: false,
+    },
+    {
+      description: "Asumsi unit jual",
+      endpoint: "detailrevenue/selling-unit-assumption",
+      insert: true,
+      file: "asumsi_unit_jual.xlsx",
+    },
+    {
+      description: "Harga jual per unit",
+      endpoint: "detailrevenue/selling-price-unit",
+      insert: true,
+      file: "harga_jual_unit.xlsx",
+    },
+    {
+      description: "Penjualan",
+      endpoint: "detailrevenue/selling",
+      insert: false,
+    },
+    {
+      description: "Potongan penjualan",
+      endpoint: "detailrevenue/sale-discount",
+      insert: false,
+    },
+  ],
+
+  "Input HPP dan pendapatan lainnya": [
+    {
+      description: "Pendapatan Operasional Lainnya",
+      endpoint: "detailrevenueother/pendapatan-lainnya",
+      insert: true,
+      file: "pendapatan_lainnya.xlsx",
+    },
+    {
+      description: "HPP Variable",
+      endpoint: "detailrevenueother/hpp-variable",
+      insert: true,
+      file: "hpp_variable.xlsx",
+    },
+    {
+      description: "HPP Lainnya",
+      endpoint: "detailrevenueother/hpp-lainnya",
+      insert: true,
+      file: "hpp_lainnya.xlsx",
+    },
+  ],
+};
+
+export const getPerusahaan = (q) => {
+  const listPerusahaan = {
+    hk: {
+      code: 311,
+      description: "PT. Hadji Kalla",
+    },
+    kiu: {
+      code: 326,
+      description: "PT. Kars Inti Utama",
+    },
+    gmm: {
+      code: 328,
+      description: "PT. Gowa Modern Motor",
+    },
+    kia: {
+      code: 313,
+      description: "PT. Kars Inti Amanah",
+    },
+    bju: {
+      code: 312,
+      description: "PT. Bumi Jasa Utama",
+    },
+    blt: {
+      code: 421,
+      description: "PT. Bumi Lintas Tama",
+    },
+    blu: {
+      code: 422,
+      description: "PT. Bumi Logistik Utama",
+    },
+    bk: {
+      code: 221,
+      description: "PT. Bumi Karsa",
+    },
+    bsu: {
+      code: 411,
+      description: "PT. Bumi Sarana Utama",
+    },
+    bsb: {
+      code: 413,
+      description: "PT. Bumi Sarana Beton",
+    },
+    kik: {
+      code: 241,
+      description: "PT. Kalla Inti Karsa",
+    },
+    ikp: {
+      code: 242,
+      description: "PT. Inti Karsa Persada",
+    },
+    band: {
+      code: 231,
+      description: "PT. Baruga Asrinusa Development",
+    },
+  };
+
+  return listPerusahaan[q];
+};
+
+export const getMonthDuration = () => {
+  const listDuration = [
+    {
+      value: "1",
+      label: "1",
+    },
+    {
+      value: "2",
+      label: "2",
+    },
+    {
+      value: "3",
+      label: "3",
+    },
+    {
+      value: "4",
+      label: "4",
+    },
+    {
+      value: "5",
+      label: "5",
+    },
+    {
+      value: "6",
+      label: "6",
+    },
+    {
+      value: "7",
+      label: "7",
+    },
+    {
+      value: "8",
+      label: "8",
+    },
+    {
+      value: "9",
+      label: "9",
+    },
+    {
+      value: "10",
+      label: "10",
+    },
+    {
+      value: "11",
+      label: "11",
+    },
+    {
+      value: "12",
+      label: "12",
+    },
+  ];
+  return listDuration;
+};
+
+export const getMonthName = () => {
+  const listMonth = [
+    {
+      value: 1,
+      label: "Januari",
+    },
+    {
+      value: 2,
+      label: "Februari",
+    },
+    {
+      value: 3,
+      label: "Maret",
+    },
+    {
+      value: 4,
+      label: "April",
+    },
+    {
+      value: 5,
+      label: "Mei",
+    },
+    {
+      value: 6,
+      label: "Juni",
+    },
+    {
+      value: 7,
+      label: "Juli",
+    },
+    {
+      value: 8,
+      label: "Agustus",
+    },
+    {
+      value: 9,
+      label: "September",
+    },
+    {
+      value: 10,
+      label: "Oktober",
+    },
+    {
+      value: 11,
+      label: "November",
+    },
+    {
+      value: 12,
+      label: "Desember",
+    },
+  ];
+  return listMonth;
 };

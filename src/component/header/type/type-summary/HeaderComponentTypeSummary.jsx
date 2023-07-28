@@ -1,61 +1,15 @@
-import {
-  ArrowDownOutlined,
-  DeleteOutlined,
-  DownloadOutlined,
-  FilterOutlined,
-  MoreOutlined,
-  ReloadOutlined,
-  SearchOutlined,
-  ToTopOutlined,
-  VerticalAlignBottomOutlined,
-} from "@ant-design/icons";
-import { Breadcrumb, Button, Dropdown, Input, Layout, Menu, Modal, Typography } from "antd";
-import { getLocal } from "../../../../values/Utilitas";
-import FilterComponent from "../../../filter/FilterComponent";
-import UploadModal from "../../../modal/UploadModal";
-import HeaderComponentTypeSummaryLogic from "./HeaderComponentTypeSummaryLogic";
+import { ArrowDownOutlined, VerticalAlignBottomOutlined } from "@ant-design/icons";
+import { Button, Layout, Modal, Typography } from "antd";
+import Logic from "./Logic";
 
 import "../style.scss";
+import { log } from "values/Utilitas";
 
 const { Header } = Layout;
 const { Text } = Typography;
 
-// const data = ["Kode produk", "Kode company"];
-
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-  "Akun",
-];
-
-const ModalFilter = ({ filter, onCloseFilter, onFinish, form }) => {
-  return (
-    <Modal
-      className="filter-modal"
-      title="Filter"
-      open={filter}
-      onCancel={onCloseFilter}
-      footer={null}
-      mask={false}
-    >
-      <FilterComponent
-        type={2}
-        isCodeProduct={true}
-        onFinish={onFinish}
-        variant="summary"
-        form={form}
-      />
-    </Modal>
-  );
-};
-
-const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
+const ModalMenuMore = ({ open, onCancel, listMenu, disabledMenu, onExport, linkExport }) => {
+  log({ listMenu });
   return (
     <Modal
       className="more-modal"
@@ -66,83 +20,44 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport }) => {
       closable={false}
       mask={false}
     >
-      <Button
-        className="btn"
-        type="text"
-        icon={<VerticalAlignBottomOutlined />}
-        disabled={disabledImportExport}
-        onClick={() => {
-          onExport();
-          onCancel();
-        }}
-      >
-        Export
-      </Button>
-      {/* <Button
-        className="btn"
-        type="text"
-        icon={<DeleteOutlined />}
-        style={{ color: "red" }}
-        disabled={disabledImportExport}
-      >
-        Clear Data
-      </Button> */}
+      {listMenu.map((e) => (
+        <Button
+          className="btn"
+          type="text"
+          // icon={<DownloadOutlined />}
+          disabled={e.disabled}
+          onClick={() => {
+            onExport(e, linkExport);
+            onCancel();
+          }}
+        >
+          Export {e.description}
+        </Button>
+      ))}
     </Modal>
   );
 };
 
-const HeaderComponentTypeSummary = ({
-  onFinish,
-  onChangeFilter,
-  disabledImportExport,
-  onExport,
-  form,
-}) => {
-  const { value, func } = HeaderComponentTypeSummaryLogic({
-    onChangeFilter,
-  });
+const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport }) => {
+  const { value, func } = Logic();
+
   return (
     <Header className="custom-header">
-      {/* <Breadcrumb className="custom-breadcrumb" separator=">">
-        <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
-        <Breadcrumb.Item>Test</Breadcrumb.Item>
-      </Breadcrumb> */}
-
-      <Text className="header-title">{getLocal("name-menu")}</Text>
+      <Text className="header-title">{value.header}</Text>
 
       <div className="container-menu">
-        {/* <Button
-          className="btn-filter"
-          icon={<FilterOutlined />}
-          onClick={func.onCilckFilter}
-        >
-          Filter
-        </Button> */}
-        {/* <Button className="btn-refresh" icon={<ReloadOutlined />}>
-          Refresh
-        </Button> */}
-        <Button
-          className="btn-more"
-          // icon={<ArrowDownOutlined />}
-
-          onClick={func.onClickMore}
-        >
+        <Button className="btn-more" onClick={func.onClickMore}>
           Action <ArrowDownOutlined />
         </Button>
       </div>
 
-      <ModalFilter
-        filter={value.filter}
-        onCloseFilter={func.onCloseFilter}
-        onFinish={onFinish}
-        form={form}
-      />
-
       <ModalMenuMore
         open={value.more}
         onCancel={func.onCloseMore}
-        disabledImportExport={disabledImportExport}
-        onExport={onExport}
+        listMenu={listMenu}
+        onExport={func.onExport}
+        disabledMenu={disabledMenu}
+        linkExport={linkExport}
       />
     </Header>
   );

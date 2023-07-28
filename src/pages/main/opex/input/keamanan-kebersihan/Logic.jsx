@@ -38,24 +38,26 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailopex/template4";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    setItems(state.item);
+    getDataAccount();
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const responseShow = (res) => {
     dispatch(
@@ -252,10 +254,14 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
         if (j === 5) e.value = totalKontrak;
-        if (j >= mulaiKontrak + 8 && j <= lamaKontrak + 8) {
+        if (mulaiKontrak < 1) mulaiKontrak = 1;
+        if (lamaKontrak > 12) lamaKontrak = 12;
+        if (j >= 8 && j <= mulaiKontrak + 8) e.value = 0;
+        if (j >= mulaiKontrak + 8 && j < lamaKontrak + 8 + mulaiKontrak) {
           e.value = totalKontrak;
           grandTotal += e.value;
         }
+        if (j >= lamaKontrak + 8 + mulaiKontrak && j <= 20) e.value = 0;
         return e;
       });
 
@@ -295,7 +301,8 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
+        formData.append("type", "keamanan");
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -307,6 +314,7 @@ const Logic = () => {
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
+        formData.append("type", "keamanan");
 
         await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }
@@ -392,6 +400,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
+    formData.append("type", "keamanan");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -404,7 +413,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 

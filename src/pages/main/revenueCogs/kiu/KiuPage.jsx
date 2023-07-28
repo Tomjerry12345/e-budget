@@ -1,17 +1,54 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { actionRevenue } from "redux/action/action.reducer";
+import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
 
 const KiuPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
-
-  const [isMoveTabs, setIsMoveTabs] = useState(false)
+  const [isMoveTabs, setIsMoveTabs] = useState(false);
+  const [listMenu, setListMenu] = useState([]);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const dataGlobalRedux = useSelector((state) => state.data);
+
+  const location = useLocation();
+  const split = location.pathname.split("/");
+  const q = split[split.length - 2];
+
+  const perusahaan = getPerusahaan(q);
+
+  useEffect(() => {
+    if (key === 1) {
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
+    }
+    form.setFieldsValue({
+      code_company: `${perusahaan.code} - ${perusahaan.description}`,
+      code_product: null,
+      code_location: null,
+      code_dept: null,
+      code_icp: null,
+      // code_project: null,
+      periode: null,
+    });
+    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+      (e) => e.file !== undefined
+    );
+    setListMenu(l);
+    dispatch(
+      actionRevenue({
+        filterValues: null,
+      })
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMoveTabs]);
 
   const tabItemParent = [
     {
@@ -26,81 +63,26 @@ const KiuPage = () => {
     },
   ];
 
-  useEffect(() => {
-    form.setFieldsValue({
-      code_company: `326 - PT. Kars Inti Utama`,
-      code_product: null,
-      code_location: null,
-      code_dept: null,
-      code_icp: null,
-      code_project: null,
-      periode: null,
-    });
-  }, [isMoveTabs]);
-
   const onFinish = (values) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-      periode
-    } = values;
-
-    // alert("test");
-
-    let fCodeCompany = code_company.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
-    let fPeriode = periode.split(" ")
-
-    fCodeCompany = fCodeCompany[0]
-    fCodeLocation = fCodeLocation[0];
-    fCodeDept = fCodeDept[0];
-    fCodeIcp = fCodeIcp[0];
-    fCodeProject = fCodeProject[0];
-    fPeriode = fPeriode[0];
-
     if (key === 1) {
-      navigate(
-        `/main/revenue-cogs/kiu/penjualan?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
-      );
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
     } else if (key === 2) {
-      navigate(
-        `/main/revenue-cogs/kiu/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
-      );
+      navigate(`/main/revenue-cogs/${q}/hpplain`);
     }
-
+    dispatch(
+      actionRevenue({
+        filterValues: values,
+      })
+    );
   };
 
   return (
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        onChangeFilter={(set) => {
-          // set(isClickFinish);
-        }}
-        // onChangeLoadingUpload={(set, setImport) => {
-        //   set(value.loadingUpload);
-
-        //   if (value.uploadSucces === true) {
-        //     setImport(false);
-        //   }
-        // }}
-        // onUploadFile={func.onUploadFile}
-        // accesFile={value}
-        // downloadFile="file/capex.xlsx"
-        // disabledImportExport={value.dataColumnInput.length <= 1}
-        // onChangeSelect={func.onChangeTahun}
-        codeCompany={311}
-        form={form}
+        listMenuImport={listMenu}
+        disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
       />
-
       <div className="custom-root-layout">
         <Tabs
           className="custom-tabs"
@@ -112,27 +94,28 @@ const KiuPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/kiu/penjualan`);
+              navigate(`/main/revenue-cogs/${q}/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/kiu/hpplain`);
+              navigate(`/main/revenue-cogs/${q}/hpplain`);
             }
 
-            setIsMoveTabs(!isMoveTabs)
+            setIsMoveTabs(!isMoveTabs);
           }}
         />
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
-          isCodeProduct={false}
+          isCodeProduct={key !== 1}
           type="input"
-          codeCompany={326}
+          codeCompany={perusahaan.code}
           form={form}
           disabled
           typeCompany="static"
           variant="perusahaan"
         />
-       <div style={{ marginTop: 16 }}>
+
+        <div style={{ marginTop: 16 }}>
           <Outlet />
         </div>
       </div>

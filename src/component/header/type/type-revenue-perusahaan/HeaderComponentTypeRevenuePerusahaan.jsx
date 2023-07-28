@@ -1,70 +1,24 @@
-import {
-  DeleteOutlined,
-  DownloadOutlined,
-  ToTopOutlined,
-} from "@ant-design/icons";
-import {  Button,Layout, Menu, Modal, Typography } from "antd";
-import { getLocal } from "../../../../values/Utilitas";
-import FilterComponent from "../../../filter/FilterComponent";
-import ImportInputModal from "../../../modal/import/ImportInputModal";
-import HeaderComponentTypeRevenuePerusahaanLogic from "./HeaderComponentTypeRevenueIPerusahaanLogic";
+import { ArrowDownOutlined } from "@ant-design/icons";
+import { Button, Layout, Modal, Typography } from "antd";
+import ImportInputModal from "component/modal/import/ImportInputModal";
+import HeaderComponentTypeRevenuePerusahaanLogic from "./Logic";
 import "../style.scss";
+import { useState } from "react";
 
 const { Header } = Layout;
 const { Text } = Typography;
 
-// const data = ["Kode produk", "Kode company"];
-
-const title = [
-  "Dashboard",
-  "Revenue & COGS",
-  "Opex",
-  "Capex",
-  "MPP",
-  "Others",
-  "Report",
-  "Master COA",
-  "Akun",
-];
-
-const ModalFilter = ({
-  filter,
-  onCloseFilter,
-  onFinish,
-  codeCompany,
-  isCodeProject,
-  form,
-  disabled,
-  keyCodeProject,
+const ModalMenuMore = ({
+  open,
+  onCancel,
+  onClickImport,
+  disabledImportExport,
+  listMenuImport,
+  setModalTitle,
 }) => {
   return (
     <Modal
-      className="filter-modal"
-      title="Filter"
-      open={filter}
-      onCancel={onCloseFilter}
-      footer={null}
-      mask={false}
-    >
-      <FilterComponent
-        type={2}
-        isCodeProduct={false}
-        isCodeProject={isCodeProject}
-        onFinish={onFinish}
-        variant="input"
-        codeCompany={codeCompany}
-        form={form}
-        disabled={disabled}
-        keyCodeProject={keyCodeProject}
-      />
-    </Modal>
-  );
-};
-
-const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) => {
-  return (
-    <Modal
-      className="more-modal"
+      className={`more-modal`}
       title={null}
       open={open}
       onCancel={onCancel}
@@ -72,117 +26,66 @@ const ModalMenuMore = ({ open, onCancel, onClickImport, disabledImportExport }) 
       closable={false}
       mask={false}
     >
-      <Button
-        className="btn"
-        type="text"
-        icon={<DownloadOutlined />}
-        disabled={disabledImportExport}
-        onClick={() => {
-          onClickImport();
-          onCancel();
-        }}
-      >
-        Import
-      </Button>
-      <Button
-        className="btn"
-        type="text"
-        icon={<ToTopOutlined />}
-        disabled={disabledImportExport}
-      >
-        Export
-      </Button>
-      <Button
-        className="btn"
-        type="text"
-        icon={<DeleteOutlined />}
-        style={{ color: "red" }}
-        disabled={disabledImportExport}
-      >
-        Clear Data
-      </Button>
+      {listMenuImport.map((e, i) => (
+        <Button
+          key={i}
+          className="btn"
+          type="text"
+          // icon={<DownloadOutlined />}
+          disabled={disabledImportExport}
+          onClick={() => {
+            setModalTitle("Import " + e.description);
+            onClickImport(e);
+            onCancel();
+          }}
+        >
+          Import {e.description}
+        </Button>
+      ))}
     </Modal>
   );
 };
 
 const HeaderComponentTypeRevenuePerusahaan = ({
-  onFinish,
-  onChangeFilter,
   onUploadFile,
   downloadFile,
-  onChangeLoadingUpload,
   accesFile,
   disabledImportExport,
   onChangeSelect,
-  form,
-  codeCompany,
-  isCodeProject,
-  disabled,
-  keyCodeProject,
+  listMenuImport,
 }) => {
-  const { value, func } = HeaderComponentTypeRevenuePerusahaanLogic({
-    onChangeFilter,
-    // onChangeLoadingUpload,
-  });
+  const { value, func } = HeaderComponentTypeRevenuePerusahaanLogic();
+  const [modalTitle, setModalTitle] = useState("Import");
   return (
     <Header className="custom-header">
-      {/* <Breadcrumb className="custom-breadcrumb" separator=">">
-        <Breadcrumb.Item>{title[getLocal("index-menu")]}</Breadcrumb.Item>
-        <Breadcrumb.Item>Test</Breadcrumb.Item>
-      </Breadcrumb> */}
-
-      <Text className="header-title">{getLocal("name-menu")}</Text>
-
+      {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
+      <Text className="header-title">{value.header}</Text>
       <div className="container-menu">
-        {/* <Input
-          className="input-search"
-          placeholder="input search text"
-          suffix={<SearchOutlined />}
-        /> */}
-        {/* <Button
-          className="btn-filter"
-          icon={<FilterOutlined />}
-          onClick={func.onCilckFilter}
-        >
-          Filter
-        </Button> */}
-        {/* <Button className="btn-refresh" icon={<ReloadOutlined />}>
-          Refresh
-        </Button> */}
-        {/* <Button
-          className="btn-more"
-          icon={<MoreOutlined />}
-          onClick={func.onClickMore}
-        /> */}
+        <Button className="btn-more" onClick={func.onClickMore}>
+          Action <ArrowDownOutlined />
+        </Button>
       </div>
 
-      {/* <ModalFilter
-        filter={value.filter}
-        onCloseFilter={func.onCloseFilter}
-        onFinish={onFinish}
-        codeCompany={codeCompany}
-        form={form}
-        isCodeProject={isCodeProject}
-        disabled={disabled}
-        keyCodeProject={keyCodeProject}
-      /> */}
-
-      {/* <ModalMenuMore
-        open={value.more}
+      <ModalMenuMore
+        open={value.importRedux.openMore}
         onCancel={func.onCloseMore}
         onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
-      /> */}
+        listMenuImport={listMenuImport}
+        setModalTitle={setModalTitle}
+      />
 
-      {/* <ImportInputModal
-        open={value.isImport}
+      <ImportInputModal
+        open={value.importRedux.openImport}
         onCancel={func.onCloseImport}
-        value={accesFile}
-        onOk={onUploadFile}
-        file={downloadFile}
-        loading={value.loadingUpload}
+        value={value}
+        onOk={func.onUploadFile}
+        file={value.file}
+        loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
-      /> */}
+        title={modalTitle}
+        type={true}
+      />
     </Header>
   );
 };

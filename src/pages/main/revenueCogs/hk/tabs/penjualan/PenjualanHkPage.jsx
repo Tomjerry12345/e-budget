@@ -1,10 +1,8 @@
 import React from "react";
-import FilterComponent from "component/filter/FilterComponent";
-import HeaderComponent from "component/header/HeaderComponent";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
+import { capitalize } from "values/react-grid/helpers";
 
 const PenjualanHkPage = () => {
   const { value, func } = Logic();
@@ -14,7 +12,7 @@ const PenjualanHkPage = () => {
       <div className="section-table">
         {value.rows &&
           value.rows.map((e, i) => (
-            <div style={{ margin: "10px" }}>
+            <div key={i} style={{ margin: "10px" }}>
               <div
                 style={{
                   display: "flex",
@@ -22,10 +20,7 @@ const PenjualanHkPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography.Text>{e.title}</Typography.Text>
-                <Button className="btn-tambah-row" onClick={() => func.onTambahRow(i, e.title)}>
-                  Tambah Data
-                </Button>
+                <Typography.Text>{capitalize(e.description)}</Typography.Text>
               </div>
 
               <div
@@ -42,10 +37,13 @@ const PenjualanHkPage = () => {
                 >
                   <ReactGrid
                     rows={e.data}
-                    columns={value.columns}
+                    columns={value.columns[e.description]}
                     stickyTopRows={1}
                     stickyLeftColumns={1}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e.title)}
+                    enableRangeSelection
+                    onCellsChanged={(change) => {
+                      func.onChangeTable(change, i, e);
+                    }}
                   />
                 </div>
               </div>

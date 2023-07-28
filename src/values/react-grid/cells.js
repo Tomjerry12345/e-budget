@@ -12,6 +12,15 @@ export const textCell = (text, className = "", style) => ({
   style,
 });
 
+export const headerCell = ({ text, className = "", style, colspan, rowspan }) => ({
+  type: "header",
+  text,
+  className,
+  style,
+  colspan,
+  rowspan,
+});
+
 export const chevronCell = (text, hasChildren, parentId, className = "", style) => ({
   type: "chevron",
   text,
@@ -28,6 +37,16 @@ export const numberCell = (value, className = "", style, isFormat = true) => ({
   className,
   style,
   format: isFormat ? numberFormat : null,
+});
+
+export const dropDownCell = (value, selectedValue, className = "", style, isOpen) => ({
+  type: "dropdown",
+  values: value,
+  inputValue: `${selectedValue}`,
+  selectedValue: `${selectedValue}`,
+  // className,
+  // style,
+  isOpen,
 });
 
 export const nonEditable = (cell) => ({
@@ -79,7 +98,7 @@ export function rootHeaderCell(
   color = "white"
 ) {
   return nonEditable(
-    textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(title, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {
@@ -102,26 +121,16 @@ export function totalCell(
     title !== ""
       ? numberCell(
           title,
-          `text-lg font-bold ${additionalClassNames}`,
+          `font-bold ${additionalClassNames}`,
           {
             background: background,
             color: color,
-            border: {
-              bottom: { style: "none" },
-              left: { style: "none" },
-              right: { style: "none" },
-            },
           },
           isFormat
         )
-      : textCell(title, `text-lg font-bold ${additionalClassNames}`, {
+      : textCell(title, `font-bold ${additionalClassNames}`, {
           background: background,
           color: color,
-          border: {
-            bottom: { style: "none" },
-            left: { style: "none" },
-            right: { style: "none" },
-          },
         })
   );
 }
@@ -133,7 +142,7 @@ export function monthHeaderCell(
   color = "#003421"
 ) {
   return nonEditable(
-    textCell(month, `text-lg font-bold ${additionalClassNames}`, {
+    textCell(month, `font-bold ${additionalClassNames}`, {
       background: background,
       color: color,
       border: {

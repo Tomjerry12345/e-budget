@@ -8,7 +8,7 @@ const AutoCompleteElement = ({
   value,
   disabled,
   intialValue,
-  variant = 'default'
+  variant = "default",
 }) => {
   const newVal = intialValue === undefined ? [] : [intialValue];
   value.forEach((val) => {
@@ -37,25 +37,24 @@ const AutoCompleteElement = ({
         },
       ]}
     >
-    {variant === "default" ? <AutoComplete
-        popupClassName="autocomplete-style"
-        style={{
-          width: 200,
-        }}
-        row
-        options={newVal}
-        onSelect={onSelect}
-        placeholder={label}
-        disabled={disabled}
-        allowClear
-        filterOption={(inputValue, option) => {
-
-          return (
-            option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
-          );
-        }}
-      /> : <Input placeholder="Basic usage" readOnly={true} style={{}}/>}
-      
+      {variant === "default" ? (
+        <AutoComplete
+          popupClassName="autocomplete-style"
+          style={{
+            width: 200,
+          }}
+          options={newVal}
+          onSelect={onSelect}
+          placeholder={label}
+          disabled={disabled}
+          allowClear
+          filterOption={(inputValue, option) => {
+            return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+          }}
+        />
+      ) : (
+        <Input placeholder="Basic usage" readOnly={true} style={{}} />
+      )}
     </Form.Item>
   );
 };

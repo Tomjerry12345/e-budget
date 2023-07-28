@@ -1,10 +1,10 @@
-import { ArrowDownOutlined, DownloadOutlined } from "@ant-design/icons";
+import { ArrowDownOutlined } from "@ant-design/icons";
 import { Button, Layout, Modal, Typography } from "antd";
-import HeaderComponentTypeInputLogic from "./HeaderComponentTypeInputLogic";
+import Logic from "./Logic";
 
 import "../../style.scss";
-import { getLocal } from "../../../../../values/Utilitas";
-import ImportInputModal from "../../../../modal/import/ImportInputModal";
+import ImportInputModal from "component/modal/import/ImportInputModal";
+import { useState } from "react";
 
 const { Header } = Layout;
 const { Text } = Typography;
@@ -15,11 +15,13 @@ const ModalMenuMore = ({
   onClickImport,
   disabledImportExport,
   listMenuImport,
-  className,
+  setModalTitle,
+  setFileName,
+  dynamicFile,
 }) => {
   return (
     <Modal
-      className={`more-modal ${className}`}
+      className={`more-modal`}
       title={null}
       open={open}
       onCancel={onCancel}
@@ -34,11 +36,13 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={disabledImportExport}
           onClick={() => {
+            setModalTitle("Import " + e.description);
             onClickImport(e.code_account);
+            if (dynamicFile === true) setFileName(e.filename);
             onCancel();
           }}
         >
-          {e.description}
+          Import {e.description}
         </Button>
       ))}
     </Modal>
@@ -46,23 +50,23 @@ const ModalMenuMore = ({
 };
 
 const HeaderComponentTypeInput = ({
-  onChangeFilter,
   onUploadFile,
   downloadFile,
-  onChangeLoadingUpload,
   accesFile,
   disabledImportExport,
   onChangeSelect,
   listMenuImport,
   className,
+  dynamicFile,
 }) => {
-  const { value, func } = HeaderComponentTypeInputLogic({
-    onChangeFilter,
-    onChangeLoadingUpload,
-  });
+  const { value, func } = Logic();
+  const [modalTitle, setModalTitle] = useState("Import");
+  const [fileName, setFileName] = useState(null);
+
   return (
     <Header className="custom-header">
-      <Text className="header-title">{getLocal("name-menu")}</Text>
+      {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
+      <Text className="header-title">{value.header}</Text>
       <div className="container-menu">
         <Button className="btn-more" onClick={func.onClickMore}>
           Action <ArrowDownOutlined />
@@ -76,6 +80,9 @@ const HeaderComponentTypeInput = ({
         onClickImport={func.onClickImport}
         disabledImportExport={disabledImportExport}
         listMenuImport={listMenuImport}
+        setModalTitle={setModalTitle}
+        setFileName={setFileName}
+        dynamicFile={dynamicFile}
       />
 
       <ImportInputModal
@@ -83,9 +90,10 @@ const HeaderComponentTypeInput = ({
         onCancel={func.onCloseImport}
         value={accesFile}
         onOk={onUploadFile}
-        file={downloadFile}
+        file={dynamicFile === true ? fileName : downloadFile}
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
+        title={modalTitle}
       />
     </Header>
   );

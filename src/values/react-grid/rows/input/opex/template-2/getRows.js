@@ -3,7 +3,6 @@ import {
   nonEditable,
   textCell,
   numberCell,
-  noSideBorders,
   totalCell,
 } from "values/react-grid/cells";
 
@@ -22,7 +21,6 @@ const firstLoadTotalRow = (data) => {
     list[0] += e["unit"];
     list[1] += e["rates"];
     list[2] += e["total"];
-    list[3] += e["pay_period"];
     list[4] += e["jan_rates"];
     list[5] += e["feb_rates"];
     list[6] += e["mar_rates"];
@@ -51,7 +49,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   return rowTotal("Total", list);
 };
@@ -108,9 +109,15 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) =>
-        noSideBorders(totalCell(e, "", "beige", "", !(i === 1 || i === 3)))
-      ),
+      ...total.map((e, i) => {
+        if (i === 1 || i === 3)
+          return nonEditable(
+            textCell("", "padding-left-lg", {
+              background: "beige",
+            })
+          );
+        else return totalCell(e, "", "beige", "");
+      }),
     ],
   };
 }
@@ -120,7 +127,11 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
+  return [
+    header,
+    reactgridNewRow(id),
+    rowTotal("Total", createArray(TOTAL_DATA)),
+  ];
 }
 
 export function reactgridNewRow(id) {

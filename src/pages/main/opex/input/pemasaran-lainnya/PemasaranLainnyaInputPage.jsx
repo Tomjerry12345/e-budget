@@ -12,7 +12,7 @@ const PemasaranLainnyaInputPage = () => {
   return (
     <>
       <HeaderComponent
-        className="more-modal-width-type1"
+        className="more-modal"
         type="input"
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
@@ -21,6 +21,7 @@ const PemasaranLainnyaInputPage = () => {
         disabledImportExport={value.rows.pemasaran.length === 0}
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
@@ -66,6 +67,7 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -74,7 +76,7 @@ const PemasaranLainnyaInputPage = () => {
             ))
           : null}
 
-        {value.rows.pemasaran.length > 0 ? (
+        {value.rows.administrasi.length > 0 ? (
           <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
@@ -114,6 +116,7 @@ const PemasaranLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>

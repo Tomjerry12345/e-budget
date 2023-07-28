@@ -1,25 +1,37 @@
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
 import { Form, Tabs } from "antd";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import { log } from "../../../../values/Utilitas";
-import FilterComponent from "../../../../component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
+import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
+import { log } from "values/Utilitas";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
   const [form] = Form.useForm();
   const [isMoveTabs, setIsMoveTabs] = useState(false);
+  const [listMenu, setListMenu] = useState([]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { clicked } = useSelector((state) => state.revenue);
+
+  const dataGlobalRedux = useSelector((state) => state.data);
+
+  const location = useLocation();
+  const split = location.pathname.split("/");
+  const q = split[split.length - 2];
+
+  const perusahaan = getPerusahaan(q);
 
   useEffect(() => {
+    if (key === 1) {
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
+    }
     form.setFieldsValue({
-      code_company: `311 - PT. Hadji Kalla`,
+      code_company: `${perusahaan.code} - ${perusahaan.description}`,
       code_product: null,
       code_location: null,
       code_dept: null,
@@ -27,6 +39,13 @@ const HkPage = () => {
       code_project: null,
       periode: null,
     });
+
+    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+      (e) => e.file !== undefined
+    );
+    setListMenu(l);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
   const tabItemParent = [
@@ -43,48 +62,14 @@ const HkPage = () => {
   ];
 
   const onFinish = (values) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-      periode,
-    } = values;
-
-    // alert("test");
-
-    let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
-    let fPeriode = periode.split(" ");
-
-    fCodeCompany = fCodeCompany[0];
-    fCodeLocation = fCodeLocation[0];
-    fCodeDept = fCodeDept[0];
-    fCodeIcp = fCodeIcp[0];
-    fCodeProject = fCodeProject[0];
-    fPeriode = fPeriode[0];
-
-    log("key", key);
-
     if (key === 1) {
-      navigate(
-        `/main/revenue-cogs/hk/penjualan?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
-      );
+      navigate(`/main/revenue-cogs/${q}/penjualan`);
     } else if (key === 2) {
-      navigate(
-        `/main/revenue-cogs/hk/hpplain?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_dept=109&code_icp=${fCodeIcp}&code_project=${fCodeProject}&periode=${fPeriode}`
-      );
+      navigate(`/main/revenue-cogs/${q}/hpplain`);
     }
     dispatch(
       actionRevenue({
-        clicked: !clicked,
+        filterValues: values,
       })
     );
   };
@@ -93,21 +78,8 @@ const HkPage = () => {
     <>
       <HeaderComponent
         type="revenue-perusahaan"
-        // onFinish={onFinish}
-        onChangeFilter={(set) => {}}
-        // onChangeLoadingUpload={(set, setImport) => {
-        //   set(value.loadingUpload);
-
-        //   if (value.uploadSucces === true) {
-        //     setImport(false);
-        //   }
-        // }}
-        // onUploadFile={func.onUploadFile}
-        // accesFile={value}
-        // downloadFile="file/capex.xlsx"
-        // disabledImportExport={value.dataColumnInput.length <= 1}
-        // onChangeSelect={func.onChangeTahun}
-        form={form}
+        listMenuImport={listMenu}
+        disabledImportExport={dataGlobalRedux.sizeDataRevenue === 0}
       />
       <div className="custom-root-layout">
         <Tabs
@@ -120,9 +92,9 @@ const HkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
-              navigate(`/main/revenue-cogs/hk/penjualan`);
+              navigate(`/main/revenue-cogs/${q}/penjualan`);
             } else {
-              navigate(`/main/revenue-cogs/hk/hpplain`);
+              navigate(`/main/revenue-cogs/${q}/hpplain`);
             }
 
             setIsMoveTabs(!isMoveTabs);
@@ -132,9 +104,9 @@ const HkPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject
-          isCodeProduct={false}
+          isCodeProduct={key !== 1}
           type="input"
-          codeCompany={311}
+          codeCompany={perusahaan.code}
           form={form}
           disabled
           typeCompany="static"

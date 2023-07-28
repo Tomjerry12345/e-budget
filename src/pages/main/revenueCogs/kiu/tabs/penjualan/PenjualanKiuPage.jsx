@@ -1,55 +1,52 @@
+import React from "react";
 import { Typography } from "antd";
-import FilterComponent from "../../../../../../component/filter/FilterComponent";
-import PenjualanHkLogic from "./PenjualanHkLogic";
-import TablePotonganComponent from "../../../component/TablePotonganComponent";
-import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
-import HeaderComponent from "../../../../../../component/header/HeaderComponent";
+import { ReactGrid } from "@silevis/reactgrid";
+import Logic from "./Logic";
 
 const PenjualanKiuPage = () => {
-  const { value, func } = PenjualanHkLogic();
-
-  const data1 = [
-    {
-      title: "Asumsi Unit Jual",
-      name: "listAsumsi",
-    },
-    {
-      title: "Harga Jual Per Unit",
-      name: "listHarga",
-    },
-    {
-      title: "Penjualan",
-      name: "listPenjualan",
-    },
-    {
-      title: "Potongan Penjualan",
-      name: "listPotongan",
-    },
-  ];
-
-  const codeCompany = `${value.filterCompany.title} (${value.filterCompany.code})`;
+  const { value, func } = Logic();
 
   return (
     <>
-      {/* <FilterComponent
-        codeCompany={codeCompany}
-        type={2}
-        isCodeProduct={false}
-        form={value.form}
-        onFinish={func.onFinish}
-        disabled={true}
-      /> */}
+      <div className="section-table">
+        {value.rows &&
+          value.rows.map((e, i) => (
+            <div style={{ margin: "10px" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography.Text>{e.description}</Typography.Text>
+              </div>
 
-      {data1.map((val) => (
-        <>
-          <Typography.Text className="title">{val.title}</Typography.Text>
-          {val.name === "listPotongan" ? (
-            <TablePotonganComponent value={value} name={val.name} />
-          ) : (
-            <ChildRevenueCogsComponent value={value} name={val.name} />
-          )}
-        </>
-      ))}
+              <div
+                style={{
+                  overflowX: "auto",
+                  overflowY: "auto",
+                  marginBottom: 16,
+                  paddingBottom: 16,
+                }}
+              >
+                <div
+                  style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+                  className="liquidity-planner-app"
+                >
+                  <ReactGrid
+                    rows={e.data}
+                    columns={value.columns[e.description]}
+                    stickyTopRows={1}
+                    stickyLeftColumns={1}
+                    enableRangeSelection
+                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
     </>
   );
 };

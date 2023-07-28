@@ -6,7 +6,9 @@ import { getLocal, log } from "../../values/Utilitas";
 const FilterComponentLogic = ({
   isCodeProduct,
   isCodeProject,
+  isCodeLocation,
   isCodeIcp,
+  isCodeDept,
   codeCompany,
   type,
   typeCompany,
@@ -111,18 +113,20 @@ const FilterComponentLogic = ({
 
       log("code", code);
 
-      // if (code !== "0") {
-      const resProduct =
-        isCodeProduct === true
-          ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
-          : null;
+      // const resProduct =
+      //   isCodeProduct === true
+      //     ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
+      //     : null;
+      const resProduct = await MainServices.get(`product/list-by-com?code_company=${code[0]}`);
 
-      const resLocation = await MainServices.get(
-        `location/list-by-com?code_company=${code[0]}`
-      );
-      const resDept = await MainServices.get(
-        `department/list-dropdown?code_company=${code[0]}`
-      );
+      const resLocation =
+        isCodeLocation === true
+          ? await MainServices.get(`location/list-by-com?code_company=${code[0]}`)
+          : null;
+      const resDept =
+        isCodeDept === true
+          ? await MainServices.get(`department/list-dropdown?code_company=${code[0]}`)
+          : null;
       const resIcp =
         isCodeIcp === true
           ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
@@ -132,16 +136,14 @@ const FilterComponentLogic = ({
           ? await MainServices.get(`project/list-by-com?code_company=${code[0]}`)
           : null;
 
-      if (resLocation.data.responseCode === 200) {
-        setState({
-          ...state,
-          code_product: resProduct !== null ? setProduct(resProduct) : [],
-          code_location: setLocation(resLocation),
-          code_dept: setDept(resDept),
-          code_icp: resIcp !== null ? setIcp(resIcp) : [],
-          code_project: resProject !== null ? setProject(resProject, code) : [],
-        });
-      }
+      setState({
+        ...state,
+        code_product: setProduct(resProduct),
+        code_location: resLocation !== null ? setLocation(resLocation) : [],
+        code_dept: resDept !== null ? setDept(resDept) : [],
+        code_icp: resIcp !== null ? setIcp(resIcp) : [],
+        code_project: resProject !== null ? setProject(resProject, code) : [],
+      });
     } catch (err) {
       log({ err });
     }

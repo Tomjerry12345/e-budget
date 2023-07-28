@@ -1,3 +1,19 @@
+export const routingRevenue = {
+  hk: "Revenue & COGS HK",
+  kiu: "Revenue & COGS KIU",
+  gmm: "Revenue & COGS GMM",
+  kia: "Revenue & COGS KIA",
+  bju: "Revenue & COGS BJU",
+  blt: "Revenue & COGS BLT",
+  blu: "Revenue & COGS BLU",
+  bk: "Revenue & COGS BK",
+  bsu: "Revenue & COGS BSU",
+  bsb: "Revenue & COGS BSB",
+  kik: "Revenue & COGS KIK",
+  ikp: "Revenue & COGS IKP",
+  band: "Revenue & COGS BAND",
+};
+
 export const routingOpex = {
   "Input By Iklan & Advertensi": "iklan-advertensi",
   "Input By Pemasaran Lainnya": "pemasaran-lainnya",
@@ -11,6 +27,7 @@ export const routingOpex = {
   "Input By Pantri": "pantri",
   "Input By Asuransi": "asuransi",
   "Input By Keamanan & Kebersihan": "keamanan-kebersihan",
+  "Input By Internet": "internet",
   "Input By Tender": "tender",
   "Input By Kontraktual, Rapat, Clearance": "kontraktual-rapat-clearance",
   "Input By BBM, Tol, Parkir": "bbm-tol-parkir",
@@ -34,6 +51,7 @@ export const routingOpex = {
   "Summary By Pantri": "pantri",
   "Summary By Asuransi": "asuransi",
   "Summary By Keamanan & Kebersihan": "keamanan-kebersihan",
+  "Summary By Internet": "internet",
   "Summary By Tender": "tender",
   "Summary By Kontraktual, Rapat, Clearance": "kontraktual-rapat-clearance",
   "Summary By BBM, Tol, Parkir": "bbm-tol-parkir",
@@ -45,6 +63,36 @@ export const routingOpex = {
   "Summary By Izin & Konsultan": "izin-konsultan",
   "Summary By Administrasi Lainnya": "administrasi-lainnya",
   "Summary Budget Opex": "opex",
+};
+export const routingCapex = {
+  "Input Load Saldo Awal": "load-saldo-awal",
+  "Input New Aset": "new-aset",
+  "Input Direct Capex": "direct-capex",
+  "Summary Existing Aset": "existing-aset",
+  "Summary Penyusutan Existing Aset": "penyusutan-existing-aset",
+  "Summary Saldo Awal Akumulasi Penyusutan": "saldo-awal-akumulasi-penyusutan",
+  "Summary New Aset": "new-aset",
+  "Summary Penyusutan New Aset": "penyusutan-new-aset",
+  "Summary Akumulasi Penyusutan New Aset": "akumulasi-penyusutan-new-aset",
+  "Summary Disposal Aset": "disposal-aset",
+  "Summary Nilai Jual Aset": "nilai-jual-aset",
+  "Summary Penyusutan Disposal Aset": "penyusutan-disposal-aset",
+  "Summary Akumulasi Penyusutan Disposal Aset": "akumulasi-penyusutan-disposal-aset",
+  "Summary Total Aset": "total-aset",
+  "Summary Total Penyusutan": "total-penyusutan",
+  "Summary Total Akumulasi Penyusutan": "total-akumulasi-penyusutan",
+};
+
+export const routingMpp = {
+  "Input MPP General Asumption": "general-asumption",
+  "Input Rate Assumption": "rate-asumption",
+  "Input Rate Salary": "rate-salary",
+  "Input Headcount Salary": "headcount-salary",
+  "Input Headcount Assumption": "headcount-asumption",
+  "Input Days": "days",
+  "Input Jam Lembur": "jam-lembur",
+  "Input Biaya PPh 21": "biaya-pph21",
+  "Input Biaya BPJS Kesehatan": "bpjs-kesehatan",
 };
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
@@ -66,4 +114,14 @@ export const routingMasterCoa = {
   "Kode akun": "akun",
   "Kode projek": "project",
   "Kode ICP": "icp",
+};
+
+export const allRouting = {
+  "revenue-cogs": routingRevenue,
+  opex: routingOpex,
+  capex: routingCapex,
+  mpp: routingMpp,
+  others: routingOthers,
+  report: routingReport,
+  coa: routingMasterCoa,
 };

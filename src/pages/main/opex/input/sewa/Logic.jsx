@@ -38,24 +38,26 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailopex/template4";
 
   useEffect(() => {
-    const state = location.state;
-    if (state === null) {
-      setLocal("index-menu", 0);
-      setLocal("name-menu", "Dashboard");
-      setLocal("move-page", "/");
-      navigate("/");
-      return;
-    }
-
-    setItems(state.item);
+    getDataAccount();
   }, []);
+
+  const getDataAccount = async () => {
+    try {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
+      const res = await MainServices.get(`config/opex/byalias/${q}`);
+      log({ res });
+      setItems(res.data.data[0]);
+    } catch (e) {
+      log({ e });
+    }
+  };
 
   const responseShow = (res) => {
     dispatch(
@@ -253,10 +255,14 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, j) => {
         if (j === 6) e.value = totalSewa;
-        if (j >= mulaiSewa + 10 && j <= lamaSewa + 10) {
+        if (mulaiSewa < 1) mulaiSewa = 1;
+        if (lamaSewa > 12) lamaSewa = 12;
+        if (j >= 10 && j <= mulaiSewa + 10) e.value = 0;
+        if (j >= mulaiSewa + 10 && j < lamaSewa + 10 + mulaiSewa) {
           e.value = totalSewa;
           grandTotal += e.value;
         }
+        if (j >= lamaSewa + 10 + mulaiSewa && j <= 22) e.value = 0;
         return e;
       });
 
@@ -296,7 +302,8 @@ const Logic = () => {
         formData.append("code_project", code_project);
         formData.append("code_icp", code_icp);
         formData.append("year", periode);
-        formData.append("description", value);
+        formData.append("name", value);
+        formData.append("type", "sewa");
 
         const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
@@ -308,6 +315,7 @@ const Logic = () => {
         formData.append("id", id);
         formData.append("column_id", column_id);
         formData.append("value", value);
+        formData.append("type", "sewa");
 
         await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       }
@@ -318,7 +326,7 @@ const Logic = () => {
 
       const newCell = newRows[i][rowIndex].cells.map((e, i) => {
         if (i >= 1 && i <= 5) e.nonEditable = false;
-        if (i >= 6 && i <= 8) e.nonEditable = false;
+        if (i >= 7 && i <= 8) e.nonEditable = false;
         return e;
       });
 
@@ -393,6 +401,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
+    formData.append("type", "sewa");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -405,7 +414,7 @@ const Logic = () => {
         data: data.data,
       });
 
-      const newRow = [...rows.pemasaran];
+      const newRow = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
       newRow[index] = r;
 

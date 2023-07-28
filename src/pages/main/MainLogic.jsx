@@ -2,19 +2,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { loadStart } from "../../redux/response/response";
+import { selectionMenu, urlPageRevenue } from "../../values/Constant";
 import {
-  allItemSummarySubMenu,
-  disabledItemSummaryMenu,
-  selectionMenu,
-  urlPageRevenue,
-} from "../../values/Constant";
-import {
+  routingCapex,
   routingMasterCoa,
+  routingMpp,
   routingOpex,
   routingOthers,
   routingReport,
 } from "../../values/RoutingPage";
-import { cekToken, getLocal, getToken, log, setLocal } from "../../values/Utilitas";
+import { cekToken, getLocal, log, setLocal } from "../../values/Utilitas";
+import { actionRevenue } from "redux/action/action.reducer";
 
 const MainLogic = () => {
   let params = useParams();
@@ -41,9 +39,9 @@ const MainLogic = () => {
 
     cekToken(navigate);
 
-    if (movePage !== "null") {
-      navigate(movePage);
-    }
+    // if (movePage !== "null") {
+    //   navigate(movePage);
+    // }
 
     if (spliter[2] === "") {
       setLocal("index-menu", 0);
@@ -155,11 +153,7 @@ const MainLogic = () => {
 
       pageNavigation = onPageNavigation(index, subMenu);
 
-      navigate(pageNavigation, {
-        state: {
-          item: subMenu,
-        },
-      });
+      navigate(pageNavigation);
 
       setLocal("move-page", pageNavigation);
     }
@@ -189,13 +183,20 @@ const MainLogic = () => {
       } else {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
       }
+      dispatch(
+        actionRevenue({
+          filterValues: null,
+        })
+      );
     } else if (index === 2) {
       const routing = routingOpex[nameMenu];
       pageNavigation = `/main/opex/${inputOrSummary}/${routing}`;
     } else if (index === 3) {
-      pageNavigation = `/main/capex/${inputOrSummary}/${nameMenu}`;
+      const routing = routingCapex[nameMenu];
+      pageNavigation = `/main/capex/${inputOrSummary}/${routing}`;
     } else if (index === 4) {
-      pageNavigation = `/main/mpp/${inputOrSummary}/${nameMenu}`;
+      const routing = routingMpp[nameMenu];
+      pageNavigation = `/main/mpp/${inputOrSummary}/${routing}`;
     } else if (index === 5) {
       const routing = routingOthers[nameMenu];
       pageNavigation = `/main/others/${inputOrSummary}/${routing}`;

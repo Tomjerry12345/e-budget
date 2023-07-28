@@ -42,7 +42,7 @@
     }
 
     .layout-upload-file {
-      width: 604px;
+      width: 100%;
       height: 170px;
       background: #f8f8f8;
       border-radius: 8px;
@@ -128,5 +128,9 @@
       height: 41px;
       border: none;
     }
+  }
+
+  .type-style {
+    margin: 16px 0px;
   }
 }

@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-use-before-define
-
+import { useDispatch } from "react-redux";
 import MainServices from "../services/MainServices";
+import { val } from "redux/action/action.reducer";
 
 export const setLocal = (key, value) => localStorage.setItem(key, value);
 
@@ -85,7 +86,7 @@ export const slicing = (text, format, i) => {
 };
 
 export const getKeyByValue = (object, value) => {
-  return Object.keys(object).find((key) => object[key] === value);
+  return Object.keys(object).filter((key) => object[key] === value);
 };
 
 export const cekToken = async (navigate) => {
@@ -104,7 +105,7 @@ export const cekToken = async (navigate) => {
     console.log("error", error.code);
 
     if (error.code === "ERR_BAD_RESPONSE") {
-      // navigate("/login");
+      navigate("/login");
     } else {
       alert("terjadi kesalahan");
     }
@@ -164,4 +165,34 @@ export const sumYearTotal = (data, keys) => {
 export const createArray = (length) => {
   const list = Array.from({ length }, () => 0);
   return list;
+};
+
+export const getTimeStamp = () => Math.floor(Date.now() / 1000);
+
+export const generateUID = () => {
+  // I generate the UID from two parts here
+  // to ensure the random number provide enough bits.
+  var firstPart = (Math.random() * 46656) | 0;
+  var secondPart = (Math.random() * 46656) | 0;
+  firstPart = ("000" + firstPart.toString(36)).slice(-3);
+  secondPart = ("000" + secondPart.toString(36)).slice(-3);
+  return firstPart + secondPart;
+};
+
+export const showNotif = (dispatch, { status, message, res = null }) => {
+  if (res === null) {
+    dispatch(
+      val({
+        status: status,
+        message: message,
+      })
+    );
+  } else {
+    dispatch(
+      val({
+        status: res.data.responseCode,
+        message: res.data.responseDescription,
+      })
+    );
+  }
 };

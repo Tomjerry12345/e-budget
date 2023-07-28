@@ -23,6 +23,7 @@ const AdministrasiLainnyaInputPage = () => {
         }
         onChangeSelect={func.onChangeTahun}
         listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
@@ -68,6 +69,7 @@ const AdministrasiLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "pemasaran")}
                     />
                   </div>
@@ -76,7 +78,7 @@ const AdministrasiLainnyaInputPage = () => {
             ))
           : null}
 
-        {value.rows.pemasaran.length > 0 ? (
+        {value.rows.administrasi.length > 0 ? (
           <Typography.Text className="section-header-table">Administrasi</Typography.Text>
         ) : null}
 
@@ -116,6 +118,7 @@ const AdministrasiLainnyaInputPage = () => {
                       columns={value.columns}
                       stickyTopRows={1}
                       stickyLeftColumns={1}
+                      enableRangeSelection
                       onCellsChanged={(change) => func.onChangeTable(change, i, "administrasi")}
                     />
                   </div>
