@@ -1,12 +1,22 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, getRows, updateId, updateNewRow, updateTotalRow } from "./getRows";
+import {
+  getRootHeaderRow,
+  getRows,
+  updateId,
+  updateNewRow,
+  updateTotalRow,
+} from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -18,7 +28,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -130,7 +142,9 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+      const columnIndex = parseInt(
+        columns.findIndex((j) => j.columnId === c.columnId)
+      );
 
       const type = c.newCell.type;
 
@@ -170,7 +184,7 @@ const Logic = () => {
         try {
           let formData = new FormData();
 
-          const id = c.rowId;
+          const id = newRows[rowIndex].id;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
           const key = newRows[rowIndex][column_id];
