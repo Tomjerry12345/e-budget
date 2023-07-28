@@ -201,7 +201,7 @@ const Logic = () => {
             formData.append("year", periode);
             formData.append("grade_id", gradeId);
             formData.append("sub_grade_id", subGradeId);
-            formData.append("level", levelId);
+            formData.append("level_id", levelId);
             formData.append(column_id, parseInt(value));
             // formData.append("name", value);
 
