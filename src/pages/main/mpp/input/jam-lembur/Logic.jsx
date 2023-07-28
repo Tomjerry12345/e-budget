@@ -1,12 +1,21 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, fullNewRow, getRows, updateTotalRow } from "./getRows";
+import {
+  getRootHeaderRow,
+  fullNewRow,
+  getRows,
+  updateTotalRow,
+} from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -18,7 +27,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -109,13 +120,9 @@ const Logic = () => {
     try {
       const { data } = await MainServices.get(url);
       let r;
-      if (data.data.length > 0) {
-        r = getRows({
-          data: data.data,
-        });
-      } else {
-        r = fullNewRow();
-      }
+      r = getRows({
+        data: data.data,
+      });
       setRows(r);
     } catch (error) {
       // Tangani error jika ada
@@ -134,7 +141,9 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+      const columnIndex = parseInt(
+        columns.findIndex((j) => j.columnId === c.columnId)
+      );
 
       const type = c.newCell.type;
 
@@ -205,7 +214,10 @@ const Logic = () => {
             formData.append(column_id, parseInt(value));
             // formData.append("name", value);
 
-            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+            const res = await MainServices.post(
+              `${ENDPOINT_URL}/insert`,
+              formData
+            );
 
             const rowId = res.data.data.id;
 
@@ -218,8 +230,6 @@ const Logic = () => {
 
             await MainServices.post(`${ENDPOINT_URL}/update`, formData);
           }
-
-          newRows[length - 1] = updateTotalRow(newRows);
         } catch (e) {
           log({ e });
         }
