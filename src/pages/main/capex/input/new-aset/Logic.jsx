@@ -1,29 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { generateUID, log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import {
-  getRootHeaderRow,
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-  updateTotalRow,
-} from "./getRows";
+import { getRootHeaderRow, fullNewRow, getRows } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
-  const [items, setItems] = useState({
-    pemasaran: [],
-    administrasi: [],
-  });
   const columns = getColumns();
   const [rows, setRows] = useState([]);
 
@@ -34,11 +23,10 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detailcapex/load";
+  const ENDPOINT_URL = "detailcapex/new-asset";
 
   const responseShow = (res) => {
     dispatch(
@@ -48,15 +36,6 @@ const Logic = () => {
       })
     );
     dispatch(actionData({ loading: false }));
-  };
-
-  const showNotif = (status, message) => {
-    dispatch(
-      val({
-        status: status,
-        message: message,
-      })
-    );
   };
 
   const onSetDataTable = (values) => {
@@ -117,12 +96,12 @@ const Logic = () => {
     codeProject,
     periode
   ) => {
-    const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
-      log("data.data", data.data.data);
+      log("data.data", data.data);
       let r;
-      if (data.data.data.length > 0) {
+      if (data.data.length > 0) {
         r = getRows({
           data: data.data.data,
         });
@@ -260,16 +239,6 @@ const Logic = () => {
     const codeAccount = dataGlobalRedux.indexImport;
     let index, category;
 
-    const checkItem = (items, cat) => {
-      items.forEach((e, i) => {
-        if (e.code_account === codeAccount) {
-          [index, category] = [i, cat];
-        }
-      });
-    };
-
-    checkItem(items.pemasaran, "pemasaran") || checkItem(items.administrasi, "administrasi");
-
     let formData = new FormData();
 
     // setLoadingUpload(true);
@@ -332,7 +301,6 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
-      items,
     },
     func: {
       onFinish,
