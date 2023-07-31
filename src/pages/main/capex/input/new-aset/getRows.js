@@ -7,10 +7,12 @@ import {
   noSideBorders,
   totalCell,
   dropDownCell,
+  headerCell,
 } from "values/react-grid/cells";
-import { createArray, log } from "values/Utilitas";
+import { createArray, generateUID, log } from "values/Utilitas";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
+export const SUB_HEADER_ROW_ID = "sub-header";
 
 const ROW_HEIGHT = 32;
 
@@ -19,27 +21,65 @@ const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
 export function getRootHeaderRow() {
-  return {
-    rowId: HEADER_ROOT_ROW_ID,
-    height: ROW_HEIGHT,
-    cells: [
-      nonEditable(textCell("Description", "justify-content-center font-bold")),
-      nonEditable(textCell("Qty", "justify-content-center font-bold")),
-      nonEditable(textCell("Price", "justify-content-center font-bold")),
-      nonEditable(textCell("Asset Category", "justify-content-center font-bold")),
-      nonEditable(textCell("Purchase Date Month", "justify-content-center font-bold")),
-      nonEditable(textCell("Purchase Date Year", "justify-content-center font-bold")),
-      nonEditable(textCell("Depreciation Date Month", "justify-content-center font-bold")),
-      nonEditable(textCell("Depreciation Date Year", "justify-content-center font-bold")),
-      nonEditable(textCell("Asset Life (In Years)", "justify-content-center font-bold")),
-      nonEditable(textCell("Salvage Value", "justify-content-center font-bold")),
-      nonEditable(textCell("Total", "justify-content-center font-bold")),
-      nonEditable(textCell("Depreciation Amount Monthly", "justify-content-center font-bold")),
-      nonEditable(textCell("Depreciation Amount Yearly", "justify-content-center font-bold")),
-      nonEditable(textCell("Accumulated Account", "justify-content-center font-bold")),
-      nonEditable(textCell("Depreciation Account", "justify-content-center font-bold")),
-    ],
-  };
+  return [
+    {
+      rowId: HEADER_ROOT_ROW_ID,
+      height: ROW_HEIGHT,
+      cells: [
+        headerCell({ text: "Description", rowspan: 1 }),
+        headerCell({ text: "Qty", rowspan: 1 }),
+        headerCell({ text: "Price", rowspan: 1 }),
+        headerCell({ text: "Asset Category", rowspan: 1 }),
+        headerCell({
+          text: "Purchase Date",
+          colspan: 2,
+          className: "justify-content-center font-bold",
+        }),
+        headerCell(""),
+        headerCell({
+          text: "Depreciation Date",
+          colspan: 2,
+          className: "justify-content-center font-bold",
+        }),
+        headerCell({ text: "" }),
+        headerCell({ text: "Asset Life (In Years)", rowspan: 1 }),
+        headerCell({ text: "Salvage Value", rowspan: 1 }),
+        headerCell({ text: "Total", rowspan: 1 }),
+        headerCell({
+          text: "Depreciation Amount",
+          colspan: 2,
+          className: "justify-content-center font-bold",
+        }),
+        headerCell({ text: "" }),
+        headerCell({ text: "Accumulated Account", rowspan: 1 }),
+        headerCell({ text: "Depreciation Account", rowspan: 1 }),
+      ],
+    },
+    {
+      rowId: SUB_HEADER_ROW_ID,
+      height: ROW_HEIGHT,
+      cells: [
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "Month", className: "justify-content-center" }),
+        headerCell({ text: "Year", className: "justify-content-center" }),
+        headerCell({ text: "Month", className: "justify-content-center" }),
+        headerCell({ text: "Year", className: "justify-content-center" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({
+          text: "Monthly",
+          className: "justify-content-center",
+        }),
+        headerCell({ text: "Yearly" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+      ],
+    },
+  ];
 }
 
 const firstLoadTotalRow = (data) => {
@@ -92,30 +132,20 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["name"], "padding-left-lg"),
-        textCell(d["activity"] ?? "-", "padding-left-lg"),
-        textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
-
-        numberCell(d["amount"] ?? 0, "padding-left-lg"),
-
-        numberCell(d["rates"] ?? 0, "padding-left-lg", null, false),
-        nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
-        numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
-        numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
-        nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
-
-        nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["feb_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["mar_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["apr_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["mei_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["jun_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["jul_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["agu_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["sep_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["okt_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["nov_rates"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["des_rates"] ?? 0, "padding-left-lg")),
+        textCell(d["description"], "padding-left-lg"),
+        numberCell(d["qty"] ?? 0, "padding-left-lg", null, true),
+        textCell(d["asset_category"] ?? "-", "padding-left-lg"),
+        dropDownCell(d["purchase_date_month"]),
+        dropDownCell(d["purchase_date_year"]),
+        dropDownCell(d["depreciation_date_month"]),
+        dropDownCell(d["depreciation_date_year"]),
+        numberCell(d["asset_life"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["salvage_value"] ?? 0, "padding-left-lg", null, false),
+        nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg", null, true)),
+        dropDownCell(d["depreciation_amount_monthly"]),
+        dropDownCell(d["depreciation_amount_yearly"]),
+        numberCell(d["accumulated_account"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["depreciation_account"] ?? 0, "padding-left-lg", null, false),
       ],
     })),
   ];
@@ -149,21 +179,20 @@ function rowTotal(titleTotal, total) {
 }
 
 export function getRows({ data }) {
-  return [getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
-}
-
-export function fullNewRow({ id }) {
-  const list = createArray(TOTAL_DATA);
   return [
-    getRootHeaderRow(),
-    reactgridNewRow(id),
-    // rowTotal("Total", list)
+    ...getRootHeaderRow(),
+    // ...getGroupRows(data),
+    // firstLoadTotalRow(data)
   ];
 }
 
-export function reactgridNewRow(id) {
+export function fullNewRow() {
+  return [...getRootHeaderRow(), reactgridNewRow()];
+}
+
+export function reactgridNewRow() {
   return {
-    rowId: id,
+    rowId: generateUID(),
     newRow: true,
     height: ROW_HEIGHT,
     cells: [

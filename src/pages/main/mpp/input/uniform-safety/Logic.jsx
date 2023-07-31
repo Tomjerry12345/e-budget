@@ -130,7 +130,7 @@ const Logic = () => {
 
   const onChangeTable = async (change) => {
     const newRows = [...rows];
-    let isChange;
+    let isChange, isSuccess;
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
@@ -223,16 +223,21 @@ const Logic = () => {
             await MainServices.post(`${ENDPOINT_URL}/update`, formData);
           }
 
+          isSuccess = true;
+
           // newRows[length - 1] = updateTotalRow(newRows);
         } catch (e) {
           log({ e });
+          isSuccess = false;
         }
       }
     }
 
-    showNotif(200, "Sukses update data");
+    if (isSuccess) {
+      showNotif(200, "Sukses update data");
 
-    setRows(newRows);
+      setRows(newRows);
+    }
   };
 
   const onSuccess = () => {

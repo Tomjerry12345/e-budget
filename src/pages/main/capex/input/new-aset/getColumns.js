@@ -25,11 +25,11 @@ export function getColumns() {
       width: 200,
     },
     {
-      columnId: "depreciation_date_monthly",
+      columnId: "depreciation_date_month",
       width: 200,
     },
     {
-      columnId: "depreciation_date_yearly",
+      columnId: "depreciation_date_year",
       width: 200,
     },
     {
