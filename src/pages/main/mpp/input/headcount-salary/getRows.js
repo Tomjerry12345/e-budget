@@ -92,7 +92,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
@@ -144,13 +147,13 @@ function getGroupRows(groups) {
           headerCell({ text: sub_grade.sub_grade, rowspan: rowspanSubGrade }),
           headerCell({ text: level.level }),
 
-          numberCell(person_grade),
-          numberCell(job_grade),
-          numberCell(comparative),
+          numberCell(person_grade ?? 0),
+          numberCell(job_grade ?? 0),
+          numberCell(comparative ?? 0),
 
-          numberCell(person_grade_p),
-          numberCell(job_grade_p),
-          numberCell(comparative_p),
+          numberCell(person_grade_p ?? 0),
+          numberCell(job_grade_p ?? 0),
+          numberCell(comparative_p ?? 0),
         ],
       };
     }),

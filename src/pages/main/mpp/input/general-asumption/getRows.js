@@ -36,7 +36,8 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
-  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = data;
+  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } =
+    data;
 
   list[0] = jht ?? 0 + thr_period ?? 0 + bonus_period ?? 0;
   list[1] = jht_p ?? 0 + thr_period_p ?? 0 + bonus_period_p ?? 0;
@@ -57,18 +58,32 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
 };
 
 function getGroupRows(groups) {
-  const { id, jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = groups;
+  const {
+    id,
+    jht,
+    thr_period,
+    bonus_period,
+    jht_p,
+    thr_period_p,
+    bonus_period_p,
+  } = groups;
+
+  log({ id });
 
   return [
     {
       rowId: generateUID(),
+      id: id,
       newRow: id === null,
       forecast: "jht",
       budget: "jht_p",
@@ -80,24 +95,26 @@ function getGroupRows(groups) {
     },
     {
       rowId: generateUID(),
+      id: id,
       newRow: id === null,
       forecast: "thr_period",
       budget: "thr_period_p",
       cells: [
         headerCell({ text: "Periode Pembayaran THR" }),
-        numberCell(thr_period ?? 0),
-        numberCell(thr_period_p ?? 0),
+        textCell(thr_period, "padding-left-lg"),
+        textCell(thr_period_p ?? ""),
       ],
     },
     {
       rowId: generateUID(),
+      id: id,
       newRow: id === null,
       forecast: "bonus_period",
       budget: "bonus_period_p",
       cells: [
         headerCell({ text: "Periode Pembayaran Bonus" }),
-        numberCell(bonus_period ?? 0),
-        numberCell(bonus_period_p ?? 0),
+        textCell(bonus_period ?? ""),
+        textCell(bonus_period_p ?? ""),
       ],
     },
   ];
@@ -127,7 +144,11 @@ function rowTotal(titleTotal, total) {
 }
 
 export function getRows({ data }) {
-  return [...getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
+  return [
+    ...getRootHeaderRow(),
+    ...getGroupRows(data),
+    // firstLoadTotalRow(data),
+  ];
 }
 
 export const updateNewRow = (data) => {
