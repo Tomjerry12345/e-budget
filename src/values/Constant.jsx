@@ -188,7 +188,7 @@ export const allItemSummarySubMenu = [
       description: "Input Biaya Pendidikan & Latihan",
     },
     {
-      description: "Input Biaya Rekrutment & Assessment",
+      description: "Input Biaya RekrutmentWS & Assessment",
     },
     {
       description: "Input Biaya Uniform & Safety",
@@ -306,7 +306,7 @@ export const allItemSummarySubMenu = [
     },
   ],
   // 9 Akun
-  ["Profile", "Logout"],
+  [{ description: "Profile" }, { description: "Logout" }],
 ];
 
 export const disabledItemSummaryMenu = [
@@ -418,28 +418,26 @@ export const disabledItemSummaryMenu = [
     false,
     true,
     true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
     false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
   ],
   // 6 Others
   [false, false, false, false, false, false, true],
@@ -840,6 +838,57 @@ export const getMonthDuration = () => {
   ];
   return listDuration;
 };
+
+export const monthData = [
+  {
+    value: "jan",
+    label: "Januari",
+  },
+  {
+    value: "feb",
+    label: "Februari",
+  },
+  {
+    value: "mar",
+    label: "Maret",
+  },
+  {
+    value: "apr",
+    label: "April",
+  },
+  {
+    value: "mei",
+    label: "Mei",
+  },
+  {
+    value: "jun",
+    label: "Juni",
+  },
+  {
+    value: "jul",
+    label: "Juli",
+  },
+  {
+    value: "agu",
+    label: "Agustus",
+  },
+  {
+    value: "sep",
+    label: "September",
+  },
+  {
+    value: "okt",
+    label: "Oktber",
+  },
+  {
+    value: "nov",
+    label: "November",
+  },
+  {
+    value: "des",
+    label: "Desember",
+  },
+];
 
 export const getMonthName = () => {
   const listMonth = [

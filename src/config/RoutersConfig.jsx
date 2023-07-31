@@ -137,6 +137,7 @@ import BiayaPph21Page from "pages/main/mpp/input/biaya-pph21/BiayaPph21Page";
 import BpjsPage from "pages/main/mpp/input/bpjs/BpjsPage";
 import DaysPage from "pages/main/mpp/input/days/DaysPage";
 import JamLemburPage from "pages/main/mpp/input/jam-lembur/JamLemburPage";
+import UniformSafetyPage from "pages/main/mpp/input/uniform-safety/UniformSafetyPage";
 
 const RoutersConfig = () => {
   return (
@@ -331,6 +332,7 @@ const RoutersConfig = () => {
             <Route path="input/jam-lembur" element={<JamLemburPage />} />
             <Route path="input/biaya-pph21" element={<BiayaPph21Page />} />
             <Route path="input/bpjs-kesehatan" element={<BpjsPage />} />
+            <Route path="input/uniform-safety" element={<UniformSafetyPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />

@@ -25,7 +25,7 @@ REVENUE
 - file import diganti jadi satu tahun 🔥 ✅
 - tambah input pilihan radio "Actual - Forecast" dan "Budget" dgn field type 🔥 ✅
 
-capex
+CAPEX
  
 - semua filter di capex di tambahkan code-code akun yg lainnya 🔥 ❌
 - preview load saldo awal, data dari import excel kolom date brmasalah
@@ -33,18 +33,25 @@ capex
 - preview load saldo awal, tambah kolom action, yg ada button retire, 
   muncul popup modal untk isi bulan, thn & harga jual retired aset
 
-mpp
+MPP
 
 - General Assumption ✅ / load total awal bermasalah karena beda tipe respons
 - Rate Assumption ✅
 - Rate Salary ✅ / gagal insert di be
-- Headcount Salary ❌
-- Headcount Assumption ❌
-- Day ❌
+- Headcount Salary ✅
+- Headcount Assumption ✅
+- Day ✅
 - Treatment cost ❌
 - PPH 21 ✅
 - BPJS ✅
 - Education & Training ❌
 - Assestment & Recruitment ❌
-- Uniform & Safety ❌
+- Uniform & Safety ✅
 - Overtime ❌
+- BPJS hilangkan total ✅
+- Bug Headcount Salary input celll 
+- Bug Headcount Assumption input celll
+
+Lain
+
+- Fitur logout munculkan ✅
