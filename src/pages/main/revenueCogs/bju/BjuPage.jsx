@@ -35,7 +35,7 @@ const BjuPage = () => {
       code_location: null,
       code_dept: null,
       code_icp: null,
-      // code_project: null,
+      code_project: null,
       periode: null,
     });
     const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(

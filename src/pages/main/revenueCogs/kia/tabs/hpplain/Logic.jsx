@@ -359,10 +359,18 @@ const Logic = () => {
       })
     );
 
-    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
-      codeFilter;
+    const {
+      code_company,
+      code_product,
+      code_location,
+      code_dept,
+      code_icp,
+      code_project,
+      periode,
+    } = codeFilter;
 
     let fCodeCompany = code_company.split(" ");
+    let fCodeCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
@@ -388,6 +396,7 @@ const Logic = () => {
     formData.append("file", file);
 
     formData.append("code_company", fCodeCompany);
+    formData.append("code_product", fCodeCodeProduct);
     formData.append("code_location", fCodeLocation);
     formData.append("code_department", fCodeDept);
     formData.append("code_icp", fCodeIcp);
@@ -398,9 +407,8 @@ const Logic = () => {
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
+      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_product=${fCodeCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
-      console.log("first stock : ", data);
 
       let r = getRows({
         header: getHeaderRow[desc],

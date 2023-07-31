@@ -186,8 +186,8 @@ function type5(data) {
       newRow: d["id"] === null,
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["code_account"], "padding-left-lg"),
-        textCell(d["description"], "padding-left-lg"),
+        textCell(d["code_account"] ?? "", "padding-left-lg"),
+        textCell(d["description"] ?? "", "padding-left-lg"),
 
         numberCell(d["jan"] ?? 0, "padding-left-lg"),
         numberCell(d["feb"] ?? 0, "padding-left-lg"),
@@ -237,7 +237,7 @@ export const getGroupRows = (data, key) => {
     Penjualan: type2(data),
     "Potongan penjualan": type4(data),
     "Pendapatan Operasional Lainnya": type5(data),
-    "HPP Variable": type4(data),
+    "HPP Variable": type5(data),
     "HPP Lainnya": type5(data),
   };
   return l[key];

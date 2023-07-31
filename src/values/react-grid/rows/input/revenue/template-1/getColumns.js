@@ -174,6 +174,6 @@ export const getColumns = {
   Penjualan: type2,
   "Potongan penjualan": type4,
   "Pendapatan Operasional Lainnya": type1,
-  "HPP Variable": type4,
+  "HPP Variable": type1,
   "HPP Lainnya": type1,
 };
