@@ -717,7 +717,7 @@ export const urlRevenue = {
       description: "HPP Variable",
       endpoint: "detailrevenueother/hpp-variable",
       insert: true,
-      file: "hpp_variable.xlsx",
+      // file: "hpp_variable.xlsx",
     },
     {
       description: "HPP Lainnya",

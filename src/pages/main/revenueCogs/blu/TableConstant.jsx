@@ -50,21 +50,21 @@ export const tableList = {
   "Input HPP dan pendapatan lainnya": [
     {
       description: "Pendapatan Operasional Lainnya",
-      endpoint: "detailrevenue/firststock",
+      endpoint: "detailrevenueother/pendapatan-lainnya",
       insert: true,
-      file: "stock_awal.xlsx",
+      file: "pendapatan_lainnya.xlsx",
     },
     {
       description: "HPP Variable",
-      endpoint: "detailrevenue/purchase-unit-assumption",
+      endpoint: "detailrevenueother/hpp-variable",
       insert: true,
-      file: "asumsi_unit_beli.xlsx",
+      // file: "hpp_variable.xlsx",
     },
     {
       description: "HPP Lainnya",
-      endpoint: "detailrevenue/purchase-price-unit",
+      endpoint: "detailrevenueother/hpp-lainnya",
       insert: true,
-      file: "harga_beli_unit.xlsx",
+      file: "hpp_lainnya.xlsx",
     },
   ],
 };
