@@ -1,16 +1,12 @@
+import { monthData } from "values/Constant";
 import {
   nonEditable,
   textCell,
-  monthHeaderCell,
-  rootHeaderCell,
   numberCell,
-  totalCell,
-  dropDownCell,
-  textCellObj,
   headerCell,
+  dropDownCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
-import { getMonthDuration, getMonthName } from "values/Constant";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -25,10 +21,49 @@ export function getRootHeaderRow() {
     {
       rowId: "header",
       cells: [
-        headerCell({ text: "Grade" }),
         headerCell({ text: "" }),
+
+        headerCell({ text: "Rate", colspan: 5, className: "justify-content-center" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({
+          text: "Qty pembelian",
+          colspan: 5,
+          className: "justify-content-center",
+        }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({ text: "Total pembelian", rowspan: 1 }),
         headerCell({ text: "Forecast" }),
         headerCell({ text: "Budget" }),
+      ],
+    },
+    {
+      rowId: "sub-header",
+      cells: [
+        headerCell({ text: "" }),
+
+        headerCell({ text: "Kemeja Abu Abu" }),
+        headerCell({ text: "Batik" }),
+        headerCell({ text: "Polo Tshirt" }),
+        headerCell({ text: "IC Card" }),
+        headerCell({ text: "Lainnya" }),
+
+        headerCell({ text: "Kemeja Abu Abu" }),
+        headerCell({ text: "Batik" }),
+        headerCell({ text: "Polo Tshirt" }),
+        headerCell({ text: "IC Card" }),
+        headerCell({ text: "Lainnya" }),
+
+        headerCell({ text: "" }),
+        headerCell({ text: "Waktu pembelian" }),
+        headerCell({ text: "Waktu pembelian" }),
       ],
     },
   ];
@@ -64,32 +99,48 @@ export const updateTotalRow = (data) => {
 };
 
 function getGroupRows(groups) {
-  let currentGrade = null;
-  let rowspan = 0;
-
   return [
     ...groups.map((item) => {
-      const { id, grade, sub_grade, forecast, budget } = item;
-
-      if (grade.grade !== currentGrade) {
-        currentGrade = grade.grade;
-        rowspan = 4; // Set rowspan to 4 for the first occurrence of a grade
-      } else {
-        rowspan = 1; // Set rowspan to 1 for subsequent occurrences of the same grade
-      }
+      const {
+        id,
+        sub_grade,
+        rate_gray_shirt,
+        rate_batik,
+        rate_polo,
+        rate_ic_card,
+        rate_other,
+        qty_gray_shirt,
+        qty_batik,
+        qty_polo,
+        qty_ic_card,
+        qty_other,
+        total,
+        forecast,
+        budget,
+      } = item;
 
       return {
         rowId: id ?? generateUID(),
         newRow: id === null,
-        gradeId: grade.id,
         subGradeId: sub_grade.id,
         cells: [
-          headerCell({ text: grade.grade, rowspan }),
           headerCell({ text: sub_grade.sub_grade }),
-          textCell(`${forecast}%`),
-          textCell(`${budget}%`),
-          // numberCell(forecast, "", null, false),
-          // numberCell(budget, "", null, false),
+
+          numberCell(rate_gray_shirt ?? 0),
+          numberCell(rate_batik ?? 0),
+          numberCell(rate_polo ?? 0),
+          numberCell(rate_ic_card ?? 0),
+          numberCell(rate_other ?? 0),
+
+          numberCell(qty_gray_shirt ?? 0),
+          numberCell(qty_batik ?? 0),
+          numberCell(qty_polo ?? 0),
+          numberCell(qty_ic_card ?? 0),
+          numberCell(qty_other ?? 0),
+
+          numberCell(total ?? 0),
+          dropDownCell(monthData, forecast),
+          dropDownCell(monthData, forecast),
         ],
       };
     }),
@@ -133,11 +184,11 @@ export function getRows({ data }) {
 }
 
 export function fullNewRow() {
-  // const list = createArray(TOTAL_DATA);
+  const list = createArray(TOTAL_DATA);
   return [
     ...getRootHeaderRow(),
-    reactgridNewRow(),
-    // rowTotal("Total", list)
+    // reactgridNewRow(),
+    // rowTotal("Total", list),
   ];
 }
 
