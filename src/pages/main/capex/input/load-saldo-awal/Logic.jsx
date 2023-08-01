@@ -38,7 +38,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "detailcapex/load";
+  const ENDPOINT_URL = "detailcapex";
 
   // useEffect(() => {
   //   getDataAccount();
@@ -139,7 +139,7 @@ const Logic = () => {
     codeProject,
     periode
   ) => {
-    const url = `${ENDPOINT_URL}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+    const url = `${ENDPOINT_URL}/load?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
       log("data.data", data.data.data);
@@ -314,7 +314,7 @@ const Logic = () => {
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
-      const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const url = `${ENDPOINT_URL}/load?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
 
       const r = getRows({
