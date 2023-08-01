@@ -153,3 +153,11 @@ export function monthHeaderCell(
     })
   );
 }
+
+
+export const dropDownCustomCell = (selectedValue, values, isOpen) => ({
+  type: "dropdown",
+  selectedValue: `${selectedValue}`,
+  values,
+  isOpen,
+});

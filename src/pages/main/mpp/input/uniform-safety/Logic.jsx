@@ -7,6 +7,7 @@ import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { getRootHeaderRow, fullNewRow, getRows, updateTotalRow } from "./getRows";
+import { generateArrayAttributes } from "values/react-grid/helpers";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -108,10 +109,11 @@ const Logic = () => {
     const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
-      let r;
+      let r, a;
       if (data.data.length > 0) {
+        a = await generateArrayAttributes(data.data, ["budget", "forecast"]);
         r = getRows({
-          data: data.data,
+          data: a,
         });
       } else {
         r = fullNewRow();
@@ -174,6 +176,21 @@ const Logic = () => {
         } else {
           isChange = false;
         }
+      } else if (type === "dropdown") {
+        if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
+          value = c.newCell.selectedValue;
+          isChange = true;
+        }
+
+        if (c.newCell.inputValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
+          value = c.newCell.inputValue;
+          isChange = true;
+        }
+
+        // CHANGED: set the isOpen property to the value received.
+        newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
       }
 
       if (isChange) {

@@ -17,6 +17,7 @@ import {
   updateNewRow,
   updateTotalRow,
 } from "./getRows";
+import { generateObjectAttributes } from "values/react-grid/helpers";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -120,9 +121,17 @@ const Logic = () => {
     const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
-      let r;
+      let r, a;
+      a = await generateObjectAttributes(data.data, [
+        "thr_period",
+        "thr_period_p",
+        "bonus_period",
+        "bonus_period_p",
+      ]);
+
+      console.log({ a });
       r = getRows({
-        data: data.data,
+        data: a,
       });
       setRows(r);
     } catch (error) {
@@ -136,113 +145,86 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
+  // REFACTOR: func fetch api when using the dropdown cell and fetch api per type
+  const updateData = async (cell) => {
+    if (Object.keys(cell).length === 3) {
+      try {
+        const formData = new FormData();
+        for (var item in cell) {
+          formData.append(item, cell[item]);
+        }
+        const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+
+        if (res.data.responseCode == 200) {
+          showNotif(200, "Sukses update data");
+        } else {
+          showNotif(500, "Error");
+        }
+      } catch (e) {
+        log({ e });
+      }
+    }
+  };
+
   const onChangeTable = async (change) => {
     let newRows = [...rows];
-    let isChange;
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
       const columnIndex = parseInt(
         columns.findIndex((j) => j.columnId === c.columnId)
       );
-
       const type = c.newCell.type;
 
-      const length = newRows.length;
-
-      let value;
+      const id = newRows[rowIndex].id;
+      const key = columnIndex == 1 ? "forecast" : "budget";
+      const column_id = newRows[rowIndex][key];
 
       if (type === "text") {
         newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
+
+        updateData({
+          id,
+          column_id,
+          value: c.newCell.value,
+        });
+      } else if (type === "number") {
+        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
+
+        updateData({
+          id,
+          column_id,
+          value: c.newCell.value,
+        });
+      } else if (type === "dropdown") {
+        if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue =
+            c.newCell.selectedValue;
+
+          updateData({
+            id,
+            column_id,
+            value: c.newCell.selectedValue,
+          });
+        }
+
+        if (c.newCell.inputValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue =
+            c.newCell.inputValue;
+
+          updateData({
+            id,
+            column_id,
+            value: c.newCell.inputValue,
+          });
+        }
+
+        // CHANGED: set the isOpen property to the value received.
+        newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
       } else {
-        value = c.newCell.value;
-        if (!isNaN(value)) {
-          newRows[rowIndex].cells[columnIndex].value = value;
-
-          // let jumlahBulan = 0;
-          // let tarif = newRows[rowIndex].cells[16].value;
-
-          // const newCell = newRows[rowIndex].cells.map((e, j) => {
-          //   if (j >= 3 && j <= 14) jumlahBulan += e.value;
-          //   if (j === 15) e.value = jumlahBulan;
-          //   if (j === 17) e.value = jumlahBulan * tarif;
-          //   if (j >= 18) e.value = newRows[rowIndex].cells[j - 15].value * tarif;
-          //   return e;
-          // });
-
-          // newRows[rowIndex].cells = newCell;
-
-          isChange = true;
-        } else {
-          isChange = false;
-        }
-      }
-
-      if (isChange) {
-        try {
-          let formData = new FormData();
-
-          const id = newRows[rowIndex].id;
-          const column_id = c.columnId;
-          const isNewRow = newRows[rowIndex].newRow;
-          const key = newRows[rowIndex][column_id];
-
-          if (isNewRow) {
-            const {
-              code_company,
-              code_dept,
-              code_location,
-              code_product,
-              code_project,
-              code_icp,
-              periode,
-            } = codeFilter;
-
-            const codeAccount = "";
-
-            formData.append("code_account", codeAccount);
-            formData.append("code_company", code_company);
-            formData.append("code_department", code_dept);
-            formData.append("code_location", code_location);
-            formData.append("code_product", code_product);
-            formData.append("code_project", code_project);
-            formData.append("code_icp", code_icp);
-            formData.append("year", periode);
-            formData.append(key, parseInt(value));
-            // formData.append("name", value);
-
-            await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-            // const rowId = res.data.data.id;
-
-            const newR = updateNewRow(newRows);
-            log({ newR });
-            newRows = newR;
-          } else {
-            formData.append("id", id);
-            formData.append("column_id", key);
-            formData.append("value", value);
-
-            await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-          }
-
-          // delete newRows[rowIndex].newRow;
-          //   if ((i >= 1 && i <= 14) || i === 16) e.nonEditable = false;
-          //   return e;
-          // });
-
-          // newRows[rowIndex].cells = newCell;
-
-          newRows[length - 1] = updateTotalRow(newRows);
-        } catch (e) {
-          log({ e });
-        }
+        log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
       }
     }
-
-    showNotif(200, "Sukses update data");
 
     setRows(newRows);
   };
