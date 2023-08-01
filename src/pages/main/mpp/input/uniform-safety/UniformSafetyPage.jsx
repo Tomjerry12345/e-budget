@@ -26,30 +26,34 @@ const UniformSafetyPage = () => {
         // dynamicFile={true}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeIcp
+        isCodeProject
+        type="input"
+      />
 
       <div className="custom-root-layout">
-        <div style={{ margin: "10px" }}>
+        <div
+          style={{
+            overflowX: "auto",
+            overflowY: "auto",
+            marginTop: 16,
+            paddingBottom: 16,
+            height: "100%",
+          }}
+        >
           <div
-            style={{
-              overflowX: "auto",
-              overflowY: "auto",
-              marginBottom: 16,
-              paddingBottom: 16,
-            }}
+            style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+            className="liquidity-planner-app"
           >
-            <div
-              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
-              className="liquidity-planner-app"
-            >
-              <ReactGrid
-                rows={value.rows}
-                columns={value.columns}
-                stickyTopRows={1}
-                stickyLeftColumns={1}
-                onCellsChanged={(change) => func.onChangeTable(change)}
-              />
-            </div>
+            <ReactGrid
+              rows={value.rows}
+              columns={value.columns}
+              stickyTopRows={1}
+              stickyLeftColumns={1}
+              onCellsChanged={(change) => func.onChangeTable(change)}
+            />
           </div>
         </div>
       </div>

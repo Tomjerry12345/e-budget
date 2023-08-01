@@ -8,9 +8,10 @@ import {
   dropDownCell,
   textCellObj,
   headerCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
-import { getMonthDuration, getMonthName } from "values/Constant";
+import { getMonthDuration, getMonthName, getMonthNameNew } from "values/Constant";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -76,6 +77,10 @@ function getGroupRows(groups) {
     jht_p,
     thr_period_p,
     bonus_period_p,
+    is_thr_period,
+    is_thr_period_p,
+    is_bonus_period,
+    is_bonus_period_p
   } = groups;
 
   log({ id });
@@ -101,8 +106,8 @@ function getGroupRows(groups) {
       budget: "thr_period_p",
       cells: [
         headerCell({ text: "Periode Pembayaran THR" }),
-        textCell(thr_period, "padding-left-lg"),
-        textCell(thr_period_p ?? ""),
+        dropDownCustomCell(thr_period, getMonthName(), is_thr_period),
+        dropDownCustomCell(thr_period_p, getMonthName(), is_thr_period_p),
       ],
     },
     {
@@ -113,8 +118,8 @@ function getGroupRows(groups) {
       budget: "bonus_period_p",
       cells: [
         headerCell({ text: "Periode Pembayaran Bonus" }),
-        textCell(bonus_period ?? ""),
-        textCell(bonus_period_p ?? ""),
+        dropDownCustomCell(bonus_period, getMonthName(), is_bonus_period),
+        dropDownCustomCell(bonus_period_p, getMonthName(), is_bonus_period_p),
       ],
     },
   ];

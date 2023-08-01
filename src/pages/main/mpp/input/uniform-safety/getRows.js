@@ -1,10 +1,11 @@
-import { monthData } from "values/Constant";
+import { getMonthName, monthData } from "values/Constant";
 import {
   nonEditable,
   textCell,
   numberCell,
   headerCell,
   dropDownCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 
@@ -117,6 +118,8 @@ function getGroupRows(groups) {
         total,
         forecast,
         budget,
+        is_forecast,
+        is_budget
       } = item;
 
       return {
@@ -139,8 +142,8 @@ function getGroupRows(groups) {
           numberCell(qty_other ?? 0),
 
           numberCell(total ?? 0),
-          dropDownCell(monthData, forecast),
-          dropDownCell(monthData, forecast),
+          dropDownCustomCell(forecast ?? 0, getMonthName(), is_forecast),
+          dropDownCustomCell(budget ?? 0, getMonthName(), is_budget),
         ],
       };
     }),
