@@ -10,6 +10,8 @@ import {
   headerCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
+import { getColumns } from "./getColumns";
+import { getMonthDuration } from "values/Constant";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 export const SUB_HEADER_ROW_ID = "sub-header";
@@ -132,21 +134,33 @@ function getGroupRows(groups) {
       rowId: d["id"],
       height: ROW_HEIGHT,
       cells: [
-        textCell(d["description"], "padding-left-lg"),
-        numberCell(d["qty"] ?? 0, "padding-left-lg", null, true),
-        textCell(d["asset_category"] ?? "-", "padding-left-lg"),
-        dropDownCell(d["purchase_date_month"]),
-        dropDownCell(d["purchase_date_year"]),
-        dropDownCell(d["depreciation_date_month"]),
-        dropDownCell(d["depreciation_date_year"]),
-        numberCell(d["asset_life"] ?? 0, "padding-left-lg", null, false),
-        numberCell(d["salvage_value"] ?? 0, "padding-left-lg", null, false),
-        nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg", null, true)),
-        dropDownCell(d["depreciation_amount_monthly"]),
-        dropDownCell(d["depreciation_amount_yearly"]),
-        numberCell(d["accumulated_account"] ?? 0, "padding-left-lg", null, false),
-        numberCell(d["depreciation_account"] ?? 0, "padding-left-lg", null, false),
+        ...getColumns().map((e) => {
+          if (e.type === "text") {
+            return textCell(d[e.columnId] ?? "", "padding-left-lg");
+          } else if (e.type === "dropdown") {
+            return dropDownCell(getMonthDuration(), d[e.columnId]);
+          } else if (e.type === "number") {
+            return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format);
+          }
+        }),
       ],
+      // cells: [
+      //   textCell(d["description"], "padding-left-lg"),
+      //   numberCell(d["qty"] ?? 0, "padding-left-lg", null, true),
+      //   textCell(d["asset_category"] ?? "-", "padding-left-lg"),
+      //   dropDownCell(d["purchase_date_month"]),
+      //   dropDownCell(d["purchase_date_year"]),
+      //   dropDownCell(d["depreciation_date_month"]),
+      //   dropDownCell(d["depreciation_date_year"]),
+      //   numberCell(d["asset_life"] ?? 0, "padding-left-lg", null, false),
+      //   numberCell(d["salvage_value"] ?? 0, "padding-left-lg", null, false),
+      //   nonEditable(numberCell(d["quantity"] ?? 0, "padding-left-lg", null, true)),
+      //   dropDownCell(d["depreciation_amount_monthly"]),
+      //   dropDownCell(d["depreciation_amount_yearly"]),
+      //   numberCell(d["asset_account"] ?? 0, "padding-left-lg", null, false),
+      //   numberCell(d["accumulated_account"] ?? 0, "padding-left-lg", null, false),
+      //   numberCell(d["depreciation_account"] ?? 0, "padding-left-lg", null, false),
+      // ],
     })),
   ];
 }
@@ -181,7 +195,7 @@ function rowTotal(titleTotal, total) {
 export function getRows({ data }) {
   return [
     ...getRootHeaderRow(),
-    // ...getGroupRows(data),
+    ...getGroupRows(data),
     // firstLoadTotalRow(data)
   ];
 }

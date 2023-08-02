@@ -3,62 +3,87 @@ export function getColumns() {
     {
       columnId: "description",
       width: 300,
+      type: "text",
     },
     {
       columnId: "qty",
       width: 200,
+      type: "number",
+      format: true,
     },
     {
       columnId: "price",
       width: 200,
+      type: "number",
+      format: true,
     },
     {
       columnId: "asset_category",
       width: 200,
+      type: "text",
     },
     {
-      columnId: "purchase_date_month",
+      columnId: "purchase_month",
       width: 200,
+      type: "dropdown",
     },
     {
-      columnId: "purchase_date_year",
+      columnId: "purchase_year",
       width: 200,
+      type: "dropdown",
     },
     {
-      columnId: "depreciation_date_month",
+      columnId: "depreciation_month",
       width: 200,
+      type: "dropdown",
     },
     {
-      columnId: "depreciation_date_year",
+      columnId: "depreciation_year",
       width: 200,
+      type: "dropdown",
     },
     {
       columnId: "asset_life",
       width: 200,
+      type: "number",
+      format: false,
     },
     {
       columnId: "salvage_value",
       width: 200,
+      type: "number",
+      format: false,
     },
     {
-      columnId: "total",
+      columnId: "quantity",
       width: 200,
+      type: "number",
+      format: true,
     },
     {
       columnId: "depreciation_amount_monthly",
       width: 200,
+      type: "dropdown",
     },
     {
       columnId: "depreciation_amount_yearly",
       width: 200,
+      type: "dropdown",
+    },
+    {
+      columnId: "asset_account",
+      width: 200,
+      type: "text",
     },
     {
       columnId: "accumulated_account",
       width: 200,
+      type: "text",
     },
     {
       columnId: "depreciation_account",
       width: 200,
+      type: "text",
     },
   ];
 }
