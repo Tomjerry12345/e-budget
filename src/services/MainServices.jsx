@@ -1,7 +1,9 @@
 import apiClient from "../config/ApiClient";
 
 class MainServices {
-  get = (endPoint) => apiClient().get(`/ebudget/${endPoint}`, {});
+  get = (endPoint, params) => apiClient().get(`/ebudget/${endPoint}`, {
+    params
+  });
   post = (endPoint, req) => apiClient().post(`/ebudget/${endPoint}`, req);
   delete = (endPoint, req) =>
     apiClient().delete(`/ebudget/${endPoint}`, {

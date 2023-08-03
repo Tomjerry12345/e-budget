@@ -32,7 +32,7 @@ CAPEX
 - pagination di halaman load saldo awal
 - preview load saldo awal, tambah kolom action, yg ada button retire, 
   muncul popup modal untk isi bulan, thn & harga jual retired aset
-- import load saldo awal 🔥
+- import load saldo awal ✅
 - tambah data input new asset 🔥
 - tampil data tidak muncul
 

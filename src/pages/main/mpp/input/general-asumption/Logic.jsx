@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -20,7 +24,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -159,11 +165,14 @@ const Logic = () => {
     let newRows = [...rows];
     changes.forEach((change) => {
       const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
+      const columnIndex = parseInt(
+        columns.findIndex((j) => j.columnId === change.columnId)
+      );
 
       const id = newRows[rowIndex].id;
-      const key = columnIndex === 1 ? "forecast" : "budget";
+      const key = columnIndex == 1 ? "forecast" : "budget";
       const column_id = newRows[rowIndex][key];
+
 
       if (change.type === "text") {
         prevDetails[column_id] = change.newCell.text;
@@ -188,7 +197,9 @@ const Logic = () => {
         });
       } else if (change.type === "dropdown") {
         let key = `is_${column_id}`;
-        if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
+        if (
+          change.previousCell.selectedValue !== change.newCell.selectedValue
+        ) {
           prevDetails[column_id] = change.newCell.selectedValue;
 
           onUpdateData({

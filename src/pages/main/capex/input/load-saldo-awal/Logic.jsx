@@ -20,10 +20,6 @@ const Logic = () => {
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
 
-  const [items, setItems] = useState({
-    pemasaran: [],
-    administrasi: [],
-  });
   const columns = getColumns();
   const [rows, setRows] = useState([]);
 
@@ -40,29 +36,8 @@ const Logic = () => {
 
   const ENDPOINT_URL = "detailcapex";
 
-  // useEffect(() => {
-  //   getDataAccount();
-  //   setRows({
-  //     ...rows,
-  //     pemasaran: [fullNewRow(getRootHeaderRow(), 1)],
-  //     // administrasi: listAdministrasi,
-  //   });
-  // }, []);
-
-  // const getDataAccount = async () => {
-  //   try {
-  //     const split = location.pathname.split("/");
-  //     const q = split[split.length - 1];
-  //     // const res = await MainServices.get(`config/opex/byalias/${q}`);
-  //     const res = await MainServices.get(`config/opex/byalias/administrasi-lainnya`);
-  //     log({ res });
-  //     setItems(res.data.data[0]);
-  //   } catch (e) {
-  //     log({ e });
-  //   }
-  // };
-
   const responseShow = (res) => {
+    log({ res });
     dispatch(
       val({
         status: res.responseCode,
@@ -81,7 +56,7 @@ const Logic = () => {
     );
   };
 
-  const onSetDataTable = (values) => {
+  const formatingFilter = (filter) => {
     const {
       code_company,
       code_dept,
@@ -90,7 +65,8 @@ const Logic = () => {
       code_project,
       code_icp,
       periode,
-    } = values;
+      status,
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
@@ -98,8 +74,8 @@ const Logic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
+    let fStatus = status.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -108,54 +84,45 @@ const Logic = () => {
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
+    fStatus = fStatus[0].toLowerCase();
 
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
-
-    setCodeFilter({
+    return {
       code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
       code_product: fCodeProduct,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode,
-    });
+      year: fPeriode,
+      filter: fStatus,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeProduct,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
-    const url = `${ENDPOINT_URL}/load?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
     try {
-      const { data } = await MainServices.get(url);
-      log("data.data", data.data);
-      let r;
-      if (data.data.length > 0) {
-        r = getRows({
-          data: data.data.data,
-        });
-      } else {
-        r = fullNewRow({ id: generateUID() });
-      }
-      setRows(r);
+      getData(formatFilter);
     } catch (error) {
-      // Tangani error jika ada
       console.error(`Error fetching data`, error);
     }
+
+    setCodeFilter(formatFilter);
+  };
+
+  const getData = async (params) => {
+    const url = `${ENDPOINT_URL}/load`;
+    const { data } = await MainServices.get(url, params);
+    log("data.data", data.data.data);
+    let r;
+    if (data.data.data.length > 0) {
+      r = getRows({
+        data: data.data.data,
+      });
+    } else {
+      r = fullNewRow({ id: generateUID() });
+    }
+    setRows(r);
   };
 
   const onFinish = (values) => {
@@ -255,55 +222,26 @@ const Logic = () => {
       })
     );
 
-    const {
-      code_company,
-      code_product,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-      periode,
-    } = codeFilter;
-
     let file1;
-
-    let formData = new FormData();
 
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
 
+    const formData = new FormData();
+
+    for (let item in codeFilter) {
+      formData.append(item, codeFilter[item]);
+    }
+
     formData.append("file", file1);
-    formData.append("code_company", code_company);
-    formData.append("code_department", code_dept);
-    formData.append("code_location", code_location);
-    formData.append("code_product", code_product);
-    formData.append("code_project", code_project);
-    formData.append("code_icp", code_icp);
-    formData.append("year", periode);
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
-      const url = `${ENDPOINT_URL}/load?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}`;
-      const { data } = await MainServices.get(url);
+      await getData(codeFilter);
 
-      log({ data });
-
-      let r;
-
-      if (data.data.length > 0) {
-        const r = getRows({
-          header: getRootHeaderRow(),
-          data: data.data,
-        });
-      } else {
-        r = fullNewRow({ id: generateUID() });
-      }
-
-      setRows(r);
-
-      responseShow(res);
+      responseShow(res.data);
 
       onSuccess();
     } catch (error) {
@@ -326,7 +264,6 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
-      items,
     },
     func: {
       onFinish,
