@@ -6,7 +6,7 @@ export function getColumns() {
       type: "text",
     },
     {
-      columnId: "qty",
+      columnId: "quantity",
       width: 200,
       type: "number",
       format: true,

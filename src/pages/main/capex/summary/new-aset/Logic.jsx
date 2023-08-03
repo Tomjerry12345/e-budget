@@ -17,65 +17,67 @@ const Logic = () => {
 
   const ENDPOINT_URL = "summary_capex/new_asset";
 
-  const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_product, code_project, code_icp, periode } = values;
+  const formatingFilter = (filter) => {
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    // getData(fCodeCompany, fCodeProduct, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
-    getData({
-      codeCompany: fCodeCompany,
-      codeProduct: fCodeProduct,
-      codeDept: fCodeDept,
-      codeIcp: fCodeIcp,
-      codeProject: fCodeProject,
-      periode: fPeriode,
-    });
+    return {
+      code_company: fCodeCompany,
+      code_product: fCodeProduct,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
+      year: fPeriode,
+    };
   };
 
-  const getData = async ({
-    codeCompany,
-    codeProduct,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode,
-  }) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
     try {
-      const { data } = await MainServices.get(url);
-      log("data.data", data.data.length);
-      let r;
-      if (data.data.length > 0) {
-        r = getRows({
-          data: data.data,
-        });
-      } else {
-        alert("null");
-        r = fullNewRow({ id: generateUID() });
-      }
-      setRows(r);
+      getData(formatFilter);
     } catch (error) {
-      // Tangani error jika ada
       console.error(`Error fetching data`, error);
     }
+  };
 
-    // setLinkExport(
-    //   `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
-    // );
+  const getData = async (params) => {
+    const url = `${ENDPOINT_URL}/load`;
+    const { data } = await MainServices.get(url, params);
+    log("data.data", data.data.data);
+    let r;
+    if (data.data.data.length > 0) {
+      r = getRows({
+        data: data.data.data,
+      });
+    } else {
+      r = fullNewRow({ id: generateUID() });
+    }
+    setRows(r);
   };
 
   const onFinish = (values) => {

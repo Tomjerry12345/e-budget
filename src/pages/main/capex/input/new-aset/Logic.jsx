@@ -144,19 +144,33 @@ const Logic = () => {
     showNotif(200, "Sukses tambah row");
   };
 
-  const updateData = async (cell) => {
+  const updateData = async (cell, rowData) => {
     if (Object.keys(cell).length === 3) {
       try {
         const formData = new FormData();
-        for (var item in cell) {
-          formData.append(item, cell[item]);
-        }
-        const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
 
-        if (res.data.responseCode === 200) {
-          showNotif(200, "Sukses update data");
+        const isNewRow = rowData["isNewRow"];
+
+        if (isNewRow) {
+          for (let item in codeFilter) {
+            formData.append(item, codeFilter[item]);
+          }
+          const res = await MainServices.post(`detailcapex/insert`, formData);
+          if (res.data.responseCode === 200) {
+            showNotif(200, "Sukses update data");
+          } else {
+            showNotif(500, "Error");
+          }
         } else {
-          showNotif(500, "Error");
+          for (let item in cell) {
+            formData.append(item, cell[item]);
+          }
+          const res = await MainServices.post(`detailcapex/update`, formData);
+          if (res.data.responseCode === 200) {
+            showNotif(200, "Sukses update data");
+          } else {
+            showNotif(500, "Error");
+          }
         }
       } catch (e) {
         log({ e });
@@ -172,45 +186,58 @@ const Logic = () => {
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
       const type = c.newCell.type;
 
-      const id = newRows[rowIndex].id;
-      const key = columnIndex === 1 ? "forecast" : "budget";
-      const column_id = newRows[rowIndex][key];
+      const id = newRows[rowIndex].rowId;
+      const column_id = columns[columnIndex].columnId;
+
+      const rowData = newRows[rowIndex];
+
+      log({ rowData });
 
       if (type === "text") {
         newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-
-        updateData({
-          id,
-          column_id,
-          value: c.newCell.value,
-        });
+        updateData(
+          {
+            id,
+            column_id,
+            value: c.newCell.value,
+          },
+          rowData
+        );
       } else if (type === "number") {
         newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-
-        updateData({
-          id,
-          column_id,
-          value: c.newCell.value,
-        });
+        updateData(
+          {
+            id,
+            column_id,
+            value: c.newCell.value,
+          },
+          rowData
+        );
       } else if (type === "dropdown") {
         if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
           newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
 
-          updateData({
-            id,
-            column_id,
-            value: c.newCell.selectedValue,
-          });
+          updateData(
+            {
+              id,
+              column_id,
+              value: c.newCell.selectedValue,
+            },
+            rowData
+          );
         }
 
         if (c.newCell.inputValue) {
           newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
 
-          updateData({
-            id,
-            column_id,
-            value: c.newCell.inputValue,
-          });
+          updateData(
+            {
+              id,
+              column_id,
+              value: c.newCell.inputValue,
+            },
+            rowData
+          );
         }
 
         // CHANGED: set the isOpen property to the value received.

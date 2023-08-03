@@ -132,6 +132,7 @@ function getGroupRows(groups) {
   return [
     ...groups.map((d) => ({
       rowId: d["id"],
+      isNewRow: d["id"] === null,
       height: ROW_HEIGHT,
       cells: [
         ...getColumns().map((e) => {
@@ -207,7 +208,7 @@ export function fullNewRow() {
 export function reactgridNewRow() {
   return {
     rowId: generateUID(),
-    newRow: true,
+    isNewRow: true,
     height: ROW_HEIGHT,
     cells: [
       nonEditable(textCell("", "padding-left-lg")),
