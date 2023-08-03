@@ -65,8 +65,8 @@ const Logic = () => {
   const responseShow = (res) => {
     dispatch(
       val({
-        status: res.data.responseCode,
-        message: res.data.responseDescription,
+        status: res.responseCode,
+        message: res.responseDescription,
       })
     );
     dispatch(actionData({ loading: false }));
@@ -142,9 +142,9 @@ const Logic = () => {
     const url = `${ENDPOINT_URL}/load?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
     try {
       const { data } = await MainServices.get(url);
-      log("data.data", data.data.data);
+      log("data.data", data.data);
       let r;
-      if (data.data.data.length > 0) {
+      if (data.data.length > 0) {
         r = getRows({
           data: data.data.data,
         });
@@ -164,94 +164,83 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const onChangeTable = async (change, category) => {
-    // const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
-    // const rowIndex = newRows[i].findIndex((j) => j.rowId === change[0].rowId);
-    // const columnIndex = columns.findIndex((j) => j.columnId === change[0].columnId);
-    // const type = newRows[i][rowIndex].cells[columnIndex].type;
-    // const length = newRows[i].length;
-    // let value;
-    // if (type === "text") {
-    //   newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-    //   value = change[0].newCell.text;
-    // } else {
-    //   newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
-    //   value = change[0].newCell.value;
-    //   let jumlah = newRows[i][rowIndex].cells[3].value;
-    //   let tarifAsuransi = newRows[i][rowIndex].cells[4].value;
-    //   let lamaAsuransi = parseInt(newRows[i][rowIndex].cells[6].value);
-    //   let mulaiAsuransi = parseInt(newRows[i][rowIndex].cells[7].value);
-    //   let totalAsuransi = jumlah * tarifAsuransi;
-    //   let grandTotal = 0;
-    //   const newCell = newRows[i][rowIndex].cells.map((e, j) => {
-    //     if (j === 5) e.value = totalAsuransi;
-    //     if (j >= mulaiAsuransi + 8 && j <= lamaAsuransi + 8) {
-    //       e.value = totalAsuransi;
-    //       grandTotal += e.value;
-    //     }
-    //     return e;
-    //   });
-    //   newRows[i][rowIndex].cells[8].value = grandTotal;
-    //   newRows[i][rowIndex].cells = newCell;
-    // }
-    // try {
-    //   let formData = new FormData();
-    //   const id = change[0].rowId;
-    //   const column_id = change[0].columnId;
-    //   const isNewRow = newRows[i][rowIndex].newRow;
-    //   if (isNewRow !== undefined) {
-    //     const {
-    //       code_company,
-    //       code_dept,
-    //       code_location,
-    //       code_product,
-    //       code_project,
-    //       code_icp,
-    //       periode,
-    //     } = codeFilter;
-    //     const codeAccount =
-    //       category === "pemasaran"
-    //         ? items.pemasaran[i]["code_account"]
-    //         : items.administrasi[i]["code_account"];
-    //     formData.append("code_account", codeAccount);
-    //     formData.append("code_company", code_company);
-    //     formData.append("code_department", code_dept);
-    //     formData.append("code_location", code_location);
-    //     formData.append("code_product", code_product);
-    //     formData.append("code_project", code_project);
-    //     formData.append("code_icp", code_icp);
-    //     formData.append("year", periode);
-    //     formData.append("name", value);
-    //     formData.append("type", "asuransi");
-    //     const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-    //     log({ res });
-    //     const rowId = res.data.data.id;
-    //     newRows[i][rowIndex].rowId = rowId;
-    //   } else {
-    //     formData.append("id", id);
-    //     formData.append("column_id", column_id);
-    //     formData.append("value", value);
-    //     formData.append("type", "asuransi");
-    //     await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-    //   }
-    //   delete newRows[i][rowIndex].newRow;
-    //   showNotif(200, "Sukses update data");
-    //   const newCell = newRows[i][rowIndex].cells.map((e, i) => {
-    //     if (i >= 1 && i <= 5) e.nonEditable = false;
-    //     if (i >= 6 && i <= 8) e.nonEditable = false;
-    //     return e;
-    //   });
-    //   newRows[i][rowIndex].cells = newCell;
-    //   newRows[i][length - 1] = updateTotalRow(newRows[i]);
-    //   // log({ newRows });
-    //   setRows({
-    //     ...rows,
-    //     [category]: newRows,
-    //   });
-    // } catch (e) {
-    //   log({ e });
-    //   // showNotif(400, e);
-    // }
+  const updateData = async (cell) => {
+    if (Object.keys(cell).length === 3) {
+      try {
+        const formData = new FormData();
+        for (var item in cell) {
+          formData.append(item, cell[item]);
+        }
+        const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+
+        if (res.data.responseCode === 200) {
+          showNotif(200, "Sukses update data");
+        } else {
+          showNotif(500, "Error");
+        }
+      } catch (e) {
+        log({ e });
+      }
+    }
+  };
+
+  const onChangeTable = async (change) => {
+    let newRows = [...rows];
+
+    for (const c of change) {
+      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+      const type = c.newCell.type;
+
+      const id = newRows[rowIndex].id;
+      const key = columnIndex === 1 ? "forecast" : "budget";
+      const column_id = newRows[rowIndex][key];
+
+      if (type === "text") {
+        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+
+        updateData({
+          id,
+          column_id,
+          value: c.newCell.value,
+        });
+      } else if (type === "number") {
+        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
+
+        updateData({
+          id,
+          column_id,
+          value: c.newCell.value,
+        });
+      } else if (type === "dropdown") {
+        if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
+
+          updateData({
+            id,
+            column_id,
+            value: c.newCell.selectedValue,
+          });
+        }
+
+        if (c.newCell.inputValue) {
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
+
+          updateData({
+            id,
+            column_id,
+            value: c.newCell.inputValue,
+          });
+        }
+
+        // CHANGED: set the isOpen property to the value received.
+        newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
+      } else {
+        log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
+      }
+    }
+
+    setRows(newRows);
   };
 
   const onSuccess = () => {
@@ -260,7 +249,6 @@ const Logic = () => {
   };
 
   const onUploadFile = async () => {
-    // let tahun1 = tahun === undefined ? new Date().getFullYear() : tahun;
     dispatch(
       actionImport({
         loading: true,
@@ -279,29 +267,13 @@ const Logic = () => {
 
     let file1;
 
-    const codeAccount = dataGlobalRedux.indexImport;
-    let index, category;
-
-    const checkItem = (items, cat) => {
-      items.forEach((e, i) => {
-        if (e.code_account === codeAccount) {
-          [index, category] = [i, cat];
-        }
-      });
-    };
-
-    checkItem(items.pemasaran, "pemasaran") || checkItem(items.administrasi, "administrasi");
-
     let formData = new FormData();
-
-    // setLoadingUpload(true);
 
     acceptedFiles.forEach((file) => {
       file1 = file;
     });
 
     formData.append("file", file1);
-    formData.append("code_account", codeAccount);
     formData.append("code_company", code_company);
     formData.append("code_department", code_dept);
     formData.append("code_location", code_location);
@@ -309,34 +281,34 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
-    formData.append("type", "asuransi");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
-      const url = `${ENDPOINT_URL}/load?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
+      const url = `${ENDPOINT_URL}/load?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}`;
       const { data } = await MainServices.get(url);
 
-      const r = getRows({
-        header: getRootHeaderRow(),
-        data: data.data,
-      });
+      log({ data });
 
-      const newRow = [...rows.pemasaran];
+      let r;
 
-      newRow[index] = r;
+      if (data.data.length > 0) {
+        const r = getRows({
+          header: getRootHeaderRow(),
+          data: data.data,
+        });
+      } else {
+        r = fullNewRow({ id: generateUID() });
+      }
 
-      setRows({
-        ...rows,
-        [category]: newRow,
-      });
+      setRows(r);
 
       responseShow(res);
 
       onSuccess();
     } catch (error) {
-      const err = error.response;
-      responseShow(err);
+      log({ error });
+      showNotif("404", JSON.stringify(error));
       dispatch(
         actionImport({
           loading: false,

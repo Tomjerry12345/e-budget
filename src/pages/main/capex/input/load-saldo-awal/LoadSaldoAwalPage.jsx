@@ -17,12 +17,10 @@ const LoadSaldoAwalPage = () => {
         // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile={constantExcellFile["opex"]["template-5"]}
-        // disabledImportExport={
-        //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
-        // }
+        downloadFile="file/capex/load_saldo_awal.xlsx"
+        disabledImportExport={value.rows.length === 0}
         onChangeSelect={func.onChangeTahun}
-        // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        listMenuImport={[{ description: "load saldo awal" }]}
       />
 
       <FilterComponent

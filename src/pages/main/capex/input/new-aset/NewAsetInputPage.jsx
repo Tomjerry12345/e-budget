@@ -4,6 +4,7 @@ import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
+import { Button } from "antd";
 
 const NewAsetInputPage = () => {
   const { value, func } = Logic();
@@ -36,6 +37,20 @@ const NewAsetInputPage = () => {
 
       <div className="custom-root-layout">
         <div style={{ margin: "10px" }}>
+          {value.rows.length > 0 ? (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Button className="btn-tambah-row" onClick={() => func.onTambahRow()}>
+                Tambah Data
+              </Button>
+            </div>
+          ) : null}
+
           <div
             style={{
               overflowX: "auto",
