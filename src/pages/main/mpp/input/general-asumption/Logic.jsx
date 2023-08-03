@@ -144,7 +144,7 @@ const Logic = () => {
         }
         const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
 
-        if (res.data.responseCode == 200) {
+        if (res.data.responseCode === 200) {
           showNotif(200, "Sukses update data");
         } else {
           showNotif(500, "Error");
