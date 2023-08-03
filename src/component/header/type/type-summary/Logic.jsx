@@ -33,15 +33,28 @@ const Logic = () => {
   };
 
   const onExport = async (e, linkExport) => {
-    let filename = e.filename;
-    const codeAccount = e.code_account;
-    filename = filename.split("/");
-    filename = filename[filename.length - 1];
-
     try {
-      const res = await MainServices.download(
-        `${linkExport}&code_account=${codeAccount}&filename=${filename}`
-      );
+      let filename = e.filename;
+      const codeAccount = e.code_account;
+
+      if (filename === undefined) {
+        filename = e.description.replaceAll(" ", "_");
+        // filename = filename.split("_");
+        // filename = filename.join("_");
+      } else {
+        filename = filename.split("/");
+        filename = filename[filename.length - 1];
+      }
+
+      let url;
+
+      if (codeAccount !== undefined) {
+        url = `${linkExport}&code_account=${codeAccount}&filename=${filename}`;
+      } else {
+        url = `${linkExport}}&filename=${filename}`;
+      }
+
+      const res = await MainServices.download(url);
       log({ res });
       const fileURL = URL.createObjectURL(res.data);
       const link = document.createElement("a");
@@ -49,6 +62,7 @@ const Logic = () => {
       link.download = `summary_${filename}`;
       link.click();
     } catch (e) {
+      log({ e });
       responseShow({
         status: 400,
         message: "Terjadi kesalahan saat melakuan export",

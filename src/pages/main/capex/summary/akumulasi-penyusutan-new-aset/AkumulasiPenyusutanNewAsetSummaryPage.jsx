@@ -10,7 +10,16 @@ const AkumulasiPenyusutanNewAsetSummaryPage = () => {
 
   return (
     <>
-      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
+      <HeaderComponent
+        type="summary"
+        listMenu={[
+          {
+            description: "akumulasi penyusutan new aset",
+            disabled: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
+      />
 
       <FilterComponent
         onFinish={func.onFinish}

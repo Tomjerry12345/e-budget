@@ -19,18 +19,18 @@ const NotificationComponent = ({ status, message }) => {
     if (parseInt(status) === 200) {
       api.success({
         message: `Notifikasi`,
-        description: <div style={{whiteSpace: "pre-line"}}>{message}</div>,
+        description: <div style={{ whiteSpace: "pre-line" }}>{message}</div>,
         placement,
-        className: "style-notif"
+        className: "style-notif",
+        duration: 1,
       });
     } else {
       api.error({
         message: `Notifikasi`,
-        description: (
-          <Context.Consumer>{({ name }) => message}</Context.Consumer>
-        ),
+        description: <Context.Consumer>{({ name }) => message}</Context.Consumer>,
         placement,
-        className: "style-notif"
+        className: "style-notif",
+        duration: 1,
       });
     }
   };
@@ -51,7 +51,6 @@ const NotificationComponent = ({ status, message }) => {
             openNotification("bottomRight");
 
             dispacth(val({ status: 0, message: "" }));
-
           }, 100)
         : null}
     </Context.Provider>

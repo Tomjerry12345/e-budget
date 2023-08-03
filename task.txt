@@ -35,6 +35,7 @@ CAPEX
 - import load saldo awal ✅
 - tambah data input new asset 🔥
 - tampil data tidak muncul
+- 
 
 MPP
 

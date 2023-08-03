@@ -85,5 +85,11 @@ export function getColumns() {
       type: "number",
       title: "Desember",
     },
+    {
+      columnId: "total",
+      width: WIDTH_BULAN,
+      type: "number",
+      title: "Total",
+    },
   ];
 }

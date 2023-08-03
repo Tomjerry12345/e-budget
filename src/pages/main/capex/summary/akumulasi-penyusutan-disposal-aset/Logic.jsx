@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 import { generateUID, log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/capex/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/summary/capex/template-2/getColumns";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/capex/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/summary/capex/template-1/getColumns";
 
 const Logic = () => {
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,8 @@ const Logic = () => {
 
   const location = useLocation();
 
-  const ENDPOINT_URL = "summary_capex/disposal_asset/accumulated";
+  const ENDPOINT_URL = "summary-capex/disposal-asset/accumulated";
+  const ENDPOINT_URL_EXPORT = "summary-capex/export/disposal-asset/accumulated";
 
   const formatingFilter = (filter) => {
     const {
@@ -60,24 +61,50 @@ const Logic = () => {
 
     try {
       getData(formatFilter);
+      // setCodeFilter(formatFilter);
     } catch (error) {
       console.error(`Error fetching data`, error);
     }
   };
 
   const getData = async (params) => {
-    const url = `${ENDPOINT_URL}/load`;
-    const { data } = await MainServices.get(url, params);
-    log("data.data", data.data.data);
-    let r;
-    if (data.data.data.length > 0) {
-      r = getRows({
-        data: data.data.data,
-      });
-    } else {
-      r = fullNewRow({ id: generateUID() });
+    const url = `${ENDPOINT_URL}`;
+    try {
+      const { data } = await MainServices.get(url, params);
+      log("data.data", data.data.length);
+      let r;
+      if (data.data.length > 0) {
+        r = getRows({
+          data: data.data,
+        });
+      } else {
+        r = fullNewRow({ id: generateUID() });
+      }
+      setRows(r);
+    } catch (error) {
+      // Tangani error jika ada
+      console.error(`Error fetching data`, error);
     }
-    setRows(r);
+
+    const {
+      code_company,
+      code_department,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = params;
+
+    setLinkExport(
+      `${ENDPOINT_URL_EXPORT}?
+      code_company=${code_company}
+      &code_location=${code_location}
+      &code_product=${code_product}
+      &code_department=${code_department}
+      &code_icp=${code_icp}&code_project=${code_project}
+      &year=${periode}`
+    );
   };
 
   const onFinish = (values) => {

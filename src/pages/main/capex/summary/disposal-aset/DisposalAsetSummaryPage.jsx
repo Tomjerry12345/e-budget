@@ -9,7 +9,16 @@ const DisposalAsetSummaryPage = () => {
 
   return (
     <>
-      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
+      <HeaderComponent
+        type="summary"
+        listMenu={[
+          {
+            description: "Export disposal aset",
+            disabled: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
+      />
 
       <FilterComponent
         onFinish={func.onFinish}

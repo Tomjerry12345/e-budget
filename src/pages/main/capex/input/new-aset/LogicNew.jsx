@@ -1,25 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { generateUID, log, showNotif } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import {
-  getRootHeaderRow,
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-} from "./getRows";
-import {
-  generateArrayAttributes,
-  generateObjectAttributes,
-} from "values/react-grid/helpers";
+import { getRootHeaderRow, fullNewRow, getRows, reactgridNewRow } from "./getRows";
+import { generateArrayAttributes, generateObjectAttributes } from "values/react-grid/helpers";
 
 const LoginNew = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -33,9 +21,7 @@ const LoginNew = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -306,9 +292,7 @@ const LoginNew = () => {
       let dataRow = prevDetails.find((d) => d.id === dataRowId);
 
       const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
-      const columnIndex = parseInt(
-        columns.findIndex((j) => j.columnId === change.columnId)
-      );
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
 
       const id = newRows[rowIndex].rowId;
       const column_id = columns[columnIndex].columnId;
@@ -364,9 +348,7 @@ const LoginNew = () => {
       } else if (change.type === "dropdown") {
         if (fieldName == "asset_category_id") {
           let key = `is_${fieldName}`;
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
+          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
             dataRow[fieldName] = change.newCell.selectedValue;
 
             updateData(
@@ -395,9 +377,7 @@ const LoginNew = () => {
 
           if (selected) {
             // find a selected category to set asset_account, accumulate_account, and depreciation_account
-            let valuesOfDropdown = change.previousCell.values.find(
-              (e) => e.value === selected
-            );
+            let valuesOfDropdown = change.previousCell.values.find((e) => e.value === selected);
 
             dataRow["asset_account"] = valuesOfDropdown["asset_account"];
             dataRow["accumulated_account"] = valuesOfDropdown["accumulated_account"];
@@ -411,11 +391,8 @@ const LoginNew = () => {
           // CHANGED: set the isOpen property to the value received.
           dataRow[key] = change.newCell.isOpen;
         } else {
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.selectedValue;
+          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
+            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.selectedValue;
 
             updateData(
               {
@@ -428,8 +405,7 @@ const LoginNew = () => {
           }
 
           if (change.newCell.inputValue) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.inputValue;
+            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.inputValue;
 
             updateData(
               {

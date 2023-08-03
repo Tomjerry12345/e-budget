@@ -5,6 +5,11 @@ const numberFormat = new Intl.NumberFormat("de", {
   maximumFractionDigits: 2,
 });
 
+export const customCell = ({ widget }) => ({
+  type: "text",
+  renderer: (text) => widget,
+});
+
 export const textCell = (text, className = "", style) => ({
   type: "text",
   text,
@@ -153,7 +158,6 @@ export function monthHeaderCell(
     })
   );
 }
-
 
 export const dropDownCustomCell = (selectedValue, values, isOpen) => ({
   type: "dropdown",

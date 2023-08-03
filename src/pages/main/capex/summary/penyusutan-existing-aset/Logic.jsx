@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 import { generateUID, log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/capex/template-2/getRows";
-import { getColumns } from "values/react-grid/rows/summary/capex/template-2/getColumns";
+import { fullNewRow, getRows } from "values/react-grid/rows/summary/capex/template-1/getRows";
+import { getColumns } from "values/react-grid/rows/summary/capex/template-1/getColumns";
 
 const Logic = () => {
   const [loading, setLoading] = useState(false);
@@ -15,48 +15,62 @@ const Logic = () => {
 
   const location = useLocation();
 
-  const ENDPOINT_URL = "summary_capex/existing_asset/depreciated";
+  const ENDPOINT_URL = "summary-capex/existing-asset/depreciated";
+  const ENDPOINT_URL_EXPORT = "summary-capex/export/existing-asset/depreciated";
 
-  const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_product, code_project, code_icp, periode } = values;
+  const formatingFilter = (filter) => {
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
+    let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    // getData(fCodeCompany, fCodeProduct, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
-    getData({
-      codeCompany: fCodeCompany,
-      codeProduct: fCodeProduct,
-      codeDept: fCodeDept,
-      codeIcp: fCodeIcp,
-      codeProject: fCodeProject,
-      periode: fPeriode,
-    });
+    return {
+      code_company: fCodeCompany,
+      code_product: fCodeProduct,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      code_project: fCodeProject,
+      year: fPeriode,
+    };
   };
 
-  const getData = async ({
-    codeCompany,
-    codeProduct,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode,
-  }) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
     try {
-      const { data } = await MainServices.get(url);
+      getData(formatFilter);
+      // setCodeFilter(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const getData = async (params) => {
+    const url = `${ENDPOINT_URL}`;
+    try {
+      const { data } = await MainServices.get(url, params);
       log("data.data", data.data.length);
       let r;
       if (data.data.length > 0) {
@@ -64,7 +78,6 @@ const Logic = () => {
           data: data.data,
         });
       } else {
-        alert("null");
         r = fullNewRow({ id: generateUID() });
       }
       setRows(r);
@@ -73,9 +86,25 @@ const Logic = () => {
       console.error(`Error fetching data`, error);
     }
 
-    // setLinkExport(
-    //   `${ENDPOINT_URL}/export?code_company=${codeCompany}&code_product=${codeProduct}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`
-    // );
+    const {
+      code_company,
+      code_department,
+      code_location,
+      code_product,
+      code_project,
+      code_icp,
+      periode,
+    } = params;
+
+    setLinkExport(
+      `${ENDPOINT_URL_EXPORT}?
+      code_company=${code_company}
+      &code_location=${code_location}
+      &code_product=${code_product}
+      &code_department=${code_department}
+      &code_icp=${code_icp}&code_project=${code_project}
+      &year=${periode}`
+    );
   };
 
   const onFinish = (values) => {

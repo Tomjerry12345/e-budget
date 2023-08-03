@@ -37,8 +37,7 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
-  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } =
-    data;
+  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = data;
 
   list[0] = jht ?? 0 + thr_period ?? 0 + bonus_period ?? 0;
   list[1] = jht_p ?? 0 + thr_period_p ?? 0 + bonus_period_p ?? 0;
@@ -59,10 +58,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   log({ list });
   return rowTotal("Total", list);
@@ -80,7 +76,7 @@ function getGroupRows(groups) {
     is_thr_period,
     is_thr_period_p,
     is_bonus_period,
-    is_bonus_period_p
+    is_bonus_period_p,
   } = groups;
 
   log({ id });
@@ -89,7 +85,6 @@ function getGroupRows(groups) {
     {
       rowId: generateUID(),
       id: id,
-      newRow: id === null,
       forecast: "jht",
       budget: "jht_p",
       cells: [
@@ -101,7 +96,6 @@ function getGroupRows(groups) {
     {
       rowId: generateUID(),
       id: id,
-      newRow: id === null,
       forecast: "thr_period",
       budget: "thr_period_p",
       cells: [
@@ -113,7 +107,6 @@ function getGroupRows(groups) {
     {
       rowId: generateUID(),
       id: id,
-      newRow: id === null,
       forecast: "bonus_period",
       budget: "bonus_period_p",
       cells: [
