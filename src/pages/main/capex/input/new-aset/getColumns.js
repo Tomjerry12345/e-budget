@@ -18,9 +18,9 @@ export function getColumns() {
       format: true,
     },
     {
-      columnId: "asset_category",
+      columnId: "asset_category_id",
       width: 200,
-      type: "text",
+      type: "dropdown",
     },
     {
       columnId: "purchase_month",
