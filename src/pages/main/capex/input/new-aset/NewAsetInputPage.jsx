@@ -2,12 +2,12 @@ import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
-import Logic from "./Logic";
+import LoginNew from "./LogicNew";
 import { constantExcellFile } from "values/Constant";
 import { Button } from "antd";
 
 const NewAsetInputPage = () => {
-  const { value, func } = Logic();
+  const { value, func } = LoginNew();
 
   return (
     <>
@@ -36,7 +36,7 @@ const NewAsetInputPage = () => {
       />
 
       <div className="custom-root-layout">
-        <div style={{ margin: "10px" }}>
+        <div style={{ margin: "10px", height: "100%" }}>
           {value.rows.length > 0 ? (
             <div
               style={{
@@ -57,6 +57,7 @@ const NewAsetInputPage = () => {
               overflowY: "auto",
               marginBottom: 16,
               paddingBottom: 16,
+              height: "100%"
             }}
           >
             <div

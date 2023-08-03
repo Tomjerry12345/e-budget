@@ -8,6 +8,7 @@ import {
   totalCell,
   dropDownCell,
   headerCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -128,7 +129,7 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
-function getGroupRows(groups) {
+function getGroupRows(groups,categories) {
   return [
     ...groups.map((d) => ({
       rowId: d["id"],
@@ -139,6 +140,9 @@ function getGroupRows(groups) {
           if (e.type === "text") {
             return textCell(d[e.columnId] ?? "", "padding-left-lg");
           } else if (e.type === "dropdown") {
+            if(e.columnId == 'asset_category_id') {
+              return dropDownCustomCell(d[e.columnId] ?? "", categories, d.is_asset_category_id)
+            }
             return dropDownCell(getMonthDuration(), d[e.columnId]);
           } else if (e.type === "number") {
             return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format);
@@ -193,10 +197,10 @@ function rowTotal(titleTotal, total) {
   };
 }
 
-export function getRows({ data }) {
+export function getRows({ data, categories }) {
   return [
     ...getRootHeaderRow(),
-    ...getGroupRows(data),
+    ...getGroupRows(data, categories),
     // firstLoadTotalRow(data)
   ];
 }
