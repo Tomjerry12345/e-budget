@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
@@ -6,7 +6,7 @@ import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, getRows, updateId, updateNewRow, updateTotalRow } from "./getRows";
+import { getRootHeaderRow, getRows } from "./getRows";
 import { generateObjectAttributes } from "values/react-grid/helpers";
 
 const Logic = () => {
@@ -16,6 +16,7 @@ const Logic = () => {
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
+  const [currData, setCurrData] = useState();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -117,11 +118,11 @@ const Logic = () => {
         "bonus_period_p",
       ]);
 
-      console.log({ a });
       r = getRows({
         data: a,
       });
       setRows(r);
+      setCurrData(a);
     } catch (error) {
       // Tangani error jika ada
       console.error(`Error fetching data for code account`, error);
@@ -134,7 +135,7 @@ const Logic = () => {
   };
 
   // REFACTOR: func fetch api when using the dropdown cell and fetch api per type
-  const updateData = async (cell) => {
+  const onUpdateData = async (cell) => {
     if (Object.keys(cell).length === 3) {
       try {
         const formData = new FormData();
@@ -154,63 +155,80 @@ const Logic = () => {
     }
   };
 
-  const onChangeTable = async (change) => {
+  const applyChanges = (changes, prevDetails) => {
     let newRows = [...rows];
-
-    for (const c of change) {
-      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
-      const type = c.newCell.type;
+    changes.forEach((change) => {
+      const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
 
       const id = newRows[rowIndex].id;
       const key = columnIndex === 1 ? "forecast" : "budget";
       const column_id = newRows[rowIndex][key];
 
-      if (type === "text") {
-        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-
-        updateData({
+      if (change.type === "text") {
+        prevDetails[column_id] = change.newCell.text;
+        onUpdateData({
           id,
           column_id,
-          value: c.newCell.value,
+          value: change.newCell.text,
         });
-      } else if (type === "number") {
-        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-
-        updateData({
+      } else if (change.type === "number") {
+        prevDetails[column_id] = change.newCell.value;
+        onUpdateData({
           id,
           column_id,
-          value: c.newCell.value,
+          value: change.newCell.value,
         });
-      } else if (type === "dropdown") {
-        if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
+      } else if (change.type === "checkbox") {
+        prevDetails[column_id] = change.newCell.checked;
+        onUpdateData({
+          id,
+          column_id,
+          value: change.newCell.checked,
+        });
+      } else if (change.type === "dropdown") {
+        let key = `is_${column_id}`;
+        if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
+          prevDetails[column_id] = change.newCell.selectedValue;
 
-          updateData({
+          onUpdateData({
             id,
             column_id,
-            value: c.newCell.selectedValue,
+            value: change.newCell.selectedValue,
           });
         }
 
-        if (c.newCell.inputValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
-
-          updateData({
+        if (change.newCell.inputValue) {
+          prevDetails[column_id] = change.newCell.inputValue;
+          onUpdateData({
             id,
             column_id,
-            value: c.newCell.inputValue,
+            value: change.newCell.inputValue,
           });
         }
 
         // CHANGED: set the isOpen property to the value received.
-        newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
+        prevDetails[key] = change.newCell.isOpen;
       } else {
-        log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
+        console.log("ERROR", change.type);
       }
-    }
+    });
 
-    setRows(newRows);
+    return { ...prevDetails };
+  };
+
+  useEffect(() => {
+    if (currData) {
+      setRows(
+        getRows({
+          data: currData,
+        })
+      );
+    }
+  }, [currData]);
+
+  const onChangeTable = (change) => {
+    setCurrData((prevState) => applyChanges(change, prevState));
   };
 
   const onSuccess = () => {
