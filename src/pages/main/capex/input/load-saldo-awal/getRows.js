@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import {
   nonEditable,
   textCell,
@@ -7,6 +8,7 @@ import {
   noSideBorders,
   totalCell,
   dropDownCell,
+  customCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
 
@@ -113,6 +115,9 @@ function getGroupRows(groups) {
         nonEditable(numberCell(d["price"] ?? 0, "padding-left-lg")),
 
         nonEditable(textCell(d["status"], "padding-left-lg")),
+        // nonEditable(
+        //   customCell({ widget: <Button className="btn-tambah-row">Tambah Data</Button> })
+        // ),
       ],
     })),
   ];
@@ -181,7 +186,7 @@ function rowTotal(titleTotal, total) {
 }
 
 export function getRows({ data }) {
-  return [getRootHeaderRow(), ...getGroupRows(data), firstLoadTotalRow(data)];
+  return [getRootHeaderRow(), ...getGroupRows(data)];
 }
 
 export function fullNewRow({ id }) {

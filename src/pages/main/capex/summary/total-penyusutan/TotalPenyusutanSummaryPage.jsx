@@ -9,7 +9,16 @@ const TotalPenyusutanSummaryPage = () => {
 
   return (
     <>
-      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
+      <HeaderComponent
+        type="summary"
+        listMenu={[
+          {
+            description: "total penyusutan",
+            disabled: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
+      />
 
       <FilterComponent
         onFinish={func.onFinish}

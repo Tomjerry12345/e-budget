@@ -14,6 +14,13 @@ export function getColumns() {
       title: "Description",
     },
     {
+      columnId: "beginning_balance",
+      width: 300,
+      format: true,
+      type: "number",
+      title: "Saldo awal",
+    },
+    {
       columnId: "jan",
       width: WIDTH_BULAN,
       type: "number",

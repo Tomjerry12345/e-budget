@@ -54,6 +54,7 @@ export function getRootHeaderRow() {
           className: "justify-content-center font-bold",
         }),
         headerCell({ text: "" }),
+        headerCell({ text: "Asset Account", rowspan: 1 }),
         headerCell({ text: "Accumulated Account", rowspan: 1 }),
         headerCell({ text: "Depreciation Account", rowspan: 1 }),
       ],
@@ -78,6 +79,7 @@ export function getRootHeaderRow() {
           className: "justify-content-center",
         }),
         headerCell({ text: "Yearly" }),
+        headerCell({ text: "" }),
         headerCell({ text: "" }),
         headerCell({ text: "" }),
       ],
@@ -129,7 +131,7 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
-function getGroupRows(groups,categories) {
+function getGroupRows(groups, categories) {
   return [
     ...groups.map((d) => ({
       rowId: d["id"],
@@ -140,32 +142,19 @@ function getGroupRows(groups,categories) {
           if (e.type === "text") {
             return textCell(d[e.columnId] ?? "", "padding-left-lg");
           } else if (e.type === "dropdown") {
-            if(e.columnId == 'asset_category_id') {
-              return dropDownCustomCell(d[e.columnId] ?? "", categories, d.is_asset_category_id)
+            if (e.columnId === "asset_category_id") {
+              return dropDownCustomCell(
+                d[e.columnId] ?? "",
+                categories,
+                d.is_asset_category_id
+              );
             }
             return dropDownCell(getMonthDuration(), d[e.columnId]);
           } else if (e.type === "number") {
-            return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format);
+            return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false);
           }
         }),
       ],
-      // cells: [
-      //   textCell(d["description"], "padding-left-lg"),
-      //   numberCell(d["qty"] ?? 0, "padding-left-lg", null, true),
-      //   textCell(d["asset_category"] ?? "-", "padding-left-lg"),
-      //   dropDownCell(d["purchase_date_month"]),
-      //   dropDownCell(d["purchase_date_year"]),
-      //   dropDownCell(d["depreciation_date_month"]),
-      //   dropDownCell(d["depreciation_date_year"]),
-      //   numberCell(d["asset_life"] ?? 0, "padding-left-lg", null, false),
-      //   numberCell(d["salvage_value"] ?? 0, "padding-left-lg", null, false),
-      //   nonEditable(numberCell(d["quantity"] ?? 0, "padding-left-lg", null, true)),
-      //   dropDownCell(d["depreciation_amount_monthly"]),
-      //   dropDownCell(d["depreciation_amount_yearly"]),
-      //   numberCell(d["asset_account"] ?? 0, "padding-left-lg", null, false),
-      //   numberCell(d["accumulated_account"] ?? 0, "padding-left-lg", null, false),
-      //   numberCell(d["depreciation_account"] ?? 0, "padding-left-lg", null, false),
-      // ],
     })),
   ];
 }

@@ -9,7 +9,16 @@ const NilaiJualAsetSummaryPage = () => {
 
   return (
     <>
-      <HeaderComponent type="summary" listMenu={[]} disabledMenu={true} linkExport={""} />
+      <HeaderComponent
+        type="summary"
+        listMenu={[
+          {
+            description: "Export nilai jual",
+            disabled: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
+      />
 
       <FilterComponent
         onFinish={func.onFinish}

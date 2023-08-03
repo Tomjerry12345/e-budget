@@ -1,10 +1,11 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import { Button, Typography } from "antd";
+import { Button, Pagination, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
+import { Box } from "@mui/material";
 
 const LoadSaldoAwalPage = () => {
   const { value, func } = Logic();
@@ -35,7 +36,7 @@ const LoadSaldoAwalPage = () => {
       />
 
       <div className="custom-root-layout">
-        <div style={{ margin: "10px" }}>
+        <div style={{ margin: 16 }}>
           <div
             style={{
               overflowX: "auto",
@@ -45,7 +46,7 @@ const LoadSaldoAwalPage = () => {
             }}
           >
             <div
-              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              style={{ width: "100%", maxHeight: "calc(100vh - 329px)" }}
               className="liquidity-planner-app"
             >
               <ReactGrid
@@ -57,6 +58,17 @@ const LoadSaldoAwalPage = () => {
               />
             </div>
           </div>
+          {value.rows.length > 0 ? (
+            <Box display="flex" justifyContent="center">
+              <Pagination
+                defaultCurrent={1}
+                total={value.totalData}
+                pageSize={50}
+                showSizeChanger={false}
+                onChange={func.onChangePagination}
+              />
+            </Box>
+          ) : null}
         </div>
       </div>
     </>

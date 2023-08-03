@@ -25,37 +25,35 @@ export function getColumns() {
     {
       columnId: "purchase_month",
       width: 200,
-      type: "dropdown",
+      type: "number",
     },
     {
       columnId: "purchase_year",
       width: 200,
-      type: "dropdown",
+      type: "number",
     },
     {
       columnId: "depreciation_month",
       width: 200,
-      type: "dropdown",
+      type: "number",
     },
     {
       columnId: "depreciation_year",
       width: 200,
-      type: "dropdown",
+      type: "number",
     },
     {
       columnId: "asset_life",
       width: 200,
       type: "number",
-      format: false,
     },
     {
       columnId: "salvage_value",
       width: 200,
       type: "number",
-      format: false,
     },
     {
-      columnId: "quantity",
+      columnId: "total",
       width: 200,
       type: "number",
       format: true,
@@ -63,12 +61,14 @@ export function getColumns() {
     {
       columnId: "depreciation_amount_monthly",
       width: 200,
-      type: "dropdown",
+      type: "number",
+      format: true,
     },
     {
       columnId: "depreciation_amount_yearly",
       width: 200,
-      type: "dropdown",
+      type: "number",
+      format: true,
     },
     {
       columnId: "asset_account",

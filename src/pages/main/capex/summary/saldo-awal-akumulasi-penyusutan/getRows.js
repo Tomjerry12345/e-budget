@@ -24,11 +24,9 @@ function getGroupRows(groups) {
       cells: [
         ...getColumns().map((e) => {
           if (e.type === "text") {
-            return nonEditable(textCell(d[e.columnId] ?? "", "padding-left-lg"));
+            return textCell(d[e.columnId] ?? "", "padding-left-lg");
           } else if (e.type === "number") {
-            return nonEditable(
-              numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
-            );
+            return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false);
           }
         }),
       ],

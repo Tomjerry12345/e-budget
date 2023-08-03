@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -21,12 +17,11 @@ const Logic = () => {
   const columns = getColumns();
   const [rows, setRows] = useState([]);
   const [currData, setCurrData] = useState();
+  const [idChange, setIdChange] = useState(null);
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -55,7 +50,7 @@ const Logic = () => {
     );
   };
 
-  const onSetDataTable = (values) => {
+  const formatingFilter = (filter) => {
     const {
       code_company,
       code_dept,
@@ -64,7 +59,8 @@ const Logic = () => {
       code_project,
       code_icp,
       periode,
-    } = values;
+      status,
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
@@ -72,7 +68,6 @@ const Logic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
@@ -83,39 +78,33 @@ const Logic = () => {
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
-
-    setCodeFilter({
+    return {
       code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
       code_product: fCodeProduct,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode,
-    });
+      year: fPeriode,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeProduct,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
     try {
-      const { data } = await MainServices.get(url);
+      getData(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+
+    setCodeFilter(formatFilter);
+  };
+
+  const getData = async (params) => {
+    const url = `${ENDPOINT_URL}`;
+    try {
+      const { data } = await MainServices.get(url, params);
       let r, a;
       a = await generateObjectAttributes(data.data, [
         "thr_period",
@@ -129,6 +118,7 @@ const Logic = () => {
       });
       setRows(r);
       setCurrData(a);
+      setIdChange(data.data.id);
     } catch (error) {
       // Tangani error jika ada
       console.error(`Error fetching data for code account`, error);
@@ -142,18 +132,45 @@ const Logic = () => {
 
   // REFACTOR: func fetch api when using the dropdown cell and fetch api per type
   const onUpdateData = async (cell) => {
-    if (Object.keys(cell).length === 3) {
+    if (Object.keys(cell).length === 2) {
       try {
         const formData = new FormData();
-        for (var item in cell) {
-          formData.append(item, cell[item]);
-        }
-        const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
 
-        if (res.data.responseCode == 200) {
-          showNotif(200, "Sukses update data");
+        let res;
+
+        if (idChange === null) {
+          for (let item in codeFilter) {
+            formData.append(item, codeFilter[item]);
+          }
+
+          formData.append(cell.column_id, cell.value);
+
+          res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+
+          if (res.data.responseCode === 200) {
+            const id = res.data.data.id;
+            showNotif(200, "Sukses insert data");
+            log("id", id);
+            setIdChange(id);
+          } else {
+            showNotif(500, "Error");
+          }
         } else {
-          showNotif(500, "Error");
+          for (var item in cell) {
+            formData.append(item, cell[item]);
+          }
+
+          log({ idChange });
+
+          formData.append("id", idChange);
+
+          res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+
+          if (res.data.responseCode === 200) {
+            showNotif(200, "Sukses update data");
+          } else {
+            showNotif(500, "Error");
+          }
         }
       } catch (e) {
         log({ e });
@@ -165,45 +182,40 @@ const Logic = () => {
     let newRows = [...rows];
     changes.forEach((change) => {
       const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
-      const columnIndex = parseInt(
-        columns.findIndex((j) => j.columnId === change.columnId)
-      );
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
 
       const id = newRows[rowIndex].id;
-      const key = columnIndex == 1 ? "forecast" : "budget";
+      const key = columnIndex === 1 ? "forecast" : "budget";
       const column_id = newRows[rowIndex][key];
-
 
       if (change.type === "text") {
         prevDetails[column_id] = change.newCell.text;
         onUpdateData({
-          id,
+          id: idChange,
           column_id,
           value: change.newCell.text,
         });
       } else if (change.type === "number") {
         prevDetails[column_id] = change.newCell.value;
         onUpdateData({
-          id,
+          // id: idChange,
           column_id,
           value: change.newCell.value,
         });
       } else if (change.type === "checkbox") {
         prevDetails[column_id] = change.newCell.checked;
         onUpdateData({
-          id,
+          id: idChange,
           column_id,
           value: change.newCell.checked,
         });
       } else if (change.type === "dropdown") {
         let key = `is_${column_id}`;
-        if (
-          change.previousCell.selectedValue !== change.newCell.selectedValue
-        ) {
+        if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
           prevDetails[column_id] = change.newCell.selectedValue;
 
           onUpdateData({
-            id,
+            id: idChange,
             column_id,
             value: change.newCell.selectedValue,
           });
@@ -212,7 +224,7 @@ const Logic = () => {
         if (change.newCell.inputValue) {
           prevDetails[column_id] = change.newCell.inputValue;
           onUpdateData({
-            id,
+            id: idChange,
             column_id,
             value: change.newCell.inputValue,
           });

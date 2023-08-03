@@ -19,6 +19,7 @@ const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [totalData, setTotalData] = useState(0);
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
@@ -103,11 +104,10 @@ const Logic = () => {
 
     try {
       getData(formatFilter);
+      setCodeFilter(formatFilter);
     } catch (error) {
       console.error(`Error fetching data`, error);
     }
-
-    setCodeFilter(formatFilter);
   };
 
   const getData = async (params) => {
@@ -119,6 +119,7 @@ const Logic = () => {
       r = getRows({
         data: data.data.data,
       });
+      setTotalData(data.data.total);
     } else {
       r = fullNewRow({ id: generateUID() });
     }
@@ -255,6 +256,16 @@ const Logic = () => {
     }
   };
 
+  const onChangePagination = (page, pageSize) => {
+    log({ page });
+    log({ pageSize });
+    const uFilter = {
+      ...codeFilter,
+      page,
+    };
+    getData(uFilter);
+  };
+
   return {
     value: {
       columns,
@@ -264,12 +275,14 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
+      totalData,
     },
     func: {
       onFinish,
       onUploadFile,
       setUploadSucces,
       onChangeTable,
+      onChangePagination,
     },
   };
 };
