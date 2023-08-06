@@ -5,8 +5,9 @@ const numberFormat = new Intl.NumberFormat("de", {
   maximumFractionDigits: 2,
 });
 
-export const customCell = ({ widget }) => ({
+export const customCell = ({ text, widget }) => ({
   type: "text",
+  text,
   renderer: (text) => widget,
 });
 

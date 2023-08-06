@@ -12,6 +12,7 @@ const FilterComponentLogic = ({
   codeCompany,
   type,
   typeCompany,
+  typeFilter,
 }) => {
   const [state, setState] = useState({
     code_company: [],
@@ -150,11 +151,14 @@ const FilterComponentLogic = ({
   };
 
   const setProduct = (resProduct) => {
-    log("resProduct", resProduct);
     let data;
 
     if (type === "input") {
       data = resProduct.data.data.filter((item) => item.code !== "all");
+      if (typeFilter === "hpp-pendapatan") {
+        data.shift();
+        log("typeFilter", data);
+      }
     } else {
       data = resProduct.data.data;
     }
@@ -163,7 +167,6 @@ const FilterComponentLogic = ({
   };
 
   const setLocation = (resLocation) => {
-    log("resLocation", resLocation);
     let data;
 
     if (type === "input") {
@@ -175,8 +178,6 @@ const FilterComponentLogic = ({
   };
 
   const setDept = (resDept) => {
-    log("resDept", resDept);
-
     let data;
 
     if (type === "input") {
@@ -189,7 +190,6 @@ const FilterComponentLogic = ({
   };
 
   const setIcp = (resIcp) => {
-    log("resIcp", resIcp);
     let data;
 
     if (type === "input") {
@@ -201,7 +201,6 @@ const FilterComponentLogic = ({
   };
 
   const setProject = (resProject, c) => {
-    log("resProject", resProject);
     let data;
 
     if (type === "input") {

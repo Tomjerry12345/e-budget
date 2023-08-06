@@ -109,6 +109,7 @@ const HkPage = () => {
           codeCompany={perusahaan.code}
           form={form}
           disabled
+          typeFilter="hpp-pendapatan"
           typeCompany="static"
           variant="perusahaan"
         />

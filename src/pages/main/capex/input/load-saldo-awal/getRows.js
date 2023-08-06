@@ -114,10 +114,20 @@ function getGroupRows(groups) {
         nonEditable(numberCell(d["disposal_year"] ?? 0, "padding-left-lg", null, false)),
         nonEditable(numberCell(d["price"] ?? 0, "padding-left-lg")),
 
-        nonEditable(textCell(d["status"], "padding-left-lg")),
-        // nonEditable(
-        //   customCell({ widget: <Button className="btn-tambah-row">Tambah Data</Button> })
-        // ),
+        // {
+        //   type: "text",
+        //   text: "test",
+
+        //   renderer: (text) => <Button className="btn-tambah-row">Tambah Data</Button>,
+        // },
+
+        // nonEditable(textCell(d["status"], "padding-left-lg")),
+        nonEditable(
+          customCell({
+            text: d["status"],
+            widget: <Button className="btn-tambah-row">Tambah Data</Button>,
+          })
+        ),
       ],
     })),
   ];

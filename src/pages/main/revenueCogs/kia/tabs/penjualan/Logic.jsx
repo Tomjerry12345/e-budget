@@ -128,48 +128,50 @@ const Logic = () => {
     const newRows = [...rows[i].data];
     let isChange;
 
-    for (const c of change) {
-      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
+    try {
+      for (const c of change) {
+        const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        const columnIndex = columns[item.description].findIndex(
+          (j) => j.columnId === c.columnId
+        );
 
-      const type = newRows[rowIndex].cells[columnIndex].type;
-      const length = newRows.length;
+        const type = newRows[rowIndex].cells[columnIndex].type;
+        const length = newRows.length;
 
-      let value;
+        let value;
 
-      if (type === "text") {
-        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
-      } else {
-        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-        value = c.newCell.value;
-
-        value = c.newCell.value;
-        if (!isNaN(value)) {
-          newRows[rowIndex].cells[columnIndex].value = value;
-
-          let total1 = 0;
-          let total2 = 0;
-
-          const newCell = newRows[rowIndex].cells.map((e, j) => {
-            if (j >= 2 && j <= 13) total1 += e.value;
-            if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 26) total2 += e.value;
-            if (j === 27) e.value = total2;
-            return e;
-          });
-
-          newRows[rowIndex].cells = newCell;
-
+        if (type === "text") {
+          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
           isChange = true;
         } else {
-          isChange = false;
-        }
-      }
+          newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
+          value = c.newCell.value;
 
-      if (isChange) {
-        try {
+          value = c.newCell.value;
+          if (!isNaN(value)) {
+            newRows[rowIndex].cells[columnIndex].value = value;
+
+            let total1 = 0;
+            let total2 = 0;
+
+            const newCell = newRows[rowIndex].cells.map((e, j) => {
+              if (j >= 2 && j <= 13) total1 += e.value;
+              if (j === 14) e.value = total1;
+              if (j >= 15 && j <= 26) total2 += e.value;
+              if (j === 27) e.value = total2;
+              return e;
+            });
+
+            newRows[rowIndex].cells = newCell;
+
+            isChange = true;
+          } else {
+            isChange = false;
+          }
+        }
+
+        if (isChange) {
           let formData = new FormData();
 
           const id = c.rowId;
@@ -256,18 +258,20 @@ const Logic = () => {
               );
             }
 
-            if (i === 2 || i === 5) {
-              const lengthStockAkhir = fullRows[6].data.length;
-              const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+            // Penjualan
+
+            if (i === 4 || i === 5) {
+              const lengthPenjualan = fullRows[6].data.length;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
               const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
 
               fullRows[6].data[rowIndex].cells[columnIndex].value =
-                hargaBeliUnit * hargaJualUnit;
+                asumsiUnitJual * hargaJualUnit;
 
               let total1 = 0;
               let total2 = 0;
 
-              const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
+              const newCellPenjualan = fullRows[6].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
                 if (j >= 15 && j <= 26) total2 += e.value;
@@ -275,21 +279,43 @@ const Logic = () => {
                 return e;
               });
 
-              fullRows[6].data[rowIndex].cells = newCellStockAkhir;
+              fullRows[6].data[rowIndex].cells = newCellPenjualan;
 
-              fullRows[6].data[lengthStockAkhir - 1] = updateTotalRow(
+              fullRows[6].data[lengthPenjualan - 1] = updateTotalRow(
                 fullRows[6].data,
                 item.description
               );
             }
+
+            if (i === 7) {
+              const length = fullRows[7].data.length;
+              const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+
+              fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
+                vPenjualan * (value / 100);
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
+
+              fullRows[7].data[rowIndex].cells = newCellPotonganPenjualan;
+
+              fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
+            }
           }
-        } catch (e) {
-          log({ e });
         }
       }
+    } catch (e) {
+      log({ e });
+      showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    showNotif(dispatch, { status: 200, message: "Sukses update data" });
 
     fullRows[i].data = newRows;
 
