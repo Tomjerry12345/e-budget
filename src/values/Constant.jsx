@@ -943,3 +943,57 @@ export const getMonthName = () => {
   ];
   return listMonth;
 };
+
+
+export const getMonthPrefix = () => {
+  return [
+    {
+      value: "1",
+      key: "jan_rates",
+    },
+    {
+      value: "2",
+      key: "feb_rates",
+    },
+    {
+      value: "3",
+      key: "mar_rates",
+    },
+    {
+      value: "4",
+      key: "apr_rates",
+    },
+    {
+      value: "5",
+      key: "mei_rates",
+    },
+    {
+      value: "6",
+      key: "jun_rates",
+    },
+    {
+      value: "7",
+      key: "jul_rates",
+    },
+    {
+      value: "8",
+      key: "agu_rates",
+    },
+    {
+      value: "9",
+      key: "sep_rates",
+    },
+    {
+      value: "10",
+      key: "okt_rates",
+    },
+    {
+      value: "11",
+      key: "nov_rates",
+    },
+    {
+      value: "12",
+      key: "des_rates",
+    },
+  ];
+};

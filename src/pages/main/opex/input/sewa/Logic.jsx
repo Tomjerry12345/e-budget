@@ -15,7 +15,7 @@ import {
   updateTotalRow,
 } from "./getRows";
 
-const Logic = () => {
+const LogicOld = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
@@ -458,4 +458,4 @@ const Logic = () => {
   };
 };
 
-export default Logic;
+export default LogicOld;
