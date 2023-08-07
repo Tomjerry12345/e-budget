@@ -6,6 +6,7 @@ import {
   numberCell,
   totalCell,
   dropDownCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
 import { getMonthDuration, getMonthName } from "values/Constant";
@@ -121,15 +122,9 @@ function getGroupRows(groups) {
         numberCell(d["rates"] ?? 0, "padding-left-lg"),
         nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
         // numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
-        dropDownCell(
-          getMonthDuration(),
-          d["month_duration"] ?? 0,
+        dropDownCustomCell(d["month_duration"], getMonthDuration(), d['is_month_duration']),
 
-          "padding-left-lg",
-          null,
-          false
-        ),
-        numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
+        dropDownCustomCell(d["month_start"], getMonthName(), d['is_month_start']),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
