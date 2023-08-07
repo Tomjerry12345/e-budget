@@ -125,6 +125,7 @@ function getGroupRows(groups) {
         nonEditable(
           customCell({
             text: d["status"],
+            className: "justify-content-center",
             widget: <Button className="btn-tambah-row">Tambah Data</Button>,
           })
         ),
