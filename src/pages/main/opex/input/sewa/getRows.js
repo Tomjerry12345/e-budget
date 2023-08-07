@@ -1,3 +1,4 @@
+import { getMonthDuration, getMonthName } from "values/Constant";
 import {
   nonEditable,
   textCell,
@@ -5,6 +6,7 @@ import {
   rootHeaderCell,
   numberCell,
   totalCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, log } from "values/Utilitas";
 
@@ -118,11 +120,11 @@ function getGroupRows(groups) {
         numberCell(d["unit"], "padding-left-lg", null, false),
         numberCell(d["rates"], "padding-left-lg"),
         nonEditable(numberCell(d["total"], "padding-left-lg")),
-        numberCell(d["month_duration"] ?? 0, "padding-left-lg", null, false),
+        dropDownCustomCell(d["month_duration"] ?? "", getMonthDuration(), d['is_month_duration']),
 
         textCell(d["pay_type"] ?? "", "padding-left-lg"),
 
-        numberCell(d["month_start"] ?? 0, "padding-left-lg", null, false),
+        dropDownCustomCell(d["month_start"] ?? "", getMonthName(), d['is_month_start']),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
@@ -200,11 +202,11 @@ export function reactgridNewRow(id) {
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      dropDownCustomCell("", getMonthDuration(), 'is_month_duration'),
 
       nonEditable(textCell("", "padding-left-lg")),
 
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      dropDownCustomCell("", getMonthName(), 'is_month_start'),
       nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),

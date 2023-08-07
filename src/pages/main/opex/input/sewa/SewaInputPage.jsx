@@ -3,7 +3,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import Logic from "./Logic";
+import Logic from "./Logic copy";
 import { constantExcellFile } from "values/Constant";
 
 const SewaInputPage = () => {
@@ -35,7 +35,7 @@ const SewaInputPage = () => {
 
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: "10px" }} key={Math.random()}>
                 <div
                   style={{
                     display: "flex",
@@ -84,7 +84,7 @@ const SewaInputPage = () => {
 
         {value.rows.administrasi.length > 0
           ? value.rows.administrasi.map((e, i) => (
-              <div style={{ margin: "10px" }}>
+              <div style={{ margin: "10px" }} key={i + Math.random()}>
                 <div
                   style={{
                     display: "flex",
