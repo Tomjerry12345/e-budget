@@ -19,6 +19,7 @@ const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [dataPenjualan, setDataPenjualan] = useState();
 
   const columns = getColumns;
   const [rows, setRows] = useState();
@@ -49,10 +50,18 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
+    const {
+      code_company,
+      code_product,
+      code_dept,
+      code_location,
+      code_project,
+      code_icp,
+      periode,
+    } = values;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
+    let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
@@ -61,19 +70,29 @@ const Logic = () => {
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0];
     fCodeLocation = fCodeLocation[0];
     fCodeDept = fCodeDept[0];
     fCodeIcp = fCodeIcp[0];
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
+    getData(
+      fCodeCompany,
+      fCodeProduct,
+      fCodeLocation,
+      fCodeDept,
+      fCodeIcp,
+      fCodeProject,
+      fPeriode
+    );
 
     setCodeFilter(values);
   };
 
   const getData = async (
     codeCompany,
+    codeProduct,
     codeLocation,
     codeDept,
     codeIcp,
@@ -85,7 +104,7 @@ const Logic = () => {
     await Promise.allSettled(
       urlRevenue[keyRevenueTab[1]].map(async (p, i) => {
         const desc = p.description;
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
         try {
           const { data } = await MainServices.get(url);
           let r;
@@ -114,9 +133,14 @@ const Logic = () => {
         }
       })
     );
-    dispatch(actionData({ sizeDataRevenue: 1 }));
 
-    log({ listRows });
+    const url = `detailrevenue/selling/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+
+    const { data } = await MainServices.get(url);
+    const fData = data.data.filter((d) => d.product_code === codeProduct);
+    log("penjualan", fData);
+    dispatch(actionData({ sizeDataRevenue: 1 }));
+    setDataPenjualan(fData);
     setRows(listRows);
   };
 
@@ -130,48 +154,50 @@ const Logic = () => {
     const newRows = [...rows[i].data];
     let isChange;
 
-    for (const c of change) {
-      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
+    try {
+      for (const c of change) {
+        const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        const columnIndex = columns[item.description].findIndex(
+          (j) => j.columnId === c.columnId
+        );
 
-      const type = newRows[rowIndex].cells[columnIndex].type;
-      const length = newRows.length;
+        const type = newRows[rowIndex].cells[columnIndex].type;
+        const length = newRows.length;
 
-      let value;
+        let value;
 
-      if (type === "text") {
-        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
-      } else {
-        newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-        value = c.newCell.value;
-
-        value = c.newCell.value;
-        if (!isNaN(value)) {
-          newRows[rowIndex].cells[columnIndex].value = value;
-
-          let total1 = 0;
-          let total2 = 0;
-
-          const newCell = newRows[rowIndex].cells.map((e, j) => {
-            if (j >= 2 && j <= 13) total1 += e.value;
-            if (j === 14) e.value = total1;
-            if (j >= 15 && j <= 26) total2 += e.value;
-            if (j === 27) e.value = total2;
-            return e;
-          });
-
-          newRows[rowIndex].cells = newCell;
-
+        if (type === "text") {
+          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
           isChange = true;
         } else {
-          isChange = false;
-        }
-      }
+          newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
+          value = c.newCell.value;
 
-      if (isChange) {
-        try {
+          value = c.newCell.value;
+          if (!isNaN(value)) {
+            newRows[rowIndex].cells[columnIndex].value = value;
+
+            let total1 = 0;
+            let total2 = 0;
+
+            const newCell = newRows[rowIndex].cells.map((e, j) => {
+              if (j >= 2 && j <= 13) total1 += e.value;
+              if (j === 14) e.value = total1;
+              if (j >= 15 && j <= 26) total2 += e.value;
+              if (j === 27) e.value = total2;
+              return e;
+            });
+
+            newRows[rowIndex].cells = newCell;
+
+            isChange = true;
+          } else {
+            isChange = false;
+          }
+        }
+
+        if (isChange) {
           let formData = new FormData();
 
           const id = c.rowId;
@@ -238,93 +264,43 @@ const Logic = () => {
           newRows[length - 1] = updateTotalRow(newRows, item.description);
           log("newRows", newRows);
 
-          // stok akhir
-          // if (type === "number") {
-          //   if (i === 0 || i === 1 || i === 4) {
-          //     const lengthStockAkhir = fullRows[3].data.length;
-          //     const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
-          //     const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-          //     const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+          // hpp variabel
+          if (type === "number") {
+            if (i === 1) {
+              const lengthHppVariabel = fullRows[1].data.length;
 
-          //     fullRows[3].data[rowIndex].cells[columnIndex].value =
-          //       stockAwal + asumsiUnitBeli - asumsiUnitJual;
+              const sColumnId = c.columnId;
+              const vPenjualan = dataPenjualan[0][`${sColumnId}_p`];
 
-          //     let total1 = 0;
-          //     let total2 = 0;
+              fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
+                vPenjualan * (value / 100);
 
-          //     const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
-          //       if (j >= 2 && j <= 13) total1 += e.value;
-          //       if (j === 14) e.value = total1;
-          //       if (j >= 15 && j <= 26) total2 += e.value;
-          //       if (j === 27) e.value = total2;
-          //       return e;
-          //     });
+              let total1 = 0;
+              let total2 = 0;
 
-          //     fullRows[3].data[rowIndex].cells = newCellStockAkhir;
+              const newCellHppVariable = fullRows[1].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
 
-          //     fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
-          //       fullRows[3].data,
-          //       item.description
-          //     );
-          //   }
+              fullRows[1].data[rowIndex].cells = newCellHppVariable;
 
-          //   if (i === 2 || i === 5) {
-          //     const lengthStockAkhir = fullRows[6].data.length;
-          //     const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
-          //     const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
-
-          //     fullRows[6].data[rowIndex].cells[columnIndex].value =
-          //       hargaBeliUnit * hargaJualUnit;
-
-          //     let total1 = 0;
-          //     let total2 = 0;
-
-          //     const newCellStockAkhir = fullRows[6].data[rowIndex].cells.map((e, j) => {
-          //       if (j >= 2 && j <= 13) total1 += e.value;
-          //       if (j === 14) e.value = total1;
-          //       if (j >= 15 && j <= 26) total2 += e.value;
-          //       if (j === 27) e.value = total2;
-          //       return e;
-          //     });
-
-          //     fullRows[6].data[rowIndex].cells = newCellStockAkhir;
-
-          //     fullRows[6].data[lengthStockAkhir - 1] = updateTotalRow(
-          //       fullRows[6].data,
-          //       item.description
-          //     );
-          //   }
-
-          //   if (i === 7) {
-          //     const length = fullRows[7].data.length;
-          //     const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
-
-          //     fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
-          //       vPenjualan * (value / 100);
-
-          //     let total1 = 0;
-          //     let total2 = 0;
-
-          //     const newCellStockAkhir = fullRows[7].data[rowIndex].cells.map((e, j) => {
-          //       if (j >= 2 && j <= 13) total1 += e.value;
-          //       if (j === 14) e.value = total1;
-          //       if (j >= 15 && j <= 26) total2 += e.value;
-          //       if (j === 27) e.value = total2;
-          //       return e;
-          //     });
-
-          //     fullRows[7].data[rowIndex].cells = newCellStockAkhir;
-
-          //     fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
-          //   }
-          // }
-        } catch (e) {
-          log({ e });
+              fullRows[1].data[lengthHppVariabel - 1] = updateTotalRow(
+                fullRows[1].data,
+                item.description
+              );
+            }
+          }
         }
       }
+      showNotif(dispatch, { status: 200, message: "Sukses update data" });
+    } catch (e) {
+      log({ e });
+      showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    showNotif(dispatch, { status: 200, message: "Sukses update data" });
 
     fullRows[i].data = newRows;
 
@@ -336,6 +312,7 @@ const Logic = () => {
     dispatch(actionImport({ loading: false }));
     dispatch(resetTypeRevenueImport());
   };
+
   const onUploadFile = async (file) => {
     dispatch(
       actionImport({

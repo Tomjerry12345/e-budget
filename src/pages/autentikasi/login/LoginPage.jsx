@@ -7,7 +7,6 @@ import logo from "../../../assets/img/logo.png";
 import LoginLogic from "./LoginLogic";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import ilustrasi from "../../../assets/img/ilustrasi.svg";
-import { Helmet } from "react-helmet";
 
 const LoginPage = () => {
   const { value, func } = LoginLogic();
@@ -16,15 +15,6 @@ const LoginPage = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>Test</title>
-        <meta property="og:title" content="luffy" />
-        <meta property="og:description" content="adakah" />
-        <meta
-          property="og:image"
-          content="https://i.pinimg.com/originals/e6/36/a6/e636a664f860a1ec9f7b5f3c4e2f634b.jpg"
-        />
-      </Helmet>
       <Layout className="custom-layout-root">
         <Row gutter={16} className="custom-row">
           <Col

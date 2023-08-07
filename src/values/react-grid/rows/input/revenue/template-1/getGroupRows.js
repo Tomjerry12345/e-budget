@@ -223,6 +223,50 @@ function type5(data) {
   ];
 }
 
+function type6(data) {
+  return [
+    ...data.map((d) => ({
+      rowId: d["id"] ?? generateUID(),
+
+      newRow: d["id"] === null,
+      height: ROW_HEIGHT,
+      cells: [
+        textCell(d["code_account"], "padding-left-lg"),
+        textCell(d["description"], "padding-left-lg"),
+
+        nonEditable(numberCell(d["jan_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["jan"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["feb_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["feb"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["mar_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["mar"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["apr_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["apr"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["mei_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["mei"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["jun_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["jun"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["jul_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["jul"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["agu_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["agu"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["sep_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["sep"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["okt_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["okt"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["nov_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["nov"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["des_sd"] ?? 0, "padding-left-lg")),
+        numberCell(d["des"] ?? 0, "padding-left-lg"),
+
+        nonEditable(numberCell(d["total_1"] ?? 0, "padding-left-lg")),
+
+        nonEditable(numberCell(d["total_2"] ?? 0, "padding-left-lg")),
+      ],
+    })),
+  ];
+}
+
 export const getGroupRows = (data, key) => {
   const l = {
     "Stok Awal": type1(data),
@@ -237,7 +281,7 @@ export const getGroupRows = (data, key) => {
     Penjualan: type2(data),
     "Potongan penjualan": type4(data),
     "Pendapatan Operasional Lainnya": type5(data),
-    "HPP Variable": type5(data),
+    "HPP Variable": type6(data),
     "HPP Lainnya": type5(data),
   };
   return l[key];

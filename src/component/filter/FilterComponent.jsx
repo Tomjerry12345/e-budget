@@ -111,6 +111,7 @@ const FilterComponent = ({
   variant,
   type = "summary",
   typeCompany = "change",
+  typeFilter
 }) => {
   const company = getLocal("code_company");
   const usersGroup = getLocal("user_group");
@@ -128,6 +129,7 @@ const FilterComponent = ({
     type: type,
     typeCompany: usersGroup === "usersbu" ? "static" : typeCompany,
     codeCompany,
+    typeFilter
   });
 
   return (
