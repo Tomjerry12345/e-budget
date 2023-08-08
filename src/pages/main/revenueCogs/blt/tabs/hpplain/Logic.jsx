@@ -14,6 +14,7 @@ import {
 } from "values/react-grid/rows/input/revenue/template-1/getRows";
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
+import { tableList } from "../../TableConstant";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -102,7 +103,7 @@ const Logic = () => {
     const listRows = [];
 
     await Promise.allSettled(
-      urlRevenue[keyRevenueTab[1]].map(async (p, i) => {
+      tableList[keyRevenueTab[1]].map(async (p, i) => {
         const desc = p.description;
         const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
         try {
@@ -262,15 +263,19 @@ const Logic = () => {
 
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
-          log("newRows", newRows);
+          fullRows[i].data = newRows;
 
           // hpp variabel
           if (type === "number") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
-              const sColumnId = c.columnId;
-              const vPenjualan = dataPenjualan[0][`${sColumnId}_p`];
+              const sColumnId = c.columnId.split("_");
+              log("sColumnId length", sColumnId.length);
+              const vPenjualan =
+                dataPenjualan[0][
+                  sColumnId.length > 1 ? `${sColumnId[0]}_${sColumnId[1]}` : `${sColumnId[0]}`
+                ];
 
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
@@ -297,14 +302,11 @@ const Logic = () => {
         }
       }
       showNotif(dispatch, { status: 200, message: "Sukses update data" });
+      setRows(fullRows);
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
   };
 
   const onSuccess = () => {

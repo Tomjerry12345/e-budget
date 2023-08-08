@@ -28,9 +28,9 @@ export const TOTAL_DATA = {
   Tarif: 26,
   "Asumsi trip": 26,
   Penjualan: 26,
-  "Potongan penjualan": 26,
+  "Potongan penjualan": 50,
   "Pendapatan Operasional Lainnya": 26,
-  "HPP Variable": 26,
+  "HPP Variable": 50,
   "HPP Lainnya": 26,
 };
 

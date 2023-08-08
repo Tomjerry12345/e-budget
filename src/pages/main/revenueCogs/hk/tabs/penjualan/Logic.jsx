@@ -228,18 +228,19 @@ const Logic = () => {
 
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
-          log("newRows", newRows);
+
+          fullRows[i].data = newRows;
 
           // stok akhir
           if (type === "number") {
-            if (i === 0 || i === 1 || i === 4) {
+            if (i === 0 || i === 1 || i === 2) {
               const lengthStockAkhir = fullRows[3].data.length;
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli - asumsiUnitJual;
+                stockAwal + asumsiUnitBeli - hargaBeliUnit;
 
               let total1 = 0;
               let total2 = 0;
@@ -314,14 +315,14 @@ const Logic = () => {
           }
         }
       }
+
+      setRows(fullRows);
+
+      showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
   };
 
   const onSuccess = () => {

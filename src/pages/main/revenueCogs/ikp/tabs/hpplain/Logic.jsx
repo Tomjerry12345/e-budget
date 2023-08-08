@@ -263,14 +263,19 @@ const Logic = () => {
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
           log("newRows", newRows);
+          fullRows[i].data = newRows;
 
           // hpp variabel
           if (type === "number") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
-              const sColumnId = c.columnId;
-              const vPenjualan = dataPenjualan[0][`${sColumnId}_p`];
+              const sColumnId = c.columnId.split("_");
+              log("sColumnId length", sColumnId.length);
+              const vPenjualan =
+                dataPenjualan[0][
+                  sColumnId.length > 1 ? `${sColumnId[0]}_${sColumnId[1]}` : `${sColumnId[0]}`
+                ];
 
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
@@ -296,15 +301,12 @@ const Logic = () => {
           }
         }
       }
+      setRows(fullRows);
       showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
   };
 
   const onSuccess = () => {

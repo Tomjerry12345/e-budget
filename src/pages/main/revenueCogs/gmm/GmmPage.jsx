@@ -113,6 +113,7 @@ const GmmPage = () => {
           disabled
           typeCompany="static"
           variant="perusahaan"
+          typeFilter="hpp-pendapatan"
         />
 
         <div style={{ marginTop: 16 }}>

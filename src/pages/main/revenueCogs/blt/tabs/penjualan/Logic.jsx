@@ -114,8 +114,10 @@ const Logic = () => {
         }
       })
     );
+
     dispatch(actionData({ sizeDataRevenue: 1 }));
 
+    log({ listRows });
     setRows(listRows);
   };
 
@@ -227,18 +229,19 @@ const Logic = () => {
 
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
-          log("newRows", newRows);
+
+          fullRows[i].data = newRows;
 
           // stok akhir
           if (type === "number") {
-            if (i === 0 || i === 1 || i === 4) {
+            if (i === 0 || i === 1 || i === 2) {
               const lengthStockAkhir = fullRows[3].data.length;
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const hargaBeliPerUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli - asumsiUnitJual;
+                stockAwal + asumsiUnitBeli - hargaBeliPerUnit;
 
               let total1 = 0;
               let total2 = 0;
@@ -261,18 +264,18 @@ const Logic = () => {
 
             // Penjualan
 
-            if (i === 4 || i === 5) {
-              const lengthPenjualan = fullRows[6].data.length;
-              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
-              const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
+            if (i === 4 || i === 5 || i === 6) {
+              const lengthPenjualan = fullRows[7].data.length;
+              const asumsiTrip = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const volume = fullRows[5].data[rowIndex].cells[columnIndex].value;
+              const tarif = fullRows[6].data[rowIndex].cells[columnIndex].value;
 
-              fullRows[6].data[rowIndex].cells[columnIndex].value =
-                asumsiUnitJual * hargaJualUnit;
+              fullRows[7].data[rowIndex].cells[columnIndex].value = asumsiTrip * volume * tarif;
 
               let total1 = 0;
               let total2 = 0;
 
-              const newCellPenjualan = fullRows[6].data[rowIndex].cells.map((e, j) => {
+              const newCellPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
                 if (j >= 15 && j <= 26) total2 += e.value;
@@ -280,25 +283,25 @@ const Logic = () => {
                 return e;
               });
 
-              fullRows[6].data[rowIndex].cells = newCellPenjualan;
+              fullRows[7].data[rowIndex].cells = newCellPenjualan;
 
-              fullRows[6].data[lengthPenjualan - 1] = updateTotalRow(
-                fullRows[6].data,
+              fullRows[7].data[lengthPenjualan - 1] = updateTotalRow(
+                fullRows[7].data,
                 item.description
               );
             }
 
-            if (i === 7) {
-              const length = fullRows[7].data.length;
-              const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+            if (i === 8) {
+              const length = fullRows[8].data.length;
+              const vPenjualan = fullRows[7].data[rowIndex].cells[columnIndex - 1].value;
 
-              fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
+              fullRows[8].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
 
               let total1 = 0;
               let total2 = 0;
 
-              const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
+              const newCellPotonganPenjualan = fullRows[8].data[rowIndex].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
                 if (j >= 15 && j <= 26) total2 += e.value;
@@ -306,21 +309,21 @@ const Logic = () => {
                 return e;
               });
 
-              fullRows[7].data[rowIndex].cells = newCellPotonganPenjualan;
+              fullRows[8].data[rowIndex].cells = newCellPotonganPenjualan;
 
-              fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
+              fullRows[8].data[length - 1] = updateTotalRow(fullRows[8].data, item.description);
             }
           }
         }
       }
+
+      setRows(fullRows);
+
+      showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
   };
 
   const onSuccess = () => {
@@ -357,11 +360,13 @@ const Logic = () => {
     const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
     const index = rows.findIndex((item) => item.description === desc);
+
     const endpoint = rows[index].endpoint;
 
     let formData = new FormData();
 
     formData.append("file", file);
+
     formData.append("code_company", fCodeCompany);
     formData.append("code_location", fCodeLocation);
     formData.append("code_department", fCodeDept);
@@ -375,6 +380,7 @@ const Logic = () => {
 
       const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
+      console.log("first stock : ", data);
 
       let r = getRows({
         header: getHeaderRow[desc],
@@ -391,6 +397,7 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
+        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
@@ -405,6 +412,7 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
+        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,

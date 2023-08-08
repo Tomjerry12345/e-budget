@@ -6,6 +6,7 @@ import { actionImport, resetDataActionImport } from "redux/action/action.reducer
 import MainServices from "services/MainServices";
 import { log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
+import { keyRevenueTab, urlRevenue } from "values/Constant";
 import {
   fullNewRow,
   getRows,
@@ -14,7 +15,6 @@ import {
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
 import { tableList } from "../../TableConstant";
-import { keyRevenueTab } from "values/Constant";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -114,6 +114,7 @@ const Logic = () => {
         }
       })
     );
+
     dispatch(actionData({ sizeDataRevenue: 1 }));
 
     log({ listRows });
@@ -228,18 +229,19 @@ const Logic = () => {
 
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
-          log("newRows", newRows);
+
+          fullRows[i].data = newRows;
 
           // stok akhir
           if (type === "number") {
-            if (i === 0 || i === 1 || i === 4) {
+            if (i === 0 || i === 1 || i === 2) {
               const lengthStockAkhir = fullRows[3].data.length;
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli - asumsiUnitJual;
+                stockAwal + asumsiUnitBeli - hargaBeliUnit;
 
               let total1 = 0;
               let total2 = 0;
@@ -264,11 +266,10 @@ const Logic = () => {
 
             if (i === 4 || i === 5) {
               const lengthPenjualan = fullRows[6].data.length;
-              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
-              const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
+              const volume = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const tarif = fullRows[5].data[rowIndex].cells[columnIndex].value;
 
-              fullRows[6].data[rowIndex].cells[columnIndex].value =
-                asumsiUnitJual * hargaJualUnit;
+              fullRows[6].data[rowIndex].cells[columnIndex].value = volume * tarif;
 
               let total1 = 0;
               let total2 = 0;
@@ -314,14 +315,14 @@ const Logic = () => {
           }
         }
       }
+
+      setRows(fullRows);
+
+      showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    fullRows[i].data = newRows;
-
-    setRows(fullRows);
   };
 
   const onSuccess = () => {
@@ -358,11 +359,13 @@ const Logic = () => {
     const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
     const index = rows.findIndex((item) => item.description === desc);
+
     const endpoint = rows[index].endpoint;
 
     let formData = new FormData();
 
     formData.append("file", file);
+
     formData.append("code_company", fCodeCompany);
     formData.append("code_location", fCodeLocation);
     formData.append("code_department", fCodeDept);
@@ -376,6 +379,7 @@ const Logic = () => {
 
       const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
       const { data } = await MainServices.get(url);
+      console.log("first stock : ", data);
 
       let r = getRows({
         header: getHeaderRow[desc],
@@ -392,6 +396,7 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
+        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
@@ -406,6 +411,7 @@ const Logic = () => {
         const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
         const { data } = await MainServices.get(urlLastStock);
 
+        console.log("last stock : ", data);
         r = getRows({
           header: getHeaderRow[desc],
           data: data.data,
