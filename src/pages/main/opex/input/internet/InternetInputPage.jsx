@@ -3,7 +3,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import Logic from "./Logic";
+import Logic from "./Logic copy";
 import { constantExcellFile } from "values/Constant";
 
 const InternetInputPage = () => {
@@ -46,7 +46,7 @@ const InternetInputPage = () => {
                   <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
                   <Button
                     className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, "pemasaran")}
+                    onClick={() => func.onAddRow(i, "pemasaran")}
                   >
                     Tambah Data
                   </Button>
@@ -95,7 +95,7 @@ const InternetInputPage = () => {
                   <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
                   <Button
                     className="btn-tambah-row"
-                    onClick={() => func.onTambahRow(i, "administrasi")}
+                    onClick={() => func.onAddRow(i, "administrasi")}
                   >
                     Tambah Data
                   </Button>

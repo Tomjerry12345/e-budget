@@ -222,7 +222,7 @@ const Logic = () => {
             if (a.length) {
               onUpdateEmpty(a[0]);
             }
-            
+
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
@@ -263,7 +263,7 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const onTambahRow = async (i, category) => {
+  const onAddRow = async (i, category) => {
     let lastCurrData = { ...emptyObj };
     const lastArray = { ...currData }[category][i];
     const newArray = [...lastArray, lastCurrData];
@@ -328,7 +328,7 @@ const Logic = () => {
       formData.append("code_icp", code_icp);
       formData.append("year", periode);
       formData.append("name", value);
-      formData.append("type", "keamanan");
+      formData.append("type", "internet");
       const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
       if (res.data.responseCode == 200) {
@@ -365,78 +365,80 @@ const Logic = () => {
       const fieldName = change.columnId;
       let dataRow = prevDetails.find((d) => d.id === dataRowId);
 
-      if (!dataRowId && change.newCell.text) {
-        // is new row
-        dataRow[fieldName] = change.newCell.text;
-        onInsertData(change.newCell.text, i, category);
-      }
-
-      if (!dataRow) {
-        dataRow = generateObjectAttributes(prevDetails);
-        prevDetails.push(dataRow);
-      }
-
-      if (change.type === "text") {
-        dataRow[fieldName] = change.newCell.text;
-        onUpdateData({
-          id: dataRow.id,
-          column_id: fieldName,
-          value: change.newCell.text,
-          type: "keamanan",
-        });
-      } else if (change.type === "number") {
-        let value = change.newCell.value;
-        dataRow[fieldName] = value;
-
-        onUpdateData({
-          id: dataRow.id,
-          column_id: fieldName,
-          value,
-          type: "keamanan",
-        });
-      } else if (change.type === "checkbox") {
-        dataRow[fieldName] = change.newCell.checked;
-        onUpdateData({
-          id: dataRow.id,
-          column_id: fieldName,
-          value: change.newCell.checked,
-          type: "keamanan",
-        });
-      } else if (change.type === "dropdown") {
-        let key = `is_${fieldName}`;
-        if (
-          change.previousCell.selectedValue !== change.newCell.selectedValue
-        ) {
-          dataRow[fieldName] = change.newCell.selectedValue;
-
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value: change.newCell.selectedValue,
-            type: "keamanan",
-          });
+      if (!dataRowId) {
+        if (change.newCell.text) {
+          // is new row
+          dataRow[fieldName] = change.newCell.text;
+          onInsertData(change.newCell.text, i, category);
         }
-
-        if (change.newCell.inputValue) {
-          dataRow[fieldName] = change.newCell.inputValue;
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value: change.newCell.inputValue,
-            type: "keamanan",
-          });
-        }
-
-        // CHANGED: set the isOpen property to the value received.
-        dataRow[key] = change.newCell.isOpen;
       } else {
-        log("ERROR", dataRow[fieldName]);
+        if (!dataRow) {
+          dataRow = generateObjectAttributes(prevDetails);
+          prevDetails.push(dataRow);
+        }
+
+        if (change.type === "text") {
+          dataRow[fieldName] = change.newCell.text;
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.text,
+            type: "internet",
+          });
+        } else if (change.type === "number") {
+          let value = change.newCell.value;
+          dataRow[fieldName] = value;
+
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value,
+            type: "internet",
+          });
+        } else if (change.type === "checkbox") {
+          dataRow[fieldName] = change.newCell.checked;
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.checked,
+            type: "internet",
+          });
+        } else if (change.type === "dropdown") {
+          let key = `is_${fieldName}`;
+          if (
+            change.previousCell.selectedValue !== change.newCell.selectedValue
+          ) {
+            dataRow[fieldName] = change.newCell.selectedValue;
+
+            onUpdateData({
+              id: dataRow.id,
+              column_id: fieldName,
+              value: change.newCell.selectedValue,
+              type: "internet",
+            });
+          }
+
+          if (change.newCell.inputValue) {
+            dataRow[fieldName] = change.newCell.inputValue;
+            onUpdateData({
+              id: dataRow.id,
+              column_id: fieldName,
+              value: change.newCell.inputValue,
+              type: "internet",
+            });
+          }
+
+          // CHANGED: set the isOpen property to the value received.
+          dataRow[key] = change.newCell.isOpen;
+        } else {
+          log("ERROR", dataRow[fieldName]);
+        }
       }
 
       let duration = parseInt(dataRow["month_duration"]);
       let start = parseInt(dataRow["month_start"]);
 
-      let total = dataRow["amount"] * dataRow["rates"];
+      let total = duration * dataRow["rates"];
       dataRow["total"] = total;
 
       let range;
@@ -579,7 +581,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
-    formData.append("type", "keamanan");
+    formData.append("type", "internet");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -642,7 +644,7 @@ const Logic = () => {
       onUploadFile,
       setUploadSucces,
       onChangeTable,
-      onTambahRow,
+      onAddRow,
     },
   };
 };

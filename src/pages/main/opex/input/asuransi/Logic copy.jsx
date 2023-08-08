@@ -225,6 +225,10 @@ const Logic = () => {
               "month_start",
             ]);
 
+            if (a.length) {
+              onUpdateEmpty(a[0]);
+            }
+
             if (data.data.length > 0) {
               // let tmp1 = [];
               // for (let x = 0; x < data.data.length; x++) tmp1.push(false);

@@ -219,6 +219,10 @@ const Logic = () => {
               "month_start",
             ]);
 
+            if (a.length) {
+              onUpdateEmpty(a[0]);
+            }
+
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
