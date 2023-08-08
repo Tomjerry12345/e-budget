@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,8 +7,8 @@ import {
   val,
 } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import {
@@ -32,6 +32,8 @@ const Logic = () => {
   const [uploadSucces, setUploadSucces] = useState(null);
   const [emptyObj, setEmptyObj] = useState();
 
+  const numFunctionRunning = useRef(0);
+
   const [items, setItems] = useState({
     pemasaran: [],
     administrasi: [],
@@ -41,6 +43,7 @@ const Logic = () => {
     pemasaran: [],
     administrasi: [],
   });
+
   const [currData, setCurrData] = useState();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
@@ -60,6 +63,7 @@ const Logic = () => {
 
   useEffect(() => {
     getDataAccount();
+    // eslint-disable-next-line
   }, []);
 
   const getDataAccount = async () => {
@@ -91,6 +95,11 @@ const Logic = () => {
         message: message,
       })
     );
+  };
+
+  const onUpdateEmpty = async (elm) => {
+    let newObj = await generateEmptyAttributes(elm);
+    setEmptyObj(newObj);
   };
 
   const onSetDataTable = (values) => {
@@ -142,11 +151,6 @@ const Logic = () => {
     });
   };
 
-  const onUpdateEmpty = async (elm) => {
-    let newObj = await generateEmptyAttributes(elm);
-    setEmptyObj(newObj);
-  };
-
   const getData = async (
     codeCompany,
     codeProduct,
@@ -187,10 +191,12 @@ const Logic = () => {
               r = getRows({
                 header: getRootHeaderRow(),
                 data: a,
+                // dd1: open1.pemasaran[i],
               });
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
             }
+
             newListPem[i] = a;
             listPemasaran[i] = r;
           } catch (error) {
@@ -224,6 +230,14 @@ const Logic = () => {
             }
 
             if (data.data.length > 0) {
+              // let tmp1 = [];
+              // for (let x = 0; x < data.data.length; x++) tmp1.push(false);
+              // let newData = open1.administrasi;
+              // newData[i] = tmp1;
+              // setCurrData({
+              //   ...open1,
+              //   administrasi: newData,
+              // });
               r = getRows({
                 header: getRootHeaderRow(),
                 data: a,
@@ -231,6 +245,7 @@ const Logic = () => {
             } else {
               r = fullNewRow(getRootHeaderRow(), i);
             }
+
             newListAds[i] = a;
             listAdministrasi[i] = r;
           } catch (error) {
@@ -250,7 +265,6 @@ const Logic = () => {
       pemasaran: newListPem,
       administrasi: newListAds,
     });
-
     setRows({
       ...rows,
       pemasaran: listPemasaran,
@@ -263,23 +277,22 @@ const Logic = () => {
     onSetDataTable(values);
   };
 
-  const onTambahRow = async (i, category) => {
-    let lastCurrData = { ...emptyObj };
-    const lastArray = { ...currData }[category][i];
-    const newArray = [...lastArray, lastCurrData];
+  const onTambahRow = (i, category) => {
+    const newRows =
+      category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    setCurrData((prevState) => {
-      return {
-        ...prevState,
-        [category]: prevState[category].map((a, idx) => {
-          if (idx === i) {
-            return newArray;
-          } else {
-            return a;
-          }
-        }),
-      };
+    const lastIndex = newRows[i].length - 1;
+    const id = lastIndex + 1;
+    const lastData = newRows[i][lastIndex];
+
+    newRows[i][lastIndex] = reactgridNewRow(id);
+    newRows[i].push(lastData);
+
+    setRows({
+      ...rows,
+      [category]: newRows,
     });
+
     showNotif(200, "Sukses tambah row");
   };
 
@@ -328,7 +341,7 @@ const Logic = () => {
       formData.append("code_icp", code_icp);
       formData.append("year", periode);
       formData.append("name", value);
-      formData.append("type", "sewa");
+      formData.append("type", "asuransi");
       const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
       if (res.data.responseCode == 200) {
@@ -365,25 +378,25 @@ const Logic = () => {
       const fieldName = change.columnId;
       let dataRow = prevDetails.find((d) => d.id === dataRowId);
 
+      if (!dataRowId && change.newCell.text) {
+        // is new row
+        dataRow[fieldName] = change.newCell.text;
+        onInsertData(change.newCell.text, i, category);
+      }
+
       if (!dataRow) {
         dataRow = generateObjectAttributes(prevDetails);
         prevDetails.push(dataRow);
       }
 
       if (change.type === "text") {
-        if (!dataRowId && change.newCell.text) {
-          // is new row
-          dataRow[fieldName] = change.newCell.text;
-          onInsertData(change.newCell.text, i, category);
-        } else {
-          dataRow[fieldName] = change.newCell.text;
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value: change.newCell.text,
-            type: "sewa",
-          });
-        }
+        dataRow[fieldName] = change.newCell.text;
+        onUpdateData({
+          id: dataRow.id,
+          column_id: fieldName,
+          value: change.newCell.text,
+          type: "asuransi",
+        });
       } else if (change.type === "number") {
         let value = change.newCell.value;
         dataRow[fieldName] = value;
@@ -392,7 +405,7 @@ const Logic = () => {
           id: dataRow.id,
           column_id: fieldName,
           value,
-          type: "sewa",
+          type: "asuransi",
         });
       } else if (change.type === "checkbox") {
         dataRow[fieldName] = change.newCell.checked;
@@ -400,7 +413,7 @@ const Logic = () => {
           id: dataRow.id,
           column_id: fieldName,
           value: change.newCell.checked,
-          type: "sewa",
+          type: "asuransi",
         });
       } else if (change.type === "dropdown") {
         let key = `is_${fieldName}`;
@@ -413,7 +426,7 @@ const Logic = () => {
             id: dataRow.id,
             column_id: fieldName,
             value: change.newCell.selectedValue,
-            type: "sewa",
+            type: "asuransi",
           });
         }
 
@@ -423,7 +436,7 @@ const Logic = () => {
             id: dataRow.id,
             column_id: fieldName,
             value: change.newCell.inputValue,
-            type: "sewa",
+            type: "asuransi",
           });
         }
 
@@ -436,8 +449,8 @@ const Logic = () => {
       let duration = parseInt(dataRow["month_duration"]);
       let start = parseInt(dataRow["month_start"]);
 
-      let total_rent = dataRow["amount"] * dataRow["unit"] * dataRow["rates"];
-      dataRow["total"] = total_rent;
+      let total_asurance = dataRow["amount"] * dataRow["rates"];
+      dataRow["total"] = total_asurance;
 
       let range;
 
@@ -456,8 +469,7 @@ const Logic = () => {
         }
       }
       // ===================================================
-
-      dataRow["grand_total"] = total_rent * (range + 1);
+      dataRow["grand_total"] = total_asurance * duration;
 
       // const months with prefix to change the key of dataRow
       const allMonths = getMonthPrefix();
@@ -465,8 +477,8 @@ const Logic = () => {
       // loop for months which is includes in rent's duration
       for (let i = 0; i < allMonths.length; i++) {
         if (parseInt(allMonths[i].value) >= start) {
-          if (parseInt([allMonths[i].value]) <= start + range) {
-            dataRow[allMonths[i].key] = total_rent;
+          if (parseInt(allMonths[i].value) < start + duration) {
+            dataRow[allMonths[i].key] = total_asurance;
           } else {
             dataRow[allMonths[i].key] = 0;
           }
@@ -586,6 +598,8 @@ const Logic = () => {
 
       const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
+
+      log("res -- upload", data.data);
 
       let a = await generateArrayAttributes(data.data, [
         "month_duration",

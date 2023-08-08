@@ -222,7 +222,7 @@ const Logic = () => {
             if (a.length) {
               onUpdateEmpty(a[0]);
             }
-
+            
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
@@ -328,7 +328,7 @@ const Logic = () => {
       formData.append("code_icp", code_icp);
       formData.append("year", periode);
       formData.append("name", value);
-      formData.append("type", "sewa");
+      formData.append("type", "keamanan");
       const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
 
       if (res.data.responseCode == 200) {
@@ -365,25 +365,25 @@ const Logic = () => {
       const fieldName = change.columnId;
       let dataRow = prevDetails.find((d) => d.id === dataRowId);
 
+      if (!dataRowId && change.newCell.text) {
+        // is new row
+        dataRow[fieldName] = change.newCell.text;
+        onInsertData(change.newCell.text, i, category);
+      }
+
       if (!dataRow) {
         dataRow = generateObjectAttributes(prevDetails);
         prevDetails.push(dataRow);
       }
 
       if (change.type === "text") {
-        if (!dataRowId && change.newCell.text) {
-          // is new row
-          dataRow[fieldName] = change.newCell.text;
-          onInsertData(change.newCell.text, i, category);
-        } else {
-          dataRow[fieldName] = change.newCell.text;
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value: change.newCell.text,
-            type: "sewa",
-          });
-        }
+        dataRow[fieldName] = change.newCell.text;
+        onUpdateData({
+          id: dataRow.id,
+          column_id: fieldName,
+          value: change.newCell.text,
+          type: "keamanan",
+        });
       } else if (change.type === "number") {
         let value = change.newCell.value;
         dataRow[fieldName] = value;
@@ -392,7 +392,7 @@ const Logic = () => {
           id: dataRow.id,
           column_id: fieldName,
           value,
-          type: "sewa",
+          type: "keamanan",
         });
       } else if (change.type === "checkbox") {
         dataRow[fieldName] = change.newCell.checked;
@@ -400,7 +400,7 @@ const Logic = () => {
           id: dataRow.id,
           column_id: fieldName,
           value: change.newCell.checked,
-          type: "sewa",
+          type: "keamanan",
         });
       } else if (change.type === "dropdown") {
         let key = `is_${fieldName}`;
@@ -413,7 +413,7 @@ const Logic = () => {
             id: dataRow.id,
             column_id: fieldName,
             value: change.newCell.selectedValue,
-            type: "sewa",
+            type: "keamanan",
           });
         }
 
@@ -423,7 +423,7 @@ const Logic = () => {
             id: dataRow.id,
             column_id: fieldName,
             value: change.newCell.inputValue,
-            type: "sewa",
+            type: "keamanan",
           });
         }
 
@@ -436,8 +436,8 @@ const Logic = () => {
       let duration = parseInt(dataRow["month_duration"]);
       let start = parseInt(dataRow["month_start"]);
 
-      let total_rent = dataRow["amount"] * dataRow["unit"] * dataRow["rates"];
-      dataRow["total"] = total_rent;
+      let total = dataRow["amount"] * dataRow["rates"];
+      dataRow["total"] = total;
 
       let range;
 
@@ -457,7 +457,7 @@ const Logic = () => {
       }
       // ===================================================
 
-      dataRow["grand_total"] = total_rent * (range + 1);
+      dataRow["grand_total"] = total * duration;
 
       // const months with prefix to change the key of dataRow
       const allMonths = getMonthPrefix();
@@ -465,8 +465,8 @@ const Logic = () => {
       // loop for months which is includes in rent's duration
       for (let i = 0; i < allMonths.length; i++) {
         if (parseInt(allMonths[i].value) >= start) {
-          if (parseInt([allMonths[i].value]) <= start + range) {
-            dataRow[allMonths[i].key] = total_rent;
+          if (parseInt([allMonths[i].value]) < start + duration) {
+            dataRow[allMonths[i].key] = total;
           } else {
             dataRow[allMonths[i].key] = 0;
           }
@@ -579,7 +579,7 @@ const Logic = () => {
     formData.append("code_project", code_project);
     formData.append("code_icp", code_icp);
     formData.append("year", periode);
-    formData.append("type", "sewa");
+    formData.append("type", "keamanan");
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -611,7 +611,9 @@ const Logic = () => {
         };
       });
 
-      responseShow(res);
+      // responseShow(res);
+      showNotif(200, "Sukses insert data");
+
       onSuccess();
     } catch (error) {
       const err = error.response;

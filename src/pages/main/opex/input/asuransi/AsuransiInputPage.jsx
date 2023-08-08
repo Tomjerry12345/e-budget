@@ -3,7 +3,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
-import Logic from "./Logic";
+import Logic from "./Logic copy";
 import { constantExcellFile } from "values/Constant";
 
 const AsuransiInputPage = () => {
