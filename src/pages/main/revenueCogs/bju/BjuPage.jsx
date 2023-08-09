@@ -105,13 +105,14 @@ const BjuPage = () => {
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
-          isCodeProject
-          isCodeProduct={key !== 1}
+          isCodeProject={key !== 1}
+          isCodeProduct
           type="input"
           codeCompany={perusahaan.code}
           form={form}
           disabled
           typeCompany="static"
+          typeFilter="hpp-pendapatan"
           variant="perusahaan"
         />
 

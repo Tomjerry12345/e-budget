@@ -1,4 +1,4 @@
-import { createArray } from "values/Utilitas";
+import { createArray, log } from "values/Utilitas";
 import { getGroupRows } from "./getGroupRows";
 import { firstLoadTotalRow } from "./firstLoadTotalRow";
 import { END_TOTAL, FIRST_TOTAL, TOTAL_DATA } from "./Constant";
@@ -10,6 +10,8 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 export const updateTotalRow = (data, key) => {
   const newData = data.slice(1, data.length - 1);
 
+  log({ newData });
+
   const list = newData
     .map((e) => {
       const values = [];
@@ -19,16 +21,13 @@ export const updateTotalRow = (data, key) => {
 
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA[key])
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
 
   return rowTotal("Total", list, key);
 };
 
-export function getRows({ header, data, key }) {
-  return [header, ...getGroupRows(data, key), firstLoadTotalRow(data, key)];
+export function getRows({ header, data, key, col }) {
+  return [header, ...getGroupRows(data, key, col), firstLoadTotalRow(data, key)];
 }
 
 export function fullNewRow(header, id, key) {

@@ -262,15 +262,17 @@ const Logic = () => {
 
           delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
-          log("newRows", newRows);
 
           // hpp variabel
           if (type === "number") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
-              const sColumnId = c.columnId;
-              const vPenjualan = dataPenjualan[0][`${sColumnId}_p`];
+              const sColumnId = c.columnId.split("_");
+              const vPenjualan =
+                dataPenjualan[0][
+                  sColumnId.length > 1 ? `${sColumnId[0]}_${sColumnId[1]}` : `${sColumnId[0]}`
+                ];
 
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);

@@ -6,7 +6,7 @@ const numberFormat = new Intl.NumberFormat("de", {
 });
 
 export const customCell = ({ text, widget, className }) => ({
-  type: "text",
+  type: "button",
   text,
   className,
   renderer: (text) => widget,

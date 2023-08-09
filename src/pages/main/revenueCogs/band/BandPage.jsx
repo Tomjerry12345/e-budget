@@ -113,6 +113,7 @@ const BandPage = () => {
           form={form}
           disabled
           typeCompany="static"
+          typeFilter="hpp-pendapatan"
           variant="perusahaan"
         />
 

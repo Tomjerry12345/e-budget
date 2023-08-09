@@ -2,13 +2,13 @@ const COL_WIDTH = 110;
 
 export const type1 = [
   {
-    columnId: "product_code",
+    columnId: "project_code",
     width: 200,
     type: "text",
     nonEditabled: true,
   },
   {
-    columnId: "product_description",
+    columnId: "project_description",
     width: 200,
     type: "text",
   },
@@ -45,13 +45,13 @@ export const type1 = [
 
 export const type2 = [
   {
-    columnId: "product_code",
+    columnId: "project_code",
     width: 200,
     type: "text",
     nonEditabled: true,
   },
   {
-    columnId: "product_description",
+    columnId: "project_description",
     width: 200,
     type: "text",
     nonEditabled: true,
@@ -90,13 +90,13 @@ export const type2 = [
 
 export const type3 = [
   {
-    columnId: "product_code",
+    columnId: "project_code",
     width: 200,
     type: "text",
     nonEditabled: true,
   },
   {
-    columnId: "product_description",
+    columnId: "project_description",
     width: 200,
     type: "text",
   },
@@ -133,7 +133,7 @@ export const type3 = [
 
 export const type4 = [
   {
-    columnId: "product_code",
+    columnId: "project_code",
     width: 200,
     type: "text",
     nonEditabled: true,
@@ -318,9 +318,6 @@ export const getColumns = {
   "Stok akhir": type2,
   "Asumsi unit jual": type1,
   "Harga jual per unit": type3,
-  "Volume / Unit": type1,
-  Tarif: type3,
-  "Asumsi trip": type3,
   Penjualan: type2,
   "Potongan penjualan": type4,
   "Pendapatan Operasional Lainnya": type6,
