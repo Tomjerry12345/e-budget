@@ -457,7 +457,7 @@ const Logic = () => {
       }
       // ===================================================
 
-      dataRow["grand_total"] = total_rent * (range + 1);
+      dataRow["grand_total"] = total_rent * duration;
 
       // const months with prefix to change the key of dataRow
       const allMonths = getMonthPrefix();
@@ -465,7 +465,7 @@ const Logic = () => {
       // loop for months which is includes in rent's duration
       for (let i = 0; i < allMonths.length; i++) {
         if (parseInt(allMonths[i].value) >= start) {
-          if (parseInt([allMonths[i].value]) <= start + range) {
+          if (parseInt([allMonths[i].value]) < start + duration) {
             dataRow[allMonths[i].key] = total_rent;
           } else {
             dataRow[allMonths[i].key] = 0;

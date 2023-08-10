@@ -116,15 +116,15 @@ function getGroupRows(groups) {
         textCell(d["activity"] ?? "-", "padding-left-lg"),
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
-        numberCell(d["amount"], "padding-left-lg", null, false),
-        numberCell(d["unit"], "padding-left-lg", null, false),
-        numberCell(d["rates"], "padding-left-lg"),
-        nonEditable(numberCell(d["total"], "padding-left-lg")),
-        dropDownCustomCell(d["month_duration"] ?? "", getMonthDuration(), d['is_month_duration']),
+        numberCell(d["amount"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["unit"] ?? 0, "padding-left-lg", null, false),
+        numberCell(d["rates"] ?? 0, "padding-left-lg"),
+        nonEditable(numberCell(d["total"] ?? 0, "padding-left-lg")),
+        dropDownCustomCell(d["month_duration"] ?? 0, getMonthDuration(), d['is_month_duration']),
 
         textCell(d["pay_type"] ?? "", "padding-left-lg"),
 
-        dropDownCustomCell(d["month_start"] ?? "", getMonthName(), d['is_month_start']),
+        dropDownCustomCell(d["month_start"] ?? 0, getMonthName(), d['is_month_start']),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
