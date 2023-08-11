@@ -1,11 +1,12 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import { Button, Pagination, Typography } from "antd";
+import { Pagination } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 import { Box } from "@mui/material";
+import { ButtonCellTemplate } from "./ButtonCellTemplate";
+import UbahRetiredModal from "component/modal/ubah-retired/UbahRetiredModal";
 
 const LoadSaldoAwalPage = () => {
   const { value, func } = Logic();
@@ -54,6 +55,7 @@ const LoadSaldoAwalPage = () => {
                 columns={value.columns}
                 stickyTopRows={1}
                 stickyLeftColumns={1}
+                customCellTemplates={{ button: new ButtonCellTemplate() }}
                 onCellsChanged={(change) => func.onChangeTable(change, "administrasi")}
               />
             </div>
@@ -71,6 +73,8 @@ const LoadSaldoAwalPage = () => {
           ) : null}
         </div>
       </div>
+
+      <UbahRetiredModal open={value.openModalRetired} />
     </>
   );
 };

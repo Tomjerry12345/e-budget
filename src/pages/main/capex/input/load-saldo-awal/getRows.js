@@ -86,6 +86,8 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
+// const on
+
 function getGroupRows(groups) {
   return [
     ...groups.map((d) => ({
@@ -114,21 +116,16 @@ function getGroupRows(groups) {
         nonEditable(numberCell(d["disposal_year"] ?? 0, "padding-left-lg", null, false)),
         nonEditable(numberCell(d["price"] ?? 0, "padding-left-lg")),
 
-        // {
-        //   type: "text",
-        //   text: "test",
-
-        //   renderer: (text) => <Button className="btn-tambah-row">Tambah Data</Button>,
-        // },
-
-        // nonEditable(textCell(d["status"], "padding-left-lg")),
-        nonEditable(
-          customCell({
-            text: d["status"],
-            className: "justify-content-center",
-            widget: <Button className="btn-tambah-row">Tambah Data</Button>,
-          })
-        ),
+        customCell({
+          text: d["status"],
+          className: "justify-content-center",
+        }),
+        // nonEditable(
+        //   customCell({
+        //     text: d["status"],
+        //     className: "justify-content-center",
+        //   })
+        // ),
       ],
     })),
   ];

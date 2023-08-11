@@ -196,3 +196,14 @@ export const showNotif = (dispatch, { status, message, res = null }) => {
     );
   }
 };
+
+export const formDataUtils = (obj) => {
+  let formData = new FormData();
+
+  for (const key in obj) {
+    const value = obj[key];
+    formData.append(key, value);
+  }
+
+  return formData;
+};

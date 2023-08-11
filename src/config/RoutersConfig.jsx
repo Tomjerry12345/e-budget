@@ -138,6 +138,10 @@ import BpjsPage from "pages/main/mpp/input/bpjs/BpjsPage";
 import DaysPage from "pages/main/mpp/input/days/DaysPage";
 import JamLemburPage from "pages/main/mpp/input/jam-lembur/JamLemburPage";
 import UniformSafetyPage from "pages/main/mpp/input/uniform-safety/UniformSafetyPage";
+import BiayaPengobatanPage from "pages/main/mpp/input/biaya-pengobatan/BiayaPengobatanPage";
+import BiayaPendidikanLatihanPage from "pages/main/mpp/input/biaya-pendidikan-latihan/BiayaPendidikanLatihanPage";
+import BiayaRekrutmentAssessmentPage from "pages/main/mpp/input/biaya-rekrutment-assessment/BiayaRekrutmentAssessmentPage";
+import MppLainnyaPage from "pages/main/mpp/input/mpp-lainnya/MppLainnyaPage";
 
 const RoutersConfig = () => {
   return (
@@ -330,9 +334,19 @@ const RoutersConfig = () => {
             <Route path="input/headcount-asumption" element={<HeadcountAsumptionPage />} />
             <Route path="input/days" element={<DaysPage />} />
             <Route path="input/jam-lembur" element={<JamLemburPage />} />
+            <Route path="input/biaya-pengobatan" element={<BiayaPengobatanPage />} />
             <Route path="input/biaya-pph21" element={<BiayaPph21Page />} />
             <Route path="input/bpjs-kesehatan" element={<BpjsPage />} />
+            <Route
+              path="input/biaya-pendidikan-latihan"
+              element={<BiayaPendidikanLatihanPage />}
+            />
+            <Route
+              path="input/rekrutment-assessment"
+              element={<BiayaRekrutmentAssessmentPage />}
+            />
             <Route path="input/uniform-safety" element={<UniformSafetyPage />} />
+            <Route path="input/lainnya" element={<MppLainnyaPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
