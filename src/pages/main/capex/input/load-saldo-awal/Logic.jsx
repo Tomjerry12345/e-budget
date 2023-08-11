@@ -3,22 +3,17 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { generateUID, log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { generateUID, log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import {
-  getRootHeaderRow,
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-  updateTotalRow,
-} from "./getRows";
+import { fullNewRow, getRows } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [openModalRetired, setOpenModalRetired] = useState(false);
   const [totalData, setTotalData] = useState(0);
 
   const columns = getColumns();
@@ -31,9 +26,6 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
-  const location = useLocation();
-
-  const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailcapex";
 
@@ -203,6 +195,8 @@ const Logic = () => {
 
         // CHANGED: set the isOpen property to the value received.
         newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
+      } else if (type === "button") {
+        setOpenModalRetired(true);
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
       }
@@ -276,6 +270,7 @@ const Logic = () => {
       getInputProps,
       acceptedFiles,
       totalData,
+      openModalRetired,
     },
     func: {
       onFinish,

@@ -188,13 +188,10 @@ export const allItemSummarySubMenu = [
       description: "Input Biaya Pendidikan & Latihan",
     },
     {
-      description: "Input Biaya RekrutmentWS & Assessment",
+      description: "Input Biaya Rekrutment & Assessment",
     },
     {
       description: "Input Biaya Uniform & Safety",
-    },
-    {
-      description: "Input Biaya DPLK",
     },
     {
       description: "Input Biaya MPP Lainnya",
@@ -413,13 +410,13 @@ export const disabledItemSummaryMenu = [
     false,
     false,
     false,
-    true,
     false,
     false,
-    true,
-    true,
     false,
-    true,
+    false,
+    false,
+    false,
+    false,
     true,
     true,
     true,

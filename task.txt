@@ -33,15 +33,7 @@ REVENUE
 
 CAPEX
  
-- semua filter di capex di tambahkan code-code akun yg lainnya 🔥 ❌
-- preview load saldo awal, data dari import excel kolom date brmasalah
-- pagination di halaman load saldo awal
-- preview load saldo awal, tambah kolom action, yg ada button retire, 
-  muncul popup modal untk isi bulan, thn & harga jual retired aset
-- import load saldo awal ✅
-- tambah data input new asset 🔥
-- tampil data tidak muncul
-- 
+- capex retired 🔥
 
 MPP
 
@@ -51,13 +43,13 @@ MPP
 - Headcount Salary ✅
 - Headcount Assumption ✅
 - Day ✅
+- Overtime ✅
 - Treatment cost ❌
 - PPH 21 ✅
 - BPJS ✅
 - Education & Training ❌
 - Assestment & Recruitment ❌
 - Uniform & Safety ✅
-- Overtime ❌
 - BPJS hilangkan total ✅
 - Bug Headcount Salary input celll 
 - Bug Headcount Assumption input celll
@@ -65,3 +57,8 @@ MPP
 Lain
 
 - Fitur logout munculkan ✅
+
+tanggal 18 harus rampung
+
+- capex retired
+- semua mpp input

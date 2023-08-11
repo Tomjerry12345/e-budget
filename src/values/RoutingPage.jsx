@@ -91,9 +91,14 @@ export const routingMpp = {
   "Input Headcount Assumption": "headcount-asumption",
   "Input Days": "days",
   "Input Jam Lembur": "jam-lembur",
+  "Input Biaya Pengobatan": "biaya-pengobatan",
   "Input Biaya PPh 21": "biaya-pph21",
   "Input Biaya BPJS Kesehatan": "bpjs-kesehatan",
+  "Input Biaya Pendidikan & Latihan": "biaya-pendidikan-latihan",
+  "Input Biaya Rekrutment & Assessment": "rekrutment-assessment",
   "Input Biaya Uniform & Safety": "uniform-safety",
+  "Input Biaya MPP Lainnya": "lainnya",
+  "Input MPP Direct": "direct",
 };
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
