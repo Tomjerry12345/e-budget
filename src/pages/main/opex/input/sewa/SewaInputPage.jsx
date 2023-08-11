@@ -35,7 +35,7 @@ const SewaInputPage = () => {
 
         {value.rows.pemasaran.length > 0
           ? value.rows.pemasaran.map((e, i) => (
-              <div style={{ margin: "10px" }} key={Math.random()}>
+              <div style={{ margin: "10px" }}>
                 <div
                   style={{
                     display: "flex",
@@ -84,7 +84,7 @@ const SewaInputPage = () => {
 
         {value.rows.administrasi.length > 0
           ? value.rows.administrasi.map((e, i) => (
-              <div style={{ margin: "10px" }} key={i + Math.random()}>
+              <div style={{ margin: "10px" }}>
                 <div
                   style={{
                     display: "flex",

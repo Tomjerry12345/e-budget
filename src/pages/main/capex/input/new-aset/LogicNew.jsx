@@ -513,23 +513,23 @@ const LoginNew = () => {
 
       const url = `${ENDPOINT_URL}/list?code_company=${code_company}&code_product=${code_product}&code_location=${code_location}&code_department=${code_dept}&code_icp=${code_icp}&code_project=${code_project}&year=${periode}&code_account=${codeAccount}`;
       const { data } = await MainServices.get(url);
+      let a = await generateArrayAttributes(data.data, ["asset_category_id"]);
 
-      const r = getRows({
-        header: getRootHeaderRow(),
-        data: data.data,
-      });
+      // const r = getRows({
+      //   header: getRootHeaderRow(),
+      //   data: a,
+      // });
 
-      const newRow = [...rows.pemasaran];
+      // const newRow = [...rows.pemasaran];
 
-      newRow[index] = r;
+      // newRow[index] = r;
 
-      setRows({
-        ...rows,
-        [category]: newRow,
-      });
-
+      // setRows({
+      //   ...rows,
+      //   [category]: newRow,
+      // });
+      setCurrData(a);
       responseShow(res);
-
       onSuccess();
     } catch (error) {
       const err = error.response;
