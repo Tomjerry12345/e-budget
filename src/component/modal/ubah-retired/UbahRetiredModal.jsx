@@ -18,104 +18,94 @@ const CustomFooterModal = ({ onOk, onCancel, loading }) => (
   </>
 );
 
-// const treeData = [
-//   {
-//     value: "100",
-//     title: "100",
-//     children: [
-//       {
-//         value: "200",
-//         title: "200",
-//         children: [
-//           {
-//             value: "210",
-//             title: "210",
-//           },
-//           {
-//             value: "230",
-//             title: "230",
-//           },
-//           {
-//             value: "240",
-//             title: "240",
-//           },
-
-//         ],
-//       },
-//     ],
-//   },
-// ];
-
-const typeAkun = [
+const bulan = [
   {
-    value: "Neraca",
-    label: "Neraca",
+    label: "Januari",
+    value: "1",
   },
   {
-    value: "CAPEX Aset",
-    label: "CAPEX Aset",
+    label: "Februari",
+    value: "2",
   },
   {
-    value: "CAPEX Penyusutan",
-    label: "CAPEX Penyusutan",
+    label: "Maret",
+    value: "3",
   },
   {
-    value: "CAPEX Akumulasi Penyusutan",
-    label: "CAPEX Akumulasi Penyusutan",
+    label: "April",
+    value: "4",
   },
   {
-    value: "Revenue & COGS",
-    label: "Revenue & COGS",
+    label: "Mei",
+    value: "5",
   },
   {
-    value: "MPP",
-    label: "MPP",
+    label: "Juni",
+    value: "6",
   },
   {
-    value: "OPEX",
-    label: "OPEX",
+    label: "Juli",
+    value: "7",
   },
   {
-    value: "Others PNO",
-    label: "Others PNO",
+    label: "Agustus",
+    value: "8",
   },
   {
-    value: "Others BNO",
-    label: "Others BNO",
+    label: "September",
+    value: "9",
   },
   {
-    value: "Aset",
-    label: "Aset",
+    label: "Oktober",
+    value: "10",
+  },
+  {
+    label: "November",
+    value: "11",
+  },
+  {
+    label: "Desember",
+    value: "12",
   },
 ];
 
+const date = new Date();
+
+const periode = [
+  { label: `${date.getFullYear() - 1}`, value: `${date.getFullYear() - 1}` },
+  { label: `${date.getFullYear()}`, value: `${date.getFullYear()}` },
+  { label: `${date.getFullYear() + 1}`, value: `${date.getFullYear() + 1}` },
+  { label: `${date.getFullYear() + 2}`, value: `${date.getFullYear() + 2}` },
+];
+
 const UbahRetiredModal = ({ open, onCancel, onFinish, form }) => {
-  // alert(inputTambah.length);
   return (
-    <Modal
-      open={open}
-      className={
-        // inputTambah.length > 3
-        //   ? "custom-tambah-data-modal-1"
-        "custom-tambah-data-modal"
-      }
-      // footer={<CustomFooterModal onOk={onOk} onCancel={onCancel} />}
-      footer={null}
-      onCancel={onCancel}
-    >
+    <Modal open={open} className={"custom-tambah-data-modal"} footer={null} onCancel={onCancel}>
       <Title level={4}>Tambah Data</Title>
 
-      <Form
-        onFinish={onFinish}
-        // onFinishFailed={onFinishFailed}
-
-        layout="horizontal"
-        form={form}
-      >
+      <Form onFinish={onFinish} layout="horizontal" form={form}>
         <div className="root-content-upload">
+          <Form.Item label="Month" name="disposal_month">
+            <Select
+              defaultValue="1"
+              style={{
+                width: 120,
+              }}
+              options={bulan}
+            />
+          </Form.Item>
+          <Form.Item label="Year" name="disposal_year">
+            <Select
+              defaultValue={`${date.getFullYear()}`}
+              style={{
+                width: 120,
+              }}
+              options={periode}
+            />
+          </Form.Item>
           <Form.Item
-            label=""
-            name=""
+            label="Price"
+            name="price"
             rules={[
               {
                 required: true,
@@ -131,13 +121,7 @@ const UbahRetiredModal = ({ open, onCancel, onFinish, form }) => {
             <Button className="btn-cancel" type="text" onClick={onCancel}>
               Cancel
             </Button>
-            <Button
-              className="btn-upload"
-              type="primary"
-              htmlType="submit"
-              // onClick={onOk}
-              // loading={loading}
-            >
+            <Button className="btn-upload" type="primary" htmlType="submit">
               Tambah
             </Button>
           </div>

@@ -74,7 +74,12 @@ const LoadSaldoAwalPage = () => {
         </div>
       </div>
 
-      <UbahRetiredModal open={value.openModalRetired} />
+      <UbahRetiredModal
+        onFinish={func.onFinishModalRetired}
+        open={value.openModalRetired}
+        onCancel={func.onCancelModalRetired}
+        form={value.formRetired}
+      />
     </>
   );
 };

@@ -28,7 +28,6 @@ class ButtonCellTemplate {
   }
 
   onClicked(cell, onCellChanged) {
-    // alert("test");
     onCellChanged(this.getCompatibleCell({ ...cell, text: "test" }), true);
   }
 
