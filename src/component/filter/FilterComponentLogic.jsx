@@ -132,10 +132,7 @@ const FilterComponentLogic = ({
         isCodeIcp === true
           ? await MainServices.get(`icp/list-dropdown?code_company=${code[0]}`)
           : null;
-      const resProject =
-        isCodeProject === true
-          ? await MainServices.get(`project/list-by-com?code_company=${code[0]}`)
-          : null;
+      const resProject = await MainServices.get(`project/list-by-com?code_company=${code[0]}`);
 
       setState({
         ...state,
@@ -143,7 +140,7 @@ const FilterComponentLogic = ({
         code_location: resLocation !== null ? setLocation(resLocation) : [],
         code_dept: resDept !== null ? setDept(resDept) : [],
         code_icp: resIcp !== null ? setIcp(resIcp) : [],
-        code_project: resProject !== null ? setProject(resProject, code) : [],
+        code_project: setProject(resProject, code),
       });
     } catch (err) {
       log({ err });

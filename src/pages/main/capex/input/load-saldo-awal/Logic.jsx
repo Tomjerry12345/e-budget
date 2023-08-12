@@ -203,7 +203,6 @@ const Logic = () => {
         setOpenModalRetired(true);
         setDataRetired({
           id,
-          column_id,
         });
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
@@ -269,21 +268,42 @@ const Logic = () => {
   };
 
   const onFinishModalRetired = async (params) => {
+    const newParams = {
+      ...params,
+      disposal_month: params.disposal_month ?? "1",
+      disposal_year: params.disposal_year ?? `${date.getFullYear()}`,
+    };
+
+    log({ newParams });
+    log({ dataRetired });
+
+    const keys = Object.keys(newParams);
+    const promises = keys.map(async (key) => {
+      try {
+        const formData = formDataUtils({
+          ...dataRetired,
+          column_id: key,
+          value: newParams[key],
+        });
+
+        await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+
+        formData.clear();
+        return { key, response: "success" };
+      } catch (error) {
+        return { key, error };
+      }
+    });
+
     try {
-      const newParams = {
-        ...params,
-        disposal_month: params.disposal_month ?? "1",
-        disposal_year: params.disposal_year ?? `${date.getFullYear()}`,
-      };
+      const results = await Promise.all(promises);
 
-      log({ newParams });
-      log({ dataRetired });
-
-      const formData = formDataUtils({
-        ...dataRetired,
-        ...newParams,
+      results.forEach((result) => {
+        if (result.error) {
+          console.error(`Error for ${result.key}:`, result.error);
+          throw new Error(result.error);
+        }
       });
-      const res = await MainServices.post(`${ENDPOINT_URL}/update`, formData);
       showNotif(200, "Sukses update data");
     } catch (e) {
       showNotif(400, e.message);
