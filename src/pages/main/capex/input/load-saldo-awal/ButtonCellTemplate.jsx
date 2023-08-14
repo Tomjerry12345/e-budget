@@ -28,7 +28,6 @@ class ButtonCellTemplate {
   }
 
   onClicked(cell, onCellChanged) {
-    // alert("test");
     onCellChanged(this.getCompatibleCell({ ...cell, text: "test" }), true);
   }
 
@@ -57,7 +56,11 @@ class ButtonCellTemplate {
     //   />
     // );
     return (
-      <Button className="btn-tambah-row" onClick={(e) => this.onClicked(cell, onCellChanged)}>
+      <Button
+        className="btn-tambah-row"
+        onClick={(e) => this.onClicked(cell, onCellChanged)}
+        disabled={status === "retired"}
+      >
         {status}
       </Button>
     );

@@ -139,7 +139,7 @@ export const type4 = [
     nonEditabled: true,
   },
   {
-    columnId: "product_description",
+    columnId: "project_description",
     width: 200,
     type: "text",
   },

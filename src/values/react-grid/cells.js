@@ -5,10 +5,11 @@ const numberFormat = new Intl.NumberFormat("de", {
   maximumFractionDigits: 2,
 });
 
-export const customCell = ({ text, className }) => ({
+export const customCell = ({ text, className, style }) => ({
   type: "button",
   text,
   className,
+  style,
   // renderer: (text) => widget,
 });
 

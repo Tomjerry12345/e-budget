@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, showNotif } from "values/Utilitas";
+import { formDataUtils, log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab } from "values/Constant";
 import {
@@ -48,46 +48,54 @@ const Logic = () => {
     }
   }, [importRedux.file]);
 
-  const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_product, code_icp, periode } = values;
+  const formatingFilter = (filter) => {
+    const { code_company, code_dept, code_location, code_product, code_icp, periode } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-
     let fPeriode = periode.split(" ");
 
-    fCodeCompany = fCodeCompany[0];
-    fCodeLocation = fCodeLocation[0];
-    fCodeDept = fCodeDept[0];
-    fCodeIcp = fCodeIcp[0];
-    fCodeProduct = fCodeProduct[0];
+    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
+    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProduct, fPeriode);
-
-    setCodeFilter(values);
+    return {
+      code_company: fCodeCompany,
+      code_product: fCodeProduct,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      year: fPeriode,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProduct,
-    periode
-  ) => {
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
+    try {
+      getData(formatFilter);
+      setCodeFilter(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const getData = async (params) => {
     const listRows = [];
 
     await Promise.allSettled(
       tableList[keyRevenueTab[0]].map(async (p, i) => {
         const desc = p.description;
 
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_product=${codeProduct}&year=${periode}`;
+        const url = `${p.endpoint}/list`;
         try {
-          const { data } = await MainServices.get(url);
+          const { data } = await MainServices.get(url, params);
           let r;
           r = getRows({
             header: getHeaderRow[desc],
@@ -97,7 +105,7 @@ const Logic = () => {
           });
           listRows[i] = {
             description: desc,
-            insert: p.insert,
+            endpointPost: p.endpointPost,
             endpoint: p.endpoint,
             data: r,
             // apiData: data.data,
@@ -107,7 +115,7 @@ const Logic = () => {
           console.error(`Error fetching data ${desc}`, error);
           listRows[i] = {
             description: desc,
-            insert: p.insert,
+            endpointPost: p.endpointPost,
             endpoint: p.endpoint,
             data: fullNewRow(getHeaderRow[desc], i, desc),
             // apiData: [],
@@ -176,56 +184,35 @@ const Logic = () => {
         }
 
         if (isChange) {
-          let formData = new FormData();
-
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
 
-          const codeProduct = newRows[rowIndex].cells[0].text;
+          const codeProject = newRows[rowIndex].cells[0].text;
 
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const { code_company, code_dept, code_location, code_product, code_icp, periode } =
-              codeFilter;
+            const formData = formDataUtils({
+              ...codeFilter,
+              code_project: codeProject,
+              [key]: value,
+            });
 
-            let fCodeCompany = code_company.split(" ");
-            let fCodeLocation = code_location.split(" ");
-            let fCodeDept = code_dept.split(" ");
-            let fCodeIcp = code_icp.split(" ");
-            let fCodeProduct = code_product.split(" ");
-
-            let fPeriode = periode.split(" ");
-
-            fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-            fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-            fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-            fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-            fPeriode = fPeriode[0];
-
-            formData.append("code_company", fCodeCompany);
-            formData.append("code_department", fCodeDept);
-            formData.append("code_location", fCodeLocation);
-            formData.append("code_product", codeProduct);
-            formData.append("code_product", fCodeProduct);
-            formData.append("code_icp", fCodeIcp);
-            formData.append("year", fPeriode);
-            formData.append(key, value);
-
-            const res = await MainServices.post(`${item.endpoint}/insert`, formData);
+            const res = await MainServices.post(`${item.endpointPost}/insert`, formData);
 
             log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
           } else {
-            formData.append("id", id);
-            formData.append("column_id", column_id);
-            formData.append("value", value);
+            const formData = formDataUtils({
+              id,
+              column_id,
+              value,
+            });
 
-            await MainServices.post(`${item.endpoint}/update`, formData);
+            await MainServices.post(`${item.endpointPost}/update`, formData);
           }
 
           delete newRows[rowIndex].newRow;
@@ -340,47 +327,23 @@ const Logic = () => {
       })
     );
 
-    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
-      codeFilter;
-
-    let fCodeCompany = code_company.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
-    let fPeriode = periode.split(" ");
-
-    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0];
-
     const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
     const index = rows.findIndex((item) => item.description === desc);
 
     const endpoint = rows[index].endpoint;
 
-    let formData = new FormData();
-
-    formData.append("file", file);
-
-    formData.append("code_company", fCodeCompany);
-    formData.append("code_location", fCodeLocation);
-    formData.append("code_department", fCodeDept);
-    formData.append("code_icp", fCodeIcp);
-    formData.append("code_project", fCodeProject);
-    formData.append("year", fPeriode);
-    formData.append("type", type);
+    const formData = formDataUtils({
+      ...codeFilter,
+      file,
+      type,
+    });
 
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-      const { data } = await MainServices.get(url);
+      const url = `${endpoint}/list`;
+      const { data } = await MainServices.get(url, codeFilter);
       console.log("first stock : ", data);
 
       let r = getRows({
@@ -395,8 +358,8 @@ const Logic = () => {
 
       if (index === 0 || index === 1 || index === 4) {
         const epLastStock = rows[3].endpoint;
-        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-        const { data } = await MainServices.get(urlLastStock);
+        const urlLastStock = `${epLastStock}/list`;
+        const { data } = await MainServices.get(urlLastStock, codeFilter);
 
         console.log("last stock : ", data);
         r = getRows({
@@ -410,8 +373,8 @@ const Logic = () => {
 
       if (index === 2 || index === 5) {
         const epLastStock = rows[6].endpoint;
-        const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-        const { data } = await MainServices.get(urlLastStock);
+        const urlLastStock = `${epLastStock}/list`;
+        const { data } = await MainServices.get(urlLastStock, codeFilter);
 
         console.log("last stock : ", data);
         r = getRows({
@@ -425,7 +388,6 @@ const Logic = () => {
 
       setRows(newRow);
 
-      // responseShow(res);
       showNotif(dispatch, { res: res });
 
       onSuccess();

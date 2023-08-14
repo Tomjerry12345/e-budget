@@ -86,8 +86,6 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
-// const on
-
 function getGroupRows(groups) {
   return [
     ...groups.map((d) => ({
@@ -112,20 +110,16 @@ function getGroupRows(groups) {
         nonEditable(numberCell(d["cost_retired"] ?? 0, "padding-left-lg")),
         nonEditable(numberCell(d["accumulated_depreciation"] ?? 0, "padding-left-lg")),
         nonEditable(numberCell(d["net_book_value"] ?? 0, "padding-left-lg")),
-        nonEditable(numberCell(d["disposal_month"] ?? 0, "padding-left-lg", null, false)),
-        nonEditable(numberCell(d["disposal_year"] ?? 0, "padding-left-lg", null, false)),
-        nonEditable(numberCell(d["price"] ?? 0, "padding-left-lg")),
+        nonEditable(numberCell(d["disposal_month"] ?? "", "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["disposal_year"] ?? "", "padding-left-lg", null, false)),
+        nonEditable(numberCell(d["price"] ?? "", "padding-left-lg")),
 
         customCell({
           text: d["status"],
-          className: "justify-content-center",
+          style: {
+            justifyContent: "center",
+          },
         }),
-        // nonEditable(
-        //   customCell({
-        //     text: d["status"],
-        //     className: "justify-content-center",
-        //   })
-        // ),
       ],
     })),
   ];

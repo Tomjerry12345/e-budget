@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { generateUID, log } from "values/Utilitas";
-import { useLocation } from "react-router-dom";
+import { formDataUtils, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { fullNewRow, getRows } from "./getRows";
+import { Form } from "antd";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -15,6 +15,11 @@ const Logic = () => {
   const [uploadSucces, setUploadSucces] = useState(null);
   const [openModalRetired, setOpenModalRetired] = useState(false);
   const [totalData, setTotalData] = useState(0);
+
+  const [formRetired] = Form.useForm();
+
+  const [dataRetired, setDataRetired] = useState({});
+  const date = new Date();
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
@@ -152,9 +157,8 @@ const Logic = () => {
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
       const type = c.newCell.type;
 
-      const id = newRows[rowIndex].id;
-      const key = columnIndex === 1 ? "forecast" : "budget";
-      const column_id = newRows[rowIndex][key];
+      const id = newRows[rowIndex].rowId;
+      const column_id = c.columnId;
 
       if (type === "text") {
         newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
@@ -197,6 +201,9 @@ const Logic = () => {
         newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
       } else if (type === "button") {
         setOpenModalRetired(true);
+        setDataRetired({
+          id,
+        });
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
       }
@@ -260,6 +267,34 @@ const Logic = () => {
     getData(uFilter);
   };
 
+  const onFinishModalRetired = async (params) => {
+    try {
+      const newParams = {
+        ...params,
+        disposal_month: params.disposal_month ?? "1",
+        disposal_year: params.disposal_year ?? `${date.getFullYear()}`,
+      };
+
+      const formData = formDataUtils({
+        ...dataRetired,
+        ...newParams,
+      });
+
+      await MainServices.post(`detailcapex/retired`, formData);
+
+      getData(codeFilter);
+
+      onCancelModalRetired();
+      showNotif(200, "Sukses update data");
+    } catch (e) {
+      showNotif(400, e.message);
+    }
+  };
+
+  const onCancelModalRetired = () => {
+    setOpenModalRetired(false);
+  };
+
   return {
     value: {
       columns,
@@ -271,6 +306,7 @@ const Logic = () => {
       acceptedFiles,
       totalData,
       openModalRetired,
+      formRetired,
     },
     func: {
       onFinish,
@@ -278,6 +314,8 @@ const Logic = () => {
       setUploadSucces,
       onChangeTable,
       onChangePagination,
+      onFinishModalRetired,
+      onCancelModalRetired,
     },
   };
 };
