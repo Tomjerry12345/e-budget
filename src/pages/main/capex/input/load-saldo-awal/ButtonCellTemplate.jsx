@@ -56,7 +56,11 @@ class ButtonCellTemplate {
     //   />
     // );
     return (
-      <Button className="btn-tambah-row" onClick={(e) => this.onClicked(cell, onCellChanged)}>
+      <Button
+        className="btn-tambah-row"
+        onClick={(e) => this.onClicked(cell, onCellChanged)}
+        disabled={status === "retired"}
+      >
         {status}
       </Button>
     );
