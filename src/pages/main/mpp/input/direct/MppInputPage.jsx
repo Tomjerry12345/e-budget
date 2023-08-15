@@ -5,7 +5,7 @@ import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { constantExcellFile } from "values/Constant";
 
-const CapexInputPage = () => {
+const MppInputPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -56,4 +56,4 @@ const CapexInputPage = () => {
   );
 };
 
-export default CapexInputPage;
+export default MppInputPage;

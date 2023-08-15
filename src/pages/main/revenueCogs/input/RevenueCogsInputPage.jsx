@@ -1,70 +1,56 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import TableComponent from "component/table/TableComponent";
-import RevenueCogsInputLogic from "./RevenueCogsInputLogic";
+import { ReactGrid } from "@silevis/reactgrid";
+import Logic from "./Logic";
 
 const RevenueCogsInputPage = () => {
-  const { value, func } = RevenueCogsInputLogic();
+  const { value, func } = Logic();
 
   return (
     <>
-      {/* <FilterComponent type={2} isCodeProduct={true} isCodeProject={true}   form={value.form} onFinish={func.onFinish} /> */}
-
       <HeaderComponent
-        // type="revenue-input"
+        className="more-modal-width-type1"
         type="input"
-        onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onChangeLoadingUpload={(set, setImport) => {
-          set(value.loadingUpload);
-
-          if (value.uploadSucces === true) {
-            setImport(false);
-            func.setUploadSucces(null);
-          }
-        }}
+        // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/revenue.xlsx"
-        disabledImportExport={value.dataColumnInput.length <= 1}
-        onChangeSelect={func.onChangeTahun}
+        // downloadFile={constantExcellFile["opex"]["template-4"]}
+        // disabledImportExport={
+        //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
+        // }
+        // onChangeSelect={func.onChangeTahun}
+        // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
+        // dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
-        {/* {value.dataColumnInput.length > 1 ? (
-          <div className="layout-btn-action">
-            <Button
-              className="btn-update"
-              type="primary"
-              icon={<UploadOutlined className="custom-icon" />}
-              onClick={func.onOpenUploadModal}
+        <div style={{ margin: "10px" }}>
+          <div
+            style={{
+              overflowX: "auto",
+              overflowY: "auto",
+              marginBottom: 16,
+              paddingBottom: 16,
+            }}
+          >
+            <div
+              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              className="liquidity-planner-app"
             >
-              Update
-            </Button>
+              <ReactGrid
+                rows={value.rows}
+                columns={value.columns}
+                stickyTopRows={1}
+                stickyLeftColumns={1}
+                onCellsChanged={(change) => func.onChangeTable(change)}
+              />
+            </div>
           </div>
-        ) : null} */}
-
-        <TableComponent
-          variant="input"
-          dataSource={value.dataColumnInput}
-          columns={value.columns}
-          loading={value.loading}
-          listKeyParent={value.listKeyParent}
-        />
+        </div>
       </div>
-      {/* <UploadModal
-        open={value.openUploadModal}
-        onCancel={func.onCloseUploadModal}
-        value={value}
-        onOk={func.onUploadFile}
-        file="file/revenue-cogs.xlsx"
-        loading={value.loadingUpload}
-      /> */}
     </>
   );
 };

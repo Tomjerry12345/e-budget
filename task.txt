@@ -64,4 +64,4 @@ tanggal 18 harus rampung
 - semua mpp input ✅
 - semua mpp summary
 - revenue bju ✅
-- semua input direct
+- semua input direct ✅
