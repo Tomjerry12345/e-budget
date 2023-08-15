@@ -135,10 +135,10 @@ const Logic = () => {
       })
     );
 
-    const url = `detailrevenue/selling/list`;
+    const url = `detailrevenue/project/selling/list`;
 
     const { data } = await MainServices.get(url, params);
-    const fData = data.data.filter((d) => d.product_code === params.code_product);
+    const fData = data.data.filter((d) => d.project_code === params.code_project);
     log("penjualan", fData);
     dispatch(actionData({ sizeDataRevenue: 1 }));
     setDataPenjualan(fData);
@@ -241,7 +241,7 @@ const Logic = () => {
               const lengthHppVariabel = fullRows[1].data.length;
 
               const sColumnId = c.columnId;
-              const vPenjualan = dataPenjualan[0][`${sColumnId}_p`];
+              const vPenjualan = dataPenjualan[0][sColumnId];
 
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);

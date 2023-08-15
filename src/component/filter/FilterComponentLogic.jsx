@@ -202,6 +202,10 @@ const FilterComponentLogic = ({
 
     if (type === "input") {
       data = resProject.data.data.filter((item) => item.code !== "all");
+      if (typeFilter === "not-show-first-filter-project") {
+        data.shift();
+        log("typeFilter", data);
+      }
     } else {
       data = resProject.data.data;
     }

@@ -12,6 +12,7 @@ import {
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getMonthDuration, getMonthName, getMonthNameNew } from "values/Constant";
+import { getColumns } from "./getColumns";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -65,56 +66,31 @@ export const updateTotalRow = (data) => {
 };
 
 function getGroupRows(groups) {
-  const {
-    id,
-    jht,
-    thr_period,
-    bonus_period,
-    jht_p,
-    thr_period_p,
-    bonus_period_p,
-    is_thr_period,
-    is_thr_period_p,
-    is_bonus_period,
-    is_bonus_period_p,
-  } = groups;
-
-  log({ id });
-
   return [
-    {
-      rowId: generateUID(),
-      id: id,
-      forecast: "jht",
-      budget: "jht_p",
+    ...groups.map((d) => ({
+      rowId: d["id"] ?? generateUID(),
+      newRow: d["id"] === null,
+      height: ROW_HEIGHT,
       cells: [
-        headerCell({ text: "BPJSTK JHT - Pemberi Kerja" }),
-        numberCell(jht ?? 0),
-        numberCell(jht_p ?? 0),
+        ...getColumns.map((e) => {
+          if (e.type === "text") {
+            if (e.nonEditabled === undefined || e.nonEditabled === false) {
+              return textCell(d[e.columnId] ?? "", "padding-left-lg");
+            } else {
+              return nonEditable(textCell(d[e.columnId] ?? "", "padding-left-lg"));
+            }
+          } else if (e.type === "number") {
+            if (e.nonEditabled === undefined || e.nonEditabled === false) {
+              return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false);
+            } else {
+              return nonEditable(
+                numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
+              );
+            }
+          }
+        }),
       ],
-    },
-    {
-      rowId: generateUID(),
-      id: id,
-      forecast: "thr_period",
-      budget: "thr_period_p",
-      cells: [
-        headerCell({ text: "Periode Pembayaran THR" }),
-        dropDownCustomCell(thr_period, getMonthName(), is_thr_period),
-        dropDownCustomCell(thr_period_p, getMonthName(), is_thr_period_p),
-      ],
-    },
-    {
-      rowId: generateUID(),
-      id: id,
-      forecast: "bonus_period",
-      budget: "bonus_period_p",
-      cells: [
-        headerCell({ text: "Periode Pembayaran Bonus" }),
-        dropDownCustomCell(bonus_period, getMonthName(), is_bonus_period),
-        dropDownCustomCell(bonus_period_p, getMonthName(), is_bonus_period_p),
-      ],
-    },
+    })),
   ];
 }
 

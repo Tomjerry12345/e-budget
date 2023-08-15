@@ -10,6 +10,7 @@ import {
   routingOpex,
   routingOthers,
   routingReport,
+  routingRevenue,
 } from "../../values/RoutingPage";
 import { cekToken, getLocal, log, setLocal } from "../../values/Utilitas";
 import { actionRevenue } from "redux/action/action.reducer";
@@ -179,7 +180,8 @@ const MainLogic = () => {
 
     if (index === 1) {
       if (nameMenu === "Summary Revenue & COGS" || nameMenu === "Input Direct Revenue & COGS") {
-        pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}`;
+        const routing = routingRevenue[nameMenu];
+        pageNavigation = `/main/revenue-cogs/${inputOrSummary}/${routing}`;
       } else {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
       }

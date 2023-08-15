@@ -113,6 +113,7 @@ const BjuPage = () => {
           disabled
           typeCompany="static"
           variant="perusahaan"
+          typeFilter="not-show-first-filter-project"
         />
 
         <div style={{ marginTop: 16 }}>

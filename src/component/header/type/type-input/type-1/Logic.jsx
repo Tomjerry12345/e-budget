@@ -17,7 +17,10 @@ const Logic = () => {
     const split = location.pathname.split("/");
     const q = split[split.length - 1];
 
-    const h = getKeyByValue(allRouting[split[2]], q);
+    log({ split });
+    log({ q });
+
+    const h = getKeyByValue(allRouting[split[2] ?? split[1]], q);
 
     setHeader(h[0]);
   }, []);

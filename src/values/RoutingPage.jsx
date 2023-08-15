@@ -12,6 +12,7 @@ export const routingRevenue = {
   kik: "Revenue & COGS KIK",
   ikp: "Revenue & COGS IKP",
   band: "Revenue & COGS BAND",
+  "Input Direct Revenue & COGS": "direct",
 };
 
 export const routingOpex = {
@@ -98,7 +99,7 @@ export const routingMpp = {
   "Input Biaya Rekrutment & Assessment": "rekrutment-assessment",
   "Input Biaya Uniform & Safety": "uniform-safety",
   "Input Biaya MPP Lainnya": "lainnya",
-  "Input MPP Direct": "direct",
+  "Input MPP Direct": "mpp",
 };
 export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",

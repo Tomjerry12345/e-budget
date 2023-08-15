@@ -142,6 +142,7 @@ import BiayaPengobatanPage from "pages/main/mpp/input/biaya-pengobatan/BiayaPeng
 import BiayaPendidikanLatihanPage from "pages/main/mpp/input/biaya-pendidikan-latihan/BiayaPendidikanLatihanPage";
 import BiayaRekrutmentAssessmentPage from "pages/main/mpp/input/biaya-rekrutment-assessment/BiayaRekrutmentAssessmentPage";
 import MppLainnyaPage from "pages/main/mpp/input/mpp-lainnya/MppLainnyaPage";
+import MppInputPage from "pages/main/mpp/input/direct/MppInputPage";
 
 const RoutersConfig = () => {
   return (
@@ -152,7 +153,7 @@ const RoutersConfig = () => {
         <Route path="/main" element={<MainPage />}>
           <Route index element={<DashboardPage />} />
           <Route path="revenue-cogs">
-            <Route path="input" element={<RevenueCogsInputPage />} />
+            <Route path="input/direct" element={<RevenueCogsInputPage />} />
             <Route path="summary" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
@@ -347,6 +348,7 @@ const RoutersConfig = () => {
             />
             <Route path="input/uniform-safety" element={<UniformSafetyPage />} />
             <Route path="input/lainnya" element={<MppLainnyaPage />} />
+            <Route path="input/mpp" element={<MppInputPage />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
