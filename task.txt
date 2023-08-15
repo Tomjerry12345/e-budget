@@ -60,5 +60,8 @@ Lain
 
 tanggal 18 harus rampung
 
-- capex retired
-- semua mpp input
+- capex retired ✅
+- semua mpp input ✅
+- semua mpp summary
+- revenue bju ✅
+- semua input direct
