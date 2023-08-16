@@ -3,9 +3,8 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 
-const OpexSummary = () => {
+const BiayaNonOperasionalSummary = () => {
   const { value, func } = Logic();
 
   return (
@@ -14,7 +13,7 @@ const OpexSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "summary opex",
+            description: "biaya non operasional",
             disabled: value.linkExport === null,
           },
         ]}
@@ -52,4 +51,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default BiayaNonOperasionalSummary;

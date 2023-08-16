@@ -5,8 +5,6 @@ import DashboardPage from "pages/main/dashboard/DashboardPage";
 import App from "pages/App";
 import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummary";
 import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
-import OthersSummary from "pages/main/others/summary/OthersSummary";
-import OthersInputPage from "pages/main/others/input/OthersInputPage";
 import OthersInputAsumsiPage from "pages/main/others/asumsi/OthersInputAsumsiPage";
 import LabaRugiPage from "pages/main/report/laba-rugi/LabaRugiPage";
 import HkPage from "pages/main/revenueCogs/hk/HkPage";
@@ -56,12 +54,6 @@ import PenjualanIkpPage from "pages/main/revenueCogs/ikp/tabs/penjualan/Penjuala
 import LainIkpPage from "pages/main/revenueCogs/ikp/tabs/hpplain/LainIkpPage";
 import PenjualanBandPage from "pages/main/revenueCogs/band/tabs/penjualan/PenjualanBandPage";
 import LainBandPage from "pages/main/revenueCogs/band/tabs/hpplain/LainBandPage";
-import TestingPages from "testing/react-grid-testing/TestingPages";
-import LiquidityPlanner from "testing/sample-react-grid-liquid/LiquidityPlanner";
-import TestingRealProject from "testing/sample-react-grid-real-project/TestingRealProject";
-import TestingPages1 from "testing/react-grid-testing/TestingPages1";
-import TestingBertahap from "testing/testing-bertahap/TestingBertahap";
-import TestingBertahap2 from "testing/testing-bertahap/TestingBertahap2";
 import DirectAllSummary from "pages/main/others/summary/direct-all/DIrectAllSummary";
 import IklanAdvertensiInputPage from "pages/main/opex/input/iklan-advertensi/IklanAdvertensiInputPage";
 import PemeliharaanInputPage from "pages/main/opex/input/pemeliharaan/PemeliharaanInputPage";
@@ -143,6 +135,10 @@ import BiayaPendidikanLatihanPage from "pages/main/mpp/input/biaya-pendidikan-la
 import BiayaRekrutmentAssessmentPage from "pages/main/mpp/input/biaya-rekrutment-assessment/BiayaRekrutmentAssessmentPage";
 import MppLainnyaPage from "pages/main/mpp/input/mpp-lainnya/MppLainnyaPage";
 import MppInputPage from "pages/main/mpp/input/direct/MppInputPage";
+import MppSummary from "pages/main/mpp/summary/summary/MppSummary";
+import CapexSummary from "pages/main/capex/summary/capex-summary/CapexSummary";
+import BiayaNonOperasionalSummary from "pages/main/others/summary/biaya-non-operasional/BiayaNonOperasionalSummary";
+import PendapatanNonOperasionalSummary from "pages/main/others/summary/pendapatan-non-operasional/PendapatanNonOperasionalSummary";
 
 const RoutersConfig = () => {
   return (
@@ -154,7 +150,7 @@ const RoutersConfig = () => {
           <Route index element={<DashboardPage />} />
           <Route path="revenue-cogs">
             <Route path="input/direct" element={<RevenueCogsInputPage />} />
-            <Route path="summary" element={<RevenueCogsSummary />} />
+            <Route path="summary/direct" element={<RevenueCogsSummary />} />
 
             <Route path="hk" element={<HkPage />}>
               <Route index path="penjualan/" element={<PenjualanHkPage />} />
@@ -325,7 +321,7 @@ const RoutersConfig = () => {
               path="summary/total-akumulasi-penyusutan"
               element={<TotalAkumulasiPenyusutanSummaryPage />}
             />
-            {/* <Route path="summary/:item" element={<CapexSummary />} /> */}
+            <Route path="summary/capex" element={<CapexSummary />} />
           </Route>
           <Route path="mpp">
             <Route path="input/general-asumption" element={<GeneralAsumptionPage />} />
@@ -349,13 +345,22 @@ const RoutersConfig = () => {
             <Route path="input/uniform-safety" element={<UniformSafetyPage />} />
             <Route path="input/lainnya" element={<MppLainnyaPage />} />
             <Route path="input/mpp" element={<MppInputPage />} />
+
+            <Route path="summary/mpp" element={<MppSummary />} />
           </Route>
           <Route path="others">
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
-            <Route path="input/:item" element={<OthersInputPage />} />
-            <Route path="summary/:item" element={<OthersSummary />} />
+
+            <Route
+              path="summary/pendapatan-non-operasional"
+              element={<PendapatanNonOperasionalSummary />}
+            />
+            <Route
+              path="summary/biaya-non-operasional"
+              element={<BiayaNonOperasionalSummary />}
+            />
           </Route>
           <Route path="report">
             <Route path="laba-rugi" element={<LabaRugiPage />} />
@@ -371,12 +376,12 @@ const RoutersConfig = () => {
             {/* <Route path=":item" element={<CoaPage />} /> */}
           </Route>
         </Route>
-        <Route path="/testing" element={<TestingPages />} />
-        <Route path="/testing1" element={<TestingPages1 />} />
-        <Route path="/react-grid-liquid" element={<LiquidityPlanner />} />
-        <Route path="/real-testing" element={<TestingRealProject />} />
+        {/* <Route path="/testing" element={<TestingPages />} />
+        <Route path="/testing1" element={<TestingPages1 />} /> */}
+        {/* <Route path="/react-grid-liquid" element={<LiquidityPlanner />} /> */}
+        {/* <Route path="/real-testing" element={<TestingRealProject />} />
         <Route path="/testing-bertahap" element={<TestingBertahap />} />
-        <Route path="/testing-bertahap2" element={<TestingBertahap2 />} />
+        <Route path="/testing-bertahap2" element={<TestingBertahap2 />} /> */}
       </Routes>
     </BrowserRouter>
   );

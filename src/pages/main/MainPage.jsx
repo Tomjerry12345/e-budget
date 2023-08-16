@@ -8,6 +8,11 @@ import "./InputStyles.scss";
 import "./SummaryStyle.scss";
 import NotificationComponent from "../../component/notification/NotificationComponent";
 
+import "@silevis/reactgrid/styles.scss";
+import "@silevis/reactgrid/default-colors.scss";
+import "@silevis/reactgrid/default-sizing.scss";
+import "@silevis/reactgrid/cell-templates-default-colors.scss";
+
 const { Content } = Layout;
 
 const MainPage = () => {

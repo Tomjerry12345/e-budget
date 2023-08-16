@@ -13,8 +13,8 @@ export const routingRevenue = {
   ikp: "Revenue & COGS IKP",
   band: "Revenue & COGS BAND",
   "Input Direct Revenue & COGS": "direct",
+  "Summary Revenue & COGS": "direct",
 };
-
 export const routingOpex = {
   "Input By Iklan & Advertensi": "iklan-advertensi",
   "Input By Pemasaran Lainnya": "pemasaran-lainnya",
@@ -82,8 +82,9 @@ export const routingCapex = {
   "Summary Total Aset": "total-aset",
   "Summary Total Penyusutan": "total-penyusutan",
   "Summary Total Akumulasi Penyusutan": "total-akumulasi-penyusutan",
-};
 
+  "Summary Capex": "capex",
+};
 export const routingMpp = {
   "Input MPP General Asumption": "general-asumption",
   "Input Rate Assumption": "rate-asumption",
@@ -100,14 +101,16 @@ export const routingMpp = {
   "Input Biaya Uniform & Safety": "uniform-safety",
   "Input Biaya MPP Lainnya": "lainnya",
   "Input MPP Direct": "mpp",
+
+  "Summary MPP": "mpp",
 };
 export const routingOthers = {
-  "Input Direct Pendapatan Non Operasional": "Input Direct Pendapatan Non Operasional",
-  "Input Direct Biaya Non Operasional": "Input Direct Biaya Non Operasional",
+  "Input Direct Pendapatan Non Operasional": "pendapatan-non-operasional",
+  "Input Direct Biaya Non Operasional": "biaya-non-operasional",
   "Input Direct All": "direct-all",
   "Summary Direct All": "direct-all",
-  "Summary Biaya Non Operasional": "Summary Biaya Non Operasional",
-  "Summary Pendapatan Non Operasional": "Summary Pendapatan Non Operasional",
+  "Summary Biaya Non Operasional": "biaya-non-operasional",
+  "Summary Pendapatan Non Operasional": "pendapatan-non-operasional",
 };
 export const routingReport = {
   "Laba Rugi": "laba-rugi",

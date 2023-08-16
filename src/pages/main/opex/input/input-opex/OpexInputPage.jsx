@@ -17,12 +17,15 @@ const OpexInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile={constantExcellFile["opex"]["template-4"]}
-        // disabledImportExport={
-        //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
-        // }
-        // onChangeSelect={func.onChangeTahun}
-        // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
-        // dynamicFile={true}
+        disabledImportExport={value.rows.length === 0}
+        showType={true}
+        listMenuImport={[
+          {
+            description: "opex",
+            code_account: 0,
+          },
+        ]}
+        dynamicFile={true}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />

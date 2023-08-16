@@ -1,34 +1,51 @@
 import React from "react";
-import CapexSummaryLogic from "./CapexSummaryLogic";
-import TableComponent from "component/table/TableComponent";
-import HeaderComponent from "component/header/HeaderComponent";
 import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import { ReactGrid } from "@silevis/reactgrid";
+import Logic from "./Logic";
 
 const CapexSummary = () => {
-  const { value, func } = CapexSummaryLogic();
+  const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
         type="summary"
-        // onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onExport={func.downloadFile}
-        disabledImportExport={value.dataColumn.length <= 1}
-        // form={value.form}
+        listMenu={[
+          {
+            description: "capex",
+            disabled: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
       />
 
-      <FilterComponent form={value.form} onFinish={func.onFinish} isCodeIcp isCodeProject />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="summary" />
 
       <div className="custom-root-layout">
-        <TableComponent
-          dataSource={value.dataColumn}
-          columns={value.tableColumn}
-          loading={value.loading}
-          type="type-2"
-        />
+        <div style={{ margin: "10px" }}>
+          <div
+            style={{
+              overflowX: "auto",
+              overflowY: "auto",
+              marginBottom: 16,
+              paddingBottom: 16,
+            }}
+          >
+            <div
+              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              className="liquidity-planner-app"
+            >
+              <ReactGrid
+                rows={value.rows}
+                columns={value.columns}
+                stickyTopRows={1}
+                stickyLeftColumns={1}
+                onCellsChanged={(change) => func.onChangeTable(change)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

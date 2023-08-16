@@ -223,11 +223,9 @@ const Logic = () => {
       })
     );
 
-    const desc = dataGlobalRedux.indexImport;
+    // const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
-    const index = rows.findIndex((item) => item.description === desc);
-
-    const endpoint = rows[index].endpoint;
+    // const index = rows.findIndex((item) => item.description === desc);
 
     const formData = formDataUtils({
       ...codeFilter,
@@ -236,7 +234,7 @@ const Logic = () => {
     });
 
     try {
-      const res = await MainServices.post(`${endpoint}/import`, formData);
+      const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
       getData(codeFilter);
 
