@@ -132,7 +132,8 @@ const Logic = () => {
 
   // REFACTOR: func fetch api when using the dropdown cell and fetch api per type
   const onUpdateData = async (cell) => {
-    if (Object.keys(cell).length === 2) {
+    let l = Object.keys(cell).length;
+    if ((l === 2) || (l === 3)) {
       try {
         const formData = new FormData();
 

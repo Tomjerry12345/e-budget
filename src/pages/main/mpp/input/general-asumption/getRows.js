@@ -11,8 +11,11 @@ import {
   dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
-import { getMonthDuration, getMonthName, getMonthNameNew } from "values/Constant";
-import { getColumns } from "./getColumns";
+import {
+  getMonthDuration,
+  getMonthName,
+  getMonthNameNew,
+} from "values/Constant";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -38,7 +41,8 @@ export function getRootHeaderRow() {
 const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
-  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } = data;
+  const { jht, thr_period, bonus_period, jht_p, thr_period_p, bonus_period_p } =
+    data;
 
   list[0] = jht ?? 0 + thr_period ?? 0 + bonus_period ?? 0;
   list[1] = jht_p ?? 0 + thr_period_p ?? 0 + bonus_period_p ?? 0;
@@ -59,38 +63,66 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
 };
 
 function getGroupRows(groups) {
+  const {
+    id,
+    jht,
+    thr_period,
+    bonus_period,
+    jht_p,
+    thr_period_p,
+    bonus_period_p,
+    is_thr_period,
+    is_thr_period_p,
+    is_bonus_period,
+    is_bonus_period_p,
+  } = groups;
+
+  log({ id });
+
   return [
-    ...groups.map((d) => ({
-      rowId: d["id"] ?? generateUID(),
-      newRow: d["id"] === null,
-      height: ROW_HEIGHT,
+    {
+      rowId: generateUID(),
+      id: id,
+      forecast: "jht",
+      budget: "jht_p",
       cells: [
-        ...getColumns.map((e) => {
-          if (e.type === "text") {
-            if (e.nonEditabled === undefined || e.nonEditabled === false) {
-              return textCell(d[e.columnId] ?? "", "padding-left-lg");
-            } else {
-              return nonEditable(textCell(d[e.columnId] ?? "", "padding-left-lg"));
-            }
-          } else if (e.type === "number") {
-            if (e.nonEditabled === undefined || e.nonEditabled === false) {
-              return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false);
-            } else {
-              return nonEditable(
-                numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
-              );
-            }
-          }
-        }),
+        headerCell({ text: "BPJSTK JHT - Pemberi Kerja" }),
+        numberCell(jht ?? 0),
+        numberCell(jht_p ?? 0),
       ],
-    })),
+    },
+    {
+      rowId: generateUID(),
+      id: id,
+      forecast: "thr_period",
+      budget: "thr_period_p",
+      cells: [
+        headerCell({ text: "Periode Pembayaran THR" }),
+        dropDownCustomCell(thr_period, getMonthName(), is_thr_period),
+        dropDownCustomCell(thr_period_p, getMonthName(), is_thr_period_p),
+      ],
+    },
+    {
+      rowId: generateUID(),
+      id: id,
+      forecast: "bonus_period",
+      budget: "bonus_period_p",
+      cells: [
+        headerCell({ text: "Periode Pembayaran Bonus" }),
+        dropDownCustomCell(bonus_period, getMonthName(), is_bonus_period),
+        dropDownCustomCell(bonus_period_p, getMonthName(), is_bonus_period_p),
+      ],
+    },
   ];
 }
 
