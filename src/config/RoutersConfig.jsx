@@ -139,6 +139,8 @@ import MppSummary from "pages/main/mpp/summary/summary/MppSummary";
 import CapexSummary from "pages/main/capex/summary/capex-summary/CapexSummary";
 import BiayaNonOperasionalSummary from "pages/main/others/summary/biaya-non-operasional/BiayaNonOperasionalSummary";
 import PendapatanNonOperasionalSummary from "pages/main/others/summary/pendapatan-non-operasional/PendapatanNonOperasionalSummary";
+import PendapatanNonOperasionalPage from "pages/main/others/input/pendapatan-non-operasional/PendapatanNonOperasionalPage";
+import BiayaNonOperasionalPage from "pages/main/others/input/biaya-non-operasional/BiayaNonOperasionalPage";
 
 const RoutersConfig = () => {
   return (
@@ -352,6 +354,11 @@ const RoutersConfig = () => {
             <Route path="others-input/Input Asumsi" element={<OthersInputAsumsiPage />} />
             <Route path="summary/direct-all" element={<DirectAllSummary />} />
             <Route path="input/direct-all" element={<InputDirectAllPage />} />
+            <Route
+              path="input/pendapatan-non-operasional"
+              element={<PendapatanNonOperasionalPage />}
+            />
+            <Route path="input/biaya-non-operasional" element={<BiayaNonOperasionalPage />} />
 
             <Route
               path="summary/pendapatan-non-operasional"

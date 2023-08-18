@@ -14,12 +14,12 @@ const BiayaNonOperasionalPage = () => {
         type="input"
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/opex/opex_direct.xlsx"
+        downloadFile="file/others/biaya_non_operasional_direct.xlsx"
         disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {
-            description: "opex",
+            description: "biaya non operasional",
             code_account: 0,
           },
         ]}
