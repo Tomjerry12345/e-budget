@@ -421,7 +421,7 @@ export const disabledItemSummaryMenu = [
     false,
     false,
     false,
-    true,
+    false,
     true,
     true,
     true,

@@ -102,6 +102,21 @@ export const routingMpp = {
   "Input Biaya MPP Lainnya": "lainnya",
   "Input MPP Direct": "mpp",
 
+  "Summary Gaji": "gaji",
+  "Summary By THR": "thr",
+  "Summary By Lembur": "lembur",
+  "Summary By Makan dan Minum": "makan-minum",
+  "Summary By Pengobatan": "pengobatan",
+  "Summary By PPh Pasal 21": "pph21",
+  "Summary By BPJS TK": "bpjs-tk",
+  "Summary By BPJS Kesehatan": "bpjs-kesehatan",
+  "Summary By Transportasi": "transportasi",
+  "Summary By Komunikasi": "komunikasi",
+  "Summary By Pendidikan & Pelatihan": "pendidikan-pelatihan",
+  "Summary By Rekrutment & Assessment": "rekrutment-assesment",
+  "Summary By Uniform & Safety": "uniform-safety",
+  "Summary By DPLK": "dplk",
+  "Summary By MPP Lainnya": "lainnya",
   "Summary MPP": "mpp",
 };
 export const routingOthers = {
