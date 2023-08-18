@@ -150,6 +150,9 @@ export const allItemSummarySubMenu = [
     {
       description: "Summary Total Akumulasi Penyusutan",
     },
+    {
+      description: "Summary Capex",
+    },
   ],
   // 5 MPP
   [
@@ -433,7 +436,7 @@ export const disabledItemSummaryMenu = [
     true,
     true,
     true,
-    true,
+    false,
     true,
   ],
   // 6 Others

@@ -3,25 +3,30 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
-import { constantExcellFile } from "values/Constant";
 
-const OpexSummary = () => {
+const BiayaNonOperasionalPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
-        type="summary"
-        listMenu={[
+        className="more-modal-width-type1"
+        type="input"
+        onUploadFile={func.onUploadFile}
+        accesFile={value}
+        downloadFile="file/opex/opex_direct.xlsx"
+        disabledImportExport={value.rows.length === 0}
+        showType={true}
+        listMenuImport={[
           {
-            description: "summary opex",
-            disabled: value.linkExport === null,
+            description: "opex",
+            code_account: 0,
           },
         ]}
-        linkExport={value.linkExport}
+        dynamicFile={false}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="summary" />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
         <div style={{ margin: "10px" }}>
@@ -52,4 +57,4 @@ const OpexSummary = () => {
   );
 };
 
-export default OpexSummary;
+export default BiayaNonOperasionalPage;

@@ -59,6 +59,7 @@ const HeaderComponentTypeInput = ({
   listMenuImport,
   className,
   dynamicFile,
+  showType,
 }) => {
   const { value, func } = Logic();
   const [modalTitle, setModalTitle] = useState("Import");
@@ -95,6 +96,7 @@ const HeaderComponentTypeInput = ({
         loading={value.importRedux.loading}
         onChangeSelect={onChangeSelect}
         title={modalTitle}
+        type={showType}
       />
     </Header>
   );

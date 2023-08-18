@@ -12,16 +12,18 @@ const RevenueCogsInputPage = () => {
       <HeaderComponent
         className="more-modal-width-type1"
         type="input"
-        // onFinish={func.onFinish}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        // downloadFile={constantExcellFile["opex"]["template-4"]}
-        // disabledImportExport={
-        //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
-        // }
-        // onChangeSelect={func.onChangeTahun}
-        // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
-        // dynamicFile={true}
+        downloadFile="file/revenue-cogs/revenue_direct.xlsx"
+        disabledImportExport={value.rows.length === 0}
+        showType={true}
+        listMenuImport={[
+          {
+            description: "revenue",
+            code_account: 0,
+          },
+        ]}
+        dynamicFile={false}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />

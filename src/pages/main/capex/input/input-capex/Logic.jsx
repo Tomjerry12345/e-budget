@@ -203,18 +203,20 @@ const Logic = () => {
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = async (file) => {
+  const onUploadFile = async () => {
     dispatch(
       actionImport({
         loading: true,
       })
     );
 
-    const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
-    const index = rows.findIndex((item) => item.description === desc);
 
-    const endpoint = rows[index].endpoint;
+    let file;
+
+    acceptedFiles.forEach((f) => {
+      file = f;
+    });
 
     const formData = formDataUtils({
       ...codeFilter,
@@ -223,17 +225,15 @@ const Logic = () => {
     });
 
     try {
-      const res = await MainServices.post(`${endpoint}/import`, formData);
+      await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
       getData(codeFilter);
 
-      showNotif(dispatch, { res: res });
+      showNotif(200, "sukses import data");
 
       onSuccess();
     } catch (error) {
-      const err = error.response;
-
-      showNotif(dispatch, { res: err });
+      showNotif(400, error.message);
 
       dispatch(
         actionImport({

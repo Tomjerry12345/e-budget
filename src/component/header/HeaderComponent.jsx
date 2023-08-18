@@ -28,6 +28,7 @@ const HeaderComponent = ({
   disabledMenu,
   linkExport,
   dynamicFile = false,
+  showType = false,
 }) => {
   let component;
 
@@ -42,6 +43,7 @@ const HeaderComponent = ({
         onChangeSelect={onChangeSelect}
         listMenuImport={listMenuImport}
         dynamicFile={dynamicFile}
+        showType={showType}
       />
     );
   } else if (type === "summary") {

@@ -25,7 +25,7 @@ const Logic = () => {
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const ENDPOINT_URL = "direct/opex";
+  const ENDPOINT_URL = "direct/others-bno";
 
   const showNotif = (status, message) => {
     dispatch(
