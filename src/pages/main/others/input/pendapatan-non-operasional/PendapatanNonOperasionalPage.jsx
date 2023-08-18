@@ -4,7 +4,7 @@ import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
-const OpexInputPage = () => {
+const PendapatanNonOperasionalPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -57,4 +57,4 @@ const OpexInputPage = () => {
   );
 };
 
-export default OpexInputPage;
+export default PendapatanNonOperasionalPage;

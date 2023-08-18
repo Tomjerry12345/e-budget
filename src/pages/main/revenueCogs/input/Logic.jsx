@@ -5,9 +5,7 @@ import { actionImport, resetDataActionImport, val } from "redux/action/action.re
 import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
-import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, fullNewRow, getRows, updateTotalRow } from "./getRows";
-import { ViewColumnSharp } from "@mui/icons-material";
+import { fullNewRow, getRows, updateTotalRow } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -16,7 +14,6 @@ const Logic = () => {
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
-  const [currData, setCurrData] = useState();
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -29,16 +26,6 @@ const Logic = () => {
   const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "direct/revenue";
-
-  const responseShow = (res) => {
-    dispatch(
-      val({
-        status: res.data.responseCode,
-        message: res.data.responseDescription,
-      })
-    );
-    dispatch(actionData({ loading: false }));
-  };
 
   const showNotif = (status, message) => {
     dispatch(
@@ -216,18 +203,20 @@ const Logic = () => {
     acceptedFiles.length = 0;
   };
 
-  const onUploadFile = async (file) => {
+  const onUploadFile = async () => {
     dispatch(
       actionImport({
         loading: true,
       })
     );
 
-    const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
-    const index = rows.findIndex((item) => item.description === desc);
 
-    const endpoint = rows[index].endpoint;
+    let file;
+
+    acceptedFiles.forEach((f) => {
+      file = f;
+    });
 
     const formData = formDataUtils({
       ...codeFilter,
@@ -236,17 +225,15 @@ const Logic = () => {
     });
 
     try {
-      const res = await MainServices.post(`${endpoint}/import`, formData);
+      await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
       getData(codeFilter);
 
-      showNotif(dispatch, { res: res });
+      showNotif(200, "sukses import data");
 
       onSuccess();
     } catch (error) {
-      const err = error.response;
-
-      showNotif(dispatch, { res: err });
+      showNotif(400, error.message);
 
       dispatch(
         actionImport({
