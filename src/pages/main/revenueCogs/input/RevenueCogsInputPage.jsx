@@ -15,7 +15,7 @@ const RevenueCogsInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/revenue-cogs/revenue_direct.xlsx"
-        disabledImportExport={value.rows.length === 0}
+        // disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {

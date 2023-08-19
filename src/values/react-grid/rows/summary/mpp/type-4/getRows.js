@@ -1,7 +1,6 @@
 import {
   nonEditable,
   textCell,
-  monthHeaderCell,
   numberCell,
   totalCell,
   headerCell,
@@ -17,52 +16,26 @@ const TOTAL_DATA = 18;
 const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
 
-const COLOR_1 = "#107C41";
-
 export function getRootHeaderRow() {
   return [
     {
       rowId: "header",
       cells: [
-        headerCell({ text: "Grade" }),
-        headerCell({ text: "Sub grade" }),
-        headerCell({ text: "level" }),
+        headerCell({ text: "Account", rowspan: 2 }),
+        headerCell({ text: "Description", rowspan: 2 }),
 
         headerCell({
           text: "Forecast",
-          colspan: 5,
           style: {
             justifyContent: "center",
           },
         }),
-
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-
-        headerCell({ text: "" }),
-
         headerCell({
           text: "Budget",
-          colspan: 13,
           style: {
             justifyContent: "center",
           },
         }),
-
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-
-        headerCell({ text: "" }),
       ],
     },
     {
@@ -70,28 +43,8 @@ export function getRootHeaderRow() {
       cells: [
         headerCell({ text: "" }),
         headerCell({ text: "" }),
-        headerCell({ text: "" }),
-
-        headerCell({ text: "Sep" }),
-        headerCell({ text: "Okt" }),
-        headerCell({ text: "Nov" }),
-        headerCell({ text: "Des" }),
 
         headerCell({ text: "Total" }),
-
-        headerCell({ text: "Jan" }),
-        headerCell({ text: "Feb" }),
-        headerCell({ text: "Mar" }),
-        headerCell({ text: "Apr" }),
-        headerCell({ text: "Mei" }),
-        headerCell({ text: "Jun" }),
-        headerCell({ text: "jul" }),
-        headerCell({ text: "Agu" }),
-        headerCell({ text: "Sep" }),
-        headerCell({ text: "Okt" }),
-        headerCell({ text: "Nov" }),
-        headerCell({ text: "Des" }),
-
         headerCell({ text: "Total" }),
       ],
     },
@@ -142,9 +95,9 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
-const formatCell = (d, rowspanGrade, rowspanSubGrade) => {
+const formatCell = (d) => {
   return [
-    ...getColumns().map((e, i) => {
+    ...getColumns().map((e) => {
       if (e.type === "text") {
         if (e.nonEditabled === undefined || e.nonEditabled === false) {
           return textCell(d[e.columnId] ?? "", "padding-left-lg");
@@ -160,103 +113,22 @@ const formatCell = (d, rowspanGrade, rowspanSubGrade) => {
           );
         }
       } else if (e.type === "header") {
-        if (i === 0) {
-          return headerCell({ text: d[e.columnId][e.columnId], rowspan: rowspanGrade });
-        } else if (i === 1) {
-          return headerCell({
-            text: d[e.columnId][e.columnId],
-            rowspan: rowspanSubGrade,
-          });
-        } else if (i === 2) {
-          return headerCell({ text: d[e.columnId][e.columnId] });
-        } else {
-          return headerCell({ text: d[e.columnId] ?? "" });
-        }
+        return headerCell({ text: d[e.columnId][e.columnId] });
       }
     }),
   ];
 };
 
 function getGroupRows(groups) {
-  let currentGrade = null;
-  let currentSubGrade = null;
-  let rowspanGrade = 0;
-  let rowspanSubGrade = 0;
-
-  const lastData = groups[groups.length - 1];
-  const data = groups.slice(0, groups.length - 1);
-
-  let newLastData = [];
-
-  for (let k in lastData) {
-    newLastData.push({
-      grade: "total",
-      sub_grade: "",
-      level: k,
-      ...lastData[k],
-    });
-  }
-
-  // newLastData = newLastData.slice(0, newLastData.length - 2);
-
-  log({ newLastData });
+  const data = groups;
 
   return [
     ...data.map((d) => {
-      const { grade, sub_grade } = d;
-
-      if (grade.grade !== currentGrade) {
-        currentGrade = grade.grade;
-        rowspanGrade = 12;
-      } else {
-        rowspanGrade = 1;
-      }
-
-      if (sub_grade.sub_grade !== currentSubGrade) {
-        currentSubGrade = sub_grade.sub_grade;
-        rowspanSubGrade = 3;
-      } else {
-        rowspanSubGrade = 1;
-      }
-
       return {
         rowId: d["id"] ?? generateUID(),
         newRow: d["id"] === null,
         height: ROW_HEIGHT,
-        cells: formatCell(d, rowspanGrade, rowspanSubGrade),
-      };
-    }),
-
-    ...newLastData.map((d) => {
-      return {
-        rowId: generateUID(),
-        height: ROW_HEIGHT,
-        cells: [
-          ...getColumns().map((e) => {
-            if (e.type === "text") {
-              if (e.nonEditabled === undefined || e.nonEditabled === false) {
-                return textCell(d[e.columnId] ?? "", "padding-left-lg");
-              } else {
-                return nonEditable(textCell(d[e.columnId] ?? "", "padding-left-lg"));
-              }
-            } else if (e.type === "number") {
-              if (e.nonEditabled === undefined || e.nonEditabled === false) {
-                return numberCell(
-                  d[e.columnId] ?? 0,
-                  "padding-left-lg",
-                  null,
-                  e.format ?? false
-                );
-              } else {
-                return nonEditable(
-                  numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
-                );
-              }
-            } else if (e.type === "header") {
-              return headerCell({ text: d[e.columnId] ?? "" });
-            }
-          }),
-        ],
+        cells: formatCell(d),
       };
     }),
   ];

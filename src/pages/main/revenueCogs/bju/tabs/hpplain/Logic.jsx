@@ -39,7 +39,7 @@ const Logic = () => {
   useEffect(() => {
     log({ filterValues });
     if (filterValues !== null) {
-      if (filterValues.code_product !== undefined) onFinish(filterValues);
+      if (filterValues.code_project !== undefined) onFinish(filterValues);
     }
   }, [filterValues]);
 

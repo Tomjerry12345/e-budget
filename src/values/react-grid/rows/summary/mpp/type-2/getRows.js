@@ -1,7 +1,6 @@
 import {
   nonEditable,
   textCell,
-  monthHeaderCell,
   numberCell,
   totalCell,
   headerCell,
@@ -26,7 +25,6 @@ export function getRootHeaderRow() {
       cells: [
         headerCell({ text: "Grade" }),
         headerCell({ text: "Sub grade" }),
-        headerCell({ text: "level" }),
 
         headerCell({
           text: "Forecast",
@@ -68,7 +66,6 @@ export function getRootHeaderRow() {
     {
       rowId: "sub-header",
       cells: [
-        headerCell({ text: "" }),
         headerCell({ text: "" }),
         headerCell({ text: "" }),
 
@@ -142,7 +139,7 @@ export const updateTotalRow = (data) => {
   return rowTotal("Total", list);
 };
 
-const formatCell = (d, rowspanGrade, rowspanSubGrade) => {
+const formatCell = (d, rowspanGrade) => {
   return [
     ...getColumns().map((e, i) => {
       if (e.type === "text") {
@@ -163,11 +160,6 @@ const formatCell = (d, rowspanGrade, rowspanSubGrade) => {
         if (i === 0) {
           return headerCell({ text: d[e.columnId][e.columnId], rowspan: rowspanGrade });
         } else if (i === 1) {
-          return headerCell({
-            text: d[e.columnId][e.columnId],
-            rowspan: rowspanSubGrade,
-          });
-        } else if (i === 2) {
           return headerCell({ text: d[e.columnId][e.columnId] });
         } else {
           return headerCell({ text: d[e.columnId] ?? "" });
@@ -179,9 +171,7 @@ const formatCell = (d, rowspanGrade, rowspanSubGrade) => {
 
 function getGroupRows(groups) {
   let currentGrade = null;
-  let currentSubGrade = null;
   let rowspanGrade = 0;
-  let rowspanSubGrade = 0;
 
   const lastData = groups[groups.length - 1];
   const data = groups.slice(0, groups.length - 1);
@@ -197,33 +187,24 @@ function getGroupRows(groups) {
     });
   }
 
-  // newLastData = newLastData.slice(0, newLastData.length - 2);
-
-  log({ newLastData });
+  newLastData = newLastData.slice(0, newLastData.length - 1);
 
   return [
     ...data.map((d) => {
-      const { grade, sub_grade } = d;
+      const { grade } = d;
 
       if (grade.grade !== currentGrade) {
         currentGrade = grade.grade;
-        rowspanGrade = 12;
+        rowspanGrade = 4;
       } else {
         rowspanGrade = 1;
-      }
-
-      if (sub_grade.sub_grade !== currentSubGrade) {
-        currentSubGrade = sub_grade.sub_grade;
-        rowspanSubGrade = 3;
-      } else {
-        rowspanSubGrade = 1;
       }
 
       return {
         rowId: d["id"] ?? generateUID(),
         newRow: d["id"] === null,
         height: ROW_HEIGHT,
-        cells: formatCell(d, rowspanGrade, rowspanSubGrade),
+        cells: formatCell(d, rowspanGrade),
       };
     }),
 

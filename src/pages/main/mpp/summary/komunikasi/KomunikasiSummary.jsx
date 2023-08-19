@@ -4,29 +4,23 @@ import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
-const PendapatanNonOperasionalPage = () => {
+const KomunikasiSummary = () => {
   const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
-        className="more-modal-width-type1"
-        type="input"
-        onUploadFile={func.onUploadFile}
-        accesFile={value}
-        downloadFile="file/others/pendapatan_non_operasional_direct.xlsx"
-        // disabledImportExport={value.rows.length === 0}
-        showType={true}
-        listMenuImport={[
+        type="summary"
+        listMenu={[
           {
-            description: "pendapatan non operasional",
-            code_account: 0,
+            description: "mpp",
+            disabled: value.linkExport === null,
           },
         ]}
-        dynamicFile={false}
+        linkExport={value.linkExport}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="summary" />
 
       <div className="custom-root-layout">
         <div style={{ margin: "10px" }}>
@@ -57,4 +51,4 @@ const PendapatanNonOperasionalPage = () => {
   );
 };
 
-export default PendapatanNonOperasionalPage;
+export default KomunikasiSummary;

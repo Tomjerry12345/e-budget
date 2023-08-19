@@ -140,7 +140,7 @@ const FilterComponentLogic = ({
         code_location: resLocation !== null ? setLocation(resLocation) : [],
         code_dept: resDept !== null ? setDept(resDept) : [],
         code_icp: resIcp !== null ? setIcp(resIcp) : [],
-        code_project: setProject(resProject, code),
+        code_project: setProject(resProject),
       });
     } catch (err) {
       log({ err });
@@ -197,14 +197,13 @@ const FilterComponentLogic = ({
     return data;
   };
 
-  const setProject = (resProject, c) => {
+  const setProject = (resProject) => {
     let data;
 
     if (type === "input") {
       data = resProject.data.data.filter((item) => item.code !== "all");
       if (typeFilter === "not-show-first-filter-project") {
         data.shift();
-        log("typeFilter", data);
       }
     } else {
       data = resProject.data.data;
