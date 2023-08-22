@@ -11,7 +11,7 @@ const PenjualanBsuPage = () => {
       <div className="section-table">
         {value.rows &&
           value.rows.map((e, i) => (
-            <div style={{ margin: "10px" }}>
+            <div key={i} style={{ margin: "10px" }}>
               <div
                 style={{
                   display: "flex",

@@ -1,14 +1,22 @@
 export const tableList = {
   "Input Penjualan dan Potongan penjualan": [
     {
-      description: "Penjualan",
-      endpoint: "detailrevenue/bk",
-      file: "penjualan.xlsx",
+      description: "All data",
+      key: "All data",
+      endpoint: "detailrevenue/bsu",
       insert: false,
+      file: "all_data.xlsx",
     },
     // {
+    //   description: "Penjualan",
+    //   // key: "Penjualan",
+    //   endpoint: "detailrevenue/bsu",
+    //   insert: false,
+    // },
+    // {
     //   description: "Potongan penjualan",
-    //   endpoint: "detailrevenue/sale-discount",
+    //   // key: "Potongan penjualan 1",
+    //   endpoint: "detailrevenue/bsu-sale-discount",
     //   insert: false,
     // },
   ],

@@ -1,4 +1,4 @@
-const COL_WIDTH = 110;
+const COL_WIDTH = 130;
 
 export const type1 = [
   {
@@ -311,6 +311,51 @@ export const type6 = [
   { columnId: "total_2", width: COL_WIDTH, type: "number", format: true, nonEditabled: true },
 ];
 
+export const type7 = [
+  {
+    columnId: "code_product",
+    width: 200,
+    type: "text",
+    nonEditabled: true,
+  },
+  {
+    columnId: "description",
+    width: 200,
+    type: "text",
+    nonEditabled: true,
+  },
+
+  { columnId: "jan", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "feb", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "mar", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "apr", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "mei", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "jun", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "jul", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "agu", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "sep", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "okt", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "nov", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "des", width: COL_WIDTH, type: "number", format: true },
+
+  { columnId: "total_1", width: COL_WIDTH, type: "number", format: true, nonEditabled: true },
+
+  { columnId: "jan_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "feb_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "mar_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "apr_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "mei_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "jun_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "jul_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "agu_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "sep_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "okt_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "nov_p", width: COL_WIDTH, type: "number", format: true },
+  { columnId: "des_p", width: COL_WIDTH, type: "number", format: true },
+
+  { columnId: "total_2", width: COL_WIDTH, type: "number", format: true, nonEditabled: true },
+];
+
 export const getColumns = {
   "Stok Awal": type1,
   "Asumsi unit beli": type1,
@@ -321,6 +366,7 @@ export const getColumns = {
   "Volume / Unit": type1,
   Tarif: type3,
   "Asumsi trip": type3,
+  "All data": type7,
   Penjualan: type2,
   "Potongan penjualan": type4,
   "Pendapatan Operasional Lainnya": type6,

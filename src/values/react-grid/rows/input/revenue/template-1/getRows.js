@@ -13,15 +13,19 @@ export const updateTotalRow = (data, key) => {
   log({ newData });
 
   const list = newData
-    .map((e) => {
+    .map((e, j) => {
       const values = [];
       for (let i = FIRST_TOTAL[key]; i < END_TOTAL(key); i++) {
-        values.push(e.cells[i].value);
+        values.push(e.cells[i].value ?? 0);
       }
+
+      log({ values });
 
       return values;
     })
     .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
+
+  log({ list });
 
   return rowTotal("Total", list, key);
 };

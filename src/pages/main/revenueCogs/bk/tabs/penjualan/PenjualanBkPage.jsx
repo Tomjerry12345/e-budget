@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import Logic from "./Logic";
+import Logic from "./Logic.jsx";
 import { ReactGrid } from "@silevis/reactgrid";
 import { capitalize } from "values/react-grid/helpers";
 
@@ -9,45 +9,44 @@ const PenjualanBkPage = () => {
   return (
     <>
       <div className="section-table">
-        {value.rows &&
-          value.rows.map((e, i) => (
-            <div style={{ margin: "10px" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <Typography.Text>{capitalize(e.description)}</Typography.Text>
-              </div>
+        {value.rows.length > 0 ? (
+          <div style={{ margin: "10px" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography.Text>{capitalize("Penjualan")}</Typography.Text>
+            </div>
 
+            <div
+              style={{
+                overflowX: "auto",
+                overflowY: "auto",
+                marginBottom: 16,
+                paddingBottom: 16,
+              }}
+            >
               <div
-                style={{
-                  overflowX: "auto",
-                  overflowY: "auto",
-                  marginBottom: 16,
-                  paddingBottom: 16,
-                }}
+                style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+                className="liquidity-planner-app"
               >
-                <div
-                  style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
-                  className="liquidity-planner-app"
-                >
-                  <ReactGrid
-                    rows={e.data}
-                    columns={value.columns[e.description]}
-                    stickyTopRows={1}
-                    stickyLeftColumns={1}
-                    enableRangeSelection
-                    onCellsChanged={(change) => {
-                      func.onChangeTable(change, i, e);
-                    }}
-                  />
-                </div>
+                <ReactGrid
+                  rows={value.rows}
+                  columns={value.columns}
+                  stickyTopRows={1}
+                  stickyLeftColumns={1}
+                  enableRangeSelection
+                  onCellsChanged={(change) => {
+                    func.onChangeTable(change);
+                  }}
+                />
               </div>
             </div>
-          ))}
+          </div>
+        ) : null}
       </div>
     </>
   );

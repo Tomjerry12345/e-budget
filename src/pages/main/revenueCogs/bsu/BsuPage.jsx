@@ -7,6 +7,8 @@ import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
 import { actionRevenue } from "redux/action/action.reducer";
+import { log } from "values/Utilitas";
+import { tableList } from "./TableConstant";
 
 const BsuPage = () => {
   const [key, setKey] = useState(1);
@@ -38,9 +40,12 @@ const BsuPage = () => {
       code_project: null,
       periode: null,
     });
-    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+    log("perusahaan.code", perusahaan.code);
+
+    const l = tableList[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
       (e) => e.file !== undefined
     );
+
     setListMenu(l);
     dispatch(
       actionRevenue({
