@@ -141,6 +141,18 @@ import BiayaNonOperasionalSummary from "pages/main/others/summary/biaya-non-oper
 import PendapatanNonOperasionalSummary from "pages/main/others/summary/pendapatan-non-operasional/PendapatanNonOperasionalSummary";
 import PendapatanNonOperasionalPage from "pages/main/others/input/pendapatan-non-operasional/PendapatanNonOperasionalPage";
 import BiayaNonOperasionalPage from "pages/main/others/input/biaya-non-operasional/BiayaNonOperasionalPage";
+import GajiSummary from "pages/main/mpp/summary/gaji/GajiSummary";
+import LemburSummary from "pages/main/mpp/summary/lembur/LemburSummary";
+import UniformSafetySummary from "pages/main/mpp/summary/uniform-safety/UniformSafetySummary";
+import MakanMinumSummary from "pages/main/mpp/summary/makan-minum/MakanMinumSummary";
+import PengobatanSummary from "pages/main/mpp/summary/pengobatan/PengobatanSummary";
+import Pph21Summary from "pages/main/mpp/summary/pph-21/Pph21Summary";
+import BpjsTkSummary from "pages/main/mpp/summary/bpjs-tk/BpjsTkSummary";
+import BpjsKesehatanSummary from "pages/main/mpp/summary/bpjs-kesehatan/BpjsKesehatanSummary";
+import KomunikasiSummary from "pages/main/mpp/summary/komunikasi/KomunikasiSummary";
+import PendidikanPelatihanSummary from "pages/main/mpp/summary/pendidikan-pelatihan/PendidikanPelatihanSummary";
+import RekrutmentAssessmentSummary from "pages/main/mpp/summary/rekrutment-assesment/RekrutmentAssessmentSummary";
+import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSummary";
 
 const RoutersConfig = () => {
   return (
@@ -348,6 +360,25 @@ const RoutersConfig = () => {
             <Route path="input/lainnya" element={<MppLainnyaPage />} />
             <Route path="input/mpp" element={<MppInputPage />} />
 
+            <Route path="summary/gaji" element={<GajiSummary />} />
+            <Route path="summary/lembur" element={<LemburSummary />} />
+            <Route path="summary/makan-minum" element={<MakanMinumSummary />} />
+            <Route path="summary/pengobatan" element={<PengobatanSummary />} />
+            <Route path="summary/pph21" element={<Pph21Summary />} />
+            <Route path="summary/bpjs-tk" element={<BpjsTkSummary />} />
+            <Route path="summary/bpjs-kesehatan" element={<BpjsKesehatanSummary />} />
+            <Route path="summary/transportasi" element={<TransportasiSummaryPage />} />
+            <Route path="summary/komunikasi" element={<KomunikasiSummary />} />
+            <Route
+              path="summary/pendidikan-pelatihan"
+              element={<PendidikanPelatihanSummary />}
+            />
+            <Route
+              path="summary/rekrutment-assesment"
+              element={<RekrutmentAssessmentSummary />}
+            />
+            <Route path="summary/uniform-safety" element={<UniformSafetySummary />} />
+            <Route path="summary/lainnya" element={<MppLainnyaSummary />} />
             <Route path="summary/mpp" element={<MppSummary />} />
           </Route>
           <Route path="others">

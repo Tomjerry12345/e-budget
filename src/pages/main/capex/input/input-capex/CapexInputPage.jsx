@@ -15,7 +15,7 @@ const CapexInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/capex/capex_direct.xlsx"
-        disabledImportExport={value.rows.length === 0}
+        // disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {

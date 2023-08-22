@@ -115,7 +115,7 @@ export const routingMpp = {
   "Summary By Pendidikan & Pelatihan": "pendidikan-pelatihan",
   "Summary By Rekrutment & Assessment": "rekrutment-assesment",
   "Summary By Uniform & Safety": "uniform-safety",
-  "Summary By DPLK": "dplk",
+  // "Summary By DPLK": "dplk",
   "Summary By MPP Lainnya": "lainnya",
   "Summary MPP": "mpp",
 };

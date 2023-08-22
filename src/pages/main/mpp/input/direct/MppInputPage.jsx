@@ -15,7 +15,7 @@ const MppInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/mpp/mpp_direct.xlsx"
-        disabledImportExport={value.rows.length === 0}
+        // disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {

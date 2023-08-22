@@ -15,7 +15,7 @@ const PendapatanNonOperasionalPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/others/pendapatan_non_operasional_direct.xlsx"
-        disabledImportExport={value.rows.length === 0}
+        // disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {

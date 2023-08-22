@@ -7,6 +7,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
 import { actionRevenue } from "redux/action/action.reducer";
+import { tableList } from "./TableConstant";
 
 const BkPage = () => {
   const [key, setKey] = useState(1);
@@ -38,7 +39,7 @@ const BkPage = () => {
       code_project: null,
       periode: null,
     });
-    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
+    const l = tableList[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
       (e) => e.file !== undefined
     );
     setListMenu(l);
@@ -102,11 +103,12 @@ const BkPage = () => {
             setIsMoveTabs(!isMoveTabs);
           }}
         />
+
         <FilterComponent
           onFinish={onFinish}
           isCodeIcp
-          isCodeProject
-          isCodeProduct={key !== 1}
+          isCodeProject={key !== 1}
+          isCodeProduct
           type="input"
           codeCompany={perusahaan.code}
           form={form}

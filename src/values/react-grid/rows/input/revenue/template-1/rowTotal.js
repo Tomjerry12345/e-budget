@@ -37,6 +37,7 @@ export const rowTotal = (titleTotal, data, key) => {
     Tarif: type1(titleTotal, data),
     "Asumsi trip": type1(titleTotal, data),
     Penjualan: type1(titleTotal, data),
+    "All data": type1(titleTotal, data),
     "Potongan penjualan": type1(titleTotal, data),
     "Pendapatan Operasional Lainnya": type1(titleTotal, data),
     "HPP Variable": type1(titleTotal, data),

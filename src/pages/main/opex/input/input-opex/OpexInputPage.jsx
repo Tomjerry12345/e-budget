@@ -15,7 +15,7 @@ const OpexInputPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/opex/opex_direct.xlsx"
-        disabledImportExport={value.rows.length === 0}
+        // disabledImportExport={value.rows.length === 0}
         showType={true}
         listMenuImport={[
           {

@@ -98,6 +98,7 @@ export const reactgridNewRow = (id, key) => {
     Tarif: type1(),
     "Asumsi trip": type1(),
     Penjualan: type1(),
+    "All data": type1(),
     "Potongan penjualan": type2(),
     "Pendapatan Operasional Lainnya": type1(),
     "HPP Variable": type2(),

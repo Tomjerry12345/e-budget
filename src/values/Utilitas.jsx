@@ -28,7 +28,7 @@ export const logO = (m) => {
 
 export const logObj = (tag, message) => console.log(`${tag} => ${JSON.stringify(message)}`);
 
-export const logS = (tag, message) => console.log(`${tag} => ${message}`);
+export const logS = (tag, message) => console.log(`[d] ${tag}`, message);
 
 export const getSizeScreen = (set) => {
   set({
