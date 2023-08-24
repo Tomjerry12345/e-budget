@@ -6,12 +6,14 @@ export const dataGlobalSlice = createSlice({
     indexImport: 0,
     sizeDataRevenue: 0,
     typeRevenueImport: null,
+    year: null,
   },
   reducers: {
     actionData: (state, action) => {
       state.indexImport = action.payload.indexImport ?? state.indexImport;
       state.sizeDataRevenue = action.payload.sizeDataRevenue ?? state.sizeDataRevenue;
       state.typeRevenueImport = action.payload.typeRevenueImport ?? state.typeRevenueImport;
+      state.year = action.payload.year ?? state.year;
     },
     resetData: (state) => {
       state.indexImport = 0;
@@ -19,6 +21,7 @@ export const dataGlobalSlice = createSlice({
     },
     resetTypeRevenueImport: (state) => {
       state.typeRevenueImport = null;
+      state.year = null;
     },
   },
 });

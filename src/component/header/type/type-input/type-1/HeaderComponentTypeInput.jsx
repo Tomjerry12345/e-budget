@@ -60,6 +60,7 @@ const HeaderComponentTypeInput = ({
   className,
   dynamicFile,
   showType,
+  showYear
 }) => {
   const { value, func } = Logic();
   const [modalTitle, setModalTitle] = useState("Import");
@@ -97,6 +98,7 @@ const HeaderComponentTypeInput = ({
         onChangeSelect={onChangeSelect}
         title={modalTitle}
         type={showType}
+        showYear={showYear}
       />
     </Header>
   );

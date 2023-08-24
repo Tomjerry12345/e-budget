@@ -16,6 +16,7 @@ const RevenueCogsInputPage = () => {
         accesFile={value}
         downloadFile="file/revenue-cogs/revenue_direct.xlsx"
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "revenue",

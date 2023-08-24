@@ -17,6 +17,7 @@ const CapexInputPage = () => {
         downloadFile="file/capex/capex_direct.xlsx"
         // disabledImportExport={value.rows.length === 0}
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "capex",

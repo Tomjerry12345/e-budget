@@ -249,6 +249,10 @@ const Logic = () => {
 
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
 
+    const date = new Date();
+
+    const year = dataGlobalRedux.year ?? `${date.getFullYear()}`;
+
     let file;
 
     acceptedFiles.forEach((f) => {
@@ -256,13 +260,14 @@ const Logic = () => {
     });
 
     const formData = formDataUtils({
-      ...codeFilter,
+      // ...codeFilter,
       file,
       type,
+      year,
     });
 
     try {
-      await MainServices.post(`direct/all/import`, formData);
+      await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
       getData(codeFilter);
 

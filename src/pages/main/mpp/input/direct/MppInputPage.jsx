@@ -17,6 +17,7 @@ const MppInputPage = () => {
         downloadFile="file/mpp/mpp_direct.xlsx"
         // disabledImportExport={value.rows.length === 0}
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "mpp",

@@ -17,6 +17,7 @@ const PendapatanNonOperasionalPage = () => {
         downloadFile="file/others/pendapatan_non_operasional_direct.xlsx"
         // disabledImportExport={value.rows.length === 0}
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "pendapatan non operasional",
