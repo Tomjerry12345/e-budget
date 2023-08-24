@@ -1,50 +1,57 @@
 import React from "react";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../../component/table/TableComponent";
-import InputDirectAllLogic from "./InputDirectAllLogic";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import { ReactGrid } from "@silevis/reactgrid";
+import Logic from "./Logic";
 
 const InputDirectAllPage = () => {
-  const { value, func } = InputDirectAllLogic();
+  const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
+        className="more-modal-width-type1"
         type="input"
-        // onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onChangeLoadingUpload={(set, setImport) => {
-          set(value.loadingUpload);
-
-          if (value.uploadSucces === true) {
-            setImport(false);
-            func.setUploadSucces(null);
-          }
-        }}
         onUploadFile={func.onUploadFile}
         accesFile={value}
-        downloadFile="file/directall.xlsx"
-        disabledImportExport={value.dataColumnInput.length <= 1}
-        onChangeSelect={func.onChangeTahun}
+        downloadFile="file/others/direct_all.xlsx"
+        // disabledImportExport={value.rows.length === 0}
+        showType={true}
+        listMenuImport={[
+          {
+            description: "direct all",
+            code_account: 0,
+          },
+        ]}
+        dynamicFile={false}
       />
 
-      <FilterComponent
-        onFinish={func.onFinish}
-        isCodeIcp
-        isCodeProject
-        type="input"
-      />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
 
       <div className="custom-root-layout">
-        <TableComponent
-          variant="input"
-          dataSource={value.dataColumnInput}
-          columns={value.columns}
-          loading={value.loading}
-          listKeyParent={value.listKeyParent}
-        />
+        <div style={{ margin: "10px" }}>
+          <div
+            style={{
+              overflowX: "auto",
+              overflowY: "auto",
+              marginBottom: 16,
+              paddingBottom: 16,
+            }}
+          >
+            <div
+              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              className="liquidity-planner-app"
+            >
+              <ReactGrid
+                rows={value.rows}
+                columns={value.columns}
+                stickyTopRows={1}
+                stickyLeftColumns={1}
+                onCellsChanged={(change) => func.onChangeTable(change)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

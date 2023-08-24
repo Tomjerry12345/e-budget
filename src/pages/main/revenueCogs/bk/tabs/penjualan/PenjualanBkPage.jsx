@@ -8,7 +8,12 @@ const PenjualanBkPage = () => {
 
   return (
     <>
-      <div className="section-table">
+      <div
+        className="section-table"
+        style={{
+          height: "calc(100vh - 292px)",
+        }}
+      >
         {value.rows.length > 0 ? (
           <div style={{ margin: "10px" }}>
             <div

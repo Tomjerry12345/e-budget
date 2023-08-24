@@ -1,9 +1,12 @@
+import { getMonthDuration, getMonthName } from "values/Constant";
 import {
   nonEditable,
   textCell,
   monthHeaderCell,
+  rootHeaderCell,
   numberCell,
   totalCell,
+  dropDownCustomCell,
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -15,6 +18,8 @@ const ROW_HEIGHT = 32;
 const TOTAL_DATA = 18;
 const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
+
+const COLOR_1 = "#107C41";
 
 export function getRootHeaderRow() {
   return {
@@ -106,6 +111,8 @@ function getGroupRows(groups) {
     ...groups.map((d) => ({
       rowId: d["id"] ?? generateUID(),
       newRow: d["id"] === null,
+      code_parent: d["code_parent"],
+      parent: d["parent"],
       height: ROW_HEIGHT,
       cells: [
         ...getColumns().map((e) => {

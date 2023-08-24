@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { formDataUtils, log } from "values/Utilitas";
+import { formDataUtils, log, logS } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
 import { getRootHeaderRow, fullNewRow, getRows, updateTotalRow } from "./getRows";
@@ -15,6 +15,7 @@ const Logic = () => {
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
+  const [dataAssumption, setAssumption] = useState([]);
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -100,6 +101,10 @@ const Logic = () => {
     const url = `${ENDPOINT_URL}`;
     try {
       const { data } = await MainServices.get(url, params);
+      const resGeneralAssumption = await MainServices.get(
+        "detail-mpp/headcount-assumption",
+        params
+      );
       let r;
       if (data.data.length > 0) {
         r = getRows({
@@ -108,6 +113,7 @@ const Logic = () => {
       } else {
         r = fullNewRow();
       }
+      setAssumption(resGeneralAssumption.data.data);
       setRows(r);
     } catch (error) {
       // Tangani error jika ada
@@ -121,51 +127,53 @@ const Logic = () => {
   };
 
   const onChangeTable = async (change) => {
-    const newRows = [...rows];
-    let isChange;
+    try {
+      const newRows = [...rows];
+      let isChange;
+      for (const c of change) {
+        const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
-    for (const c of change) {
-      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+        const type = c.newCell.type;
 
-      const type = c.newCell.type;
+        const length = newRows.length;
 
-      const length = newRows.length;
+        let value;
 
-      let value;
+        const column_id = c.columnId;
 
-      if (type === "text") {
-        newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
-      } else {
-        value = c.newCell.value;
-        if (!isNaN(value)) {
-          newRows[rowIndex].cells[columnIndex].value = value;
-
-          // let jumlahBulan = 0;
-          // let tarif = newRows[rowIndex].cells[16].value;
-
-          // const newCell = newRows[rowIndex].cells.map((e, j) => {
-          //   if (j >= 3 && j <= 14) jumlahBulan += e.value;
-          //   if (j === 15) e.value = jumlahBulan;
-          //   if (j === 17) e.value = jumlahBulan * tarif;
-          //   if (j >= 18) e.value = newRows[rowIndex].cells[j - 15].value * tarif;
-          //   return e;
-          // });
-
-          // newRows[rowIndex].cells = newCell;
-
+        if (type === "text") {
+          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
           isChange = true;
         } else {
-          isChange = false;
-        }
-      }
+          value = c.newCell.value;
+          if (!isNaN(value)) {
+            newRows[rowIndex].cells[columnIndex].value = value;
 
-      if (isChange) {
-        try {
+            const sColumnId = column_id.split("_");
+            const typeColumn = sColumnId[sColumnId.length - 1] !== "p" ? "forecast" : "budget";
+            const dAsumption = dataAssumption[rowIndex - 2];
+            const vAsumption = dAsumption[typeColumn];
+
+            const i = typeColumn === "forecast" ? 4 : 7;
+
+            const premi_inhealth = newRows[rowIndex].cells[i - 2].value;
+            const jumlah_anggota = newRows[rowIndex].cells[i - 1].value;
+
+            const sum = premi_inhealth * (jumlah_anggota + vAsumption);
+
+            newRows[rowIndex].cells[i].value = sum;
+
+            isChange = true;
+          } else {
+            isChange = false;
+          }
+        }
+
+        if (isChange) {
           const id = c.rowId;
-          const column_id = c.columnId;
+
           const isNewRow = newRows[rowIndex].newRow;
           const gradeId = newRows[rowIndex].gradeId;
           const subGradeId = newRows[rowIndex].subGradeId;
@@ -194,16 +202,15 @@ const Logic = () => {
             await MainServices.post(`${ENDPOINT_URL}/update`, formData);
           }
 
-          newRows[length - 1] = updateTotalRow(newRows);
-        } catch (e) {
-          log({ e });
+          // newRows[length - 1] = updateTotalRow(newRows);
         }
       }
+      showNotif(200, "Sukses update data");
+
+      setRows(newRows);
+    } catch (e) {
+      log({ e });
     }
-
-    showNotif(200, "Sukses update data");
-
-    setRows(newRows);
   };
 
   const onSuccess = () => {

@@ -90,13 +90,9 @@ export const getKeyByValue = (object, value) => {
 };
 
 export const cekToken = async (navigate) => {
-  console.log("token");
-  const token = getToken();
-
   try {
+    const token = getToken();
     await MainServices.get("company/list");
-
-    console.log("getExpired");
 
     if (token === null) {
       navigate("/login");

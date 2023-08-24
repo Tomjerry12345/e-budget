@@ -1,40 +1,49 @@
 import React from "react";
-
-import DirectAllSummaryLogic from "./DirectAllSummaryLogic";
-import HeaderComponent from "../../../../../component/header/HeaderComponent";
-import FilterComponent from "../../../../../component/filter/FilterComponent";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
-import "./style.css";
+import Logic from "./Logic";
 
-const DirectAllSummary = () => {
-  const { value, func } = DirectAllSummaryLogic();
+const DIrectAllSummary = () => {
+  const { value, func } = Logic();
 
   return (
     <>
       <HeaderComponent
-        type="summary"
-        // onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onExport={func.downloadFile}
-        disabledImportExport={value.rows.length <= 1}
+        type="summary-direct-all"
+        listMenu={[
+          {
+            description: "direct all",
+            before: value.linkExport === null,
+          },
+        ]}
+        linkExport={value.linkExport}
       />
 
-      <FilterComponent onFinish={func.onFinish} form={value.form} isCodeIcp isCodeProject />
+      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="summary" />
 
       <div className="custom-root-layout">
-        <div style={{ overflowX: "auto", overflowY: "auto" }}>
+        <div style={{ margin: "10px" }}>
           <div
-            style={{ width: "100%", height: "calc(100vh - 239px)" }}
-            className="liquidity-planner-app"
+            style={{
+              overflowX: "auto",
+              overflowY: "auto",
+              marginBottom: 16,
+              paddingBottom: 16,
+            }}
           >
-            <ReactGrid
-              rows={value.rows}
-              columns={value.columns}
-              stickyTopRows={1}
-              stickyLeftColumns={1}
-            />
+            <div
+              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              className="liquidity-planner-app"
+            >
+              <ReactGrid
+                rows={value.rows}
+                columns={value.columns}
+                stickyTopRows={1}
+                stickyLeftColumns={1}
+                onCellsChanged={(change) => func.onChangeTable(change)}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -42,4 +51,4 @@ const DirectAllSummary = () => {
   );
 };
 
-export default DirectAllSummary;
+export default DIrectAllSummary;

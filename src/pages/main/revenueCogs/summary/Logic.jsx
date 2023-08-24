@@ -10,7 +10,8 @@ const Logic = () => {
   const columns = getColumns();
   const [rows, setRows] = useState([]);
 
-  const ENDPOINT_URL = "direct/mpp";
+  const ENDPOINT_URL = "direct/revenue";
+  const linkCalculate = "revenue/calculate";
 
   const formatingFilter = (filter) => {
     const {
@@ -102,6 +103,7 @@ const Logic = () => {
       rows,
       loading,
       linkExport,
+      linkCalculate,
     },
     func: {
       onFinish,

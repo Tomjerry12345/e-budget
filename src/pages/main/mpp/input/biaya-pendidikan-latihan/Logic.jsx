@@ -143,18 +143,20 @@ const Logic = () => {
         if (!isNaN(value)) {
           newRows[rowIndex].cells[columnIndex].value = value;
 
-          // let jumlahBulan = 0;
-          // let tarif = newRows[rowIndex].cells[16].value;
+          let jumlahBulan = 0;
 
-          // const newCell = newRows[rowIndex].cells.map((e, j) => {
-          //   if (j >= 3 && j <= 14) jumlahBulan += e.value;
-          //   if (j === 15) e.value = jumlahBulan;
-          //   if (j === 17) e.value = jumlahBulan * tarif;
-          //   if (j >= 18) e.value = newRows[rowIndex].cells[j - 15].value * tarif;
-          //   return e;
-          // });
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= 3 && j <= 6) jumlahBulan += e.value;
+            if (j === 7) {
+              e.value = jumlahBulan;
+              jumlahBulan = 0;
+            }
+            if (j >= 9 && j <= 20) e.value = jumlahBulan += e.value;
+            if (j === 21) e.value = jumlahBulan;
+            return e;
+          });
 
-          // newRows[rowIndex].cells = newCell;
+          newRows[rowIndex].cells = newCell;
 
           isChange = true;
         } else {
@@ -193,8 +195,6 @@ const Logic = () => {
 
             await MainServices.post(`${ENDPOINT_URL}/update`, formData);
           }
-
-          newRows[length - 1] = updateTotalRow(newRows);
         } catch (e) {
           log({ e });
         }

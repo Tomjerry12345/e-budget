@@ -183,7 +183,7 @@ const Logic = () => {
             }
           }
 
-          for (let i = rowIndex; i < newRows.length; i++) {
+          for (let i = rowIndex; i < newRows.length - 1; i++) {
             if (newRows[i].parent === true) {
               last = i - 1;
 
@@ -267,7 +267,7 @@ const Logic = () => {
     });
 
     try {
-      const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
+      await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
       getData(codeFilter);
 

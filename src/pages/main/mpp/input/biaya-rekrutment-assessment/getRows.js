@@ -275,7 +275,7 @@ function getGroupRows(groups) {
           numberCell(psychotest),
           numberCell(mcu),
           numberCell(welcome_pack),
-          numberCell(recruitment_total),
+          nonEditable(numberCell(recruitment_total)),
 
           numberCell(assess_sep),
           numberCell(assess_okt),
