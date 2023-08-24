@@ -183,7 +183,7 @@ const Logic = () => {
             }
           }
 
-          for (let i = rowIndex; i < newRows.length; i++) {
+          for (let i = rowIndex; i < newRows.length - 1; i++) {
             if (newRows[i].parent === true) {
               last = i - 1;
 

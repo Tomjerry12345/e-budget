@@ -16,8 +16,13 @@ const CapexSummary = () => {
             description: "capex",
             disabled: value.linkExport === null,
           },
+          {
+            description: "calculate data detail",
+            disabled: false,
+          },
         ]}
         linkExport={value.linkExport}
+        linkCalculate={value.linkCalculate}
       />
 
       <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="summary" />

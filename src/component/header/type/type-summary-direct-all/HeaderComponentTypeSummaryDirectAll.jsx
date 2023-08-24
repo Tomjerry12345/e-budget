@@ -4,19 +4,12 @@ import Logic from "./Logic";
 
 import "../style.scss";
 import { log } from "values/Utilitas";
-import ModalCalculate from "./modal-calculate/ModalCalculate";
+import ModalExportSummaryDirectAll from "./modal-export/ModalExportSummaryDirectAll";
 
 const { Header } = Layout;
 const { Text } = Typography;
 
-const ModalMenuMore = ({
-  open,
-  onCancel,
-  listMenu,
-  onExport,
-  linkExport,
-  onClickCalculate,
-}) => {
+const ModalMenuMore = ({ open, onCancel, listMenu, onExport, linkExport, onClickBefore }) => {
   log({ listMenu });
   return (
     <Modal
@@ -28,19 +21,16 @@ const ModalMenuMore = ({
       closable={false}
       mask={false}
     >
-      {listMenu.map((e, i) => (
+      {listMenu.map((e) => (
         <Button
           className="btn"
           type="text"
-          // icon={<DownloadOutlined />}
-          disabled={e.disabled}
           onClick={() => {
-            if (i === 0) {
+            if (e.before) {
+              onClickBefore();
+            } else {
               onExport(e, linkExport);
-            } else if (i === 1) {
-              onClickCalculate();
             }
-
             onCancel();
           }}
         >
@@ -51,7 +41,7 @@ const ModalMenuMore = ({
   );
 };
 
-const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport, linkCalculate }) => {
+const HeaderComponentTypeSummaryDirectAll = ({ listMenu, disabledMenu, linkExport }) => {
   const { value, func } = Logic();
 
   return (
@@ -71,17 +61,16 @@ const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport, linkCa
         onExport={func.onExport}
         disabledMenu={disabledMenu}
         linkExport={linkExport}
-        onClickCalculate={func.onClickCalculate}
+        onClickBefore={func.onClickBefore}
       />
 
-      <ModalCalculate
+      <ModalExportSummaryDirectAll
         open={value.openModal}
-        onCancel={func.onCloseCalculate}
-        title={`calculate data`}
-        linkCalculate={linkCalculate}
+        onCancel={func.onCloseBefore}
+        title={`export  ${value.header}`}
       />
     </Header>
   );
 };
 
-export default HeaderComponentTypeSummary;
+export default HeaderComponentTypeSummaryDirectAll;

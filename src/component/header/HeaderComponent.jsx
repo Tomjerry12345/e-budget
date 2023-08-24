@@ -2,6 +2,7 @@ import HeaderComponentTypeCoa1 from "./type/type-coa/type-1/HeaderComponentTypeC
 import HeaderComponentTypeCoa2 from "./type/type-coa/type-2/HeaderComponentTypeCoa2";
 import HeaderComponentTypeInput from "./type/type-input/type-1/HeaderComponentTypeInput";
 import HeaderComponentTypeRevenuePerusahaan from "./type/type-revenue-perusahaan/HeaderComponentTypeRevenuePerusahaan";
+import HeaderComponentTypeSummaryDirectAll from "./type/type-summary-direct-all/HeaderComponentTypeSummaryDirectAll";
 import HeaderComponentTypeSummary from "./type/type-summary/HeaderComponentTypeSummary";
 
 const HeaderComponent = ({
@@ -27,6 +28,7 @@ const HeaderComponent = ({
   listMenu = [],
   disabledMenu,
   linkExport,
+  linkCalculate,
   dynamicFile = false,
   showType = false,
 }) => {
@@ -49,6 +51,15 @@ const HeaderComponent = ({
   } else if (type === "summary") {
     component = (
       <HeaderComponentTypeSummary
+        listMenu={listMenu}
+        disabledMenu={disabledMenu}
+        linkExport={linkExport}
+        linkCalculate={linkCalculate}
+      />
+    );
+  } else if (type === "summary-direct-all") {
+    component = (
+      <HeaderComponentTypeSummaryDirectAll
         listMenu={listMenu}
         disabledMenu={disabledMenu}
         linkExport={linkExport}

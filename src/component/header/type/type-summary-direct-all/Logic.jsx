@@ -19,6 +19,7 @@ const Logic = () => {
     const q = split[split.length - 1];
 
     const h = getKeyByValue(allRouting[split[2]], q);
+
     setHeader(h[1] === undefined ? h[0] : split[3] === "input" ? h[0] : h[1]);
   }, []);
 
@@ -28,6 +29,14 @@ const Logic = () => {
 
   const onCloseMore = () => {
     setMore(false);
+  };
+
+  const onClickBefore = () => {
+    setOpenModal(true);
+  };
+
+  const onCloseBefore = () => {
+    setOpenModal(false);
   };
 
   const onExport = async (e, linkExport) => {
@@ -66,14 +75,6 @@ const Logic = () => {
     }
   };
 
-  const onClickCalculate = () => {
-    setOpenModal(true);
-  };
-
-  const onCloseCalculate = () => {
-    setOpenModal(false);
-  };
-
   const responseShow = ({ status, message }) => {
     dispatch(
       val({
@@ -93,8 +94,8 @@ const Logic = () => {
       onClickMore,
       onCloseMore,
       onExport,
-      onClickCalculate,
-      onCloseCalculate,
+      onClickBefore,
+      onCloseBefore,
     },
   };
 };

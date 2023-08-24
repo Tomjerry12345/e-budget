@@ -5,7 +5,7 @@ import {
   totalCell,
   headerCell,
 } from "values/react-grid/cells";
-import { createArray, generateUID, log } from "values/Utilitas";
+import { createArray, generateUID, log, logS } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
@@ -26,16 +26,47 @@ export function getRootHeaderRow() {
 
         headerCell({
           text: "Forecast",
+          colspan: 13,
           style: {
             justifyContent: "center",
           },
         }),
+
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({ text: "" }),
+
         headerCell({
           text: "Budget",
+          colspan: 13,
           style: {
             justifyContent: "center",
           },
         }),
+
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({ text: "" }),
       ],
     },
     {
@@ -44,7 +75,34 @@ export function getRootHeaderRow() {
         headerCell({ text: "" }),
         headerCell({ text: "" }),
 
+        headerCell({ text: "Jan" }),
+        headerCell({ text: "Feb" }),
+        headerCell({ text: "Mar" }),
+        headerCell({ text: "Apr" }),
+        headerCell({ text: "Mei" }),
+        headerCell({ text: "Jun" }),
+        headerCell({ text: "jul" }),
+        headerCell({ text: "Agu" }),
+        headerCell({ text: "Sep" }),
+        headerCell({ text: "Okt" }),
+        headerCell({ text: "Nov" }),
+        headerCell({ text: "Des" }),
+
         headerCell({ text: "Total" }),
+
+        headerCell({ text: "Jan" }),
+        headerCell({ text: "Feb" }),
+        headerCell({ text: "Mar" }),
+        headerCell({ text: "Apr" }),
+        headerCell({ text: "Mei" }),
+        headerCell({ text: "Jun" }),
+        headerCell({ text: "jul" }),
+        headerCell({ text: "Agu" }),
+        headerCell({ text: "Sep" }),
+        headerCell({ text: "Okt" }),
+        headerCell({ text: "Nov" }),
+        headerCell({ text: "Des" }),
+
         headerCell({ text: "Total" }),
       ],
     },
@@ -98,6 +156,7 @@ export const updateTotalRow = (data) => {
 const formatCell = (d) => {
   return [
     ...getColumns().map((e) => {
+      logS(e.columnId, d[e.columnId]);
       if (e.type === "text") {
         if (e.nonEditabled === undefined || e.nonEditabled === false) {
           return textCell(d[e.columnId] ?? "", "padding-left-lg");
@@ -113,7 +172,7 @@ const formatCell = (d) => {
           );
         }
       } else if (e.type === "header") {
-        return headerCell({ text: d[e.columnId][e.columnId] });
+        return headerCell({ text: d[e.columnId] });
       }
     }),
   ];

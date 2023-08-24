@@ -6,7 +6,7 @@ import {
   totalCell,
   headerCell,
 } from "values/react-grid/cells";
-import { createArray, generateUID, log } from "values/Utilitas";
+import { createArray, generateUID, log, logS } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
@@ -126,7 +126,11 @@ const firstLoadTotalRow = (data) => {
   const list = createArray(TOTAL_DATA);
 
   data.forEach((e) => {
-    if (e !== null) {
+    // logS("e", e);
+    // if (e !== null) {
+
+    // }
+    if (e.parent === true) {
       list[0] += e["jan"] ?? 0;
       list[1] += e["feb"] ?? 0;
       list[2] += e["mar"] ?? 0;
@@ -165,8 +169,9 @@ export const updateTotalRow = (data) => {
     .map((e) => {
       const values = [];
       for (let i = FIRST_TOTAL; i < END_TOTAL; i++) {
-        values.push(e.cells[i].value ?? 0);
+        values.push(e.parent ? e.cells[i].value ?? 0 : 0);
       }
+
       return values;
     })
     .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
@@ -230,7 +235,7 @@ function rowTotal(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => totalCell(e, "", "beige", "", !(i === 0))),
+      ...total.map((e, i) => totalCell(e, "", "beige", "", true)),
     ],
   };
 }

@@ -130,10 +130,10 @@ function getGroupRows(groups) {
           nonEditable(textCell(sub_grade.sub_grade)),
           numberCell(premi_inhealth),
           numberCell(family_member),
-          numberCell(total),
+          nonEditable(numberCell(total)),
           numberCell(premi_inhealth_p),
           numberCell(family_member_p),
-          numberCell(total_p),
+          nonEditable(numberCell(total_p)),
         ],
       };
     }),

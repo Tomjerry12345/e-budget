@@ -11,6 +11,7 @@ const Logic = () => {
   const [rows, setRows] = useState([]);
 
   const ENDPOINT_URL = "direct/capex";
+  const linkCalculate = "capex/calculate";
 
   const formatingFilter = (filter) => {
     const {
@@ -102,6 +103,7 @@ const Logic = () => {
       rows,
       loading,
       linkExport,
+      linkCalculate,
     },
     func: {
       onFinish,
