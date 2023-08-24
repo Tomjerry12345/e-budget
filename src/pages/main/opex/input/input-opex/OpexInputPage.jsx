@@ -17,6 +17,7 @@ const OpexInputPage = () => {
         downloadFile="file/opex/opex_direct.xlsx"
         // disabledImportExport={value.rows.length === 0}
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "opex",

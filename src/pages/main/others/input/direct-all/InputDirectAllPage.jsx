@@ -17,6 +17,7 @@ const InputDirectAllPage = () => {
         downloadFile="file/others/direct_all.xlsx"
         // disabledImportExport={value.rows.length === 0}
         showType={true}
+        showYear={true}
         listMenuImport={[
           {
             description: "direct all",

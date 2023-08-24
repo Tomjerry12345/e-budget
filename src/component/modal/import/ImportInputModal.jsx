@@ -1,5 +1,5 @@
 import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Radio, Typography } from "antd";
+import { Button, Radio, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,9 +28,31 @@ const ImportInputModal = ({
   loading,
   title,
   type = false,
+  showYear,
 }) => {
   const dispatch = useDispatch();
   const dataGlobalRedux = useSelector((state) => state.data);
+
+  const date = new Date();
+
+  const periode = [
+    {
+      value: `${date.getFullYear() - 2}`,
+      label: `${date.getFullYear() - 2}`,
+    },
+    {
+      value: `${date.getFullYear() - 1}`,
+      label: `${date.getFullYear() - 1}`,
+    },
+    {
+      value: `${date.getFullYear()}`,
+      label: `${date.getFullYear()}`,
+    },
+    {
+      value: `${date.getFullYear() + 1}`,
+      label: `${date.getFullYear() + 1}`,
+    },
+  ];
 
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
@@ -38,6 +60,11 @@ const ImportInputModal = ({
 
   const onChange = (e) => {
     dispatch(actionData({ typeRevenueImport: e.target.value }));
+  };
+
+  const onSelect = (e) => {
+    log("e.target.value", e);
+    dispatch(actionData({ year: e }));
   };
 
   return (
@@ -66,16 +93,35 @@ const ImportInputModal = ({
           </div>
         </div>
 
-        {type ? (
-          <Radio.Group
-            className="type-style"
-            onChange={onChange}
-            value={dataGlobalRedux.typeRevenueImport ?? "actual"}
-          >
-            <Radio value="actual">Actual - Forecast</Radio>
-            <Radio value="budget">Budget</Radio>
-          </Radio.Group>
-        ) : null}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: "16px",
+          }}
+        >
+          {type ? (
+            <Radio.Group
+              className="type-style"
+              onChange={onChange}
+              value={dataGlobalRedux.typeRevenueImport ?? "actual"}
+            >
+              <Radio value="actual">Actual - Forecast</Radio>
+              <Radio value="budget">Budget</Radio>
+            </Radio.Group>
+          ) : null}
+          {showYear ? (
+            <Select
+              onSelect={onSelect}
+              // placeholder="tahun"
+              defaultValue={`${date.getFullYear()}`}
+              style={{
+                width: "182px",
+              }}
+              options={periode}
+            />
+          ) : null}
+        </div>
 
         <div className="layout-download-template">
           <Text className="txt-accepted">Accepted File Type .xlsx</Text>

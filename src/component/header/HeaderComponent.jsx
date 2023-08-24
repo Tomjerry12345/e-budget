@@ -1,3 +1,4 @@
+import { FastForwardOutlined } from "@ant-design/icons";
 import HeaderComponentTypeCoa1 from "./type/type-coa/type-1/HeaderComponentTypeCoa1";
 import HeaderComponentTypeCoa2 from "./type/type-coa/type-2/HeaderComponentTypeCoa2";
 import HeaderComponentTypeInput from "./type/type-input/type-1/HeaderComponentTypeInput";
@@ -31,6 +32,7 @@ const HeaderComponent = ({
   linkCalculate,
   dynamicFile = false,
   showType = false,
+  showYear = false,
 }) => {
   let component;
 
@@ -46,6 +48,7 @@ const HeaderComponent = ({
         listMenuImport={listMenuImport}
         dynamicFile={dynamicFile}
         showType={showType}
+        showYear={showYear}
       />
     );
   } else if (type === "summary") {
