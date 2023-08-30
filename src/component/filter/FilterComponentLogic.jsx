@@ -72,14 +72,24 @@ const FilterComponentLogic = ({
         });
       });
 
-      log("dataCompany", dataCompany);
-
       setState({
         ...state,
         code_company: dataCompany,
       });
     }
   }, [isLoad]);
+
+  useEffect(() => {
+    if (type === "summary") {
+      form.setFieldsValue({
+        code_product: `ALL`,
+        code_location: `ALL`,
+        code_dept: `ALL`,
+        code_icp: `ALL`,
+        code_project: `ALL`,
+      });
+    }
+  }, []);
 
   const onSelect = (e) => {
     if (e === "all") {

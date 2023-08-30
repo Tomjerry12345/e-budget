@@ -1,25 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { generateUID, log, showNotif } from "values/Utilitas";
+import { formDataUtils, generateUID, log, showNotif } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import {
-  getRootHeaderRow,
-  fullNewRow,
-  getRows,
-  reactgridNewRow,
-} from "./getRows";
-import {
-  generateArrayAttributes,
-  generateObjectAttributes,
-} from "values/react-grid/helpers";
+import { getRootHeaderRow, fullNewRow, getRows, reactgridNewRow } from "./getRows";
+import { generateArrayAttributes, generateObjectAttributes } from "values/react-grid/helpers";
 
 const LoginNew = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -33,9 +21,7 @@ const LoginNew = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -44,6 +30,8 @@ const LoginNew = () => {
   const dataGlobalRedux = useSelector((state) => state.data);
 
   const ENDPOINT_URL = "detailcapex/new-asset";
+
+  const idRef = useRef(null);
 
   const responseShow = (res) => {
     dispatch(
@@ -64,7 +52,7 @@ const LoginNew = () => {
     );
   };
 
-  const onSetDataTable = (values) => {
+  const formatingFilter = (filter) => {
     const {
       code_company,
       code_dept,
@@ -73,58 +61,50 @@ const LoginNew = () => {
       code_project,
       code_icp,
       periode,
-    } = values;
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
+    let fCodeProject = code_project.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
-
-    setCodeFilter({
+    return {
       code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
       code_product: fCodeProduct,
-      code_icp: fCodeIcp,
       code_project: fCodeProject,
-      periode: fPeriode,
-    });
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      year: fPeriode,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeProduct,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
-    const url = `${ENDPOINT_URL}?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
     try {
-      const { data } = await MainServices.get(url);
+      getData(formatFilter);
+      setCodeFilter(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const getData = async (params) => {
+    const url = `${ENDPOINT_URL}`;
+    try {
+      const { data } = await MainServices.get(url, params);
 
       const response = await MainServices.get("detailcapex/asset-categories");
       const allAssetsCategory = response
@@ -167,14 +147,12 @@ const LoginNew = () => {
 
   const onTambahRow = () => {
     const newRows = [...rows];
-    const lastIndex = newRows.length - 1;
-    const id = lastIndex + 1;
-    const lastData = newRows[lastIndex];
-
-    newRows[lastIndex] = reactgridNewRow(id);
-    newRows.push(lastData);
-
-    setRows(newRows);
+    const headerRow = newRows.slice(0, 2);
+    const dataRow = newRows.slice(2, newRows.length);
+    log({ headerRow });
+    log({ dataRow });
+    dataRow.unshift(reactgridNewRow());
+    setRows([...headerRow, ...dataRow]);
 
     showNotif(200, "Sukses tambah row");
   };
@@ -182,24 +160,24 @@ const LoginNew = () => {
   const updateData = async (cell, rowData) => {
     if (Object.keys(cell).length === 3) {
       try {
-        const formData = new FormData();
-
         const isNewRow = rowData["isNewRow"];
 
         if (isNewRow) {
-          for (let item in codeFilter) {
-            formData.append(item, codeFilter[item]);
+          const formData = formDataUtils(codeFilter);
+
+          if (cell.column_id === "description") {
+            formData.append("description", cell.value);
+            formData.append("description", cell.value);
           }
           const res = await MainServices.post(`detailcapex/insert`, formData);
           if (res.data.responseCode === 200) {
             showNotif(200, "Sukses update data");
+            getData(codeFilter);
           } else {
             showNotif(500, "Error");
           }
         } else {
-          for (let item in cell) {
-            formData.append(item, cell[item]);
-          }
+          const formData = formDataUtils(cell);
           const res = await MainServices.post(`detailcapex/update`, formData);
           if (res.data.responseCode === 200) {
             showNotif(200, "Sukses update data");
@@ -300,15 +278,13 @@ const LoginNew = () => {
   const applyChanges = (changes, prevDetails) => {
     let newRows = [...rows];
 
-    changes.forEach((change, i) => {
+    changes.forEach(async (change, i) => {
       const dataRowId = change.rowId;
       const fieldName = change.columnId;
       let dataRow = prevDetails.find((d) => d.id === dataRowId);
 
       const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
-      const columnIndex = parseInt(
-        columns.findIndex((j) => j.columnId === change.columnId)
-      );
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
 
       const id = newRows[rowIndex].rowId;
       const column_id = columns[columnIndex].columnId;
@@ -321,6 +297,7 @@ const LoginNew = () => {
       }
 
       if (change.type === "text") {
+        log({ prevDetails });
         dataRow[fieldName] = change.newCell.text;
         updateData(
           {
@@ -363,11 +340,9 @@ const LoginNew = () => {
           rowData
         );
       } else if (change.type === "dropdown") {
-        if (fieldName == "asset_category_id") {
+        if (fieldName === "asset_category_id") {
           let key = `is_${fieldName}`;
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
+          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
             dataRow[fieldName] = change.newCell.selectedValue;
             selected = change.newCell.selectedValue;
 
@@ -394,19 +369,14 @@ const LoginNew = () => {
           }
 
           if (selected) {
-            valuesOfDropdown = change.previousCell.values.find(
-              (e) => e.value === selected
-            );
+            valuesOfDropdown = change.previousCell.values.find((e) => e.value === selected);
           }
 
           // CHANGED: set the isOpen property to the value received.
           dataRow[key] = change.newCell.isOpen;
         } else {
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.selectedValue;
+          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
+            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.selectedValue;
 
             updateData(
               {
@@ -419,8 +389,7 @@ const LoginNew = () => {
           }
 
           if (change.newCell.inputValue) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.inputValue;
+            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.inputValue;
 
             updateData(
               {
@@ -440,10 +409,8 @@ const LoginNew = () => {
           // find a selected category to set asset_account, accumulate_account, and depreciation_account
 
           dataRow["asset_account"] = valuesOfDropdown["asset_account"];
-          dataRow["accumulated_account"] =
-            valuesOfDropdown["accumulated_account"];
-          dataRow["depreciation_account"] =
-            valuesOfDropdown["depreciation_account"];
+          dataRow["accumulated_account"] = valuesOfDropdown["accumulated_account"];
+          dataRow["depreciation_account"] = valuesOfDropdown["depreciation_account"];
 
           log("valueSelected", valuesOfDropdown);
 
@@ -489,7 +456,7 @@ const LoginNew = () => {
     const codeAccount = dataGlobalRedux.indexImport;
     let index, category;
 
-    let formData = new FormData();
+    // let formData = new FormData();
 
     // setLoadingUpload(true);
 
@@ -497,16 +464,21 @@ const LoginNew = () => {
       file1 = file;
     });
 
-    formData.append("file", file1);
-    formData.append("code_account", codeAccount);
-    formData.append("code_company", code_company);
-    formData.append("code_department", code_dept);
-    formData.append("code_location", code_location);
-    formData.append("code_product", code_product);
-    formData.append("code_project", code_project);
-    formData.append("code_icp", code_icp);
-    formData.append("year", periode);
-    formData.append("type", "asuransi");
+    // formData.append("file", file1);
+    // formData.append("code_account", codeAccount);
+    // formData.append("code_company", code_company);
+    // formData.append("code_department", code_dept);
+    // formData.append("code_location", code_location);
+    // formData.append("code_product", code_product);
+    // formData.append("code_project", code_project);
+    // formData.append("code_icp", code_icp);
+    // formData.append("year", periode);
+    // formData.append("type", "asuransi");
+
+    const formData = formDataUtils({
+      ...codeFilter,
+      type: "asuransi",
+    });
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
@@ -515,19 +487,6 @@ const LoginNew = () => {
       const { data } = await MainServices.get(url);
       let a = await generateArrayAttributes(data.data, ["asset_category_id"]);
 
-      // const r = getRows({
-      //   header: getRootHeaderRow(),
-      //   data: a,
-      // });
-
-      // const newRow = [...rows.pemasaran];
-
-      // newRow[index] = r;
-
-      // setRows({
-      //   ...rows,
-      //   [category]: newRow,
-      // });
       setCurrData(a);
       responseShow(res);
       onSuccess();

@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, showNotif } from "values/Utilitas";
+import { log, logS, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab, urlRevenue } from "values/Constant";
 import {
@@ -116,7 +116,6 @@ const Logic = () => {
 
     dispatch(actionData({ sizeDataRevenue: 1 }));
 
-    log({ listRows });
     setRows(listRows);
   };
 
@@ -128,7 +127,7 @@ const Logic = () => {
   const onChangeTable = async (change, i, item) => {
     const fullRows = [...rows];
     const newRows = [...rows[i].data];
-    let isChange;
+    let isChange = false;
 
     try {
       for (const c of change) {
@@ -143,34 +142,55 @@ const Logic = () => {
         let value;
 
         if (type === "text") {
-          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
+          newRows[rowIndex].cells[columnIndex].text = value;
           isChange = true;
-        } else {
-          newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
+        } else if (type === "number") {
           value = c.newCell.value;
+          newRows[rowIndex].cells[columnIndex].value = value;
 
-          value = c.newCell.value;
-          if (!isNaN(value)) {
-            newRows[rowIndex].cells[columnIndex].value = value;
+          let total1 = 0;
+          let total2 = 0;
 
-            let total1 = 0;
-            let total2 = 0;
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= 2 && j <= 13) total1 += e.value;
+            if (j === 14) e.value = total1;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
+            return e;
+          });
 
-            const newCell = newRows[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
+          newRows[rowIndex].cells = newCell;
 
-            newRows[rowIndex].cells = newCell;
+          isChange = true;
+        } else if (type === "percent") {
+          value = parseInt(c.newCell.text);
+          let total = 0;
 
-            isChange = true;
-          } else {
-            isChange = false;
-          }
+          let ind = 2;
+
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
         }
 
         if (isChange) {
@@ -214,10 +234,10 @@ const Logic = () => {
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
@@ -226,21 +246,20 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
 
           fullRows[i].data = newRows;
 
-          // stok akhir
           if (type === "number") {
-            if (i === 0 || i === 1 || i === 2) {
+            // stok akhir
+            if (i === 0 || i === 1 || i === 4) {
               const lengthStockAkhir = fullRows[3].data.length;
               const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
               const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const hargaBeliUnit = fullRows[2].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli - hargaBeliUnit;
+                stockAwal + asumsiUnitBeli + asumsiUnitJual;
 
               let total1 = 0;
               let total2 = 0;
@@ -289,22 +308,32 @@ const Logic = () => {
                 item.description
               );
             }
-
+          } else if (type === "percent") {
             if (i === 7) {
               const length = fullRows[7].data.length;
               const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
 
-              fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
-                vPenjualan * (value / 100);
+              const tot = vPenjualan * (value / 100);
+              log({ tot });
+              fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
 
-              let total1 = 0;
-              let total2 = 0;
+              let total = 0;
+              let ind = 2;
 
               const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
                 return e;
               });
 

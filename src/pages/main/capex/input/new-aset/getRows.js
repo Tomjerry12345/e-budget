@@ -204,7 +204,7 @@ export function reactgridNewRow() {
     isNewRow: true,
     height: ROW_HEIGHT,
     cells: [
-      nonEditable(textCell("", "padding-left-lg")),
+      textCell("", "padding-left-lg"),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),

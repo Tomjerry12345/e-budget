@@ -472,13 +472,15 @@ export const urlGetMenu = ["", "", "config/opex"];
 export const selectionMenu = async (i) => {
   const user = getLocal("user_group");
 
-  if (user === "superadmin") {
+  if (user === "superadmin" || user === "usersbu" || user === "reviewer") {
     return await superAdmin(i);
-  } else if (user === "usersbu") {
-    return userBu(i);
-  } else {
-    return reviewer(i);
   }
+  // else if (user === "usersbu") {
+  //   return userBu(i);
+  // }
+  // else {
+  //   return reviewer(i);
+  // }
 };
 
 const superAdmin = (i) => {
@@ -526,12 +528,6 @@ const superAdmin = (i) => {
       submenu: listSubMenu,
       disabled: disabledItemSummaryMenu[i],
     });
-
-    // return {
-    //   fulldata: listFullDataSubMenu,
-    //   submenu: listSubMenu,
-    //   disabled: disabledItemSummaryMenu[i],
-    // };
   });
 };
 
