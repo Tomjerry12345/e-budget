@@ -280,6 +280,12 @@ export const allItemSummarySubMenu = [
     {
       description: "Laba Rugi",
     },
+    {
+      description: "Cash Flow",
+    },
+    {
+      description: "Neraca",
+    },
   ],
   // 8 Master COA
   [
