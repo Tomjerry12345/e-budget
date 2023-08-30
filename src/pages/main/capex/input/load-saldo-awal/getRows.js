@@ -28,6 +28,7 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Asset Book", "justify-content-center font-bold")),
       nonEditable(textCell("Asset  Number", "justify-content-center font-bold")),
       nonEditable(textCell("Asset Category", "justify-content-center font-bold")),
+      nonEditable(textCell("Unit", "justify-content-center font-bold")),
       nonEditable(textCell("Asset Cost Account", "justify-content-center font-bold")),
       nonEditable(textCell("Depreciation Account", "justify-content-center font-bold")),
       nonEditable(textCell("Account Akumulasi", "justify-content-center font-bold")),
@@ -35,7 +36,6 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Date Placed in Service", "justify-content-center font-bold")),
       nonEditable(textCell("Account Date", "justify-content-center font-bold")),
       nonEditable(textCell("Asset Life (In Years)", "justify-content-center font-bold")),
-      nonEditable(textCell("Unit", "justify-content-center font-bold")),
       nonEditable(textCell("Original Cost", "justify-content-center font-bold")),
       nonEditable(textCell("Asset Cost", "justify-content-center font-bold")),
       nonEditable(textCell("Depreciation Amount", "justify-content-center font-bold")),
@@ -49,25 +49,6 @@ export function getRootHeaderRow() {
     ],
   };
 }
-
-const firstLoadTotalRow = (data) => {
-  const list = createArray(TOTAL_DATA);
-
-  data.forEach((e) => {
-    list[0] += e["unit"] ?? 0;
-    list[1] += e["original_cost"] ?? 0;
-    list[2] += e["asset_cost"] ?? 0;
-    list[3] += e["depreciation_amount"] ?? 0;
-    list[4] += e["cost_retired"] ?? 0;
-    list[5] += e["accumulated_depreciation"] ?? 0;
-    list[6] += e["net_book_value"] ?? 0;
-    list[7] += e["disposal_month"] ?? 0;
-    list[8] += e["disposal_year"] ?? 0;
-    list[9] += e["price"] ?? 0;
-  });
-
-  return rowTotal("Total", list);
-};
 
 export const updateTotalRow = (data) => {
   const newData = data.slice(1, data.length - 1);
@@ -95,6 +76,7 @@ function getGroupRows(groups) {
         nonEditable(textCell(d["asset_book"], "padding-left-lg")),
         nonEditable(textCell(d["asset_number"] ?? "-", "padding-left-lg")),
         nonEditable(textCell(d["asset_category"] ?? "-", "padding-left-lg")),
+        nonEditable(numberCell(d["unit"] ?? 0, "padding-left-lg")),
         nonEditable(textCell(d["asset_cost_account"] ?? "-", "padding-left-lg")),
         nonEditable(textCell(d["depreciation_account"] ?? "-", "padding-left-lg")),
         nonEditable(textCell(d["accumulated_account"] ?? "-", "padding-left-lg")),
@@ -102,8 +84,6 @@ function getGroupRows(groups) {
         nonEditable(textCell(d["date_placed"] ?? "-", "padding-left-lg")),
         nonEditable(textCell(d["account_date"] ?? "-", "padding-left-lg")),
         nonEditable(numberCell(d["asset_life"] ?? 0, "padding-left-lg")),
-
-        nonEditable(numberCell(d["unit"] ?? 0, "padding-left-lg")),
         nonEditable(numberCell(d["original_cost"] ?? 0, "padding-left-lg")),
         nonEditable(numberCell(d["asset_cost"] ?? 0, "padding-left-lg")),
         nonEditable(numberCell(d["depreciation_amount"] ?? 0, "padding-left-lg")),
@@ -116,6 +96,7 @@ function getGroupRows(groups) {
 
         customCell({
           text: d["status"],
+          type: "status",
           style: {
             justifyContent: "center",
           },

@@ -2,12 +2,12 @@ import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
-import LoginNew from "./LogicNew";
+import LogicNew from "./LogicNew";
 import { constantExcellFile } from "values/Constant";
 import { Button } from "antd";
 
 const NewAsetInputPage = () => {
-  const { value, func } = LoginNew();
+  const { value, func } = LogicNew();
 
   return (
     <>
@@ -57,7 +57,7 @@ const NewAsetInputPage = () => {
               overflowY: "auto",
               marginBottom: 16,
               paddingBottom: 16,
-              height: "100%"
+              height: "100%",
             }}
           >
             <div

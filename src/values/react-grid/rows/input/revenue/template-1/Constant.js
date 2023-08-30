@@ -11,7 +11,7 @@ export const FIRST_TOTAL = {
   Tarif: 2,
   "Asumsi trip": 2,
   Penjualan: 2,
-  "All data": 2,
+  "All data": 1,
   "Potongan penjualan": 2,
   "Pendapatan Operasional Lainnya": 2,
   "HPP Variable": 2,

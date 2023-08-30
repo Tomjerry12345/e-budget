@@ -3,7 +3,7 @@ import { Card } from "@mui/material";
 import FilterComponentLogic from "./FilterComponentLogic";
 import AutoCompleteElement from "../element/auto-complete/AutoCompleteElement";
 import "./Style.scss";
-import { getLocal, log } from "../../values/Utilitas";
+import { getLocal } from "../../values/Utilitas";
 
 const { Panel } = Collapse;
 
@@ -111,7 +111,7 @@ const FilterComponent = ({
   variant,
   type = "summary",
   typeCompany = "change",
-  typeFilter
+  typeFilter,
 }) => {
   const company = getLocal("code_company");
   const usersGroup = getLocal("user_group");
@@ -129,7 +129,7 @@ const FilterComponent = ({
     type: type,
     typeCompany: usersGroup === "usersbu" ? "static" : typeCompany,
     codeCompany,
-    typeFilter
+    typeFilter,
   });
 
   return (

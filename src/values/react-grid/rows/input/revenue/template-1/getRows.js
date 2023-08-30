@@ -10,22 +10,20 @@ export const HEADER_ROOT_ROW_ID = "header-root";
 export const updateTotalRow = (data, key) => {
   const newData = data.slice(1, data.length - 1);
 
-  log({ newData });
-
   const list = newData
-    .map((e, j) => {
+    .map((e) => {
       const values = [];
       for (let i = FIRST_TOTAL[key]; i < END_TOTAL(key); i++) {
-        values.push(e.cells[i].value ?? 0);
+        if (i % 2 === 1) {
+          values.push(parseInt(e.cells[i].text) ?? 0);
+        } else {
+          values.push(e.cells[i].value ?? 0);
+        }
       }
-
-      log({ values });
 
       return values;
     })
     .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
-
-  log({ list });
 
   return rowTotal("Total", list, key);
 };

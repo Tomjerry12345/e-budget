@@ -5,8 +5,8 @@ const numberFormat = new Intl.NumberFormat("de", {
   maximumFractionDigits: 2,
 });
 
-export const customCell = ({ text, className, style }) => ({
-  type: "button",
+export const customCell = ({ text, type, className, style }) => ({
+  type,
   text,
   className,
   style,
@@ -123,22 +123,25 @@ export function totalCell(
   additionalClassNames = "",
   background = "#107C41",
   color = "black",
-  isFormat = true
+  isFormat = true,
+  style
 ) {
   return nonEditable(
-    title !== ""
+    typeof title === "number"
       ? numberCell(
           title,
           `font-bold ${additionalClassNames}`,
           {
             background: background,
             color: color,
+            ...style,
           },
           isFormat
         )
       : textCell(title, `font-bold ${additionalClassNames}`, {
           background: background,
           color: color,
+          ...style,
         })
   );
 }

@@ -2,7 +2,7 @@ import { generateUID, log } from "values/Utilitas";
 import { ROW_HEIGHT } from "./Constant";
 import { getColumns } from "./getColumns";
 
-const { nonEditable, textCell, numberCell } = require("values/react-grid/cells");
+const { nonEditable, textCell, numberCell, customCell } = require("values/react-grid/cells");
 
 export const getGroupRows = (groups, key, getCol) => {
   const col = getCol ?? getColumns;
@@ -40,6 +40,14 @@ export const getGroupRows = (groups, key, getCol) => {
                   numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
                 );
               }
+            } else if (e.type === "percent") {
+              return customCell({
+                type: e.type,
+                text: `${d[e.columnId]}`,
+                style: {
+                  justifyContent: "end",
+                },
+              });
             }
           }),
         ],

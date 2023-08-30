@@ -199,7 +199,7 @@ const Logic = () => {
 
         // CHANGED: set the isOpen property to the value received.
         newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
-      } else if (type === "button") {
+      } else if (type === "status") {
         setOpenModalRetired(true);
         setDataRetired({
           id,
