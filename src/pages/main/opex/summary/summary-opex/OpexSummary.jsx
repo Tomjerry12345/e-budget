@@ -17,7 +17,7 @@ const OpexSummary = () => {
             disabled: value.linkExport === null,
           },
           {
-            description: "calculate data detail",
+            description: "Calculate detail opex",
             disabled: false,
           },
         ]}
