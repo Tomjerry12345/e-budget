@@ -7,6 +7,8 @@ import RevenueCogsSummary from "pages/main/revenueCogs/summary/RevenueCogsSummar
 import RevenueCogsInputPage from "pages/main/revenueCogs/input/RevenueCogsInputPage";
 import OthersInputAsumsiPage from "pages/main/others/asumsi/OthersInputAsumsiPage";
 import LabaRugiPage from "pages/main/report/laba-rugi/LabaRugiPage";
+import CashFlowPage from "pages/main/report/cash-flow/CashFlowPage";
+import NeracaPage from "pages/main/report/neraca/NeracaPage";
 import HkPage from "pages/main/revenueCogs/hk/HkPage";
 import KiuPage from "pages/main/revenueCogs/kiu/KiuPage";
 import KiaPage from "pages/main/revenueCogs/kia/KiaPage";
@@ -402,6 +404,8 @@ const RoutersConfig = () => {
           </Route>
           <Route path="report">
             <Route path="laba-rugi" element={<LabaRugiPage />} />
+            <Route path="cash-flow" element={<CashFlowPage />} />
+            <Route path="neraca" element={<NeracaPage />} />
           </Route>
           <Route path="coa">
             <Route path="perusahaan" element={<CompanyPage />} />

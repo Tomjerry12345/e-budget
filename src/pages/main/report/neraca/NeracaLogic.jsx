@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  columnOutputType1,
-  columnOutputType2,
+  columnOutputType3,
 } from "../../../../component/table/utils/TypeColumn";
 import MainServices from "../../../../services/MainServices";
 import { getLocal, log } from "../../../../values/Utilitas";
 
-const rootEndpoint = "report/labarugi";
+const rootEndpoint = "report/neraca";
 
 const LabaRugiLogic = () => {
   const [data, setData] = useState([]);
@@ -100,7 +99,7 @@ const LabaRugiLogic = () => {
 
   const getData = (data, periode) => {
     setData(data.list);
-    setColumns(columnOutputType2(periode, parseInt(periode) + 1));
+    setColumns(columnOutputType3(periode, parseInt(periode) + 1));
     setLoading(false);
   };
 

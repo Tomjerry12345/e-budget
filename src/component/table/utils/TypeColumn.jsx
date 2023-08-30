@@ -62,6 +62,307 @@ const columnOutputType2 = (year_1, year_2) => [
   },
 ];
 
+const columnOutputType3 = (year_1, year_2) => [
+  {
+    title: "Code",
+    dataIndex: "code",
+    width: 80,
+    fixed: "left",
+  },
+  {
+    title: "Description",
+    dataIndex: "description",
+    width: 200,
+    fixed: "left",
+  },
+  {
+    title: `Year ${year_1}`,
+    children: [
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Jan.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jan",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Feb.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "feb",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Mar.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "mar",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Apr.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "apr",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>May.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "mei",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Jun.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jun",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Jul.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jul",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Aug.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "agu",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="act-styles">Actual</Typography.Text>
+            <Typography.Text>Sep.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "sep",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="for-styles">Forecast</Typography.Text>
+            <Typography.Text>Okt.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "okt",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="for-styles">Forecast</Typography.Text>
+            <Typography.Text>Nov.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "nov",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="for-styles">Forecast</Typography.Text>
+            <Typography.Text>Des.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "des",
+        align: "right"
+      },
+    ],
+  },
+  {
+    title: "Year total",
+    dataIndex: "year1",
+    width: 110,
+    align: "right"
+  },
+  {
+    title: `Year ${year_2}`,
+    children: [
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Jan.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jan_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Feb.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "feb_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Mar.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "mar_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Apr.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "apr_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>May.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "mei_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Jun.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jun_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Jul.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "jul_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Aug.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "agu_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Sep.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "sep_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Okt.</Typography.Text>
+          </div>
+        ),
+        width: 100,
+        dataIndex: "okt_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Nov.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "nov_p",
+        align: "right"
+      },
+      {
+        title: (
+          <div className="title-table">
+            <Typography.Text className="ebu-styles">Budget</Typography.Text>
+            <Typography.Text>Des.</Typography.Text>
+          </div>
+        ),
+        width: 110,
+        dataIndex: "des_p",
+        align: "right"
+      },
+    ],
+  },
+  {
+    title: "Year total",
+    dataIndex: "year2",
+    width: 110,
+    align: "right"
+  },
+];
+
 const columnInputType1 = (year_1, year_2) => [
   {
     title: "Account",
@@ -1042,4 +1343,4 @@ const columnInputTypePotongan = (year_1, year_2) => [
   // },
 ]
 
-export { columnOutputType1, columnOutputType2, columnInputType1, columnInputType2, columnInputTypePotongan };
+export { columnOutputType1, columnOutputType2, columnOutputType3, columnInputType1, columnInputType2, columnInputTypePotongan };
