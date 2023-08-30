@@ -17,7 +17,7 @@ const RevenueCogsSummary = () => {
             disabled: value.linkExport === null,
           },
           {
-            description: "calculate data detail",
+            description: "Calculate detail revenue",
             disabled: false,
           },
         ]}

@@ -9,6 +9,7 @@ import { getKeyByValue, log } from "values/Utilitas";
 const Logic = () => {
   const [more, setMore] = useState(false);
   const [header, setHeader] = useState("");
+  const [headerCalculate, setHeaderCalculate] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
   const location = useLocation();
@@ -66,8 +67,9 @@ const Logic = () => {
     }
   };
 
-  const onClickCalculate = () => {
+  const onClickCalculate = (title) => {
     setOpenModal(true);
+    setHeaderCalculate(title);
   };
 
   const onCloseCalculate = () => {
@@ -87,7 +89,9 @@ const Logic = () => {
     value: {
       more,
       header,
+      headerCalculate,
       openModal,
+
     },
     func: {
       onClickMore,

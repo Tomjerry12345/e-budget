@@ -38,13 +38,13 @@ const ModalMenuMore = ({
             if (i === 0) {
               onExport(e, linkExport);
             } else if (i === 1) {
-              onClickCalculate();
+              onClickCalculate(e.description);
             }
 
             onCancel();
           }}
         >
-          Export {e.description}
+          {i === 0 ? `Export ${e.description}` : e.description}
         </Button>
       ))}
     </Modal>
@@ -77,7 +77,7 @@ const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport, linkCa
       <ModalCalculate
         open={value.openModal}
         onCancel={func.onCloseCalculate}
-        title={`calculate data`}
+        title={value.headerCalculate}
         linkCalculate={linkCalculate}
       />
     </Header>
