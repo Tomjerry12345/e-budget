@@ -48,7 +48,7 @@ trus pindah tab HPP lngsung ki error ✅
 
 - status = activate -> action retired, status = retired -> action cancel, update ❌
 
-- load saldo awal bisa import di awal ❌
+- load saldo awal bisa import di awal ✅
 
 - inputan di import saldo awal, pilih perusahaan = "code_company", 
 year mirip dengan tampilan periode di filter,
