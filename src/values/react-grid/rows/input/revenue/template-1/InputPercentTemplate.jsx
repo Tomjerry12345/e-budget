@@ -4,7 +4,7 @@ import {
   isNavigationKey,
   keyCodes,
   getCellProperty,
-} from "@silevis/reactgrid";
+} from "@silevis/reactgrid/dist";
 import { logS } from "values/Utilitas";
 import { Typography } from "antd";
 

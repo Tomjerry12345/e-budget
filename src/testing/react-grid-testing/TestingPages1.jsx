@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { render } from "react-dom";
 import { columns as dataColumns } from "./columns";
 import { rows as dataRows, headerRow } from "./rows";
-import { CellChange, ChevronCell, ReactGrid, Row } from "@silevis/reactgrid";
-import "@silevis/reactgrid/styles.css";
+import { CellChange, ChevronCell, ReactGrid, Row } from "@silevis/reactgrid/dist";
+import "@silevis/reactgrid/dist/styles.css";
 import { logO } from "../../values/Utilitas";
 // import "./styles.css";
 

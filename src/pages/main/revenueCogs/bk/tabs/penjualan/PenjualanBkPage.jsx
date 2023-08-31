@@ -1,6 +1,6 @@
 import { Typography } from "antd";
 import Logic from "./Logic.jsx";
-import { ReactGrid } from "@silevis/reactgrid";
+import { ReactGrid } from "@silevis/reactgrid/dist";
 import { capitalize } from "values/react-grid/helpers";
 
 const PenjualanBkPage = () => {

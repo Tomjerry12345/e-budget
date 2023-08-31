@@ -1,4 +1,4 @@
-import { Column } from "@silevis/reactgrid";
+import { Column } from "@silevis/reactgrid/dist";
 
 export const columns = (reorderable, resizable) => [
   { columnId: "id", reorderable, resizable, width: 150 },

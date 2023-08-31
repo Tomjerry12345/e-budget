@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
-import { ReactGrid } from "@silevis/reactgrid";
+import { ReactGrid } from "@silevis/reactgrid/dist";
 import Logic from "./Logic";
 
 const PenjualanBsuPage = () => {

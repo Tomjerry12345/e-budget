@@ -1,5 +1,5 @@
 import React from "react";
-import { isAlphaNumericKey, keyCodes, getCellProperty } from "@silevis/reactgrid";
+import { isAlphaNumericKey, keyCodes, getCellProperty } from "@silevis/reactgrid/dist";
 import { Button } from "antd";
 import { connect } from "react-redux";
 import { changeCellTemplate } from "redux/action/cell.template.reducer";
