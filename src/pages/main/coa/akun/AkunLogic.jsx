@@ -295,9 +295,22 @@ const AkunLogic = () => {
     }
   };
 
-  const onExport = () => {
-    const urlFile = `https://apikalla.binaries.id/ebudget/account/export`;
-    window.location.href = urlFile;
+  const onExport = async () => {
+    try {
+      const res = await MainServices.download("account/export");
+      log({ res });
+      const fileURL = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `account.xlsx`;
+      link.click();
+    } catch (e) {
+      log({ e });
+      responseShow({
+        status: 400,
+        message: "Terjadi kesalahan saat melakuan export",
+      });
+    }
   };
 
   const onSearch = async (e) => {

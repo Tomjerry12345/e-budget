@@ -170,7 +170,7 @@ const Logic = () => {
           newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
-        } else {
+        } else if (type === "number") {
           newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
 
@@ -195,6 +195,34 @@ const Logic = () => {
           } else {
             isChange = false;
           }
+        } else if (type === "percent") {
+          value = parseInt(c.newCell.text);
+          let total = 0;
+
+          let ind = 2;
+
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
         }
 
         if (isChange) {
@@ -248,10 +276,10 @@ const Logic = () => {
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
@@ -260,18 +288,14 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
 
-          fullRows[i].data = newRows;
-
           // hpp variabel
-          if (type === "number") {
+          if (type === "percent") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
               const sColumnId = c.columnId.split("_");
-
               const vPenjualan =
                 dataPenjualan[0][
                   sColumnId.length > 1 ? `${sColumnId[0]}_${sColumnId[1]}` : `${sColumnId[0]}`
@@ -280,14 +304,23 @@ const Logic = () => {
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
 
-              let total1 = 0;
-              let total2 = 0;
+              let total = 0;
+              let ind = 2;
 
               const newCellHppVariable = fullRows[1].data[rowIndex].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
                 return e;
               });
 
@@ -301,12 +334,15 @@ const Logic = () => {
           }
         }
       }
-      setRows(fullRows);
       showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
       log({ e });
       showNotif(dispatch, { status: 400, message: e.message });
     }
+
+    fullRows[i].data = newRows;
+
+    setRows(fullRows);
   };
 
   const onSuccess = () => {

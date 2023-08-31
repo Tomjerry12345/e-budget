@@ -1,11 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  Form,
-  Menu,
-  Popconfirm,
-  Typography,
-} from "antd";
+import { Button, Dropdown, Form, Menu, Popconfirm, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
@@ -100,23 +93,13 @@ const DepartementLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm
-              placement="leftTop"
-              title="Sure to cancel?"
-              onConfirm={cancel}
-            >
+            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
               <a>Cancel</a>
             </Popconfirm>
           </span>
         ) : (
           <Dropdown
-            overlay={
-              <DropdownMenu
-                onAction={onAction}
-                record={record}
-                onDelete={onDelete}
-              />
-            }
+            overlay={<DropdownMenu onAction={onAction} record={record} onDelete={onDelete} />}
             placement="bottom"
             trigger={["click"]}
             disabled={editingKey !== ""}
@@ -148,9 +131,7 @@ const DepartementLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -282,9 +263,22 @@ const DepartementLogic = () => {
     }
   };
 
-  const onExport = () => {
-    const urlFile = `https://apikalla.binaries.id/ebudget/department/export`;
-    window.location.href = urlFile;
+  const onExport = async () => {
+    try {
+      const res = await MainServices.download("dept/export");
+      log({ res });
+      const fileURL = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `account.xlsx`;
+      link.click();
+    } catch (e) {
+      log({ e });
+      responseShow({
+        status: 400,
+        message: "Terjadi kesalahan saat melakuan export",
+      });
+    }
   };
 
   const onSearch = async (e) => {

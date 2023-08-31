@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, showNotif } from "values/Utilitas";
+import { formDataUtils, log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab, urlRevenue } from "values/Constant";
 import {
@@ -49,7 +49,7 @@ const Logic = () => {
     }
   }, [importRedux.file]);
 
-  const onSetDataTable = (values) => {
+  const formatingFilter = (filter) => {
     const {
       code_company,
       code_product,
@@ -58,7 +58,7 @@ const Logic = () => {
       code_project,
       code_icp,
       periode,
-    } = values;
+    } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProduct = code_product.split(" ");
@@ -77,36 +77,37 @@ const Logic = () => {
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
-
-    setCodeFilter(values);
+    return {
+      code_company: fCodeCompany,
+      code_product: fCodeProduct,
+      code_project: fCodeProject,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      year: fPeriode,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeProduct,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
+    try {
+      getData(formatFilter);
+      setCodeFilter(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const getData = async (params) => {
     const listRows = [];
 
     await Promise.allSettled(
       urlRevenue[keyRevenueTab[1]].map(async (p, i) => {
         const desc = p.description;
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_product=${codeProduct}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list`;
         try {
-          const { data } = await MainServices.get(url);
+          const { data } = await MainServices.get(url, params);
           let r;
           r = getRows({
             header: getHeaderRow[desc],
@@ -134,10 +135,10 @@ const Logic = () => {
       })
     );
 
-    const url = `detailrevenue/selling/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+    const url = `detailrevenue/selling/list`;
 
-    const { data } = await MainServices.get(url);
-    const fData = data.data.filter((d) => d.product_code === codeProduct);
+    const { data } = await MainServices.get(url, params);
+    const fData = data.data.filter((d) => d.product_code === params.code_product);
     log("penjualan", fData);
     dispatch(actionData({ sizeDataRevenue: 1 }));
     setDataPenjualan(fData);
@@ -170,7 +171,7 @@ const Logic = () => {
           newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
-        } else {
+        } else if (type === "number") {
           newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
 
@@ -195,11 +196,37 @@ const Logic = () => {
           } else {
             isChange = false;
           }
+        } else if (type === "percent") {
+          value = parseInt(c.newCell.text);
+          let total = 0;
+
+          let ind = 2;
+
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
         }
 
         if (isChange) {
-          let formData = new FormData();
-
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
@@ -207,64 +234,31 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const {
-              code_company,
-              code_product,
-              code_dept,
-              code_location,
-              code_project,
-              code_icp,
-              periode,
-            } = codeFilter;
-
-            const codeAccount = newRows[rowIndex].cells[0].text;
-
-            let fCodeCompany = code_company.split(" ");
-            let fCodeProduct = code_product.split(" ");
-            let fCodeLocation = code_location.split(" ");
-            let fCodeDept = code_dept.split(" ");
-            let fCodeIcp = code_icp.split(" ");
-            let fCodeProject = code_project.split(" ");
-
-            let fPeriode = periode.split(" ");
-
-            fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-            fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-            fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-            fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-            fPeriode = fPeriode[0];
-
-            formData.append("code_company", fCodeCompany);
-            formData.append("code_account", codeAccount);
-            formData.append("code_department", fCodeDept);
-            formData.append("code_location", fCodeLocation);
-            formData.append("code_product", fCodeProduct);
-            formData.append("code_project", fCodeProject);
-            formData.append("code_icp", fCodeIcp);
-            formData.append("year", fPeriode);
-            formData.append(key, value);
+            const formData = formDataUtils({
+              ...codeFilter,
+              [key]: value,
+            });
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
           } else {
-            formData.append("id", id);
-            formData.append("column_id", column_id);
-            formData.append("value", value);
+            const formData = formDataUtils({
+              id,
+              column_id,
+              value,
+            });
 
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
 
           // hpp variabel
-          if (type === "number") {
+          if (type === "percent") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
@@ -277,14 +271,23 @@ const Logic = () => {
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
 
-              let total1 = 0;
-              let total2 = 0;
+              let total = 0;
+              let ind = 2;
 
               const newCellHppVariable = fullRows[1].data[rowIndex].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
                 return e;
               });
 

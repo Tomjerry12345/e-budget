@@ -40,7 +40,9 @@ const PemeliharaanInputPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text>{value.items.pemasaran[i].description}</Typography.Text>
+                  <Typography.Text>
+                    {`${value.items.pemasaran[i].code_account} - ${value.items.pemasaran[i].description}`}
+                  </Typography.Text>
                   <Button
                     className="btn-tambah-row"
                     onClick={() => func.onTambahRow(i, "pemasaran")}
@@ -89,7 +91,9 @@ const PemeliharaanInputPage = () => {
                     alignItems: "center",
                   }}
                 >
-                  <Typography.Text>{value.items.administrasi[i].description}</Typography.Text>
+                  <Typography.Text>
+                    {`${value.items.administrasi[i].code_account} - ${value.items.administrasi[i].description}`}
+                  </Typography.Text>
                   <Button
                     className="btn-tambah-row"
                     onClick={() => func.onTambahRow(i, "administrasi")}

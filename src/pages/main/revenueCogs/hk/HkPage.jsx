@@ -30,6 +30,7 @@ const HkPage = () => {
     if (key === 1) {
       navigate(`/main/revenue-cogs/${q}/penjualan`);
     }
+
     form.setFieldsValue({
       code_company: `${perusahaan.code} - ${perusahaan.description}`,
       code_product: null,

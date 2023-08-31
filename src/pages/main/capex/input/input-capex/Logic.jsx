@@ -211,9 +211,7 @@ const Logic = () => {
     );
 
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
-
     const date = new Date();
-
     const year = dataGlobalRedux.year ?? `${date.getFullYear()}`;
 
     let file;

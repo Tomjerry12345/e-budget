@@ -128,7 +128,7 @@ const Logic = () => {
   const onChangeTable = async (change, i, item) => {
     const fullRows = [...rows];
     const newRows = [...rows[i].data];
-    let isChange;
+    let isChange = false;
 
     try {
       for (const c of change) {
@@ -143,31 +143,55 @@ const Logic = () => {
         let value;
 
         if (type === "text") {
-          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
+          newRows[rowIndex].cells[columnIndex].text = value;
           isChange = true;
-        } else {
+        } else if (type === "number") {
           value = c.newCell.value;
-          if (!isNaN(value)) {
-            newRows[rowIndex].cells[columnIndex].value = value;
+          newRows[rowIndex].cells[columnIndex].value = value;
 
-            let total1 = 0;
-            let total2 = 0;
+          let total1 = 0;
+          let total2 = 0;
 
-            const newCell = newRows[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= 2 && j <= 13) total1 += e.value;
+            if (j === 14) e.value = total1;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
+            return e;
+          });
 
-            newRows[rowIndex].cells = newCell;
+          newRows[rowIndex].cells = newCell;
 
-            isChange = true;
-          } else {
-            isChange = false;
-          }
+          isChange = true;
+        } else if (type === "percent") {
+          value = parseInt(c.newCell.text);
+          let total = 0;
+
+          let ind = 2;
+
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
         }
 
         if (isChange) {
@@ -211,10 +235,10 @@ const Logic = () => {
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
@@ -223,7 +247,6 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
 
           fullRows[i].data = newRows;
@@ -286,22 +309,31 @@ const Logic = () => {
                 item.description
               );
             }
-
+          } else if (type === "percent") {
             if (i === 7) {
               const length = fullRows[7].data.length;
               const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
 
-              fullRows[7].data[rowIndex].cells[columnIndex - 1].value =
-                vPenjualan * (value / 100);
+              const tot = vPenjualan * (value / 100);
+              fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
 
-              let total1 = 0;
-              let total2 = 0;
+              let total = 0;
+              let ind = 2;
 
               const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
                 return e;
               });
 
