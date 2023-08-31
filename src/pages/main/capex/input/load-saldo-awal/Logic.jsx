@@ -156,6 +156,14 @@ const Logic = () => {
     }
   };
 
+  const onCancelRetired = () => {
+    console.log("onCancelRetired");
+  };
+
+  const onUpdateRetired = () => {
+    console.log("onUpdateRetired");
+  };
+
   const onChangeTable = async (change) => {
     let newRows = [...rows];
 
@@ -207,10 +215,18 @@ const Logic = () => {
         // CHANGED: set the isOpen property to the value received.
         newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
       } else if (type === "status") {
-        setOpenModalRetired(true);
-        setDataRetired({
-          id,
-        });
+        const t = c.newCell.text;
+        log("c.newCell", c.newCell);
+        if (t === "retired") {
+          setOpenModalRetired(true);
+          setDataRetired({
+            id,
+          });
+        } else if (t === "cancel retired") {
+          onCancelRetired();
+        } else if (t === "update retired") {
+          onUpdateRetired();
+        }
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
       }

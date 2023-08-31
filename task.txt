@@ -64,3 +64,5 @@ radio button -> forecast / budget ❌
 
 - laba tidak tampil table di awal
 
+- saldo awal akumulasi penyusutan ambil beginning_balance_p saja
+
