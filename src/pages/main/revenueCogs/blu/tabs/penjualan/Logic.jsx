@@ -268,7 +268,7 @@ const Logic = () => {
               const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
-                stockAwal + asumsiUnitBeli + asumsiUnitJual;
+                stockAwal + asumsiUnitBeli - asumsiUnitJual;
 
               let total1 = 0;
               let total2 = 0;
