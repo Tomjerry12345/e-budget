@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, generateUID, log } from "values/Utilitas";
@@ -31,8 +31,15 @@ const Logic = () => {
   });
 
   const dispatch = useDispatch();
+  const dataGlobalRedux = useSelector((state) => state.data);
+
+  const cellTemplate = useSelector((state) => state.cellTemplate);
 
   const ENDPOINT_URL = "detailcapex";
+
+  // useEffect(() => {
+  //   log({ cellTemplate });
+  // }, [cellTemplate]);
 
   const responseShow = (res) => {
     log({ res });
@@ -218,30 +225,36 @@ const Logic = () => {
   };
 
   const onUploadFile = async () => {
+    const date = new Date();
+
+    const type = dataGlobalRedux.typeRevenueImport ?? "actual";
+    const year = dataGlobalRedux.year ?? `${date.getFullYear()}`;
+    const code_company = dataGlobalRedux.code_company ?? 211;
+
     dispatch(
       actionImport({
         loading: true,
       })
     );
 
-    let file1;
+    let file;
 
-    acceptedFiles.forEach((file) => {
-      file1 = file;
+    acceptedFiles.forEach((f) => {
+      file = f;
     });
 
-    const formData = new FormData();
-
-    for (let item in codeFilter) {
-      formData.append(item, codeFilter[item]);
-    }
-
-    formData.append("file", file1);
+    const formData = formDataUtils({
+      // ...codeFilter,
+      file,
+      code_company,
+      year,
+      type,
+    });
 
     try {
       const res = await MainServices.post(`${ENDPOINT_URL}/import`, formData);
 
-      await getData(codeFilter);
+      // await getData(codeFilter);
 
       responseShow(res.data);
 

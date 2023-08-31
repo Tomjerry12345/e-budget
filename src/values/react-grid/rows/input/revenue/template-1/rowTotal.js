@@ -43,7 +43,6 @@ function type2(titleTotal, total) {
 }
 
 function type3(titleTotal, total) {
-  let j = 0;
   return {
     rowId: "row_total",
     height: ROW_HEIGHT,
@@ -87,7 +86,7 @@ export const rowTotal = (titleTotal, data, key) => {
     "All data": type2(titleTotal, data),
     "Potongan penjualan": type3(titleTotal, data),
     "Pendapatan Operasional Lainnya": type1(titleTotal, data),
-    "HPP Variable": type1(titleTotal, data),
+    "HPP Variable": type3(titleTotal, data),
     "HPP Lainnya": type1(titleTotal, data),
   };
 

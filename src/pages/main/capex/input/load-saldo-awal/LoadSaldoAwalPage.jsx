@@ -5,8 +5,8 @@ import { Pagination } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { Box } from "@mui/material";
-import { ButtonCellTemplate } from "./ButtonCellTemplate";
 import UbahRetiredModal from "component/modal/ubah-retired/UbahRetiredModal";
+import { ButtonCellTemplate } from "./ButtonCellTemplate";
 
 const LoadSaldoAwalPage = () => {
   const { value, func } = Logic();
@@ -20,9 +20,11 @@ const LoadSaldoAwalPage = () => {
         onUploadFile={func.onUploadFile}
         accesFile={value}
         downloadFile="file/capex/load_saldo_awal.xlsx"
-        disabledImportExport={value.rows.length === 0}
-        onChangeSelect={func.onChangeTahun}
-        listMenuImport={[{ description: "load saldo awal" }]}
+        // disabledImportExport={value.rows.length === 0}
+        listMenuImport={[{ description: "load saldo awal", code_account: 0 }]}
+        showCompany
+        showType
+        showYear
       />
 
       <FilterComponent

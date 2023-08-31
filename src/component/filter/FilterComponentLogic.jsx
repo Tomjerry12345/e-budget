@@ -2,6 +2,8 @@ import { Form } from "antd";
 import { useEffect, useState } from "react";
 import MainServices from "../../services/MainServices";
 import { getLocal, log } from "../../values/Utilitas";
+import { useDispatch } from "react-redux";
+import { actionData } from "redux/data-global/data.reducer";
 
 const FilterComponentLogic = ({
   isCodeProduct,
@@ -30,6 +32,8 @@ const FilterComponentLogic = ({
   const company = getLocal("code_company");
   const company_names = getLocal("company_names");
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await MainServices.get("company/list-child");
@@ -39,6 +43,8 @@ const FilterComponentLogic = ({
           ...state,
           code_company: data.data,
         });
+
+        dispatch(actionData({ listCompany: data.data }));
 
         setIsLoad(true);
       }

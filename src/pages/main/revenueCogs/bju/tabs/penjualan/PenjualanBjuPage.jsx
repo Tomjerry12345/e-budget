@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
+import { InputPercentTemplate } from "values/react-grid/rows/input/revenue/template-1/InputPercentTemplate";
 
 const PenjualanBjuPage = () => {
   const { value, func } = Logic();
@@ -40,6 +41,7 @@ const PenjualanBjuPage = () => {
                     stickyTopRows={1}
                     stickyLeftColumns={1}
                     enableRangeSelection
+                    customCellTemplates={{ percent: new InputPercentTemplate() }}
                     onCellsChanged={(change) => func.onChangeTable(change, i, e)}
                   />
                 </div>

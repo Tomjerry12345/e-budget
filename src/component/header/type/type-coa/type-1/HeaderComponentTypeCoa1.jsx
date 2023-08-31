@@ -19,7 +19,8 @@ const { Text } = Typography;
 const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClickImport }) => {
   return (
     <Modal
-      className="more-modal-type-coa"
+      // className="more-modal-type-coa"
+      className="more-modal"
       title={null}
       open={open}
       onCancel={onCancel}

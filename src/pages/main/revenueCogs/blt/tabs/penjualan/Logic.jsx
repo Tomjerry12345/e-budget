@@ -147,7 +147,7 @@ const Logic = () => {
           newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
-        } else {
+        } else if (type === "number") {
           newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
 
@@ -172,6 +172,34 @@ const Logic = () => {
           } else {
             isChange = false;
           }
+        } else if (type === "percent") {
+          value = parseInt(c.newCell.text);
+          let total = 0;
+
+          let ind = 2;
+
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
+
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
         }
 
         if (isChange) {
@@ -215,10 +243,10 @@ const Logic = () => {
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            log({ res });
             const rowId = res.data.data.id;
 
             newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
@@ -227,7 +255,6 @@ const Logic = () => {
             await MainServices.post(`${item.endpoint}/update`, formData);
           }
 
-          delete newRows[rowIndex].newRow;
           newRows[length - 1] = updateTotalRow(newRows, item.description);
 
           fullRows[i].data = newRows;
@@ -263,7 +290,6 @@ const Logic = () => {
             }
 
             // Penjualan
-
             if (i === 4 || i === 5 || i === 6) {
               const lengthPenjualan = fullRows[7].data.length;
               const asumsiTrip = fullRows[4].data[rowIndex].cells[columnIndex].value;
@@ -290,7 +316,7 @@ const Logic = () => {
                 item.description
               );
             }
-
+          } else if (type === "percent") {
             if (i === 8) {
               const length = fullRows[8].data.length;
               const vPenjualan = fullRows[7].data[rowIndex].cells[columnIndex - 1].value;
@@ -298,14 +324,23 @@ const Logic = () => {
               fullRows[8].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
 
-              let total1 = 0;
-              let total2 = 0;
+              let total = 0;
+              let ind = 2;
 
               const newCellPotonganPenjualan = fullRows[8].data[rowIndex].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
                 return e;
               });
 

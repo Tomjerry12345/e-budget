@@ -31,7 +31,7 @@ kalo pilih ini lngsung muncul modal untk pilih tahun
 - hitungan stock akhir tdk sesuai pi andri di revenue
 hrsnya nilai dari stock awal + asumsi unit beli - asumsi unit jual ✅
 
-- hpp variabel dgn potongan penjualan kasi tanda % d blakangnya ❌
+- hpp variabel dgn potongan penjualan kasi tanda % d blakangnya ✅
 
 - BSU brmslh ki all datanya
 kolom prtama kan description, tp isinya kode kasi hilang mi sj kodenya ✅
@@ -39,14 +39,14 @@ kolom prtama kan description, tp isinya kode kasi hilang mi sj kodenya ✅
 - BK klo sdh ka tampilkan data di revenue 
 trus pindah tab HPP lngsung ki error ✅
 
-- semua file import revenue BAND tdk ada ❌
+- semua file import revenue BAND tdk ada ✅
 
 - summary smua kode kasi default ALL ✅
 
-- input new aset sdh aman mi kah , tambah kolom? ❌ (bermasalah di be) 
+- input new aset sdh aman mi kah , tambah kolom? ✅ (bermasalah di be) 
 - Aset Number, Aset Description, Aset Category, Unit kasi Freeze sblah kanan ❌
 
-- status = activate -> action retired, status = retired -> action cancel, update
+- status = activate -> action retired, status = retired -> action cancel, update ❌
 
 - load saldo awal bisa import di awal ❌
 
@@ -56,9 +56,9 @@ radio button -> forecast / budget ❌
 
 - hilangkan auto refresh ketika pindah tab revenue ❌
 
-- di header opex setiap table tambah code account ❌
+- di header opex setiap table tambah code account ✅
 
-- export coa bermasalah ❌
+- export coa bermasalah ✅
 
 - laba rugi buat 3 tab: ❌
 

@@ -45,7 +45,12 @@ export function getRootHeaderRow() {
       nonEditable(textCell("Disposal Aset	Month", "justify-content-center font-bold")),
       nonEditable(textCell("Disposal Aset	Year", "justify-content-center font-bold")),
       nonEditable(textCell("Nilai Jual", "justify-content-center font-bold")),
-      nonEditable(textCell("Status", "justify-content-center font-bold")),
+      // nonEditable(textCell("Status", "justify-content-center font-bold")),
+      nonEditable(
+        textCell("Action", "font-bold", {
+          justifyContent: "center",
+        })
+      ),
     ],
   };
 }
@@ -93,6 +98,8 @@ function getGroupRows(groups) {
         nonEditable(numberCell(d["disposal_month"] ?? "", "padding-left-lg", null, false)),
         nonEditable(numberCell(d["disposal_year"] ?? "", "padding-left-lg", null, false)),
         nonEditable(numberCell(d["price"] ?? "", "padding-left-lg")),
+
+        // nonEditable(textCell(d["status"] ?? "", "padding-left-lg")),
 
         customCell({
           text: d["status"],

@@ -2,6 +2,7 @@ import { Typography } from "antd";
 import Logic from "./Logic";
 import { capitalize } from "values/react-grid/helpers";
 import { ReactGrid } from "@silevis/reactgrid";
+import { InputPercentTemplate } from "values/react-grid/rows/input/revenue/template-1/InputPercentTemplate";
 
 const LainHkPage = () => {
   const { value, func } = Logic();
@@ -40,6 +41,7 @@ const LainHkPage = () => {
                     stickyTopRows={1}
                     stickyLeftColumns={1}
                     enableRangeSelection
+                    customCellTemplates={{ percent: new InputPercentTemplate() }}
                     onCellsChanged={(change) => {
                       func.onChangeTable(change, i, e);
                     }}

@@ -81,9 +81,13 @@ export function getColumns() {
       columnId: "price",
       width: 150,
     },
+    // {
+    //   columnId: "status",
+    //   width: 130,
+    // },
     {
-      columnId: "status",
-      width: 200,
+      columnId: "action",
+      width: 230,
     },
   ];
 }

@@ -1,12 +1,4 @@
-import {
-  Button,
-  Dropdown,
-  Form,
-  Menu,
-  Popconfirm,
-  Switch,
-  Typography,
-} from "antd";
+import { Button, Dropdown, Form, Menu, Popconfirm, Switch, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useDropzone } from "react-dropzone";
@@ -41,7 +33,6 @@ const DropdownMenu = ({ onAction, record, onDelete }) => (
 );
 
 const CompanyLogic = () => {
-
   const [form] = Form.useForm();
   const [formTambah] = Form.useForm();
 
@@ -61,7 +52,7 @@ const CompanyLogic = () => {
 
   const isEditing = (record) => record.id === editingKey;
   const dispatch = useDispatch();
-  
+
   const constantTableColums = [
     {
       title: "Code",
@@ -78,7 +69,7 @@ const CompanyLogic = () => {
       title: "Alias",
       dataIndex: "alias",
       editable: true,
-      width: 70
+      width: 70,
     },
     {
       title: "Created At",
@@ -127,11 +118,7 @@ const CompanyLogic = () => {
             >
               Save
             </Typography.Link>
-            <Popconfirm
-              placement="leftTop"
-              title="Sure to cancel?"
-              onConfirm={cancel}
-            >
+            <Popconfirm placement="leftTop" title="Sure to cancel?" onConfirm={cancel}>
               <a>Cancel</a>
             </Popconfirm>
           </span>
@@ -143,13 +130,7 @@ const CompanyLogic = () => {
           //   Edit
           // </Typography.Link>
           <Dropdown
-            overlay={
-              <DropdownMenu
-                onAction={onAction}
-                record={record}
-                onDelete={onDelete}
-              />
-            }
+            overlay={<DropdownMenu onAction={onAction} record={record} onDelete={onDelete} />}
             placement="bottom"
             trigger={["click"]}
             disabled={editingKey !== ""}
@@ -181,13 +162,9 @@ const CompanyLogic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
-
-  
 
   useEffect(() => {
     setDataColumn([]);
@@ -233,7 +210,6 @@ const CompanyLogic = () => {
       const err = error.response;
       responseShow(err);
       setEditingKey("");
-
     }
   };
 
@@ -252,7 +228,6 @@ const CompanyLogic = () => {
 
   const onDelete = async (record) => {
     try {
-
       const res = await MainServices.delete("company/delete", {
         id: record.id,
       });
@@ -307,7 +282,7 @@ const CompanyLogic = () => {
       const res = await MainServices.post("company/import", formData);
       log("res", res);
 
-      responseShow(res)
+      responseShow(res);
 
       setLoadingUpload(false);
 
@@ -318,15 +293,28 @@ const CompanyLogic = () => {
       // navigate(0);
     } catch (error) {
       const err = error.response;
-      responseShow(err)
+      responseShow(err);
       log("error", err);
     }
   };
 
-  const onExport = () => {
-    const urlFile = `https://apikalla.binaries.id/ebudget/company/export`;
-    window.location.href = urlFile;
-  }
+  const onExport = async () => {
+    try {
+      const res = await MainServices.download("company/export");
+      log({ res });
+      const fileURL = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `account.xlsx`;
+      link.click();
+    } catch (e) {
+      log({ e });
+      responseShow({
+        status: 400,
+        message: "Terjadi kesalahan saat melakuan export",
+      });
+    }
+  };
 
   const onClosePopupModal = () => {
     setShowPopup(false);
@@ -338,13 +326,13 @@ const CompanyLogic = () => {
     try {
       if (val !== "") {
         const res = await MainServices.get(`company/list?search=${val}`);
-        log("res", res.data.data)
+        log("res", res.data.data);
         setDataColumn(res.data.data);
       } else {
         onSetDataTable();
       }
     } catch (error) {
-      const err = error.response
+      const err = error.response;
       responseShow(err);
     }
   };
@@ -408,7 +396,7 @@ const CompanyLogic = () => {
       });
     } catch (error) {
       const err = error.response;
-      responseShow(err)
+      responseShow(err);
     }
   };
 
@@ -438,7 +426,7 @@ const CompanyLogic = () => {
       onTambahData,
       setIsTambah,
       setUploadSucces,
-      onExport
+      onExport,
     },
   };
 };

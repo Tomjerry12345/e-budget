@@ -1,9 +1,10 @@
 import { CloudUploadOutlined, UploadOutlined } from "@ant-design/icons";
-import { Button, Radio, Select, Typography } from "antd";
+import { AutoComplete, Button, Radio, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { actionData } from "redux/data-global/data.reducer";
+import { useEffect, useState } from "react";
 import { log } from "values/Utilitas";
 
 const { Title, Text } = Typography;
@@ -27,11 +28,16 @@ const ImportInputModal = ({
   file,
   loading,
   title,
-  type = false,
+  type,
   showYear,
+  showCompany,
 }) => {
   const dispatch = useDispatch();
   const dataGlobalRedux = useSelector((state) => state.data);
+
+  const reduxCompany = dataGlobalRedux.listCompany;
+
+  const [listCompany, setListCompany] = useState([]);
 
   const date = new Date();
 
@@ -54,6 +60,18 @@ const ImportInputModal = ({
     },
   ];
 
+  useEffect(() => {
+    if (reduxCompany !== null) {
+      const newVal = [];
+      dataGlobalRedux.listCompany.forEach((val) => {
+        newVal.push({
+          value: val.description,
+        });
+      });
+      setListCompany(newVal);
+    }
+  }, [reduxCompany]);
+
   const downloadFile = () => {
     window.location.href = `${process.env.PUBLIC_URL}/${file}`;
   };
@@ -62,9 +80,15 @@ const ImportInputModal = ({
     dispatch(actionData({ typeRevenueImport: e.target.value }));
   };
 
-  const onSelect = (e) => {
-    log("e.target.value", e);
+  const onSelectYear = (e) => {
     dispatch(actionData({ year: e }));
+  };
+
+  const onSelectCompany = (e) => {
+    let fCodeCompany = e.split(" ");
+    fCodeCompany = fCodeCompany[0];
+    log({ fCodeCompany });
+    dispatch(actionData({ code_company: fCodeCompany }));
   };
 
   return (
@@ -98,8 +122,26 @@ const ImportInputModal = ({
             display: "flex",
             flexDirection: "column",
             marginBottom: "16px",
+            paddingTop: "16px",
           }}
         >
+          {showCompany ? (
+            <AutoComplete
+              popupClassName="autocomplete-style"
+              style={{
+                width: 303,
+              }}
+              options={listCompany}
+              onSelect={onSelectCompany}
+              defaultValue="211 - PT. Haka Sarana Investama"
+              placeholder="company"
+              // disabled={disabled}
+              allowClear
+              filterOption={(inputValue, option) => {
+                return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+              }}
+            />
+          ) : null}
           {type ? (
             <Radio.Group
               className="type-style"
@@ -112,7 +154,7 @@ const ImportInputModal = ({
           ) : null}
           {showYear ? (
             <Select
-              onSelect={onSelect}
+              onSelect={onSelectYear}
               // placeholder="tahun"
               defaultValue={`${date.getFullYear()}`}
               style={{
