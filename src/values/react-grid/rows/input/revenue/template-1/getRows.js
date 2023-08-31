@@ -14,8 +14,12 @@ export const updateTotalRow = (data, key) => {
     .map((e) => {
       const values = [];
       for (let i = FIRST_TOTAL[key]; i < END_TOTAL(key); i++) {
-        if (i % 2 === 1) {
-          values.push(parseInt(e.cells[i].text) ?? 0);
+        if (key === "Potongan penjualan") {
+          if (i % 2 === 1) {
+            values.push(parseInt(e.cells[i].text) ?? 0);
+          } else {
+            values.push(e.cells[i].value ?? 0);
+          }
         } else {
           values.push(e.cells[i].value ?? 0);
         }

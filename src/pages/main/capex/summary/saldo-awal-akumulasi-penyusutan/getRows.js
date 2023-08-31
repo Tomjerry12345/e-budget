@@ -9,6 +9,46 @@ const ROW_HEIGHT = 32;
 export function getRootHeaderRow() {
   return [
     {
+      rowId: "header",
+      cells: [
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({
+          text: "Forecast",
+          colspan: 4,
+          style: {
+            justifyContent: "center",
+          },
+        }),
+
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+
+        headerCell({ text: "" }),
+
+        headerCell({
+          text: "Budget",
+          colspan: 13,
+          style: {
+            justifyContent: "center",
+          },
+        }),
+
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+        headerCell({ text: "" }),
+      ],
+    },
+    {
       rowId: HEADER_ROOT_ROW_ID,
       height: ROW_HEIGHT,
       cells: [...getColumns().map((e) => headerCell({ text: e.title }))],

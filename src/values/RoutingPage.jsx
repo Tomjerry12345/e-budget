@@ -130,7 +130,7 @@ export const routingOthers = {
 export const routingReport = {
   "Laba Rugi": "laba-rugi",
   "Cash Flow": "cash-flow",
-  "Neraca": "neraca",
+  Neraca: "neraca",
 };
 export const routingMasterCoa = {
   "Kode perusahaan": "perusahaan",
@@ -140,6 +140,10 @@ export const routingMasterCoa = {
   "Kode akun": "akun",
   "Kode projek": "project",
   "Kode ICP": "icp",
+};
+
+export const routingAkun = {
+  "Management user": "management-user",
 };
 
 export const allRouting = {

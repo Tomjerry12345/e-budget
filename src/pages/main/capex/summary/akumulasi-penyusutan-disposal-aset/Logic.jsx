@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MainServices from "services/MainServices";
 import { generateUID, log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";

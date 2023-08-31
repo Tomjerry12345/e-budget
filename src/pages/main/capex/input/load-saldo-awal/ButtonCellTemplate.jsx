@@ -24,12 +24,13 @@ class ButtonCellTemplate {
   }
 
   onClicked(cell, onCellChanged, status) {
-    console.log(status);
-    // this.props.changeCellTemplate({
-    //   clickedActivated: true,
-    //   status,
-    // });
-    onCellChanged(this.getCompatibleCell({ ...cell, text: "test" }), true);
+    onCellChanged(
+      this.getCompatibleCell({
+        ...cell,
+        text: status === "actived" ? "retired" : "cancel retired",
+      }),
+      true
+    );
   }
 
   render(cell, isInEditMode, onCellChanged) {
@@ -42,7 +43,7 @@ class ButtonCellTemplate {
           onClick={(e) => this.onClicked(cell, onCellChanged, status)}
           // disabled={status === "active"}
         >
-          {/* {status === "actived" ? "cancel retired" : "retired"} */}
+          {/* {status === "actived" ? "retired" : "cancel retired"} */}
           retired
         </Button>
         {/* <Button
