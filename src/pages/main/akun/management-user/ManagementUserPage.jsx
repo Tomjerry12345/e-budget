@@ -1,38 +1,15 @@
-import { Form } from "antd";
-import { useEffect, useState } from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../component/table/TableComponent";
-import { getLocal, getSizeScreen } from "../../../../values/Utilitas";
+import { Button, Pagination, Table } from "antd";
 import Logic from "./Logic";
+import HeaderComponent from "component/header/HeaderComponent";
+import "./style.scss";
+import ModalManagementUser from "./modal/ModalManagementUser";
+import { Box } from "@mui/material";
 
 const ManagementUserPage = () => {
   const { value, func } = Logic();
 
-  const [size, setSize] = useState({
-    x: window.innerWidth,
-    y: window.innerHeight,
-  });
-
-  const [form] = Form.useForm();
-
-  useEffect(() => {
-    window.onresize = getSizeScreen(setSize);
-    const company = getLocal("code_company");
-    const company_names = getLocal("company_names");
-    form.setFieldsValue({
-      code_company: company === "" ? null : `${company} - ${company_names}`,
-      code_location: "ALL",
-      code_dept: "ALL",
-      code_product: "ALL",
-      code_icp: "ALL",
-      code_project: "ALL",
-      periode: "2023 - 2024",
-    });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return (
-    <>
+    <div className="style-management-user">
       <HeaderComponent
         type="summary"
         onFinish={func.onFinish}
@@ -40,35 +17,41 @@ const ManagementUserPage = () => {
           set(value.filter);
         }}
         onExport={func.downloadFile}
-        disabledImportExport={value.data.length <= 1}
+        // disabledImportExport={value.data.length <= 1}
+        titleHeader="Management user"
       />
-
-      <FilterComponent
-        onFinish={func.onFinish}
-        codeCompany={211}
-        isCodeIcp={true}
-        isCodeProject={true}
-        form={form}
-        // disabled={true}
-      />
-
       <div className="custom-root-layout">
-        {/* {value.data.length > 1 ? (
-          <div className="layout-btn-action">
-            <Button className="btn-download-template" type="primary" onClick={func.downloadFile} icon={<UploadOutlined className="custom-icon" />}>
-              Download
-            </Button>
-          </div>
-        ) : null} */}
-
-        <TableComponent
-          dataSource={value.data}
+        <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
+          Tambah User
+        </Button>
+        <Table
+          components={value.components}
+          rowClassName={() => "editable-row"}
+          bordered
+          dataSource={value.dataSource}
           columns={value.columns}
-          loading={value.loading}
-          scroll={{ y: size.y - 260 }}
+          pagination={false}
+          rowKey="id"
         />
+        <Box display="flex" justifyContent="center">
+          <Pagination
+            defaultCurrent={1}
+            total={value.totalData}
+            pageSize={50}
+            showSizeChanger={false}
+            onChange={func.onChangePagination}
+          />
+        </Box>
       </div>
-    </>
+
+      <ModalManagementUser
+        open={value.openModal}
+        onOk={func.onActionUser}
+        onCancel={func.onCloseModal}
+        form={value.form}
+        isEdit={value.isEdit}
+      />
+    </div>
   );
 };
 

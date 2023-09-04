@@ -6,7 +6,7 @@ import MainServices from "services/MainServices";
 import { allRouting } from "values/RoutingPage";
 import { getKeyByValue, log } from "values/Utilitas";
 
-const Logic = () => {
+const Logic = ({ titleHeader }) => {
   const [more, setMore] = useState(false);
   const [header, setHeader] = useState("");
   const [headerCalculate, setHeaderCalculate] = useState("");
@@ -16,11 +16,13 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const split = location.pathname.split("/");
-    const q = split[split.length - 1];
+    if (titleHeader === undefined) {
+      const split = location.pathname.split("/");
+      const q = split[split.length - 1];
 
-    const h = getKeyByValue(allRouting[split[2]], q);
-    setHeader(h[1] === undefined ? h[0] : split[3] === "input" ? h[0] : h[1]);
+      const h = getKeyByValue(allRouting[split[2]], q);
+      setHeader(h[1] === undefined ? h[0] : split[3] === "input" ? h[0] : h[1]);
+    }
   }, []);
 
   const onClickMore = () => {
@@ -91,7 +93,6 @@ const Logic = () => {
       header,
       headerCalculate,
       openModal,
-
     },
     func: {
       onClickMore,

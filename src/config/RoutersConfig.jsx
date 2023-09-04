@@ -155,6 +155,7 @@ import KomunikasiSummary from "pages/main/mpp/summary/komunikasi/KomunikasiSumma
 import PendidikanPelatihanSummary from "pages/main/mpp/summary/pendidikan-pelatihan/PendidikanPelatihanSummary";
 import RekrutmentAssessmentSummary from "pages/main/mpp/summary/rekrutment-assesment/RekrutmentAssessmentSummary";
 import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSummary";
+import ManagementUserPage from "pages/main/akun/management-user/ManagementUserPage";
 
 const RoutersConfig = () => {
   return (
@@ -417,6 +418,7 @@ const RoutersConfig = () => {
             <Route path="icp" element={<IcpPage />} />
             {/* <Route path=":item" element={<CoaPage />} /> */}
           </Route>
+          <Route path="management-user" element={<ManagementUserPage />} />
         </Route>
         {/* <Route path="/testing" element={<TestingPages />} />
         <Route path="/testing1" element={<TestingPages1 />} /> */}

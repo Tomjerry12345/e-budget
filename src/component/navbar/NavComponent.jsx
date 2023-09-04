@@ -8,6 +8,7 @@ import SupervisedUserCircleOutlinedIcon from "@mui/icons-material/SupervisedUser
 import ContentPasteOutlinedIcon from "@mui/icons-material/ContentPasteOutlined";
 import SummarizeOutlinedIcon from "@mui/icons-material/SummarizeOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import GroupIcon from "@mui/icons-material/Group";
 
 import logo from "../../assets/img/logo.png";
 
@@ -148,20 +149,14 @@ const NavComponent = ({ func, value }) => {
           Akun
         </Menu.Item>
 
-        {/* <Menu.Item className="style-profile" title={null} disabled>
-          <Dropdown overlay={menu} overlayClassName="custom-dropdown">
-            <Button
-              type="primary"
-              shape="circle"
-              style={{
-                height: "40px",
-                width: "40px",
-              }}
-            >
-              A
-            </Button>
-          </Dropdown>
-        </Menu.Item> */}
+        <Menu.Item
+          key={"9-Management User"}
+          className={`menuItem ${isClickedMenu(9)}`}
+          icon={<GroupIcon className={`colorIcon ${isClickedMenu(9)}`} />}
+          // onClick={func.onClickedMenu}
+        >
+          Akun
+        </Menu.Item>
       </Menu>
     </Sider>
   );
