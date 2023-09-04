@@ -45,7 +45,7 @@ const Logic = () => {
               type="link"
               onClick={() => {
                 idRef.current = record.id;
-                const code_company = record.code_company.split(",");
+                const code_company = record.code_company.split(", ");
                 setIsEdit(true);
                 const nRecord = {
                   ...record,
@@ -131,7 +131,7 @@ const Logic = () => {
       } else {
         const params = {
           ...values,
-          code_company: values.code_company.toString(),
+          code_company: values.code_company.join(', '),
         };
 
         const formData = formDataUtils(params);

@@ -59,7 +59,8 @@ const getRows = () => [
   },
 ];
 
-const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron");
+const findChevronCell = (row) =>
+  row.cells.find((cell) => cell.type === "chevron");
 
 const findParentRow = (rows, row) =>
   rows.find((r) => {
@@ -92,7 +93,9 @@ const getExpandedRows = (rows) =>
 const getDirectChildRows = (rows, parentRow) =>
   rows.filter(
     (row) =>
-      !!row.cells.find((cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId)
+      !!row.cells.find(
+        (cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId
+      )
   );
 
 const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
@@ -243,7 +246,9 @@ function TestingBertahap() {
   // const [rowTree] = useState(() => buildTree(getRows()));
   // const rowsToRender = [headerRow, ...getExpandedRows(rowTree)];
 
-  const [eRow] = useState(() => expandedRowChecked([headerRow, ...getRows()], col[3]));
+  const [eRow] = useState(() =>
+    expandedRowChecked([headerRow, ...getRows()], col[3])
+  );
   // const eCol = expandedColChecked(col);
 
   const [rows, setRows] = useState(eRow);

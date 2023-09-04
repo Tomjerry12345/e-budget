@@ -9,8 +9,20 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Typography } from "antd";
 
 const col = [
-  { columnId: "produk", width: 100, isExpand: false, reorderable: true, resizable: false },
-  { columnId: "jan1", width: 150, isExpand: false, reorderable: true, resizable: false },
+  {
+    columnId: "produk",
+    width: 100,
+    isExpand: false,
+    reorderable: true,
+    resizable: false,
+  },
+  {
+    columnId: "jan1",
+    width: 150,
+    isExpand: false,
+    reorderable: true,
+    resizable: false,
+  },
   { columnId: "feb1", width: 150, reorderable: true, resizable: false },
 ];
 
@@ -36,7 +48,13 @@ const getRows = () => [
         isExpand: false,
         isExpanded: true,
       },
-      { type: "text", text: "1", expandText: "1", isExpand: false, nonEditable: false },
+      {
+        type: "text",
+        text: "1",
+        expandText: "1",
+        isExpand: false,
+        nonEditable: false,
+      },
       { type: "text", text: "0" },
     ],
   },
@@ -51,13 +69,20 @@ const getRows = () => [
         parentId: 1,
         nonEditable: false,
       },
-      { type: "text", text: "0", expandText: "0", isExpand: false, nonEditable: false },
+      {
+        type: "text",
+        text: "0",
+        expandText: "0",
+        isExpand: false,
+        nonEditable: false,
+      },
       { type: "text", text: "1" },
     ],
   },
 ];
 
-const findChevronCell = (row) => row.cells.find((cell) => cell.type === "chevron");
+const findChevronCell = (row) =>
+  row.cells.find((cell) => cell.type === "chevron");
 
 const findParentRow = (rows, row) =>
   rows.find((r) => {
@@ -90,7 +115,9 @@ const getExpandedRows = (rows) =>
 const getDirectChildRows = (rows, parentRow) =>
   rows.filter(
     (row) =>
-      !!row.cells.find((cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId)
+      !!row.cells.find(
+        (cell) => cell.type === "chevron" && cell.parentId === parentRow.rowId
+      )
   );
 
 const assignIndentAndHasChildren = (rows, parentRow, indent = 0) => {
@@ -266,8 +293,12 @@ function TestingBertahap2() {
     if (!changes[0].newCell.isExpand) {
       const newRows = [...rowTree];
       changes.forEach((change) => {
-        const changeRowIdx = rowTree.findIndex((el) => el.rowId === change.rowId);
-        const changeColumnIdx = columns.findIndex((el) => el.columnId === change.columnId);
+        const changeRowIdx = rowTree.findIndex(
+          (el) => el.rowId === change.rowId
+        );
+        const changeColumnIdx = columns.findIndex(
+          (el) => el.columnId === change.columnId
+        );
         newRows[changeRowIdx].cells[changeColumnIdx] = change.newCell;
       });
 
