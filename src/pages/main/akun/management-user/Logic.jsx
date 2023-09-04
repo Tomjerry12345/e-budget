@@ -1,6 +1,5 @@
 import { Button, Form, Popconfirm } from "antd";
 import { useEffect, useRef, useState } from "react";
-import { EditableCell, EditableRow } from "./EditableComponent";
 import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 
@@ -10,6 +9,7 @@ const Logic = () => {
   const [dataSource, setDataSource] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
+  const [totalData, setTotalData] = useState(0);
 
   const idRef = useRef();
 
@@ -51,7 +51,6 @@ const Logic = () => {
                   ...record,
                   code_company,
                 };
-                log({ nRecord });
                 form.setFieldsValue(nRecord);
                 onOpenModal();
               }}
@@ -67,13 +66,6 @@ const Logic = () => {
     },
   ];
 
-  const components = {
-    body: {
-      row: EditableRow,
-      cell: EditableCell,
-    },
-  };
-
   const columns = defaultColumns.map((col) => {
     if (!col.editable) {
       return col;
@@ -85,7 +77,6 @@ const Logic = () => {
         editable: col.editable,
         dataIndex: col.dataIndex,
         title: col.title,
-        handleSave,
       }),
     };
   });
@@ -100,6 +91,7 @@ const Logic = () => {
       const { data } = await MainServices.get(url);
       log("data.data", data.data.data);
       setDataSource(data.data.data);
+      setTotalData(data.data.total);
     } catch (error) {
       // Tangani error jika ada
       console.error(`Error fetching data`, error);
@@ -127,18 +119,12 @@ const Logic = () => {
 
   const onActionUser = async (values) => {
     try {
-      log({ values });
-
       if (isEdit) {
         const params = {
           ...values,
           code_company: values.code_company.toString(),
           id: idRef.current,
         };
-
-        log({ params });
-
-        // const formData = formDataUtils(params);
 
         const url = `users`;
         await MainServices.update(url, params);
@@ -147,8 +133,6 @@ const Logic = () => {
           ...values,
           code_company: values.code_company.toString(),
         };
-
-        log({ params });
 
         const formData = formDataUtils(params);
 
@@ -177,30 +161,30 @@ const Logic = () => {
     }
   };
 
-  const handleSave = (row) => {
-    const newData = [...dataSource];
-    const index = newData.findIndex((item) => row.key === item.key);
-    const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    setDataSource(newData);
+  const onChangePagination = (page, pageSize) => {
+    log({ page });
+    log({ pageSize });
+    // const uFilter = {
+    //   ...codeFilter,
+    //   page,
+    // };
+    // getData(uFilter);
   };
 
   return {
     value: {
       dataSource,
       columns,
-      components,
       openModal,
       form,
       isEdit,
+      totalData,
     },
     func: {
       onOpenModal,
       onCloseModal,
       onActionUser,
+      onChangePagination,
     },
   };
 };

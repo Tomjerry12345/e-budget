@@ -70,8 +70,8 @@ radio button -> forecast / budget ✅
 - ukuran font di perkecil lg ❌
 - tipe data inputan angka ganti jd double ❌
 
-- Export data to oracle pilih company dan tahun
-- load saldo awal periode format sesuaikan sama filter
-- management user
-- usergroup company userbu cuman satu select, reviewer multiple select
+- Export data to oracle pilih company dan tahun ✅
+- load saldo awal periode format sesuaikan sama filter ✅
+- management user ✅
+- usergroup company userbu cuman satu select, reviewer multiple select ✅
 
