@@ -25,7 +25,6 @@ const ManagementUserPage = () => {
           Tambah User
         </Button>
         <Table
-          components={value.components}
           rowClassName={() => "editable-row"}
           bordered
           dataSource={value.dataSource}
@@ -37,7 +36,7 @@ const ManagementUserPage = () => {
           <Pagination
             defaultCurrent={1}
             total={value.totalData}
-            pageSize={50}
+            pageSize={25}
             showSizeChanger={false}
             onChange={func.onChangePagination}
           />

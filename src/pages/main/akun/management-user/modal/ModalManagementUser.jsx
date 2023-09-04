@@ -53,7 +53,10 @@ const ModalManagementUser = ({
         <div className="root-content-upload">
           <div className="layout-upload-file">
             <FormItem label="Username" name="username" children={<Input />} />
-            <FormItem label="Password" name="password" children={<Input />} />
+            {!isEdit ? (
+              <FormItem label="Password" name="password" children={<Input />} />
+            ) : null}
+
             <FormItem label="Nama" name="name" children={<Input />} />
             <FormItem
               label="User group"
