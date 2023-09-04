@@ -1,0 +1,16 @@
+.style-management-user {
+    .btn-tambah-user {
+        margin-bottom: 16px;
+        background: #34a853;
+        border: none;
+        border-radius: 8px;
+        margin-top: 16px;
+
+        &:hover {
+            background: #34a853a9;
+        }
+        &:focus {
+            background: #34a853a9;
+        }
+    }
+}

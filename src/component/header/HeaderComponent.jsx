@@ -33,6 +33,7 @@ const HeaderComponent = ({
   showType = false,
   showYear = false,
   showCompany = false,
+  titleHeader,
 }) => {
   let component;
 
@@ -59,6 +60,7 @@ const HeaderComponent = ({
         disabledMenu={disabledMenu}
         linkExport={linkExport}
         linkCalculate={linkCalculate}
+        titleHeader={titleHeader}
       />
     );
   } else if (type === "summary-direct-all") {
