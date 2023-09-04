@@ -12,9 +12,17 @@ const DIrectAllSummary = () => {
       <HeaderComponent
         type="summary-direct-all"
         listMenu={[
+          // {
+          //   description: "direct all",
+          //   before: value.linkExport === null,
+          // },
           {
             description: "direct all",
-            before: value.linkExport === null,
+            disabled: value.rows.length === 0,
+          },
+          {
+            description: "data oracle",
+            disabled: false,
           },
         ]}
         linkExport={value.linkExport}

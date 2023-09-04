@@ -9,7 +9,14 @@ import ModalExportSummaryDirectAll from "./modal-export/ModalExportSummaryDirect
 const { Header } = Layout;
 const { Text } = Typography;
 
-const ModalMenuMore = ({ open, onCancel, listMenu, onExport, linkExport, onClickBefore }) => {
+const ModalMenuMore = ({
+  open,
+  onCancel,
+  listMenu,
+  onExport,
+  linkExport,
+  onClickDataOracle,
+}) => {
   log({ listMenu });
   return (
     <Modal
@@ -21,15 +28,17 @@ const ModalMenuMore = ({ open, onCancel, listMenu, onExport, linkExport, onClick
       closable={false}
       mask={false}
     >
-      {listMenu.map((e) => (
+      {listMenu.map((e, i) => (
         <Button
+          key={i}
           className="btn"
           type="text"
+          disabled={e.disabled}
           onClick={() => {
-            if (e.before) {
-              onClickBefore();
-            } else {
+            if (i === 0) {
               onExport(e, linkExport);
+            } else if (i === 1) {
+              onClickDataOracle();
             }
             onCancel();
           }}
@@ -61,13 +70,14 @@ const HeaderComponentTypeSummaryDirectAll = ({ listMenu, disabledMenu, linkExpor
         onExport={func.onExport}
         disabledMenu={disabledMenu}
         linkExport={linkExport}
-        onClickBefore={func.onClickBefore}
+        onClickDataOracle={func.onClickDataOracle}
       />
 
       <ModalExportSummaryDirectAll
         open={value.openModal}
         onCancel={func.onCloseBefore}
-        title={`export  ${value.header}`}
+        title={`Export data to oracle`}
+        // title={`Export  ${value.header}`}
       />
     </Header>
   );

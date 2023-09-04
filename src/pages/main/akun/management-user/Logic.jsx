@@ -1,134 +1,208 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-  columnOutputType1,
-  columnOutputType2,
-} from "../../../../component/table/utils/TypeColumn";
-import MainServices from "../../../../services/MainServices";
-import { getLocal, log } from "../../../../values/Utilitas";
+import { Button, Form, Popconfirm } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { EditableCell, EditableRow } from "./EditableComponent";
+import MainServices from "services/MainServices";
+import { formDataUtils, log } from "values/Utilitas";
 
-const rootEndpoint = "report/labarugi";
+const Logic = () => {
+  const [form] = Form.useForm();
 
-const LabaRugiLogic = () => {
-  const [data, setData] = useState([]);
-  const [columns, setColumns] = useState();
-  const [loading, setLoading] = useState(false);
-  const [codeFilter, setCodeFilter] = useState();
+  const [dataSource, setDataSource] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
-  let params = useParams();
+  const idRef = useRef();
+
+  const defaultColumns = [
+    {
+      title: "Username",
+      dataIndex: "username",
+      width: "30%",
+    },
+    {
+      title: "Nama",
+      dataIndex: "name",
+    },
+    {
+      title: "User group",
+      dataIndex: "user_group",
+    },
+    {
+      title: "Akses perusahaan",
+      dataIndex: "code_company",
+    },
+    {
+      title: "operation",
+      dataIndex: "operation",
+      render: (_, record) =>
+        dataSource.length >= 1 ? (
+          <div
+            style={{
+              display: "flex",
+            }}
+          >
+            <Button
+              type="link"
+              onClick={() => {
+                idRef.current = record.id;
+                const code_company = record.code_company.split(",");
+                setIsEdit(true);
+                const nRecord = {
+                  ...record,
+                  code_company,
+                };
+                log({ nRecord });
+                form.setFieldsValue(nRecord);
+                onOpenModal();
+              }}
+            >
+              Edit
+            </Button>
+
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+              <Button type="link">Delete</Button>
+            </Popconfirm>
+          </div>
+        ) : null,
+    },
+  ];
+
+  const components = {
+    body: {
+      row: EditableRow,
+      cell: EditableCell,
+    },
+  };
+
+  const columns = defaultColumns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        handleSave,
+      }),
+    };
+  });
 
   useEffect(() => {
-    const codeCompany = getLocal("code_company");
-    const userGroup = getLocal("user_group");
-    loadData(userGroup === "superadmin" ? "211" : codeCompany, "all", "all", "all", "all", "all", "2023");
+    onGetUser();
   }, []);
 
-  const onFinish = async (values) => {
-    setLoading(true);
+  const onGetUser = async () => {
+    try {
+      const url = `users`;
+      const { data } = await MainServices.get(url);
+      log("data.data", data.data.data);
+      setDataSource(data.data.data);
+    } catch (error) {
+      // Tangani error jika ada
+      console.error(`Error fetching data`, error);
+    }
+  };
 
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_product,
-      code_project,
-      code_icp,
-      periode
-    } = values;
+  const onOpenModal = () => {
+    // const newData = {
+    //   key: "0",
+    //   username: "admin",
+    //   nama: "Admin",
+    //   user_group: "admin",
+    //   akses_perusahaan: "hk",
+    // };
+    // setDataSource([...dataSource, newData]);
+    // setCount(count + 1);
+    setOpenModal(true);
+  };
 
-    let fCodeCompany = code_company.split(" ");
-    let fCodeProduct = code_product.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-    let fPeriode = periode.split(" ")
+  const onCloseModal = () => {
+    setOpenModal(false);
+    setIsEdit(false);
+    form.resetFields();
+  };
 
-    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
-    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0];
+  const onActionUser = async (values) => {
+    try {
+      log({ values });
 
-    loadData(
-      fCodeCompany,
-      fCodeProduct,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
+      if (isEdit) {
+        const params = {
+          ...values,
+          code_company: values.code_company.toString(),
+          id: idRef.current,
+        };
 
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-      periode: fPeriode,
+        log({ params });
+
+        // const formData = formDataUtils(params);
+
+        const url = `users`;
+        await MainServices.update(url, params);
+      } else {
+        const params = {
+          ...values,
+          code_company: values.code_company.toString(),
+        };
+
+        log({ params });
+
+        const formData = formDataUtils(params);
+
+        const url = `users`;
+        await MainServices.post(url, formData);
+      }
+
+      onGetUser();
+      onCloseModal();
+    } catch (error) {
+      // Tangani error jika ada
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const url = `users`;
+      await MainServices.delete(url, {
+        id,
+      });
+      onGetUser();
+    } catch (error) {
+      // Tangani error jika ada
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const handleSave = (row) => {
+    const newData = [...dataSource];
+    const index = newData.findIndex((item) => row.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, {
+      ...item,
+      ...row,
     });
-  };
-
-  const loadData = async (
-    fCodeCompany,
-    fCodeProduct,
-    fCodeLocation,
-    fCodeDept,
-    fCodeIcp,
-    fCodeProject,
-    periode
-  ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${periode}`;
-    const { data } = await MainServices.get(url);
-    getData(data.data, periode);
-
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-    });
-  };
-
-  const getData = (data, periode) => {
-    setData(data.list);
-    setColumns(columnOutputType2(periode, parseInt(periode) + 1));
-    setLoading(false);
-  };
-
-  const downloadFile = () => {
-    const {
-      code_company,
-      code_product,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-    } = codeFilter;
-    const urlFile = `https://apikalla.binaries.id/ebudget/report/tablereport?code_company=${code_company}&code_location=${code_location}&code_dept=${code_dept}&code_product=${code_product}`;
-    window.location.href = urlFile;
+    setDataSource(newData);
   };
 
   return {
     value: {
-      data,
+      dataSource,
       columns,
-      loading,
-      params,
+      components,
+      openModal,
+      form,
+      isEdit,
     },
     func: {
-      onFinish,
-      downloadFile,
+      onOpenModal,
+      onCloseModal,
+      onActionUser,
     },
   };
 };
 
-export default LabaRugiLogic;
+export default Logic;

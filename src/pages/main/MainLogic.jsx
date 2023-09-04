@@ -24,7 +24,7 @@ const MainLogic = () => {
   const [listSubmenu, setListSubmenu] = useState([]);
   const [itemDisabledMenu, setitemDisabledMenu] = useState();
   const [titleMenu, setTitleMenu] = useState();
-  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0]);
+  const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [header, setHeader] = useState("");
   const [routerNewPage, setRouterNewPage] = useState("#");
 
@@ -68,7 +68,7 @@ const MainLogic = () => {
   };
 
   const onActivatedMenu = () => {
-    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     const index = getLocal("index-menu");
     isActivated[index] = 2;
     setiEmenu(index);
@@ -115,7 +115,7 @@ const MainLogic = () => {
   const onClickedMenu = (key, item, subMenu, title, e) => {
     if (e !== undefined) e.preventDefault();
 
-    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let isActivated = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     let pageNavigation = "";
     const index = parseInt(key);
 
@@ -130,6 +130,15 @@ const MainLogic = () => {
         setLocal("index-menu", index);
         setLocal("name-menu", "Dashboard");
         pageNavigation = "/";
+        navigate(pageNavigation);
+        setLocal("move-page", pageNavigation);
+      } else if (index === 9) {
+        setHeader("Management User");
+
+        isActivated[index] = 2;
+        setLocal("index-menu", index);
+        setLocal("name-menu", "Management User");
+        pageNavigation = "/main/management-user";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
       } else {
@@ -202,11 +211,6 @@ const MainLogic = () => {
     } else if (index === 5) {
       const routing = routingOthers[nameMenu];
       pageNavigation = `/main/others/${inputOrSummary}/${routing}`;
-      // if (nameMenu === "Input Asumsi") {
-      //   pageNavigation = `/main/others/others-input/Input Asumsi`;
-      // } else {
-      //   pageNavigation = `/main/others/${inputOrSummary}/${nameMenu}`;
-      // }
     } else if (index === 6) {
       const routing = routingReport[nameMenu];
       pageNavigation = `/main/report/${routing}`;
@@ -218,6 +222,9 @@ const MainLogic = () => {
         pageNavigation = `/login`;
       }
     }
+    // else if (index === 9) {
+    //   pageNavigation = `/main/management-user`;
+    // }
 
     return pageNavigation;
   };

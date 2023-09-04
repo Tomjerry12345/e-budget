@@ -31,7 +31,7 @@ const Logic = () => {
     setMore(false);
   };
 
-  const onClickBefore = () => {
+  const onClickDataOracle = () => {
     setOpenModal(true);
   };
 
@@ -94,7 +94,7 @@ const Logic = () => {
       onClickMore,
       onCloseMore,
       onExport,
-      onClickBefore,
+      onClickDataOracle,
       onCloseBefore,
     },
   };

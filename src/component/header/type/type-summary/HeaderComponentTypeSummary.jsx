@@ -51,12 +51,18 @@ const ModalMenuMore = ({
   );
 };
 
-const HeaderComponentTypeSummary = ({ listMenu, disabledMenu, linkExport, linkCalculate }) => {
-  const { value, func } = Logic();
+const HeaderComponentTypeSummary = ({
+  listMenu,
+  disabledMenu,
+  linkExport,
+  linkCalculate,
+  titleHeader,
+}) => {
+  const { value, func } = Logic({ titleHeader });
 
   return (
     <Header className="custom-header">
-      <Text className="header-title">{value.header}</Text>
+      <Text className="header-title">{titleHeader ?? value.header}</Text>
 
       <div className="container-menu">
         <Button className="btn-more" onClick={func.onClickMore}>
