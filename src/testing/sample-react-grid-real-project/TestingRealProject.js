@@ -1,4 +1,4 @@
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { getColumns } from "./getColumns";
 import { useState } from "react";
 import { data as emptyData } from "./rawData";

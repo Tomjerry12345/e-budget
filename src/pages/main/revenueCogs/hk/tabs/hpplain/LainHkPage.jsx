@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 import Logic from "./Logic";
 import { capitalize } from "values/react-grid/helpers";
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { InputPercentTemplate } from "values/react-grid/rows/input/revenue/template-1/InputPercentTemplate";
 
 const LainHkPage = () => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ReactGrid } from "@silevis/reactgrid/dist";
-import "@silevis/reactgrid/dist/styles.css";
+import { ReactGrid } from "@silevis/reactgrid";
+import "@silevis/reactgrid/styles.css";
 import "./styles.css";
 import { logO } from "../../values/Utilitas";
 

@@ -1,4 +1,4 @@
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { CASHBOXBANK_ROW_ID, CREDITLINE_ROW_ID, getRows } from "./getRows";
 import { getColumns } from "./getColumns";
 import { useState } from "react";

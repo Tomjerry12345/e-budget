@@ -1,7 +1,7 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import LogicNew from "./LogicNew";
 import { constantExcellFile } from "values/Constant";
 import { Button } from "antd";

@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
 import Logic from "./Logic";
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { capitalize } from "values/react-grid/helpers";
 import { InputPercentTemplate } from "values/react-grid/rows/input/revenue/template-1/InputPercentTemplate";
 

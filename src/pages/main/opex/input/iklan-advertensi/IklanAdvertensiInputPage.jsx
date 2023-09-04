@@ -3,7 +3,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import Logic from "./Logic";
 import { Button, Typography } from "antd";
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { constantExcellFile } from "values/Constant";
 
 const IklanAdvertensiInputPage = () => {

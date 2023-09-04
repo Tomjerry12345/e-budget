@@ -1,9 +1,9 @@
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import { useRef, useState } from "react";
-import "@silevis/reactgrid/dist/styles.scss";
-import "@silevis/reactgrid/dist/default-colors.scss";
-import "@silevis/reactgrid/dist/default-sizing.scss";
-import "@silevis/reactgrid/dist/cell-templates-default-colors.scss";
+import "@silevis/reactgrid/styles.scss";
+import "@silevis/reactgrid/default-colors.scss";
+import "@silevis/reactgrid/default-sizing.scss";
+import "@silevis/reactgrid/cell-templates-default-colors.scss";
 import { Button, Typography } from "antd";
 import { log } from "../../values/Utilitas";
 import "./styles.scss";

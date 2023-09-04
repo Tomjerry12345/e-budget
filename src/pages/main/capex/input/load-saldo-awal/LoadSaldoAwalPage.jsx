@@ -2,7 +2,7 @@ import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import { Pagination } from "antd";
-import { ReactGrid } from "@silevis/reactgrid/dist";
+import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 import { Box } from "@mui/material";
 import UbahRetiredModal from "component/modal/ubah-retired/UbahRetiredModal";
