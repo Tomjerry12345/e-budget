@@ -125,22 +125,21 @@ const MainLogic = () => {
     if (item === "menu") {
       if (index === 0) {
         setHeader("Dashboard");
-
-        isActivated[index] = 2;
-        setLocal("index-menu", index);
-        setLocal("name-menu", "Dashboard");
+        isActivated[index] = 1;
         pageNavigation = "/";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
+        setLocal("index-menu", index);
+        setLocal("name-menu", "Dashboard");
       } else if (index === 9) {
         setHeader("Management User");
-
-        isActivated[index] = 2;
-        setLocal("index-menu", index);
-        setLocal("name-menu", "Management User");
+        isActivated[index] = 1;
         pageNavigation = "/main/management-user";
         navigate(pageNavigation);
         setLocal("move-page", pageNavigation);
+        setLocal("index-menu", index);
+        setLocal("name-menu", "Management user");
+        setShowMenu(false);
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;

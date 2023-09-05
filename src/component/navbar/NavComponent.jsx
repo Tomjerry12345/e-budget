@@ -130,29 +130,30 @@ const NavComponent = ({ func, value }) => {
         </Menu.Item>
 
         {getLocal("user_group") === "superadmin" ? (
-          <Menu.Item
-            key={"7-Master COA"}
-            className={`menuItem ${isClickedMenu(7)}`}
-            icon={<Inventory2OutlinedIcon className={`colorIcon ${isClickedMenu(7)}`} />}
-            // onClick={func.onClickedMenu}
-          >
-            Master COA
-          </Menu.Item>
+          <>
+            <Menu.Item
+              key={"7-Master COA"}
+              className={`menuItem ${isClickedMenu(7)}`}
+              icon={<Inventory2OutlinedIcon className={`colorIcon ${isClickedMenu(7)}`} />}
+              // onClick={func.onClickedMenu}
+            >
+              Master COA
+            </Menu.Item>
+            <Menu.Item
+              key={"9-Management User"}
+              className={`menuItem ${isClickedMenu(9)}`}
+              icon={<GroupIcon className={`colorIcon ${isClickedMenu(9)}`} />}
+              // onClick={func.onClickedMenu}
+            >
+              Management User
+            </Menu.Item>
+          </>
         ) : null}
 
         <Menu.Item
           key={"8-Akun"}
           className={`menuItem ${isClickedMenu(8)}`}
           icon={<UserOutlined className={`colorIcon ${isClickedMenu(8)}`} />}
-          // onClick={func.onClickedMenu}
-        >
-          Akun
-        </Menu.Item>
-
-        <Menu.Item
-          key={"9-Management User"}
-          className={`menuItem ${isClickedMenu(9)}`}
-          icon={<GroupIcon className={`colorIcon ${isClickedMenu(9)}`} />}
           // onClick={func.onClickedMenu}
         >
           Akun

@@ -1,0 +1,38 @@
+.style-management-user {
+    .ant-table-thead > tr > .ant-table-cell {
+        padding: 1px 8px !important;
+        font-size: 12px !important;
+        font-weight: bold;
+      }
+
+    .ant-table-tbody > tr > .ant-table-cell {
+        padding: 1px 8px !important;
+        font-size: 10px !important;
+      }
+
+    .btn-tambah-user {
+        background: #34a853;
+        border: none;
+        border-radius: 8px;
+
+        &:hover {
+            background: #34a853a9;
+        }
+        &:focus {
+            background: #34a853a9;
+        }
+    }
+
+    .btn-edit {
+        font-size: 10px;
+    }
+
+    .btn-delete {
+        font-size: 10px;
+    }
+
+    .pagination {
+        margin: 10px;
+        height: 48px;
+    }
+}
