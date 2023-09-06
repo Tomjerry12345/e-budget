@@ -5,7 +5,7 @@ import Logic from "./Logic";
 const { Header } = Layout;
 const { Text } = Typography;
 
-const HeaderManagementUser = ({ titleHeader = "" }) => {
+const HeaderManagementUser = ({ titleHeader = "", onOpenModal }) => {
   const { value, func } = Logic();
 
   return (
@@ -13,7 +13,7 @@ const HeaderManagementUser = ({ titleHeader = "" }) => {
       <Text className="header-title">{titleHeader}</Text>
 
       <div className="container-menu">
-        <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
+        <Button className="btn-tambah-user" onClick={onOpenModal} type="primary">
           Tambah User
         </Button>
       </div>

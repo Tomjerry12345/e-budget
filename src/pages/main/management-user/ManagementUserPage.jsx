@@ -11,7 +11,7 @@ const ManagementUserPage = () => {
 
   return (
     <div className="style-management-user">
-      <HeaderManagementUser titleHeader="Management user" />
+      <HeaderManagementUser titleHeader="Management user" onOpenModal={func.onOpenModal} />
       <div className="custom-root-layout">
         {/* <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
           Tambah User

@@ -1,5 +1,7 @@
 import { Button, Form, Popconfirm } from "antd";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 
@@ -10,6 +12,8 @@ const Logic = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [totalData, setTotalData] = useState(0);
+
+  const dispatch = useDispatch();
 
   const idRef = useRef();
 
@@ -59,6 +63,15 @@ const Logic = () => {
               Edit
             </Button>
 
+            <Popconfirm
+              title="Sure to reset password?"
+              onConfirm={() => onResetPassword(record.id)}
+            >
+              <Button className="btn-reset" type="link">
+                Reset password
+              </Button>
+            </Popconfirm>
+
             <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
               <Button className="btn-delete" type="link">
                 Delete
@@ -87,6 +100,15 @@ const Logic = () => {
   useEffect(() => {
     onGetUser();
   }, []);
+
+  const showNotif = (status, message) => {
+    dispatch(
+      val({
+        status: status,
+        message: message,
+      })
+    );
+  };
 
   const onGetUser = async () => {
     try {
@@ -147,6 +169,20 @@ const Logic = () => {
       onCloseModal();
     } catch (error) {
       // Tangani error jika ada
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const onResetPassword = async (id) => {
+    try {
+      const url = `users/reset-password`;
+      const formData = formDataUtils({ id });
+      await MainServices.post(url, formData);
+      showNotif(200, "Sukses reset password");
+      onGetUser();
+    } catch (error) {
+      // Tangani error jika ada
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };

@@ -71,13 +71,36 @@ function type3(titleTotal, total) {
   };
 }
 
+function type4(titleTotal, total) {
+  return {
+    rowId: "row_total",
+    height: ROW_HEIGHT,
+    cells: [
+      nonEditable(
+        textCell(titleTotal, "padding-left-lg", {
+          background: "beige",
+          fontWeight: "bold",
+        })
+      ),
+      nonEditable(
+        textCell("", "padding-left-lg", {
+          background: "beige",
+          fontWeight: "bold",
+        })
+      ),
+
+      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", "", false))),
+    ],
+  };
+}
+
 export const rowTotal = (titleTotal, data, key) => {
   const l = {
-    "Stok Awal": type1(titleTotal, data),
-    "Asumsi unit beli": type1(titleTotal, data),
+    "Stok Awal": type4(titleTotal, data),
+    "Asumsi unit beli": type4(titleTotal, data),
     "Harga beli per unit": type1(titleTotal, data),
     "Stok akhir": type1(titleTotal, data),
-    "Asumsi unit jual": type1(titleTotal, data),
+    "Asumsi unit jual": type4(titleTotal, data),
     "Harga jual per unit": type1(titleTotal, data),
     "Volume / Unit": type1(titleTotal, data),
     Tarif: type1(titleTotal, data),
