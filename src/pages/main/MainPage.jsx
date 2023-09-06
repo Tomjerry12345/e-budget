@@ -5,7 +5,7 @@ import NavComponent from "../../component/navbar/NavComponent";
 import MainLogic from "./MainLogic";
 import "./MainStyles.scss";
 import "./InputStyles.scss";
-import "./SummaryStyle.scss";
+// import "./SummaryStyle.scss";
 import NotificationComponent from "../../component/notification/NotificationComponent";
 
 import "@silevis/reactgrid/styles.scss";

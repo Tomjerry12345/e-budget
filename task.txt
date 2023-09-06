@@ -75,3 +75,9 @@ radio button -> forecast / budget ✅
 - management user ✅
 - usergroup company userbu cuman satu select, reviewer multiple select ✅
 
+- lebar kolom kasi pas
+- freaze code dan description
+- kolom nominal uang kasi 130
+- kolom quantity , revenue, stock awal, asumsi unit, persentasi 70
+- 
+

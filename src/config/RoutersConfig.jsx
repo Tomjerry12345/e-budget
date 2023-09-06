@@ -155,7 +155,7 @@ import KomunikasiSummary from "pages/main/mpp/summary/komunikasi/KomunikasiSumma
 import PendidikanPelatihanSummary from "pages/main/mpp/summary/pendidikan-pelatihan/PendidikanPelatihanSummary";
 import RekrutmentAssessmentSummary from "pages/main/mpp/summary/rekrutment-assesment/RekrutmentAssessmentSummary";
 import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSummary";
-import ManagementUserPage from "pages/main/akun/management-user/ManagementUserPage";
+import ManagementUserPage from "pages/main/management-user/ManagementUserPage";
 
 const RoutersConfig = () => {
   return (
@@ -420,12 +420,6 @@ const RoutersConfig = () => {
           </Route>
           <Route path="management-user" element={<ManagementUserPage />} />
         </Route>
-        {/* <Route path="/testing" element={<TestingPages />} />
-        <Route path="/testing1" element={<TestingPages1 />} /> */}
-        {/* <Route path="/react-grid-liquid" element={<LiquidityPlanner />} /> */}
-        {/* <Route path="/real-testing" element={<TestingRealProject />} />
-        <Route path="/testing-bertahap" element={<TestingBertahap />} />
-        <Route path="/testing-bertahap2" element={<TestingBertahap2 />} /> */}
       </Routes>
     </BrowserRouter>
   );

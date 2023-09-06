@@ -39,8 +39,7 @@ const PenjualanHkPage = () => {
                   <ReactGrid
                     rows={e.data}
                     columns={value.columns[e.description]}
-                    stickyTopRows={1}
-                    stickyLeftColumns={1}
+                    stickyLeftColumns={2}
                     enableRangeSelection
                     customCellTemplates={{ percent: new InputPercentTemplate() }}
                     onCellsChanged={(change) => {

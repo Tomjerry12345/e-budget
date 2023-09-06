@@ -1,3 +1,4 @@
+import { resetData } from "redux/data-global/data.reducer";
 import MainServices from "../services/MainServices";
 import { getLocal, log, logO } from "./Utilitas";
 
@@ -478,15 +479,17 @@ export const urlGetMenu = ["", "", "config/opex"];
 export const selectionMenu = async (i) => {
   const user = getLocal("user_group");
 
-  if (user === "superadmin" || user === "usersbu" || user === "reviewer") {
-    return await superAdmin(i);
+  // if (user === "superadmin" || user === "usersbu" || user === "reviewer") {
+  //   return await superAdmin(i);
+  // }
+
+  if (user === "superadmin") {
+    return superAdmin(i);
+  } else if (user === "usersbu") {
+    return userBu(i);
+  } else {
+    return reviewer(i);
   }
-  // else if (user === "usersbu") {
-  //   return userBu(i);
-  // }
-  // else {
-  //   return reviewer(i);
-  // }
 };
 
 const superAdmin = (i) => {
@@ -510,7 +513,7 @@ const superAdmin = (i) => {
       ];
 
       const res = await MainServices.get(urlGetMenu[i]);
-      logO({ res });
+
       res.data.data.forEach((e) => {
         listSubmenuInput.push({
           ...e,
@@ -538,71 +541,151 @@ const superAdmin = (i) => {
 };
 
 const userBu = (i) => {
-  let v = {
-    submenu: allItemSummarySubMenu[i],
-    disabled: disabledItemSummaryMenu[i],
-  };
+  return new Promise(async (resolve) => {
+    let v = {
+      submenu: allItemSummarySubMenu[i],
+      disabled: disabledItemSummaryMenu[i],
+    };
 
-  if (i === 1) {
-    const codeCompany = getLocal("code_company");
+    if (i === 1) {
+      const codeCompany = getLocal("code_company");
 
-    if (codeCompany === "412") {
-      return changeMenu(i, [13, 14]);
-    } else if (codeCompany === "326") {
-      return changeMenu(i, [1, 13, 14]);
-    } else if (codeCompany === "411") {
-      return changeMenu(i, [8, 13, 14]);
-    } else if (codeCompany === "422") {
-      return changeMenu(i, [6, 13, 14]);
-    } else if (codeCompany === "311") {
-      return changeMenu(i, [0, 13, 14]);
-    } else if (codeCompany === "312") {
-      return changeMenu(i, [4, 13, 14]);
-    } else if (codeCompany === "231") {
-      return changeMenu(i, [12, 13, 14]);
-    } else if (codeCompany === "328") {
-      return changeMenu(i, [2, 13, 14]);
-    } else if (codeCompany === "211") {
-      return changeMenu(i, [13, 14]);
-    } else if (codeCompany === "242") {
-      return changeMenu(i, [11, 13, 14]);
-    } else if (codeCompany === "241") {
-      return changeMenu(i, [10, 13, 14]);
-    } else if (codeCompany === "313") {
-      return changeMenu(i, [3, 13, 14]);
-    } else if (codeCompany === "421") {
-      return changeMenu(i, [5, 13, 14]);
-    } else if (codeCompany === "221") {
-      return changeMenu(i, [13, 14]);
-    } else if (codeCompany === "413") {
-      return changeMenu(i, [9, 13, 14]);
-    } else if (codeCompany === "399") {
-      return changeMenu(i, [13, 14]);
+      if (codeCompany === "412") {
+        resolve(changeMenu(i, [13, 14]));
+      } else if (codeCompany === "326") {
+        resolve(changeMenu(i, [1, 13, 14]));
+      } else if (codeCompany === "411") {
+        resolve(changeMenu(i, [8, 13, 14]));
+      } else if (codeCompany === "422") {
+        resolve(changeMenu(i, [6, 13, 14]));
+      } else if (codeCompany === "311") {
+        resolve(changeMenu(i, [0, 13, 14]));
+      } else if (codeCompany === "312") {
+        resolve(changeMenu(i, [4, 13, 14]));
+      } else if (codeCompany === "231") {
+        resolve(changeMenu(i, [12, 13, 14]));
+      } else if (codeCompany === "328") {
+        resolve(changeMenu(i, [2, 13, 14]));
+      } else if (codeCompany === "211") {
+        resolve(changeMenu(i, [13, 14]));
+      } else if (codeCompany === "242") {
+        resolve(changeMenu(i, [11, 13, 14]));
+      } else if (codeCompany === "241") {
+        resolve(changeMenu(i, [10, 13, 14]));
+      } else if (codeCompany === "313") {
+        resolve(changeMenu(i, [3, 13, 14]));
+      } else if (codeCompany === "421") {
+        resolve(changeMenu(i, [5, 13, 14]));
+      } else if (codeCompany === "221") {
+        resolve(changeMenu(i, [13, 14]));
+      } else if (codeCompany === "413") {
+        resolve(changeMenu(i, [9, 13, 14]));
+      } else if (codeCompany === "399") {
+        resolve(changeMenu(i, [13, 14]));
+      }
+    } else if (i === 2) {
+      let listSubmenuInput = [];
+      let listSubmenuSummary = [];
+      const anotherMenuInput = [
+        {
+          description: "Input By Opex Direct",
+          children: [],
+        },
+      ];
+
+      const anotherMenuSummary = [
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
+      ];
+
+      const res = await MainServices.get(urlGetMenu[i]);
+
+      res.data.data.forEach((e) => {
+        listSubmenuInput.push({
+          ...e,
+          description: `Input By ${e.description}`,
+        });
+        listSubmenuSummary.push({
+          ...e,
+          description: `Summary By ${e.description}`,
+        });
+      });
+
+      listSubmenuInput = listSubmenuInput.concat(anotherMenuInput);
+      listSubmenuSummary = listSubmenuSummary.concat(anotherMenuSummary);
+
+      const listSubMenu = listSubmenuInput.concat(listSubmenuSummary);
+      resolve({
+        ...v,
+        submenu: listSubMenu,
+      });
+    } else {
+      resolve(v);
     }
-  }
-
-  return v;
+  });
 };
 
 const reviewer = (i) => {
-  let v = {
-    submenu: allItemSummarySubMenu[i],
-    disabled: disabledItemSummaryMenu[i],
-  };
+  return new Promise(async (resolve) => {
+    let v = {
+      submenu: allItemSummarySubMenu[i],
+      disabled: disabledItemSummaryMenu[i],
+    };
 
-  if (i === 1) {
-    const codeCompany = getLocal("code_company");
+    if (i === 1) {
+      const codeCompany = getLocal("code_company");
 
-    if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
-      return changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]);
-    } else if (codeCompany === "231, 242, 241") {
-      return changeMenu(i, [10, 11, 12, 13, 14]);
-    } else if (codeCompany === "221, 413, 411") {
-      return changeMenu(i, [7, 8, 9, 13, 14]);
+      if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
+        resolve(changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]));
+      } else if (codeCompany === "231, 242, 241") {
+        resolve(changeMenu(i, [10, 11, 12, 13, 14]));
+      } else if (codeCompany === "221, 413, 411") {
+        resolve(changeMenu(i, [7, 8, 9, 13, 14]));
+      }
+    } else if (i === 2) {
+      let listSubmenuInput = [];
+      let listSubmenuSummary = [];
+      const anotherMenuInput = [
+        {
+          description: "Input By Opex Direct",
+          children: [],
+        },
+      ];
+
+      const anotherMenuSummary = [
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
+      ];
+
+      const res = await MainServices.get(urlGetMenu[i]);
+
+      res.data.data.forEach((e) => {
+        listSubmenuInput.push({
+          ...e,
+          description: `Input By ${e.description}`,
+        });
+        listSubmenuSummary.push({
+          ...e,
+          description: `Summary By ${e.description}`,
+        });
+      });
+
+      listSubmenuInput = listSubmenuInput.concat(anotherMenuInput);
+      listSubmenuSummary = listSubmenuSummary.concat(anotherMenuSummary);
+
+      const listSubMenu = listSubmenuInput.concat(listSubmenuSummary);
+      resolve({
+        ...v,
+        submenu: listSubMenu,
+      });
+    } else {
+      resolve(v);
     }
-  }
-
-  return v;
+  });
 };
 
 const changeMenu = (i, a = []) => {
@@ -613,9 +696,6 @@ const changeMenu = (i, a = []) => {
     s.push(allItemSummarySubMenu[i][item]);
     d.push(disabledItemSummaryMenu[i][item]);
   });
-
-  log("s", s);
-  log("d", d);
 
   return {
     submenu: s,

@@ -4,26 +4,18 @@ import HeaderComponent from "component/header/HeaderComponent";
 import "./style.scss";
 import ModalManagementUser from "./modal/ModalManagementUser";
 import { Box } from "@mui/material";
+import HeaderManagementUser from "./header/HeaderManagementUser";
 
 const ManagementUserPage = () => {
   const { value, func } = Logic();
 
   return (
     <div className="style-management-user">
-      <HeaderComponent
-        type="summary"
-        onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onExport={func.downloadFile}
-        // disabledImportExport={value.data.length <= 1}
-        titleHeader="Management user"
-      />
+      <HeaderManagementUser titleHeader="Management user" onOpenModal={func.onOpenModal} />
       <div className="custom-root-layout">
-        <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
+        {/* <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
           Tambah User
-        </Button>
+        </Button> */}
         <Table
           rowClassName={() => "editable-row"}
           bordered
@@ -32,7 +24,7 @@ const ManagementUserPage = () => {
           pagination={false}
           rowKey="id"
         />
-        <Box display="flex" justifyContent="center">
+        <Box className="pagination" display="flex" justifyContent="center">
           <Pagination
             defaultCurrent={1}
             total={value.totalData}

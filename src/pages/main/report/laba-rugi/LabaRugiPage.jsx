@@ -1,10 +1,11 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../component/table/TableComponent";
-import { getLocal, getSizeScreen } from "../../../../values/Utilitas";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import TableComponent from "component/table/TableComponent";
+import { getLocal, getSizeScreen } from "values/Utilitas";
 import LabaRugiLogic from "./LabaRugiLogic";
+import "../style.scss";
 
 const LabaRugiPage = () => {
   const { value, func } = LabaRugiLogic();
@@ -32,7 +33,7 @@ const LabaRugiPage = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <>
+    <div className="style-report">
       <HeaderComponent
         type="summary"
         onFinish={func.onFinish}
@@ -65,10 +66,10 @@ const LabaRugiPage = () => {
           dataSource={value.data}
           columns={value.columns}
           loading={value.loading}
-          scroll={{ y: size.y - 260}}
+          scroll={{ y: size.y - 260 }}
         />
       </div>
-    </>
+    </div>
   );
 };
 
