@@ -19,6 +19,12 @@ const Logic = () => {
 
   const defaultColumns = [
     {
+      title: "No",
+      dataIndex: "no",
+      width: "2%",
+      render: (item, record, index) => <>{index + 1}</>,
+    },
+    {
       title: "Username",
       dataIndex: "username",
       width: "30%",
@@ -124,15 +130,6 @@ const Logic = () => {
   };
 
   const onOpenModal = () => {
-    // const newData = {
-    //   key: "0",
-    //   username: "admin",
-    //   nama: "Admin",
-    //   user_group: "admin",
-    //   akses_perusahaan: "hk",
-    // };
-    // setDataSource([...dataSource, newData]);
-    // setCount(count + 1);
     setOpenModal(true);
   };
 

@@ -217,7 +217,9 @@ const MainLogic = () => {
       const routing = routingMasterCoa[nameMenu];
       pageNavigation = `/main/coa/${routing}`;
     } else if (index === 8) {
-      if (nameMenu === "Logout") {
+      if (nameMenu === "Profile") {
+        pageNavigation = `akun/profile`;
+      } else if (nameMenu === "Logout") {
         pageNavigation = `/login`;
       }
     }
