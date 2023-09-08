@@ -156,6 +156,7 @@ import PendidikanPelatihanSummary from "pages/main/mpp/summary/pendidikan-pelati
 import RekrutmentAssessmentSummary from "pages/main/mpp/summary/rekrutment-assesment/RekrutmentAssessmentSummary";
 import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSummary";
 import ManagementUserPage from "pages/main/management-user/ManagementUserPage";
+import ProfilePage from "pages/main/akun/profile/ProfilePage";
 
 const RoutersConfig = () => {
   return (
@@ -417,6 +418,9 @@ const RoutersConfig = () => {
             <Route path="project" element={<ProjectPage />} />
             <Route path="icp" element={<IcpPage />} />
             {/* <Route path=":item" element={<CoaPage />} /> */}
+          </Route>
+          <Route path="akun">
+            <Route path="profile" element={<ProfilePage />} />
           </Route>
           <Route path="management-user" element={<ManagementUserPage />} />
         </Route>

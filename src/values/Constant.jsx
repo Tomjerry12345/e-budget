@@ -453,7 +453,7 @@ export const disabledItemSummaryMenu = [
   // 8 Master COA
   [false, false, false, false, false, false, false],
   // 9 Akun
-  [false, false],
+  [true, false],
 ];
 
 export const urlPageRevenue = {

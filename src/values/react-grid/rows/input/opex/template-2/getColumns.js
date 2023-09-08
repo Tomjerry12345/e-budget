@@ -1,10 +1,10 @@
-const COL_WIDTH = 110;
+const COL_WIDTH = 50;
 
 export function getColumns() {
   return [
     {
       columnId: "name",
-      width: 300,
+      width: 200,
     },
     {
       columnId: "activity",
@@ -12,23 +12,23 @@ export function getColumns() {
     },
     {
       columnId: "cost_driver",
-      width: 200,
+      width: 120,
     },
     {
       columnId: "unit",
-      width: 200,
+      width: 70,
     },
     {
       columnId: "rates",
-      width: 200,
+      width: 120,
     },
     {
       columnId: "total",
-      width: 200,
+      width: 120,
     },
     {
       columnId: "pay_period",
-      width: 200,
+      width: 120,
     },
     { columnId: "jan_rates", width: COL_WIDTH },
     { columnId: "feb_rates", width: COL_WIDTH },

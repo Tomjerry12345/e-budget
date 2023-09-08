@@ -5,6 +5,9 @@ import { log } from "values/Utilitas";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 
+import "./style.scss";
+import { val } from "redux/action/action.reducer";
+
 const { Title } = Typography;
 
 const FormItem = ({ label, name, children }) => (
@@ -34,10 +37,6 @@ const ModalExportSummaryDirectAll = ({
 }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const dataGlobalRedux = useSelector((state) => state.data);
-
-  const [dataPeriode, setDataPeriode] = useState(null);
-  // const [disable, setDisable] = useState(true);
 
   const date = new Date();
 
@@ -74,33 +73,48 @@ const ModalExportSummaryDirectAll = ({
     }
   };
 
-  const onExport = async (values) => {
-    log({ values });
-    const filename = "data-to-oracle";
-    const url = `directall/export-to-oracle`;
-    // const url = `directall/export-to-oracle?year=${dataPeriode}&filename=${filename}`;
+  const showNotif = (status, message) => {
+    dispatch(
+      val({
+        status: status,
+        message: message,
+      })
+    );
+  };
 
-    const params = {
-      ...values,
-      filename,
-    };
-    const res = await MainServices.download(url, params);
-    log({ res });
-    const fileURL = URL.createObjectURL(res.data);
-    const link = document.createElement("a");
-    link.href = fileURL;
-    link.download = `summary_${filename}`;
-    link.click();
-    onCancel();
+  const onExport = async (values) => {
+    try {
+      const filename = "data-to-oracle";
+      const url = `directall/export-to-oracle`;
+
+      const params = {
+        ...values,
+        filename,
+      };
+      const res = await MainServices.download(url, params);
+
+      const fileURL = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `summary_${filename}`;
+      link.click();
+      onCancel();
+      form.setFieldsValue({
+        code_company: null,
+        year: null,
+      });
+    } catch (e) {
+      log({ e });
+      showNotif(400, e.message);
+    }
   };
 
   return (
-    <Modal open={open} footer={null} onCancel={onCancel}>
+    <Modal className="style-modal-summary" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{title}</Title>
       <Form onFinish={onExport} layout="vertical" form={form}>
         <div className="root-content-upload">
           <div className="layout-upload-file">
-            <FormItem label="Periode" name="year" children={<Select options={periode} />} />
             <FormItem
               label="Kode perusahaan"
               name="code_company"
@@ -116,13 +130,14 @@ const ModalExportSummaryDirectAll = ({
                 />
               }
             />
+            <FormItem label="Periode" name="year" children={<Select options={periode} />} />
           </div>
           <Form.Item className="footer-custom">
             <Button className="btn-cancel" type="text" onClick={onCancel}>
               Cancel
             </Button>
             <Button
-              className="btn-upload"
+              className="btn-export"
               type="primary"
               htmlType="submit"
               // loading={loading}

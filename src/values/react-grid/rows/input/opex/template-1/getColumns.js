@@ -1,10 +1,10 @@
-const COL_WIDTH = 110;
+const COL_WIDTH = 50;
 
 export function getColumns() {
   return [
     {
       columnId: "name",
-      width: 300,
+      width: 200,
     },
     {
       columnId: "activity",
@@ -37,7 +37,7 @@ export function getColumns() {
     },
     {
       columnId: "total",
-      width: 250,
+      width: 120,
     },
 
     { columnId: "jan_rates", width: COL_WIDTH },

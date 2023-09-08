@@ -12,6 +12,8 @@ export const getToken = () => localStorage.getItem("token");
 export const log = (tag, msg) => {
   if (msg !== undefined) {
     console.log(`[d] ${tag}`, msg);
+  } else if (typeof tag === "string") {
+    console.log(`[d] ${tag}`);
   } else {
     logO(tag);
   }
