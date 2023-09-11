@@ -43,19 +43,19 @@ const ModalExportSummaryDirectAll = ({
   const periode = [
     {
       label: `${date.getFullYear() - 2} - ${date.getFullYear() - 1}`,
-      value: `${date.getFullYear() - 1}`,
+      value: `${date.getFullYear() - 2}`,
     },
     {
       label: `${date.getFullYear() - 1} - ${date.getFullYear()}`,
-      value: `${date.getFullYear()}`,
+      value: `${date.getFullYear() - 1}`,
     },
     {
       label: `${date.getFullYear()} - ${date.getFullYear() + 1}`,
-      value: `${date.getFullYear() + 1}`,
+      value: `${date.getFullYear()}`,
     },
     {
       label: `${date.getFullYear() + 1} - ${date.getFullYear() + 2}`,
-      value: `${date.getFullYear() + 2}`,
+      value: `${date.getFullYear() + 1}`,
     },
   ];
 
