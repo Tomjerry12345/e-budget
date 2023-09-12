@@ -3,6 +3,7 @@ import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
+import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
@@ -21,28 +22,49 @@ const FormItem = ({ label, name, children }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({
-  open,
-  onCancel,
-  onOk,
-  loading,
-  title,
-  form,
-  isEdit = false,
-}) => {
+const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => {
   const [listCompany, setListCompany] = useState([]);
+  const [listLocation, setListLocation] = useState([]);
+  const [listDept, setListDept] = useState([]);
 
-  const [user_group, setUserGroup] = useState("");
+  const [user_group, setUserGroup] = useState();
 
   useEffect(() => {
     getListCompany();
   }, []);
+
+  useEffect(() => {
+    const l = form.getFieldsValue();
+    log({ l });
+    setUserGroup(l.user_group);
+    if (l.user_group !== undefined) {
+      // setUserGroup(l.user_group);
+      getListLocation(l.code_company);
+      getListDept(l.code_company);
+    }
+  }, [isEdit]);
 
   const getListCompany = async () => {
     const { data } = await MainServices.get("company/list-child");
 
     if (data.responseCode === 200) {
       setListCompany(data.data);
+    }
+  };
+
+  const getListLocation = async (e) => {
+    const { data } = await MainServices.get(`location/list-by-com?code_company=${e}`);
+
+    if (data.responseCode === 200) {
+      setListLocation(data.data);
+    }
+  };
+
+  const getListDept = async (e) => {
+    const { data } = await MainServices.get(`department/list-dropdown?code_company=${e}`);
+
+    if (data.responseCode === 200) {
+      setListDept(data.data);
     }
   };
 
@@ -86,11 +108,13 @@ const ModalManagementUser = ({
               name="code_company"
               children={
                 <Select
-                  disabled={user_group === "" && !isEdit}
+                  disabled={user_group === undefined && !isEdit}
                   mode={user_group === "usersbu" ? null : "multiple"}
                   allowClear
                   onChange={(e) => {
                     form.setFieldsValue({ code_company: e });
+                    getListLocation(e);
+                    getListDept(e);
                   }}
                   options={listCompany.map((e) => ({
                     value: e.code,
@@ -99,6 +123,37 @@ const ModalManagementUser = ({
                 />
               }
             />
+
+            {user_group === "usersbu" ? (
+              <>
+                <FormItem
+                  label="Kode Lokasi"
+                  name="code_location"
+                  children={
+                    <Select
+                      allowClear
+                      options={listLocation.map((e) => ({
+                        value: e.code,
+                        label: e.description,
+                      }))}
+                    />
+                  }
+                />
+                <FormItem
+                  label="Kode Department"
+                  name="code_department"
+                  children={
+                    <Select
+                      allowClear
+                      options={listDept.map((e) => ({
+                        value: e.code,
+                        label: e.description,
+                      }))}
+                    />
+                  }
+                />
+              </>
+            ) : null}
           </div>
           <Form.Item className="footer-custom">
             <Button className="btn-cancel" type="text" onClick={onCancel}>
