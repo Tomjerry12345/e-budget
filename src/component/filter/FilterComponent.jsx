@@ -55,10 +55,16 @@ const AutoCompleteFilter = ({
         label="Lokasi"
         name="code_location"
         value={value.state.code_location}
+        disabled={disabled}
       />
     ) : null}
     {isCodeDept === true ? (
-      <AutoCompleteElement label="Departemen" name="code_dept" value={value.state.code_dept} />
+      <AutoCompleteElement
+        label="Departemen"
+        name="code_dept"
+        value={value.state.code_dept}
+        disabled={disabled}
+      />
     ) : null}
 
     {isCodeIcp ? (

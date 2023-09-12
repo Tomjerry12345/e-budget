@@ -31,10 +31,11 @@ const LoginLogic = () => {
       if (response !== null) {
         const {
           responseCode,
-          responseDescription,
           token,
           user_group,
           code_company,
+          code_location,
+          code_department,
           company_names,
         } = response;
         if (responseCode === "200") {
@@ -43,6 +44,8 @@ const LoginLogic = () => {
           setLocal("token", token);
           setLocal("user_group", user_group);
           setLocal("code_company", code_company);
+          setLocal("code_location", code_location);
+          setLocal("code_department", code_department);
           setLocal("company_names", company_names);
           navigate("/");
         } else {

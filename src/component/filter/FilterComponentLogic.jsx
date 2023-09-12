@@ -1,13 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Form } from "antd";
 import { useEffect, useState } from "react";
-import MainServices from "../../services/MainServices";
-import { getLocal, log } from "../../values/Utilitas";
+import MainServices from "services/MainServices";
+import { getLocal, log } from "values/Utilitas";
 import { useDispatch } from "react-redux";
 import { actionData } from "redux/data-global/data.reducer";
 
 const FilterComponentLogic = ({
-  isCodeProduct,
-  isCodeProject,
   isCodeLocation,
   isCodeIcp,
   isCodeDept,
@@ -31,6 +30,8 @@ const FilterComponentLogic = ({
   const userGroup = getLocal("user_group");
   const company = getLocal("code_company");
   const company_names = getLocal("company_names");
+  const code_location = getLocal("code_location");
+  const code_department = getLocal("code_department");
 
   const dispatch = useDispatch();
 
@@ -66,6 +67,17 @@ const FilterComponentLogic = ({
           code_company: `${company} - ${company_names}`,
         });
         getValueComboBox(company);
+      }
+      if (code_location !== null) {
+        form.setFieldsValue({
+          code_location,
+        });
+      }
+
+      if (code_department !== null) {
+        form.setFieldsValue({
+          code_dept: code_department,
+        });
       }
     } else if (userGroup === "reviewer") {
       let dataCompany = [];
@@ -128,8 +140,6 @@ const FilterComponentLogic = ({
         code.push(e);
       }
 
-      log("code", code);
-
       // const resProduct =
       //   isCodeProduct === true
       //     ? await MainServices.get(`product/list-by-com?code_company=${code[0]}`)
@@ -170,7 +180,6 @@ const FilterComponentLogic = ({
       data = resProduct.data.data.filter((item) => item.code !== "all");
       if (typeFilter === "hpp-pendapatan") {
         data.shift();
-        log("typeFilter", data);
       }
     } else {
       data = resProduct.data.data;
