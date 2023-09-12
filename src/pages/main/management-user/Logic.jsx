@@ -46,6 +46,10 @@ const Logic = () => {
       dataIndex: "code_location",
     },
     {
+      title: "Kode Department",
+      dataIndex: "code_department",
+    },
+    {
       title: "operation",
       dataIndex: "operation",
       render: (_, record) =>
