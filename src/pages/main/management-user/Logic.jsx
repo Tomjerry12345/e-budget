@@ -42,6 +42,10 @@ const Logic = () => {
       dataIndex: "code_company",
     },
     {
+      title: "Kode Lokasi",
+      dataIndex: "code_location",
+    },
+    {
       title: "operation",
       dataIndex: "operation",
       render: (_, record) =>
@@ -57,12 +61,13 @@ const Logic = () => {
               onClick={() => {
                 idRef.current = record.id;
                 const code_company = record.code_company.split(",");
-                setIsEdit(true);
+
                 const nRecord = {
                   ...record,
                   code_company,
                 };
                 form.setFieldsValue(nRecord);
+                setIsEdit(true);
                 onOpenModal();
               }}
             >
@@ -120,16 +125,14 @@ const Logic = () => {
     try {
       const url = `users`;
       const { data } = await MainServices.get(url);
-      log("data.data", data.data.data);
       setDataSource(data.data.data);
       setTotalData(data.data.total);
     } catch (error) {
-      // Tangani error jika ada
       console.error(`Error fetching data`, error);
     }
   };
 
-  const onOpenModal = () => {
+  const onOpenModal = (e) => {
     setOpenModal(true);
   };
 
