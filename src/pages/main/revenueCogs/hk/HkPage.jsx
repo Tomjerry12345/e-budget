@@ -19,6 +19,7 @@ const HkPage = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
+  const { filterValuesPenjualan, filterValuesHpplain } = useSelector((state) => state.revenue);
 
   const location = useLocation();
   const split = location.pathname.split("/");
@@ -27,19 +28,38 @@ const HkPage = () => {
   const perusahaan = getPerusahaan(q);
 
   useEffect(() => {
+    log({ filterValuesPenjualan });
+    log({ filterValuesHpplain });
     if (key === 1) {
+      if (filterValuesPenjualan === undefined) {
+        form.setFieldsValue({
+          code_company: `${perusahaan.code} - ${perusahaan.description}`,
+          code_product: null,
+          code_location: null,
+          code_dept: null,
+          code_icp: null,
+          code_project: null,
+          periode: null,
+        });
+      } else {
+        form.setFieldsValue(filterValuesPenjualan);
+      }
       navigate(`/main/revenue-cogs/${q}/penjualan`);
+    } else {
+      if (filterValuesHpplain === undefined) {
+        form.setFieldsValue({
+          code_company: `${perusahaan.code} - ${perusahaan.description}`,
+          code_product: null,
+          code_location: null,
+          code_dept: null,
+          code_icp: null,
+          code_project: null,
+          periode: null,
+        });
+      } else {
+        form.setFieldsValue(filterValuesHpplain);
+      }
     }
-
-    form.setFieldsValue({
-      code_company: `${perusahaan.code} - ${perusahaan.description}`,
-      code_product: null,
-      code_location: null,
-      code_dept: null,
-      code_icp: null,
-      code_project: null,
-      periode: null,
-    });
 
     const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
       (e) => e.file !== undefined
@@ -64,15 +84,23 @@ const HkPage = () => {
 
   const onFinish = (values) => {
     if (key === 1) {
+      dispatch(
+        actionRevenue({
+          filterValuesPenjualan: values,
+          filterValuesHpplain: filterValuesHpplain ?? undefined,
+        })
+      );
+
       navigate(`/main/revenue-cogs/${q}/penjualan`);
     } else if (key === 2) {
+      dispatch(
+        actionRevenue({
+          filterValuesPenjualan: filterValuesPenjualan ?? undefined,
+          filterValuesHpplain: values,
+        })
+      );
       navigate(`/main/revenue-cogs/${q}/hpplain`);
     }
-    dispatch(
-      actionRevenue({
-        filterValues: values,
-      })
-    );
   };
 
   return (

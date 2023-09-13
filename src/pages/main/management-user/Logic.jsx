@@ -59,22 +59,7 @@ const Logic = () => {
               display: "flex",
             }}
           >
-            <Button
-              className="btn-edit"
-              type="link"
-              onClick={() => {
-                idRef.current = record.id;
-                const code_company = record.code_company.split(",");
-
-                const nRecord = {
-                  ...record,
-                  code_company,
-                };
-                form.setFieldsValue(nRecord);
-                setIsEdit(true);
-                onOpenModal();
-              }}
-            >
+            <Button className="btn-edit" type="link" onClick={() => handleEdit(record)}>
               Edit
             </Button>
 
@@ -189,6 +174,23 @@ const Logic = () => {
       showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
+  };
+
+  const handleEdit = async (record) => {
+    log("record.code_company", record.code_company);
+
+    idRef.current = record.id;
+    const code_company = record.code_company.split(", ");
+
+    log({ code_company });
+
+    const nRecord = {
+      ...record,
+      code_company,
+    };
+    form.setFieldsValue(nRecord);
+    setIsEdit(true);
+    onOpenModal();
   };
 
   const handleDelete = async (id) => {
