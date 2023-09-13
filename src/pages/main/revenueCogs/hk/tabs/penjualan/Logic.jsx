@@ -32,14 +32,15 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { filterValues } = useSelector((state) => state.revenue);
+  const { filterValuesPenjualan } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    if (filterValues !== null) {
-      if (filterValues.code_product === undefined) onFinish(filterValues);
+    if (filterValuesPenjualan !== undefined) {
+      // if (filterValuesPenjualan.code_product === undefined) onFinish(filterValuesPenjualan);
+      onFinish(filterValuesPenjualan);
     }
-  }, [filterValues]);
+  }, [filterValuesPenjualan]);
 
   useEffect(() => {
     if (importRedux.file !== null) {

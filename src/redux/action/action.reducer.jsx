@@ -47,11 +47,13 @@ export const { actionImport, resetDataActionImport } = importSlice.actions;
 export const revenueSlice = createSlice({
   name: "revenue",
   initialState: {
-    filterValues: null,
+    filterValuesPenjualan: undefined,
+    filterValuesHpplain: undefined,
   },
   reducers: {
     actionRevenue: (state, action) => {
-      state.filterValues = action.payload.filterValues;
+      state.filterValuesPenjualan = action.payload.filterValuesPenjualan;
+      state.filterValuesHpplain = action.payload.filterValuesHpplain;
     },
   },
 });

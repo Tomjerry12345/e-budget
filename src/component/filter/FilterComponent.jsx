@@ -159,7 +159,11 @@ const FilterComponent = ({
                 isCodeDept={isCodeDept}
                 isStatus={isStatus}
                 disabled={
-                  usersGroup === "usersbu" ? true : usersGroup === "reviewer" ? false : disabled
+                  usersGroup === "usersbu"
+                    ? true
+                    : usersGroup === "reviewer" || usersGroup === "superadmin"
+                    ? false
+                    : disabled
                 }
                 // disabled={false}
                 variant={variant}

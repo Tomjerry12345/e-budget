@@ -1,9 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Button, Form, Input, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
-import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
@@ -35,10 +35,8 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
 
   useEffect(() => {
     const l = form.getFieldsValue();
-    log({ l });
     setUserGroup(l.user_group);
-    if (l.user_group !== undefined) {
-      // setUserGroup(l.user_group);
+    if (l.user_group !== undefined && l.user_group === "usersbu") {
       getListLocation(l.code_company);
       getListDept(l.code_company);
     }
@@ -81,7 +79,6 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
           name="user_group"
           children={
             <Select
-              // placeholder="User group"
               onChange={(e) => {
                 form.setFieldsValue({ user_group: e });
                 setUserGroup(e);
@@ -154,12 +151,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
           <Button className="btn-cancel" type="text" onClick={onCancel}>
             Cancel
           </Button>
-          <Button
-            className="btn-tambah"
-            type="primary"
-            htmlType="submit"
-            // loading={loading}
-          >
+          <Button className="btn-tambah" type="primary" htmlType="submit">
             {isEdit ? "Edit" : "Tambah"}
           </Button>
         </Form.Item>
