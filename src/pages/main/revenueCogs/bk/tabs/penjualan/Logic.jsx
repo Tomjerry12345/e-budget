@@ -4,10 +4,9 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { formDataUtils, log, logS } from "values/Utilitas";
+import { formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { fullNewRow, getRows, updateTotalRow } from "./getRows";
-import { DATA_CONSTANT } from "./DataConstant";
 import { actionData } from "redux/data-global/data.reducer";
 
 const Logic = () => {
@@ -27,17 +26,16 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { filterValues } = useSelector((state) => state.revenue);
+  const { filterValuesPenjualan } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   const ENDPOINT_URL = "detailrevenue/bk";
 
   useEffect(() => {
-    if (filterValues !== null) {
-      log({ filterValues });
-      if (filterValues.code_project === undefined) onFinish(filterValues);
+    if (filterValuesPenjualan !== undefined) {
+      onFinish(filterValuesPenjualan);
     }
-  }, [filterValues]);
+  }, [filterValuesPenjualan]);
 
   useEffect(() => {
     if (importRedux.file !== null) {

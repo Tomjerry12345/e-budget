@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
@@ -6,7 +7,7 @@ import HeaderComponent from "component/header/HeaderComponent";
 import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
-import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
+import { getPerusahaan } from "values/Constant";
 
 const BluPage = () => {
   const [key, setKey] = useState(1);
@@ -18,6 +19,7 @@ const BluPage = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
+  const { filterValuesPenjualan, filterValuesHpplain } = useSelector((state) => state.revenue);
 
   const location = useLocation();
   const split = location.pathname.split("/");
@@ -27,27 +29,35 @@ const BluPage = () => {
 
   useEffect(() => {
     if (key === 1) {
+      if (filterValuesPenjualan === undefined) {
+        form.setFieldsValue({
+          code_company: `${perusahaan.code} - ${perusahaan.description}`,
+          code_product: null,
+          code_location: null,
+          code_dept: null,
+          code_icp: null,
+          code_project: null,
+          periode: null,
+        });
+      } else {
+        form.setFieldsValue(filterValuesPenjualan);
+      }
       navigate(`/main/revenue-cogs/${q}/penjualan`);
+    } else {
+      if (filterValuesHpplain === undefined) {
+        form.setFieldsValue({
+          code_company: `${perusahaan.code} - ${perusahaan.description}`,
+          code_product: null,
+          code_location: null,
+          code_dept: null,
+          code_icp: null,
+          code_project: null,
+          periode: null,
+        });
+      } else {
+        form.setFieldsValue(filterValuesHpplain);
+      }
     }
-    form.setFieldsValue({
-      code_company: `${perusahaan.code} - ${perusahaan.description}`,
-      code_product: null,
-      code_location: null,
-      code_dept: null,
-      code_icp: null,
-      code_project: null,
-      periode: null,
-    });
-    const l = urlRevenue[key === 1 ? keyRevenueTab[0] : keyRevenueTab[1]].filter(
-      (e) => e.file !== undefined
-    );
-    setListMenu(l);
-    dispatch(
-      actionRevenue({
-        filterValues: null,
-      })
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
   const tabItemParent = [
@@ -65,15 +75,23 @@ const BluPage = () => {
 
   const onFinish = (values) => {
     if (key === 1) {
+      dispatch(
+        actionRevenue({
+          filterValuesPenjualan: values,
+          filterValuesHpplain: filterValuesHpplain ?? undefined,
+        })
+      );
+
       navigate(`/main/revenue-cogs/${q}/penjualan`);
     } else if (key === 2) {
+      dispatch(
+        actionRevenue({
+          filterValuesPenjualan: filterValuesPenjualan ?? undefined,
+          filterValuesHpplain: values,
+        })
+      );
       navigate(`/main/revenue-cogs/${q}/hpplain`);
     }
-    dispatch(
-      actionRevenue({
-        filterValues: values,
-      })
-    );
   };
 
   return (

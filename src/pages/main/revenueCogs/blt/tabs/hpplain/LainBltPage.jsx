@@ -1,5 +1,4 @@
 import { Typography } from "antd";
-import ChildRevenueCogsComponent from "../../../component/ChildRevenueCogsComponent";
 import Logic from "./Logic";
 import { ReactGrid } from "@silevis/reactgrid";
 import { capitalize } from "values/react-grid/helpers";
@@ -13,7 +12,7 @@ const LainBltPage = () => {
       <div className="section-table">
         {value.rows &&
           value.rows.map((e, i) => (
-            <div style={{ margin: "10px" }}>
+            <div key={i} style={{ margin: "10px" }}>
               <div
                 style={{
                   display: "flex",

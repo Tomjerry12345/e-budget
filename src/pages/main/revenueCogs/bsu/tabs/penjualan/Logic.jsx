@@ -6,7 +6,7 @@ import { actionImport, resetDataActionImport } from "redux/action/action.reducer
 import MainServices from "services/MainServices";
 import { formDataUtils, log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
-import { keyRevenueTab, urlRevenue } from "values/Constant";
+import { keyRevenueTab } from "values/Constant";
 import {
   fullNewRow,
   getRows,
@@ -15,7 +15,6 @@ import {
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
 import { tableList } from "../../TableConstant";
-import { DATA_CONSTANT } from "../../DataConstant";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -34,14 +33,14 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { filterValues } = useSelector((state) => state.revenue);
+  const { filterValuesPenjualan } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    if (filterValues !== null) {
-      if (filterValues.code_product === undefined) onFinish(filterValues);
+    if (filterValuesPenjualan !== undefined) {
+      onFinish(filterValuesPenjualan);
     }
-  }, [filterValues]);
+  }, [filterValuesPenjualan]);
 
   useEffect(() => {
     if (importRedux.file !== null) {
