@@ -6,7 +6,7 @@ import { actionImport, resetDataActionImport } from "redux/action/action.reducer
 import MainServices from "services/MainServices";
 import { log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
-import { keyRevenueTab, urlRevenue } from "values/Constant";
+import { keyRevenueTab } from "values/Constant";
 import {
   fullNewRow,
   getRows,
@@ -34,15 +34,14 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { filterValues } = useSelector((state) => state.revenue);
+  const { filterValuesHpplain } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    log({ filterValues });
-    if (filterValues !== null) {
-      if (filterValues.code_product !== undefined) onFinish(filterValues);
+    if (filterValuesHpplain !== undefined) {
+      onFinish(filterValuesHpplain);
     }
-  }, [filterValues]);
+  }, [filterValuesHpplain]);
 
   useEffect(() => {
     if (importRedux.file !== null) {

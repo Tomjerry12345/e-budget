@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import "../OthersRevenueCogsStyle.scss";
@@ -7,7 +8,6 @@ import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
 import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
-import { log } from "values/Utilitas";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
@@ -28,8 +28,6 @@ const HkPage = () => {
   const perusahaan = getPerusahaan(q);
 
   useEffect(() => {
-    log({ filterValuesPenjualan });
-    log({ filterValuesHpplain });
     if (key === 1) {
       if (filterValuesPenjualan === undefined) {
         form.setFieldsValue({
@@ -65,8 +63,6 @@ const HkPage = () => {
       (e) => e.file !== undefined
     );
     setListMenu(l);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMoveTabs]);
 
   const tabItemParent = [

@@ -38,7 +38,6 @@ const Logic = () => {
 
   useEffect(() => {
     if (filterValuesHpplain !== undefined) {
-      // if (filterValuesHpplain.code_product !== undefined) onFinish(filterValuesHpplain);
       onFinish(filterValuesHpplain);
     }
   }, [filterValuesHpplain]);

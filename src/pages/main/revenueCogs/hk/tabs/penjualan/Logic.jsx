@@ -36,8 +36,8 @@ const Logic = () => {
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
+    
     if (filterValuesPenjualan !== undefined) {
-      // if (filterValuesPenjualan.code_product === undefined) onFinish(filterValuesPenjualan);
       onFinish(filterValuesPenjualan);
     }
   }, [filterValuesPenjualan]);

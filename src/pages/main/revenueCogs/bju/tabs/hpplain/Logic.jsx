@@ -33,15 +33,14 @@ const Logic = () => {
   const dispatch = useDispatch();
 
   const dataGlobalRedux = useSelector((state) => state.data);
-  const { filterValues } = useSelector((state) => state.revenue);
+  const { filterValuesHpplain } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    log({ filterValues });
-    if (filterValues !== null) {
-      if (filterValues.code_project !== undefined) onFinish(filterValues);
+    if (filterValuesHpplain !== undefined) {
+      onFinish(filterValuesHpplain);
     }
-  }, [filterValues]);
+  }, [filterValuesHpplain]);
 
   useEffect(() => {
     if (importRedux.file !== null) {

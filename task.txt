@@ -3,7 +3,9 @@ version: v1.4.7 ✅ ❌ 🔥
 Bug New:
 - Insert data opex bermasalah
 - Tidak ada kolom row kosong di sewa (Template 4)
-- Filter lokasi dan departement ketika null bisa memilih
+- Filter lokasi dan departement ketika null bisa memilih ✅
+- Error di revenue selain HK, dan KIU
+- management user tambah notifikasi ketika berhasil tambah data
 
 Bug Before:
 
