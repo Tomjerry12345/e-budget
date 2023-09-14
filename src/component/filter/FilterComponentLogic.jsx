@@ -31,7 +31,7 @@ const FilterComponentLogic = ({
   const company = getLocal("code_company");
   const company_names = getLocal("company_names");
   const code_location = getLocal("code_location");
-  const code_department = getLocal("code_department");
+  const code_dept = getLocal("code_department");
 
   const dispatch = useDispatch();
 
@@ -60,24 +60,27 @@ const FilterComponentLogic = ({
     }
   }, []);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     if (userGroup === "usersbu") {
       if (company_names !== null) {
         form.setFieldsValue({
           code_company: `${company} - ${company_names}`,
         });
-        getValueComboBox(company);
-      }
-      if (code_location !== null) {
-        form.setFieldsValue({
-          code_location,
-        });
-      }
 
-      if (code_department !== null) {
-        form.setFieldsValue({
-          code_dept: code_department,
-        });
+        if (code_location !== "null") {
+          form.setFieldsValue({
+            code_location,
+          });
+        }
+        if (code_dept !== "null") {
+          form.setFieldsValue({
+            code_dept,
+          });
+        }
+
+        getValueComboBox(company);
       }
     } else if (userGroup === "reviewer") {
       let dataCompany = [];
@@ -240,6 +243,8 @@ const FilterComponentLogic = ({
     value: {
       state,
       form,
+      code_location,
+      code_dept,
     },
     func: {
       onSelect,
