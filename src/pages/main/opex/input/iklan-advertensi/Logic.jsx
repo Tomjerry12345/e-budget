@@ -50,7 +50,6 @@ const Logic = () => {
       const split = location.pathname.split("/");
       const q = split[split.length - 1];
       const res = await MainServices.get(`config/opex/byalias/${q}`);
-      log({ res });
       setItems(res.data.data[0]);
     } catch (e) {
       log({ e });

@@ -28,6 +28,8 @@ const AutoCompleteFilter = ({
   isCodeDept,
   isStatus,
   disabled,
+  disabledLocation,
+  disabledDept,
   variant,
   type = "default",
 }) => (
@@ -55,7 +57,7 @@ const AutoCompleteFilter = ({
         label="Lokasi"
         name="code_location"
         value={value.state.code_location}
-        disabled={disabled}
+        disabled={disabledLocation}
       />
     ) : null}
     {isCodeDept === true ? (
@@ -63,7 +65,7 @@ const AutoCompleteFilter = ({
         label="Departemen"
         name="code_dept"
         value={value.state.code_dept}
-        disabled={disabled}
+        disabled={disabledDept}
       />
     ) : null}
 
@@ -165,7 +167,16 @@ const FilterComponent = ({
                     ? false
                     : disabled
                 }
-                // disabled={false}
+                disabledLocation={
+                  usersGroup === "usersbu"
+                    ? value.code_location !== "null"
+                      ? true
+                      : false
+                    : false
+                }
+                disabledDept={
+                  usersGroup === "usersbu" ? (value.code_dept !== "null" ? true : false) : false
+                }
                 variant={variant}
               />
               <div style={{ display: "flex" }}>
