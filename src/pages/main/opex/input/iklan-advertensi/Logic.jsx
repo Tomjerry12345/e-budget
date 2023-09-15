@@ -241,13 +241,12 @@ const Logic = () => {
       let value;
 
       if (type === "text") {
-        try{
+        try {
           newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
-        }
-        catch(e){
-          console.log(e)
+        } catch (e) {
+          log({ e });
         }
       } else {
         value = c.newCell.value;
