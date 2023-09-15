@@ -37,7 +37,6 @@ import LocationPage from "pages/main/coa/location/LocationPage";
 import InputDirectAllPage from "pages/main/others/input/direct-all/InputDirectAllPage";
 import GmmPage from "pages/main/revenueCogs/gmm/GmmPage";
 import PenjualanKiuPage from "pages/main/revenueCogs/hk/tabs/penjualan/PenjualanHkPage";
-import LainKiuPage from "pages/main/revenueCogs/hk/tabs/hpplain/LainHkPage";
 import PenjualanGmmPage from "pages/main/revenueCogs/gmm/tabs/penjualan/PenjualanGmmPage";
 import LainGmmPage from "pages/main/revenueCogs/gmm/tabs/hpplain/LainGmmPage";
 import PenjualanKiaPage from "pages/main/revenueCogs/kia/tabs/penjualan/PenjualanKiaPage";
@@ -157,6 +156,7 @@ import RekrutmentAssessmentSummary from "pages/main/mpp/summary/rekrutment-asses
 import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSummary";
 import ManagementUserPage from "pages/main/management-user/ManagementUserPage";
 import ProfilePage from "pages/main/akun/profile/ProfilePage";
+import LainKiuPage from "pages/main/revenueCogs/kiu/tabs/hpplain/LainKiuPage";
 
 const RoutersConfig = () => {
   return (

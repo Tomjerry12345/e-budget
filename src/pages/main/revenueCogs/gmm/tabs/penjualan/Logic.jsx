@@ -202,8 +202,6 @@ const Logic = () => {
         }
 
         if (isChange) {
-          let formData = new FormData();
-
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
@@ -213,32 +211,11 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
-              codeFilter;
-
-            let fCodeCompany = code_company.split(" ");
-            let fCodeLocation = code_location.split(" ");
-            let fCodeDept = code_dept.split(" ");
-            let fCodeIcp = code_icp.split(" ");
-            let fCodeProject = code_project.split(" ");
-
-            let fPeriode = periode.split(" ");
-
-            fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-            fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-            fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-            fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-            fPeriode = fPeriode[0];
-
-            formData.append("code_company", fCodeCompany);
-            formData.append("code_department", fCodeDept);
-            formData.append("code_location", fCodeLocation);
-            formData.append("code_product", codeProduct);
-            formData.append("code_project", fCodeProject);
-            formData.append("code_icp", fCodeIcp);
-            formData.append("year", fPeriode);
-            formData.append(key, value);
+            const formData = formDataUtils({
+              ...codeFilter,
+              code_product: codeProduct,
+              [key]: value,
+            });
 
             const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
@@ -247,9 +224,11 @@ const Logic = () => {
             newRows[rowIndex].rowId = rowId;
             newRows[rowIndex].newRow = false;
           } else {
-            formData.append("id", id);
-            formData.append("column_id", column_id);
-            formData.append("value", value);
+            const formData = formDataUtils({
+              id,
+              column_id,
+              value,
+            });
 
             await MainServices.post(`${item.endpoint}/update`, formData);
           }

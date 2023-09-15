@@ -4,7 +4,7 @@ import { ReactGrid } from "@silevis/reactgrid";
 import { capitalize } from "values/react-grid/helpers";
 import { InputPercentTemplate } from "values/react-grid/rows/input/revenue/template-1/InputPercentTemplate";
 
-const LainHkPage = () => {
+const LainKiuPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -55,4 +55,4 @@ const LainHkPage = () => {
   );
 };
 
-export default LainHkPage;
+export default LainKiuPage;

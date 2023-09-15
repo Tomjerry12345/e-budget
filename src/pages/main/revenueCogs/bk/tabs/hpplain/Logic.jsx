@@ -138,7 +138,6 @@ const Logic = () => {
 
     const { data } = await MainServices.get(url, params);
     const fData = data.data.filter((d) => d.product_code === params.code_product);
-    log("penjualan", fData);
     dispatch(actionData({ sizeDataRevenue: 1 }));
     setDataPenjualan(fData);
     setRows(listRows);
@@ -233,8 +232,11 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
+            const code_account = newRows[rowIndex].cells[0].text;
+
             const formData = formDataUtils({
               ...codeFilter,
+              code_account,
               [key]: value,
             });
 
