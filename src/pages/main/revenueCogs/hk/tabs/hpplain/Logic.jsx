@@ -229,12 +229,14 @@ const Logic = () => {
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
+          const code_account = newRows[rowIndex].cells[0].text;
 
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
             const formData = formDataUtils({
               ...codeFilter,
+              code_account,
               [key]: value,
             });
 

@@ -37,7 +37,7 @@ const Logic = () => {
   const importRedux = useSelector((state) => state.import);
 
   useEffect(() => {
-    if (filterValuesHpplain !== null) {
+    if (filterValuesHpplain !== undefined) {
       onFinish(filterValuesHpplain);
     }
   }, [filterValuesHpplain]);

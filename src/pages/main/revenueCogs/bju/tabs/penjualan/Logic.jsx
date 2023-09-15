@@ -216,14 +216,14 @@ const Logic = () => {
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
 
-          const codeProject = newRows[rowIndex].cells[0].text;
+          const code_project = newRows[rowIndex].cells[0].text;
 
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
             const formData = formDataUtils({
               ...codeFilter,
-              code_project: codeProject,
+              code_project,
               [key]: value,
             });
 
