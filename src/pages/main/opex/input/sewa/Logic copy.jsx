@@ -30,7 +30,46 @@ const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
-  const [emptyObj, setEmptyObj] = useState();
+  const [emptyObj, setEmptyObj] = useState({
+    id: "",
+    code_account: "",
+    code_company: "",
+    code_product: "",
+    code_location: "",
+    code_department: "",
+    code_project: "",
+    code_icp: "",
+    index: 1,
+    year: 0,
+    name: "",
+    activity: null,
+    cost_driver: null,
+    amount: 0,
+    unit: 0,
+    rates: 0,
+    pay_type: null,
+    month_start: 0,
+    month_duration: null,
+    type: "",
+    created_at: "",
+    updated_at: "",
+    total: 0,
+    grand_total: 0,
+    jan_rates: 0,
+    feb_rates: 0,
+    mar_rates: 0,
+    apr_rates: 0,
+    mei_rates: 0,
+    jun_rates: 0,
+    jul_rates: 0,
+    agu_rates: 0,
+    sep_rates: 0,
+    okt_rates: 0,
+    nov_rates: 0,
+    des_rates: 0,
+    is_month_duration: false,
+    is_month_start: false,
+  });
 
   const [items, setItems] = useState({
     pemasaran: [],
@@ -179,10 +218,6 @@ const Logic = () => {
               "month_start",
             ]);
 
-            if (a.length) {
-              onUpdateEmpty(a[0]);
-            }
-
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
@@ -219,10 +254,6 @@ const Logic = () => {
               "month_start",
             ]);
 
-            if (a.length) {
-              onUpdateEmpty(a[0]);
-            }
-
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
@@ -251,11 +282,11 @@ const Logic = () => {
       administrasi: newListAds,
     });
 
-    setRows({
-      ...rows,
-      pemasaran: listPemasaran,
-      administrasi: listAdministrasi,
-    });
+    // setRows({
+    //   ...rows,
+    //   pemasaran: listPemasaran,
+    //   administrasi: listAdministrasi,
+    // });
   };
 
   const onFinish = (values) => {
@@ -487,7 +518,12 @@ const Logic = () => {
         ...prevState,
         [category]: prevState[category].map((a, idx) => {
           if (idx === i) {
-            return applyChanges(change, a, i, category);
+            return applyChanges(
+              change,
+              a.length ? a : [{ ...emptyObj }],
+              i,
+              category
+            );
           } else {
             return a;
           }
@@ -511,25 +547,27 @@ const Logic = () => {
     });
   };
 
+  // this func is use to add new default row with description editable
+  const generateTables = (arrays) => {
+    return arrays.map((a, i) => {
+      let r;
+      if (a.length) {
+        r = getRows({
+          header: getRootHeaderRow(),
+          data: a,
+        });
+      } else {
+        r = fullNewRow(getRootHeaderRow(), i);
+      }
+
+      return [...r];
+    });
+  };
+
   useEffect(() => {
     if (currData) {
-      let listPemasaran = [...currData.pemasaran].map((a) => {
-        let r = getRows({
-          header: getRootHeaderRow(),
-          data: a,
-        });
-
-        return [...r];
-      });
-
-      let listAdministrasi = [...currData.administrasi].map((a) => {
-        let r = getRows({
-          header: getRootHeaderRow(),
-          data: a,
-        });
-
-        return [...r];
-      });
+      const listPemasaran = generateTables([...currData.pemasaran]);
+      const listAdministrasi = generateTables([...currData.administrasi]);
 
       setRows({
         ...rows,
