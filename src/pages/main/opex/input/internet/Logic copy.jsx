@@ -342,9 +342,7 @@ const Logic = () => {
             ...prevState,
             [category]: prevState[category].map((a, idx) => {
               if (idx === i) {
-                return a.map((el) =>
-                  el.name === newObject.name ? { ...newObject } : { ...el }
-                );
+                return a.map((el) => (!el.id ? { ...newObject } : { ...el }));
               } else {
                 return a;
               }
@@ -363,21 +361,21 @@ const Logic = () => {
     changes.forEach((change, idx) => {
       const dataRowId = change.rowId;
       const fieldName = change.columnId;
-      let dataRow = prevDetails.find((d) => d.id === dataRowId);
+      let dataRow = prevDetails.find((d) => d.id == dataRowId)
+        ? prevDetails.find((d) => d.id == dataRowId)
+        : prevDetails.find((d) => !d.id);
 
-      if (!dataRowId) {
-        if (change.newCell.text) {
+      if (!dataRow) {
+        dataRow = generateObjectAttributes(prevDetails);
+        prevDetails.push(dataRow);
+      }
+
+      if (change.type === "text") {
+        if (typeof dataRowId == "number" && change.newCell.text) {
           // is new row
           dataRow[fieldName] = change.newCell.text;
           onInsertData(change.newCell.text, i, category);
-        }
-      } else {
-        if (!dataRow) {
-          dataRow = generateObjectAttributes(prevDetails);
-          prevDetails.push(dataRow);
-        }
-
-        if (change.type === "text") {
+        } else {
           dataRow[fieldName] = change.newCell.text;
           onUpdateData({
             id: dataRow.id,
@@ -385,54 +383,54 @@ const Logic = () => {
             value: change.newCell.text,
             type: "internet",
           });
-        } else if (change.type === "number") {
-          let value = change.newCell.value;
-          dataRow[fieldName] = value;
-
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value,
-            type: "internet",
-          });
-        } else if (change.type === "checkbox") {
-          dataRow[fieldName] = change.newCell.checked;
-          onUpdateData({
-            id: dataRow.id,
-            column_id: fieldName,
-            value: change.newCell.checked,
-            type: "internet",
-          });
-        } else if (change.type === "dropdown") {
-          let key = `is_${fieldName}`;
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
-            dataRow[fieldName] = change.newCell.selectedValue;
-
-            onUpdateData({
-              id: dataRow.id,
-              column_id: fieldName,
-              value: change.newCell.selectedValue,
-              type: "internet",
-            });
-          }
-
-          if (change.newCell.inputValue) {
-            dataRow[fieldName] = change.newCell.inputValue;
-            onUpdateData({
-              id: dataRow.id,
-              column_id: fieldName,
-              value: change.newCell.inputValue,
-              type: "internet",
-            });
-          }
-
-          // CHANGED: set the isOpen property to the value received.
-          dataRow[key] = change.newCell.isOpen;
-        } else {
-          log("ERROR", dataRow[fieldName]);
         }
+      } else if (change.type === "number") {
+        let value = change.newCell.value;
+        dataRow[fieldName] = value;
+
+        onUpdateData({
+          id: dataRow.id,
+          column_id: fieldName,
+          value,
+          type: "internet",
+        });
+      } else if (change.type === "checkbox") {
+        dataRow[fieldName] = change.newCell.checked;
+        onUpdateData({
+          id: dataRow.id,
+          column_id: fieldName,
+          value: change.newCell.checked,
+          type: "internet",
+        });
+      } else if (change.type === "dropdown") {
+        let key = `is_${fieldName}`;
+        if (
+          change.previousCell.selectedValue !== change.newCell.selectedValue
+        ) {
+          dataRow[fieldName] = change.newCell.selectedValue;
+
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.selectedValue,
+            type: "internet",
+          });
+        }
+
+        if (change.newCell.inputValue) {
+          dataRow[fieldName] = change.newCell.inputValue;
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.inputValue,
+            type: "internet",
+          });
+        }
+
+        // CHANGED: set the isOpen property to the value received.
+        dataRow[key] = change.newCell.isOpen;
+      } else {
+        log("ERROR", dataRow[fieldName]);
       }
 
       let duration = parseInt(dataRow["month_duration"]);
@@ -497,6 +495,21 @@ const Logic = () => {
     });
   };
 
+  const generateNewRows = (arrayData) => {
+    return arrayData.map((a) => {
+      let newObj = [];
+      if (a.find((el) => !el.rowId)) {
+        newObj = a.map((elm) =>
+          !elm.rowId ? reactgridNewRow(a.length + 1) : { ...elm }
+        );
+      } else {
+        newObj = a;
+      }
+
+      return newObj;
+    });
+  };
+
   useEffect(() => {
     if (currData) {
       const listPemasaran = [...currData.pemasaran].map((a) => {
@@ -519,8 +532,8 @@ const Logic = () => {
 
       setRows({
         ...rows,
-        administrasi: listAdministrasi,
-        pemasaran: listPemasaran,
+        administrasi: generateNewRows(listAdministrasi),
+        pemasaran: generateNewRows(listPemasaran),
       });
     }
   }, [currData]);

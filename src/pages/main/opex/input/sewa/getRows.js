@@ -191,7 +191,7 @@ export function fullNewRow(header, id) {
 export function reactgridNewRow(id) {
   return {
     rowId: id,
-    newRow: true,
+    // newRow: true,
     height: ROW_HEIGHT,
     cells: [
       textCell("", "padding-left-lg"),

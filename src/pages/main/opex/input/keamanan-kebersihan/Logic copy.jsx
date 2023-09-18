@@ -222,7 +222,7 @@ const Logic = () => {
             if (a.length) {
               onUpdateEmpty(a[0]);
             }
-            
+
             if (data.data.length > 0) {
               r = getRows({
                 header: getRootHeaderRow(),
@@ -342,9 +342,7 @@ const Logic = () => {
             ...prevState,
             [category]: prevState[category].map((a, idx) => {
               if (idx === i) {
-                return a.map((el) =>
-                  el.name === newObject.name ? { ...newObject } : { ...el }
-                );
+                return a.map((el) => (!el.id ? { ...newObject } : { ...el }));
               } else {
                 return a;
               }
@@ -363,13 +361,9 @@ const Logic = () => {
     changes.forEach((change, idx) => {
       const dataRowId = change.rowId;
       const fieldName = change.columnId;
-      let dataRow = prevDetails.find((d) => d.id === dataRowId);
-
-      if (!dataRowId && change.newCell.text) {
-        // is new row
-        dataRow[fieldName] = change.newCell.text;
-        onInsertData(change.newCell.text, i, category);
-      }
+      let dataRow = prevDetails.find((d) => d.id == dataRowId)
+        ? prevDetails.find((d) => d.id == dataRowId)
+        : prevDetails.find((d) => !d.id);
 
       if (!dataRow) {
         dataRow = generateObjectAttributes(prevDetails);
@@ -377,13 +371,19 @@ const Logic = () => {
       }
 
       if (change.type === "text") {
-        dataRow[fieldName] = change.newCell.text;
-        onUpdateData({
-          id: dataRow.id,
-          column_id: fieldName,
-          value: change.newCell.text,
-          type: "keamanan",
-        });
+        if (typeof dataRowId == "number" && change.newCell.text) {
+          // is new row
+          dataRow[fieldName] = change.newCell.text;
+          onInsertData(change.newCell.text, i, category);
+        } else {
+          dataRow[fieldName] = change.newCell.text;
+          onUpdateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.text,
+            type: "keamanan",
+          });
+        }
       } else if (change.type === "number") {
         let value = change.newCell.value;
         dataRow[fieldName] = value;
@@ -495,6 +495,21 @@ const Logic = () => {
     });
   };
 
+  const generateNewRows = (arrayData) => {
+    return arrayData.map((a) => {
+      let newObj = [];
+      if (a.find((el) => !el.rowId)) {
+        newObj = a.map((elm) =>
+          !elm.rowId ? reactgridNewRow(a.length + 1) : { ...elm }
+        );
+      } else {
+        newObj = a;
+      }
+
+      return newObj;
+    });
+  };
+
   useEffect(() => {
     if (currData) {
       const listPemasaran = [...currData.pemasaran].map((a) => {
@@ -517,8 +532,8 @@ const Logic = () => {
 
       setRows({
         ...rows,
-        administrasi: listAdministrasi,
-        pemasaran: listPemasaran,
+        administrasi: generateNewRows(listAdministrasi),
+        pemasaran: generateNewRows(listPemasaran),
       });
     }
   }, [currData]);
