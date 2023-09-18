@@ -137,224 +137,214 @@ const Logic = () => {
     const newRows = [...rows[i].data];
     let isChange = false;
 
-    // try {
-    for (const c of change) {
-      const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
+    try {
+      for (const c of change) {
+        const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        if (rowIndex < 0) continue;
+        const columnIndex = columns[item.description].findIndex(
+          (j) => j.columnId === c.columnId
+        );
 
-      console.log("c", c);
+        const type = c.type;
 
-      const type = c.type;
+        const length = newRows.length;
 
-      const length = newRows.length;
+        let value;
 
-      let value;
+        if (type === "text") {
+          value = c.newCell.text;
+          try {
+            newRows[rowIndex].cells[columnIndex].text = value;
+          } catch (e) {
+            log({ e });
+          }
 
-      if (type === "text") {
-        value = c.newCell.text;
-        try {
-          newRows[rowIndex].cells[columnIndex].text = value;
-        } catch (e) {
-          log({ e });
-        }
-
-        isChange = true;
-      } else if (type === "number") {
-        value = c.newCell.value;
-        try {
-          console.log("rowIndex", rowIndex);
-          console.log("columnIndex", columnIndex);
-          console.log(
-            "newRows[rowIndex].cells[columnIndex]",
-            newRows[rowIndex].cells[columnIndex]
-          );
+          isChange = true;
+        } else if (type === "number") {
+          value = c.newCell.value;
           newRows[rowIndex].cells[columnIndex].value = value;
-        } catch (e) {
-          log({ e });
-        }
 
-        let total1 = 0;
-        let total2 = 0;
+          let total1 = 0;
+          let total2 = 0;
 
-        const newCell = newRows[rowIndex].cells.map((e, j) => {
-          if (j >= 2 && j <= 13) total1 += e.value;
-          if (j === 14) e.value = total1;
-          if (j >= 15 && j <= 26) total2 += e.value;
-          if (j === 27) e.value = total2;
-          return e;
-        });
-
-        newRows[rowIndex].cells = newCell;
-
-        isChange = true;
-      } else if (type === "percent") {
-        value = parseInt(c.newCell.text);
-        let total = 0;
-
-        let ind = 2;
-
-        const newCell = newRows[rowIndex].cells.map((e, j) => {
-          if (j >= ind && j <= 24) {
-            total += e.value;
-            ind += 2;
-          }
-          if (j === 26) {
-            e.value = total;
-            total = 0;
-            ind = 27;
-          }
-          if (j >= ind && j <= 27 + 24) {
-            total += e.value;
-            ind += 2;
-          }
-          return e;
-        });
-
-        newRows[rowIndex].cells = newCell;
-
-        newRows[rowIndex].cells[columnIndex].text = `${value}`;
-
-        isChange = true;
-      }
-
-      if (isChange) {
-        const id = c.rowId;
-        const column_id = c.columnId;
-        const isNewRow = newRows[rowIndex].newRow;
-
-        const codeProduct = newRows[rowIndex].cells[0].text;
-
-        const key = columns[item.description][columnIndex].columnId;
-
-        if (isNewRow) {
-          const formData = formDataUtils({
-            ...codeFilter,
-            code_product: codeProduct,
-            [key]: value,
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= 2 && j <= 13) total1 += e.value;
+            if (j === 14) e.value = total1;
+            if (j >= 15 && j <= 26) total2 += e.value;
+            if (j === 27) e.value = total2;
+            return e;
           });
 
-          const res = await MainServices.post(`${item.endpoint}/insert`, formData);
+          newRows[rowIndex].cells = newCell;
 
-          const rowId = res.data.data.id;
-
-          newRows[rowIndex].rowId = rowId;
-          newRows[rowIndex].newRow = false;
-        } else {
-          const formData = formDataUtils({
-            id,
-            column_id,
-            value,
-          });
-
-          await MainServices.post(`${item.endpoint}/update`, formData);
-        }
-
-        newRows[length - 1] = updateTotalRow(newRows, item.description);
-
-        fullRows[i].data = newRows;
-
-        if (type === "number") {
-          // stok akhir
-          if (i === 0 || i === 1 || i === 4) {
-            const lengthStockAkhir = fullRows[3].data.length;
-            const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
-            const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
-            const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
-
-            fullRows[3].data[rowIndex].cells[columnIndex].value =
-              stockAwal + asumsiUnitBeli - asumsiUnitJual;
-
-            let total1 = 0;
-            let total2 = 0;
-
-            const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
-
-            fullRows[3].data[rowIndex].cells = newCellStockAkhir;
-
-            fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
-              fullRows[3].data,
-              item.description
-            );
-          }
-
-          // Penjualan
-
-          if (i === 4 || i === 5) {
-            const lengthPenjualan = fullRows[6].data.length;
-            const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
-            const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
-
-            fullRows[6].data[rowIndex].cells[columnIndex].value =
-              asumsiUnitJual * hargaJualUnit;
-
-            let total1 = 0;
-            let total2 = 0;
-
-            const newCellPenjualan = fullRows[6].data[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
-
-            fullRows[6].data[rowIndex].cells = newCellPenjualan;
-
-            fullRows[6].data[lengthPenjualan - 1] = updateTotalRow(
-              fullRows[6].data,
-              item.description
-            );
-          }
+          isChange = true;
         } else if (type === "percent") {
-          if (i === 7) {
-            const length = fullRows[7].data.length;
-            const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+          value = parseInt(c.newCell.text);
+          let total = 0;
 
-            const tot = vPenjualan * (value / 100);
-            fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
+          let ind = 2;
 
-            let total = 0;
-            let ind = 2;
+          const newCell = newRows[rowIndex].cells.map((e, j) => {
+            if (j >= ind && j <= 24) {
+              total += e.value;
+              ind += 2;
+            }
+            if (j === 26) {
+              e.value = total;
+              total = 0;
+              ind = 27;
+            }
+            if (j >= ind && j <= 27 + 24) {
+              total += e.value;
+              ind += 2;
+            }
+            return e;
+          });
 
-            const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
-              if (j >= ind && j <= 24) {
-                total += e.value;
-                ind += 2;
-              }
-              if (j === 26) {
-                e.value = total;
-                total = 0;
-                ind = 27;
-              }
-              if (j >= ind && j <= 27 + 24) {
-                total += e.value;
-                ind += 2;
-              }
-              return e;
+          newRows[rowIndex].cells = newCell;
+
+          newRows[rowIndex].cells[columnIndex].text = `${value}`;
+
+          isChange = true;
+        }
+
+        if (isChange) {
+          const id = c.rowId;
+          const column_id = c.columnId;
+          const isNewRow = newRows[rowIndex].newRow;
+
+          const codeProduct = newRows[rowIndex].cells[0].text;
+
+          const key = columns[item.description][columnIndex].columnId;
+
+          if (isNewRow) {
+            const formData = formDataUtils({
+              ...codeFilter,
+              code_product: codeProduct,
+              [key]: value,
             });
 
-            fullRows[7].data[rowIndex].cells = newCellPotonganPenjualan;
+            const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
-            fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
+            const rowId = res.data.data.id;
+
+            newRows[rowIndex].rowId = rowId;
+            newRows[rowIndex].newRow = false;
+          } else {
+            const formData = formDataUtils({
+              id,
+              column_id,
+              value,
+            });
+
+            await MainServices.post(`${item.endpoint}/update`, formData);
+          }
+
+          newRows[length - 1] = updateTotalRow(newRows, item.description);
+
+          fullRows[i].data = newRows;
+
+          if (type === "number") {
+            // stok akhir
+            if (i === 0 || i === 1 || i === 4) {
+              const lengthStockAkhir = fullRows[3].data.length;
+              const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+
+              fullRows[3].data[rowIndex].cells[columnIndex].value =
+                stockAwal + asumsiUnitBeli - asumsiUnitJual;
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
+
+              fullRows[3].data[rowIndex].cells = newCellStockAkhir;
+
+              fullRows[3].data[lengthStockAkhir - 1] = updateTotalRow(
+                fullRows[3].data,
+                item.description
+              );
+            }
+
+            // Penjualan
+
+            if (i === 4 || i === 5) {
+              const lengthPenjualan = fullRows[6].data.length;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
+
+              fullRows[6].data[rowIndex].cells[columnIndex].value =
+                asumsiUnitJual * hargaJualUnit;
+
+              let total1 = 0;
+              let total2 = 0;
+
+              const newCellPenjualan = fullRows[6].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
+
+              fullRows[6].data[rowIndex].cells = newCellPenjualan;
+
+              fullRows[6].data[lengthPenjualan - 1] = updateTotalRow(
+                fullRows[6].data,
+                item.description
+              );
+            }
+          } else if (type === "percent") {
+            if (i === 7) {
+              const length = fullRows[7].data.length;
+              const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+
+              const tot = vPenjualan * (value / 100);
+              fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
+
+              let total = 0;
+              let ind = 2;
+
+              const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
+                if (j >= ind && j <= 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                if (j === 26) {
+                  e.value = total;
+                  total = 0;
+                  ind = 27;
+                }
+                if (j >= ind && j <= 27 + 24) {
+                  total += e.value;
+                  ind += 2;
+                }
+                return e;
+              });
+
+              fullRows[7].data[rowIndex].cells = newCellPotonganPenjualan;
+
+              fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
+            }
           }
         }
       }
+
+      setRows(fullRows);
+
+      showNotif(dispatch, { status: 200, message: "Sukses update data" });
+    } catch (e) {
+      log({ e });
+      showNotif(dispatch, { status: 400, message: e.message });
     }
-
-    setRows(fullRows);
-
-    showNotif(dispatch, { status: 200, message: "Sukses update data" });
-    // }
-    //  catch (e) {
-    //   log({ e });
-    //   showNotif(dispatch, { status: 400, message: e.message });
-    // }
   };
 
   const onSuccess = () => {
