@@ -162,6 +162,8 @@ const Logic = () => {
       } else if (type === "number") {
         value = c.newCell.value;
         try {
+          console.log("rowIndex", rowIndex);
+          console.log("columnIndex", columnIndex);
           console.log(
             "newRows[rowIndex].cells[columnIndex]",
             newRows[rowIndex].cells[columnIndex]
