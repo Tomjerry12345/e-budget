@@ -389,9 +389,14 @@ const Logic = () => {
   };
 
   const applyChanges = (changes, prevDetails, i, category) => {
+    let arrPosition = [];
     changes.forEach((change, idx) => {
+      if (arrPosition.includes(change.rowId + ',' + change.columnId)) {
+        return;
+      }
       const dataRowId = change.rowId;
       const fieldName = change.columnId;
+      arrPosition.push(change.rowId + ',' + change.columnId);
 
       let dataRow = prevDetails.find((d) => d.id == dataRowId)
         ? prevDetails.find((d) => d.id == dataRowId)
