@@ -137,6 +137,7 @@ const Logic = () => {
     const newRows = [...rows[i].data];
     let isChange = false;
 
+    // try {
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
       const columnIndex = columns[item.description].findIndex((j) => j.columnId === c.columnId);
@@ -151,11 +152,24 @@ const Logic = () => {
 
       if (type === "text") {
         value = c.newCell.text;
-        newRows[rowIndex].cells[columnIndex].text = value;
+        try {
+          newRows[rowIndex].cells[columnIndex].text = value;
+        } catch (e) {
+          log({ e });
+        }
+
         isChange = true;
       } else if (type === "number") {
         value = c.newCell.value;
-        newRows[rowIndex].cells[columnIndex].value = value;
+        try {
+          console.log(
+            "newRows[rowIndex].cells[columnIndex]",
+            newRows[rowIndex].cells[columnIndex]
+          );
+          newRows[rowIndex].cells[columnIndex].value = value;
+        } catch (e) {
+          log({ e });
+        }
 
         let total1 = 0;
         let total2 = 0;
@@ -334,10 +348,8 @@ const Logic = () => {
     setRows(fullRows);
 
     showNotif(dispatch, { status: 200, message: "Sukses update data" });
-
-    // try {
-
-    // } catch (e) {
+    // }
+    //  catch (e) {
     //   log({ e });
     //   showNotif(dispatch, { status: 400, message: e.message });
     // }
