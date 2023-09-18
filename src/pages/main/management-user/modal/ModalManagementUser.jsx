@@ -106,8 +106,10 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
               allowClear
               onChange={(e) => {
                 form.setFieldsValue({ code_company: e });
-                getListLocation(e);
-                getListDept(e);
+                if (user_group === "usersbu") {
+                  getListLocation(e);
+                  getListDept(e);
+                }
               }}
               options={listCompany.map((e) => ({
                 value: e.code,

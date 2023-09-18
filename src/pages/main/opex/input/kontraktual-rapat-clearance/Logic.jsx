@@ -208,16 +208,12 @@ const Logic = () => {
   const onTambahRow = (i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    log({ i });
-    log({ category });
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
 
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
-
-    log({ newRows });
 
     setRows({
       ...rows,
@@ -242,9 +238,13 @@ const Logic = () => {
       let value;
 
       if (type === "text") {
-        newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
+        try {
+          newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
+          isChange = true;
+        } catch (e) {
+          log({ e });
+        }
       } else {
         log("cells", newRows[i][rowIndex].cells);
         value = c.newCell.value;

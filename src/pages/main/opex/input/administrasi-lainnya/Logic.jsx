@@ -239,9 +239,13 @@ const Logic = () => {
       let value;
 
       if (type === "text") {
-        newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
-        value = c.newCell.text;
-        isChange = true;
+        try {
+          newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+          value = c.newCell.text;
+          isChange = true;
+        } catch (e) {
+          log({ e });
+        }
       } else {
         value = c.newCell.value;
         if (!isNaN(value)) {

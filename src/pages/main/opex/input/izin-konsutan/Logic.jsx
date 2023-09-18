@@ -7,12 +7,13 @@ import { log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
 import { getColumns } from "values/react-grid/rows/input/opex/template-2/getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { 
-  getRootHeaderRow, 
+import {
+  getRootHeaderRow,
   fullNewRow,
   getRows,
   reactgridNewRow,
-  updateTotalRow, } from "./getRows";
+  updateTotalRow,
+} from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -244,8 +245,12 @@ const Logic = () => {
     let value;
 
     if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
+      try {
+        newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
+        value = change[0].newCell.text;
+      } catch (e) {
+        log({ e });
+      }
     } else {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
@@ -255,11 +260,6 @@ const Logic = () => {
       let periodeBayar = newRows[i][rowIndex].cells[6].value;
 
       let grandTotal = satuan * tarif;
-
-      log({ tarif });
-      log({ satuan });
-      log({ grandTotal });
-      log({ periodeBayar });
 
       newRows[i][rowIndex].cells[5].value = grandTotal;
       // newRows[i][rowIndex].cells[periodeBayar + 6].value = grandTotal;

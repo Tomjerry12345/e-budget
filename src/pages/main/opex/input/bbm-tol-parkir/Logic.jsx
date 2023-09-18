@@ -236,8 +236,12 @@ const Logic = () => {
     let value;
 
     if (type === "text") {
-      newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
-      value = change[0].newCell.text;
+      try {
+        newRows[i][rowIndex].cells[columnIndex].text = change[0].newCell.text;
+        value = change[0].newCell.text;
+      } catch (e) {
+        log({ e });
+      }
     } else {
       newRows[i][rowIndex].cells[columnIndex].value = change[0].newCell.value;
       value = change[0].newCell.value;
