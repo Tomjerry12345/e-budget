@@ -4,13 +4,19 @@ Bug New:
 - Insert data opex bermasalah
 - Tidak ada kolom row kosong di sewa (Template 4)
 - Filter lokasi dan departement ketika null bisa memilih ✅
-- Error di revenue selain HK, dan KIU
+- Error di revenue selain HK, dan KIU ✅
 - management user tambah notifikasi ketika berhasil tambah data
+
+- di filternya kosong tp terdisable ki di usersbu, export laba rugi, neraca, revenue ✅
+- import stock awal perusahaan BJU ❌
+- import kik, salah ki di code_product nya, bgini ki jg hpp lainnya ✅
+- msh KIK, Potongan Penjualan & HPP Variable tdk update ki ✅
+- trus semua revenue di tab kedua mau di kasi kondisi if jg kyk mslh yg prtama td ✅
 
 Bug Before:
 
 Revenue
-- hilangkan auto refresh ketika pindah tab revenue ❌
+- hilangkan auto refresh ketika pindah tab revenue ✅
 
 Direct all
 - input mpp lainnya sesuaikan lebar kolom ❌

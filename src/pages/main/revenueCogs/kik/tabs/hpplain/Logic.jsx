@@ -156,6 +156,7 @@ const Logic = () => {
     try {
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        if (rowIndex < 0) continue;
         const columnIndex = columns[item.description].findIndex(
           (j) => j.columnId === c.columnId
         );
@@ -377,6 +378,7 @@ const Logic = () => {
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
+    fCodeCodeProduct = fCodeCodeProduct[0] === "ALL" ? "all" : fCodeCodeProduct[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];

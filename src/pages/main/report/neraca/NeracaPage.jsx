@@ -18,13 +18,17 @@ const LabaRugiPage = () => {
 
   useEffect(() => {
     window.onresize = getSizeScreen(setSize);
+    const userGroup = getLocal("user_group");
     const company = getLocal("code_company");
     const company_names = getLocal("company_names");
+    const code_location = getLocal("code_location");
+    const code_dept = getLocal("code_department");
+
     form.setFieldsValue({
       code_company: company === "" ? null : `${company} - ${company_names}`,
-      code_location: "ALL",
-      code_dept: "ALL",
       code_product: "ALL",
+      code_location: userGroup === "superadmin" ? "ALL" : code_location,
+      code_dept: userGroup === "superadmin" ? "ALL" : code_dept,
       code_icp: "ALL",
       code_project: "ALL",
       periode: "2023 - 2024",
@@ -65,7 +69,7 @@ const LabaRugiPage = () => {
           dataSource={value.data}
           columns={value.columns}
           loading={value.loading}
-          scroll={{ y: size.y - 260}}
+          scroll={{ y: size.y - 260 }}
         />
       </div>
     </>

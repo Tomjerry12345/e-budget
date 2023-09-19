@@ -8,7 +8,7 @@ import FilterComponent from "component/filter/FilterComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { getPerusahaan, keyRevenueTab } from "values/Constant";
 import { actionRevenue } from "redux/action/action.reducer";
-import { log } from "values/Utilitas";
+import { getLocal, log } from "values/Utilitas";
 import { tableList } from "./TableConstant";
 
 const BsuPage = () => {
@@ -29,14 +29,20 @@ const BsuPage = () => {
 
   const perusahaan = getPerusahaan(q);
 
+  const userGroup = getLocal("user_group");
+  const code_location = getLocal("code_location");
+  const code_dept = getLocal("code_department");
+
   useEffect(() => {
     if (key === 1) {
       if (filterValuesPenjualan === undefined) {
         form.setFieldsValue({
           code_company: `${perusahaan.code} - ${perusahaan.description}`,
           code_product: null,
-          code_location: null,
-          code_dept: null,
+          code_location:
+            userGroup === "superadmin" ? null : code_location !== "null" ? code_location : null,
+          code_dept:
+            userGroup === "superadmin" ? null : code_dept !== "null" ? code_dept : null,
           code_icp: null,
           code_project: null,
           periode: null,
@@ -50,8 +56,10 @@ const BsuPage = () => {
         form.setFieldsValue({
           code_company: `${perusahaan.code} - ${perusahaan.description}`,
           code_product: null,
-          code_location: null,
-          code_dept: null,
+          code_location:
+            userGroup === "superadmin" ? null : code_location !== "null" ? code_location : null,
+          code_dept:
+            userGroup === "superadmin" ? null : code_dept !== "null" ? code_dept : null,
           code_icp: null,
           code_project: null,
           periode: null,
