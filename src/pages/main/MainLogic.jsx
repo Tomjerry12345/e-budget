@@ -14,6 +14,7 @@ import {
 } from "../../values/RoutingPage";
 import { cekToken, getLocal, log, setLocal } from "../../values/Utilitas";
 import { actionRevenue } from "redux/action/action.reducer";
+import { actionData } from "redux/data-global/data.reducer";
 
 const MainLogic = () => {
   let params = useParams();
@@ -193,9 +194,11 @@ const MainLogic = () => {
       } else {
         pageNavigation = `/main/revenue-cogs/${urlPageRevenue[nameMenu]}/penjualan`;
       }
+      dispatch(actionData({ sizeDataRevenue: 0 }));
       dispatch(
         actionRevenue({
-          filterValues: null,
+          filterValuesPenjualan: undefined,
+          filterValuesHpplain: undefined,
         })
       );
     } else if (index === 2) {

@@ -12,6 +12,8 @@ Bug New:
 - import kik, salah ki di code_product nya, bgini ki jg hpp lainnya ✅
 - msh KIK, Potongan Penjualan & HPP Variable tdk update ki ✅
 - trus semua revenue di tab kedua mau di kasi kondisi if jg kyk mslh yg prtama td ✅
+- GMM Pendapatan lainnya belum ada file template nya ❌
+- 
 
 Bug Before:
 

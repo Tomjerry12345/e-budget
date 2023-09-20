@@ -327,56 +327,23 @@ const Logic = () => {
       })
     );
 
-    const {
-      code_company,
-      code_product,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-      periode,
-    } = codeFilter;
-
-    let fCodeCompany = code_company.split(" ");
-    let fCodeCodeProduct = code_product.split(" ");
-    let fCodeLocation = code_location.split(" ");
-    let fCodeDept = code_dept.split(" ");
-    let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
-    let fPeriode = periode.split(" ");
-
-    fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-    fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-    fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-    fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0];
-
     const desc = dataGlobalRedux.indexImport;
     const type = dataGlobalRedux.typeRevenueImport ?? "actual";
     const index = rows.findIndex((item) => item.description === desc);
 
     const endpoint = rows[index].endpoint;
 
-    let formData = new FormData();
-
-    formData.append("file", file);
-
-    formData.append("code_company", fCodeCompany);
-    formData.append("code_product", fCodeCodeProduct);
-    formData.append("code_location", fCodeLocation);
-    formData.append("code_department", fCodeDept);
-    formData.append("code_icp", fCodeIcp);
-    formData.append("code_project", fCodeProject);
-    formData.append("year", fPeriode);
-    formData.append("type", type);
+    const formData = formDataUtils({
+      ...codeFilter,
+      file,
+      type,
+    });
 
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      const url = `${endpoint}/list?code_company=${fCodeCompany}&code_product=${fCodeCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-      const { data } = await MainServices.get(url);
+      const url = `${endpoint}/list`;
+      const { data } = await MainServices.get(url, codeFilter);
 
       let r = getRows({
         header: getHeaderRow[desc],
@@ -388,39 +355,6 @@ const Logic = () => {
 
       newRow[index].data = r;
 
-      // if (index === 0 || index === 1 || index === 4) {
-      //   const epLastStock = rows[3].endpoint;
-      //   const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-      //   const { data } = await MainServices.get(urlLastStock);
-
-      //   console.log("last stock : ", data);
-      //   r = getRows({
-      //     header: getHeaderRow[desc],
-      //     data: data.data,
-      //     key: desc,
-      //   });
-
-      //   newRow[3].data = r;
-      // }
-
-      // if (index === 2 || index === 5) {
-      //   const epLastStock = rows[6].endpoint;
-      //   const urlLastStock = `${epLastStock}/list?code_company=${fCodeCompany}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${fPeriode}`;
-      //   const { data } = await MainServices.get(urlLastStock);
-
-      //   console.log("last stock : ", data);
-      //   r = getRows({
-      //     header: getHeaderRow[desc],
-      //     data: data.data,
-      //     key: desc,
-      //   });
-
-      //   newRow[6].data = r;
-      // }
-
-      // setRows(newRow);
-
-      // responseShow(res);
       showNotif(dispatch, { res: res });
 
       onSuccess();
