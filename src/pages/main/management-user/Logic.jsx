@@ -132,6 +132,7 @@ const Logic = () => {
   };
 
   const onActionUser = async (values) => {
+    log("values.code_company.toString()", values.code_company.toString());
     try {
       if (isEdit) {
         const params = {
@@ -180,7 +181,7 @@ const Logic = () => {
     log("record.code_company", record.code_company);
 
     idRef.current = record.id;
-    const code_company = record.code_company.split(", ");
+    const code_company = record.code_company.split(",");
 
     log({ code_company });
 

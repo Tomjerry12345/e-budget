@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { actionRevenue } from "redux/action/action.reducer";
 import { getPerusahaan, keyRevenueTab, urlRevenue } from "values/Constant";
 import { getLocal } from "values/Utilitas";
+import { actionData } from "redux/data-global/data.reducer";
 
 const HkPage = () => {
   const [key, setKey] = useState(1);
@@ -104,6 +105,7 @@ const HkPage = () => {
           filterValuesHpplain: values,
         })
       );
+
       navigate(`/main/revenue-cogs/${q}/hpplain`);
     }
   };
@@ -126,8 +128,14 @@ const HkPage = () => {
           onChange={(key) => {
             setKey(key);
             if (key === 1) {
+              dispatch(
+                actionData({ sizeDataRevenue: filterValuesPenjualan === undefined ? 0 : 1 })
+              );
               navigate(`/main/revenue-cogs/${q}/penjualan`);
             } else {
+              dispatch(
+                actionData({ sizeDataRevenue: filterValuesHpplain === undefined ? 0 : 1 })
+              );
               navigate(`/main/revenue-cogs/${q}/hpplain`);
             }
 
