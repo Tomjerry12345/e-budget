@@ -125,7 +125,10 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
+    .reduce(
+      (acc, curr) => acc.map((v, i) => v + curr[i]),
+      createArray(TOTAL_DATA)
+    );
 
   log({ list });
   return rowTotal("Total", list);
@@ -133,29 +136,62 @@ export const updateTotalRow = (data) => {
 
 function getGroupRows(groups, categories) {
   return [
-    ...groups.map((d) => ({
-      rowId: d["id"],
-      isNewRow: d["id"] === null,
-      height: ROW_HEIGHT,
-      cells: [
-        ...getColumns().map((e) => {
-          if (e.type === "text") {
-            return textCell(d[e.columnId] ?? "", "padding-left-lg");
-          } else if (e.type === "dropdown") {
-            if (e.columnId === "asset_category_id") {
-              return dropDownCustomCell(
-                d[e.columnId] ?? "",
-                categories,
-                d.is_asset_category_id
-              );
-            }
-            return dropDownCell(getMonthDuration(), d[e.columnId]);
-          } else if (e.type === "number") {
-            return numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false);
-          }
-        }),
-      ],
-    })),
+    ...groups.map((d) => {
+      if (d.id) {
+        return {
+          rowId: d["id"],
+          // isNewRow: d["id"] === null,
+          height: ROW_HEIGHT,
+          cells: [
+            ...getColumns().map((e) => {
+              if (e.type === "text") {
+                return textCell(d[e.columnId] ?? "", "padding-left-lg");
+              } else if (e.type === "dropdown") {
+                if (e.columnId === "asset_category_id") {
+                  return dropDownCustomCell(
+                    d[e.columnId] ?? "",
+                    categories,
+                    d.is_asset_category_id
+                  );
+                }
+                return dropDownCell(getMonthDuration(), d[e.columnId]);
+              } else if (e.type === "number") {
+                return numberCell(
+                  d[e.columnId] ?? 0,
+                  "padding-left-lg",
+                  null,
+                  e.format ?? false
+                );
+              }
+            }),
+          ],
+        };
+      } else {
+        return {
+          rowId: generateUID(),
+          isNewRow: true,
+          height: ROW_HEIGHT,
+          cells: [
+            textCell("", "padding-left-lg"),
+            nonEditable(numberCell(0, "padding-left-lg", null, false)),
+            nonEditable(numberCell(0, "padding-left-lg", null, false)),
+            nonEditable(dropDownCustomCell("", [], "asset_category_id")),
+            // nonEditable(numberCell(0, "padding-left-lg", null, false)),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(numberCell(0, "padding-left-lg")),
+            nonEditable(textCell("", "padding-left-lg")),
+            nonEditable(textCell("", "padding-left-lg")),
+            nonEditable(textCell("", "padding-left-lg")),
+          ],
+        };
+      }
+    }),
   ];
 }
 
@@ -205,17 +241,18 @@ export function reactgridNewRow() {
     height: ROW_HEIGHT,
     cells: [
       textCell("", "padding-left-lg"),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
-      nonEditable(textCell("", "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      nonEditable(dropDownCustomCell("", [], "asset_category_id")),
+      // nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
+      nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),

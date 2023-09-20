@@ -1,13 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, generateUID, log, showNotif } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { actionData } from "redux/data-global/data.reducer";
-import { getRootHeaderRow, fullNewRow, getRows, reactgridNewRow } from "./getRows";
-import { generateArrayAttributes, generateObjectAttributes } from "values/react-grid/helpers";
+import {
+  getRootHeaderRow,
+  fullNewRow,
+  getRows,
+  reactgridNewRow,
+} from "./getRows";
+import {
+  generateArrayAttributes,
+  generateAttributesByNewValue,
+  generateObjectAttributes,
+} from "values/react-grid/helpers";
 
 const LoginNew = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -18,10 +31,41 @@ const LoginNew = () => {
   const [rows, setRows] = useState([]);
   const [currData, setCurrData] = useState();
   const [categories, setCategories] = useState();
+  const [emptyObj, setEmptyObj] = useState({
+    id: "",
+    code_company: "",
+    code_product: "",
+    code_location: "",
+    code_department: "",
+    code_project: "",
+    code_icp: "",
+    year: 0,
+    description: "",
+    quantity: 0,
+    price: null,
+    asset_category_id: "",
+    purchase_month: null,
+    purchase_year: null,
+    depreciation_month: null,
+    depreciation_year: null,
+    asset_life: null,
+    salvage_value: null,
+    created_at: "",
+    updated_at: "",
+    total: 0,
+    depreciation_amount_monthly: 0,
+    depreciation_amount_yearly: 0,
+    asset_account: "",
+    accumulated_account: "",
+    depreciation_account: "",
+    is_asset_category_id: false,
+  });
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -119,19 +163,20 @@ const LoginNew = () => {
           })
         : [];
       setCategories(allAssetsCategory);
-      let a = await generateArrayAttributes(data.data, ["asset_category_id"]);
+      let a;
 
-      log("data.data", a);
       let r;
-      if (a.length > 0) {
+      if (data.data.length > 0) {
+        a = await generateArrayAttributes(data.data, ["asset_category_id"]);
         r = getRows({
           data: a,
           categories: allAssetsCategory,
         });
       } else {
+        a = [{ ...reactgridNewRow() }];
         r = fullNewRow({ id: generateUID() });
       }
-      setRows(r);
+
       setCurrData(a);
     } catch (error) {
       // Tangani error jika ada
@@ -141,38 +186,46 @@ const LoginNew = () => {
 
   const onFinish = (values) => {
     setLoading(true);
-
     onSetDataTable(values);
   };
 
   const onTambahRow = () => {
-    const newRows = [...rows];
-    const headerRow = newRows.slice(0, 2);
-    const dataRow = newRows.slice(2, newRows.length);
-    log({ headerRow });
-    log({ dataRow });
-    dataRow.unshift(reactgridNewRow());
-    setRows([...headerRow, ...dataRow]);
+    let lastCurrData = { ...emptyObj };
+    const newArray = [...currData, lastCurrData];
+    // const headerRow = newRows.slice(0, 2);
+    // const dataRow = newRows.slice(2, newRows.length);
 
+    // dataRow.unshift(reactgridNewRow());
+    // setRows([...headerRow, ...dataRow]);
+    setCurrData(newArray);
     showNotif(200, "Sukses tambah row");
   };
 
   const updateData = async (cell, rowData) => {
     if (Object.keys(cell).length === 3) {
       try {
-        const isNewRow = rowData["isNewRow"];
+        const isNewRow = rowData["isNewRow"] ?? !rowData.rowId ?? false;
 
         if (isNewRow) {
           const formData = formDataUtils(codeFilter);
 
           if (cell.column_id === "description") {
             formData.append("description", cell.value);
-            formData.append("description", cell.value);
           }
           const res = await MainServices.post(`detailcapex/insert`, formData);
+
           if (res.data.responseCode === 200) {
+            let newObject = await generateAttributesByNewValue(
+              emptyObj,
+              res.data.data
+            );
+
+            let newData = [...currData].map((el) =>
+              !el.id ? { ...newObject } : el
+            );
+
+            setCurrData(newData);
             showNotif(200, "Sukses update data");
-            getData(codeFilter);
           } else {
             showNotif(500, "Error");
           }
@@ -180,11 +233,23 @@ const LoginNew = () => {
           const formData = formDataUtils(cell);
           const res = await MainServices.post(`detailcapex/update`, formData);
           if (res.data.responseCode === 200) {
+            let newObject = await generateAttributesByNewValue(
+              emptyObj,
+              res.data.data
+            );
+
+            let newData = [...currData].map((el) =>
+              el.id === rowData.rowId ? { ...newObject } : el
+            );
+
+            setCurrData(newData);
             showNotif(200, "Sukses update data");
           } else {
             showNotif(500, "Error");
           }
         }
+
+        getData(codeFilter);
       } catch (e) {
         log({ e });
       }
@@ -266,12 +331,16 @@ const LoginNew = () => {
 
   useEffect(() => {
     if (currData) {
-      setRows(
-        getRows({
-          data: currData,
-          categories,
-        })
-      );
+      if (currData.length) {
+        setRows(
+          getRows({
+            data: currData,
+            categories,
+          })
+        );
+      } else {
+        setRows(fullNewRow({ id: generateUID() }));
+      }
     }
   }, [currData]);
 
@@ -281,10 +350,15 @@ const LoginNew = () => {
     changes.forEach(async (change, i) => {
       const dataRowId = change.rowId;
       const fieldName = change.columnId;
-      let dataRow = prevDetails.find((d) => d.id === dataRowId);
+
+      let dataRow = prevDetails.find((d) => d.id == dataRowId)
+        ? prevDetails.find((d) => d.id == dataRowId)
+        : prevDetails.find((d) => !d.id);
 
       const rowIndex = newRows.findIndex((j) => j.rowId === change.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === change.columnId));
+      const columnIndex = parseInt(
+        columns.findIndex((j) => j.columnId === change.columnId)
+      );
 
       const id = newRows[rowIndex].rowId;
       const column_id = columns[columnIndex].columnId;
@@ -297,7 +371,6 @@ const LoginNew = () => {
       }
 
       if (change.type === "text") {
-        log({ prevDetails });
         dataRow[fieldName] = change.newCell.text;
         updateData(
           {
@@ -342,7 +415,9 @@ const LoginNew = () => {
       } else if (change.type === "dropdown") {
         if (fieldName === "asset_category_id") {
           let key = `is_${fieldName}`;
-          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
+          if (
+            change.previousCell.selectedValue !== change.newCell.selectedValue
+          ) {
             dataRow[fieldName] = change.newCell.selectedValue;
             selected = change.newCell.selectedValue;
 
@@ -369,14 +444,19 @@ const LoginNew = () => {
           }
 
           if (selected) {
-            valuesOfDropdown = change.previousCell.values.find((e) => e.value === selected);
+            valuesOfDropdown = change.previousCell.values.find(
+              (e) => e.value === selected
+            );
           }
 
           // CHANGED: set the isOpen property to the value received.
           dataRow[key] = change.newCell.isOpen;
         } else {
-          if (change.previousCell.selectedValue !== change.newCell.selectedValue) {
-            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.selectedValue;
+          if (
+            change.previousCell.selectedValue !== change.newCell.selectedValue
+          ) {
+            newRows[rowIndex].cells[columnIndex].selectedValue =
+              change.newCell.selectedValue;
 
             updateData(
               {
@@ -389,7 +469,8 @@ const LoginNew = () => {
           }
 
           if (change.newCell.inputValue) {
-            newRows[rowIndex].cells[columnIndex].selectedValue = change.newCell.inputValue;
+            newRows[rowIndex].cells[columnIndex].selectedValue =
+              change.newCell.inputValue;
 
             updateData(
               {
@@ -409,10 +490,10 @@ const LoginNew = () => {
           // find a selected category to set asset_account, accumulate_account, and depreciation_account
 
           dataRow["asset_account"] = valuesOfDropdown["asset_account"];
-          dataRow["accumulated_account"] = valuesOfDropdown["accumulated_account"];
-          dataRow["depreciation_account"] = valuesOfDropdown["depreciation_account"];
-
-          log("valueSelected", valuesOfDropdown);
+          dataRow["accumulated_account"] =
+            valuesOfDropdown["accumulated_account"];
+          dataRow["depreciation_account"] =
+            valuesOfDropdown["depreciation_account"];
 
           // =============
         }
@@ -425,7 +506,12 @@ const LoginNew = () => {
   };
 
   const onChangeTable = (change) => {
-    setCurrData((prevState) => applyChanges(change, prevState));
+    setCurrData((prevState) => {
+      return applyChanges(
+        change,
+        prevState.length ? prevState : [{ ...emptyObj }]
+      );
+    });
   };
 
   const onSuccess = () => {
