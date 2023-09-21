@@ -50,7 +50,7 @@ const Logic = ({ titleHeader }) => {
       if (codeAccount !== undefined) {
         url = `${linkExport}&code_account=${codeAccount}&filename=${filename}`;
       } else {
-        url = `${linkExport}}&filename=${filename}`;
+        url = `${linkExport}&filename=${filename}`;
       }
 
       const res = await MainServices.download(url);

@@ -1,13 +1,13 @@
 import { Form } from "antd";
 import { useEffect, useState } from "react";
-import FilterComponent from "../../../../component/filter/FilterComponent";
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../component/table/TableComponent";
-import { getLocal, getSizeScreen } from "../../../../values/Utilitas";
-import NeracaLogic from "./NeracaLogic";
+import FilterComponent from "component/filter/FilterComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import TableComponent from "component/table/TableComponent";
+import { getLocal, getSizeScreen } from "values/Utilitas";
+import Logic from "./Logic";
 
 const LabaRugiPage = () => {
-  const { value, func } = NeracaLogic();
+  const { value, func } = Logic();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -40,11 +40,8 @@ const LabaRugiPage = () => {
       <HeaderComponent
         type="summary"
         onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onExport={func.downloadFile}
-        disabledImportExport={value.data.length <= 1}
+        listMenu={[{ description: "Neraca", disabled: value.data.length === 0 }]}
+        linkExport={value.linkExport}
       />
 
       <FilterComponent
