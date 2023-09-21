@@ -63,6 +63,29 @@ const FilterComponentLogic = ({
   useEffect(() => {}, []);
 
   useEffect(() => {
+    const fetchData = async (q) => {
+      const { data } = await MainServices.get("company/list-child");
+
+      const arr = data.data;
+      const listCompany = [];
+
+      if (data.responseCode === 200) {
+        log({ q });
+        q.forEach((code) => {
+          let obj = arr.find((o) => o.code === code);
+          listCompany.push(obj);
+        });
+        setState({
+          ...state,
+          code_company: listCompany,
+        });
+
+        // dispatch(actionData({ listCompany: listCompany }));
+
+        // setIsLoad(true);
+      }
+    };
+
     if (userGroup === "usersbu") {
       if (company_names !== null) {
         form.setFieldsValue({
@@ -84,19 +107,12 @@ const FilterComponentLogic = ({
       }
     } else if (userGroup === "reviewer") {
       let dataCompany = [];
-      let companyNames = company_names.split(", ");
 
-      company.split(", ").forEach((v, i) => {
-        dataCompany.push({
-          code: v,
-          description: `${v} - ${companyNames[i]}`,
-        });
+      company.split(",").forEach((v, i) => {
+        dataCompany.push(v);
       });
 
-      setState({
-        ...state,
-        code_company: dataCompany,
-      });
+      fetchData(dataCompany);
     }
   }, [isLoad]);
 
