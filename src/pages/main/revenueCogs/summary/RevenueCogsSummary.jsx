@@ -11,6 +11,7 @@ const RevenueCogsSummary = () => {
     <>
       <HeaderComponent
         type="summary"
+        typeSummary="direct"
         listMenu={[
           {
             description: "revenue",

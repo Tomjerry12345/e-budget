@@ -11,6 +11,7 @@ const OpexSummary = () => {
     <>
       <HeaderComponent
         type="summary"
+        typeSummary="direct"
         listMenu={[
           {
             description: "summary opex",

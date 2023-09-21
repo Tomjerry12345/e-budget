@@ -11,6 +11,7 @@ const CapexSummary = () => {
     <>
       <HeaderComponent
         type="summary"
+        typeSummary="direct"
         listMenu={[
           {
             description: "capex",
