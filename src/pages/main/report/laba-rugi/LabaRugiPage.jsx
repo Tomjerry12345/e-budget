@@ -4,11 +4,11 @@ import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
 import TableComponent from "component/table/TableComponent";
 import { getLocal, getSizeScreen } from "values/Utilitas";
-import LabaRugiLogic from "./LabaRugiLogic";
+import Logic from "./Logic";
 import "../style.scss";
 
 const LabaRugiPage = () => {
-  const { value, func } = LabaRugiLogic();
+  const { value, func } = Logic();
 
   const [size, setSize] = useState({
     x: window.innerWidth,
@@ -42,11 +42,8 @@ const LabaRugiPage = () => {
       <HeaderComponent
         type="summary"
         onFinish={func.onFinish}
-        onChangeFilter={(set) => {
-          set(value.filter);
-        }}
-        onExport={func.downloadFile}
-        disabledImportExport={value.data.length <= 1}
+        listMenu={[{ description: "Laba rugi", disabled: value.data.length === 0 }]}
+        linkExport={value.linkExport}
       />
 
       <FilterComponent

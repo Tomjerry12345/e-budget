@@ -1,26 +1,32 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  columnOutputType1,
-  columnOutputType2,
-} from "../../../../component/table/utils/TypeColumn";
-import MainServices from "../../../../services/MainServices";
-import { getLocal, log } from "../../../../values/Utilitas";
+import { columnOutputType2 } from "component/table/utils/TypeColumn";
+import MainServices from "services/MainServices";
+import { getLocal } from "values/Utilitas";
 
-const rootEndpoint = "report/labarugi";
+const rootEndpoint = "report";
 
-const LabaRugiLogic = () => {
+const Logic = () => {
   const [data, setData] = useState([]);
   const [columns, setColumns] = useState();
   const [loading, setLoading] = useState(false);
-  const [codeFilter, setCodeFilter] = useState();
+  const [linkExport, setLinkExport] = useState(null);
 
   let params = useParams();
 
   useEffect(() => {
     const codeCompany = getLocal("code_company");
     const userGroup = getLocal("user_group");
-    loadData(userGroup === "superadmin" ? "211" : codeCompany, "all", "all", "all", "all", "all", "2023");
+    loadData(
+      userGroup === "superadmin" ? "211" : codeCompany,
+      "all",
+      "all",
+      "all",
+      "all",
+      "all",
+      "2023"
+    );
   }, []);
 
   const onFinish = async (values) => {
@@ -33,7 +39,7 @@ const LabaRugiLogic = () => {
       code_product,
       code_project,
       code_icp,
-      periode
+      periode,
     } = values;
 
     let fCodeCompany = code_company.split(" ");
@@ -42,7 +48,7 @@ const LabaRugiLogic = () => {
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
     let fCodeProject = code_project.split(" ");
-    let fPeriode = periode.split(" ")
+    let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
     fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
@@ -61,17 +67,6 @@ const LabaRugiLogic = () => {
       fCodeProject,
       fPeriode
     );
-
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-      periode: fPeriode,
-    });
   };
 
   const loadData = async (
@@ -83,19 +78,13 @@ const LabaRugiLogic = () => {
     fCodeProject,
     periode
   ) => {
-    const url = `${rootEndpoint}?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${periode}`;
+    const url = `${rootEndpoint}/labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${periode}`;
     const { data } = await MainServices.get(url);
     getData(data.data, periode);
 
-    setCodeFilter({
-      code_company: fCodeCompany,
-      code_dept: fCodeDept,
-      code_location: fCodeLocation,
-      code_product: fCodeProduct,
-      code_product: fCodeProduct,
-      code_icp: fCodeIcp,
-      code_project: fCodeProject,
-    });
+    setLinkExport(
+      `${rootEndpoint}/export-labarugi?code_company=${fCodeCompany}&code_product=${fCodeProduct}&code_location=${fCodeLocation}&code_department=${fCodeDept}&code_icp=${fCodeIcp}&code_project=${fCodeProject}&year=${periode}`
+    );
   };
 
   const getData = (data, periode) => {
@@ -104,31 +93,18 @@ const LabaRugiLogic = () => {
     setLoading(false);
   };
 
-  const downloadFile = () => {
-    const {
-      code_company,
-      code_product,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-    } = codeFilter;
-    const urlFile = `https://apikalla.binaries.id/ebudget/report/tablereport?code_company=${code_company}&code_location=${code_location}&code_dept=${code_dept}&code_product=${code_product}`;
-    window.location.href = urlFile;
-  };
-
   return {
     value: {
       data,
       columns,
       loading,
       params,
+      linkExport,
     },
     func: {
       onFinish,
-      downloadFile,
     },
   };
 };
 
-export default LabaRugiLogic;
+export default Logic;

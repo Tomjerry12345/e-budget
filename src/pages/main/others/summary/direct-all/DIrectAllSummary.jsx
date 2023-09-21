@@ -48,7 +48,7 @@ const DIrectAllSummary = () => {
                 rows={value.rows}
                 columns={value.columns}
                 stickyTopRows={1}
-                stickyLeftColumns={1}
+                stickyLeftColumns={2}
                 onCellsChanged={(change) => func.onChangeTable(change)}
               />
             </div>
