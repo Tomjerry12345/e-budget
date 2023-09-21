@@ -4,7 +4,7 @@ import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
-const TransportasiSummary = () => {
+const TransportasiMppSummary = () => {
   const { value, func } = Logic();
 
   return (
@@ -51,4 +51,4 @@ const TransportasiSummary = () => {
   );
 };
 
-export default TransportasiSummary;
+export default TransportasiMppSummary;

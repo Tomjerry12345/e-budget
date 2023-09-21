@@ -1,6 +1,5 @@
-import { resetData } from "redux/data-global/data.reducer";
 import MainServices from "../services/MainServices";
-import { getLocal, log, logO } from "./Utilitas";
+import { getLocal } from "./Utilitas";
 
 export const allItemSummarySubMenu = [
   // 1 Dashboard
@@ -550,36 +549,36 @@ const userBu = (i) => {
     if (i === 1) {
       const codeCompany = getLocal("code_company");
 
-      if (codeCompany === "412") {
-        resolve(changeMenu(i, [13, 14]));
+      if (codeCompany === "311") {
+        resolve(changeMenu(i, [0, 13, 14]));
       } else if (codeCompany === "326") {
         resolve(changeMenu(i, [1, 13, 14]));
-      } else if (codeCompany === "411") {
-        resolve(changeMenu(i, [8, 13, 14]));
-      } else if (codeCompany === "422") {
-        resolve(changeMenu(i, [6, 13, 14]));
-      } else if (codeCompany === "311") {
-        resolve(changeMenu(i, [0, 13, 14]));
-      } else if (codeCompany === "312") {
-        resolve(changeMenu(i, [4, 13, 14]));
-      } else if (codeCompany === "231") {
-        resolve(changeMenu(i, [12, 13, 14]));
       } else if (codeCompany === "328") {
         resolve(changeMenu(i, [2, 13, 14]));
-      } else if (codeCompany === "211") {
-        resolve(changeMenu(i, [13, 14]));
-      } else if (codeCompany === "242") {
-        resolve(changeMenu(i, [11, 13, 14]));
-      } else if (codeCompany === "241") {
-        resolve(changeMenu(i, [10, 13, 14]));
       } else if (codeCompany === "313") {
         resolve(changeMenu(i, [3, 13, 14]));
+      } else if (codeCompany === "312") {
+        resolve(changeMenu(i, [4, 13, 14]));
       } else if (codeCompany === "421") {
         resolve(changeMenu(i, [5, 13, 14]));
+      } else if (codeCompany === "422") {
+        resolve(changeMenu(i, [6, 13, 14]));
       } else if (codeCompany === "221") {
-        resolve(changeMenu(i, [13, 14]));
+        resolve(changeMenu(i, [7, 13, 14]));
+      } else if (codeCompany === "411") {
+        resolve(changeMenu(i, [8, 13, 14]));
       } else if (codeCompany === "413") {
         resolve(changeMenu(i, [9, 13, 14]));
+      } else if (codeCompany === "241") {
+        resolve(changeMenu(i, [10, 13, 14]));
+      } else if (codeCompany === "242") {
+        resolve(changeMenu(i, [11, 13, 14]));
+      } else if (codeCompany === "231") {
+        resolve(changeMenu(i, [12, 13, 14]));
+      } else if (codeCompany === "211") {
+        resolve(changeMenu(i, [13, 14]));
+      } else if (codeCompany === "221") {
+        resolve(changeMenu(i, [13, 14]));
       } else if (codeCompany === "399") {
         resolve(changeMenu(i, [13, 14]));
       }
@@ -637,13 +636,39 @@ const reviewer = (i) => {
     if (i === 1) {
       const codeCompany = getLocal("code_company");
 
-      if (codeCompany === "312, 421, 422, 328, 311, 313, 326") {
-        resolve(changeMenu(i, [0, 1, 2, 3, 4, 5, 6, 13, 14]));
-      } else if (codeCompany === "231, 242, 241") {
-        resolve(changeMenu(i, [10, 11, 12, 13, 14]));
-      } else if (codeCompany === "221, 413, 411") {
-        resolve(changeMenu(i, [7, 8, 9, 13, 14]));
-      }
+      const listCompany = [];
+
+      codeCompany.split(",").forEach((v, i) => {
+        if (v === "311") {
+          listCompany.push(0);
+        } else if (v === "326") {
+          listCompany.push(1);
+        } else if (v === "328") {
+          listCompany.push(2);
+        } else if (v === "313") {
+          listCompany.push(3);
+        } else if (v === "312") {
+          listCompany.push(4);
+        } else if (v === "421") {
+          listCompany.push(5);
+        } else if (v === "422") {
+          listCompany.push(6);
+        } else if (v === "221") {
+          listCompany.push(7);
+        } else if (v === "411") {
+          listCompany.push(8);
+        } else if (v === "413") {
+          listCompany.push(9);
+        } else if (v === "241") {
+          listCompany.push(10);
+        } else if (v === "242") {
+          listCompany.push(11);
+        } else if (v === "231") {
+          listCompany.push(12);
+        }
+      });
+
+      resolve(changeMenu(i, listCompany));
     } else if (i === 2) {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];

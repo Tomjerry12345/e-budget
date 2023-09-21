@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { loadStart } from "../../redux/response/response";
-import { selectionMenu, urlPageRevenue } from "../../values/Constant";
+import { loadStart } from "redux/response/response";
+import { selectionMenu, urlPageRevenue } from "values/Constant";
 import {
   routingCapex,
   routingMasterCoa,

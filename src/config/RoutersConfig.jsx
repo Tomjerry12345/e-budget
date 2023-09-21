@@ -157,6 +157,7 @@ import MppLainnyaSummary from "pages/main/mpp/summary/mpp-lainnya/MppLainnyaSumm
 import ManagementUserPage from "pages/main/management-user/ManagementUserPage";
 import ProfilePage from "pages/main/akun/profile/ProfilePage";
 import LainKiuPage from "pages/main/revenueCogs/kiu/tabs/hpplain/LainKiuPage";
+import TransportasiMppSummary from "pages/main/mpp/summary/transportasi/TransportasiMppSummary";
 
 const RoutersConfig = () => {
   return (
@@ -371,7 +372,7 @@ const RoutersConfig = () => {
             <Route path="summary/pph21" element={<Pph21Summary />} />
             <Route path="summary/bpjs-tk" element={<BpjsTkSummary />} />
             <Route path="summary/bpjs-kesehatan" element={<BpjsKesehatanSummary />} />
-            <Route path="summary/transportasi" element={<TransportasiSummaryPage />} />
+            <Route path="summary/transportasi" element={<TransportasiMppSummary />} />
             <Route path="summary/komunikasi" element={<KomunikasiSummary />} />
             <Route
               path="summary/pendidikan-pelatihan"
