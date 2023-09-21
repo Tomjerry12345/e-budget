@@ -13,7 +13,7 @@ const PendidikanPelatihanSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Pendidikan Pelatihan",
             disabled: value.linkExport === null,
           },
         ]}

@@ -13,7 +13,7 @@ const MakanMinumSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Makan Minum",
             disabled: value.linkExport === null,
           },
         ]}

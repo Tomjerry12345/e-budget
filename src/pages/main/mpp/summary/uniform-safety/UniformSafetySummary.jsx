@@ -13,7 +13,7 @@ const UniformSafetySummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Uniform Safety",
             disabled: value.linkExport === null,
           },
         ]}

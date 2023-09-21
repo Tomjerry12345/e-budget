@@ -10,7 +10,7 @@ const Logic = () => {
   const columns = getColumns();
   const [rows, setRows] = useState([]);
 
-  const ENDPOINT_URL = "detail-mpp/summary/allowance";
+  const ENDPOINT_URL = "detail-mpp";
 
   const formatingFilter = (filter) => {
     const {
@@ -66,7 +66,7 @@ const Logic = () => {
         year,
       } = formatFilter;
       setLinkExport(
-        `${ENDPOINT_URL}/export?code_company=${code_company}&code_location=${code_location}&code_product=${code_product}&code_department=${code_department}&code_icp=${code_icp}&code_project=${code_project}&year=${year}`
+        `${ENDPOINT_URL}/export/allowance?code_company=${code_company}&code_location=${code_location}&code_product=${code_product}&code_department=${code_department}&code_icp=${code_icp}&code_project=${code_project}&year=${year}`
       );
     } catch (error) {
       console.error(`Error fetching data`, error);
@@ -74,7 +74,7 @@ const Logic = () => {
   };
 
   const getData = async (params) => {
-    const url = `${ENDPOINT_URL}`;
+    const url = `${ENDPOINT_URL}/summary/allowance`;
     try {
       const { data } = await MainServices.get(url, params);
       let r;

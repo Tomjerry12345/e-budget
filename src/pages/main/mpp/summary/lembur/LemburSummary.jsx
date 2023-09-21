@@ -13,7 +13,7 @@ const LemburSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Lembur",
             disabled: value.linkExport === null,
           },
         ]}

@@ -11,6 +11,7 @@ const MppSummary = () => {
     <>
       <HeaderComponent
         type="summary"
+        typeSummary="direct"
         listMenu={[
           {
             description: "mpp",

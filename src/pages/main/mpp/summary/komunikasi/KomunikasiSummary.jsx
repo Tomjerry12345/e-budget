@@ -13,7 +13,7 @@ const KomunikasiSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Komunikasi",
             disabled: value.linkExport === null,
           },
         ]}

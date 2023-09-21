@@ -16,6 +16,7 @@ const ModalMenuMore = ({
   onExport,
   linkExport,
   onClickCalculate,
+  type,
 }) => {
   log({ listMenu });
   return (
@@ -35,16 +36,24 @@ const ModalMenuMore = ({
           // icon={<DownloadOutlined />}
           disabled={e.disabled}
           onClick={() => {
-            if (i === 0) {
+            if (type === "direct") {
+              if (i === 0) {
+                onExport(e, linkExport);
+              } else if (i === 1) {
+                onClickCalculate(e.description);
+              }
+            } else {
               onExport(e, linkExport);
-            } else if (i === 1) {
-              onClickCalculate(e.description);
             }
 
             onCancel();
           }}
         >
-          {i === 0 ? `Export ${e.description}` : e.description}
+          {type === "direct"
+            ? i === 0
+              ? `Export ${e.description}`
+              : e.description
+            : `Export ${e.description}`}
         </Button>
       ))}
     </Modal>
@@ -57,6 +66,7 @@ const HeaderComponentTypeSummary = ({
   linkExport,
   linkCalculate,
   titleHeader,
+  type = "",
 }) => {
   const { value, func } = Logic({ titleHeader });
 
@@ -78,6 +88,7 @@ const HeaderComponentTypeSummary = ({
         disabledMenu={disabledMenu}
         linkExport={linkExport}
         onClickCalculate={func.onClickCalculate}
+        type={type}
       />
 
       <ModalCalculate

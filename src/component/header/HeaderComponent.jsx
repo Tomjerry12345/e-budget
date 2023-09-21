@@ -34,6 +34,7 @@ const HeaderComponent = ({
   showYear = false,
   showCompany = false,
   titleHeader,
+  typeSummary,
 }) => {
   let component;
 
@@ -61,6 +62,7 @@ const HeaderComponent = ({
         linkExport={linkExport}
         linkCalculate={linkCalculate}
         titleHeader={titleHeader}
+        type={typeSummary}
       />
     );
   } else if (type === "summary-direct-all") {
