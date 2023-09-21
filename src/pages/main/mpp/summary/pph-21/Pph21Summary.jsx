@@ -13,7 +13,7 @@ const Pph21Summary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Pph21",
             disabled: value.linkExport === null,
           },
         ]}

@@ -13,7 +13,7 @@ const BpjsKesehatanSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Bpjs kesehatan",
             disabled: value.linkExport === null,
           },
         ]}

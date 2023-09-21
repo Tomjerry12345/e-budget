@@ -13,7 +13,7 @@ const BpjsTkSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Bpjs Tk",
             disabled: value.linkExport === null,
           },
         ]}

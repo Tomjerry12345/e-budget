@@ -13,7 +13,7 @@ const ThrSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Thr",
             disabled: value.linkExport === null,
           },
         ]}

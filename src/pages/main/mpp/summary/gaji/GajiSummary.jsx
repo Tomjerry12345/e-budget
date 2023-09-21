@@ -13,7 +13,7 @@ const GajiSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Gaji",
             disabled: value.linkExport === null,
           },
         ]}

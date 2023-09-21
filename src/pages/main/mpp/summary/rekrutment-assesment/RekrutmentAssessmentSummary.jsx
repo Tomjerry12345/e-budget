@@ -13,7 +13,7 @@ const RekrutmentAssessmentSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Rekrutment Assessment",
             disabled: value.linkExport === null,
           },
         ]}

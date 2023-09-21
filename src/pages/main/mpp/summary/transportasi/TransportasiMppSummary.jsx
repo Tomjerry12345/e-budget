@@ -13,7 +13,7 @@ const TransportasiMppSummary = () => {
         type="summary"
         listMenu={[
           {
-            description: "mpp",
+            description: "Transportasi",
             disabled: value.linkExport === null,
           },
         ]}
