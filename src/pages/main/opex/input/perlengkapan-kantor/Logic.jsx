@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { actionData } from "redux/data-global/data.reducer";
 import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
 import {
@@ -52,7 +53,6 @@ const Logic = () => {
       const split = location.pathname.split("/");
       const q = split[split.length - 1];
       const res = await MainServices.get(`config/opex/byalias/${q}`);
-      log({ res });
       setItems(res.data.data[0]);
     } catch (e) {
       log({ e });
@@ -233,6 +233,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;

@@ -586,17 +586,17 @@ const userBu = (i) => {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
       const anotherMenuInput = [
-        {
-          description: "Input By Opex Direct",
-          children: [],
-        },
+        // {
+        //   description: "Input By Opex Direct",
+        //   children: [],
+        // },
       ];
 
       const anotherMenuSummary = [
-        {
-          description: "Summary Budget Opex",
-          children: [],
-        },
+        // {
+        //   description: "Summary Budget Opex",
+        //   children: [],
+        // },
       ];
 
       const res = await MainServices.get(urlGetMenu[i]);
@@ -673,17 +673,17 @@ const reviewer = (i) => {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
       const anotherMenuInput = [
-        {
-          description: "Input By Opex Direct",
-          children: [],
-        },
+        // {
+        //   description: "Input By Opex Direct",
+        //   children: [],
+        // },
       ];
 
       const anotherMenuSummary = [
-        {
-          description: "Summary Budget Opex",
-          children: [],
-        },
+        // {
+        //   description: "Summary Budget Opex",
+        //   children: [],
+        // },
       ];
 
       const res = await MainServices.get(urlGetMenu[i]);

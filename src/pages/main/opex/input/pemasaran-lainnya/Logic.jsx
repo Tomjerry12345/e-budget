@@ -197,9 +197,6 @@ const Logic = () => {
       pemasaran: listPemasaran,
       administrasi: listAdministrasi,
     });
-
-    // getDataTable(data.data);
-    // setLoading(false);
   };
 
   const onFinish = (values) => {
@@ -231,6 +228,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;
@@ -244,7 +242,6 @@ const Logic = () => {
         value = c.newCell.text;
         isChange = true;
       } else {
-        log("cells", newRows[i][rowIndex].cells);
         value = c.newCell.value;
         if (!isNaN(value)) {
           newRows[i][rowIndex].cells[columnIndex].value = value;
