@@ -232,6 +232,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;

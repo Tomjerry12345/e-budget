@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { log, setLocal } from "values/Utilitas";
-import { useLocation, useNavigate } from "react-router-dom";
+import { log } from "values/Utilitas";
+import { useLocation } from "react-router-dom";
 import { actionData } from "redux/data-global/data.reducer";
 import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
 import {
@@ -38,7 +39,6 @@ const Logic = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
 
   const dataGlobalRedux = useSelector((state) => state.data);
 
@@ -209,16 +209,12 @@ const Logic = () => {
   const onTambahRow = (i, category) => {
     const newRows = category === "pemasaran" ? [...rows.pemasaran] : [...rows.administrasi];
 
-    log({ i });
-    log({ category });
     const lastIndex = newRows[i].length - 1;
     const id = lastIndex + 1;
     const lastData = newRows[i][lastIndex];
 
     newRows[i][lastIndex] = reactgridNewRow(id);
     newRows[i].push(lastData);
-
-    log({ newRows });
 
     setRows({
       ...rows,
@@ -234,6 +230,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;

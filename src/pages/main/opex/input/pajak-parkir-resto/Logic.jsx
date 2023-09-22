@@ -7,12 +7,13 @@ import { log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
 import { actionData } from "redux/data-global/data.reducer";
 import { getColumns } from "values/react-grid/rows/input/opex/template-1/getColumns";
-import { 
+import {
   getRootHeaderRow,
   fullNewRow,
   getRows,
   reactgridNewRow,
-  updateTotalRow, } from "./getRows";
+  updateTotalRow,
+} from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -233,6 +234,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;

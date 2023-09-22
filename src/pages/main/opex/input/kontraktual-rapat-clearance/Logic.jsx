@@ -229,6 +229,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows[i].findIndex((j) => j.rowId === c.rowId);
+      if (rowIndex < 0) continue;
       const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
 
       const type = c.newCell.type;
@@ -238,15 +239,10 @@ const Logic = () => {
       let value;
 
       if (type === "text") {
-        try {
-          newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
-          value = c.newCell.text;
-          isChange = true;
-        } catch (e) {
-          log({ e });
-        }
+        newRows[i][rowIndex].cells[columnIndex].text = c.newCell.text;
+        value = c.newCell.text;
+        isChange = true;
       } else {
-        log("cells", newRows[i][rowIndex].cells);
         value = c.newCell.value;
         if (!isNaN(value)) {
           newRows[i][rowIndex].cells[columnIndex].value = value;
