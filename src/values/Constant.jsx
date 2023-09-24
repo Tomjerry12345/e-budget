@@ -1,5 +1,5 @@
 import MainServices from "../services/MainServices";
-import { getLocal } from "./Utilitas";
+import { getLocal, log } from "./Utilitas";
 
 export const allItemSummarySubMenu = [
   // 1 Dashboard
@@ -575,12 +575,6 @@ const userBu = (i) => {
         resolve(changeMenu(i, [11, 13, 14]));
       } else if (codeCompany === "231") {
         resolve(changeMenu(i, [12, 13, 14]));
-      } else if (codeCompany === "211") {
-        resolve(changeMenu(i, [13, 14]));
-      } else if (codeCompany === "221") {
-        resolve(changeMenu(i, [13, 14]));
-      } else if (codeCompany === "399") {
-        resolve(changeMenu(i, [13, 14]));
       }
     } else if (i === 2) {
       let listSubmenuInput = [];
@@ -620,7 +614,13 @@ const userBu = (i) => {
         ...v,
         submenu: listSubMenu,
       });
-    } else {
+    } else if (i === 3) {
+      resolve(changeMenu(i, [2, 15], true));
+    }
+    //  else if (i === 4) {
+    //   resolve(changeMenu(i, [14, 29], true));
+    // }
+    else {
       resolve(v);
     }
   });
@@ -668,7 +668,10 @@ const reviewer = (i) => {
         }
       });
 
-      resolve(changeMenu(i, listCompany));
+      const l = [...listCompany, 13, 14];
+      log({ l });
+
+      resolve(changeMenu(i, [...listCompany, 13, 14]));
     } else if (i === 2) {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
@@ -707,20 +710,27 @@ const reviewer = (i) => {
         ...v,
         submenu: listSubMenu,
       });
+    } else if (i === 3) {
+      resolve(changeMenu(i, [2, 15], true));
     } else {
       resolve(v);
     }
   });
 };
 
-const changeMenu = (i, a = []) => {
+const changeMenu = (i, a = [], reverse = false) => {
   let s = [];
   let d = [];
 
-  a.forEach((item) => {
-    s.push(allItemSummarySubMenu[i][item]);
-    d.push(disabledItemSummaryMenu[i][item]);
-  });
+  if (reverse) {
+    s = allItemSummarySubMenu[i].filter((value, index) => !a.includes(index));
+    d = disabledItemSummaryMenu[i].filter((value, index) => !a.includes(index));
+  } else {
+    a.forEach((item) => {
+      s.push(allItemSummarySubMenu[i][item]);
+      d.push(disabledItemSummaryMenu[i][item]);
+    });
+  }
 
   return {
     submenu: s,

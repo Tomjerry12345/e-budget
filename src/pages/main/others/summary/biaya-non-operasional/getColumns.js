@@ -4,13 +4,13 @@ export function getColumns() {
   return [
     {
       columnId: "code",
-      width: 150,
+      width: 60,
       type: "text",
       nonEditabled: true,
     },
     {
       columnId: "description",
-      width: 250,
+      width: 400,
       type: "text",
       nonEditabled: true,
     },
