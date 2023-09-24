@@ -113,13 +113,15 @@ const NavComponent = ({ func, value }) => {
           MPP
         </Menu.Item>
 
-        <Menu.Item
-          key={"5-Others"}
-          className={`menuItem ${isClickedMenu(5)}`}
-          icon={<ContentPasteOutlinedIcon className={`colorIcon ${isClickedMenu(5)}`} />}
-        >
-          Others
-        </Menu.Item>
+        {getLocal("user_group") === "superadmin" ? (
+          <Menu.Item
+            key={"5-Others"}
+            className={`menuItem ${isClickedMenu(5)}`}
+            icon={<ContentPasteOutlinedIcon className={`colorIcon ${isClickedMenu(5)}`} />}
+          >
+            Others
+          </Menu.Item>
+        ) : null}
 
         <Menu.Item
           key={"6-Report"}
