@@ -79,6 +79,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
           name="user_group"
           children={
             <Select
+              allowClear
               onChange={(e) => {
                 form.setFieldsValue({ user_group: e });
                 setUserGroup(e);
@@ -101,9 +102,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
           name="code_company"
           children={
             <Select
+              allowClear
               disabled={user_group === undefined && !isEdit}
               mode={user_group === "usersbu" ? null : "multiple"}
-              allowClear
               onChange={(e) => {
                 form.setFieldsValue({ code_company: e });
                 if (user_group === "usersbu") {
