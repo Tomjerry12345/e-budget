@@ -12,6 +12,7 @@ export const type1 = [
     columnId: "product_description",
     width: 200,
     type: "text",
+    nonEditabled: true,
   },
   { columnId: "jan", width: COL_WIDTH, type: "number", format: true },
   { columnId: "feb", width: COL_WIDTH, type: "number", format: true },
@@ -100,6 +101,7 @@ export const type3 = [
     columnId: "product_description",
     width: 200,
     type: "text",
+    nonEditabled: true,
   },
   { columnId: "jan", width: COL_WIDTH, type: "number", format: true },
   { columnId: "feb", width: COL_WIDTH, type: "number", format: true },
@@ -143,6 +145,7 @@ export const type4 = [
     columnId: "product_description",
     width: 200,
     type: "text",
+    nonEditabled: true,
   },
 
   { columnId: "jan_sd", width: COL_WIDTH, type: "number", format: true, nonEditabled: true },
@@ -209,8 +212,9 @@ export const type5 = [
   },
   {
     columnId: "description",
-    width: 200,
+    width: 400,
     type: "text",
+    nonEditabled: true,
   },
 
   { columnId: "jan_sd", width: COL_WIDTH, type: "number", format: true, nonEditabled: true },
@@ -277,8 +281,9 @@ export const type6 = [
   },
   {
     columnId: "description",
-    width: 200,
+    width: 400,
     type: "text",
+    nonEditabled: true,
   },
 
   { columnId: "jan", width: COL_WIDTH, type: "number", format: true },
@@ -362,6 +367,7 @@ export const type8 = [
     columnId: "product_description",
     width: 200,
     type: "text",
+    nonEditabled: true,
   },
   { columnId: "jan", width: COL_WIDTH, type: "number", format: false },
   { columnId: "feb", width: COL_WIDTH, type: "number", format: false },

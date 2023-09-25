@@ -42,7 +42,7 @@ const PenjualanBkPage = () => {
                   rows={value.rows}
                   columns={value.columns}
                   stickyTopRows={1}
-                  stickyLeftColumns={1}
+                  stickyLeftColumns={2}
                   enableRangeSelection
                   onCellsChanged={(change) => {
                     func.onChangeTable(change);

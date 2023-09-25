@@ -12,6 +12,7 @@ export function getColumns() {
       columnId: "description",
       width: 250,
       type: "text",
+      nonEditabled: true,
     },
 
     {
