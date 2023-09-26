@@ -62,7 +62,7 @@ function type3(titleTotal, total) {
 
       ...total.map((e, i) => {
         return noSideBorders(
-          totalCell(i % 2 === 1 ? `${e}%` : e, "", "beige", "", null, {
+          totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
             justifyContent: "end",
           })
         );
@@ -99,7 +99,7 @@ export const rowTotal = (titleTotal, data, key) => {
     "Stok Awal": type4(titleTotal, data),
     "Asumsi unit beli": type4(titleTotal, data),
     "Harga beli per unit": type1(titleTotal, data),
-    "Stok akhir": type1(titleTotal, data),
+    "Stok akhir": type4(titleTotal, data),
     "Asumsi unit jual": type4(titleTotal, data),
     "Harga jual per unit": type1(titleTotal, data),
     "Volume / Unit": type1(titleTotal, data),

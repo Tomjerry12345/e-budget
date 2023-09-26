@@ -267,7 +267,7 @@ const Logic = () => {
     });
 
     try {
-      await MainServices.post(`${ENDPOINT_URL}/import`, formData);
+      await MainServices.post(`direct/all/import`, formData);
 
       getData(codeFilter);
 

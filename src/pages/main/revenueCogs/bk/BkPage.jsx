@@ -39,7 +39,7 @@ const BkPage = () => {
       if (filterValuesPenjualan === undefined) {
         form.setFieldsValue({
           code_company: `${perusahaan.code} - ${perusahaan.description}`,
-          code_product: null,
+          // code_product: null,
           code_location:
             userGroup === "superadmin" ? null : code_location !== "null" ? code_location : null,
           code_dept:
@@ -56,7 +56,7 @@ const BkPage = () => {
       if (filterValuesHpplain === undefined) {
         form.setFieldsValue({
           code_company: `${perusahaan.code} - ${perusahaan.description}`,
-          code_product: null,
+          // code_product: null,
           code_location:
             userGroup === "superadmin" ? null : code_location !== "null" ? code_location : null,
           code_dept:
@@ -147,7 +147,7 @@ const BkPage = () => {
           onFinish={onFinish}
           isCodeIcp
           isCodeProject={key !== 1}
-          isCodeProduct
+          isCodeProduct={key !== 1}
           type="input"
           codeCompany={perusahaan.code}
           form={form}

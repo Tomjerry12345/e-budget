@@ -13,7 +13,12 @@ Bug New:
 - msh KIK, Potongan Penjualan & HPP Variable tdk update ki ✅
 - trus semua revenue di tab kedua mau di kasi kondisi if jg kyk mslh yg prtama td ✅
 - GMM Pendapatan lainnya belum ada file template nya ❌
-- 
+- kursor akan selalu pindah ke stok awal....,tiap kali selesai menginput di kolom inputan lain ✅
+- klo bisa semua yg pendek kolomnya dikasi lebar2 supaya keliatan nominal inputnya ❌
+- ketika di scrool headernya transparant ✅
+- stock akhir ini quantity atau nilai rupiah pak? knp inputannya 
+ada 2 angka dibelakang koma tp totalnya tdk pakai 2 angka d blkng koma ❌
+- ndak menghitung keatas ki ini terus yang energy - listrik dihitung dari mana ?  ❌
 
 Bug Before:
 
