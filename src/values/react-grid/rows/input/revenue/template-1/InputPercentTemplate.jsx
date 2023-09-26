@@ -5,7 +5,6 @@ import {
   keyCodes,
   getCellProperty,
 } from "@silevis/reactgrid";
-import { logS } from "values/Utilitas";
 import { Typography } from "antd";
 
 class InputPercentTemplate {
