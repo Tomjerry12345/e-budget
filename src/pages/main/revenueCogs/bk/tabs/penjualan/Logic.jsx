@@ -57,14 +57,14 @@ const Logic = () => {
       code_company,
       code_dept,
       code_location,
-      code_product,
+      // code_product,
       // code_project,
       code_icp,
       periode,
     } = filter;
 
     let fCodeCompany = code_company.split(" ");
-    let fCodeProduct = code_product.split(" ");
+    // let fCodeProduct = code_product.split(" ");
     // let fCodeProject = code_project.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
@@ -72,7 +72,7 @@ const Logic = () => {
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-    fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
+    // fCodeProduct = fCodeProduct[0] === "ALL" ? "all" : fCodeProduct[0];
     // fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
     fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
@@ -81,7 +81,7 @@ const Logic = () => {
 
     return {
       code_company: fCodeCompany,
-      code_product: fCodeProduct,
+      // code_product: fCodeProduct,
       // code_project: fCodeProject,
       code_location: fCodeLocation,
       code_department: fCodeDept,
@@ -178,25 +178,33 @@ const Logic = () => {
             if (newRows[i].parent === true) {
               indexParent = i;
               first = i + 1;
+
               break;
             }
           }
 
           for (let i = rowIndex; i < newRows.length - 1; i++) {
             if (newRows[i].parent === true) {
-              last = i - 1;
-
+              last = i;
               break;
             }
           }
+
+          last = last ?? newRows.length - 1;
+
+          const code_product = newRows[indexParent].cells[0].text;
 
           const dataByParent = newRows.slice(first, last);
 
           let sumParent = 0;
 
-          dataByParent.forEach((e) => {
-            sumParent += e.cells[columnIndex].value;
-          });
+          if (dataByParent.length > 0) {
+            dataByParent.forEach((e) => {
+              sumParent += e.cells[columnIndex].value;
+            });
+          } else {
+            sumParent = newRows[first].cells[columnIndex].value;
+          }
 
           newRows[indexParent].cells[columnIndex].value = sumParent;
 
@@ -212,6 +220,7 @@ const Logic = () => {
             const formData = formDataUtils({
               ...codeFilter,
               code_project,
+              code_product,
               [key]: value,
             });
 
