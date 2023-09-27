@@ -313,7 +313,10 @@ const Logic = () => {
           } else if (type === "percent") {
             if (i === 7) {
               const length = fullRows[7].data.length;
-              const vPenjualan = fullRows[6].data[rowIndex].cells[columnIndex - 1].value;
+
+              let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
+
+              const vPenjualan = fullRows[6].data[rowIndex].cells[indexPenjualan].value;
 
               const tot = vPenjualan * (value / 100);
               fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
