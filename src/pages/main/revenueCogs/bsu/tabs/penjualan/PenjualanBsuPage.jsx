@@ -40,7 +40,7 @@ const PenjualanBsuPage = () => {
                     stickyTopRows={1}
                     stickyLeftColumns={2}
                     enableRangeSelection
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
+                    // onCellsChanged={(change) => func.onChangeTable(change, i, e)}
                   />
                 </div>
               </div>

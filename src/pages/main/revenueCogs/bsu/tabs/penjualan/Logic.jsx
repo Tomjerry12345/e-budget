@@ -250,7 +250,9 @@ const Logic = () => {
             // Potongan penjualan
             if (i === 7) {
               const length = fullRows[2].data.length;
-              const vPenjualan = fullRows[1].data[rowIndex].cells[columnIndex - 1].value;
+              let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
+
+              const vPenjualan = fullRows[1].data[rowIndex].cells[indexPenjualan].value;
 
               fullRows[2].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
