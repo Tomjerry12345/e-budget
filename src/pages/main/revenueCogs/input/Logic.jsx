@@ -195,7 +195,7 @@ const Logic = () => {
           }
 
           delete newRows[rowIndex].newRow;
-          newRows[length - 1] = updateTotalRow(newRows);
+          // newRows[length - 1] = updateTotalRow(newRows);
         }
       }
 
