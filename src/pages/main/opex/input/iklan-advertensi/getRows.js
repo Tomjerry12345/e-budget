@@ -35,9 +35,7 @@ export function getRootHeaderRow() {
 
       nonEditable(textCell("Jumlah Bulan", "justify-content-center font-bold")),
       nonEditable(textCell("Tarif", "justify-content-center font-bold")),
-      nonEditable(
-        rootHeaderCell("Grand Total", "justify-content-center", COLOR_1)
-      ),
+      nonEditable(rootHeaderCell("Grand Total", "justify-content-center")),
 
       nonEditable(monthHeaderCell(`Jan`, "justify-content-center")),
       nonEditable(monthHeaderCell(`Feb`, "justify-content-center")),

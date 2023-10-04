@@ -26,7 +26,12 @@ const RevenueCogsInputPage = () => {
         dynamicFile={false}
       />
 
-      <FilterComponent onFinish={func.onFinish} isCodeIcp isCodeProject type="input" />
+      <FilterComponent
+        onFinish={func.onFinish}
+        isCodeIcp
+        isCodeProject
+        type="input"
+      />
 
       <div className="custom-root-layout">
         <div style={{ margin: "10px" }}>
@@ -47,7 +52,7 @@ const RevenueCogsInputPage = () => {
                 columns={value.columns}
                 stickyTopRows={1}
                 stickyLeftColumns={2}
-                // onCellsChanged={(change) => func.onChangeTable(change)}
+                onCellsChanged={(change) => func.onChangeTable(change)}
               />
             </div>
           </div>

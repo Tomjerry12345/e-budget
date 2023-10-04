@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 import { generateUID, log } from "values/Utilitas";
 import { useLocation } from "react-router-dom";
-import { fullNewRow, getRows } from "values/react-grid/rows/summary/capex/template-1/getRows";
+import {
+  fullNewRow,
+  getRows,
+} from "values/react-grid/rows/summary/capex/template-1/getRows";
 import { getColumns } from "values/react-grid/rows/summary/capex/template-1/getColumns";
 
 const Logic = () => {

@@ -1,7 +1,6 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
 import HeaderComponent from "component/header/HeaderComponent";
-import { Typography } from "antd";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
@@ -48,7 +47,7 @@ const SaldoAwalAkumulasiPenyusutanSummaryPage = () => {
                 rows={value.rows}
                 columns={value.columns}
                 stickyTopRows={1}
-                stickyLeftColumns={1}
+                stickyLeftColumns={2}
               />
             </div>
           </div>
