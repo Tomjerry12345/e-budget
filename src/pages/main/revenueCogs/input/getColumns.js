@@ -10,7 +10,7 @@ export function getColumns() {
     },
     {
       columnId: "description",
-      width: 290,
+      width: 400,
       type: "text",
     },
 

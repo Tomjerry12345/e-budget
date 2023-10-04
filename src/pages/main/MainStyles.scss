@@ -1,8 +1,18 @@
-.reactgrid-content .rg-pane .rg-cell{
-  color:#000000 !important;
+.reactgrid-content .rg-pane .rg-cell {
+  color: #000000 !important;
 }
-.rg-celleditor-input, .rg-celleditor input{
-  color:#000000 !important;
+.rg-celleditor-input,
+.rg-celleditor input {
+  color: #000000 !important;
+}
+.reactgrid-content .rg-pane.rg-pane-top {
+  z-index: 1;
+}
+.reactgrid-content .rg-pane.rg-pane-left {
+  z-index: 1;
+}
+.reactgrid-content .rg-pane-shadow.shadow-top-left-corner {
+  z-index: 2;
 }
 .ant-modal-wrap {
   margin-left: 82px !important;
@@ -52,8 +62,24 @@
       }
       .scroll-shadows {
         background:
-    /* Shadow covers */ linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)), linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0 100%,
-          /* Shadows */ radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)) 0 100%;
+    /* Shadow covers */ linear-gradient(
+            #ffffff 30%,
+            rgba(255, 255, 255, 0)
+          ),
+          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
+            100%,
+          /* Shadows */
+            radial-gradient(
+              farthest-side at 50% 0,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            ),
+          radial-gradient(
+              farthest-side at 50% 100%,
+              rgba(0, 0, 0, 40%),
+              rgba(0, 0, 0, 0)
+            )
+            0 100%;
         background-repeat: no-repeat;
         background-color: white;
         background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
@@ -103,7 +129,6 @@
   overflow-x: hidden;
   // height: 100%;
 }
-
 
 .custom-breadcrumb {
   font-family: "Poppins";
@@ -155,18 +180,18 @@
   overflow: auto;
 }
 
-.rg-text-celleditor{
-  input{
+.rg-text-celleditor {
+  input {
     border: none;
     padding-left: 9px !important;
   }
 }
-.rg-number-celleditor{
-  input{
+.rg-number-celleditor {
+  input {
     border: none;
   }
 }
 
-.reactgrid{
+.reactgrid {
   font-size: 8pt;
 }
