@@ -103,6 +103,7 @@ export function getColumns() {
       columnId: "total_1",
       width: COL_WIDTH,
       type: "number",
+      format: true,
     },
 
     {
@@ -193,6 +194,7 @@ export function getColumns() {
       columnId: "total_2",
       width: COL_WIDTH,
       type: "number",
+      format: true,
     },
   ];
 }
