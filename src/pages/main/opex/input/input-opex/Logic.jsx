@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -17,7 +21,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -114,6 +120,7 @@ const Logic = () => {
       let isChange;
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        if (rowIndex < 0) continue;
         const columnIndex = columns.findIndex((j) => j.columnId === c.columnId);
 
         const type = newRows[rowIndex].cells[columnIndex].type;
@@ -168,7 +175,10 @@ const Logic = () => {
               [key]: value,
             });
 
-            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+            const res = await MainServices.post(
+              `${ENDPOINT_URL}/insert`,
+              formData
+            );
 
             log({ res });
             const rowId = res.data.data.id;
