@@ -47,7 +47,7 @@ const AkumulasiPenyusutanNewAsetSummaryPage = () => {
               <ReactGrid
                 rows={value.rows}
                 columns={value.columns}
-                stickyTopRows={1}
+                stickyTopRows={2}
                 stickyLeftColumns={2}
               />
             </div>
