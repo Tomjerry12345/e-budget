@@ -1,6 +1,11 @@
 import { ROW_HEIGHT } from "./Constant";
 
-const { nonEditable, textCell, noSideBorders, totalCell } = require("values/react-grid/cells");
+const {
+  nonEditable,
+  textCell,
+  noSideBorders,
+  totalCell,
+} = require("values/react-grid/cells");
 
 function type1(titleTotal, total) {
   return {
@@ -61,11 +66,19 @@ function type3(titleTotal, total) {
       ),
 
       ...total.map((e, i) => {
-        return noSideBorders(
-          totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
-            justifyContent: "end",
-          })
-        );
+        if (i > 24) {
+          return noSideBorders(
+            totalCell(i % 2 === 0 ? `${e} %` : e, "", "beige", "", true, {
+              justifyContent: "end",
+            })
+          );
+        } else {
+          return noSideBorders(
+            totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
+              justifyContent: "end",
+            })
+          );
+        }
       }),
     ],
   };
@@ -89,7 +102,9 @@ function type4(titleTotal, total) {
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", "", false))),
+      ...total.map((e, i) =>
+        noSideBorders(totalCell(e, "", "beige", "", false))
+      ),
     ],
   };
 }
