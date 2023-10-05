@@ -37,3 +37,5 @@ export const TOTAL_DATA = {
 };
 
 export const END_TOTAL = (key) => FIRST_TOTAL[key] + TOTAL_DATA[key];
+
+export const colorNonEditable = "#d2ffd2";

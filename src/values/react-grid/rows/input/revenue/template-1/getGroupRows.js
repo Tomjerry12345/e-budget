@@ -1,8 +1,13 @@
 import { generateUID, log } from "values/Utilitas";
-import { ROW_HEIGHT } from "./Constant";
+import { ROW_HEIGHT, colorNonEditable } from "./Constant";
 import { getColumns } from "./getColumns";
 
-const { nonEditable, textCell, numberCell, customCell } = require("values/react-grid/cells");
+const {
+  nonEditable,
+  textCell,
+  numberCell,
+  customCell,
+} = require("values/react-grid/cells");
 
 export const getGroupRows = (groups, key, getCol) => {
   const col = getCol ?? getColumns;
@@ -25,7 +30,17 @@ export const getGroupRows = (groups, key, getCol) => {
               if (e.nonEditabled === undefined || e.nonEditabled === false) {
                 return textCell(d[e.columnId] ?? "", "padding-left-lg");
               } else {
-                return nonEditable(textCell(d[e.columnId] ?? "", "padding-left-lg"));
+                return nonEditable(
+                  textCell(d[e.columnId] ?? "", "padding-left-lg", {
+                    background:
+                      d["columnId"] !== "product_code" ||
+                      d["columnId"] !== "product_description" ||
+                      d["columnId"] !== "code_account" ||
+                      d["columnId"] !== "description"
+                        ? "#fff"
+                        : colorNonEditable,
+                  })
+                );
               }
             } else if (e.type === "number") {
               if (e.nonEditabled === undefined || e.nonEditabled === false) {
@@ -37,7 +52,14 @@ export const getGroupRows = (groups, key, getCol) => {
                 );
               } else {
                 return nonEditable(
-                  numberCell(d[e.columnId] ?? 0, "padding-left-lg", null, e.format ?? false)
+                  numberCell(
+                    d[e.columnId] ?? 0,
+                    "padding-left-lg",
+                    {
+                      background: colorNonEditable,
+                    },
+                    e.format ?? false
+                  )
                 );
               }
             } else if (e.type === "percent") {

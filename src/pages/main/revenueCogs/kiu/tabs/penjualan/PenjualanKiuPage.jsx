@@ -20,7 +20,8 @@ const PenjualanKiuPage = () => {
                   alignItems: "center",
                 }}
               >
-                <Typography.Text>{e.description}</Typography.Text>
+                {/* <Typography.Text>{e.description}</Typography.Text> */}
+                <Typography.Text>Test</Typography.Text>
               </div>
 
               <div
@@ -41,8 +42,12 @@ const PenjualanKiuPage = () => {
                     stickyTopRows={1}
                     stickyLeftColumns={2}
                     enableRangeSelection
-                    customCellTemplates={{ percent: new InputPercentTemplate() }}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
+                    customCellTemplates={{
+                      percent: new InputPercentTemplate(),
+                    }}
+                    onCellsChanged={(change) =>
+                      func.onChangeTable(change, i, e)
+                    }
                   />
                 </div>
               </div>
