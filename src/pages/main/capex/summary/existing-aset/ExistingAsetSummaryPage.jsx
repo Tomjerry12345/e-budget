@@ -47,7 +47,6 @@ const ExistingAsetSummaryPage = () => {
                 rows={value.rows}
                 columns={value.columns}
                 stickyTopRows={1}
-                stickyLeftColumns={2}
               />
             </div>
           </div>
