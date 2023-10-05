@@ -20,8 +20,7 @@ const PenjualanKiuPage = () => {
                   alignItems: "center",
                 }}
               >
-                {/* <Typography.Text>{e.description}</Typography.Text> */}
-                <Typography.Text>Test</Typography.Text>
+                <Typography.Text>{e.description}</Typography.Text>
               </div>
 
               <div

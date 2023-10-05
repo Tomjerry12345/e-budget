@@ -67,6 +67,9 @@ export function getRootHeaderRow() {
         textCell("Net Book Value", "justify-content-center font-bold")
       ),
       nonEditable(
+        textCell("Disposal Unit", "justify-content-center font-bold")
+      ),
+      nonEditable(
         textCell("Disposal Aset	Month", "justify-content-center font-bold")
       ),
       nonEditable(
@@ -145,6 +148,9 @@ function getGroupRows(groups) {
           numberCell(d["accumulated_depreciation"] ?? 0, "padding-left-lg")
         ),
         nonEditable(numberCell(d["net_book_value"] ?? 0, "padding-left-lg")),
+        nonEditable(
+          numberCell(d["disposal_unit"] ?? "", "padding-left-lg", null, false)
+        ),
         nonEditable(
           numberCell(d["disposal_month"] ?? "", "padding-left-lg", null, false)
         ),
@@ -266,6 +272,7 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
 
+      nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
       nonEditable(textCell("", "padding-left-lg")),
