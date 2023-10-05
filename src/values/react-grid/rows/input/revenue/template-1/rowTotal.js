@@ -1,3 +1,4 @@
+import { log } from "values/Utilitas";
 import { ROW_HEIGHT } from "./Constant";
 
 const {
@@ -66,19 +67,12 @@ function type3(titleTotal, total) {
       ),
 
       ...total.map((e, i) => {
-        if (i > 24) {
-          return noSideBorders(
-            totalCell(i % 2 === 0 ? `${e} %` : e, "", "beige", "", true, {
-              justifyContent: "end",
-            })
-          );
-        } else {
-          return noSideBorders(
-            totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
-              justifyContent: "end",
-            })
-          );
-        }
+        const cellValue = i > 24 ? `${e} %` : e;
+        return noSideBorders(
+          totalCell(cellValue, "", "beige", "", true, {
+            justifyContent: "end",
+          })
+        );
       }),
     ],
   };
