@@ -153,8 +153,9 @@ function getGroupRows(groups, categories) {
                     categories,
                     d.is_asset_category_id
                   );
+                } else {
+                  return dropDownCell(getMonthDuration(), d[e.columnId]);
                 }
-                return dropDownCell(getMonthDuration(), d[e.columnId]);
               } else if (e.type === "number") {
                 return numberCell(
                   d[e.columnId] ?? 0,
@@ -168,8 +169,8 @@ function getGroupRows(groups, categories) {
         };
       } else {
         return {
-          rowId: generateUID(),
-          isNewRow: true,
+          rowId: null,
+          // isNewRow: true,
           height: ROW_HEIGHT,
           cells: [
             textCell("", "padding-left-lg"),
@@ -236,8 +237,7 @@ export function fullNewRow() {
 
 export function reactgridNewRow() {
   return {
-    rowId: generateUID(),
-    isNewRow: true,
+    rowId: null,
     height: ROW_HEIGHT,
     cells: [
       textCell("", "padding-left-lg"),
