@@ -174,7 +174,7 @@ const LoginNew = () => {
         });
       } else {
         a = [{ ...reactgridNewRow() }];
-        r = fullNewRow({ id: generateUID() });
+        r = fullNewRow();
       }
 
       setCurrData(a);
@@ -201,133 +201,40 @@ const LoginNew = () => {
     showNotif(200, "Sukses tambah row");
   };
 
-  const updateData = async (cell, rowData) => {
+  const insertData = async (cell) => {
+    const formData = formDataUtils(codeFilter);
+    if (cell.column_id === "description") {
+      formData.append("description", cell.value);
+    }
+    const res = await MainServices.post(`detailcapex/insert`, formData);
+    if (res.data.responseCode === 200) {
+      let newObject = await generateAttributesByNewValue(
+        emptyObj,
+        res.data.data
+      );
+      let newData = [...currData].map((el) => (!el.id ? { ...newObject } : el));
+      setCurrData(newData);
+      showNotif(200, "Sukses update data");
+    } else {
+      showNotif(500, "Error");
+    }
+  };
+
+  const updateData = async (cell) => {
     if (Object.keys(cell).length === 3) {
       try {
-        const isNewRow = rowData["isNewRow"] ?? !rowData.rowId ?? false;
-
-        if (isNewRow) {
-          const formData = formDataUtils(codeFilter);
-
-          if (cell.column_id === "description") {
-            formData.append("description", cell.value);
-          }
-          const res = await MainServices.post(`detailcapex/insert`, formData);
-
-          if (res.data.responseCode === 200) {
-            let newObject = await generateAttributesByNewValue(
-              emptyObj,
-              res.data.data
-            );
-
-            let newData = [...currData].map((el) =>
-              !el.id ? { ...newObject } : el
-            );
-
-            setCurrData(newData);
-            showNotif(200, "Sukses update data");
-          } else {
-            showNotif(500, "Error");
-          }
+        const formData = formDataUtils(cell);
+        const res = await MainServices.post(`detailcapex/update`, formData);
+        if (res.data.responseCode === 200) {
+          showNotif(200, "Sukses update data");
         } else {
-          const formData = formDataUtils(cell);
-          const res = await MainServices.post(`detailcapex/update`, formData);
-          if (res.data.responseCode === 200) {
-            let newObject = await generateAttributesByNewValue(
-              emptyObj,
-              res.data.data
-            );
-
-            let newData = [...currData].map((el) =>
-              el.id === rowData.rowId ? { ...newObject } : el
-            );
-
-            setCurrData(newData);
-            showNotif(200, "Sukses update data");
-          } else {
-            showNotif(500, "Error");
-          }
+          showNotif(500, "Error");
         }
-
-        getData(codeFilter);
       } catch (e) {
         log({ e });
       }
     }
   };
-
-  // temp: onChange old version
-  // const onChangeTable = async (change) => {
-  //   let newRows = [...rows];
-
-  //   for (const c of change) {
-  //     const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-  //     const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
-  //     const type = c.newCell.type;
-
-  //     const id = newRows[rowIndex].rowId;
-  //     const column_id = columns[columnIndex].columnId;
-
-  //     const rowData = newRows[rowIndex];
-
-  //     log({ rowData });
-
-  //     if (type === "text") {
-  //       newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
-  //       updateData(
-  //         {
-  //           id,
-  //           column_id,
-  //           value: c.newCell.value,
-  //         },
-  //         rowData
-  //       );
-  //     } else if (type === "number") {
-  //       newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-  //       updateData(
-  //         {
-  //           id,
-  //           column_id,
-  //           value: c.newCell.value,
-  //         },
-  //         rowData
-  //       );
-  //     } else if (type === "dropdown") {
-  //       if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
-  //         newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
-
-  //         updateData(
-  //           {
-  //             id,
-  //             column_id,
-  //             value: c.newCell.selectedValue,
-  //           },
-  //           rowData
-  //         );
-  //       }
-
-  //       if (c.newCell.inputValue) {
-  //         newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
-
-  //         updateData(
-  //           {
-  //             id,
-  //             column_id,
-  //             value: c.newCell.inputValue,
-  //           },
-  //           rowData
-  //         );
-  //       }
-
-  //       // CHANGED: set the isOpen property to the value received.
-  //       newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
-  //     } else {
-  //       log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });
-  //     }
-  //   }
-
-  //   setRows(newRows);
-  // };
 
   useEffect(() => {
     if (currData) {
@@ -339,7 +246,7 @@ const LoginNew = () => {
           })
         );
       } else {
-        setRows(fullNewRow({ id: generateUID() }));
+        setRows(fullNewRow());
       }
     }
   }, [currData]);
@@ -365,141 +272,101 @@ const LoginNew = () => {
       const rowData = newRows[rowIndex];
       let valuesOfDropdown, selected;
 
-      if (!dataRow) {
-        dataRow = generateObjectAttributes(prevDetails);
-        prevDetails.push(dataRow);
-      }
-
-      if (change.type === "text") {
+      if (!dataRowId) {
         dataRow[fieldName] = change.newCell.text;
-        updateData(
-          {
-            id,
-            column_id,
-            value: change.newCell.text,
-          },
-          rowData
-        );
-      } else if (change.type === "number") {
-        let value = change.newCell.value;
-        dataRow[fieldName] = value;
 
-        updateData(
-          {
+        insertData({
+          column_id: fieldName,
+          value: change.newCell.text,
+        });
+      } else {
+        if (change.type === "text") {
+          dataRow[fieldName] = change.newCell.text;
+          updateData({
+            id: dataRow.id,
+            column_id: fieldName,
+            value: change.newCell.text,
+          });
+        } else if (change.type === "number") {
+          let value = change.newCell.value;
+          dataRow[fieldName] = value;
+
+          updateData({
             id,
             column_id,
             value,
-          },
-          rowData
-        );
-        if (!isNaN(value)) {
-          value =
-            dataRow["rate_gray_shirt"] * dataRow["qty_gray_shirt"] +
-            dataRow["rate_batik"] * dataRow["qty_batik"] +
-            dataRow["rate_polo"] * dataRow["qty_polo"] +
-            dataRow["rate_ic_card"] * dataRow["qty_ic_card"] +
-            dataRow["rate_other"] * dataRow["qty_other"];
+          });
+          if (!isNaN(value)) {
+            value =
+              dataRow["rate_gray_shirt"] * dataRow["qty_gray_shirt"] +
+              dataRow["rate_batik"] * dataRow["qty_batik"] +
+              dataRow["rate_polo"] * dataRow["qty_polo"] +
+              dataRow["rate_ic_card"] * dataRow["qty_ic_card"] +
+              dataRow["rate_other"] * dataRow["qty_other"];
 
-          dataRow["total"] = value;
-        }
-      } else if (change.type === "checkbox") {
-        dataRow[fieldName] = change.newCell.checked;
-        updateData(
-          {
+            dataRow["total"] = value;
+          }
+        } else if (change.type === "checkbox") {
+          dataRow[fieldName] = change.newCell.checked;
+          updateData({
             id,
             column_id,
             value: change.newCell.checked,
-          },
-          rowData
-        );
-      } else if (change.type === "dropdown") {
-        if (fieldName === "asset_category_id") {
+          });
+        } else if (change.type === "dropdown") {
           let key = `is_${fieldName}`;
+
           if (
             change.previousCell.selectedValue !== change.newCell.selectedValue
           ) {
             dataRow[fieldName] = change.newCell.selectedValue;
             selected = change.newCell.selectedValue;
 
-            updateData(
-              {
-                id,
-                column_id,
-                value: change.newCell.selectedValue,
-              },
-              rowData
-            );
+            updateData({
+              id: dataRow.id,
+              column_id: fieldName,
+              value: change.newCell.selectedValue,
+            });
           }
 
           if (change.newCell.inputValue) {
             dataRow[fieldName] = change.newCell.inputValue;
-            updateData(
-              {
-                id,
-                column_id,
-                value: change.newCell.inputValue,
-              },
-              rowData
-            );
-          }
-
-          if (selected) {
-            valuesOfDropdown = change.previousCell.values.find(
-              (e) => e.value === selected
-            );
+            updateData({
+              id: dataRow.id,
+              column_id: fieldName,
+              value: change.newCell.inputValue,
+            });
           }
 
           // CHANGED: set the isOpen property to the value received.
           dataRow[key] = change.newCell.isOpen;
         } else {
-          if (
-            change.previousCell.selectedValue !== change.newCell.selectedValue
-          ) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.selectedValue;
-
-            updateData(
-              {
-                id,
-                column_id,
-                value: change.newCell.selectedValue,
-              },
-              rowData
-            );
-          }
-
-          if (change.newCell.inputValue) {
-            newRows[rowIndex].cells[columnIndex].selectedValue =
-              change.newCell.inputValue;
-
-            updateData(
-              {
-                id,
-                column_id,
-                value: change.newCell.inputValue,
-              },
-              rowData
-            );
-          }
-
-          // CHANGED: set the isOpen property to the value received.
-          newRows[rowIndex].cells[columnIndex].isOpen = change.newCell.isOpen;
+          log("ERROR", change.type);
         }
-
-        if (valuesOfDropdown) {
-          // find a selected category to set asset_account, accumulate_account, and depreciation_account
-
-          dataRow["asset_account"] = valuesOfDropdown["asset_account"];
-          dataRow["accumulated_account"] =
-            valuesOfDropdown["accumulated_account"];
-          dataRow["depreciation_account"] =
-            valuesOfDropdown["depreciation_account"];
-
-          // =============
-        }
-      } else {
-        log("ERROR", change.type);
       }
+
+      if (selected) {
+        valuesOfDropdown = change.previousCell.values.find(
+          (e) => e.value === selected
+        );
+      }
+
+      if (valuesOfDropdown) {
+        // find a selected category to set asset_account, accumulate_account, and depreciation_account
+
+        dataRow["asset_account"] = valuesOfDropdown["asset_account"];
+        dataRow["accumulated_account"] =
+          valuesOfDropdown["accumulated_account"];
+        dataRow["depreciation_account"] =
+          valuesOfDropdown["depreciation_account"];
+
+        // =============
+      }
+
+      // if (!dataRow) {
+      //   dataRow = generateObjectAttributes(prevDetails);
+      //   prevDetails.push(dataRow);
+      // }
     });
 
     return [...prevDetails];
