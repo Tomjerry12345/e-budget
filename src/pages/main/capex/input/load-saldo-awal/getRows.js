@@ -111,6 +111,7 @@ function getGroupRows(groups) {
     ...groups.map((d) => ({
       rowId: d["id"],
       height: ROW_HEIGHT,
+      typeYear: d["type"],
       cells: [
         nonEditable(textCell(d["asset_book"], "padding-left-lg")),
         nonEditable(textCell(d["asset_number"] ?? "-", "padding-left-lg")),
