@@ -70,8 +70,12 @@ export function getColumns() {
       width: 150,
     },
     {
+      columnId: "disposal_unit",
+      width: 100,
+    },
+    {
       columnId: "disposal_month",
-      width: 150,
+      width: 100,
     },
     {
       columnId: "disposal_year",

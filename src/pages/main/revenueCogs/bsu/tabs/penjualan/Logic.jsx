@@ -2,10 +2,16 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log, showNotif } from "values/Utilitas";
-import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
+import {
+  actionData,
+  resetTypeRevenueImport,
+} from "redux/data-global/data.reducer";
 import { keyRevenueTab } from "values/Constant";
 import {
   fullNewRow,
@@ -26,7 +32,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -49,7 +57,14 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
+    const {
+      code_company,
+      code_dept,
+      code_location,
+      code_project,
+      code_icp,
+      periode,
+    } = values;
 
     let fCodeCompany = code_company.split(" ");
     // let fCodeProduct = code_product.split(" ");
@@ -67,7 +82,14 @@ const Logic = () => {
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
+    getData(
+      fCodeCompany,
+      fCodeLocation,
+      fCodeDept,
+      fCodeIcp,
+      fCodeProject,
+      fPeriode
+    );
 
     setCodeFilter(values);
   };
@@ -197,8 +219,14 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
-              codeFilter;
+            const {
+              code_company,
+              code_dept,
+              code_location,
+              code_project,
+              code_icp,
+              periode,
+            } = codeFilter;
 
             let fCodeCompany = code_company.split(" ");
             let fCodeLocation = code_location.split(" ");
@@ -209,7 +237,8 @@ const Logic = () => {
             let fPeriode = periode.split(" ");
 
             fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+            fCodeLocation =
+              fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
             fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
             fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
             fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
@@ -227,7 +256,10 @@ const Logic = () => {
               list_number: listNumber,
             });
 
-            const res = await MainServices.post(`${item.endpoint}/insert`, formData);
+            const res = await MainServices.post(
+              `${item.endpoint}/insert`,
+              formData
+            );
 
             log({ res });
             const rowId = res.data.data.id;
@@ -252,7 +284,8 @@ const Logic = () => {
               const length = fullRows[2].data.length;
               let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
 
-              const vPenjualan = fullRows[1].data[rowIndex].cells[indexPenjualan].value;
+              const vPenjualan =
+                fullRows[1].data[rowIndex].cells[indexPenjualan - 1].value;
 
               fullRows[2].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);
@@ -260,7 +293,9 @@ const Logic = () => {
               let total1 = 0;
               let total2 = 0;
 
-              const newCellPotonganPenjualan = fullRows[2].data[rowIndex].cells.map((e, j) => {
+              const newCellPotonganPenjualan = fullRows[2].data[
+                rowIndex
+              ].cells.map((e, j) => {
                 if (j >= 2 && j <= 13) total1 += e.value;
                 if (j === 14) e.value = total1;
                 if (j >= 15 && j <= 26) total2 += e.value;
@@ -270,7 +305,10 @@ const Logic = () => {
 
               fullRows[2].data[rowIndex].cells = newCellPotonganPenjualan;
 
-              fullRows[2].data[length - 1] = updateTotalRow(fullRows[2].data, item.description);
+              fullRows[2].data[length - 1] = updateTotalRow(
+                fullRows[2].data,
+                item.description
+              );
             }
           }
         }
@@ -298,8 +336,14 @@ const Logic = () => {
       })
     );
 
-    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
-      codeFilter;
+    const {
+      code_company,
+      code_location,
+      code_dept,
+      code_icp,
+      code_project,
+      periode,
+    } = codeFilter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeLocation = code_location.split(" ");
@@ -337,7 +381,14 @@ const Logic = () => {
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
+      getData(
+        fCodeCompany,
+        fCodeLocation,
+        fCodeDept,
+        fCodeIcp,
+        fCodeProject,
+        fPeriode
+      );
 
       showNotif(dispatch, { res: res });
 

@@ -2,8 +2,6 @@
   margin: 0;
 }
 
-
-
 .custom-tambah-data-modal {
   width: 100%;
   display: flex;
@@ -11,7 +9,7 @@
   top: 20px;
 
   .ant-modal-content {
-    width: 700px;
+    width: 400px;
     height: 100%;
     border-radius: 8px;
 
@@ -34,7 +32,6 @@
       letter-spacing: 0.2px;
       color: rgba(18, 18, 18, 0.7);
     }
-
   }
 
   .footer-custom {
@@ -46,8 +43,7 @@
       height: 41px;
       color: #888888;
       border-color: #888888;
-      border-radius: 8px
-      
+      border-radius: 8px;
     }
     .btn-upload {
       background-color: #008041;
@@ -58,5 +54,4 @@
       margin-left: 16px;
     }
   }
-
 }

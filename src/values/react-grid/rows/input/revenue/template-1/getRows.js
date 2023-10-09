@@ -15,11 +15,19 @@ export const updateTotalRow = (data, key) => {
       const values = [];
       for (let i = FIRST_TOTAL[key]; i < END_TOTAL(key); i++) {
         if (key === "Potongan penjualan") {
-          const isEven = i % 2 === 0;
-          const valueToPush = isEven
-            ? parseInt(e.cells[i].text)
-            : e.cells[i].value;
-          values.push(valueToPush ?? 0);
+          if (i > 24) {
+            const isEven = i % 2 === 0;
+            const valueToPush = isEven
+              ? parseInt(e.cells[i].text)
+              : e.cells[i].value;
+            values.push(valueToPush ?? 0);
+          } else {
+            const isEven = i % 2 === 1;
+            const valueToPush = isEven
+              ? parseInt(e.cells[i].text)
+              : e.cells[i].value;
+            values.push(valueToPush ?? 0);
+          }
         } else {
           values.push(e.cells[i].value ?? 0);
         }

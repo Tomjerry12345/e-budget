@@ -58,7 +58,9 @@ const LoadSaldoAwalPage = () => {
                 stickyTopRows={1}
                 stickyLeftColumns={4}
                 customCellTemplates={{ status: new ButtonCellTemplate() }}
-                onCellsChanged={(change) => func.onChangeTable(change, "administrasi")}
+                onCellsChanged={(change) =>
+                  func.onChangeTable(change, "administrasi")
+                }
               />
             </div>
           </div>

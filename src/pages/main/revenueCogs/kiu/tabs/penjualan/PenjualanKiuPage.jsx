@@ -41,8 +41,12 @@ const PenjualanKiuPage = () => {
                     stickyTopRows={1}
                     stickyLeftColumns={2}
                     enableRangeSelection
-                    customCellTemplates={{ percent: new InputPercentTemplate() }}
-                    onCellsChanged={(change) => func.onChangeTable(change, i, e)}
+                    customCellTemplates={{
+                      percent: new InputPercentTemplate(),
+                    }}
+                    onCellsChanged={(change) =>
+                      func.onChangeTable(change, i, e)
+                    }
                   />
                 </div>
               </div>

@@ -67,12 +67,19 @@ function type3(titleTotal, total) {
       ),
 
       ...total.map((e, i) => {
-        const cellValue = i > 24 ? `${e} %` : e;
-        return noSideBorders(
-          totalCell(cellValue, "", "beige", "", true, {
-            justifyContent: "end",
-          })
-        );
+        if (i > 24) {
+          return noSideBorders(
+            totalCell(i % 2 === 0 ? `${e} %` : e, "", "beige", "", true, {
+              justifyContent: "end",
+            })
+          );
+        } else {
+          return noSideBorders(
+            totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
+              justifyContent: "end",
+            })
+          );
+        }
       }),
     ],
   };

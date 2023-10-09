@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
+import {
+  actionImport,
+  resetDataActionImport,
+  val,
+} from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -26,7 +30,9 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
+        ".xlsx",
+      ],
     },
   });
 
@@ -88,7 +94,7 @@ const Logic = () => {
     fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
     fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
     fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-    fPeriode = fPeriode[0];
+    // fPeriode = fPeriode[0];
     fStatus = fStatus[0].toLowerCase();
 
     return {
@@ -98,7 +104,9 @@ const Logic = () => {
       code_department: fCodeDept,
       code_icp: fCodeIcp,
       code_project: fCodeProject,
-      year: fPeriode,
+      year: fPeriode[0],
+      budget: fPeriode[0],
+      forecast: fPeriode[2],
       filter: fStatus,
     };
   };
@@ -117,7 +125,6 @@ const Logic = () => {
   const getData = async (params) => {
     const url = `${ENDPOINT_URL}/load`;
     const { data } = await MainServices.get(url, params);
-    log("data.data", data.data.data);
     let r;
     if (data.data.data.length > 0) {
       r = getRows({
@@ -169,7 +176,9 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
+      const columnIndex = parseInt(
+        columns.findIndex((j) => j.columnId === c.columnId)
+      );
       const type = c.newCell.type;
 
       const id = newRows[rowIndex].rowId;
@@ -193,7 +202,8 @@ const Logic = () => {
         });
       } else if (type === "dropdown") {
         if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
+          newRows[rowIndex].cells[columnIndex].selectedValue =
+            c.newCell.selectedValue;
 
           updateData({
             id,
@@ -203,7 +213,8 @@ const Logic = () => {
         }
 
         if (c.newCell.inputValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
+          newRows[rowIndex].cells[columnIndex].selectedValue =
+            c.newCell.inputValue;
 
           updateData({
             id,
@@ -216,8 +227,14 @@ const Logic = () => {
         newRows[rowIndex].cells[columnIndex].isOpen = c.newCell.isOpen;
       } else if (type === "status") {
         const t = c.newCell.text;
-        log("c.newCell", c.newCell);
+        const typeYear = newRows[rowIndex].typeYear;
+        const budget = codeFilter.budget;
+        const forecast = codeFilter.forecast;
         if (t === "retired") {
+          formRetired.setFieldsValue({
+            disposal_month: "1",
+            disposal_year: typeYear === "budget" ? budget : forecast,
+          });
           setOpenModalRetired(true);
           setDataRetired({
             id,
@@ -298,6 +315,7 @@ const Logic = () => {
 
   const onFinishModalRetired = async (params) => {
     try {
+      log({ params });
       const newParams = {
         ...params,
         disposal_month: params.disposal_month ?? "1",
@@ -321,6 +339,10 @@ const Logic = () => {
   };
 
   const onCancelModalRetired = () => {
+    formRetired.setFieldsValue({
+      quantity: undefined,
+      price: undefined,
+    });
     setOpenModalRetired(false);
   };
 
