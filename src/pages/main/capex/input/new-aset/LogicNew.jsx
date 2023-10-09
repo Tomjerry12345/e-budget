@@ -317,6 +317,7 @@ const LoginNew = () => {
           let key = `is_${fieldName}`;
 
           if (
+            change.newCell.selectedValue &&
             change.previousCell.selectedValue !== change.newCell.selectedValue
           ) {
             dataRow[fieldName] = change.newCell.selectedValue;
@@ -331,6 +332,7 @@ const LoginNew = () => {
 
           if (change.newCell.inputValue) {
             dataRow[fieldName] = change.newCell.inputValue;
+
             updateData({
               id: dataRow.id,
               column_id: fieldName,
