@@ -17,15 +17,11 @@ export const updateTotalRow = (data, key) => {
         if (key === "Potongan penjualan") {
           if (i > 24) {
             const isEven = i % 2 === 0;
-            const valueToPush = isEven
-              ? parseInt(e.cells[i].text)
-              : e.cells[i].value;
+            const valueToPush = isEven ? parseInt(e.cells[i].text) : e.cells[i].value;
             values.push(valueToPush ?? 0);
           } else {
             const isEven = i % 2 === 1;
-            const valueToPush = isEven
-              ? parseInt(e.cells[i].text)
-              : e.cells[i].value;
+            const valueToPush = isEven ? parseInt(e.cells[i].text) : e.cells[i].value;
             values.push(valueToPush ?? 0);
           }
         } else {
@@ -35,20 +31,13 @@ export const updateTotalRow = (data, key) => {
 
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA[key])
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA[key]));
 
   return rowTotal("Total", list, key);
 };
 
 export function getRows({ header, data, key, col }) {
-  return [
-    header,
-    ...getGroupRows(data, key, col),
-    firstLoadTotalRow(data, key),
-  ];
+  return [header, ...getGroupRows(data, key, col), firstLoadTotalRow(data, key)];
 }
 
 export function fullNewRow(header, id, key) {

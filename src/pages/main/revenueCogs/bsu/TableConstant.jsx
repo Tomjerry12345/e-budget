@@ -4,21 +4,17 @@ export const tableList = {
       description: "All data",
       key: "All data",
       endpoint: "detailrevenue/bsu",
+      endpointChange: "detailrevenue/bsu",
       insert: false,
       file: "all_data.xlsx",
     },
-    // {
-    //   description: "Penjualan",
-    //   // key: "Penjualan",
-    //   endpoint: "detailrevenue/bsu",
-    //   insert: false,
-    // },
-    // {
-    //   description: "Potongan penjualan",
-    //   // key: "Potongan penjualan 1",
-    //   endpoint: "detailrevenue/bsu-sale-discount",
-    //   insert: false,
-    // },
+    {
+      description: "Potongan penjualan",
+      // key: "Potongan penjualan 1",
+      endpoint: "detailrevenue/bsu-sale-discount",
+      endpointChange: "detailrevenue/sale-discount",
+      insert: false,
+    },
   ],
 
   "Input HPP dan pendapatan lainnya": [

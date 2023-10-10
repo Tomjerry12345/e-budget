@@ -1,14 +1,16 @@
-import { generateUID, log } from "values/Utilitas";
-import { ROW_HEIGHT, colorNonEditable } from "./Constant";
-import { getColumns } from "./getColumns";
+import { nonEditable, textCell, numberCell, customCell } from "values/react-grid/cells";
+import { colorNonEditable } from "values/react-grid/rows/input/revenue/template-1/Constant";
+import { firstLoadTotalRow } from "values/react-grid/rows/input/revenue/template-1/firstLoadTotalRow";
+import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
+import { generateUID } from "values/Utilitas";
 
-const { nonEditable, textCell, numberCell, customCell } = require("values/react-grid/cells");
+export const HEADER_ROOT_ROW_ID = "header-root";
 
-export const getGroupRows = (groups, key, getCol) => {
-  const col = getCol ?? getColumns;
+const ROW_HEIGHT = 32;
 
+function getGroupRows(groups, key) {
   return [
-    ...groups.map((d) => {
+    ...groups.map((d, i) => {
       const id = d === null ? generateUID() : d["id"];
       return {
         list_number: d === null ? null : d["list_number"] ?? null,
@@ -16,9 +18,21 @@ export const getGroupRows = (groups, key, getCol) => {
         newRow: d === null || d["id"] === null,
         height: ROW_HEIGHT,
         cells: [
-          ...col[key].map((e) => {
+          ...getColumns[key].map((e) => {
             if (d === null) {
               return nonEditable(textCell("", "padding-left-lg"));
+            }
+
+            let nonEdit = false;
+
+            if (key === "All data") {
+              if (i === 6 || i === 8 || i === 12 || i === 13 || i === 15) {
+                e.nonEditabled = true;
+                nonEdit = true;
+              } else {
+                e.nonEditabled = false;
+                nonEdit = true;
+              }
             }
 
             if (e.type === "text") {
@@ -27,6 +41,7 @@ export const getGroupRows = (groups, key, getCol) => {
               } else {
                 return nonEditable(
                   textCell(d[e.columnId] ?? "", "padding-left-lg", {
+                    fontWeight: key === "All data" ? (nonEdit ? "bold" : "normal") : "normal",
                     background:
                       d["columnId"] !== "product_code" ||
                       d["columnId"] !== "product_description" ||
@@ -71,4 +86,12 @@ export const getGroupRows = (groups, key, getCol) => {
       };
     }),
   ];
-};
+}
+
+export function getRows({ header, data, key }) {
+  const r =
+    key === "All data"
+      ? [header, ...getGroupRows(data, key)]
+      : [header, ...getGroupRows(data, key), firstLoadTotalRow(data, key)];
+  return r;
+}

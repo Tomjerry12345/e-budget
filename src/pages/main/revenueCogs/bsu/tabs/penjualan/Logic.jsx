@@ -2,25 +2,19 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log, showNotif } from "values/Utilitas";
-import {
-  actionData,
-  resetTypeRevenueImport,
-} from "redux/data-global/data.reducer";
+import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab } from "values/Constant";
 import {
   fullNewRow,
-  getRows,
   updateTotalRow,
 } from "values/react-grid/rows/input/revenue/template-1/getRows";
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
 import { tableList } from "../../TableConstant";
+import { getRows } from "./getRows";
 
 const Logic = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -32,9 +26,7 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -57,14 +49,7 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const onSetDataTable = (values) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_project,
-      code_icp,
-      periode,
-    } = values;
+    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
 
     let fCodeCompany = code_company.split(" ");
     // let fCodeProduct = code_product.split(" ");
@@ -82,14 +67,7 @@ const Logic = () => {
     fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(
-      fCodeCompany,
-      fCodeLocation,
-      fCodeDept,
-      fCodeIcp,
-      fCodeProject,
-      fPeriode
-    );
+    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
 
     setCodeFilter(values);
   };
@@ -123,11 +101,13 @@ const Logic = () => {
             data: d,
             key: desc,
           });
+
           listRows[i] = {
             description: desc,
             key: key,
             insert: p.insert,
             endpoint: p.endpoint,
+            endpointChange: p.endpointChange,
             data: r,
             // apiData: data.data,
           };
@@ -139,6 +119,7 @@ const Logic = () => {
             key: key,
             insert: p.insert,
             endpoint: p.endpoint,
+            endpointChange: p.endpointChange,
             data: fullNewRow(getHeaderRow[desc], i, desc),
             // apiData: [],
           };
@@ -171,34 +152,32 @@ const Logic = () => {
         );
 
         const type = newRows[rowIndex].cells[columnIndex].type;
-        const length = newRows.length;
+        // const length = newRows.length;
 
         let value;
 
         if (type === "text") {
-          newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
+          // newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
         } else {
-          newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
-          value = c.newCell.value;
-
+          // newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
           if (!isNaN(value)) {
-            newRows[rowIndex].cells[columnIndex].value = value;
+            // newRows[rowIndex].cells[columnIndex].value = value;
 
-            let total1 = 0;
-            let total2 = 0;
+            // let total1 = 0;
+            // let total2 = 0;
 
-            const newCell = newRows[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
+            // const newCell = newRows[rowIndex].cells.map((e, j) => {
+            //   if (j >= 2 && j <= 13) total1 += e.value;
+            //   if (j === 14) e.value = total1;
+            //   if (j >= 15 && j <= 26) total2 += e.value;
+            //   if (j === 27) e.value = total2;
+            //   return e;
+            // });
 
-            newRows[rowIndex].cells = newCell;
+            // newRows[rowIndex].cells = newCell;
 
             isChange = true;
           } else {
@@ -219,14 +198,8 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const {
-              code_company,
-              code_dept,
-              code_location,
-              code_project,
-              code_icp,
-              periode,
-            } = codeFilter;
+            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
+              codeFilter;
 
             let fCodeCompany = code_company.split(" ");
             let fCodeLocation = code_location.split(" ");
@@ -237,8 +210,7 @@ const Logic = () => {
             let fPeriode = periode.split(" ");
 
             fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeLocation =
-              fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
+            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
             fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
             fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
             fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
@@ -256,65 +228,58 @@ const Logic = () => {
               list_number: listNumber,
             });
 
-            const res = await MainServices.post(
-              `${item.endpoint}/insert`,
-              formData
-            );
+            const res = await MainServices.post(`${item.endpointChange}/insert`, formData);
 
             log({ res });
-            const rowId = res.data.data.id;
+            // const rowId = res.data.data.id;
 
-            newRows[rowIndex].rowId = rowId;
-            newRows[rowIndex].newRow = false;
+            // newRows[rowIndex].rowId = rowId;
+            // newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
             formData.append("value", value);
-            await MainServices.post(`${item.endpoint}/update`, formData);
+            await MainServices.post(`${item.endpointChange}/update`, formData);
           }
 
           // delete newRows[rowIndex].newRow;
-          newRows[length - 1] = updateTotalRow(newRows, item.description);
 
-          fullRows[i].data = newRows;
+          // fullRows[i].data = newRows;
 
-          if (type === "number") {
-            // Potongan penjualan
-            if (i === 7) {
-              const length = fullRows[2].data.length;
-              let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
+          // if (type === "percent") {
+          //   // Potongan penjualan
+          //   if (i === 1) {
+          //     const length = fullRows[1].data.length;
+          //     let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
 
-              const vPenjualan =
-                fullRows[1].data[rowIndex].cells[indexPenjualan - 1].value;
+          //     const vPenjualan = fullRows[0].data[16].cells[indexPenjualan - 1].value;
 
-              fullRows[2].data[rowIndex].cells[columnIndex - 1].value =
-                vPenjualan * (value / 100);
+          //     log({ vPenjualan });
 
-              let total1 = 0;
-              let total2 = 0;
+          //     fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
+          //       vPenjualan * (value / 100);
 
-              const newCellPotonganPenjualan = fullRows[2].data[
-                rowIndex
-              ].cells.map((e, j) => {
-                if (j >= 2 && j <= 13) total1 += e.value;
-                if (j === 14) e.value = total1;
-                if (j >= 15 && j <= 26) total2 += e.value;
-                if (j === 27) e.value = total2;
-                return e;
-              });
+          //     let total1 = 0;
+          //     let total2 = 0;
 
-              fullRows[2].data[rowIndex].cells = newCellPotonganPenjualan;
+          //     const newCellPotonganPenjualan = fullRows[1].data[rowIndex].cells.map((e, j) => {
+          //       if (j >= 2 && j <= 13) total1 += e.value;
+          //       if (j === 14) e.value = total1;
+          //       if (j >= 15 && j <= 26) total2 += e.value;
+          //       if (j === 27) e.value = total2;
+          //       return e;
+          //     });
 
-              fullRows[2].data[length - 1] = updateTotalRow(
-                fullRows[2].data,
-                item.description
-              );
-            }
-          }
+          //     fullRows[1].data[rowIndex].cells = newCellPotonganPenjualan;
+
+          //     fullRows[1].data[length - 1] = updateTotalRow(fullRows[1].data, item.description);
+          //   }
+          // }
         }
       }
 
-      setRows(fullRows);
+      // setRows(fullRows);
+      getData(codeFilter);
 
       showNotif(dispatch, { status: 200, message: "Sukses update data" });
     } catch (e) {
@@ -336,14 +301,8 @@ const Logic = () => {
       })
     );
 
-    const {
-      code_company,
-      code_location,
-      code_dept,
-      code_icp,
-      code_project,
-      periode,
-    } = codeFilter;
+    const { code_company, code_location, code_dept, code_icp, code_project, periode } =
+      codeFilter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeLocation = code_location.split(" ");
@@ -381,14 +340,7 @@ const Logic = () => {
     try {
       const res = await MainServices.post(`${endpoint}/import`, formData);
 
-      getData(
-        fCodeCompany,
-        fCodeLocation,
-        fCodeDept,
-        fCodeIcp,
-        fCodeProject,
-        fPeriode
-      );
+      getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
 
       showNotif(dispatch, { res: res });
 
