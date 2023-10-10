@@ -438,7 +438,7 @@ const Logic = () => {
       } else if (change.type === "dropdown") {
         let key = `is_${fieldName}`;
         if (
-          change.previousCell.selectedValue !== change.newCell.selectedValue
+          change.newCell.selectedValue && change.previousCell.selectedValue !== change.newCell.selectedValue
         ) {
           dataRow[fieldName] = change.newCell.selectedValue;
 

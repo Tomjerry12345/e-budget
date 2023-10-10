@@ -116,8 +116,8 @@ function getGroupRows(groups) {
         textCell(d["cost_driver"] ?? "-", "padding-left-lg"),
 
         numberCell(d["rates"] ?? 0, "padding-left-lg"),
-        dropDownCustomCell(d["month_duration"] ?? 0, getMonthDuration(), d["is_month_duration"]),
-        dropDownCustomCell(d["month_start"] ?? 0, getMonthName(), d["is_month_start"]),
+        dropDownCustomCell(d["month_duration"] ?? "", getMonthDuration(), d["is_month_duration"]),
+        dropDownCustomCell(d["month_start"] ?? "", getMonthName(), d["is_month_start"]),
         nonEditable(numberCell(d["grand_total"] ?? 0, "padding-left-lg")),
 
         nonEditable(numberCell(d["jan_rates"] ?? 0, "padding-left-lg")),
@@ -192,8 +192,8 @@ export function reactgridNewRow(id) {
       nonEditable(textCell("", "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      dropDownCustomCell("", getMonthDuration(), 'is_month_duration'),
+      dropDownCustomCell("", getMonthName(), 'is_month_start'),
       nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),

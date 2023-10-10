@@ -201,8 +201,8 @@ export function reactgridNewRow(id) {
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg")),
       nonEditable(numberCell(0, "padding-left-lg")),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
-      nonEditable(numberCell(0, "padding-left-lg", null, false)),
+      dropDownCustomCell("", getMonthDuration(), 'is_month_duration'),
+      dropDownCustomCell("", getMonthName(), 'is_month_start'),
       nonEditable(numberCell(0, "padding-left-lg")),
 
       nonEditable(numberCell(0, "padding-left-lg")),
