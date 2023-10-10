@@ -48,38 +48,45 @@ const Logic = () => {
     }
   }, [importRedux.file]);
 
-  const onSetDataTable = (values) => {
-    const { code_company, code_dept, code_location, code_project, code_icp, periode } = values;
+  const formatingFilter = (filter) => {
+    const { code_company, code_dept, code_location, code_project, code_icp, periode } = filter;
 
     let fCodeCompany = code_company.split(" ");
-    // let fCodeProduct = code_product.split(" ");
+    let fCodeProject = code_project.split(" ");
     let fCodeLocation = code_location.split(" ");
     let fCodeDept = code_dept.split(" ");
     let fCodeIcp = code_icp.split(" ");
-    let fCodeProject = code_project.split(" ");
-
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0];
+    fCodeProject = fCodeProject[0];
     fCodeLocation = fCodeLocation[0];
     fCodeDept = fCodeDept[0];
     fCodeIcp = fCodeIcp[0];
-    fCodeProject = fCodeProject[0];
     fPeriode = fPeriode[0];
 
-    getData(fCodeCompany, fCodeLocation, fCodeDept, fCodeIcp, fCodeProject, fPeriode);
-
-    setCodeFilter(values);
+    return {
+      code_company: fCodeCompany,
+      code_project: fCodeProject,
+      code_location: fCodeLocation,
+      code_department: fCodeDept,
+      code_icp: fCodeIcp,
+      year: fPeriode,
+    };
   };
 
-  const getData = async (
-    codeCompany,
-    codeLocation,
-    codeDept,
-    codeIcp,
-    codeProject,
-    periode
-  ) => {
+  const onSetDataTable = (values) => {
+    const formatFilter = formatingFilter(values);
+
+    try {
+      getData(formatFilter);
+      setCodeFilter(formatFilter);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
+  const getData = async (params) => {
     const listRows = [];
 
     await Promise.allSettled(
@@ -87,9 +94,9 @@ const Logic = () => {
         const desc = p.description;
         const key = p.key;
 
-        const url = `${p.endpoint}/list?code_company=${codeCompany}&code_location=${codeLocation}&code_department=${codeDept}&code_icp=${codeIcp}&code_project=${codeProject}&year=${periode}`;
+        const url = `${p.endpoint}/list`;
         try {
-          const { data } = await MainServices.get(url);
+          const { data } = await MainServices.get(url, params);
           let r, d;
 
           if (desc === "All data") d = data.data.detail;
