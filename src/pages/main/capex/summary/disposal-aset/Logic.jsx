@@ -61,7 +61,6 @@ const Logic = () => {
 
     try {
       getData(formatFilter);
-      // setCodeFilter(formatFilter);
     } catch (error) {
       console.error(`Error fetching data`, error);
     }

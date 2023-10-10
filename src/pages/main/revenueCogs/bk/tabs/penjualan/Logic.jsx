@@ -121,12 +121,12 @@ const Logic = () => {
   };
 
   const onFinish = (values) => {
-    log("test", "...");
     setLoading(true);
     onSetDataTable(values);
   };
 
-  const onChangeTable = async (change) => {
+  // eslint-disable-next-line no-unused-vars
+  const onChangeTableBackup = async (change) => {
     try {
       const newRows = [...rows];
       let isChange;
@@ -246,6 +246,82 @@ const Logic = () => {
       }
 
       setRows(newRows);
+
+      showNotif(200, "Sukses update data");
+    } catch (e) {
+      log({ e });
+      showNotif(400, e.message);
+    }
+  };
+
+  const onChangeTable = async (change) => {
+    try {
+      const newRows = [...rows];
+      let isChange;
+      for (const c of change) {
+        const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        if (rowIndex < 0) continue;
+        const columnIndex = columns.findIndex((j) => j.columnId === c.columnId);
+        const type = newRows[rowIndex].cells[columnIndex].type;
+        let value;
+
+        if (type === "text") {
+          value = c.newCell.text;
+          isChange = true;
+        } else {
+          value = c.newCell.value;
+
+          if (!isNaN(value)) {
+            isChange = true;
+          } else {
+            isChange = false;
+          }
+        }
+
+        if (isChange) {
+          let indexParent;
+
+          for (let i = rowIndex; i > 0; i--) {
+            if (newRows[i].parent === true) {
+              indexParent = i;
+              break;
+            }
+          }
+
+          const code_product = newRows[indexParent].cells[0].text;
+
+          const id = c.rowId;
+          const column_id = c.columnId;
+          const isNewRow = newRows[rowIndex].newRow;
+
+          const code_project = newRows[rowIndex].cells[0].text;
+
+          const key = columns[columnIndex].columnId;
+
+          if (isNewRow) {
+            const formData = formDataUtils({
+              ...codeFilter,
+              code_project,
+              code_product,
+              [key]: value,
+            });
+
+            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
+
+            log({ res });
+          } else {
+            const formData = formDataUtils({
+              id,
+              column_id,
+              value,
+            });
+
+            await MainServices.post(`${ENDPOINT_URL}/update`, formData);
+          }
+        }
+      }
+
+      getData(codeFilter);
 
       showNotif(200, "Sukses update data");
     } catch (e) {
