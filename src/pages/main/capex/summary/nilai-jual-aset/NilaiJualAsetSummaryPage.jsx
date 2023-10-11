@@ -13,7 +13,7 @@ const NilaiJualAsetSummaryPage = () => {
         type="summary"
         listMenu={[
           {
-            description: "Export nilai jual",
+            description: "nilai jual",
             disabled: value.linkExport === null,
           },
         ]}

@@ -13,7 +13,7 @@ const DisposalAsetSummaryPage = () => {
         type="summary"
         listMenu={[
           {
-            description: "Export disposal aset",
+            description: "disposal aset",
             disabled: value.linkExport === null,
           },
         ]}

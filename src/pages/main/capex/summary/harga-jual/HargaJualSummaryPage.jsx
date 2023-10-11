@@ -4,7 +4,7 @@ import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
 
-const PenyusutanDisposalAsetSummaryPage = () => {
+const HargaJualSummaryPage = () => {
   const { value, func } = Logic();
 
   return (
@@ -13,7 +13,7 @@ const PenyusutanDisposalAsetSummaryPage = () => {
         type="summary"
         listMenu={[
           {
-            description: "penyusutan disposal aset",
+            description: "harga jual",
             disabled: value.linkExport === null,
           },
         ]}
@@ -57,4 +57,4 @@ const PenyusutanDisposalAsetSummaryPage = () => {
   );
 };
 
-export default PenyusutanDisposalAsetSummaryPage;
+export default HargaJualSummaryPage;

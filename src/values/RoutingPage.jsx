@@ -77,6 +77,7 @@ export const routingCapex = {
   "Summary Akumulasi Penyusutan New Aset": "akumulasi-penyusutan-new-aset",
   "Summary Disposal Aset": "disposal-aset",
   "Summary Nilai Jual Aset": "nilai-jual-aset",
+  "Summary Harga Jual": "harga-jual",
   "Summary Penyusutan Disposal Aset": "penyusutan-disposal-aset",
   "Summary Akumulasi Penyusutan Disposal Aset": "akumulasi-penyusutan-disposal-aset",
   "Summary Total Aset": "total-aset",

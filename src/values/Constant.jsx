@@ -142,6 +142,12 @@ export const allItemSummarySubMenu = [
       description: "Summary Akumulasi Penyusutan Disposal Aset",
     },
     {
+      description: "Summary Nilai Jual Aset",
+    },
+    // {
+    //   description: "Summary Harga Jual",
+    // },
+    {
       description: "Summary Total Aset",
     },
     {
