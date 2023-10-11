@@ -13,6 +13,8 @@ const Logic = () => {
   const columns = getColumns();
   const [rows, setRows] = useState([]);
 
+  const location = useLocation();
+
   const ENDPOINT_URL = "summary-capex/sale-value";
   const ENDPOINT_URL_EXPORT = "summary-capex/export/sale-value";
 
