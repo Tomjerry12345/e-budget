@@ -2,16 +2,10 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log, showNotif } from "values/Utilitas";
-import {
-  actionData,
-  resetTypeRevenueImport,
-} from "redux/data-global/data.reducer";
+import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab, urlRevenue } from "values/Constant";
 import {
   fullNewRow,
@@ -31,9 +25,7 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -56,14 +48,7 @@ const Logic = () => {
   }, [importRedux.file]);
 
   const formatingFilter = (filter) => {
-    const {
-      code_company,
-      code_dept,
-      code_location,
-      code_project,
-      code_icp,
-      periode,
-    } = filter;
+    const { code_company, code_dept, code_location, code_project, code_icp, periode } = filter;
 
     let fCodeCompany = code_company.split(" ");
     let fCodeProject = code_project.split(" ");
@@ -239,10 +224,7 @@ const Logic = () => {
               [key]: value,
             });
 
-            const res = await MainServices.post(
-              `${item.endpoint}/insert`,
-              formData
-            );
+            const res = await MainServices.post(`${item.endpoint}/insert`, formData);
 
             const rowId = res.data.data.id;
 
@@ -266,12 +248,9 @@ const Logic = () => {
             // stok akhir
             if (i === 0 || i === 1 || i === 4) {
               const lengthStockAkhir = fullRows[3].data.length;
-              const stockAwal =
-                fullRows[0].data[rowIndex].cells[columnIndex].value;
-              const asumsiUnitBeli =
-                fullRows[1].data[rowIndex].cells[columnIndex].value;
-              const asumsiUnitJual =
-                fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const stockAwal = fullRows[0].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitBeli = fullRows[1].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
 
               fullRows[3].data[rowIndex].cells[columnIndex].value =
                 stockAwal + asumsiUnitBeli - asumsiUnitJual;
@@ -279,15 +258,13 @@ const Logic = () => {
               let total1 = 0;
               let total2 = 0;
 
-              const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map(
-                (e, j) => {
-                  if (j >= 2 && j <= 13) total1 += e.value;
-                  if (j === 14) e.value = total1;
-                  if (j >= 15 && j <= 26) total2 += e.value;
-                  if (j === 27) e.value = total2;
-                  return e;
-                }
-              );
+              const newCellStockAkhir = fullRows[3].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
 
               fullRows[3].data[rowIndex].cells = newCellStockAkhir;
 
@@ -301,10 +278,8 @@ const Logic = () => {
 
             if (i === 4 || i === 5) {
               const lengthPenjualan = fullRows[6].data.length;
-              const asumsiUnitJual =
-                fullRows[4].data[rowIndex].cells[columnIndex].value;
-              const hargaJualUnit =
-                fullRows[5].data[rowIndex].cells[columnIndex].value;
+              const asumsiUnitJual = fullRows[4].data[rowIndex].cells[columnIndex].value;
+              const hargaJualUnit = fullRows[5].data[rowIndex].cells[columnIndex].value;
 
               fullRows[6].data[rowIndex].cells[columnIndex].value =
                 asumsiUnitJual * hargaJualUnit;
@@ -312,15 +287,13 @@ const Logic = () => {
               let total1 = 0;
               let total2 = 0;
 
-              const newCellPenjualan = fullRows[6].data[rowIndex].cells.map(
-                (e, j) => {
-                  if (j >= 2 && j <= 13) total1 += e.value;
-                  if (j === 14) e.value = total1;
-                  if (j >= 15 && j <= 26) total2 += e.value;
-                  if (j === 27) e.value = total2;
-                  return e;
-                }
-              );
+              const newCellPenjualan = fullRows[6].data[rowIndex].cells.map((e, j) => {
+                if (j >= 2 && j <= 13) total1 += e.value;
+                if (j === 14) e.value = total1;
+                if (j >= 15 && j <= 26) total2 += e.value;
+                if (j === 27) e.value = total2;
+                return e;
+              });
 
               fullRows[6].data[rowIndex].cells = newCellPenjualan;
 
@@ -334,8 +307,10 @@ const Logic = () => {
               const length = fullRows[7].data.length;
 
               let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
-              const vPenjualan =
-                fullRows[6].data[rowIndex].cells[indexPenjualan - 1].value;
+              if (indexPenjualan < 15) {
+                indexPenjualan--;
+              }
+              const vPenjualan = fullRows[6].data[rowIndex].cells[indexPenjualan].value;
 
               const tot = vPenjualan * (value / 100);
               fullRows[7].data[rowIndex].cells[columnIndex - 1].value = tot;
@@ -343,9 +318,7 @@ const Logic = () => {
               let total = 0;
               let ind = 2;
 
-              const newCellPotonganPenjualan = fullRows[7].data[
-                rowIndex
-              ].cells.map((e, j) => {
+              const newCellPotonganPenjualan = fullRows[7].data[rowIndex].cells.map((e, j) => {
                 if (j >= ind && j <= 24) {
                   total += e.value;
                   ind += 2;
@@ -364,10 +337,7 @@ const Logic = () => {
 
               fullRows[7].data[rowIndex].cells = newCellPotonganPenjualan;
 
-              fullRows[7].data[length - 1] = updateTotalRow(
-                fullRows[7].data,
-                item.description
-              );
+              fullRows[7].data[length - 1] = updateTotalRow(fullRows[7].data, item.description);
             }
           }
         }
