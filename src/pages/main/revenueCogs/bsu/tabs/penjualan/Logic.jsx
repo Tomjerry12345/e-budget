@@ -159,33 +159,15 @@ const Logic = () => {
         );
 
         const type = newRows[rowIndex].cells[columnIndex].type;
-        // const length = newRows.length;
 
         let value;
 
         if (type === "text") {
-          // newRows[rowIndex].cells[columnIndex].text = c.newCell.text;
           value = c.newCell.text;
           isChange = true;
         } else {
-          // newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
           if (!isNaN(value)) {
-            // newRows[rowIndex].cells[columnIndex].value = value;
-
-            // let total1 = 0;
-            // let total2 = 0;
-
-            // const newCell = newRows[rowIndex].cells.map((e, j) => {
-            //   if (j >= 2 && j <= 13) total1 += e.value;
-            //   if (j === 14) e.value = total1;
-            //   if (j >= 15 && j <= 26) total2 += e.value;
-            //   if (j === 27) e.value = total2;
-            //   return e;
-            // });
-
-            // newRows[rowIndex].cells = newCell;
-
             isChange = true;
           } else {
             isChange = false;
@@ -205,31 +187,8 @@ const Logic = () => {
           const key = columns[item.description][columnIndex].columnId;
 
           if (isNewRow) {
-            const { code_company, code_dept, code_location, code_project, code_icp, periode } =
-              codeFilter;
-
-            let fCodeCompany = code_company.split(" ");
-            let fCodeLocation = code_location.split(" ");
-            let fCodeDept = code_dept.split(" ");
-            let fCodeIcp = code_icp.split(" ");
-            let fCodeProject = code_project.split(" ");
-
-            let fPeriode = periode.split(" ");
-
-            fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-            fCodeLocation = fCodeLocation[0] === "ALL" ? "all" : fCodeLocation[0];
-            fCodeDept = fCodeDept[0] === "ALL" ? "all" : fCodeDept[0];
-            fCodeIcp = fCodeIcp[0] === "ALL" ? "all" : fCodeIcp[0];
-            fCodeProject = fCodeProject[0] === "ALL" ? "all" : fCodeProject[0];
-            fPeriode = fPeriode[0];
-
             const formData = formDataUtils({
-              code_company: fCodeCompany,
-              code_department: fCodeDept,
-              code_location: fCodeLocation,
-              code_project: fCodeProject,
-              code_icp: fCodeIcp,
-              year: fPeriode,
+              ...codeFilter,
               [key]: value,
               code_product: codeProduct,
               list_number: listNumber,
@@ -238,54 +197,15 @@ const Logic = () => {
             const res = await MainServices.post(`${item.endpointChange}/insert`, formData);
 
             log({ res });
-            // const rowId = res.data.data.id;
-
-            // newRows[rowIndex].rowId = rowId;
-            // newRows[rowIndex].newRow = false;
           } else {
             formData.append("id", id);
             formData.append("column_id", column_id);
             formData.append("value", value);
             await MainServices.post(`${item.endpointChange}/update`, formData);
           }
-
-          // delete newRows[rowIndex].newRow;
-
-          // fullRows[i].data = newRows;
-
-          // if (type === "percent") {
-          //   // Potongan penjualan
-          //   if (i === 1) {
-          //     const length = fullRows[1].data.length;
-          //     let indexPenjualan = Math.floor((columnIndex - 1) / 2) + 2;
-
-          //     const vPenjualan = fullRows[0].data[16].cells[indexPenjualan - 1].value;
-
-          //     log({ vPenjualan });
-
-          //     fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
-          //       vPenjualan * (value / 100);
-
-          //     let total1 = 0;
-          //     let total2 = 0;
-
-          //     const newCellPotonganPenjualan = fullRows[1].data[rowIndex].cells.map((e, j) => {
-          //       if (j >= 2 && j <= 13) total1 += e.value;
-          //       if (j === 14) e.value = total1;
-          //       if (j >= 15 && j <= 26) total2 += e.value;
-          //       if (j === 27) e.value = total2;
-          //       return e;
-          //     });
-
-          //     fullRows[1].data[rowIndex].cells = newCellPotonganPenjualan;
-
-          //     fullRows[1].data[length - 1] = updateTotalRow(fullRows[1].data, item.description);
-          //   }
-          // }
         }
       }
 
-      // setRows(fullRows);
       getData(codeFilter);
 
       showNotif(dispatch, { status: 200, message: "Sukses update data" });
