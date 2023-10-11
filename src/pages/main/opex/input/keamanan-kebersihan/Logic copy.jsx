@@ -492,21 +492,22 @@ const Logic = () => {
       }
       // ===================================================
 
-      dataRow["grand_total"] = total * duration;
-
       // const months with prefix to change the key of dataRow
       const allMonths = getMonthPrefix();
 
       // loop for months which is includes in rent's duration
+      if (start > 0){
+      dataRow["grand_total"] = total * duration;
       for (let i = 0; i < allMonths.length; i++) {
-        if (parseInt(allMonths[i].value) >= start) {
-          if (parseInt([allMonths[i].value]) < start + duration) {
-            dataRow[allMonths[i].key] = total;
+          if (parseInt(allMonths[i].value) >= start) {
+            if (parseInt([allMonths[i].value]) < start + duration) {
+              dataRow[allMonths[i].key] = total;
+            } else {
+              dataRow[allMonths[i].key] = 0;
+            }
           } else {
             dataRow[allMonths[i].key] = 0;
           }
-        } else {
-          dataRow[allMonths[i].key] = 0;
         }
       }
       // ===================================================

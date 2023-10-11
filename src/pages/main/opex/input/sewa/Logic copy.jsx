@@ -442,7 +442,7 @@ const Logic = () => {
       } else if (change.type === "dropdown") {
         let key = `is_${fieldName}`;
         if (
-          change.previousCell.selectedValue !== change.newCell.selectedValue
+          change.newCell.selectedValue && change.previousCell.selectedValue !== change.newCell.selectedValue
         ) {
           dataRow[fieldName] = change.newCell.selectedValue;
 
@@ -494,21 +494,23 @@ const Logic = () => {
       }
       // ===================================================
 
-      dataRow["grand_total"] = total_rent * duration;
-
+      
       // const months with prefix to change the key of dataRow
       const allMonths = getMonthPrefix();
-
+      
       // loop for months which is includes in rent's duration
-      for (let i = 0; i < allMonths.length; i++) {
-        if (parseInt(allMonths[i].value) >= start) {
-          if (parseInt([allMonths[i].value]) < start + duration) {
-            dataRow[allMonths[i].key] = total_rent;
+      if (start > 0){
+        dataRow["grand_total"] = total_rent * duration;
+        for (let i = 0; i < allMonths.length; i++) {
+          if (parseInt(allMonths[i].value) >= start) {
+            if (parseInt([allMonths[i].value]) < start + duration) {
+              dataRow[allMonths[i].key] = total_rent;
+            } else {
+              dataRow[allMonths[i].key] = 0;
+            }
           } else {
             dataRow[allMonths[i].key] = 0;
           }
-        } else {
-          dataRow[allMonths[i].key] = 0;
         }
       }
       // ===================================================
