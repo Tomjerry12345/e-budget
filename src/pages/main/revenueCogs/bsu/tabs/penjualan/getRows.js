@@ -26,6 +26,11 @@ function getGroupRows(groups, key) {
             let nonEdit = false;
 
             if (key === "All data") {
+              if (i === 0 || i === 1 || i === 2) {
+                e.format = false;
+              } else {
+                e.format = true;
+              }
               if (i === 6 || i === 8 || i === 12 || i === 13 || i === 15) {
                 e.nonEditabled = true;
                 nonEdit = true;
