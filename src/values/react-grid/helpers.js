@@ -66,5 +66,5 @@ export async function generateAttributesByNewValue(object1, object2) {
     }
   });
 
-  return obj1
+  return obj1;
 }

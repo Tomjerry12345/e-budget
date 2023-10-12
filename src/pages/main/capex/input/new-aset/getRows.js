@@ -145,7 +145,13 @@ function getGroupRows(groups, categories) {
           cells: [
             ...getColumns().map((e) => {
               if (e.type === "text") {
-                return textCell(d[e.columnId] ?? "", "padding-left-lg");
+                if (e.nonEditabled === undefined || e.nonEditabled === false) {
+                  return textCell(d[e.columnId] ?? "", "padding-left-lg");
+                } else {
+                  return nonEditable(
+                    textCell(d[e.columnId] ?? "", "padding-left-lg")
+                  );
+                }
               } else if (e.type === "dropdown") {
                 if (e.columnId === "asset_category_id") {
                   return dropDownCustomCell(
@@ -157,12 +163,23 @@ function getGroupRows(groups, categories) {
                   return dropDownCell(getMonthDuration(), d[e.columnId]);
                 }
               } else if (e.type === "number") {
-                return numberCell(
-                  d[e.columnId] ?? 0,
-                  "padding-left-lg",
-                  null,
-                  e.format ?? false
-                );
+                if (e.nonEditabled === undefined || e.nonEditabled === false) {
+                  return numberCell(
+                    d[e.columnId] ?? 0,
+                    "padding-left-lg",
+                    null,
+                    e.format ?? false
+                  );
+                } else {
+                  return nonEditable(
+                    numberCell(
+                      d[e.columnId] ?? 0,
+                      "padding-left-lg",
+                      null,
+                      e.format ?? false
+                    )
+                  );
+                }
               }
             }),
           ],

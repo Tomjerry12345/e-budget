@@ -9,7 +9,7 @@ export function getColumns() {
       columnId: "quantity",
       width: 200,
       type: "number",
-      format: true,
+      format: false,
     },
     {
       columnId: "price",
@@ -26,11 +26,12 @@ export function getColumns() {
       columnId: "purchase_month",
       width: 200,
       type: "number",
+      format: false,
     },
     {
       columnId: "purchase_year",
       width: 200,
-      type: "number",
+      type: "text",
     },
     {
       columnId: "depreciation_month",
@@ -40,7 +41,7 @@ export function getColumns() {
     {
       columnId: "depreciation_year",
       width: 200,
-      type: "number",
+      type: "text",
     },
     {
       columnId: "asset_life",
@@ -57,6 +58,7 @@ export function getColumns() {
       width: 200,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "depreciation_amount_monthly",
@@ -74,16 +76,19 @@ export function getColumns() {
       columnId: "asset_account",
       width: 200,
       type: "text",
+      nonEditabled: true,
     },
     {
       columnId: "accumulated_account",
       width: 200,
       type: "text",
+      nonEditabled: true,
     },
     {
       columnId: "depreciation_account",
       width: 200,
       type: "text",
+      nonEditabled: true,
     },
   ];
 }

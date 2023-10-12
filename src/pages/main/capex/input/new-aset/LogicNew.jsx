@@ -168,6 +168,13 @@ const LoginNew = () => {
       let r;
       if (data.data.length > 0) {
         a = await generateArrayAttributes(data.data, ["asset_category_id"]);
+        a = a.map((x) => {
+          return {
+            ...x,
+            purchase_year: x.purchase_year !== null ? '' + x.purchase_year : '',
+            depreciation_year: x.depreciation_year !== null ? '' + x.depreciation_year : '',
+          }
+        })
         r = getRows({
           data: a,
           categories: allAssetsCategory,
@@ -297,12 +304,7 @@ const LoginNew = () => {
             value,
           });
           if (!isNaN(value)) {
-            value =
-              dataRow["rate_gray_shirt"] * dataRow["qty_gray_shirt"] +
-              dataRow["rate_batik"] * dataRow["qty_batik"] +
-              dataRow["rate_polo"] * dataRow["qty_polo"] +
-              dataRow["rate_ic_card"] * dataRow["qty_ic_card"] +
-              dataRow["rate_other"] * dataRow["qty_other"];
+            value = dataRow["quantity"] * dataRow["price"];
 
             dataRow["total"] = value;
           }
