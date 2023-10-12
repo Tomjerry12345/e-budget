@@ -4,6 +4,7 @@ import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -22,7 +23,13 @@ const FormItem = ({ label, name, children }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => {
+const ModalManagementUser = ({
+  open,
+  onCancel,
+  onOk,
+  form,
+  isEdit = false,
+}) => {
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
@@ -51,7 +58,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   };
 
   const getListLocation = async (e) => {
-    const { data } = await MainServices.get(`location/list-by-com?code_company=${e}`);
+    const { data } = await MainServices.get(
+      `location/list-by-com?code_company=${e}`
+    );
 
     if (data.responseCode === 200) {
       setListLocation(data.data);
@@ -59,7 +68,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   };
 
   const getListDept = async (e) => {
-    const { data } = await MainServices.get(`department/list-dropdown?code_company=${e}`);
+    const { data } = await MainServices.get(
+      `department/list-dropdown?code_company=${e}`
+    );
 
     if (data.responseCode === 200) {
       setListDept(data.data);
@@ -67,11 +78,25 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   };
 
   return (
-    <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
+    <Modal
+      className="management-user"
+      open={open}
+      footer={null}
+      onCancel={onCancel}
+    >
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form onFinish={onOk} layout="vertical" form={form}>
         <FormItem label="Username" name="username" children={<Input />} />
-        {!isEdit ? <FormItem label="Password" name="password" children={<Input />} /> : null}
+        {!isEdit ? (
+          <Form.Item name="password" label="Password">
+            <Input.Password
+              placeholder="input password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+            />
+          </Form.Item>
+        ) : null}
 
         <FormItem label="Nama" name="name" children={<Input />} />
         <FormItem
@@ -86,12 +111,20 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
               }}
               options={[
                 {
-                  value: "usersbu",
-                  label: "Usersbu",
+                  value: "sbu",
+                  label: "Sbu",
                 },
                 {
-                  value: "reviewer",
-                  label: "Reviewer",
+                  value: "subholding",
+                  label: "Subholding",
+                },
+                {
+                  value: "hc",
+                  label: "Hc",
+                },
+                {
+                  value: "holding",
+                  label: "Holding",
                 },
               ]}
             />

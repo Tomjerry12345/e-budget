@@ -1,4 +1,4 @@
-version: v1.4.7 ✅ ❌ 🔥
+version: v1.4.8 ✅ ❌ 🔥
 
 Bug New:
 - tambahkan inputan quantity ketika retired
@@ -21,3 +21,17 @@ BK
 - total warna kuning di bawah jg mau di kasi hilang ✅
 - trus update perubahan total year tdk terupdate klo ada perbuahan data ✅
 - ini jg BK download tempate untk import tdk na dpt ki filenya ✅
+- BK gagal update
+
+
+management user
+- ganti username jadi nik
+- pencarian berdasarkan nik, nama
+- tambah email
+- reset password kirim ke email
+- pagination belum berfungsi
+- notifikasi nik saat data duplikat
+- user group diganti jadi [sbu, subholding, hc, holding] ✅
+- input password msh kelihatan ✅
+
+- fitur remember password saat login
