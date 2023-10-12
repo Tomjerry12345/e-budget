@@ -23,13 +23,7 @@ const FormItem = ({ label, name, children }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({
-  open,
-  onCancel,
-  onOk,
-  form,
-  isEdit = false,
-}) => {
+const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => {
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
@@ -58,9 +52,7 @@ const ModalManagementUser = ({
   };
 
   const getListLocation = async (e) => {
-    const { data } = await MainServices.get(
-      `location/list-by-com?code_company=${e}`
-    );
+    const { data } = await MainServices.get(`location/list-by-com?code_company=${e}`);
 
     if (data.responseCode === 200) {
       setListLocation(data.data);
@@ -68,9 +60,7 @@ const ModalManagementUser = ({
   };
 
   const getListDept = async (e) => {
-    const { data } = await MainServices.get(
-      `department/list-dropdown?code_company=${e}`
-    );
+    const { data } = await MainServices.get(`department/list-dropdown?code_company=${e}`);
 
     if (data.responseCode === 200) {
       setListDept(data.data);
@@ -78,22 +68,16 @@ const ModalManagementUser = ({
   };
 
   return (
-    <Modal
-      className="management-user"
-      open={open}
-      footer={null}
-      onCancel={onCancel}
-    >
+    <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form onFinish={onOk} layout="vertical" form={form}>
-        <FormItem label="Username" name="username" children={<Input />} />
+        <FormItem label="Nik" name="nik" children={<Input />} />
+        <FormItem label="Email" name="email" children={<Input />} />
         {!isEdit ? (
           <Form.Item name="password" label="Password">
             <Input.Password
               placeholder="input password"
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
         ) : null}

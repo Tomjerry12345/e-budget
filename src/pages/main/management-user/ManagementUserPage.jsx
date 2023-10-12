@@ -1,10 +1,11 @@
-import { Button, Pagination, Table } from "antd";
+import { Button, Form, Input, Pagination, Table } from "antd";
 import Logic from "./Logic";
-import HeaderComponent from "component/header/HeaderComponent";
 import "./style.scss";
 import ModalManagementUser from "./modal/ModalManagementUser";
 import { Box } from "@mui/material";
 import HeaderManagementUser from "./header/HeaderManagementUser";
+import FormItem from "antd/es/form/FormItem";
+import { SearchOutlined } from "@ant-design/icons";
 
 const ManagementUserPage = () => {
   const { value, func } = Logic();
@@ -16,6 +17,22 @@ const ManagementUserPage = () => {
         {/* <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
           Tambah User
         </Button> */}
+        <Form
+          layout="horizontal"
+          onFinish={func.onSearch}
+          // form={form}
+        >
+          <FormItem
+            label="Cari berdasarkan nik / nama"
+            name="search"
+            children={<Input prefix={<SearchOutlined />} />}
+          />
+          <Form.Item className="footer-custom">
+            <Button className="btn-cari" type="primary" htmlType="submit">
+              Cari
+            </Button>
+          </Form.Item>
+        </Form>
         <Table
           rowClassName={() => "editable-row"}
           bordered

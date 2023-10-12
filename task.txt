@@ -25,13 +25,13 @@ BK
 
 
 management user
-- ganti username jadi nik
-- pencarian berdasarkan nik, nama
-- tambah email
-- reset password kirim ke email
-- pagination belum berfungsi
-- notifikasi nik saat data duplikat
+- ganti username jadi nik ✅
+- pencarian berdasarkan nik, nama 🔥
+- tambah email ✅
+- reset password kirim ke email ❌
+- pagination belum berfungsi ❌
+- notifikasi nik saat data duplikat ❌
 - user group diganti jadi [sbu, subholding, hc, holding] ✅
 - input password msh kelihatan ✅
 
-- fitur remember password saat login
+- fitur remember password saat login ❌
