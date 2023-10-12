@@ -7,10 +7,7 @@ import MainServices from "services/MainServices";
 import { formDataUtils, log, showNotif } from "values/Utilitas";
 import { actionData, resetTypeRevenueImport } from "redux/data-global/data.reducer";
 import { keyRevenueTab } from "values/Constant";
-import {
-  fullNewRow,
-  updateTotalRow,
-} from "values/react-grid/rows/input/revenue/template-1/getRows";
+import { fullNewRow } from "values/react-grid/rows/input/revenue/template-1/getRows";
 import { getHeaderRow } from "values/react-grid/rows/input/revenue/template-1/getHeaderRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
 import { tableList } from "../../TableConstant";
@@ -146,7 +143,6 @@ const Logic = () => {
   };
 
   const onChangeTable = async (change, i, item) => {
-    const fullRows = [...rows];
     const newRows = [...rows[i].data];
     let isChange;
 
