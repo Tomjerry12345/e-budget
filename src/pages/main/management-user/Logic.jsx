@@ -59,11 +59,7 @@ const Logic = () => {
               display: "flex",
             }}
           >
-            <Button
-              className="btn-edit"
-              type="link"
-              onClick={() => handleEdit(record)}
-            >
+            <Button className="btn-edit" type="link" onClick={() => handleEdit(record)}>
               Edit
             </Button>
 
@@ -76,10 +72,7 @@ const Logic = () => {
               </Button>
             </Popconfirm>
 
-            <Popconfirm
-              title="Sure to delete?"
-              onConfirm={() => handleDelete(record.id)}
-            >
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
               <Button className="btn-delete" type="link">
                 Delete
               </Button>
@@ -119,7 +112,7 @@ const Logic = () => {
 
   const onGetUser = async () => {
     try {
-      const url = `users`;
+      let url = `users`;
       const { data } = await MainServices.get(url);
       setDataSource(data.data.data);
       setTotalData(data.data.total);
@@ -146,9 +139,7 @@ const Logic = () => {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === ""
-              ? null
-              : values.code_company.toString(),
+            values.code_company.toString() === "" ? null : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
           id: idRef.current,
@@ -160,9 +151,7 @@ const Logic = () => {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === ""
-              ? null
-              : values.code_company.toString(),
+            values.code_company.toString() === "" ? null : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
         };
@@ -200,8 +189,7 @@ const Logic = () => {
 
     idRef.current = record.id;
 
-    if (record.code_company !== null)
-      code_company = record.code_company.split(",");
+    if (record.code_company !== null) code_company = record.code_company.split(",");
 
     const nRecord = {
       ...record,
@@ -225,14 +213,19 @@ const Logic = () => {
     }
   };
 
-  const onChangePagination = (page, pageSize) => {
-    log({ page });
-    log({ pageSize });
-    // const uFilter = {
-    //   ...codeFilter,
-    //   page,
-    // };
-    // getData(uFilter);
+  const onSearch = async (values) => {
+    try {
+      if (values.search === "") {
+        onGetUser();
+        return;
+      }
+      let url = `users/${values.search}`;
+      const { data } = await MainServices.get(url);
+      setDataSource([data.data]);
+      setTotalData(1);
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
   };
 
   return {
@@ -248,7 +241,8 @@ const Logic = () => {
       onOpenModal,
       onCloseModal,
       onActionUser,
-      onChangePagination,
+
+      onSearch,
     },
   };
 };

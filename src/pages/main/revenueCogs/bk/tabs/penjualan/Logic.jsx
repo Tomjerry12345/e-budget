@@ -29,6 +29,8 @@ const Logic = () => {
   const { filterValuesPenjualan } = useSelector((state) => state.revenue);
   const importRedux = useSelector((state) => state.import);
 
+  const refSumChange = 0;
+
   const ENDPOINT_URL = "detailrevenue/bk";
 
   useEffect(() => {
@@ -255,9 +257,10 @@ const Logic = () => {
   };
 
   const onChangeTable = async (change) => {
+    const newRows = [...rows];
+    let isChange = false;
+    log({ change });
     try {
-      const newRows = [...rows];
-      let isChange;
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
         if (rowIndex < 0) continue;
@@ -277,6 +280,8 @@ const Logic = () => {
             isChange = false;
           }
         }
+
+        log({ value });
 
         if (isChange) {
           let indexParent;

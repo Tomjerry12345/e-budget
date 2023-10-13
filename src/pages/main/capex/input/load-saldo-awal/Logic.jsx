@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  actionImport,
-  resetDataActionImport,
-  val,
-} from "redux/action/action.reducer";
+import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
@@ -30,9 +26,7 @@ const Logic = () => {
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-        ".xlsx",
-      ],
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     },
   });
 
@@ -176,9 +170,7 @@ const Logic = () => {
 
     for (const c of change) {
       const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
-      const columnIndex = parseInt(
-        columns.findIndex((j) => j.columnId === c.columnId)
-      );
+      const columnIndex = parseInt(columns.findIndex((j) => j.columnId === c.columnId));
       const type = c.newCell.type;
 
       const id = newRows[rowIndex].rowId;
@@ -202,8 +194,7 @@ const Logic = () => {
         });
       } else if (type === "dropdown") {
         if (c.previousCell.selectedValue !== c.newCell.selectedValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue =
-            c.newCell.selectedValue;
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.selectedValue;
 
           updateData({
             id,
@@ -213,8 +204,7 @@ const Logic = () => {
         }
 
         if (c.newCell.inputValue) {
-          newRows[rowIndex].cells[columnIndex].selectedValue =
-            c.newCell.inputValue;
+          newRows[rowIndex].cells[columnIndex].selectedValue = c.newCell.inputValue;
 
           updateData({
             id,
@@ -304,8 +294,6 @@ const Logic = () => {
   };
 
   const onChangePagination = (page, pageSize) => {
-    log({ page });
-    log({ pageSize });
     const uFilter = {
       ...codeFilter,
       page,

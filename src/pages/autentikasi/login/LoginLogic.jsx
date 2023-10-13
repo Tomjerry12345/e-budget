@@ -1,20 +1,37 @@
-import { Form } from "antd";
-import axios from "axios";
-import { createRef, useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import loginAsync from "../../../redux/auth/auth.thunks";
-import { log, logS, setLocal } from "../../../values/Utilitas";
+import { getLocal, log, setLocal } from "../../../values/Utilitas";
+import { Form } from "antd";
 
 const LoginLogic = () => {
   const dispatch = useDispatch();
   const { isLoading, response, errorMessage } = useSelector((state) => state.reducer);
   const [open, setOpen] = useState(false);
+  const [input, setInput] = useState(false);
 
-  const ref = createRef();
+  const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
+
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    const checkedRemember = getLocal("checked-remember");
+    if (checkedRemember === "true") {
+      const username = getLocal("username");
+      const password = getLocal("password");
+      form.setFieldsValue({
+        username: username,
+        password: password,
+      });
+      setChecked(true);
+    } else {
+      setChecked(false);
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -47,14 +64,31 @@ const LoginLogic = () => {
           setLocal("code_location", code_location);
           setLocal("code_department", code_department);
           setLocal("company_names", company_names);
+
+          if (checked) {
+            setLocal("username", input.username);
+            setLocal("password", input.password);
+          } else {
+            setLocal("username", "");
+            setLocal("password", "");
+          }
+
+          setLocal("checked-remember", checked);
+
           navigate("/");
         } else {
-          ref.current.setFields([
+          form.setFields([
             {
               name: "password",
               errors: ["Password salah"],
             },
           ]);
+          // ref.current.setFields([
+          //   {
+          //     name: "password",
+          //     errors: ["Password salah"],
+          //   },
+          // ]);
         }
       }
     } catch (e) {
@@ -67,6 +101,8 @@ const LoginLogic = () => {
     formData.append("username", values.username);
     formData.append("password", values.password);
 
+    setInput(values);
+
     dispatch(loginAsync(formData));
   };
 
@@ -77,15 +113,22 @@ const LoginLogic = () => {
     setOpen(false);
   };
 
+  const onCheckRemember = (e) => {
+    const isChecked = e.target.checked;
+    setChecked(isChecked);
+  };
+
   return {
     func: {
       onFinish,
       handleOk,
       handleCancel,
+      onCheckRemember,
     },
     value: {
-      ref,
       open,
+      form,
+      checked,
     },
   };
 };

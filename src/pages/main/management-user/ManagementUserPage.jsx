@@ -1,10 +1,11 @@
-import { Button, Pagination, Table } from "antd";
+import { Button, Form, Input, Pagination, Table } from "antd";
 import Logic from "./Logic";
-import HeaderComponent from "component/header/HeaderComponent";
 import "./style.scss";
 import ModalManagementUser from "./modal/ModalManagementUser";
 import { Box } from "@mui/material";
 import HeaderManagementUser from "./header/HeaderManagementUser";
+import FormItem from "antd/es/form/FormItem";
+import { SearchOutlined } from "@ant-design/icons";
 
 const ManagementUserPage = () => {
   const { value, func } = Logic();
@@ -16,23 +17,35 @@ const ManagementUserPage = () => {
         {/* <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
           Tambah User
         </Button> */}
+        <Form
+          layout="horizontal"
+          onFinish={func.onSearch}
+          // form={form}
+        >
+          <FormItem
+            className="form-search"
+            name="search"
+            children={
+              <Input placeholder="Cari berdasarkan nik / nama" prefix={<SearchOutlined />} />
+            }
+          />
+          <Form.Item>
+            <Button className="btn-search" type="primary" htmlType="submit">
+              Cari
+            </Button>
+          </Form.Item>
+        </Form>
         <Table
           rowClassName={() => "editable-row"}
           bordered
           dataSource={value.dataSource}
           columns={value.columns}
-          pagination={false}
+          pagination={{
+            position: ["bottomCenter"],
+            pageSize: 13,
+          }}
           rowKey="id"
         />
-        <Box className="pagination" display="flex" justifyContent="center">
-          <Pagination
-            defaultCurrent={1}
-            total={value.totalData}
-            pageSize={25}
-            showSizeChanger={false}
-            onChange={func.onChangePagination}
-          />
-        </Box>
       </div>
 
       <ModalManagementUser
