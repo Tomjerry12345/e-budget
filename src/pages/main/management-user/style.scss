@@ -1,4 +1,13 @@
 .style-management-user {
+    .ant-form {
+        display: flex;
+
+        .form-search {
+            width: 249px;
+            margin-right: 16px;
+        
+        }
+    }
     .ant-table-thead > tr > .ant-table-cell {
         padding: 1px 8px !important;
         font-size: 12px !important;

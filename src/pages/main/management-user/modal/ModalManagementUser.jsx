@@ -71,7 +71,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
     <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form onFinish={onOk} layout="vertical" form={form}>
-        <FormItem label="Nik" name="nik" children={<Input />} />
+        <FormItem label="Nik" name="username" children={<Input />} />
         <FormItem label="Email" name="email" children={<Input />} />
         {!isEdit ? (
           <Form.Item name="password" label="Password">

@@ -23,12 +23,14 @@ const ManagementUserPage = () => {
           // form={form}
         >
           <FormItem
-            label="Cari berdasarkan nik / nama"
+            className="form-search"
             name="search"
-            children={<Input prefix={<SearchOutlined />} />}
+            children={
+              <Input placeholder="Cari berdasarkan nik / nama" prefix={<SearchOutlined />} />
+            }
           />
-          <Form.Item className="footer-custom">
-            <Button className="btn-cari" type="primary" htmlType="submit">
+          <Form.Item>
+            <Button className="btn-search" type="primary" htmlType="submit">
               Cari
             </Button>
           </Form.Item>
@@ -38,18 +40,12 @@ const ManagementUserPage = () => {
           bordered
           dataSource={value.dataSource}
           columns={value.columns}
-          pagination={false}
+          pagination={{
+            position: ["bottomCenter"],
+            pageSize: 13,
+          }}
           rowKey="id"
         />
-        <Box className="pagination" display="flex" justifyContent="center">
-          <Pagination
-            defaultCurrent={1}
-            total={value.totalData}
-            pageSize={25}
-            showSizeChanger={false}
-            onChange={func.onChangePagination}
-          />
-        </Box>
       </div>
 
       <ModalManagementUser

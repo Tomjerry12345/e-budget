@@ -21,7 +21,7 @@
 }
 .custom-card {
   width: 430px !important;
-  height: 410px;
+  height: 448px;
   border-radius: 8px;
   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
 }
@@ -32,6 +32,9 @@
 }
 
 .custom-form {
+  .remember-password {
+    margin-bottom: 16px;
+  }
   .ant-form-item-label > label {
     letter-spacing: 0.005em;
     line-height: 22px;

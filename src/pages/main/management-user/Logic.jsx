@@ -215,6 +215,10 @@ const Logic = () => {
 
   const onSearch = async (values) => {
     try {
+      if (values.search === "") {
+        onGetUser();
+        return;
+      }
       let url = `users/${values.search}`;
       const { data } = await MainServices.get(url);
       setDataSource([data.data]);
@@ -222,15 +226,6 @@ const Logic = () => {
     } catch (error) {
       console.error(`Error fetching data`, error);
     }
-  };
-
-  const onChangePagination = (page, pageSize) => {
-    alert("belum tersedia");
-    // const uFilter = {
-    //   ...codeFilter,
-    //   page,
-    // };
-    // getData(uFilter);
   };
 
   return {
@@ -246,7 +241,7 @@ const Logic = () => {
       onOpenModal,
       onCloseModal,
       onActionUser,
-      onChangePagination,
+
       onSearch,
     },
   };
