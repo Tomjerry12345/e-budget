@@ -21,7 +21,7 @@ BK
 - total warna kuning di bawah jg mau di kasi hilang ✅
 - trus update perubahan total year tdk terupdate klo ada perbuahan data ✅
 - ini jg BK download tempate untk import tdk na dpt ki filenya ✅
-- BK gagal update
+- BK gagal update ✅
 
 
 management user
@@ -34,4 +34,4 @@ management user
 - user group diganti jadi [sbu, subholding, hc, holding] ✅
 - input password msh kelihatan ✅
 
-- fitur remember password saat login ❌
+- fitur remember password saat login ✅

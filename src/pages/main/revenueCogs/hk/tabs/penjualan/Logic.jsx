@@ -136,6 +136,8 @@ const Logic = () => {
     const newRows = [...rows[i].data];
     let isChange = false;
 
+    log({ change });
+
     try {
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);

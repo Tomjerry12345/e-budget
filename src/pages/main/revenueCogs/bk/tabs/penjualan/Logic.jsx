@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
-import { formDataUtils, log } from "values/Utilitas";
+import { duplicateArrayObjectBy, formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { fullNewRow, getRows, updateTotalRow } from "./getRows";
 import { actionData } from "redux/data-global/data.reducer";
@@ -259,7 +259,35 @@ const Logic = () => {
   const onChangeTable = async (change) => {
     const newRows = [...rows];
     let isChange = false;
-    log({ change });
+
+    // const uniqueData = [];
+
+    // for (let i = 0; i < change.length; i++) {
+    //   let isUnique = true;
+
+    //   for (let j = 0; j < change.length; j++) {
+    //     if (
+    //       i !== j &&
+    //       change[i].columnId === change[j].columnId &&
+    //       change[i].previousCell.value === change[j].newCell.value
+    //     ) {
+    //       isUnique = false;
+    //       break;
+    //     }
+    //   }
+
+    //   if (isUnique) {
+    //     uniqueData.push(change[i]);
+    //   }
+    // }
+
+    // console.log(uniqueData);
+
+    change = duplicateArrayObjectBy({
+      data: change,
+      keyDelete: "columnId",
+    });
+
     try {
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
