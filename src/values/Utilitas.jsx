@@ -205,3 +205,20 @@ export const formDataUtils = (obj) => {
 
   return formData;
 };
+
+export const duplicateArrayObjectBy = ({ data, keyDelete }) => {
+  const uniqueData = [];
+  const seenColumnIds = {};
+
+  for (const item of data) {
+    const delId = item[keyDelete];
+    if (!seenColumnIds[delId]) {
+      seenColumnIds[delId] = true;
+      uniqueData.push(item);
+    }
+  }
+
+  console.log(uniqueData);
+
+  return uniqueData;
+};
