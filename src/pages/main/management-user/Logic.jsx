@@ -59,7 +59,11 @@ const Logic = () => {
               display: "flex",
             }}
           >
-            <Button className="btn-edit" type="link" onClick={() => handleEdit(record)}>
+            <Button
+              className="btn-edit"
+              type="link"
+              onClick={() => handleEdit(record)}
+            >
               Edit
             </Button>
 
@@ -72,7 +76,10 @@ const Logic = () => {
               </Button>
             </Popconfirm>
 
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => handleDelete(record.id)}
+            >
               <Button className="btn-delete" type="link">
                 Delete
               </Button>
@@ -132,13 +139,16 @@ const Logic = () => {
   };
 
   const onActionUser = async (values) => {
-    log("values.code_company.toString()", values.code_company.toString());
     try {
       if (isEdit) {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === "" ? null : values.code_company.toString(),
+            values.code_company === undefined
+              ? null
+              : values.code_company.toString() === ""
+              ? null
+              : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
           id: idRef.current,
@@ -150,7 +160,11 @@ const Logic = () => {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === "" ? null : values.code_company.toString(),
+            values.code_company === undefined
+              ? null
+              : values.code_company.toString() === ""
+              ? null
+              : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
         };
@@ -166,6 +180,7 @@ const Logic = () => {
       onCloseModal();
     } catch (error) {
       // Tangani error jika ada
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };
@@ -189,7 +204,8 @@ const Logic = () => {
 
     idRef.current = record.id;
 
-    if (record.code_company !== null) code_company = record.code_company.split(",");
+    if (record.code_company !== null)
+      code_company = record.code_company.split(",");
 
     const nRecord = {
       ...record,
@@ -209,6 +225,7 @@ const Logic = () => {
       onGetUser();
     } catch (error) {
       // Tangani error jika ada
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };
@@ -224,6 +241,7 @@ const Logic = () => {
       setDataSource([data.data]);
       setTotalData(1);
     } catch (error) {
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };

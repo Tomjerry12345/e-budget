@@ -1,5 +1,9 @@
 import React from "react";
-import { isAlphaNumericKey, keyCodes, getCellProperty } from "@silevis/reactgrid";
+import {
+  isAlphaNumericKey,
+  keyCodes,
+  getCellProperty,
+} from "@silevis/reactgrid";
 import { Button } from "antd";
 import { connect } from "react-redux";
 import { changeCellTemplate } from "redux/action/cell.template.reducer";
@@ -41,10 +45,10 @@ class ButtonCellTemplate {
           // className="btn-tambah-row"
           type="link"
           onClick={(e) => this.onClicked(cell, onCellChanged, status)}
-          // disabled={status === "active"}
+          disabled={status === "active"}
         >
-          {/* {status === "actived" ? "retired" : "cancel retired"} */}
-          retired
+          {status === "actived" ? "retired" : "cancel retired"}
+          {/* retired */}
         </Button>
         {/* <Button
           // className="btn-tambah-row"
