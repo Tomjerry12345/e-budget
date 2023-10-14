@@ -159,6 +159,7 @@ import LainKiuPage from "pages/main/revenueCogs/kiu/tabs/hpplain/LainKiuPage";
 import TransportasiMppSummary from "pages/main/mpp/summary/transportasi/TransportasiMppSummary";
 import PenjualanKiuPage from "pages/main/revenueCogs/kiu/tabs/penjualan/PenjualanKiuPage";
 import HargaJualSummaryPage from "pages/main/capex/summary/harga-jual/HargaJualSummaryPage";
+import FasilitasKreditPage from "pages/main/report/fasilitas-kredit/FasilitasKreditPage";
 
 const RoutersConfig = () => {
   return (
@@ -411,6 +412,7 @@ const RoutersConfig = () => {
             <Route path="laba-rugi" element={<LabaRugiPage />} />
             <Route path="cash-flow" element={<CashFlowPage />} />
             <Route path="neraca" element={<NeracaPage />} />
+            <Route path="fasilitas-kredit" element={<FasilitasKreditPage />} />
           </Route>
           <Route path="coa">
             <Route path="perusahaan" element={<CompanyPage />} />

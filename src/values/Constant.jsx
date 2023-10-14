@@ -292,6 +292,9 @@ export const allItemSummarySubMenu = [
     {
       description: "Neraca",
     },
+    {
+      description: "Fasilitas Kredit",
+    },
   ],
   // 8 Master COA
   [
@@ -747,9 +750,7 @@ const changeMenu = (i, a = [], reverse = false) => {
   if (a.length > 0) {
     if (reverse) {
       s = allItemSummarySubMenu[i].filter((value, index) => !a.includes(index));
-      d = disabledItemSummaryMenu[i].filter(
-        (value, index) => !a.includes(index)
-      );
+      d = disabledItemSummaryMenu[i].filter((value, index) => !a.includes(index));
     } else {
       a.forEach((item) => {
         s.push(allItemSummarySubMenu[i][item]);

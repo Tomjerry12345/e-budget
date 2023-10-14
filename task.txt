@@ -42,9 +42,9 @@ management user
 - profile, ganti password, forgot password
 - perubahan warna
 - revneue bk ✅
-- usersbu jadi sbu
-- reviewer jadi subholding
-- tambahan baru hc dgn holding
-    - hc cuma bisa akses dashboard, mpp, dgn profil
-    - holding bisa akses semua keuali master dgn management user
+- usersbu jadi sbu ✅
+- reviewer jadi subholding 
+- tambahan baru hc dgn holding ✅
+    - hc cuma bisa akses dashboard, mpp, dgn profil ✅
+    - holding bisa akses semua keuali master dgn management user ✅
 
