@@ -132,7 +132,6 @@ const Logic = () => {
   };
 
   const onActionUser = async (values) => {
-    console.log("values.code_location", values.code_location);
     log("values.code_company.toString()", values.code_company.toString());
     try {
       if (isEdit) {
@@ -159,7 +158,8 @@ const Logic = () => {
         const formData = formDataUtils(params);
 
         const url = `users`;
-        await MainServices.post(url, formData);
+        const res = await MainServices.post(url, formData);
+        log({ res });
       }
 
       onGetUser();
