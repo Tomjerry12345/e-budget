@@ -157,8 +157,17 @@ const Logic = () => {
     }
   };
 
-  const onCancelRetired = () => {
-    alert("onCancelRetired");
+  const onCancelRetired = async (id) => {
+    try {
+      const formData = formDataUtils({
+        id,
+      });
+
+      await MainServices.post(`${ENDPOINT_URL}/unretired`, formData);
+      getData(codeFilter);
+    } catch (e) {
+      showNotif(400, e.message);
+    }
   };
 
   const onChangeTable = async (change) => {
@@ -225,8 +234,8 @@ const Logic = () => {
           setDataRetired({
             id,
           });
-        } else if (t === "retrive") {
-          onCancelRetired();
+        } else if (t === "reinstate") {
+          onCancelRetired(id);
         }
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });

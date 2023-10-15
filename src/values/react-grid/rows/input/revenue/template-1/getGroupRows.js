@@ -1,6 +1,7 @@
-import { generateUID, log } from "values/Utilitas";
-import { ROW_HEIGHT, colorNonEditable } from "./Constant";
+import { generateUID } from "values/Utilitas";
+import { ROW_HEIGHT } from "./Constant";
 import { getColumns } from "./getColumns";
+import { nonEditableColor } from "values/Colors";
 
 const { nonEditable, textCell, numberCell, customCell } = require("values/react-grid/cells");
 
@@ -33,7 +34,7 @@ export const getGroupRows = (groups, key, getCol) => {
                       d["columnId"] !== "code_account" ||
                       d["columnId"] !== "description"
                         ? "#fff"
-                        : colorNonEditable,
+                        : nonEditableColor,
                   })
                 );
               }
@@ -51,7 +52,7 @@ export const getGroupRows = (groups, key, getCol) => {
                     d[e.columnId] ?? 0,
                     "padding-left-lg",
                     {
-                      background: colorNonEditable,
+                      background: nonEditableColor,
                     },
                     e.format ?? false
                   )

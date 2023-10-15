@@ -59,11 +59,7 @@ const Logic = () => {
               display: "flex",
             }}
           >
-            <Button
-              className="btn-edit"
-              type="link"
-              onClick={() => handleEdit(record)}
-            >
+            <Button className="btn-edit" type="link" onClick={() => handleEdit(record)}>
               Edit
             </Button>
 
@@ -76,10 +72,7 @@ const Logic = () => {
               </Button>
             </Popconfirm>
 
-            <Popconfirm
-              title="Sure to delete?"
-              onConfirm={() => handleDelete(record.id)}
-            >
+            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
               <Button className="btn-delete" type="link">
                 Delete
               </Button>
@@ -180,7 +173,7 @@ const Logic = () => {
       onCloseModal();
     } catch (error) {
       // Tangani error jika ada
-      showNotif(400, error.message);
+      showNotif(400, error.response.data.responseDescription);
       console.error(`Error fetching data`, error);
     }
   };
@@ -204,8 +197,7 @@ const Logic = () => {
 
     idRef.current = record.id;
 
-    if (record.code_company !== null)
-      code_company = record.code_company.split(",");
+    if (record.code_company !== null) code_company = record.code_company.split(",");
 
     const nRecord = {
       ...record,

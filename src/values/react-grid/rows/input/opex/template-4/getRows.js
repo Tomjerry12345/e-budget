@@ -1,3 +1,4 @@
+import { tableRowTotal } from "values/Colors";
 import { createArray } from "values/Utilitas";
 import {
   nonEditable,
@@ -93,22 +94,22 @@ function rowTotal(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
 
-      ...total.map((e) => noSideBorders(totalCell(e, "", "beige"))),
+      ...total.map((e) => noSideBorders(totalCell(e, "", tableRowTotal))),
     ],
   };
 }

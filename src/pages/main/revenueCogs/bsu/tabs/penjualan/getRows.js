@@ -1,5 +1,5 @@
+import { nonEditableColor } from "values/Colors";
 import { nonEditable, textCell, numberCell, customCell } from "values/react-grid/cells";
-import { colorNonEditable } from "values/react-grid/rows/input/revenue/template-1/Constant";
 import { firstLoadTotalRow } from "values/react-grid/rows/input/revenue/template-1/firstLoadTotalRow";
 import { getColumns } from "values/react-grid/rows/input/revenue/template-1/getColumns";
 import { generateUID } from "values/Utilitas";
@@ -53,7 +53,7 @@ function getGroupRows(groups, key) {
                       d["columnId"] !== "code_account" ||
                       d["columnId"] !== "description"
                         ? "#fff"
-                        : colorNonEditable,
+                        : nonEditableColor,
                   })
                 );
               }
@@ -71,7 +71,7 @@ function getGroupRows(groups, key) {
                     d[e.columnId] ?? 0,
                     "padding-left-lg",
                     {
-                      background: colorNonEditable,
+                      background: nonEditableColor,
                     },
                     e.format ?? false
                   )

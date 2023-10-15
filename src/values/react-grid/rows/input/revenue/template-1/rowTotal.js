@@ -1,12 +1,7 @@
-import { log } from "values/Utilitas";
 import { ROW_HEIGHT } from "./Constant";
+import { tableRowTotal } from "values/Colors";
 
-const {
-  nonEditable,
-  textCell,
-  noSideBorders,
-  totalCell,
-} = require("values/react-grid/cells");
+const { nonEditable, textCell, noSideBorders, totalCell } = require("values/react-grid/cells");
 
 function type1(titleTotal, total) {
   return {
@@ -15,18 +10,18 @@ function type1(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => noSideBorders(totalCell(e, "", tableRowTotal, ""))),
     ],
   };
 }
@@ -38,12 +33,12 @@ function type2(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
 
-      ...total.map((e, i) => noSideBorders(totalCell(e, "", "beige", ""))),
+      ...total.map((e, i) => noSideBorders(totalCell(e, "", tableRowTotal, ""))),
     ],
   };
 }
@@ -55,13 +50,13 @@ function type3(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
@@ -69,13 +64,13 @@ function type3(titleTotal, total) {
       ...total.map((e, i) => {
         if (i > 24) {
           return noSideBorders(
-            totalCell(i % 2 === 0 ? `${e} %` : e, "", "beige", "", true, {
+            totalCell(i % 2 === 0 ? `${e} %` : e, "", tableRowTotal, "", true, {
               justifyContent: "end",
             })
           );
         } else {
           return noSideBorders(
-            totalCell(i % 2 === 1 ? `${e} %` : e, "", "beige", "", true, {
+            totalCell(i % 2 === 1 ? `${e} %` : e, "", tableRowTotal, "", true, {
               justifyContent: "end",
             })
           );
@@ -92,20 +87,18 @@ function type4(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
 
-      ...total.map((e, i) =>
-        noSideBorders(totalCell(e, "", "beige", "", false))
-      ),
+      ...total.map((e, i) => noSideBorders(totalCell(e, "", tableRowTotal, "", false))),
     ],
   };
 }

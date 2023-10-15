@@ -38,11 +38,17 @@ class ButtonCellTemplate {
     return (
       <div>
         <Button type="link" onClick={(e) => this.onClicked(cell, onCellChanged, "retire")}>
-          retire
+          Retire
         </Button>
-        {status === "actived" ? (
-          <Button type="link" onClick={(e) => this.onClicked(cell, onCellChanged, "retrive")}>
-            retrive
+        {status !== "actived" ? (
+          <Button
+            style={{
+              color: "red",
+            }}
+            type="link"
+            onClick={(e) => this.onClicked(cell, onCellChanged, "reinstate")}
+          >
+            Reinstate
           </Button>
         ) : null}
       </div>

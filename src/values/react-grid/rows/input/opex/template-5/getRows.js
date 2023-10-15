@@ -1,10 +1,6 @@
+import { tableRowTotal } from "values/Colors";
 import { createArray, log } from "values/Utilitas";
-import {
-  nonEditable,
-  textCell,
-  numberCell,
-  totalCell,
-} from "values/react-grid/cells";
+import { nonEditable, textCell, numberCell, totalCell } from "values/react-grid/cells";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -57,8 +53,6 @@ const firstLoadTotalRow = (data) => {
 export const updateTotalRow = (data) => {
   const newData = data.slice(1, data.length - 1);
 
-  log({ newData });
-
   const list = newData
     .map((e) => {
       const values = [];
@@ -67,10 +61,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   return rowTotal("Total", list);
 };
@@ -100,9 +91,7 @@ function getGroupRows(groups) {
         numberCell(d["nov"], "padding-left-lg", "", false),
         numberCell(d["des"], "padding-left-lg", "", false),
 
-        nonEditable(
-          numberCell(d["total_quantity"], "padding-left-lg", "", false)
-        ),
+        nonEditable(numberCell(d["total_quantity"], "padding-left-lg", "", false)),
         numberCell(d["rates"], "padding-left-lg"),
         nonEditable(numberCell(d["grand_total"], "padding-left-lg")),
 
@@ -130,27 +119,27 @@ function rowTotal(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
 
-      ...total.map((e, i) => totalCell(e, "", "beige", "", !(i <= 13))),
+      ...total.map((e, i) => totalCell(e, "", tableRowTotal, "", !(i <= 13))),
     ],
   };
 }
@@ -160,11 +149,7 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [
-    header,
-    reactgridNewRow(id),
-    rowTotal("Total", createArray(TOTAL_DATA)),
-  ];
+  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
 }
 
 export function reactgridNewRow(id) {

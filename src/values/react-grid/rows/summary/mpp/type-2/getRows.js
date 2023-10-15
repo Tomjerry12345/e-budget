@@ -7,6 +7,7 @@ import {
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
+import { tableRowTotal } from "values/Colors";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -15,8 +16,6 @@ const ROW_HEIGHT = 32;
 const TOTAL_DATA = 18;
 const FIRST_TOTAL = 3;
 const END_TOTAL = FIRST_TOTAL + TOTAL_DATA;
-
-const COLOR_1 = "#107C41";
 
 export function getRootHeaderRow() {
   return [
@@ -94,33 +93,6 @@ export function getRootHeaderRow() {
     },
   ];
 }
-
-const firstLoadTotalRow = (data) => {
-  const list = createArray(TOTAL_DATA);
-
-  list[3] = "";
-  list[4] = "";
-  data.forEach((e) => {
-    list[0] += e["amount"] ?? 0;
-    list[1] += e["rates"] ?? 0;
-    list[2] += e["total"] ?? 0;
-    list[5] += e["grand_total"] ?? 0;
-    list[6] += e["jan_rates"] ?? 0;
-    list[7] += e["feb_rates"] ?? 0;
-    list[8] += e["mar_rates"] ?? 0;
-    list[9] += e["apr_rates"] ?? 0;
-    list[10] += e["mei_rates"] ?? 0;
-    list[11] += e["jun_rates"] ?? 0;
-    list[12] += e["jul_rates"] ?? 0;
-    list[13] += e["agu_rates"] ?? 0;
-    list[14] += e["sep_rates"] ?? 0;
-    list[15] += e["okt_rates"] ?? 0;
-    list[16] += e["nov_rates"] ?? 0;
-    list[17] += e["des_rates"] ?? 0;
-  });
-
-  return rowTotal("Total", list);
-};
 
 export const updateTotalRow = (data) => {
   const newData = data.slice(1, data.length - 1);
@@ -250,41 +222,32 @@ function rowTotal(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
       nonEditable(
         textCell("", "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
         })
       ),
 
-      ...total.map((e, i) => totalCell(e, "", "beige", "", !(i === 0))),
+      ...total.map((e, i) => totalCell(e, "", tableRowTotal, "", !(i === 0))),
     ],
   };
 }
 
 export function getRows({ data }) {
-  return [
-    ...getRootHeaderRow(),
-    ...getGroupRows(data),
-    // firstLoadTotalRow(data)
-  ];
+  return [...getRootHeaderRow(), ...getGroupRows(data)];
 }
 
 export function fullNewRow() {
-  const list = createArray(TOTAL_DATA);
-  return [
-    getRootHeaderRow(),
-    // reactgridNewRow(),
-    // rowTotal("Total", list)
-  ];
+  return [getRootHeaderRow()];
 }
 
 export function reactgridNewRow() {
