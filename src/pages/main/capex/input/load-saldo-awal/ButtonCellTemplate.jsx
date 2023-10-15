@@ -27,7 +27,7 @@ class ButtonCellTemplate {
     onCellChanged(
       this.getCompatibleCell({
         ...cell,
-        text: status === "actived" ? "retired" : "cancel retired",
+        text: status,
       }),
       true
     );
@@ -37,23 +37,20 @@ class ButtonCellTemplate {
     const status = cell.text;
     return (
       <div>
-        <Button
-          // className="btn-tambah-row"
-          type="link"
-          onClick={(e) => this.onClicked(cell, onCellChanged, status)}
-          // disabled={status === "active"}
-        >
-          {/* {status === "actived" ? "retired" : "cancel retired"} */}
-          retired
+        <Button type="link" onClick={(e) => this.onClicked(cell, onCellChanged, "retire")}>
+          Retire
         </Button>
-        {/* <Button
-          // className="btn-tambah-row"
-          type="link"
-          // onClick={(e) => this.onClicked(cell, onCellChanged)}
-          // disabled={status === "active"}
-        >
-          update retired
-        </Button> */}
+        {status !== "actived" ? (
+          <Button
+            style={{
+              color: "red",
+            }}
+            type="link"
+            onClick={(e) => this.onClicked(cell, onCellChanged, "reinstate")}
+          >
+            Reinstate
+          </Button>
+        ) : null}
       </div>
     );
   }

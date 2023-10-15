@@ -292,6 +292,9 @@ export const allItemSummarySubMenu = [
     {
       description: "Neraca",
     },
+    {
+      description: "Fasilitas Kredit",
+    },
   ],
   // 8 Master COA
   [
@@ -490,10 +493,14 @@ export const selectionMenu = async (i) => {
 
   if (user === "superadmin") {
     return superAdmin(i);
-  } else if (user === "usersbu") {
+  } else if (user === "sbu") {
     return userBu(i);
-  } else {
-    return reviewer(i);
+  } else if (user === "subholding") {
+    return subholding(i);
+  } else if (user === "hc") {
+    return hc(i);
+  } else if (user === "holding") {
+    return hc(i);
   }
 };
 
@@ -632,7 +639,7 @@ const userBu = (i) => {
   });
 };
 
-const reviewer = (i) => {
+const subholding = (i) => {
   return new Promise(async (resolve) => {
     let v = {
       submenu: allItemSummarySubMenu[i],
@@ -724,18 +731,35 @@ const reviewer = (i) => {
   });
 };
 
+const hc = (i) => {
+  if (i === 4) {
+    return changeMenu(i, [], true);
+  }
+};
+
+const holding = (i) => {
+  if (i === 4) {
+    return changeMenu(i, [], true);
+  }
+};
+
 const changeMenu = (i, a = [], reverse = false) => {
   let s = [];
   let d = [];
 
-  if (reverse) {
-    s = allItemSummarySubMenu[i].filter((value, index) => !a.includes(index));
-    d = disabledItemSummaryMenu[i].filter((value, index) => !a.includes(index));
+  if (a.length > 0) {
+    if (reverse) {
+      s = allItemSummarySubMenu[i].filter((value, index) => !a.includes(index));
+      d = disabledItemSummaryMenu[i].filter((value, index) => !a.includes(index));
+    } else {
+      a.forEach((item) => {
+        s.push(allItemSummarySubMenu[i][item]);
+        d.push(disabledItemSummaryMenu[i][item]);
+      });
+    }
   } else {
-    a.forEach((item) => {
-      s.push(allItemSummarySubMenu[i][item]);
-      d.push(disabledItemSummaryMenu[i][item]);
-    });
+    s = allItemSummarySubMenu[i];
+    d = disabledItemSummaryMenu[i];
   }
 
   return {

@@ -35,3 +35,17 @@ management user
 - input password msh kelihatan ✅
 
 - fitur remember password saat login ✅
+
+
+- Cancel retired > input load saldo awal ✅
+- fasilitas kredit > input asumsi > neraca ❌
+- profile, ganti password, forgot password ❌
+- perubahan warna ❌
+- Log ❌
+- revneue bk ✅
+- usersbu jadi sbu ✅
+- reviewer jadi subholding 
+- tambahan baru hc dgn holding ✅
+    - hc cuma bisa akses dashboard, mpp, dgn profil ✅
+    - holding bisa akses semua keuali master dgn management user ✅
+

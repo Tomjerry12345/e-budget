@@ -132,6 +132,7 @@ export const routingReport = {
   "Laba Rugi": "laba-rugi",
   "Cash Flow": "cash-flow",
   Neraca: "neraca",
+  "Fasilitas Kredit": "fasilitas-kredit",
 };
 export const routingMasterCoa = {
   "Kode perusahaan": "perusahaan",

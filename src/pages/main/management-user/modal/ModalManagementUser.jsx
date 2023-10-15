@@ -37,7 +37,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   useEffect(() => {
     const l = form.getFieldsValue();
     setUserGroup(l.user_group);
-    if (l.user_group !== undefined && l.user_group === "usersbu") {
+    if (l.user_group !== undefined && l.user_group === "sbu") {
       getListLocation(l.code_company);
       getListDept(l.code_company);
     }
@@ -114,30 +114,32 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
             />
           }
         />
-        <FormItem
-          label="Akses perusahaan"
-          name="code_company"
-          children={
-            <Select
-              allowClear
-              disabled={user_group === undefined && !isEdit}
-              mode={user_group === "usersbu" ? null : "multiple"}
-              onChange={(e) => {
-                form.setFieldsValue({ code_company: e });
-                if (user_group === "usersbu") {
-                  getListLocation(e);
-                  getListDept(e);
-                }
-              }}
-              options={listCompany.map((e) => ({
-                value: e.code,
-                label: e.description,
-              }))}
-            />
-          }
-        />
+        {user_group === "sbu" || user_group === "subholding" ? (
+          <FormItem
+            label="Akses perusahaan"
+            name="code_company"
+            children={
+              <Select
+                allowClear
+                disabled={user_group === undefined && !isEdit}
+                mode={user_group === "sbu" ? null : "multiple"}
+                onChange={(e) => {
+                  form.setFieldsValue({ code_company: e });
+                  if (user_group === "sbu") {
+                    getListLocation(e);
+                    getListDept(e);
+                  }
+                }}
+                options={listCompany.map((e) => ({
+                  value: e.code,
+                  label: e.description,
+                }))}
+              />
+            }
+          />
+        ) : null}
 
-        {user_group === "usersbu" ? (
+        {user_group === "sbu" ? (
           <>
             <FormItem
               label="Kode Lokasi"
@@ -171,7 +173,12 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
           <Button className="btn-cancel" type="text" onClick={onCancel}>
             Cancel
           </Button>
-          <Button className="btn-tambah" type="primary" htmlType="submit">
+          <Button
+            className="btn-tambah"
+            type="primary"
+            htmlType="submit"
+            disabled={user_group === undefined && !isEdit}
+          >
             {isEdit ? "Edit" : "Tambah"}
           </Button>
         </Form.Item>

@@ -157,12 +157,17 @@ const Logic = () => {
     }
   };
 
-  const onCancelRetired = () => {
-    console.log("onCancelRetired");
-  };
+  const onCancelRetired = async (id) => {
+    try {
+      const formData = formDataUtils({
+        id,
+      });
 
-  const onUpdateRetired = () => {
-    console.log("onUpdateRetired");
+      await MainServices.post(`${ENDPOINT_URL}/unretired`, formData);
+      getData(codeFilter);
+    } catch (e) {
+      showNotif(400, e.message);
+    }
   };
 
   const onChangeTable = async (change) => {
@@ -220,7 +225,7 @@ const Logic = () => {
         const typeYear = newRows[rowIndex].typeYear;
         const budget = codeFilter.budget;
         const forecast = codeFilter.forecast;
-        if (t === "retired") {
+        if (t === "retire") {
           formRetired.setFieldsValue({
             disposal_month: "1",
             disposal_year: typeYear === "budget" ? budget : forecast,
@@ -229,10 +234,8 @@ const Logic = () => {
           setDataRetired({
             id,
           });
-        } else if (t === "cancel retired") {
-          onCancelRetired();
-        } else if (t === "update retired") {
-          onUpdateRetired();
+        } else if (t === "reinstate") {
+          onCancelRetired(id);
         }
       } else {
         log({ error: `Error on cell column ${columnIndex} & row ${rowIndex}` });

@@ -1,3 +1,4 @@
+import { tableRowTotal } from "values/Colors";
 import { createArray } from "values/Utilitas";
 import {
   nonEditable,
@@ -48,10 +49,7 @@ export const updateTotalRow = (data) => {
       }
       return values;
     })
-    .reduce(
-      (acc, curr) => acc.map((v, i) => v + curr[i]),
-      createArray(TOTAL_DATA)
-    );
+    .reduce((acc, curr) => acc.map((v, i) => v + curr[i]), createArray(TOTAL_DATA));
 
   return rowTotal("Total", list);
 };
@@ -88,12 +86,12 @@ function rowTotal(titleTotal, total) {
     cells: [
       nonEditable(
         textCell(titleTotal, "padding-left-lg", {
-          background: "beige",
+          background: tableRowTotal,
           fontWeight: "bold",
         })
       ),
 
-      ...total.map((e) => noSideBorders(totalCell(e, "", "beige"))),
+      ...total.map((e) => noSideBorders(totalCell(e, "", tableRowTotal))),
     ],
   };
 }
@@ -103,11 +101,7 @@ export function getRows({ header, data }) {
 }
 
 export function fullNewRow(header, id) {
-  return [
-    header,
-    reactgridNewRow(id),
-    rowTotal("Total", createArray(TOTAL_DATA)),
-  ];
+  return [header, reactgridNewRow(id), rowTotal("Total", createArray(TOTAL_DATA))];
 }
 
 export function reactgridNewRow(id) {

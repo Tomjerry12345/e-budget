@@ -132,14 +132,16 @@ const Logic = () => {
   };
 
   const onActionUser = async (values) => {
-    console.log("values.code_location", values.code_location);
-    log("values.code_company.toString()", values.code_company.toString());
     try {
       if (isEdit) {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === "" ? null : values.code_company.toString(),
+            values.code_company === undefined
+              ? null
+              : values.code_company.toString() === ""
+              ? null
+              : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
           id: idRef.current,
@@ -151,7 +153,11 @@ const Logic = () => {
         const params = {
           ...values,
           code_company:
-            values.code_company.toString() === "" ? null : values.code_company.toString(),
+            values.code_company === undefined
+              ? null
+              : values.code_company.toString() === ""
+              ? null
+              : values.code_company.toString(),
           code_location: values.code_location ?? null,
           code_department: values.code_department ?? null,
         };
@@ -159,13 +165,15 @@ const Logic = () => {
         const formData = formDataUtils(params);
 
         const url = `users`;
-        await MainServices.post(url, formData);
+        const res = await MainServices.post(url, formData);
+        log({ res });
       }
 
       onGetUser();
       onCloseModal();
     } catch (error) {
       // Tangani error jika ada
+      showNotif(400, error.response.data.responseDescription);
       console.error(`Error fetching data`, error);
     }
   };
@@ -209,6 +217,7 @@ const Logic = () => {
       onGetUser();
     } catch (error) {
       // Tangani error jika ada
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };
@@ -224,6 +233,7 @@ const Logic = () => {
       setDataSource([data.data]);
       setTotalData(1);
     } catch (error) {
+      showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
   };
