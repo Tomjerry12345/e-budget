@@ -43,7 +43,7 @@ management user
 - perubahan warna ❌
 - Log ❌
 - revneue bk ✅
-- usersbu jadi sbu ✅
+- usersbu jadi sbu ✅   
 - reviewer jadi subholding 
 - tambahan baru hc dgn holding ✅
     - hc cuma bisa akses dashboard, mpp, dgn profil ✅

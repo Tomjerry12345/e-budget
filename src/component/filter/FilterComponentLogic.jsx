@@ -86,7 +86,7 @@ const FilterComponentLogic = ({
       }
     };
 
-    if (userGroup === "usersbu") {
+    if (userGroup === "sbu") {
       if (company_names !== null) {
         form.setFieldsValue({
           code_company: `${company} - ${company_names}`,
@@ -105,7 +105,7 @@ const FilterComponentLogic = ({
 
         getValueComboBox(company);
       }
-    } else if (userGroup === "reviewer") {
+    } else if (userGroup === "subholding") {
       let dataCompany = [];
 
       company.split(",").forEach((v, i) => {
