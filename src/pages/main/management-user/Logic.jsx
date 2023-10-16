@@ -12,6 +12,7 @@ const Logic = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [totalData, setTotalData] = useState(0);
+  const [record, setRecord] = useState();
 
   const dispatch = useDispatch();
 
@@ -134,14 +135,18 @@ const Logic = () => {
   const onCloseModal = () => {
     setOpenModal(false);
     setIsEdit(false);
+    setRecord();
     form.resetFields();
   };
 
   const onActionUser = async (values) => {
     try {
+      const username = values.nik;
+      delete values.nik;
       if (isEdit) {
         const params = {
           ...values,
+          username,
           code_company:
             values.code_company === undefined
               ? null
@@ -158,6 +163,7 @@ const Logic = () => {
       } else {
         const params = {
           ...values,
+          username,
           code_company:
             values.code_company === undefined
               ? null
@@ -201,16 +207,25 @@ const Logic = () => {
   const handleEdit = async (record) => {
     let code_company = undefined;
 
-    idRef.current = record.id;
+    const nik = record.username;
 
-    if (record.code_company !== null) code_company = record.code_company.split(",");
+    if (record.user_group === "sbu") {
+      code_company = record.code_company;
+    } else if (record.user_group === "subholding") {
+      code_company = record.code_company.split(",");
+    }
 
     const nRecord = {
       ...record,
+      nik,
       code_company,
     };
+
+    setRecord(nRecord);
+
     form.setFieldsValue(nRecord);
     setIsEdit(true);
+    idRef.current = record.id;
     onOpenModal();
   };
 
@@ -234,10 +249,12 @@ const Logic = () => {
         onGetUser();
         return;
       }
-      let url = `users/${values.search}`;
-      const { data } = await MainServices.get(url);
-      setDataSource([data.data]);
-      setTotalData(1);
+      let url = `users/search`;
+      const { data } = await MainServices.get(url, {
+        keyword: values.search,
+      });
+      setDataSource(data.data);
+      setTotalData(data.total);
     } catch (error) {
       showNotif(400, error.message);
       console.error(`Error fetching data`, error);
@@ -252,6 +269,7 @@ const Logic = () => {
       form,
       isEdit,
       totalData,
+      record,
     },
     func: {
       onOpenModal,

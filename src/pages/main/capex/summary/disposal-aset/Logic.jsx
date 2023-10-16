@@ -92,17 +92,11 @@ const Logic = () => {
       code_product,
       code_project,
       code_icp,
-      periode,
+      year,
     } = params;
 
     setLinkExport(
-      `${ENDPOINT_URL_EXPORT}?
-      code_company=${code_company}
-      &code_location=${code_location}
-      &code_product=${code_product}
-      &code_department=${code_department}
-      &code_icp=${code_icp}&code_project=${code_project}
-      &year=${periode}`
+      `${ENDPOINT_URL_EXPORT}?code_company=${code_company}&code_location=${code_location}&code_product=${code_product}&code_department=${code_department}&code_icp=${code_icp}&code_project=${code_project}&year=${year}`
     );
   };
 
