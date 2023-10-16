@@ -54,6 +54,7 @@ const ManagementUserPage = () => {
         onCancel={func.onCloseModal}
         form={value.form}
         isEdit={value.isEdit}
+        record={value.record}
       />
     </div>
   );

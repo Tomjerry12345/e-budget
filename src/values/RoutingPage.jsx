@@ -124,6 +124,7 @@ export const routingOthers = {
   "Input Direct Pendapatan Non Operasional": "pendapatan-non-operasional",
   "Input Direct Biaya Non Operasional": "biaya-non-operasional",
   "Input Direct All": "direct-all",
+  "Fasilitas Kredit": "fasilitas-kredit",
   "Summary Direct All": "direct-all",
   "Summary Biaya Non Operasional": "biaya-non-operasional",
   "Summary Pendapatan Non Operasional": "pendapatan-non-operasional",
@@ -132,7 +133,6 @@ export const routingReport = {
   "Laba Rugi": "laba-rugi",
   "Cash Flow": "cash-flow",
   Neraca: "neraca",
-  "Fasilitas Kredit": "fasilitas-kredit",
 };
 export const routingMasterCoa = {
   "Kode perusahaan": "perusahaan",

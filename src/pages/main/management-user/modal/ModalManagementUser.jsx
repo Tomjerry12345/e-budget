@@ -5,6 +5,7 @@ import "./style.scss";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
@@ -23,7 +24,7 @@ const FormItem = ({ label, name, children }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => {
+const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, record }) => {
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
@@ -35,11 +36,15 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   }, []);
 
   useEffect(() => {
-    const l = form.getFieldsValue();
-    setUserGroup(l.user_group);
-    if (l.user_group !== undefined && l.user_group === "sbu") {
-      getListLocation(l.code_company);
-      getListDept(l.code_company);
+    try {
+      const l = form.getFieldsValue();
+      setUserGroup(l.user_group);
+      if (l.user_group !== undefined && l.user_group === "sbu") {
+        getListLocation(record.code_company);
+        getListDept(record.code_company);
+      }
+    } catch (e) {
+      log({ e });
     }
   }, [isEdit]);
 
@@ -70,13 +75,13 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
   return (
     <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
-      <Form onFinish={onOk} layout="vertical" form={form}>
-        <FormItem label="Nik" name="username" children={<Input />} />
+      <Form onFinish={onOk} layout="vertical" form={form} autoComplete="new-password">
+        <FormItem label="NIK" name="nik" children={<Input />} />
         <FormItem label="Email" name="email" children={<Input />} />
         {!isEdit ? (
           <Form.Item name="password" label="Password">
             <Input.Password
-              placeholder="input password"
+              // placeholder="input password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
@@ -177,9 +182,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false }) => 
             className="btn-tambah"
             type="primary"
             htmlType="submit"
-            disabled={user_group === undefined && !isEdit}
+            // disabled={user_group === undefined && !isEdit}
           >
-            {isEdit ? "Edit" : "Tambah"}
+            {isEdit ? "Save" : "Tambah"}
           </Button>
         </Form.Item>
       </Form>

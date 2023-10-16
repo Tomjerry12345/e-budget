@@ -212,7 +212,11 @@ const MainLogic = () => {
       pageNavigation = `/main/mpp/${inputOrSummary}/${routing}`;
     } else if (index === 5) {
       const routing = routingOthers[nameMenu];
-      pageNavigation = `/main/others/${inputOrSummary}/${routing}`;
+      if (nameMenu === "Fasilitas Kredit") {
+        pageNavigation = `/main/others/${routing}`;
+      } else {
+        pageNavigation = `/main/others/${inputOrSummary}/${routing}`;
+      }
     } else if (index === 6) {
       const routing = routingReport[nameMenu];
       pageNavigation = `/main/report/${routing}`;

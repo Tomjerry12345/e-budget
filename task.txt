@@ -49,3 +49,14 @@ management user
     - hc cuma bisa akses dashboard, mpp, dgn profil ✅
     - holding bisa akses semua keuali master dgn management user ✅
 
+- pencarian pake keyword ✅
+- bug saat tambah user (sprti di video) ✅
+- bug saat edit user sbu pertama kali, bug get list location (sprti di video) ✅
+- form tambah, tombol tambahnya teksnya mau dikasi warna putih ✅
+- form edit user, ganti teksnya jadi Save ✅
+- nik itu tulisannya NIK, bkn Nik (revisi di form dgn table) ✅
+- ini exportnya summary capex, year yg na kirim undefined, periksa smua ki jg ✅
+- ini jg format stock akhir mau di kasi hilang angka di blakang koma ❌
+- cek stock akhir d sub menu lain ❌
+- BJU stock awal, msh ada angka di blakang koma nya ❌
+

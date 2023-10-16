@@ -266,6 +266,9 @@ export const allItemSummarySubMenu = [
       description: "Input Direct All",
     },
     {
+      description: "Fasilitas Kredit",
+    },
+    {
       description: "Summary Direct All",
     },
     {
@@ -288,9 +291,6 @@ export const allItemSummarySubMenu = [
     },
     {
       description: "Neraca",
-    },
-    {
-      description: "Fasilitas Kredit",
     },
   ],
   // 8 Master COA
@@ -491,7 +491,7 @@ export const selectionMenu = async (i) => {
   if (user === "superadmin") {
     return superAdmin(i);
   } else if (user === "sbu") {
-    console.log('test')
+    console.log("test");
     return userBu(i);
   } else if (user === "subholding") {
     return subholding(i);
@@ -629,8 +629,7 @@ const userBu = (i) => {
       resolve(changeMenu(i, [2], true));
     } else if (i === 5) {
       resolve(changeMenu(i, [2, 3, 6, 7, 8], true));
-    }
-    else {
+    } else {
       resolve(v);
     }
   });
@@ -739,7 +738,7 @@ const hc = (i) => {
     } else {
       resolve(v);
     }
-  })
+  });
   // if (i === 4) {
   //   return changeMenu(i, [], true);
   // }
