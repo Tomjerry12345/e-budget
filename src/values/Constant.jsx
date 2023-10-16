@@ -144,9 +144,6 @@ export const allItemSummarySubMenu = [
     {
       description: "Summary Nilai Jual Aset",
     },
-    // {
-    //   description: "Summary Harga Jual",
-    // },
     {
       description: "Summary Total Aset",
     },
@@ -494,13 +491,14 @@ export const selectionMenu = async (i) => {
   if (user === "superadmin") {
     return superAdmin(i);
   } else if (user === "sbu") {
+    console.log('test')
     return userBu(i);
   } else if (user === "subholding") {
     return subholding(i);
   } else if (user === "hc") {
     return hc(i);
   } else if (user === "holding") {
-    return hc(i);
+    return holding(i);
   }
 };
 
@@ -563,31 +561,31 @@ const userBu = (i) => {
       const codeCompany = getLocal("code_company");
 
       if (codeCompany === "311") {
-        resolve(changeMenu(i, [0, 13, 14]));
+        resolve(changeMenu(i, [0, 14]));
       } else if (codeCompany === "326") {
-        resolve(changeMenu(i, [1, 13, 14]));
+        resolve(changeMenu(i, [1, 14]));
       } else if (codeCompany === "328") {
-        resolve(changeMenu(i, [2, 13, 14]));
+        resolve(changeMenu(i, [2, 14]));
       } else if (codeCompany === "313") {
-        resolve(changeMenu(i, [3, 13, 14]));
+        resolve(changeMenu(i, [3, 14]));
       } else if (codeCompany === "312") {
-        resolve(changeMenu(i, [4, 13, 14]));
+        resolve(changeMenu(i, [4, 14]));
       } else if (codeCompany === "421") {
-        resolve(changeMenu(i, [5, 13, 14]));
+        resolve(changeMenu(i, [5, 14]));
       } else if (codeCompany === "422") {
-        resolve(changeMenu(i, [6, 13, 14]));
+        resolve(changeMenu(i, [6, 14]));
       } else if (codeCompany === "221") {
-        resolve(changeMenu(i, [7, 13, 14]));
+        resolve(changeMenu(i, [7, 14]));
       } else if (codeCompany === "411") {
-        resolve(changeMenu(i, [8, 13, 14]));
+        resolve(changeMenu(i, [8, 14]));
       } else if (codeCompany === "413") {
-        resolve(changeMenu(i, [9, 13, 14]));
+        resolve(changeMenu(i, [9, 14]));
       } else if (codeCompany === "241") {
-        resolve(changeMenu(i, [10, 13, 14]));
+        resolve(changeMenu(i, [10, 14]));
       } else if (codeCompany === "242") {
-        resolve(changeMenu(i, [11, 13, 14]));
+        resolve(changeMenu(i, [11, 14]));
       } else if (codeCompany === "231") {
-        resolve(changeMenu(i, [12, 13, 14]));
+        resolve(changeMenu(i, [12, 14]));
       }
     } else if (i === 2) {
       let listSubmenuInput = [];
@@ -600,10 +598,10 @@ const userBu = (i) => {
       ];
 
       const anotherMenuSummary = [
-        // {
-        //   description: "Summary Budget Opex",
-        //   children: [],
-        // },
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
       ];
 
       const res = await MainServices.get(urlGetMenu[i]);
@@ -628,11 +626,10 @@ const userBu = (i) => {
         submenu: listSubMenu,
       });
     } else if (i === 3) {
-      resolve(changeMenu(i, [2, 15], true));
+      resolve(changeMenu(i, [2], true));
+    } else if (i === 5) {
+      resolve(changeMenu(i, [2, 3, 6, 7, 8], true));
     }
-    //  else if (i === 4) {
-    //   resolve(changeMenu(i, [14, 29], true));
-    // }
     else {
       resolve(v);
     }
@@ -732,15 +729,68 @@ const subholding = (i) => {
 };
 
 const hc = (i) => {
-  if (i === 4) {
-    return changeMenu(i, [], true);
-  }
+  return new Promise(async (resolve) => {
+    let v = {
+      submenu: allItemSummarySubMenu[i],
+      disabled: disabledItemSummaryMenu[i],
+    };
+    if (i === 4) {
+      resolve(changeMenu(i, [], true));
+    } else {
+      resolve(v);
+    }
+  })
+  // if (i === 4) {
+  //   return changeMenu(i, [], true);
+  // }
 };
 
 const holding = (i) => {
-  if (i === 4) {
-    return changeMenu(i, [], true);
-  }
+  return new Promise(async (resolve) => {
+    let listSubMenu = [];
+    if (i === 2) {
+      let listSubmenuInput = [];
+      let listSubmenuSummary = [];
+      const anotherMenuInput = [
+        {
+          description: "Input By Opex Direct",
+          children: [],
+        },
+      ];
+
+      const anotherMenuSummary = [
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
+      ];
+
+      const res = await MainServices.get(urlGetMenu[i]);
+
+      res.data.data.forEach((e) => {
+        listSubmenuInput.push({
+          ...e,
+          description: `Input By ${e.description}`,
+        });
+        listSubmenuSummary.push({
+          ...e,
+          description: `Summary By ${e.description}`,
+        });
+      });
+
+      listSubmenuInput = listSubmenuInput.concat(anotherMenuInput);
+      listSubmenuSummary = listSubmenuSummary.concat(anotherMenuSummary);
+
+      listSubMenu = listSubmenuInput.concat(listSubmenuSummary);
+    } else {
+      listSubMenu = allItemSummarySubMenu[i];
+    }
+
+    resolve({
+      submenu: listSubMenu,
+      disabled: disabledItemSummaryMenu[i],
+    });
+  });
 };
 
 const changeMenu = (i, a = [], reverse = false) => {

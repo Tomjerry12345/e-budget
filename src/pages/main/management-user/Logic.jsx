@@ -27,11 +27,17 @@ const Logic = () => {
     {
       title: "Username",
       dataIndex: "username",
-      width: "30%",
+      width: "15%",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: "15%",
     },
     {
       title: "Nama",
       dataIndex: "name",
+      width: "15%",
     },
     {
       title: "User group",

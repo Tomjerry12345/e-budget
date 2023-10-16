@@ -235,7 +235,7 @@ const MainLogic = () => {
 
   const getSubmenu = async (index) => {
     const sMenu = await selectionMenu(index);
-    log("sMenu.submenu", sMenu.submenu);
+    log("sMenu.submenu", index);
     setListSubmenu(sMenu.submenu);
     setitemDisabledMenu(sMenu.disabled);
   };

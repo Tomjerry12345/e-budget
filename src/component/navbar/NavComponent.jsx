@@ -124,6 +124,7 @@ const NavComponent = ({ func, value }) => {
           </Menu.Item>
         )}
 
+        {getLocal("user_group") === "hc" ? (
         <Menu.Item
           key={"4-MPP"}
           className={`menuItem ${isClickedMenu(4)}`}
@@ -134,9 +135,9 @@ const NavComponent = ({ func, value }) => {
           }
         >
           MPP
-        </Menu.Item>
+        </Menu.Item>) : null}
 
-        {getLocal("user_group") === "superadmin" ? (
+        {getLocal("user_group") === "hc" ? null : (
           <Menu.Item
             key={"5-Others"}
             className={`menuItem ${isClickedMenu(5)}`}
@@ -148,21 +149,19 @@ const NavComponent = ({ func, value }) => {
           >
             Others
           </Menu.Item>
-        ) : null}
-
-        {getLocal("user_group") === "hc" ? null : (
-          <Menu.Item
-            key={"6-Report"}
-            className={`menuItem ${isClickedMenu(6)}`}
-            icon={
-              <SummarizeOutlinedIcon
-                className={`colorIcon ${isClickedMenu(6)}`}
-              />
-            }
-          >
-            Report
-          </Menu.Item>
         )}
+
+        <Menu.Item
+          key={"6-Report"}
+          className={`menuItem ${isClickedMenu(6)}`}
+          icon={
+            <SummarizeOutlinedIcon
+              className={`colorIcon ${isClickedMenu(6)}`}
+            />
+          }
+        >
+          Report
+        </Menu.Item>
 
         {getLocal("user_group") === "superadmin" ? (
           <>
