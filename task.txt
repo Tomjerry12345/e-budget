@@ -60,5 +60,6 @@ management user
 - cek stock akhir d sub menu lain ✅
 - BJU stock awal, msh ada angka di blakang koma nya ✅
 - knp disable Summary Pendapatan Non Operasional ? ✅
-- kasi bgini ki urutannya ❌ ✅
+- kasi bgini ki urutannya ✅
+- BJU Blank saat import data ✅
 

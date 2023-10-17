@@ -78,26 +78,53 @@ const Logic = () => {
   };
 
   const getData = async (params) => {
+    let index = 0;
     try {
       const listRows = [];
-      const { data } = await MainServices.get(`${ENDPOINT_URL}/names`, params);
-
-      log({ data });
+      const { data } = await MainServices.get(`config/credit-facility/names`);
 
       await Promise.allSettled(
         data.data.map(async (p, i) => {
-          const url = `${p.slug}/list`;
+          // log("p.slug", p.slug);
+
+          if (i === 0) {
+            listRows[index] = {
+              name: p.name,
+              parent: true,
+            };
+            index++;
+          }
+
+          const url = `config/credit-facility/accounts/${p.slug}`;
           try {
-            const { data } = await MainServices.get(url, params);
-            listRows[i] = getRows({
-              data: data.data,
-              act: filterYear.act,
-              budget: filterYear.budget,
+            const { data } = await MainServices.get(url, {
+              type: "short",
             });
+
+            listRows[index] = {
+              name: "Jangka pendek",
+            };
+            index++;
+
+            const child = data.data;
+            console.log({ data });
+
+            child.forEach((e) => {
+              listRows[index] = {
+                name: e.description,
+              };
+              index++;
+            });
+
+            // listRows[i] = getRows({
+            //   data: data.data,
+            //   act: filterYear.act,
+            //   budget: filterYear.budget,
+            // });
           } catch (error) {
             // Tangani error jika ada
             console.error(`Error fetching data ${p.name}`, error);
-            listRows[i] = fullNewRow();
+            // listRows[i] = fullNewRow();
           }
         })
       );

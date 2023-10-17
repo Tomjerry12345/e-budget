@@ -11,10 +11,11 @@ import {
   routingOthers,
   routingReport,
   routingRevenue,
-} from "../../values/RoutingPage";
-import { cekToken, getLocal, log, setLocal } from "../../values/Utilitas";
+} from "values/RoutingPage";
+import { cekToken, getLocal, log, setLocal } from "values/Utilitas";
 import { actionRevenue } from "redux/action/action.reducer";
 import { actionData } from "redux/data-global/data.reducer";
+import MainServices from "services/MainServices";
 
 const MainLogic = () => {
   let params = useParams();
@@ -28,6 +29,18 @@ const MainLogic = () => {
   const [isListMenuActivated, setListMenuActivated] = useState([2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [header, setHeader] = useState("");
   const [routerNewPage, setRouterNewPage] = useState("#");
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    user_group: "",
+    email: "",
+    code_company: "",
+    code_location: "",
+    code_department: "",
+    fullNameCompany: null,
+  });
+
+  const [openProfilModal, setOpenProfilModal] = useState(false);
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -37,7 +50,7 @@ const MainLogic = () => {
   const notifRedux = useSelector((state) => state.notif);
 
   useEffect(() => {
-    const movePage = getLocal("move-page");
+    // const movePage = getLocal("move-page");
 
     cekToken(navigate);
 
@@ -54,6 +67,7 @@ const MainLogic = () => {
     onRefreshBrowser();
     onClosingTab();
     onActivatedMenu();
+    onGetUser();
     // setLocal("move-page", null);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -88,6 +102,29 @@ const MainLogic = () => {
     // setLocal("move-page", null);
   };
 
+  const onGetUser = async () => {
+    const username = getLocal("username");
+    try {
+      let url = `users/${username}`;
+      const { data } = await MainServices.get(url);
+      const listCompany = [];
+
+      const codeCompany = data.data.code_company.split("-");
+      const companyNames = data.data.company_names.split("-");
+
+      for (let i = 0; i < codeCompany.length; i++) {
+        listCompany.push(`${codeCompany[i]} - ${companyNames[i]}`);
+      }
+
+      log({ codeCompany });
+      log({ companyNames });
+      log({ listCompany });
+      setUser({ ...data.data, fullNameCompany: listCompany });
+    } catch (error) {
+      console.error(`Error fetching data`, error);
+    }
+  };
+
   const handleCancel = () => {
     const isActivated = [...isListMenuActivated];
     const i = isActivated.findIndex((val) => val === 2);
@@ -100,6 +137,7 @@ const MainLogic = () => {
 
     setListMenuActivated(isActivated);
     setShowMenu(false);
+    setOpenProfilModal(false);
   };
 
   const isShowMenu = () => {
@@ -124,6 +162,7 @@ const MainLogic = () => {
     setKeyMenu(index);
 
     if (item === "menu") {
+      // log({ index });
       if (index === 0) {
         setHeader("Dashboard");
         isActivated[index] = 1;
@@ -132,6 +171,16 @@ const MainLogic = () => {
         setLocal("move-page", pageNavigation);
         setLocal("index-menu", index);
         setLocal("name-menu", "Dashboard");
+      } else if (index === 8) {
+        // setHeader("Management User");
+        isActivated[index] = 1;
+        // pageNavigation = "/main/management-user";
+        // navigate(pageNavigation);
+        // setLocal("move-page", pageNavigation);
+        // setLocal("index-menu", index);
+        // setLocal("name-menu", "Management user");
+        setOpenProfilModal(true);
+        setShowMenu(false);
       } else if (index === 9) {
         setHeader("Management User");
         isActivated[index] = 1;
@@ -141,6 +190,7 @@ const MainLogic = () => {
         setLocal("index-menu", index);
         setLocal("name-menu", "Management user");
         setShowMenu(false);
+        setOpenProfilModal(false);
       } else {
         isActivated[iEMenu] = 2;
         isActivated[index] = 1;
@@ -157,6 +207,7 @@ const MainLogic = () => {
       isActivated[index] = 2;
       setListSubmenu([]);
       setShowMenu(false);
+      setOpenProfilModal(false);
       // setTitleHeader(title);
 
       setHeader(subMenu.description);
@@ -239,9 +290,12 @@ const MainLogic = () => {
 
   const getSubmenu = async (index) => {
     const sMenu = await selectionMenu(index);
-    log("sMenu.submenu", index);
     setListSubmenu(sMenu.submenu);
     setitemDisabledMenu(sMenu.disabled);
+  };
+
+  const onLogout = () => {
+    navigate("/login");
   };
 
   return {
@@ -249,6 +303,7 @@ const MainLogic = () => {
       onClickedMenu,
       handleCancel,
       onMouseDownClickedMenu,
+      onLogout,
     },
     value: {
       listSubmenu,
@@ -262,6 +317,8 @@ const MainLogic = () => {
       routerNewPage,
       navigate,
       notifRedux,
+      openProfilModal,
+      user,
     },
   };
 };
