@@ -1,30 +1,19 @@
 import React from "react";
 import FilterComponent from "component/filter/FilterComponent";
-import HeaderComponent from "component/header/HeaderComponent";
 import { ReactGrid } from "@silevis/reactgrid";
 import Logic from "./Logic";
+import "./style.scss";
+import HeaderFasilitasKredit from "./header/HeaderFasilitasKredit";
+import ModalFasilitasKredit from "./modal/ModalFasilitasKredit";
 
 const FasilitasKreditPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
-      <HeaderComponent
-        className="more-modal-width-type1"
-        type="input"
-        onUploadFile={func.onUploadFile}
-        accesFile={value}
-        downloadFile="file/capex/capex_direct.xlsx"
-        // disabledImportExport={value.rows.length === 0}
-        showType={true}
-        showYear={true}
-        listMenuImport={[
-          {
-            description: "capex",
-            code_account: 0,
-          },
-        ]}
-        dynamicFile={false}
+      <HeaderFasilitasKredit
+        titleHeader="Fasilitas Kredit"
+        onOpenModal={func.onOpenModalTambah}
       />
 
       <FilterComponent
@@ -62,6 +51,13 @@ const FasilitasKreditPage = () => {
           </div>
         </div>
       </div>
+
+      <ModalFasilitasKredit
+        form={value.form}
+        open={value.modalTambah}
+        onOk={func.onOkModalFasilitas}
+        onCancel={func.onCloseModalTambah}
+      />
     </>
   );
 };

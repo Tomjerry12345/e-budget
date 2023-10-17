@@ -266,19 +266,22 @@ export const allItemSummarySubMenu = [
       description: "Input Direct All",
     },
     {
+      description: "Input Asumsi",
+    },
+    {
       description: "Fasilitas Kredit",
-    },
-    {
-      description: "Summary Direct All",
-    },
-    {
-      description: "Summary Biaya Non Operasional",
     },
     {
       description: "Summary Pendapatan Non Operasional",
     },
     {
-      description: "Input Asumsi",
+      description: "Summary Biaya Non Operasional",
+    },
+    {
+      description: "Summary Direct All",
+    },
+    {
+      description: "Transfer Budget",
     },
   ],
   // 7 Report
@@ -452,7 +455,7 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 6 Others
-  [false, false, false, false, false, false, true],
+  [false, false, false, false, false, false, false, false, true],
   // 7 Report
   [false],
   // 8 Master COA

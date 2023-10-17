@@ -6,11 +6,15 @@ import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { fullNewRow, getRows, updateTotalRow } from "./getRows";
+import { Form } from "antd";
 
 const Logic = () => {
+  const [form] = Form.useForm();
+
   const [codeFilter, setCodeFilter] = useState();
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
+  const [modalTambah, setModalTambah] = useState(null);
   const [filterYear, setFilterYear] = useState({
     act: "",
     budget: "",
@@ -74,21 +78,44 @@ const Logic = () => {
   };
 
   const getData = async (params) => {
-    const url = `${ENDPOINT_URL}`;
     try {
-      const { data } = await MainServices.get(url, params);
-      let r;
-      if (data.data.length > 0) {
-        log({ filterYear });
-        r = getRows({
-          data: data.data,
-          act: filterYear.act,
-          budget: filterYear.budget,
-        });
-      } else {
-        r = fullNewRow();
-      }
-      setRows(r);
+      const listRows = [];
+      const { data } = await MainServices.get(`${ENDPOINT_URL}/names`, params);
+
+      log({ data });
+
+      await Promise.allSettled(
+        data.data.map(async (p, i) => {
+          const url = `${p.slug}/list`;
+          try {
+            const { data } = await MainServices.get(url, params);
+            listRows[i] = getRows({
+              data: data.data,
+              act: filterYear.act,
+              budget: filterYear.budget,
+            });
+          } catch (error) {
+            // Tangani error jika ada
+            console.error(`Error fetching data ${p.name}`, error);
+            listRows[i] = fullNewRow();
+          }
+        })
+      );
+
+      log({ listRows });
+
+      // let r;
+      // if (data.data.length > 0) {
+      //   log({ filterYear });
+      //   r = getRows({
+      //     data: data.data,
+      //     act: filterYear.act,
+      //     budget: filterYear.budget,
+      //   });
+      // } else {
+      //   r = fullNewRow();
+      // }
+      // setRows(listRows);
     } catch (error) {
       console.error(`Error fetching data for code account`, error);
     }
@@ -238,6 +265,16 @@ const Logic = () => {
     }
   };
 
+  const onOpenModalTambah = () => {
+    setModalTambah(true);
+  };
+
+  const onCloseModalTambah = () => {
+    setModalTambah(false);
+  };
+
+  const onOkModalFasilitas = (values) => {};
+
   return {
     value: {
       columns,
@@ -247,12 +284,17 @@ const Logic = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
+      modalTambah,
+      form,
     },
     func: {
       onFinish,
       onUploadFile,
       setUploadSucces,
       onChangeTable,
+      onOpenModalTambah,
+      onCloseModalTambah,
+      onOkModalFasilitas,
     },
   };
 };
