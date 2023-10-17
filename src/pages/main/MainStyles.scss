@@ -62,24 +62,12 @@
       }
       .scroll-shadows {
         background:
-    /* Shadow covers */ linear-gradient(
-            #ffffff 30%,
-            rgba(255, 255, 255, 0)
-          ),
-          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0
-            100%,
+    /* Shadow covers */ linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)),
+          linear-gradient(rgba(255, 255, 255, 0), #ffffff calc(100% - 30%)) 0 100%,
           /* Shadows */
-            radial-gradient(
-              farthest-side at 50% 0,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            ),
-          radial-gradient(
-              farthest-side at 50% 100%,
-              rgba(0, 0, 0, 40%),
-              rgba(0, 0, 0, 0)
-            )
-            0 100%;
+            radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)),
+          radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 40%), rgba(0, 0, 0, 0)) 0
+            100%;
         background-repeat: no-repeat;
         background-color: white;
         background-size: 100% 80px, 100% 80px, 100% 8px, 100% 8px;
@@ -100,6 +88,28 @@
           }
         }
       }
+    }
+  }
+
+  .root-profile {
+    padding: 24px;
+    .container-name {
+      background: aliceblue;
+      padding: 8px;
+    }
+    .txt-title {
+      font-size: 14px !important;
+      font-weight: bold !important;
+    }
+    .txt-sub {
+      font-weight: 100 !important;
+    }
+    .header-profile {
+      height: calc(100vh - 353px);
+    }
+    .bottom-profile {
+      margin-top: calc(100vh - 574px);
+      width: 0px;
     }
   }
 }
@@ -186,6 +196,7 @@
     padding-left: 9px !important;
   }
 }
+
 .rg-number-celleditor {
   input {
     border: none;
