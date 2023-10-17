@@ -1,0 +1,12 @@
+.btn-tambah-user {
+    background: #34a853;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+        background: #34a853a9;
+    }
+    &:focus {
+        background: #34a853a9;
+    }
+}

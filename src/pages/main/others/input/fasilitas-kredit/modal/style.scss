@@ -1,0 +1,17 @@
+.management-user {
+    top: 8px !important;
+
+    .btn-tambah {
+        margin-bottom: 0px;
+        background: #34a853;
+        border: none;
+        border-radius: 8px;
+    
+        &:hover {
+            background: #34a853a9;
+        }
+        &:focus {
+            background: #34a853a9;
+        }
+    }
+}

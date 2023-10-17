@@ -393,6 +393,7 @@ const Logic = () => {
         header: getHeaderRow[desc],
         data: data.data,
         key: desc,
+        col: columns,
       });
 
       const newRow = [...rows];
@@ -409,6 +410,7 @@ const Logic = () => {
           header: getHeaderRow[desc],
           data: data.data,
           key: desc,
+          col: columns,
         });
 
         newRow[3].data = r;
@@ -424,6 +426,7 @@ const Logic = () => {
           header: getHeaderRow[desc],
           data: data.data,
           key: desc,
+          col: columns,
         });
 
         newRow[6].data = r;
