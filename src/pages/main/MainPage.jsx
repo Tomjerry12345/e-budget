@@ -14,8 +14,13 @@ import "@silevis/reactgrid/default-colors.scss";
 import "@silevis/reactgrid/default-sizing.scss";
 import "@silevis/reactgrid/cell-templates-default-colors.scss";
 import { Box } from "@mui/material";
-import { BarChartOutlined, LogoutOutlined } from "@ant-design/icons";
-import { getLocal } from "values/Utilitas";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
+import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
+import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
+import { KeyOutlined, LogoutOutlined } from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -80,7 +85,8 @@ const ModalProfil = ({ value, func }) => {
       <Box className="root-profile">
         <Box className="header-profile">
           <Box className="container-name" display="flex" flexDirection="row">
-            <img alt="logo" />
+            {/* <img alt="logo" /> */}
+            <AccountCircleOutlinedIcon />
             <Box className="ml-16">
               <Typography.Title className="txt-title">HI, {value.user.name}</Typography.Title>
               <Typography.Text className="txt-sub">
@@ -89,7 +95,7 @@ const ModalProfil = ({ value, func }) => {
             </Box>
           </Box>
           <Box className="mt-16" display="flex" flexDirection="row">
-            <BarChartOutlined />
+            <GroupsOutlinedIcon />
             <Box className="ml-8">
               <Typography.Title className="txt-title">User group</Typography.Title>
               <Typography.Text className="txt-sub">
@@ -98,14 +104,14 @@ const ModalProfil = ({ value, func }) => {
             </Box>
           </Box>
           <Box className="mt-16" display="flex" flexDirection="row">
-            <BarChartOutlined />
+            <AlternateEmailRoundedIcon />
             <Box className="ml-8">
               <Typography.Title className="txt-title">Email</Typography.Title>
               <Typography.Text className="txt-sub">{value.user.email ?? "-"}</Typography.Text>
             </Box>
           </Box>
           <Box className="mt-16" display="flex" flexDirection="row">
-            <BarChartOutlined />
+            <BusinessRoundedIcon />
             <Box className="ml-8">
               <Typography.Title className="txt-title">Akses perusahaan</Typography.Title>
               <Box display="flex" flexDirection="column">
@@ -120,7 +126,7 @@ const ModalProfil = ({ value, func }) => {
             </Box>
           </Box>
           <Box className="mt-16" display="flex" flexDirection="row">
-            <BarChartOutlined />
+            <PinDropOutlinedIcon />
             <Box className="ml-8">
               <Typography.Title className="txt-title">Kode Lokasi</Typography.Title>
               <Typography.Text className="txt-sub">
@@ -129,7 +135,7 @@ const ModalProfil = ({ value, func }) => {
             </Box>
           </Box>
           <Box className="mt-16" display="flex" flexDirection="row">
-            <BarChartOutlined />
+            <PeopleOutlineOutlinedIcon />
             <Box className="ml-8">
               <Typography.Title className="txt-title">kode Department</Typography.Title>
               <Typography.Text className="txt-sub">
@@ -140,7 +146,7 @@ const ModalProfil = ({ value, func }) => {
         </Box>
 
         <Box className="bottom-profile" display="flex" flexDirection="column">
-          <Button className="no-padding" type="link" icon={<BarChartOutlined />}>
+          <Button className="no-padding" type="link" icon={<KeyOutlined />}>
             Ganti Password
           </Button>
           <Button
@@ -152,14 +158,6 @@ const ModalProfil = ({ value, func }) => {
           >
             Logout
           </Button>
-          {/* <Box display="flex">
-            <BarChartOutlined />
-            <Typography.Title className="txt-title ml-8">Ganti password</Typography.Title>
-          </Box> */}
-          {/* <Box className="mt-8" display="flex">
-            <LogoutOutlined className="color-error" />
-            <Typography.Title className="txt-title ml-8 color-error">Logout</Typography.Title>
-          </Box> */}
         </Box>
       </Box>
     </Modal>
