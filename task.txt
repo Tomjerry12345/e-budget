@@ -64,7 +64,7 @@ management user
 - BJU Blank saat import data ✅
 
 - bermasalah persen bju hpp variable ✅
-- export data to oracle tambah actual dan budget, default budget
-- profil rampung ganti password
+- export data to oracle tambah actual dan budget, default budget ✅
+- profil rampung ganti password ✅
 - Input direct dan summary di subholding ✅
 
