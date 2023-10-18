@@ -142,7 +142,9 @@ const Logic = () => {
   const onActionUser = async (values) => {
     try {
       const username = values.nik;
+      const password = values.password1;
       delete values.nik;
+      delete values.password1;
       if (isEdit) {
         const params = {
           ...values,
@@ -164,6 +166,7 @@ const Logic = () => {
         const params = {
           ...values,
           username,
+          password,
           code_company:
             values.code_company === undefined
               ? null

@@ -1,4 +1,4 @@
-import { Button, Form, Select, Typography } from "antd";
+import { Button, Form, Radio, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { log } from "values/Utilitas";
@@ -89,6 +89,7 @@ const ModalExportSummaryDirectAll = ({
 
       const params = {
         ...values,
+        type: values.type ?? "budget",
         filename,
       };
       const res = await MainServices.download(url, params);
@@ -131,6 +132,22 @@ const ModalExportSummaryDirectAll = ({
               }
             />
             <FormItem label="Periode" name="year" children={<Select options={periode} />} />
+            <FormItem
+              label="Type"
+              name="type"
+              children={
+                <Radio.Group
+                  className="type-style"
+                  onChange={(e) => {
+                    form.setFieldsValue({ type: e.target.value });
+                  }}
+                  defaultValue="budget"
+                >
+                  <Radio value="actual">Actual - Forecast</Radio>
+                  <Radio value="budget">Budget</Radio>
+                </Radio.Group>
+              }
+            />
           </div>
           <Form.Item className="footer-custom">
             <Button className="btn-cancel" type="text" onClick={onCancel}>

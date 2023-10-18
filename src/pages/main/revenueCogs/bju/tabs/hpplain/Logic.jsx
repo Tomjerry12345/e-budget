@@ -263,12 +263,15 @@ const Logic = () => {
           fullRows[i].data = newRows;
 
           // hpp variabel
-          if (type === "number") {
+          if (type === "percent") {
             if (i === 1) {
               const lengthHppVariabel = fullRows[1].data.length;
 
-              const sColumnId = c.columnId;
-              const vPenjualan = dataPenjualan[0][sColumnId];
+              const sColumnId = c.columnId.split("_");
+              const vPenjualan =
+                dataPenjualan[0][
+                  sColumnId.length > 1 ? `${sColumnId[0]}_${sColumnId[1]}` : `${sColumnId[0]}`
+                ];
 
               fullRows[1].data[rowIndex].cells[columnIndex - 1].value =
                 vPenjualan * (value / 100);

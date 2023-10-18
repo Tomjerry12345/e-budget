@@ -79,10 +79,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
         <FormItem label="NIK" name="nik" children={<Input />} />
         <FormItem
           label="Email"
-          name="email
-        
-        
-        "
+          name="email"
           children={<Input />}
         />
         {!isEdit ? (

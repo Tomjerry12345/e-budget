@@ -1,4 +1,4 @@
-import { Button, Layout, List, Modal, Space, Typography } from "antd";
+import { Button, Form, Input, Layout, List, Modal, Space, Typography } from "antd";
 import React from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
@@ -14,13 +14,18 @@ import "@silevis/reactgrid/default-colors.scss";
 import "@silevis/reactgrid/default-sizing.scss";
 import "@silevis/reactgrid/cell-templates-default-colors.scss";
 import { Box } from "@mui/material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import AlternateEmailRoundedIcon from "@mui/icons-material/AlternateEmailRounded";
 import BusinessRoundedIcon from "@mui/icons-material/BusinessRounded";
 import PinDropOutlinedIcon from "@mui/icons-material/PinDropOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
 import GroupsOutlinedIcon from "@mui/icons-material/GroupsOutlined";
-import { KeyOutlined, LogoutOutlined } from "@ant-design/icons";
+import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+  KeyOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 
 const { Content } = Layout;
 
@@ -86,7 +91,7 @@ const ModalProfil = ({ value, func }) => {
         <Box className="header-profile">
           <Box className="container-name" display="flex" flexDirection="row">
             {/* <img alt="logo" /> */}
-            <AccountCircleOutlinedIcon />
+            <AccountCircleTwoToneIcon />
             <Box className="ml-16">
               <Typography.Title className="txt-title">HI, {value.user.name}</Typography.Title>
               <Typography.Text className="txt-sub">
@@ -146,7 +151,12 @@ const ModalProfil = ({ value, func }) => {
         </Box>
 
         <Box className="bottom-profile" display="flex" flexDirection="column">
-          <Button className="no-padding" type="link" icon={<KeyOutlined />}>
+          <Button
+            className="no-padding"
+            type="link"
+            icon={<KeyOutlined />}
+            onClick={func.onOpenModalForgetPassword}
+          >
             Ganti Password
           </Button>
           <Button
@@ -164,6 +174,79 @@ const ModalProfil = ({ value, func }) => {
   );
 };
 
+const ModalForgetPassword = ({ value, func }) => {
+  return (
+    <Modal
+      open={value.openModalForgetPassword}
+      className="modal-forget-password"
+      // onCancel={func.onCancelYakin}
+      footer={null}
+    >
+      <Typography.Title className="title" level={4}>
+        Ganti Password
+      </Typography.Title>
+      <Form
+        className="mt-16"
+        onFinish={func.onClickYakin}
+        layout="vertical"
+        form={value.form}
+        autoComplete="off"
+      >
+        <Form.Item name="old_password" label="Password Lama" required>
+          <Input.Password
+            placeholder="Input Password Lama"
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+          />
+        </Form.Item>
+        <Form.Item name="password" label="Password Baru" required>
+          <Input.Password
+            placeholder="Input Password Baru"
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+          />
+        </Form.Item>
+        <Form.Item name="password_confirmation" label="Konfirmasi Password baru" required>
+          <Input.Password
+            placeholder="Input Konfirmasi Password Baru"
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+          />
+        </Form.Item>
+        <Form.Item className="footer">
+          <Button className="btn-kembali" type="text" onClick={func.onCancelYakin}>
+            Cancel
+          </Button>
+          <Button className="btn-tambah" type="primary" htmlType="submit">
+            Yakin
+          </Button>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
+
+const ModalConfirm = ({ value, func }) => {
+  return (
+    <Modal
+      open={value.openConfirm}
+      className="modal-confirm"
+      // onCancel={func.onCancelConfirm}
+      footer={null}
+      closable={false}
+    >
+      <Typography.Title className="title" level={4}>
+        Anda Yakin Ingin Menyimpan Perubahan Ini ?
+      </Typography.Title>
+      <Box className="footer">
+        <Button className="btn-kembali" type="text" onClick={func.onCancelConfirm}>
+          Cancel
+        </Button>
+        <Button className="btn-confirm" type="primary" onClick={func.onClickConfirm}>
+          Yakin
+        </Button>
+      </Box>
+    </Modal>
+  );
+};
+
 const MainPage = () => {
   const { func, value } = MainLogic();
 
@@ -174,8 +257,9 @@ const MainPage = () => {
       <NavComponent func={func} value={value} />
 
       <ModalListMenu value={value} func={func} />
-
       <ModalProfil value={value} func={func} />
+      <ModalForgetPassword value={value} func={func} />
+      <ModalConfirm value={value} func={func} />
 
       <Layout
         style={{
