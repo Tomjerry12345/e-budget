@@ -12,8 +12,8 @@ import {
   routingReport,
   routingRevenue,
 } from "values/RoutingPage";
-import { cekToken, getLocal, log, setLocal } from "values/Utilitas";
-import { actionRevenue } from "redux/action/action.reducer";
+import { cekToken, formDataUtils, getLocal, log, setLocal } from "values/Utilitas";
+import { actionRevenue, val } from "redux/action/action.reducer";
 import { actionData } from "redux/data-global/data.reducer";
 import MainServices from "services/MainServices";
 
@@ -39,8 +39,10 @@ const MainLogic = () => {
     code_department: "",
     fullNameCompany: null,
   });
-
   const [openProfilModal, setOpenProfilModal] = useState(false);
+  const [openModalForgetPassword, setOpenModalForgetPassword] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [dataPassword, setDataPassword] = useState();
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -75,6 +77,15 @@ const MainLogic = () => {
   //   log("notifRedux", notifRedux)
   // }, [notifRedux])
 
+  const showNotif = (status, message) => {
+    dispatch(
+      val({
+        status: status,
+        message: message,
+      })
+    );
+  };
+
   const onRefreshBrowser = () => {
     if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
       console.info("This page is reloaded");
@@ -103,22 +114,19 @@ const MainLogic = () => {
   };
 
   const onGetUser = async () => {
-    const username = getLocal("username");
+    const username = getLocal("username-get");
     try {
       let url = `users/${username}`;
       const { data } = await MainServices.get(url);
       const listCompany = [];
 
-      const codeCompany = data.data.code_company.split("-");
-      const companyNames = data.data.company_names.split("-");
+      const codeCompany = data.data.code_company.split(",");
+      const companyNames = data.data.company_names.split(",");
 
       for (let i = 0; i < codeCompany.length; i++) {
         listCompany.push(`${codeCompany[i]} - ${companyNames[i]}`);
       }
 
-      log({ codeCompany });
-      log({ companyNames });
-      log({ listCompany });
       setUser({ ...data.data, fullNameCompany: listCompany });
     } catch (error) {
       console.error(`Error fetching data`, error);
@@ -138,6 +146,7 @@ const MainLogic = () => {
     setListMenuActivated(isActivated);
     setShowMenu(false);
     setOpenProfilModal(false);
+    setOpenModalForgetPassword(false);
   };
 
   const isShowMenu = () => {
@@ -172,13 +181,8 @@ const MainLogic = () => {
         setLocal("index-menu", index);
         setLocal("name-menu", "Dashboard");
       } else if (index === 8) {
-        // setHeader("Management User");
         isActivated[index] = 1;
-        // pageNavigation = "/main/management-user";
-        // navigate(pageNavigation);
-        // setLocal("move-page", pageNavigation);
-        // setLocal("index-menu", index);
-        // setLocal("name-menu", "Management user");
+        isActivated[iEMenu] = 2;
         setOpenProfilModal(true);
         setShowMenu(false);
       } else if (index === 9) {
@@ -196,6 +200,7 @@ const MainLogic = () => {
         isActivated[index] = 1;
         getSubmenu(index);
         isShowMenu();
+        if (openProfilModal === true) setOpenProfilModal(false);
       }
     } else {
       cekToken(navigate);
@@ -294,6 +299,37 @@ const MainLogic = () => {
     setitemDisabledMenu(sMenu.disabled);
   };
 
+  const onOpenModalForgetPassword = () => {
+    setOpenModalForgetPassword(true);
+  };
+
+  const onClickYakin = (values) => {
+    setOpenConfirm(true);
+    setOpenModalForgetPassword(false);
+    setDataPassword(values);
+  };
+
+  const onCancelYakin = () => {
+    setOpenModalForgetPassword(false);
+  };
+
+  const onClickConfirm = async () => {
+    try {
+      const formData = formDataUtils({ ...dataPassword, id: user.id });
+      const res = await MainServices.post("users/change-password", formData);
+      showNotif(200, res.data.responseDescription);
+      onCancelConfirm();
+    } catch (e) {
+      onOpenModalForgetPassword();
+      onCancelConfirm();
+      showNotif(400, e.response.data.responseDescription);
+    }
+  };
+
+  const onCancelConfirm = () => {
+    setOpenConfirm(false);
+  };
+
   const onLogout = () => {
     navigate("/login");
   };
@@ -303,7 +339,12 @@ const MainLogic = () => {
       onClickedMenu,
       handleCancel,
       onMouseDownClickedMenu,
+      onOpenModalForgetPassword,
       onLogout,
+      onClickYakin,
+      onCancelYakin,
+      onClickConfirm,
+      onCancelConfirm,
     },
     value: {
       listSubmenu,
@@ -318,6 +359,8 @@ const MainLogic = () => {
       navigate,
       notifRedux,
       openProfilModal,
+      openModalForgetPassword,
+      openConfirm,
       user,
     },
   };

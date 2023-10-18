@@ -486,15 +486,9 @@ export const urlGetMenu = ["", "", "config/opex"];
 
 export const selectionMenu = async (i) => {
   const user = getLocal("user_group");
-
-  // if (user === "superadmin" || user === "usersbu" || user === "reviewer") {
-  //   return await superAdmin(i);
-  // }
-
   if (user === "superadmin") {
     return superAdmin(i);
   } else if (user === "sbu") {
-    console.log("test");
     return userBu(i);
   } else if (user === "subholding") {
     return subholding(i);
@@ -639,6 +633,7 @@ const userBu = (i) => {
 };
 
 const subholding = (i) => {
+  log("subholding");
   return new Promise(async (resolve) => {
     let v = {
       submenu: allItemSummarySubMenu[i],
@@ -688,17 +683,17 @@ const subholding = (i) => {
       let listSubmenuInput = [];
       let listSubmenuSummary = [];
       const anotherMenuInput = [
-        // {
-        //   description: "Input By Opex Direct",
-        //   children: [],
-        // },
+        {
+          description: "Input By Opex Direct",
+          children: [],
+        },
       ];
 
       const anotherMenuSummary = [
-        // {
-        //   description: "Summary Budget Opex",
-        //   children: [],
-        // },
+        {
+          description: "Summary Budget Opex",
+          children: [],
+        },
       ];
 
       const res = await MainServices.get(urlGetMenu[i]);
@@ -722,8 +717,6 @@ const subholding = (i) => {
         ...v,
         submenu: listSubMenu,
       });
-    } else if (i === 3) {
-      resolve(changeMenu(i, [2, 15], true));
     } else {
       resolve(v);
     }

@@ -64,6 +64,7 @@ const LoginLogic = () => {
           setLocal("code_location", code_location);
           setLocal("code_department", code_department);
           setLocal("company_names", company_names);
+          setLocal("username-get", input.username);
 
           if (checked) {
             setLocal("username", input.username);
