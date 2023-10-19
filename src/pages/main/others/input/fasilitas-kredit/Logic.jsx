@@ -78,71 +78,32 @@ const Logic = () => {
   };
 
   const getData = async (params) => {
-    let index = 0;
     try {
-      const listRows = [];
-      const { data } = await MainServices.get(`config/credit-facility/names`);
+      const { data } = await MainServices.get(`other/credit-facility`, params);
 
-      await Promise.allSettled(
-        data.data.map(async (p, i) => {
-          // log("p.slug", p.slug);
+      let r = [];
+      let d = data.data;
+      const list = [];
+      log({ d });
 
-          if (i === 0) {
-            listRows[index] = {
-              name: p.name,
-              parent: true,
-            };
-            index++;
-          }
+      if (d.length > 0) {
+        log("d.length", d.length);
+        for (let i = 0; i < d.length; i++) {
+          list.push({
+            ...d[i],
+            no: d[i].no.toString(),
+          });
+        }
 
-          const url = `config/credit-facility/accounts/${p.slug}`;
-          try {
-            const { data } = await MainServices.get(url, {
-              type: "short",
-            });
-
-            listRows[index] = {
-              name: "Jangka pendek",
-            };
-            index++;
-
-            const child = data.data;
-            console.log({ data });
-
-            child.forEach((e) => {
-              listRows[index] = {
-                name: e.description,
-              };
-              index++;
-            });
-
-            // listRows[i] = getRows({
-            //   data: data.data,
-            //   act: filterYear.act,
-            //   budget: filterYear.budget,
-            // });
-          } catch (error) {
-            // Tangani error jika ada
-            console.error(`Error fetching data ${p.name}`, error);
-            // listRows[i] = fullNewRow();
-          }
-        })
-      );
-
-      log({ listRows });
-
-      // let r;
-      // if (data.data.length > 0) {
-      //   log({ filterYear });
-      //   r = getRows({
-      //     data: data.data,
-      //     act: filterYear.act,
-      //     budget: filterYear.budget,
-      //   });
-      // } else {
-      //   r = fullNewRow();
-      // }
-      // setRows(listRows);
+        r = getRows({
+          data: list,
+          act: filterYear.act,
+          budget: filterYear.budget,
+        });
+      } else {
+        r = fullNewRow();
+      }
+      setRows(r);
     } catch (error) {
       console.error(`Error fetching data for code account`, error);
     }

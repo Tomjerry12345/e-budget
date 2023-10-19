@@ -455,7 +455,7 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 6 Others
-  [false, false, false, true, true, false, false, false, true],
+  [false, false, false, true, false, false, false, false, true],
   // 7 Report
   [false],
   // 8 Master COA
