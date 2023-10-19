@@ -58,13 +58,13 @@ export const type1 = [
 export const type2 = [
   {
     columnId: "project_code",
-    width: 200,
+    width: 60,
     type: "text",
     nonEditabled: true,
   },
   {
     columnId: "description",
-    width: 400,
+    width: 430,
     type: "text",
     nonEditabled: true,
   },

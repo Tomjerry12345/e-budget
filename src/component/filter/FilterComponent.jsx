@@ -135,7 +135,7 @@ const FilterComponent = ({
     keyCodeProject,
     formGlobal: form,
     type: type,
-    typeCompany: usersGroup === "usersbu" ? "static" : typeCompany,
+    typeCompany: usersGroup === "sbu" ? "static" : typeCompany,
     codeCompany,
     typeFilter,
   });
@@ -161,21 +161,17 @@ const FilterComponent = ({
                 isCodeDept={isCodeDept}
                 isStatus={isStatus}
                 disabled={
-                  usersGroup === "usersbu"
+                  usersGroup === "sbu"
                     ? true
-                    : usersGroup === "reviewer" || usersGroup === "superadmin"
+                    : usersGroup === "subholding" || usersGroup === "superadmin"
                     ? false
                     : disabled
                 }
                 disabledLocation={
-                  usersGroup === "usersbu"
-                    ? value.code_location !== "null"
-                      ? true
-                      : false
-                    : false
+                  usersGroup === "sbu" ? (value.code_location !== "null" ? true : false) : false
                 }
                 disabledDept={
-                  usersGroup === "usersbu" ? (value.code_dept !== "null" ? true : false) : false
+                  usersGroup === "sbu" ? (value.code_dept !== "null" ? true : false) : false
                 }
                 variant={variant}
               />
