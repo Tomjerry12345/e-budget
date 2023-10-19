@@ -1,4 +1,4 @@
-import { Button, Form, Radio, Select, Typography } from "antd";
+import { AutoComplete, Button, Form, Radio, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { log } from "values/Utilitas";
@@ -84,11 +84,13 @@ const ModalExportSummaryDirectAll = ({
 
   const onExport = async (values) => {
     try {
+      const codeCompany = values.code_company.split(" ");
       const filename = "data-to-oracle";
       const url = `directall/export-to-oracle`;
 
       const params = {
         ...values,
+        code_company: codeCompany[0],
         type: values.type ?? "budget",
         filename,
       };
@@ -116,21 +118,38 @@ const ModalExportSummaryDirectAll = ({
       <Form onFinish={onExport} layout="vertical" form={form}>
         <div className="root-content-upload">
           <div className="layout-upload-file">
-            <FormItem
+            <Form.Item
               label="Kode perusahaan"
               name="code_company"
               children={
-                <Select
-                  onChange={(e) => {
-                    form.setFieldsValue({ code_company: e });
-                  }}
+                <AutoComplete
                   options={listCompany.map((e) => ({
-                    value: e.code,
-                    label: e.description,
+                    value: e.description,
                   }))}
+                  allowClear
+                  filterOption={(inputValue, option) => {
+                    return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                  }}
                 />
               }
-            />
+            ></Form.Item>
+
+            {/*  <FormItem
+               label="Kode perusahaan"
+               name="code_company"
+               children={
+                 <Select
+                   onChange={(e) => {
+                     form.setFieldsValue({ code_company: e });
+                   }}
+                   options={listCompany.map((e) => ({
+                     value: e.code,
+                     label: e.description,
+                   }))}
+                 />
+               }
+             /> */}
+
             <FormItem label="Periode" name="year" children={<Select options={periode} />} />
             <FormItem
               label="Type"
