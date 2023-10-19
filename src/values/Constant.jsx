@@ -455,7 +455,7 @@ export const disabledItemSummaryMenu = [
     false,
   ],
   // 6 Others
-  [false, false, false, false, false, false, false, false, true],
+  [false, false, false, true, true, false, false, false, true],
   // 7 Report
   [false],
   // 8 Master COA
@@ -485,6 +485,7 @@ export const urlPageRevenue = {
 export const urlGetMenu = ["", "", "config/opex"];
 
 export const selectionMenu = async (i) => {
+  log({ i });
   const user = getLocal("user_group");
   if (user === "superadmin") {
     return superAdmin(i);
@@ -583,6 +584,8 @@ const userBu = (i) => {
         resolve(changeMenu(i, [11, 14]));
       } else if (codeCompany === "231") {
         resolve(changeMenu(i, [12, 14]));
+      } else {
+        resolve(changeMenu(i, [], true));
       }
     } else if (i === 2) {
       let listSubmenuInput = [];
@@ -625,7 +628,7 @@ const userBu = (i) => {
     } else if (i === 3) {
       resolve(changeMenu(i, [2], true));
     } else if (i === 5) {
-      resolve(changeMenu(i, [2, 3, 6, 7, 8], true));
+      resolve(changeMenu(i, [2, 3, 4, 7, 8], true));
     } else {
       resolve(v);
     }
@@ -633,7 +636,6 @@ const userBu = (i) => {
 };
 
 const subholding = (i) => {
-  log("subholding");
   return new Promise(async (resolve) => {
     let v = {
       submenu: allItemSummarySubMenu[i],
@@ -803,8 +805,13 @@ const changeMenu = (i, a = [], reverse = false) => {
       });
     }
   } else {
-    s = allItemSummarySubMenu[i];
-    d = disabledItemSummaryMenu[i];
+    if (reverse) {
+      s = [];
+      d = [];
+    } else {
+      s = allItemSummarySubMenu[i];
+      d = disabledItemSummaryMenu[i];
+    }
   }
 
   return {

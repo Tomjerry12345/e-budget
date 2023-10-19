@@ -15,15 +15,6 @@ const AutoCompleteElement = ({
     newVal.push({
       value: val.description,
     });
-    // if (val.code !== "") {
-    //   newVal.push({
-    //     value: `${val.title} (${val.code})`,
-    //   });
-    // } else {
-    //   newVal.push({
-    //     value: `${val.title}`,
-    //   });
-    // }
   });
 
   return (

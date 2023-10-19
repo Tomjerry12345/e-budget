@@ -9,7 +9,7 @@ export const type1 = [
   },
   {
     columnId: "project_description",
-    width: 600,
+    width: 430,
     type: "text",
   },
   { columnId: "jan", width: COL_WIDTH, type: "number", format: false },
@@ -64,7 +64,7 @@ export const type2 = [
   },
   {
     columnId: "description",
-    width: 200,
+    width: 400,
     type: "text",
     nonEditabled: true,
   },
@@ -259,13 +259,13 @@ export const type2 = [
 export const type3 = [
   {
     columnId: "project_code",
-    width: 200,
+    width: 60,
     type: "text",
     nonEditabled: true,
   },
   {
     columnId: "project_description",
-    width: 200,
+    width: 430,
     type: "text",
   },
   { columnId: "jan", width: COL_WIDTH, type: "number", format: true },
@@ -308,13 +308,13 @@ export const type3 = [
 export const type4 = [
   {
     columnId: "project_code",
-    width: 200,
+    width: 60,
     type: "text",
     nonEditabled: true,
   },
   {
     columnId: "project_description",
-    width: 200,
+    width: 430,
     type: "text",
   },
 
@@ -538,7 +538,7 @@ export const type5 = [
   },
   {
     columnId: "description",
-    width: 200,
+    width: 400,
     type: "text",
   },
 
@@ -762,7 +762,7 @@ export const type6 = [
   },
   {
     columnId: "description",
-    width: 200,
+    width: 400,
     type: "text",
   },
 
@@ -812,13 +812,13 @@ export const type6 = [
 export const type7 = [
   {
     columnId: "project_code",
-    width: 200,
+    width: 60,
     type: "text",
     nonEditabled: true,
   },
   {
     columnId: "project_description",
-    width: 200,
+    width: 430,
     type: "text",
     nonEditabled: true,
   },

@@ -17,6 +17,7 @@
 .ant-modal-wrap {
   margin-left: 82px !important;
 }
+
 .modal-menu {
   top: 8px;
   bottom: 8px;
@@ -97,7 +98,7 @@
       background: #f5f7f9;
       border-radius: 10px;
       padding: 16px 12px;
-      .css-i4bv87-MuiSvgIcon-root {
+      .MuiSvgIcon-root {
         font-size: 44px;
         color: #089851;
       }
@@ -115,8 +116,9 @@
     .bottom-profile {
       width: 0px;
     }
-    .css-i4bv87-MuiSvgIcon-root {
-      font-size: 16px;
+    .MuiSvgIcon-root {
+      font-size: 18px;
+      color: #aaaaaa;
     }
   }
 }
