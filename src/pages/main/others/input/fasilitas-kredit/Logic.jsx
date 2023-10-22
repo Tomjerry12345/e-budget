@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
 import MainServices from "services/MainServices";
 import { formDataUtils, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
-import { fullNewRow, getRows, updateTotalRow } from "./getRows";
+import { fullNewRow, getRows } from "./getRows";
 import { Form } from "antd";
 
 const Logic = () => {
@@ -15,10 +15,12 @@ const Logic = () => {
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
   const [modalTambah, setModalTambah] = useState(null);
-  const [filterYear, setFilterYear] = useState({
-    act: "",
-    budget: "",
-  });
+  // const [filterYear, setFilterYear] = useState({
+  //   act: "",
+  //   budget: "",
+  // });
+
+  const filterYear = useRef();
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
@@ -54,11 +56,15 @@ const Logic = () => {
 
     log({ fPeriode });
 
-    setFilterYear({
-      ...filterYear,
+    // setFilterYear({
+    //   ...filterYear,
+    //   act: fPeriode[0],
+    //   budget: fPeriode[2],
+    // });
+    filterYear.current = {
       act: fPeriode[0],
       budget: fPeriode[2],
-    });
+    };
 
     return {
       code_company: fCodeCompany,
@@ -84,16 +90,16 @@ const Logic = () => {
       let r = [];
       let d = data.data;
       const list = [];
-      log({ d });
 
       if (d.length > 0) {
-        log("d.length", d.length);
         for (let i = 0; i < d.length; i++) {
           list.push({
             ...d[i],
             no: d[i].no.toString(),
           });
         }
+
+        log({ filterYear });
 
         r = getRows({
           data: list,
@@ -124,7 +130,6 @@ const Logic = () => {
         const columnIndex = columns.findIndex((j) => j.columnId === c.columnId);
 
         const type = newRows[rowIndex].cells[columnIndex].type;
-        const length = newRows.length;
 
         let value;
 
@@ -136,23 +141,7 @@ const Logic = () => {
           newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
 
-          value = c.newCell.value;
           if (!isNaN(value)) {
-            newRows[rowIndex].cells[columnIndex].value = value;
-
-            let total1 = 0;
-            let total2 = 0;
-
-            const newCell = newRows[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
-
-            newRows[rowIndex].cells = newCell;
-
             isChange = true;
           } else {
             isChange = false;
@@ -162,41 +151,18 @@ const Logic = () => {
         if (isChange) {
           const id = c.rowId;
           const column_id = c.columnId;
-          const isNewRow = newRows[rowIndex].newRow;
 
-          const code_account = newRows[rowIndex].cells[0].text;
+          const formData = formDataUtils({
+            id,
+            column_id,
+            value,
+          });
 
-          const key = columns[columnIndex].columnId;
-
-          if (isNewRow) {
-            const formData = formDataUtils({
-              ...codeFilter,
-              code_account,
-              [key]: value,
-            });
-
-            const res = await MainServices.post(`${ENDPOINT_URL}/insert`, formData);
-
-            log({ res });
-            const rowId = res.data.data.id;
-
-            newRows[rowIndex].rowId = rowId;
-          } else {
-            const formData = formDataUtils({
-              id,
-              column_id,
-              value,
-            });
-
-            await MainServices.post(`${ENDPOINT_URL}/update`, formData);
-          }
-
-          delete newRows[rowIndex].newRow;
-          // newRows[length - 1] = updateTotalRow(newRows);
+          await MainServices.post(`other/credit-facility/update`, formData);
         }
       }
 
-      setRows(newRows);
+      getData(codeFilter);
 
       showNotif(200, "Sukses update data");
     } catch (e) {
@@ -259,9 +225,24 @@ const Logic = () => {
 
   const onCloseModalTambah = () => {
     setModalTambah(false);
+    form.resetFields();
   };
 
-  const onOkModalFasilitas = (values) => {};
+  const onOkModalFasilitas = async (values) => {
+    try {
+      log({ values });
+      const formData = formDataUtils({
+        ...codeFilter,
+        code_account: values.code_account,
+      });
+
+      await MainServices.post(`other/credit-facility/insert`, formData);
+      getData(codeFilter);
+      onCloseModalTambah();
+    } catch (e) {
+      showNotif(400, e.message);
+    }
+  };
 
   return {
     value: {
@@ -274,6 +255,7 @@ const Logic = () => {
       acceptedFiles,
       modalTambah,
       form,
+      codeFilter,
     },
     func: {
       onFinish,

@@ -14,6 +14,7 @@ const FasilitasKreditPage = () => {
       <HeaderFasilitasKredit
         titleHeader="Fasilitas Kredit"
         onOpenModal={func.onOpenModalTambah}
+        disabled={value.codeFilter === undefined}
       />
 
       <FilterComponent

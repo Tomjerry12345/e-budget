@@ -45,6 +45,7 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -64,12 +65,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jan",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -89,12 +92,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_feb",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -114,12 +119,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_mar",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -139,12 +146,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_apr",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -164,12 +173,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_mei",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -189,12 +200,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jun",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -214,12 +227,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jul",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -239,12 +254,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_agu",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -264,12 +281,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_sep",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -289,12 +308,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_okt",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -314,12 +335,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_nov",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -339,12 +362,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_des",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -352,24 +377,28 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "outlook_refund",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "outlook_outstanding",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "outlook_remaining",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -389,12 +418,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jan_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -414,6 +445,7 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_feb_p",
@@ -439,12 +471,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_mar_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -464,12 +498,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_apr_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -489,12 +525,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_mei_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -514,12 +552,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jun_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -539,12 +579,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_jul_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -564,12 +606,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_agu_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -589,12 +633,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_sep_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -614,12 +660,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_okt_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -639,12 +687,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_nov_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -664,12 +714,14 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "remaining_des_p",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     {
@@ -677,24 +729,28 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "total_refund",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "total_outstanding",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "total_remaining",
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
 
     // {
@@ -714,6 +770,7 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
   ];
 }
