@@ -26,7 +26,7 @@ const Logic = () => {
       render: (item, record, index) => <>{index + 1}</>,
     },
     {
-      title: "Username",
+      title: "NIK",
       dataIndex: "username",
       width: "15%",
     },
@@ -142,9 +142,11 @@ const Logic = () => {
   const onActionUser = async (values) => {
     try {
       const username = values.nik;
-      const password = values.password1;
+      const email = values.inputemail;
+      const password = values.inputpassword;
       delete values.nik;
-      delete values.password1;
+      delete values.email;
+      delete values.password;
       if (isEdit) {
         const params = {
           ...values,

@@ -76,11 +76,11 @@ const LoginPage = () => {
                   onFinish={onFinish}
                 >
                   <Form.Item
-                    label="Masukkan username"
+                    label="Masukkan NIK"
                     name="username"
-                    rules={[{ required: true, message: "Please input your username!" }]}
+                    rules={[{ required: true, message: "Mohon masukkan NIK anda!" }]}
                   >
-                    <Input placeholder="Masukkan username disini..." />
+                    <Input placeholder="Masukkan NIK di sini..." />
                   </Form.Item>
 
                   <Form.Item
@@ -89,7 +89,7 @@ const LoginPage = () => {
                     style={{
                       marginBottom: 8,
                     }}
-                    rules={[{ required: true, message: "Please input your password!" }]}
+                    rules={[{ required: true, message: "Mohon masukkan Password anda!" }]}
                   >
                     <Input.Password
                       placeholder="input password"

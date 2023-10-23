@@ -79,11 +79,11 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
         <FormItem label="NIK" name="nik" children={<Input />} />
         <FormItem
           label="Email"
-          name="email"
+          name="inputemail"
           children={<Input />}
         />
         {!isEdit ? (
-          <Form.Item name="password1" label="Password">
+          <Form.Item name="inputpassword" label="Password">
             <Input.Password
               // placeholder="input password"
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
