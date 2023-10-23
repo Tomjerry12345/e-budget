@@ -127,7 +127,7 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
               }}
               options={listAccount.map((e) => ({
                 value: e.account,
-                label: e.description,
+                label: `${e.account} - ${e.description}`,
               }))}
             />
           }

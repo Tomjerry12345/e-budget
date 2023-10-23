@@ -85,7 +85,7 @@ const Logic = () => {
     }
   };
 
-  const getData = async (params) => {
+  const getData = async (params, typeCall = "get") => {
     const url = `${ENDPOINT_URL}/list`;
     try {
       const { data } = await MainServices.get(url, params);
@@ -98,6 +98,10 @@ const Logic = () => {
         r = fullNewRow();
       }
       setRows(r);
+
+      if (typeCall === "update") {
+        showNotif(200, "Sukses update data");
+      }
     } catch (error) {
       console.error(`Error fetching data for code account`, error);
     }
@@ -114,10 +118,10 @@ const Logic = () => {
       let isChange;
       for (const c of change) {
         const rowIndex = newRows.findIndex((j) => j.rowId === c.rowId);
+        if (rowIndex < 0) continue;
         const columnIndex = columns.findIndex((j) => j.columnId === c.columnId);
 
         const type = newRows[rowIndex].cells[columnIndex].type;
-        const length = newRows.length;
 
         let value;
 
@@ -129,23 +133,7 @@ const Logic = () => {
           newRows[rowIndex].cells[columnIndex].value = c.newCell.value;
           value = c.newCell.value;
 
-          value = c.newCell.value;
           if (!isNaN(value)) {
-            newRows[rowIndex].cells[columnIndex].value = value;
-
-            let total1 = 0;
-            let total2 = 0;
-
-            const newCell = newRows[rowIndex].cells.map((e, j) => {
-              if (j >= 2 && j <= 13) total1 += e.value;
-              if (j === 14) e.value = total1;
-              if (j >= 15 && j <= 26) total2 += e.value;
-              if (j === 27) e.value = total2;
-              return e;
-            });
-
-            newRows[rowIndex].cells = newCell;
-
             isChange = true;
           } else {
             isChange = false;
@@ -156,12 +144,12 @@ const Logic = () => {
           const id = c.rowId;
           const column_id = c.columnId;
           const isNewRow = newRows[rowIndex].newRow;
-          const code_parent = newRows[rowIndex].code_parent;
+          // const code_parent = newRows[rowIndex].code_parent;
           const code_account = newRows[rowIndex].cells[0].text;
 
           const key = columns[columnIndex].columnId;
 
-          const sliceRows = newRows.slice(1, newRows.length - 1);
+          // const sliceRows = newRows.slice(1, newRows.length - 1);
 
           if (isNewRow) {
             const formData = formDataUtils({
@@ -187,48 +175,47 @@ const Logic = () => {
             await MainServices.post(`direct/all/update`, formData);
           }
 
-          let v = value;
-          let child = false;
+          // let v = value;
+          // let child = false;
 
           // getData(codeFilter);
 
-          const sumTotalParent = (codeParent) => {
-            if (codeParent !== null) {
-              const pIndex = sliceRows.findIndex((j) => j.code_parent === codeParent);
-              let cParent = newRows[pIndex].code_parent;
-              let vParent = newRows[pIndex].cells[columnIndex].value;
+          // const sumTotalParent = (codeParent) => {
+          //   if (codeParent !== null) {
+          //     const pIndex = sliceRows.findIndex((j) => j.code_parent === codeParent);
+          //     let cParent = newRows[pIndex].code_parent;
+          //     let vParent = newRows[pIndex].cells[columnIndex].value;
 
-              if (child) {
-                v = vParent + value;
-              } else {
-                v = value;
-              }
+          //     if (child) {
+          //       v = vParent + value;
+          //     } else {
+          //       v = value;
+          //     }
 
-              if (pIndex > 0) {
-                let aboveParent = newRows[pIndex - 1].parent;
+          //     if (pIndex > 0) {
+          //       let aboveParent = newRows[pIndex - 1].parent;
 
-                if (aboveParent === false) {
-                  child = true;
-                }
-              }
+          //       if (aboveParent === false) {
+          //         child = true;
+          //       }
+          //     }
 
-              newRows[pIndex].cells[columnIndex].value = v;
+          //     newRows[pIndex].cells[columnIndex].value = v;
 
-              log({ pIndex });
-              log({ cParent });
-              sumTotalParent(cParent);
-            }
-          };
+          //     log({ pIndex });
+          //     log({ cParent });
+          //     sumTotalParent(cParent);
+          //   }
+          // };
 
-          sumTotalParent(code_parent);
+          // sumTotalParent(code_parent);
 
           // newRows[length - 1] = updateTotalRow(newRows);
         }
       }
 
-      setRows(newRows);
-
-      showNotif(200, "Sukses update data");
+      // setRows(newRows);
+      getData(codeFilter, "update");
     } catch (e) {
       log({ e });
       showNotif(400, e.message);

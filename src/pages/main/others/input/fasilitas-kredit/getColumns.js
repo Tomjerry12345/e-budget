@@ -1,35 +1,36 @@
 const COL_WIDTH = 150;
+const COL_RATE = 70;
 
 export function getColumns() {
   return [
     {
       columnId: "no",
-      width: 60,
+      width: 40,
       type: "text",
       nonEditabled: true,
     },
     {
       columnId: "name",
-      width: 400,
+      width: 220,
       type: "text",
     },
 
     {
       columnId: "prev_rate",
-      width: 100,
+      width: COL_RATE,
       type: "number",
       format: true,
     },
     {
       columnId: "rate",
-      width: 100,
+      width: COL_RATE,
       type: "number",
       format: true,
     },
 
     {
       columnId: "plafon",
-      width: 100,
+      width: COL_WIDTH,
       type: "number",
       format: true,
     },

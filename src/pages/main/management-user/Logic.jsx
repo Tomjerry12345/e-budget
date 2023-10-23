@@ -250,7 +250,7 @@ const Logic = () => {
 
   const onSearch = async (values) => {
     try {
-      if (values.search === "") {
+      if (values.search === "" || values.search === undefined) {
         onGetUser();
         return;
       }
@@ -264,6 +264,11 @@ const Logic = () => {
       showNotif(400, error.message);
       console.error(`Error fetching data`, error);
     }
+  };
+
+  const onReset = () => {
+    form.resetFields();
+    form.submit();
   };
 
   return {
@@ -280,8 +285,8 @@ const Logic = () => {
       onOpenModal,
       onCloseModal,
       onActionUser,
-
       onSearch,
+      onReset,
     },
   };
 };
