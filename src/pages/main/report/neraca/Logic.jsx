@@ -15,19 +15,19 @@ const Logic = () => {
 
   let params = useParams();
 
-  useEffect(() => {
-    const codeCompany = getLocal("code_company");
-    const userGroup = getLocal("user_group");
-    loadData(
-      userGroup === "superadmin" ? "211" : codeCompany,
-      "all",
-      "all",
-      "all",
-      "all",
-      "all",
-      "2023"
-    );
-  }, []);
+  // useEffect(() => {
+  //   const codeCompany = getLocal("code_company");
+  //   const userGroup = getLocal("user_group");
+  //   loadData(
+  //     userGroup === "superadmin" ? "211" : codeCompany,
+  //     "all",
+  //     "all",
+  //     "all",
+  //     "all",
+  //     "all",
+  //     "2023"
+  //   );
+  // }, []);
 
   const onFinish = async (values) => {
     setLoading(true);

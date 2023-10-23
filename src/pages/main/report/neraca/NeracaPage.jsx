@@ -26,12 +26,12 @@ const LabaRugiPage = () => {
 
     form.setFieldsValue({
       code_company: company === "" ? null : `${company} - ${company_names}`,
-      code_product: "ALL",
-      code_location: userGroup === "superadmin" ? "ALL" : code_location,
-      code_dept: userGroup === "superadmin" ? "ALL" : code_dept,
-      code_icp: "ALL",
-      code_project: "ALL",
-      periode: "2023 - 2024",
+      // code_product: "ALL",
+      // code_location: userGroup === "superadmin" ? "ALL" : code_location,
+      // code_dept: userGroup === "superadmin" ? "ALL" : code_dept,
+      // code_icp: "ALL",
+      // code_project: "ALL",
+      // periode: "2023 - 2024",
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

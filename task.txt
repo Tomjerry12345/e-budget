@@ -2,6 +2,19 @@ version: v1.4.8 ✅ ❌ 🔥
 
 Bug New:
 
+- Others> Input Direct all: perbaikan alert, inputan dan automation ❌
+- Management User: Tambahkan tombol reset disamping tombol cari 🔥
+- Tambah user (email dan password) masih terisi langsung. tambahkan keterangan mandatory (*)
+  pada setiap inputan, ---pada label nik di form tambah data tambah / username begitu pun sebaliknya pada tabel username
+  tambahkan / nik 🔥
+- Laporan laba rugi dan neraca untuk admin jangan otomatis menampilkan data. dipilih kek model summary kalo SBU tampilkan sesuai 
+  sbu nya ✅
+- Neraca dan laba rugi : tambahkan 2 angka di belakang koma sama seperti hasil export ❌
+- Export data to oracle: penamaan file actual dan budget di sesuaikan dengan type ✅
+- pagination load saldo awal ✅
+- header angka tahun msh undefined ki
+- perlu ki di tambahkan kode bank, di dropdown tambah data
+
 - Icon belum sesuai ✅
 - ini ku tes login pake user sbu, mngkin krna brubah ki urutannya jd lari ki arraynya, 
 hrsnya yg muncul dstu Summary Biaya, bkn fasilitas kredit ✅

@@ -61,6 +61,8 @@ const ModalExportSummaryDirectAll = ({
 
   const [listCompany, setListCompany] = useState([]);
 
+  // const [typeForecast, setTypeForecast] = useState()
+
   useEffect(() => {
     getListCompany();
   }, []);
@@ -85,7 +87,7 @@ const ModalExportSummaryDirectAll = ({
   const onExport = async (values) => {
     try {
       const codeCompany = values.code_company.split(" ");
-      const filename = "data-to-oracle";
+      const filename = "data_to_oracle";
       const url = `directall/export-to-oracle`;
 
       const params = {
@@ -99,7 +101,7 @@ const ModalExportSummaryDirectAll = ({
       const fileURL = URL.createObjectURL(res.data);
       const link = document.createElement("a");
       link.href = fileURL;
-      link.download = `summary_${filename}`;
+      link.download = `summary_${filename}_${params.type}`;
       link.click();
       onCancel();
       form.setFieldsValue({
@@ -159,6 +161,7 @@ const ModalExportSummaryDirectAll = ({
                   className="type-style"
                   onChange={(e) => {
                     form.setFieldsValue({ type: e.target.value });
+                    // setTypeForecast(e.target.value)
                   }}
                   defaultValue="budget"
                 >
