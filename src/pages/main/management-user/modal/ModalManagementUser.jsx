@@ -75,16 +75,16 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
   return (
     <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
-      <Form onFinish={onOk} layout="vertical" form={form} autoComplete="off">
-        <FormItem label="NIK" name="nik" children={<Input />} />
-        <FormItem label="Email" name="inputemail" children={<Input />} />
+      <Form onFinish={onOk} layout="vertical" form={form} autoComplete="off" aria-autocomplete="none">
+        <FormItem label="NIK" name="nik" children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />} />
+        <FormItem label="Email" name="inputemail" children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />} />
 
         {!isEdit ? (
           <FormItem
             label="Password"
             name="inputpassword"
             children={
-              <Input.Password
+              <Input.Password autoComplete="new-password" aria-autocomplete="none" role="presentation"
                 // placeholder="input password"
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
