@@ -99,8 +99,6 @@ const Logic = () => {
           });
         }
 
-        log({ filterYear });
-
         r = getRows({
           data: list,
           act: filterYear.act,
@@ -230,10 +228,9 @@ const Logic = () => {
 
   const onOkModalFasilitas = async (values) => {
     try {
-      log({ values });
       const formData = formDataUtils({
         ...codeFilter,
-        code_account: values.code_account,
+        account: values.code_account,
       });
 
       await MainServices.post(`other/credit-facility/insert`, formData);
