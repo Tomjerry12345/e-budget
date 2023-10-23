@@ -17,11 +17,7 @@ const ManagementUserPage = () => {
         {/* <Button className="btn-tambah-user" onClick={func.onOpenModal} type="primary">
           Tambah User
         </Button> */}
-        <Form
-          layout="horizontal"
-          onFinish={func.onSearch}
-          // form={form}
-        >
+        <Form layout="horizontal" onFinish={func.onSearch} form={value.form}>
           <FormItem
             className="form-search"
             name="search"
@@ -40,7 +36,7 @@ const ManagementUserPage = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button className="btn-reset" type="secondary">
+            <Button className="btn-reset" type="primary" onClick={func.onReset}>
               Reset
             </Button>
           </Form.Item>

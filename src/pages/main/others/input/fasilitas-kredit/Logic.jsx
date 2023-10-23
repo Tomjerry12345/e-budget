@@ -101,8 +101,8 @@ const Logic = () => {
 
         r = getRows({
           data: list,
-          act: filterYear.act,
-          budget: filterYear.budget,
+          act: filterYear.current.act,
+          budget: filterYear.current.budget,
         });
       } else {
         r = fullNewRow();
