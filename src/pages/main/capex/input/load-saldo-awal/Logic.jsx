@@ -127,6 +127,7 @@ const Logic = () => {
       setTotalData(data.data.total);
     } else {
       r = fullNewRow({ id: generateUID() });
+      setTotalData(0);
     }
     setRows(r);
   };

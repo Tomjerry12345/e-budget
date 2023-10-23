@@ -1,58 +1,62 @@
 .style-management-user {
-    .ant-form {
-        display: flex;
+  .ant-form {
+    display: flex;
 
-        .form-search {
-            width: 249px;
-            margin-right: 16px;
-
-           
-        
-        }
+    .form-search {
+      width: 249px;
+      margin-right: 16px;
     }
+  }
 
-    .btn-search {
-        background-color: #34a853;
+  .btn-search {
+    background-color: #34a853;
+    margin-right: 16px;
+  }
+
+  .btn-reset {
+    background-color: #465a4b64;
+    margin-right: 16px;
+    border-color: #465a4b64;
+  }
+
+  .ant-table-thead > tr > .ant-table-cell {
+    padding: 1px 8px !important;
+    font-size: 12px !important;
+    font-weight: bold;
+  }
+
+  .ant-table-tbody > tr > .ant-table-cell {
+    padding: 1px 8px !important;
+    font-size: 10px !important;
+  }
+
+  .btn-tambah-user {
+    background: #34a853;
+    border: none;
+    border-radius: 8px;
+
+    &:hover {
+      background: #34a853a9;
     }
-
-    .ant-table-thead > tr > .ant-table-cell {
-        padding: 1px 8px !important;
-        font-size: 12px !important;
-        font-weight: bold;
-      }
-
-    .ant-table-tbody > tr > .ant-table-cell {
-        padding: 1px 8px !important;
-        font-size: 10px !important;
-      }
-
-    .btn-tambah-user {
-        background: #34a853;
-        border: none;
-        border-radius: 8px;
-
-        &:hover {
-            background: #34a853a9;
-        }
-        &:focus {
-            background: #34a853a9;
-        }
+    &:focus {
+      background: #34a853a9;
     }
+  }
 
-    .btn-edit {
-        font-size: 10px;
-    }
+  .btn-edit {
+    font-size: 10px;
+  }
 
-    .btn-reset {
-        font-size: 10px;
-    }
+  .btn-reset {
+    font-size: 10px;
+  }
 
-    .btn-delete {
-        font-size: 10px;
-    }
+  .btn-delete {
+    font-size: 10px;
+  }
 
-    .pagination {
-        margin: 10px;
-        height: 48px;
-    }
+  .pagination {
+    margin: 10px;
+    height: 48px;
+  }
 }

@@ -9,16 +9,16 @@ import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
-const FormItem = ({ label, name, children }) => (
+const FormItem = ({ label, name, children, required = true }) => (
   <Form.Item
     label={label}
     name={name}
-    // rules={[
-    //   {
-    //     required: true,
-    //     message: `${name} tidak boleh kosong!`,
-    //   },
-    // ]}
+    rules={[
+      {
+        required: required,
+        message: `${name} tidak boleh kosong!`,
+      },
+    ]}
   >
     {children}
   </Form.Item>
@@ -77,18 +77,19 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form onFinish={onOk} layout="vertical" form={form} autoComplete="off">
         <FormItem label="NIK" name="nik" children={<Input />} />
-        <FormItem
-          label="Email"
-          name="inputemail"
-          children={<Input />}
-        />
+        <FormItem label="Email" name="inputemail" children={<Input />} />
+
         {!isEdit ? (
-          <Form.Item name="inputpassword" label="Password">
-            <Input.Password
-              // placeholder="input password"
-              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-            />
-          </Form.Item>
+          <FormItem
+            label="Password"
+            name="inputpassword"
+            children={
+              <Input.Password
+                // placeholder="input password"
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              />
+            }
+          />
         ) : null}
 
         <FormItem label="Nama" name="name" children={<Input />} />

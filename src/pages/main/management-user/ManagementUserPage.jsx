@@ -26,12 +26,22 @@ const ManagementUserPage = () => {
             className="form-search"
             name="search"
             children={
-              <Input placeholder="Cari berdasarkan nik / nama" prefix={<SearchOutlined />} />
+              <Input
+                allowClear
+                placeholder="Cari berdasarkan nik / nama"
+                prefix={<SearchOutlined />}
+              />
             }
           />
           <Form.Item>
             <Button className="btn-search" type="primary" htmlType="submit">
               Cari
+            </Button>
+          </Form.Item>
+
+          <Form.Item>
+            <Button className="btn-reset" type="secondary">
+              Reset
             </Button>
           </Form.Item>
         </Form>
