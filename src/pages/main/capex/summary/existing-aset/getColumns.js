@@ -8,7 +8,7 @@ export function getColumns() {
     },
     {
       columnId: "description",
-      width: 1050,
+      width: 750,
       type: "text",
       title: "Description",
     },
