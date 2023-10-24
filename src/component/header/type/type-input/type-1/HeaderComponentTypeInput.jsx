@@ -61,7 +61,8 @@ const HeaderComponentTypeInput = ({
   dynamicFile,
   showType,
   showYear,
-  showCompany
+  showCompany,
+  hideAction,
 }) => {
   const { value, func } = Logic();
   const [modalTitle, setModalTitle] = useState("Import");
@@ -71,11 +72,13 @@ const HeaderComponentTypeInput = ({
     <Header className="custom-header">
       {/* <Text className="header-title">{getLocal("name-menu")}</Text> */}
       <Text className="header-title">{value.header}</Text>
-      <div className="container-menu">
-        <Button className="btn-more" onClick={func.onClickMore}>
-          Action <ArrowDownOutlined />
-        </Button>
-      </div>
+      {!hideAction ? (
+        <div className="container-menu">
+          <Button className="btn-more" onClick={func.onClickMore}>
+            Action <ArrowDownOutlined />
+          </Button>
+        </div>
+      ) : null}
 
       <ModalMenuMore
         className={className}

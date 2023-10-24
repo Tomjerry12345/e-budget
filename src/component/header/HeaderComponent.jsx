@@ -35,6 +35,7 @@ const HeaderComponent = ({
   showCompany = false,
   titleHeader,
   typeSummary,
+  hideAction = false,
 }) => {
   let component;
 
@@ -52,6 +53,7 @@ const HeaderComponent = ({
         showType={showType}
         showYear={showYear}
         showCompany={showCompany}
+        hideAction={hideAction}
       />
     );
   } else if (type === "summary") {

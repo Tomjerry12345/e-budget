@@ -14,12 +14,12 @@ const FormItem = ({ label, name, children }) => (
   <Form.Item
     label={label}
     name={name}
-    // rules={[
-    //   {
-    //     required: true,
-    //     message: `${name} tidak boleh kosong!`,
-    //   },
-    // ]}
+    rules={[
+      {
+        required: true,
+        message: `${label} tidak boleh kosong!`,
+      },
+    ]}
   >
     {children}
   </Form.Item>
@@ -64,6 +64,7 @@ const ModalExportSummaryDirectAll = ({
   // const [typeForecast, setTypeForecast] = useState()
 
   useEffect(() => {
+    form.setFieldsValue({ type: "budget" });
     getListCompany();
   }, []);
 
@@ -120,7 +121,7 @@ const ModalExportSummaryDirectAll = ({
       <Form onFinish={onExport} layout="vertical" form={form}>
         <div className="root-content-upload">
           <div className="layout-upload-file">
-            <Form.Item
+            <FormItem
               label="Kode perusahaan"
               name="code_company"
               children={
@@ -134,7 +135,7 @@ const ModalExportSummaryDirectAll = ({
                   }}
                 />
               }
-            ></Form.Item>
+            />
 
             {/*  <FormItem
                label="Kode perusahaan"
@@ -163,7 +164,6 @@ const ModalExportSummaryDirectAll = ({
                     form.setFieldsValue({ type: e.target.value });
                     // setTypeForecast(e.target.value)
                   }}
-                  defaultValue="budget"
                 >
                   <Radio value="actual">Actual - Forecast</Radio>
                   <Radio value="budget">Budget</Radio>
