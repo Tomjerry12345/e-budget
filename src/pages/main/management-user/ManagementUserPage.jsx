@@ -36,7 +36,7 @@ const ManagementUserPage = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button className="btn-reset" type="primary" onClick={func.onReset}>
+            <Button className="btn-reset-search" type="primary" onClick={func.onReset}>
               Reset
             </Button>
           </Form.Item>

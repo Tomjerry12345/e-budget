@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/role-supports-aria-props */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Button, Form, Input, Select, Typography } from "antd";
+import { AutoComplete, Button, Form, Input, Select, Typography } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
@@ -16,7 +17,7 @@ const FormItem = ({ label, name, children, required = true }) => (
     rules={[
       {
         required: required,
-        message: `${name} tidak boleh kosong!`,
+        message: `${label} tidak boleh kosong!`,
       },
     ]}
   >
@@ -75,16 +76,33 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
   return (
     <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
-      <Form onFinish={onOk} layout="vertical" form={form} autoComplete="off" aria-autocomplete="none">
-        <FormItem label="NIK" name="nik" children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />} />
-        <FormItem label="Email" name="inputemail" children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />} />
+      <Form
+        onFinish={onOk}
+        layout="vertical"
+        form={form}
+        autoComplete="off"
+        aria-autocomplete="none"
+      >
+        <FormItem
+          label="NIK"
+          name="nik"
+          children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />}
+        />
+        <FormItem
+          label="Email"
+          name="inputemail"
+          children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />}
+        />
 
         {!isEdit ? (
           <FormItem
             label="Password"
             name="inputpassword"
             children={
-              <Input.Password autoComplete="new-password" aria-autocomplete="none" role="presentation"
+              <Input.Password
+                autoComplete="new-password"
+                aria-autocomplete="none"
+                role="presentation"
                 // placeholder="input password"
                 iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
@@ -129,21 +147,38 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             label="Akses perusahaan"
             name="code_company"
             children={
-              <Select
-                allowClear
-                disabled={user_group === undefined && !isEdit}
-                mode={user_group === "sbu" ? null : "multiple"}
-                onChange={(e) => {
+              // <Select
+              //   allowClear
+              //   disabled={user_group === undefined && !isEdit}
+              //   mode={user_group === "sbu" ? null : "multiple"}
+              //   onChange={(e) => {
+              //     form.setFieldsValue({ code_company: e });
+              //     if (user_group === "sbu") {
+              //       getListLocation(e);
+              //       getListDept(e);
+              //     }
+              //   }}
+              //   options={listCompany.map((e) => ({
+              //     value: e.code,
+              //     label: e.description,
+              //   }))}
+              // />
+              <AutoComplete
+                options={listCompany.map((e) => ({
+                  value: `${e.description}`,
+                }))}
+                onSelect={(e) => {
+                  const code = e.split(" ");
                   form.setFieldsValue({ code_company: e });
                   if (user_group === "sbu") {
-                    getListLocation(e);
-                    getListDept(e);
+                    getListLocation(code[0]);
+                    getListDept(code[0]);
                   }
                 }}
-                options={listCompany.map((e) => ({
-                  value: e.code,
-                  label: e.description,
-                }))}
+                allowClear
+                filterOption={(inputValue, option) => {
+                  return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                }}
               />
             }
           />
@@ -155,12 +190,21 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
               label="Kode Lokasi"
               name="code_location"
               children={
-                <Select
-                  allowClear
+                // <Select
+                //   allowClear
+                //   options={listLocation.map((e) => ({
+                //     value: e.code,
+                //     label: e.description,
+                //   }))}
+                // />
+                <AutoComplete
                   options={listLocation.map((e) => ({
-                    value: e.code,
-                    label: e.description,
+                    value: `${e.description}`,
                   }))}
+                  allowClear
+                  filterOption={(inputValue, option) => {
+                    return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                  }}
                 />
               }
             />
@@ -168,12 +212,21 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
               label="Kode Department"
               name="code_department"
               children={
-                <Select
-                  allowClear
+                // <Select
+                //   allowClear
+                //   options={listDept.map((e) => ({
+                //     value: e.code,
+                //     label: e.description,
+                //   }))}
+                // />
+                <AutoComplete
                   options={listDept.map((e) => ({
-                    value: e.code,
-                    label: e.description,
+                    value: `${e.description}`,
                   }))}
+                  allowClear
+                  filterOption={(inputValue, option) => {
+                    return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                  }}
                 />
               }
             />

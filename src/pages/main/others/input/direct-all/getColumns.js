@@ -1,4 +1,4 @@
-const COL_WIDTH = 110;
+const COL_WIDTH = 140;
 
 export function getColumns() {
   return [

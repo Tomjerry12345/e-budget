@@ -141,24 +141,31 @@ const Logic = () => {
 
   const onActionUser = async (values) => {
     try {
+      log({ values });
       const username = values.nik;
       const email = values.inputemail;
       const password = values.inputpassword;
+      const codeCompany = values.code_company?.split(" ");
+      const codeLocation = values.code_location?.split(" ");
+      const codeDepartment = values.code_department?.split(" ");
       delete values.nik;
-      delete values.email;
-      delete values.password;
+      delete values.inputemail;
+      delete values.inputpassword;
+      delete values.search;
       if (isEdit) {
         const params = {
           ...values,
           username,
+          email,
+          password,
           code_company:
             values.code_company === undefined
               ? null
               : values.code_company.toString() === ""
               ? null
-              : values.code_company.toString(),
-          code_location: values.code_location ?? null,
-          code_department: values.code_department ?? null,
+              : codeCompany[0],
+          code_location: codeLocation?.[0] ?? null,
+          code_department: codeDepartment?.[0] ?? null,
           id: idRef.current,
         };
 
@@ -167,6 +174,7 @@ const Logic = () => {
       } else {
         const params = {
           ...values,
+          email,
           username,
           password,
           code_company:
@@ -174,9 +182,9 @@ const Logic = () => {
               ? null
               : values.code_company.toString() === ""
               ? null
-              : values.code_company.toString(),
-          code_location: values.code_location ?? null,
-          code_department: values.code_department ?? null,
+              : codeCompany[0],
+          code_location: codeLocation?.[0] ?? null,
+          code_department: codeDepartment?.[0] ?? null,
         };
 
         const formData = formDataUtils(params);
@@ -189,9 +197,10 @@ const Logic = () => {
       onGetUser();
       onCloseModal();
     } catch (error) {
+      log({ error });
       // Tangani error jika ada
-      showNotif(400, error.response.data.responseDescription);
-      console.error(`Error fetching data`, error);
+      // console.error(`Error fetching data`, error);
+      showNotif(400, `${error.response.data.responseDescription}`);
     }
   };
 

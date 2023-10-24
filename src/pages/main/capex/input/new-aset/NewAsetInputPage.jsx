@@ -22,6 +22,7 @@ const NewAsetInputPage = () => {
         //   value.rows.pemasaran.length === 0 && value.rows.administrasi.length === 0
         // }
         onChangeSelect={func.onChangeTahun}
+        hideAction={true}
         // listMenuImport={value.items.pemasaran.concat(value.items.administrasi)}
       />
 
