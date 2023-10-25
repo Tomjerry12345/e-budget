@@ -241,7 +241,14 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
           </>
         ) : null}
         <Form.Item className="footer-custom">
-          <Button className="btn-cancel" type="text" onClick={onCancel}>
+          <Button
+            className="btn-cancel"
+            type="text"
+            onClick={() => {
+              setUserGroup();
+              onCancel();
+            }}
+          >
             Cancel
           </Button>
           <Button
