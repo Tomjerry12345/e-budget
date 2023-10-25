@@ -11,7 +11,7 @@ import {
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
-import { nonEditableColor } from "values/Colors";
+import { colorHeaderTable, nonEditableColor } from "values/Colors";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -28,40 +28,98 @@ export function getRootHeaderRow(act, budget) {
     {
       rowId: "header",
       cells: [
-        headerCell({ text: "No", rowspan: 1 }),
-        headerCell({ text: "Nama Bank & Non Bank", rowspan: 1 }),
+        headerCell({
+          text: "No",
+          rowspan: 1,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Nama Bank & Non Bank",
+          rowspan: 1,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: "Rate",
+          style: {
+            background: colorHeaderTable,
+          },
         }),
-        headerCell({ text: "Rate" }),
-        headerCell({ text: "Plafon" }),
+        headerCell({
+          text: "Rate",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual ${act}`,
           colspan: 2,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual Jan ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual Feb ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({ text: "" }),
         headerCell({
           text: `Actual Mar ${act}`,
@@ -70,9 +128,24 @@ export function getRootHeaderRow(act, budget) {
             justifyContent: "center",
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual Apr ${act}`,
           colspan: 4,
@@ -108,352 +181,1254 @@ export function getRootHeaderRow(act, budget) {
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual Agu ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Actual Sep ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Proyeksi Okt ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Proyeksi Nov ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Proyeksi Des ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Outlook ${act}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Jan ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Feb ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Mar ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Apr ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Mei ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Jun ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Jul ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Agu ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Sep ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Okt ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Nov ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Budget Des ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
         headerCell({
           text: `Total ${budget}`,
           colspan: 4,
           style: {
             justifyContent: "center",
+            background: colorHeaderTable,
           },
         }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
         // headerCell({ text: "Status", rowspan: 1 }),
-        headerCell({ text: "Collateral Aset", rowspan: 1 }),
-        headerCell({ text: "% Collateral Aset", rowspan: 1 }),
+        headerCell({
+          text: "Collateral Aset",
+          rowspan: 1,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "% Collateral Aset",
+          rowspan: 1,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
       ],
     },
     {
       rowId: "sub-header",
       cells: [
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: `${act}` }),
-        headerCell({ text: `${budget}` }),
-        headerCell({ text: "" }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: `${act}`,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: `${budget}`,
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        headerCell({ text: "KEBUTUHAN" }),
-        headerCell({ text: "PENGEMBALIAN" }),
-        headerCell({ text: "Outstanding" }),
-        headerCell({ text: "Sisa Plafon" }),
+        headerCell({
+          text: "KEBUTUHAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "PENGEMBALIAN",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
 
-        // headerCell({ text: "" }),
-        headerCell({ text: "" }),
-        headerCell({ text: "" }),
+        // headerCell({
+        //   text: "",
+        //   style: {
+        //     background: colorHeaderTable,
+        //   },
+        // }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
       ],
     },
   ];
@@ -518,7 +1493,7 @@ function getGroupRows(groups) {
               background: nonEditableColor,
             };
           } else {
-            e.nonEditabled = false;
+            // e.nonEditabled = false;
             style = {
               fontWeight: "normal",
               background: "white",

@@ -38,13 +38,13 @@ const FasilitasKreditPage = () => {
             }}
           >
             <div
-              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              style={{ width: "100%", maxHeight: "calc(100vh - 276px)" }}
               className="liquidity-planner-app"
             >
               <ReactGrid
                 rows={value.rows}
                 columns={value.columns}
-                stickyTopRows={1}
+                stickyTopRows={2}
                 stickyLeftColumns={2}
                 onCellsChanged={(change) => func.onChangeTable(change)}
               />
