@@ -156,6 +156,7 @@ const LoginNew = () => {
             return {
               label: category.name,
               value: category.id,
+              asset_life_in_year: category.asset_life_in_year,
               asset_account: category.asset_account,
               accumulated_account: category.accumulated_account,
               depreciation_account: category.depreciation_account,
@@ -358,6 +359,7 @@ const LoginNew = () => {
       if (valuesOfDropdown) {
         // find a selected category to set asset_account, accumulate_account, and depreciation_account
 
+        dataRow["asset_life"] = valuesOfDropdown["asset_life_in_year"];
         dataRow["asset_account"] = valuesOfDropdown["asset_account"];
         dataRow["accumulated_account"] =
           valuesOfDropdown["accumulated_account"];
