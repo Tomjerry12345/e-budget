@@ -1496,7 +1496,7 @@ function getGroupRows(groups) {
             // e.nonEditabled = false;
             style = {
               fontWeight: "normal",
-              background: "white",
+              background: nonEditableColor,
             };
           }
 
