@@ -61,7 +61,7 @@ export function getRootHeaderRow(act, budget) {
           },
         }),
         headerCell({
-          text: `Actual ${act}`,
+          text: `Actual ${parseInt(act) - 1}`,
           colspan: 2,
           style: {
             justifyContent: "center",
@@ -762,38 +762,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -812,38 +787,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -862,38 +812,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -912,38 +837,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -962,38 +862,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1012,38 +887,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1062,38 +912,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1112,38 +937,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1162,38 +962,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1212,38 +987,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1262,38 +1012,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1312,38 +1037,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Outstanding",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "Sisa Plafon",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-
-        headerCell({
-          text: "KEBUTUHAN",
-          style: {
-            background: colorHeaderTable,
-          },
-        }),
-        headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1362,13 +1062,13 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },
@@ -1387,13 +1087,313 @@ export function getRootHeaderRow(act, budget) {
         }),
 
         headerCell({
-          text: "KEBUTUHAN",
+          text: "Kebutuhan",
           style: {
             background: colorHeaderTable,
           },
         }),
         headerCell({
-          text: "PENGEMBALIAN",
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Outstanding",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Sisa Plafon",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+
+        headerCell({
+          text: "Kebutuhan",
+          style: {
+            background: colorHeaderTable,
+          },
+        }),
+        headerCell({
+          text: "Pengembalian",
           style: {
             background: colorHeaderTable,
           },

@@ -37,7 +37,7 @@ const NewAsetInputPage = () => {
       />
 
       <div className="custom-root-layout">
-        <div style={{ margin: "10px", height: "100%" }}>
+        <div style={{ margin: "10px" }}>
           {value.rows.length > 0 ? (
             <div
               style={{
@@ -62,13 +62,13 @@ const NewAsetInputPage = () => {
             }}
           >
             <div
-              style={{ width: "100%", maxHeight: "calc(100vh - 239px)" }}
+              style={{ width: "100%", height: "calc(100vh - 348px)" }}
               className="liquidity-planner-app"
             >
               <ReactGrid
                 rows={value.rows}
                 columns={value.columns}
-                stickyTopRows={1}
+                stickyTopRows={2}
                 stickyLeftColumns={1}
                 onCellsChanged={(change) => func.onChangeTable(change, "administrasi")}
               />
