@@ -40,6 +40,7 @@ export function getColumns() {
       width: COL_WIDTH,
       type: "number",
       format: true,
+      nonEditabled: true,
     },
     {
       columnId: "prev_remaining",
