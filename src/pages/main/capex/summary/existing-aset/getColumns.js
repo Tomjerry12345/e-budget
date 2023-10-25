@@ -13,7 +13,7 @@ export function getColumns() {
       title: "Description",
     },
     {
-      columnId: "beginning_balance",
+      columnId: "beginning_balance_p",
       width: 250,
       format: true,
       type: "number",
