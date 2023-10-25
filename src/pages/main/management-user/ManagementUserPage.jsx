@@ -61,6 +61,8 @@ const ManagementUserPage = () => {
         form={value.form}
         isEdit={value.isEdit}
         record={value.record}
+        // userGroup={value.userGroup}
+        // setUserGroup={func.setUserGroup}
       />
     </div>
   );

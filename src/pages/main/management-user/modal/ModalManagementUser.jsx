@@ -29,8 +29,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
+  const [userGroup, setUserGroup] = useState();
 
-  const [user_group, setUserGroup] = useState();
+  const l = form.getFieldsValue();
 
   useEffect(() => {
     getListCompany();
@@ -38,7 +39,6 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
 
   useEffect(() => {
     try {
-      const l = form.getFieldsValue();
       setUserGroup(l.user_group);
       if (l.user_group !== undefined && l.user_group === "sbu") {
         getListLocation(record.code_company);
@@ -74,7 +74,15 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
   };
 
   return (
-    <Modal className="management-user" open={open} footer={null} onCancel={onCancel}>
+    <Modal
+      className="management-user"
+      open={open}
+      footer={null}
+      onCancel={() => {
+        setUserGroup();
+        onCancel();
+      }}
+    >
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form
         onFinish={onOk}
@@ -142,7 +150,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             />
           }
         />
-        {user_group === "sbu" || user_group === "subholding" ? (
+        {userGroup === "sbu" || userGroup === "subholding" ? (
           <FormItem
             label="Akses perusahaan"
             name="code_company"
@@ -170,7 +178,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
                 onSelect={(e) => {
                   const code = e.split(" ");
                   form.setFieldsValue({ code_company: e });
-                  if (user_group === "sbu") {
+                  if (userGroup === "sbu") {
                     getListLocation(code[0]);
                     getListDept(code[0]);
                   }
@@ -184,7 +192,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
           />
         ) : null}
 
-        {user_group === "sbu" ? (
+        {userGroup === "sbu" ? (
           <>
             <FormItem
               label="Kode Lokasi"
