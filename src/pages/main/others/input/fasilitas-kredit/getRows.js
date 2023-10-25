@@ -11,6 +11,7 @@ import {
 } from "values/react-grid/cells";
 import { createArray, generateUID, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
+import { nonEditableColor } from "values/Colors";
 
 export const HEADER_ROOT_ROW_ID = "header-root";
 
@@ -514,11 +515,13 @@ function getGroupRows(groups) {
             e.nonEditabled = true;
             style = {
               fontWeight: "bold",
+              background: nonEditableColor,
             };
           } else {
             e.nonEditabled = false;
             style = {
               fontWeight: "normal",
+              background: "white",
             };
           }
 
