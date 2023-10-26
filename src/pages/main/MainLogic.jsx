@@ -120,10 +120,10 @@ const MainLogic = () => {
       const { data } = await MainServices.get(url);
       const listCompany = [];
 
-      const codeCompany = data.data.code_company.split(",");
-      const companyNames = data.data.company_names.split(",");
+      const codeCompany = data.data?.code_company?.split(",");
+      const companyNames = data.data?.company_names?.split(",");
 
-      for (let i = 0; i < codeCompany.length; i++) {
+      for (let i = 0; i < codeCompany?.length; i++) {
         listCompany.push(`${codeCompany[i]} - ${companyNames[i]}`);
       }
 

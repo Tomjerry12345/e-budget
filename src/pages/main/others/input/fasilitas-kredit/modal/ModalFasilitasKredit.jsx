@@ -12,12 +12,12 @@ const FormItem = ({ label, name, children }) => (
   <Form.Item
     label={label}
     name={name}
-    // rules={[
-    //   {
-    //     required: true,
-    //     message: `${name} tidak boleh kosong!`,
-    //   },
-    // ]}
+    rules={[
+      {
+        required: true,
+        message: `${label} tidak boleh kosong!`,
+      },
+    ]}
   >
     {children}
   </Form.Item>

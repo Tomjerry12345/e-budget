@@ -93,7 +93,7 @@ const ModalProfil = ({ value, func }) => {
             {/* <img alt="logo" /> */}
             <AccountCircleTwoToneIcon />
             <Box className="ml-16">
-              <Typography.Title className="txt-title">HI, {value.user.name}</Typography.Title>
+              <Typography.Title className="txt-title">Hi, {value.user.name}</Typography.Title>
               <Typography.Text className="txt-sub">
                 {value.user.username ?? "-"}
               </Typography.Text>

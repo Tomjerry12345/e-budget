@@ -231,6 +231,7 @@ const Logic = () => {
 
     const nRecord = {
       ...record,
+      inputemail: record.email,
       nik,
       code_company,
     };
