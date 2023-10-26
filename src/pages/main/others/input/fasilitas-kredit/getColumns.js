@@ -768,7 +768,7 @@ export function getColumns() {
       format: true,
     },
     {
-      columnId: "collateral_asset_precent",
+      columnId: "collateral_asset_percent",
       width: COL_WIDTH,
       type: "number",
       format: true,
