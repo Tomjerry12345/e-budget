@@ -14,6 +14,10 @@ class MainServices {
       responseType: "blob",
       params,
     });
+  downloadPost = (endPoint, req) =>
+    apiClient().post(`/ebudget/${endPoint}`, req, {
+      responseType: "blob",
+    });
 }
 
 export default new MainServices();

@@ -5,17 +5,14 @@ import Logic from "./Logic";
 import "./style.scss";
 import HeaderFasilitasKredit from "./header/HeaderFasilitasKredit";
 import ModalFasilitasKredit from "./modal/ModalFasilitasKredit";
+import { ModalMenu } from "./modal/ModalMenu";
 
 const FasilitasKreditPage = () => {
   const { value, func } = Logic();
 
   return (
     <>
-      <HeaderFasilitasKredit
-        titleHeader="Fasilitas Kredit"
-        onOpenModal={func.onOpenModalTambah}
-        disabled={value.codeFilter === undefined}
-      />
+      <HeaderFasilitasKredit titleHeader="Fasilitas Kredit" onClickMenu={func.onOpenMenu} />
 
       <FilterComponent
         onFinish={func.onFinish}
@@ -52,6 +49,22 @@ const FasilitasKreditPage = () => {
           </div>
         </div>
       </div>
+
+      <ModalMenu
+        open={value.openMenu}
+        onCancel={func.onCloseMenu}
+        disabled={value.codeFilter === undefined}
+        listMenu={[
+          {
+            desc: "Tambah Fasilitas",
+            func: func.onOpenModalTambah,
+          },
+          {
+            desc: "Export Fasilitas",
+            func: func.onExport,
+          },
+        ]}
+      />
 
       <ModalFasilitasKredit
         form={value.form}
