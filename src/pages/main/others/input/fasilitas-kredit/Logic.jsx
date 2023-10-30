@@ -15,15 +15,13 @@ const Logic = () => {
   const [loading, setLoading] = useState(false);
   const [uploadSucces, setUploadSucces] = useState(null);
   const [modalTambah, setModalTambah] = useState(null);
-  // const [filterYear, setFilterYear] = useState({
-  //   act: "",
-  //   budget: "",
-  // });
+  const [openMenu, setOpenMenu] = useState(false);
 
   const filterYear = useRef();
 
   const columns = getColumns();
   const [rows, setRows] = useState([]);
+  const [urlExport, setUrlExport] = useState("");
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     accept: {
@@ -53,14 +51,6 @@ const Logic = () => {
     let fPeriode = periode.split(" ");
 
     fCodeCompany = fCodeCompany[0] === "ALL" ? "all" : fCodeCompany[0];
-
-    log({ fPeriode });
-
-    // setFilterYear({
-    //   ...filterYear,
-    //   act: fPeriode[0],
-    //   budget: fPeriode[2],
-    // });
     filterYear.current = {
       act: fPeriode[0],
       budget: fPeriode[2],
@@ -217,6 +207,14 @@ const Logic = () => {
     }
   };
 
+  const onOpenMenu = () => {
+    setOpenMenu(true);
+  };
+
+  const onCloseMenu = () => {
+    setOpenMenu(false);
+  };
+
   const onOpenModalTambah = () => {
     setModalTambah(true);
   };
@@ -241,6 +239,25 @@ const Logic = () => {
     }
   };
 
+  const onExport = async () => {
+    try {
+      const formData = formDataUtils({
+        ...codeFilter,
+        filename: "export-fasilitas-kredit",
+      });
+      const res = await MainServices.downloadPost("other/credit-facility/export", formData);
+      log({ res });
+      const fileURL = URL.createObjectURL(res.data);
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.download = `export-fasilitas-kredit`;
+      link.click();
+    } catch (e) {
+      log({ e });
+      showNotif(400, e);
+    }
+  };
+
   return {
     value: {
       columns,
@@ -253,6 +270,7 @@ const Logic = () => {
       modalTambah,
       form,
       codeFilter,
+      openMenu,
     },
     func: {
       onFinish,
@@ -262,6 +280,9 @@ const Logic = () => {
       onOpenModalTambah,
       onCloseModalTambah,
       onOkModalFasilitas,
+      onOpenMenu,
+      onCloseMenu,
+      onExport,
     },
   };
 };

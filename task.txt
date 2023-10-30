@@ -2,6 +2,7 @@ version: v1.4.8 ✅ ❌ 🔥
 
 Bug New:
 
+- fitur export di fasilitas kredit
 - buat logout secara otomatis
 - apakah tidak ada aksi di input new asset ? saya coba klik tombol action nya ndak bisa (kasi hilang) ✅
 - import load saldo awal gagal (sisa ganti file) ✅
