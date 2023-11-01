@@ -360,6 +360,8 @@ const LoginNew = () => {
         // find a selected category to set asset_account, accumulate_account, and depreciation_account
 
         dataRow["asset_life"] = valuesOfDropdown["asset_life_in_year"];
+        dataRow['depreciation_amount_monthly'] = valuesOfDropdown["asset_life_in_year"] === 0 ? 0 : dataRow['price'] / (valuesOfDropdown["asset_life_in_year"] * 12);
+        dataRow['depreciation_amount_yearly'] = (12 - dataRow['depreciation_month'] + 1) * dataRow['depreciation_amount_monthly'];
         dataRow["asset_account"] = valuesOfDropdown["asset_account"];
         dataRow["accumulated_account"] =
           valuesOfDropdown["accumulated_account"];
