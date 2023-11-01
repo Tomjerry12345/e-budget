@@ -13,6 +13,10 @@ const Logic = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [totalData, setTotalData] = useState(0);
   const [record, setRecord] = useState();
+  const [heightTable, setHeightTable] = useState(window.innerHeight - 230);
+  const [firstNumber, setFirstNumber] = useState(1);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch();
 
@@ -22,43 +26,50 @@ const Logic = () => {
     {
       title: "No",
       dataIndex: "no",
-      width: "2%",
-      render: (item, record, index) => <>{index + 1}</>,
+      width: "40px",
+      fixed: "left",
+      render: (item, record, index) => <>{index + firstNumber}</>,
     },
     {
       title: "NIK",
       dataIndex: "username",
-      width: "15%",
+      width: "100px",
+      fixed: "left",
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "15%",
+      width: "230px",
     },
     {
       title: "Nama",
       dataIndex: "name",
-      width: "15%",
+      width: "200px",
     },
     {
-      title: "User group",
+      title: "User Group",
       dataIndex: "user_group",
+      width: "90px",
     },
     {
-      title: "Akses perusahaan",
+      title: "Company",
       dataIndex: "code_company",
+      width: "90px",
     },
     {
-      title: "Kode Lokasi",
+      title: "Location",
       dataIndex: "code_location",
+      width: "90px",
     },
     {
-      title: "Kode Department",
+      title: "Department",
       dataIndex: "code_department",
+      width: "100px",
     },
     {
-      title: "operation",
+      title: "Action",
       dataIndex: "operation",
+      width: "260px",
       render: (_, record) =>
         dataSource.length >= 1 ? (
           <div
@@ -117,14 +128,17 @@ const Logic = () => {
     );
   };
 
-  const onGetUser = async () => {
+  const onGetUser = async (page=1) => {
+    setLoading(true)
     try {
-      let url = `users`;
+      let url = `users?page=${page}`;
       const { data } = await MainServices.get(url);
       setDataSource(data.data.data);
       setTotalData(data.data.total);
-    } catch (error) {
+      setLoading(false)
+  } catch (error) {
       console.error(`Error fetching data`, error);
+      setLoading(false)
     }
   };
 
@@ -281,6 +295,16 @@ const Logic = () => {
     form.submit();
   };
 
+  const handleResizeTable = () => {
+    setHeightTable(window.innerHeight - 230)
+  }
+
+  const pageChange = (p) => {
+    setFirstNumber((25 * (p - 1)) + 1)
+    setPage(p)
+    onGetUser(p)
+  }
+
   return {
     value: {
       dataSource,
@@ -290,6 +314,9 @@ const Logic = () => {
       isEdit,
       totalData,
       record,
+      heightTable,
+      page,
+      loading,
     },
     func: {
       onOpenModal,
@@ -297,6 +324,8 @@ const Logic = () => {
       onActionUser,
       onSearch,
       onReset,
+      handleResizeTable,
+      pageChange,
     },
   };
 };

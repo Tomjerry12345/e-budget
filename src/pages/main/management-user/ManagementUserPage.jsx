@@ -2,13 +2,18 @@ import { Button, Form, Input, Pagination, Table } from "antd";
 import Logic from "./Logic";
 import "./style.scss";
 import ModalManagementUser from "./modal/ModalManagementUser";
-import { Box } from "@mui/material";
 import HeaderManagementUser from "./header/HeaderManagementUser";
 import FormItem from "antd/es/form/FormItem";
 import { SearchOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 
 const ManagementUserPage = () => {
   const { value, func } = Logic();
+
+  useEffect(() => {
+    window.addEventListener("resize", func.handleResizeTable, false);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="style-management-user">
@@ -46,11 +51,20 @@ const ManagementUserPage = () => {
           bordered
           dataSource={value.dataSource}
           columns={value.columns}
-          pagination={{
-            position: ["bottomCenter"],
-            pageSize: 13,
-          }}
           rowKey="id"
+          pagination={false}
+          loading={value.loading}
+          scroll={{y: value.heightTable, x: 1200}}
+        />
+        <Pagination
+          onChange={func.pageChange}
+          defaultCurrent={1}
+          current={value.page}
+          showSizeChanger={false}
+          style={{marginTop: "12px", display:'flex', justifyContent: 'end'}}
+          total={value.totalData}
+          defaultPageSize={25}
+          showTotal={(total, range) => `Showing ${range[0]} to ${range[1]} of ${total} items`}
         />
       </div>
 
