@@ -139,52 +139,66 @@ const Logic = () => {
     form.resetFields();
   };
 
+  const onSingleOrMultipleSelect = (values) => {
+    return typeof values === "object" ? values.toString() : values?.split(" ")[0];
+  };
+
   const onActionUser = async (values) => {
     try {
       log({ values });
       const username = values.nik;
       const email = values.inputemail;
       const password = values.inputpassword;
-      const codeCompany = values.code_company?.split(" ");
-      const codeLocation = values.code_location?.split(" ");
-      const codeDepartment = values.code_department?.split(" ");
+      log("type", typeof values.code_company);
+      const codeCompany = onSingleOrMultipleSelect(values.code_company);
+      const codeLocation = onSingleOrMultipleSelect(values.code_location);
+      const codeDepartment = onSingleOrMultipleSelect(values.code_department);
       delete values.nik;
       delete values.inputemail;
       delete values.inputpassword;
       delete values.search;
+
+      log({ codeCompany });
+      log({ codeLocation });
+      log({ codeDepartment });
       if (isEdit) {
         const params = {
           ...values,
           username,
           email,
           password,
-          code_company:
-            values.code_company === undefined
-              ? null
-              : values.code_company.toString() === ""
-              ? null
-              : codeCompany[0],
-          code_location: codeLocation?.[0] ?? null,
-          code_department: codeDepartment?.[0] ?? null,
+          code_company: codeCompany === undefined ? null : codeCompany,
+          code_location: codeLocation === undefined ? null : codeLocation,
+          code_department: codeDepartment === undefined ? null : codeDepartment,
           id: idRef.current,
         };
 
         const url = `users`;
         await MainServices.update(url, params);
       } else {
+        // const params = {
+        //   ...values,
+        //   email,
+        //   username,
+        //   password,
+        //   code_company:
+        //     values.code_company === undefined
+        //       ? null
+        //       : values.code_company.toString() === ""
+        //       ? null
+        //       : codeCompany[0],
+        //   code_location: codeLocation?.[0] ?? null,
+        //   code_department: codeDepartment?.[0] ?? null,
+        // };
+
         const params = {
           ...values,
           email,
           username,
           password,
-          code_company:
-            values.code_company === undefined
-              ? null
-              : values.code_company.toString() === ""
-              ? null
-              : codeCompany[0],
-          code_location: codeLocation?.[0] ?? null,
-          code_department: codeDepartment?.[0] ?? null,
+          code_company: codeCompany === undefined ? null : codeCompany,
+          code_location: codeLocation === undefined ? null : codeLocation,
+          code_department: codeDepartment === undefined ? null : codeDepartment,
         };
 
         const formData = formDataUtils(params);
@@ -220,8 +234,12 @@ const Logic = () => {
 
   const handleEdit = async (record) => {
     let code_company = undefined;
+    let code_location = undefined;
+    let code_department = undefined;
 
     const nik = record.username;
+
+    log({ record });
 
     if (record.user_group === "sbu") {
       code_company = record.code_company;
@@ -229,11 +247,18 @@ const Logic = () => {
       code_company = record.code_company.split(",");
     }
 
+    code_location = record.code_location.split(",");
+    code_department = record.code_department.split(",");
+
+    log({ code_location });
+
     const nRecord = {
       ...record,
       inputemail: record.email,
       nik,
       code_company,
+      code_location,
+      code_department,
     };
 
     setRecord(nRecord);

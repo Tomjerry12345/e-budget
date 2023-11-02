@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/role-supports-aria-props */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { AutoComplete, Button, Form, Input, Select, Typography } from "antd";
+import { Button, Form, Input, Select, Typography, Spin } from "antd";
 import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
@@ -61,7 +61,8 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
     const { data } = await MainServices.get(`location/list-by-com?code_company=${e}`);
 
     if (data.responseCode === 200) {
-      setListLocation(data.data);
+      const d = data.data.filter((item) => item.code !== "all");
+      setListLocation(d);
     }
   };
 
@@ -69,7 +70,9 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
     const { data } = await MainServices.get(`department/list-dropdown?code_company=${e}`);
 
     if (data.responseCode === 200) {
-      setListDept(data.data);
+      const d = data.data.filter((item) => item.code !== "all");
+      setListLocation(d);
+      setListDept(d);
     }
   };
 
@@ -155,38 +158,28 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             label="Akses perusahaan"
             name="code_company"
             children={
-              // <Select
-              //   allowClear
-              //   disabled={user_group === undefined && !isEdit}
-              //   mode={user_group === "sbu" ? null : "multiple"}
-              //   onChange={(e) => {
-              //     form.setFieldsValue({ code_company: e });
-              //     if (user_group === "sbu") {
-              //       getListLocation(e);
-              //       getListDept(e);
-              //     }
-              //   }}
-              //   options={listCompany.map((e) => ({
-              //     value: e.code,
-              //     label: e.description,
-              //   }))}
-              // />
-              <AutoComplete
-                options={listCompany.map((e) => ({
-                  value: `${e.description}`,
-                }))}
-                onSelect={(e) => {
-                  const code = e.split(" ");
-                  form.setFieldsValue({ code_company: e });
-                  if (userGroup === "sbu") {
-                    getListLocation(code[0]);
-                    getListDept(code[0]);
-                  }
-                }}
+              <Select
+                mode={userGroup === "sbu" ? null : "multiple"}
+                onSelect={
+                  userGroup === "sbu"
+                    ? (e) => {
+                        const code = e.split(" ");
+                        form.setFieldsValue({ code_company: e });
+                        if (userGroup === "sbu") {
+                          getListLocation(code[0]);
+                          getListDept(code[0]);
+                        }
+                      }
+                    : null
+                }
                 allowClear
                 filterOption={(inputValue, option) => {
                   return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                 }}
+                options={listCompany.map((e) => ({
+                  value: e.code,
+                  label: e.description,
+                }))}
               />
             }
           />
@@ -198,21 +191,16 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
               label="Kode Lokasi"
               name="code_location"
               children={
-                // <Select
-                //   allowClear
-                //   options={listLocation.map((e) => ({
-                //     value: e.code,
-                //     label: e.description,
-                //   }))}
-                // />
-                <AutoComplete
-                  options={listLocation.map((e) => ({
-                    value: `${e.description}`,
-                  }))}
+                <Select
+                  mode="multiple"
                   allowClear
                   filterOption={(inputValue, option) => {
                     return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                   }}
+                  options={listLocation.map((e) => ({
+                    value: e.code,
+                    label: e.description,
+                  }))}
                 />
               }
             />
@@ -220,21 +208,16 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
               label="Kode Department"
               name="code_department"
               children={
-                // <Select
-                //   allowClear
-                //   options={listDept.map((e) => ({
-                //     value: e.code,
-                //     label: e.description,
-                //   }))}
-                // />
-                <AutoComplete
-                  options={listDept.map((e) => ({
-                    value: `${e.description}`,
-                  }))}
+                <Select
+                  mode="multiple"
                   allowClear
                   filterOption={(inputValue, option) => {
                     return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                   }}
+                  options={listDept.map((e) => ({
+                    value: e.code,
+                    label: e.description,
+                  }))}
                 />
               }
             />

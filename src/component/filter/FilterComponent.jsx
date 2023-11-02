@@ -167,13 +167,12 @@ const FilterComponent = ({
                     ? false
                     : disabled
                 }
-                disabledLocation={
-                  usersGroup === "sbu" ? (value.code_location !== "null" ? true : false) : false
-                }
-                disabledDept={
-                  usersGroup === "sbu" ? (value.code_dept !== "null" ? true : false) : false
-                }
+                disabledLocation={false}
+                disabledDept={false}
                 variant={variant}
+                // disabledLocation={
+                //   usersGroup === "sbu" ? (value.code_location !== "null" ? true : false) : false
+                // }
               />
               <div style={{ display: "flex" }}>
                 {/* <Form.Item>
