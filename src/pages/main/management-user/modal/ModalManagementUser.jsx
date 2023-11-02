@@ -25,13 +25,11 @@ const FormItem = ({ label, name, children, required = true }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, record }) => {
+const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => {
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
   const [userGroup, setUserGroup] = useState();
-
-  const l = form.getFieldsValue();
 
   useEffect(() => {
     getListCompany();
@@ -39,10 +37,16 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
 
   useEffect(() => {
     try {
-      setUserGroup(l.user_group);
-      if (l.user_group !== undefined && l.user_group === "sbu") {
-        getListLocation(record.code_company);
-        getListDept(record.code_company);
+      log({ isEdit });
+      log({ record });
+
+      if (record !== undefined) {
+        const rUserGroup = record.user_group;
+        setUserGroup(record.user_group);
+        if (rUserGroup === "sbu") {
+          getListLocation(record.code_company);
+          getListDept(record.code_company);
+        }
       }
     } catch (e) {
       log({ e });
@@ -71,7 +75,6 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
 
     if (data.responseCode === 200) {
       const d = data.data.filter((item) => item.code !== "all");
-      setListLocation(d);
       setListDept(d);
     }
   };
@@ -88,7 +91,10 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
     >
       <Title level={4}>{isEdit ? "Edit" : "Tambah"} user</Title>
       <Form
-        onFinish={onOk}
+        onFinish={(values) => {
+          onOk(values);
+          setUserGroup();
+        }}
         layout="vertical"
         form={form}
         autoComplete="off"
@@ -129,21 +135,26 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             <Select
               allowClear
               onChange={(e) => {
-                form.setFieldsValue({ user_group: e });
+                form.setFieldsValue({
+                  user_group: e,
+                  code_company: undefined,
+                  code_location: undefined,
+                  code_department: undefined,
+                });
                 setUserGroup(e);
               }}
               options={[
                 {
                   value: "sbu",
-                  label: "Sbu",
+                  label: "SBU",
                 },
                 {
                   value: "subholding",
-                  label: "Subholding",
+                  label: "Sub Holding",
                 },
                 {
                   value: "hc",
-                  label: "Hc",
+                  label: "HC",
                 },
                 {
                   value: "holding",
@@ -153,6 +164,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             />
           }
         />
+
         {userGroup === "sbu" || userGroup === "subholding" ? (
           <FormItem
             label="Akses perusahaan"
@@ -223,6 +235,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit = false, recor
             />
           </>
         ) : null}
+
         <Form.Item className="footer-custom">
           <Button
             className="btn-cancel"

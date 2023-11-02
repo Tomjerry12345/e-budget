@@ -149,18 +149,20 @@ const Logic = () => {
       const username = values.nik;
       const email = values.inputemail;
       const password = values.inputpassword;
-      log("type", typeof values.code_company);
-      const codeCompany = onSingleOrMultipleSelect(values.code_company);
-      const codeLocation = onSingleOrMultipleSelect(values.code_location);
-      const codeDepartment = onSingleOrMultipleSelect(values.code_department);
+
       delete values.nik;
       delete values.inputemail;
       delete values.inputpassword;
       delete values.search;
 
+      const codeCompany = onSingleOrMultipleSelect(values.code_company);
+      const codeLocation = onSingleOrMultipleSelect(values.code_location);
+      const codeDepartment = onSingleOrMultipleSelect(values.code_department);
+
       log({ codeCompany });
       log({ codeLocation });
       log({ codeDepartment });
+
       if (isEdit) {
         const params = {
           ...values,
@@ -176,21 +178,6 @@ const Logic = () => {
         const url = `users`;
         await MainServices.update(url, params);
       } else {
-        // const params = {
-        //   ...values,
-        //   email,
-        //   username,
-        //   password,
-        //   code_company:
-        //     values.code_company === undefined
-        //       ? null
-        //       : values.code_company.toString() === ""
-        //       ? null
-        //       : codeCompany[0],
-        //   code_location: codeLocation?.[0] ?? null,
-        //   code_department: codeDepartment?.[0] ?? null,
-        // };
-
         const params = {
           ...values,
           email,
@@ -239,18 +226,16 @@ const Logic = () => {
 
     const nik = record.username;
 
-    log({ record });
-
     if (record.user_group === "sbu") {
       code_company = record.code_company;
     } else if (record.user_group === "subholding") {
       code_company = record.code_company.split(",");
     }
 
-    code_location = record.code_location.split(",");
-    code_department = record.code_department.split(",");
-
-    log({ code_location });
+    if (record.code_location !== null && record.code_department !== null) {
+      code_location = record.code_location.split(",");
+      code_department = record.code_department.split(",");
+    }
 
     const nRecord = {
       ...record,
@@ -265,6 +250,7 @@ const Logic = () => {
 
     form.setFieldsValue(nRecord);
     setIsEdit(true);
+
     idRef.current = record.id;
     onOpenModal();
   };
