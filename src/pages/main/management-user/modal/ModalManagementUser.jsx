@@ -217,9 +217,11 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
                 />
               }
             />
+
             <FormItem
               label="Kode Department"
               name="code_department"
+              required={false}
               children={
                 <Select
                   mode="multiple"

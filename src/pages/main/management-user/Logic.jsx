@@ -232,9 +232,11 @@ const Logic = () => {
       code_company = record.code_company.split(",");
     }
 
-    if (record.code_location !== null && record.code_department !== null) {
+    if (record.code_location !== null) {
       code_location = record.code_location.split(",");
-      code_department = record.code_department.split(",");
+    }
+
+    if (record.code_department !== null) {
     }
 
     const nRecord = {
