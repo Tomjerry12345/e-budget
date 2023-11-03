@@ -1,8 +1,8 @@
-import HeaderComponent from "../../../../component/header/HeaderComponent";
-import TableComponent from "../../../../component/table/TableComponent";
+import HeaderComponent from "component/header/HeaderComponent";
+import TableComponent from "component/table/TableComponent";
 import LocationLogic from "./LocationLogic";
 import "../CoaStyle.scss";
-import ModalListPerusahaan from "../../../../component/modal/list-perusahaan/ModalListPerusahaan";
+import ModalListPerusahaan from "component/modal/list-perusahaan/ModalListPerusahaan";
 
 const data = [
   {

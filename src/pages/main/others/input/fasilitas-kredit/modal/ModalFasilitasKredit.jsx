@@ -54,6 +54,8 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
     } else {
       if (params.nama_bank !== "" && params.type !== "") {
         getListAccount();
+      } else {
+        setListAccount([]);
       }
     }
   }, [params]);
@@ -126,7 +128,11 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
             name="code_account"
             children={
               <Select
+                showSearch
                 allowClear
+                filterOption={(inputValue, option) => {
+                  return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                }}
                 onChange={(e) => {
                   setParams({
                     ...params,
