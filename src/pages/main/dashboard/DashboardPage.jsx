@@ -1,5 +1,7 @@
+// import Header from "./header/Header";
+
 const DashboardPage = () => {
-  return <div className="custom-root-layout">DashboardPage</div>;
+  return <>{/* <Header /> */}</>;
 };
 
 export default DashboardPage;
