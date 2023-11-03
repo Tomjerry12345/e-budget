@@ -171,6 +171,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
             name="code_company"
             children={
               <Select
+                showSearch
                 mode={userGroup === "sbu" ? null : "multiple"}
                 onSelect={
                   userGroup === "sbu"

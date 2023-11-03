@@ -55,9 +55,9 @@ const FilterComponentLogic = ({
       fetchData();
     }
 
-    // if (codeCompany !== null) {
-    //   getValueComboBox(codeCompany);
-    // }
+    if (codeCompany !== null) {
+      getValueComboBox(codeCompany);
+    }
   }, []);
 
   useEffect(() => {}, []);
