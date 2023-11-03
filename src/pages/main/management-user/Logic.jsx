@@ -237,6 +237,7 @@ const Logic = () => {
     }
 
     if (record.code_department !== null) {
+      code_department = record.code_department.split(",");
     }
 
     const nRecord = {
