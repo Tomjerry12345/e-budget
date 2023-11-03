@@ -77,7 +77,11 @@ const Logic = () => {
               display: "flex",
             }}
           >
-            <Button className="btn-edit" type="link" onClick={() => handleEdit(record)}>
+            <Button
+              className="btn-edit"
+              type="link"
+              onClick={() => handleEdit(record)}
+            >
               Edit
             </Button>
 
@@ -90,7 +94,10 @@ const Logic = () => {
               </Button>
             </Popconfirm>
 
-            <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => handleDelete(record.id)}
+            >
               <Button className="btn-delete" type="link">
                 Delete
               </Button>
@@ -154,7 +161,9 @@ const Logic = () => {
   };
 
   const onSingleOrMultipleSelect = (values) => {
-    return typeof values === "object" ? values.toString() : values?.split(" ")[0];
+    return typeof values === "object"
+      ? values.toString()
+      : values?.split(" ")[0];
   };
 
   const onActionUser = async (values) => {
@@ -246,8 +255,11 @@ const Logic = () => {
       code_company = record.code_company.split(",");
     }
 
-    if (record.code_location !== null && record.code_department !== null) {
+    if (record.code_location !== null) {
       code_location = record.code_location.split(",");
+    }
+
+    if (record.code_department !== null) {
       code_department = record.code_department.split(",");
     }
 
