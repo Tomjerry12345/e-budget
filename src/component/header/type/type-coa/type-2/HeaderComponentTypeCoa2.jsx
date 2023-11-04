@@ -3,7 +3,7 @@ import {
   FileAddOutlined,
   SearchOutlined,
   ToTopOutlined,
-  VerticalAlignBottomOutlined
+  VerticalAlignBottomOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Layout, Modal, Typography } from "antd";
 import { getLocal } from "../../../../../values/Utilitas";
@@ -16,7 +16,15 @@ import "../../style.scss";
 const { Header } = Layout;
 const { Text } = Typography;
 
-const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClickImport, onClickImport2, listMenuTitleMore }) => {
+const ModalMenuMore = ({
+  open,
+  onCancel,
+  disabledImportExport,
+  onExport,
+  onClickImport,
+  onClickImport2,
+  listMenuTitleMore,
+}) => {
   return (
     <Modal
       className="more-modal-type-coa"
@@ -27,24 +35,15 @@ const ModalMenuMore = ({ open, onCancel, disabledImportExport, onExport, onClick
       closable={false}
       mask={false}
     >
-      <Button
-        className="btn-import"
-        icon={<ToTopOutlined />}
-        onClick={onClickImport}
-      >
+      <Button className="btn" type="text" onClick={onClickImport}>
         {listMenuTitleMore[0]}
       </Button>
-      <Button
-        className="btn-import"
-        icon={<ToTopOutlined />}
-        onClick={onClickImport2}
-      >
+      <Button className="btn" type="text" onClick={onClickImport2}>
         {listMenuTitleMore[1]}
       </Button>
       <Button
         className="btn"
         type="text"
-        icon={<VerticalAlignBottomOutlined />}
         disabled={disabledImportExport}
         onClick={() => {
           onExport();
@@ -81,12 +80,12 @@ const HeaderComponentTypeCoa2 = ({
   valueTreeData,
   disabledImportExport,
   onExport,
-  listMenuTitleMore
+  listMenuTitleMore,
 }) => {
   const { value, func } = HeaderComponentTypeCoa2Logic({
     onChangeTambahData,
     onChangeLoadingUpload,
-    accesFile
+    accesFile,
   });
 
   return (
@@ -110,7 +109,7 @@ const HeaderComponentTypeCoa2 = ({
         <Button
           className="btn-more"
           // icon={<ArrowDownOutlined />}
-          
+
           onClick={func.onClickMore}
         >
           Action <ArrowDownOutlined />

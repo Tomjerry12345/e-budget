@@ -25,14 +25,7 @@ const FormItem = ({ label, name, children, required = true }) => (
   </Form.Item>
 );
 
-const ModalManagementUser = ({
-  open,
-  onCancel,
-  onOk,
-  form,
-  isEdit,
-  record,
-}) => {
+const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => {
   const [listCompany, setListCompany] = useState([]);
   const [listLocation, setListLocation] = useState([]);
   const [listDept, setListDept] = useState([]);
@@ -69,9 +62,7 @@ const ModalManagementUser = ({
   };
 
   const getListLocation = async (e) => {
-    const { data } = await MainServices.get(
-      `location/list-by-com?code_company=${e}`
-    );
+    const { data } = await MainServices.get(`location/list-by-com?code_company=${e}`);
 
     if (data.responseCode === 200) {
       const d = data.data.filter((item) => item.code !== "all");
@@ -80,9 +71,7 @@ const ModalManagementUser = ({
   };
 
   const getListDept = async (e) => {
-    const { data } = await MainServices.get(
-      `department/list-dropdown?code_company=${e}`
-    );
+    const { data } = await MainServices.get(`department/list-dropdown?code_company=${e}`);
 
     if (data.responseCode === 200) {
       const d = data.data.filter((item) => item.code !== "all");
@@ -114,24 +103,12 @@ const ModalManagementUser = ({
         <FormItem
           label="NIK"
           name="nik"
-          children={
-            <Input
-              autoComplete="off"
-              aria-autocomplete="none"
-              role="presentation"
-            />
-          }
+          children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />}
         />
         <FormItem
           label="Email"
           name="inputemail"
-          children={
-            <Input
-              autoComplete="off"
-              aria-autocomplete="none"
-              role="presentation"
-            />
-          }
+          children={<Input autoComplete="off" aria-autocomplete="none" role="presentation" />}
         />
 
         {!isEdit ? (
@@ -144,9 +121,7 @@ const ModalManagementUser = ({
                 aria-autocomplete="none"
                 role="presentation"
                 // placeholder="input password"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
             }
           />
@@ -212,11 +187,7 @@ const ModalManagementUser = ({
                 }
                 allowClear
                 filterOption={(inputValue, option) => {
-                  return (
-                    option.value
-                      .toUpperCase()
-                      .indexOf(inputValue.toUpperCase()) !== -1
-                  );
+                  return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                 }}
                 options={listCompany.map((e) => ({
                   value: e.code,
@@ -238,11 +209,7 @@ const ModalManagementUser = ({
                   mode="multiple"
                   allowClear
                   filterOption={(inputValue, option) => {
-                    return (
-                      option.value
-                        .toUpperCase()
-                        .indexOf(inputValue.toUpperCase()) !== -1
-                    );
+                    return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                   }}
                   options={listLocation.map((e) => ({
                     value: e.code,
@@ -251,6 +218,7 @@ const ModalManagementUser = ({
                 />
               }
             />
+
             <FormItem
               label="Kode Department"
               name="code_department"
@@ -260,11 +228,7 @@ const ModalManagementUser = ({
                   mode="multiple"
                   allowClear
                   filterOption={(inputValue, option) => {
-                    return (
-                      option.value
-                        .toUpperCase()
-                        .indexOf(inputValue.toUpperCase()) !== -1
-                    );
+                    return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
                   }}
                   options={listDept.map((e) => ({
                     value: e.code,

@@ -43,8 +43,6 @@ const LoginLogic = () => {
       setLocal("code_company", "");
       setLocal("company_names", "");
 
-      log({ response });
-
       if (response !== null) {
         const {
           responseCode,
@@ -84,12 +82,6 @@ const LoginLogic = () => {
               errors: ["Password salah"],
             },
           ]);
-          // ref.current.setFields([
-          //   {
-          //     name: "password",
-          //     errors: ["Password salah"],
-          //   },
-          // ]);
         }
       }
     } catch (e) {

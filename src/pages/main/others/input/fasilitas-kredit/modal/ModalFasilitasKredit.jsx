@@ -5,6 +5,7 @@ import "./style.scss";
 import MainServices from "services/MainServices";
 import { useState } from "react";
 import { useEffect } from "react";
+import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
@@ -35,11 +36,11 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
   const listType = [
     {
       value: "long",
-      label: "Long",
+      label: "Jangka panjang",
     },
     {
       value: "short",
-      label: "Short",
+      label: "Jangka pendek",
     },
   ];
 
@@ -48,8 +49,14 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
   }, []);
 
   useEffect(() => {
-    if (params.nama_bank !== "" && params.type !== "") {
+    if (params.nama_bank === "bank-garansi") {
       getListAccount();
+    } else {
+      if (params.nama_bank !== "" && params.type !== "") {
+        getListAccount();
+      } else {
+        setListAccount([]);
+      }
     }
   }, [params]);
 
@@ -86,7 +93,7 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
                   ...params,
                   nama_bank: e,
                 });
-                form.setFieldsValue({ nama_bank: e });
+                form.setFieldsValue({ nama_bank: e, type: undefined, code_account: undefined });
               }}
               options={listBank.map((e) => ({
                 value: e.slug,
@@ -95,43 +102,52 @@ const ModalFasilitasKredit = ({ open, onCancel, onOk, form }) => {
             />
           }
         />
-        <FormItem
-          label="Type"
-          name="type"
-          children={
-            <Select
-              allowClear
-              onChange={(e) => {
-                setParams({
-                  ...params,
-                  type: e,
-                });
-                form.setFieldsValue({ type: e });
-              }}
-              options={listType}
-            />
-          }
-        />
-        <FormItem
-          label="Code Account"
-          name="code_account"
-          children={
-            <Select
-              allowClear
-              onChange={(e) => {
-                setParams({
-                  ...params,
-                  code_account: e,
-                });
-                form.setFieldsValue({ code_account: e });
-              }}
-              options={listAccount.map((e) => ({
-                value: e.account,
-                label: `${e.account} - ${e.description}`,
-              }))}
-            />
-          }
-        />
+        {params.nama_bank !== "bank-garansi" && params.nama_bank !== "" ? (
+          <FormItem
+            label="Type"
+            name="type"
+            children={
+              <Select
+                allowClear
+                onChange={(e) => {
+                  setParams({
+                    ...params,
+                    type: e,
+                  });
+                  form.setFieldsValue({ type: e });
+                }}
+                options={listType}
+              />
+            }
+          />
+        ) : null}
+
+        {params.nama_bank !== "" ? (
+          <FormItem
+            label="Code Account"
+            name="code_account"
+            children={
+              <Select
+                showSearch
+                allowClear
+                filterOption={(inputValue, option) => {
+                  return option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
+                }}
+                onChange={(e) => {
+                  setParams({
+                    ...params,
+                    code_account: e,
+                  });
+                  form.setFieldsValue({ code_account: e });
+                }}
+                options={listAccount.map((e) => ({
+                  value: e.account,
+                  label: `${e.account} - ${e.description}`,
+                }))}
+              />
+            }
+          />
+        ) : null}
 
         <Form.Item className="footer-custom">
           <Button className="btn-cancel" type="text" onClick={onCancel}>
