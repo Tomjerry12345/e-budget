@@ -95,19 +95,19 @@ export const cekToken = async (navigate) => {
   try {
     const token = getToken();
 
-    // if (token === null) {
-    //   navigate("/login");
-    // }
+    if (token === null) {
+      navigate("/login");
+    }
 
     await MainServices.get("company/list");
   } catch (error) {
     console.log("error", error.code);
 
-    // if (error.code === "ERR_BAD_RESPONSE") {
-    //   navigate("/login");
-    // } else {
-    //   alert("terjadi kesalahan");
-    // }
+    if (error.code === "ERR_BAD_RESPONSE") {
+      navigate("/login");
+    } else {
+      alert("terjadi kesalahan");
+    }
   }
 };
 
