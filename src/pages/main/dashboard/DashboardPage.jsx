@@ -44,7 +44,7 @@ const data = {
   ],
 };
 
-const labels1 = ["January"];
+const labels1 = ["January", "feb", "mar"];
 
 const data1 = {
   labels1,
@@ -89,7 +89,7 @@ const DashboardPage = () => {
             >
               <Typography.Text>DASHBOARD KALLA GROUP (DALAM JUTAAN)</Typography.Text>
               <Card className="card-section">
-                <Bar options={options} data={data} />
+                <Bar options={options} data={data1} />
               </Card>
             </div>
             <div>
@@ -104,22 +104,42 @@ const DashboardPage = () => {
               >
                 <Col>
                   <Card className="card-section ">
-                    <Bar options={options} data={data1} />
+                    <Bar
+                      options={{ maintainAspectRatio: false }}
+                      width="200px"
+                      height="200px"
+                      data={data1}
+                    />
                   </Card>
                 </Col>
                 <Col>
                   <Card className="card-section ">
-                    <Bar options={options} data={data1} />
+                    <Bar
+                      options={{ maintainAspectRatio: false }}
+                      width="200px"
+                      height="200px"
+                      data={data1}
+                    />
                   </Card>
                 </Col>
                 <Col>
                   <Card className="card-section ">
-                    <Bar options={options} data={data1} />
+                    <Bar
+                      options={{ maintainAspectRatio: false }}
+                      width="200px"
+                      height="200px"
+                      data={data1}
+                    />
                   </Card>
                 </Col>
                 <Col>
                   <Card className="card-section">
-                    <Bar options={options} data={data1} />
+                    <Bar
+                      options={{ maintainAspectRatio: false }}
+                      width="200px"
+                      height="200px"
+                      data={data1}
+                    />
                   </Card>
                 </Col>
               </Row>
