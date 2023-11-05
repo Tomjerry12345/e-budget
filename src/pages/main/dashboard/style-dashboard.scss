@@ -55,6 +55,12 @@
   .icon-root {
     margin-right: 8px;
   }
+
+  .section-header-growth {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
 }
 
 .custom-root-card {

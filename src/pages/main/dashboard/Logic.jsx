@@ -112,6 +112,7 @@ const Logic = () => {
         },
         title: e.chart_name,
         maxValue: Math.max(...e.datasets.data) + 7400000,
+        growth: parseInt(e.growth),
         // maxValue: Math.max(...e.datasets.data) + 18000000,
       };
 
