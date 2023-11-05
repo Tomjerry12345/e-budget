@@ -21,6 +21,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: false,
@@ -44,18 +45,14 @@ const data = {
   ],
 };
 
-const labels1 = ["January", "feb", "mar"];
+const labels1 = ["January", "feb"];
 
 const data1 = {
-  labels1,
+  labels: labels1,
   datasets: [
     {
-      data: labels1.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      data: labels1.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      data: [500, 600],
+      backgroundColor: ["green", "blue"],
     },
   ],
 };
@@ -73,6 +70,7 @@ const DashboardPage = () => {
       />
       <div className="custom-root-layout">
         {/* <div className="root-dashboard"> */}
+
         <Row
           gutter={{
             xs: 8,
@@ -81,7 +79,7 @@ const DashboardPage = () => {
             lg: 32,
           }}
         >
-          <Col span={16}>
+          <Col span={17}>
             <div
               style={{
                 marginBottom: "16px",
@@ -89,10 +87,12 @@ const DashboardPage = () => {
             >
               <Typography.Text>DASHBOARD KALLA GROUP (DALAM JUTAAN)</Typography.Text>
               <Card className="card-section">
-                <Bar options={options} data={data1} />
+                {value.dataMain !== undefined ? (
+                  <Bar className="bar-dashboard" options={options} data={value.dataMain} />
+                ) : null}
               </Card>
             </div>
-            <div>
+            <div style={{ marginBottom: "16px" }}>
               <Typography.Text>GROWTH 2 TAHUN</Typography.Text>
               <Row
                 gutter={{
@@ -102,66 +102,49 @@ const DashboardPage = () => {
                   lg: 32,
                 }}
               >
-                <Col>
-                  <Card className="card-section ">
-                    <Bar
-                      options={{ maintainAspectRatio: false }}
-                      width="200px"
-                      height="200px"
-                      data={data1}
-                    />
-                  </Card>
-                </Col>
-                <Col>
-                  <Card className="card-section ">
-                    <Bar
-                      options={{ maintainAspectRatio: false }}
-                      width="200px"
-                      height="200px"
-                      data={data1}
-                    />
-                  </Card>
-                </Col>
-                <Col>
-                  <Card className="card-section ">
-                    <Bar
-                      options={{ maintainAspectRatio: false }}
-                      width="200px"
-                      height="200px"
-                      data={data1}
-                    />
-                  </Card>
-                </Col>
-                <Col>
-                  <Card className="card-section">
-                    <Bar
-                      options={{ maintainAspectRatio: false }}
-                      width="200px"
-                      height="200px"
-                      data={data1}
-                    />
-                  </Card>
-                </Col>
+                {value.dataGrowth.map((e, i) => (
+                  <Col key={i}>
+                    <Card className="card-section">
+                      <Bar
+                        className="bar-growth"
+                        options={{
+                          maintainAspectRatio: false,
+                          plugins: {
+                            legend: {
+                              display: false,
+                            },
+                          },
+                        }}
+                        data={e}
+                      />
+                    </Card>
+                  </Col>
+                ))}
               </Row>
             </div>
           </Col>
-          <Col span={8}>
+          <Col span={7}>
             <Card>
               <div style={{ marginBottom: "16px" }}>
                 <UpSquareOutlined />
                 <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
-              <Table dataSource={value.dataSource} columns={value.columns} pagination={false} />
+              <Table
+                dataSource={value.dataTopRevenue}
+                columns={value.columns}
+                pagination={false}
+              />
             </Card>
             <Card className="card-section">
               <div style={{ marginBottom: "16px" }}>
                 <UpSquareOutlined />
                 <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
-              <Table dataSource={value.dataSource} columns={value.columns} pagination={false} />
+              <Table dataSource={value.dataTopEbt} columns={value.columns} pagination={false} />
             </Card>
           </Col>
         </Row>
+
         {/* </div> */}
       </div>
     </>
