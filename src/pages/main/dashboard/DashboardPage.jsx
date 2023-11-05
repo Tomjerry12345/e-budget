@@ -116,15 +116,39 @@ const DashboardPage = () => {
                 {value.dataGrowth.map((e, i) => (
                   <Col key={i} span={8}>
                     <Card className="mt-16 card-section">
-                      <Typography.Text
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          lineHeight: "18.86px",
-                        }}
-                      >
-                        {e.title}
-                      </Typography.Text>
+                      <div className="section-header-growth">
+                        <Typography.Text
+                          style={{
+                            fontSize: "12px",
+                            fontWeight: "600",
+                            lineHeight: "18.86px",
+                          }}
+                        >
+                          {e.title}
+                        </Typography.Text>
+                        <div>
+                          <img
+                            src={
+                              e.growth >= 10
+                                ? "icon/ic_growth_success.svg"
+                                : "icon/ic_growth_error.svg"
+                            }
+                            alt="ic_growt_status"
+                          />
+                          <Typography.Text
+                            style={{
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              lineHeight: "18.86px",
+                              color:
+                                e.growth >= 10 ? "rgba(0, 157, 80, 1)" : "rgba(255, 76, 0, 1)",
+                            }}
+                          >
+                            {e.growth}%
+                          </Typography.Text>
+                        </div>
+                      </div>
+
                       <Bar
                         style={{
                           marginTop: "16px",
