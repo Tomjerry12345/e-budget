@@ -86,6 +86,7 @@ const Logic = () => {
               ? mainChart.datasets.background1
               : mainChart.datasets.background2;
           }),
+          borderRadius: 8,
         },
       ],
     };
@@ -97,15 +98,21 @@ const Logic = () => {
     const growthChart = data.growth_chart;
     growthChart.forEach((e, i) => {
       const growthFixChart = {
-        labels: e.labels,
-        datasets: [
-          {
-            data: e.datasets.data,
-            backgroundColor: e.labels.map((j, i) => {
-              return i % 2 === 0 ? e.datasets.background1 : e.datasets.background2;
-            }),
-          },
-        ],
+        data: {
+          labels: e.labels,
+          datasets: [
+            {
+              data: e.datasets.data,
+              backgroundColor: e.labels.map((j, i) => {
+                return i % 2 === 0 ? e.datasets.background1 : e.datasets.background2;
+              }),
+              borderRadius: 8,
+            },
+          ],
+        },
+        title: e.chart_name,
+        maxValue: Math.max(...e.datasets.data) + 7400000,
+        // maxValue: Math.max(...e.datasets.data) + 18000000,
       };
 
       listGrowthFixChart.push(growthFixChart);
