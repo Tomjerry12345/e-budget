@@ -14,7 +14,6 @@ import { Card, Col, Row, Table, Typography } from "antd";
 import FilterComponent from "component/filter/FilterComponent";
 
 import "./style-dashboard.scss";
-import { UpSquareOutlined } from "@ant-design/icons";
 import Logic from "./Logic";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -29,34 +28,6 @@ const options = {
   },
 };
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-const data = {
-  labels,
-  datasets: [
-    {
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-
-const labels1 = ["January", "feb"];
-
-const data1 = {
-  labels: labels1,
-  datasets: [
-    {
-      data: [500, 600],
-      backgroundColor: ["green", "blue"],
-    },
-  ],
-};
-
 const DashboardPage = () => {
   const { value, func } = Logic();
   return (
@@ -64,11 +35,13 @@ const DashboardPage = () => {
       <Header />
       <FilterComponent
         // onFinish={func.onFinish}
+        form={value.form}
         isCodeIcp
         isCodeProject
-        type="input"
+        isType
+        type="summary"
       />
-      <div className="custom-root-layout">
+      <div className="custom-root-layout root-dashboard">
         {/* <div className="root-dashboard"> */}
 
         <Row
@@ -126,7 +99,7 @@ const DashboardPage = () => {
           <Col span={7}>
             <Card>
               <div style={{ marginBottom: "16px" }}>
-                <UpSquareOutlined />
+                <img className="icon-root" src="icon/ic_revenue.svg" alt="ic_revenue" />
                 <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
               <Table
@@ -137,7 +110,7 @@ const DashboardPage = () => {
             </Card>
             <Card className="card-section">
               <div style={{ marginBottom: "16px" }}>
-                <UpSquareOutlined />
+                <img className="icon-root" src="icon/ic_ebt.svg" alt="ic_ebt" />
                 <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
               <Table dataSource={value.dataTopEbt} columns={value.columns} pagination={false} />

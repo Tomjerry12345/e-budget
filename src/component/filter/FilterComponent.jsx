@@ -18,6 +18,8 @@ const periode = [
 
 const status = [{ description: `All` }, { description: `Actived` }, { description: `Retired` }];
 
+const dataType = [{ description: `Actual` }, { description: `Budget` }];
+
 const AutoCompleteFilter = ({
   value,
   func,
@@ -27,6 +29,7 @@ const AutoCompleteFilter = ({
   isCodeLocation,
   isCodeDept,
   isStatus,
+  isType,
   disabled,
   disabledLocation,
   disabledDept,
@@ -86,6 +89,8 @@ const AutoCompleteFilter = ({
     {isStatus === true ? (
       <AutoCompleteElement label="Status" name="status" value={status} />
     ) : null}
+
+    {isType === true ? <AutoCompleteElement label="Tipe" name="type" value={dataType} /> : null}
   </>
 );
 
@@ -93,17 +98,18 @@ const AutoCompleteFilter = ({
  *
  * @param {{
  * onFinish: const function = () => {};
- * isCodeProduct: true | false;
+ * isCodeProduct: const boolean;
  * isCodeProject: true | false;
  * isCodeLocation: true | false;
  * isCodeIcp: true | false;
- * isCodeLocation: true | false;
+ * isCodeDept: true | false;
+ * isStatus: true | false;
+ * isType: true | false;
  * keyCodeProject: "default" | "BJU";
  * type: "summary" | "input";
  * }} props Props for the component
  *
  */
-
 const FilterComponent = ({
   onFinish,
   isCodeProduct = true,
@@ -112,6 +118,7 @@ const FilterComponent = ({
   isCodeIcp = true,
   isCodeDept = true,
   isStatus = false,
+  isType = false,
   keyCodeProject = null,
   form = null,
   codeCompany = null,
@@ -160,6 +167,7 @@ const FilterComponent = ({
                 isCodeIcp={isCodeIcp}
                 isCodeDept={isCodeDept}
                 isStatus={isStatus}
+                isType={isType}
                 disabled={
                   usersGroup === "sbu"
                     ? true

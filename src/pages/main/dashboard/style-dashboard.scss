@@ -1,16 +1,19 @@
 .root-dashboard {
-  display: flex;
-}
+  padding: 16px 16px 30px !important;
+  .card-section {
+    margin-top: 16px;
+  }
 
-.card-section {
-  margin-top: 16px;
-}
+  .card-width {
+    width: 100px;
+  }
 
-.card-width {
-  width: 100px;
-}
+  .bar-growth {
+    width: 150px;
+    height: 150px;
+  }
 
-.bar-growth {
-  width: 150px;
-  height: 150px;
+  .icon-root {
+    margin-right: 8px;
+  }
 }

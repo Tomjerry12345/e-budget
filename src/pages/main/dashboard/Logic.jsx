@@ -1,3 +1,4 @@
+import { Form } from "antd";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
 import { log } from "values/Utilitas";
@@ -45,7 +46,17 @@ const Logic = () => {
   const [dataTopRevenue, setDataTopRevenue] = useState([]);
   const [dataTopEbt, setDataTopEbt] = useState([]);
 
+  const [form] = Form.useForm();
+
   useEffect(() => {
+    form.setFieldsValue({
+      code_product: "",
+      code_location: "",
+      code_dept: "",
+      code_icp: "",
+      code_project: "",
+      // periode: "2023 - 2024",
+    });
     onGetData();
   }, []);
 
@@ -121,6 +132,7 @@ const Logic = () => {
       dataGrowth,
       dataTopRevenue,
       dataTopEbt,
+      form,
     },
     func: {},
   };
