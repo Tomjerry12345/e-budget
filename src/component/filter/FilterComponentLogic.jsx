@@ -60,8 +60,6 @@ const FilterComponentLogic = ({
     }
   }, []);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     const fetchData = async (q) => {
       const { data } = await MainServices.get("company/list-child");

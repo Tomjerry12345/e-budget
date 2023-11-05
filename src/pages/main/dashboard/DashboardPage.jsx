@@ -9,52 +9,63 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { faker } from "@faker-js/faker";
 import { Card, Col, Row, Table, Typography } from "antd";
 import FilterComponent from "component/filter/FilterComponent";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import "./style-dashboard.scss";
-import { UpSquareOutlined } from "@ant-design/icons";
 import Logic from "./Logic";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  ChartDataLabels
+);
 
 const options = {
   responsive: true,
-  maintainAspectRatio: false,
+  scales: {
+    // to remove the labels
+    x: {
+      // ticks: {
+      //   display: false,
+      // },
+
+      // to remove the x-axis grid
+      grid: {
+        drawBorder: false,
+        display: false,
+      },
+    },
+    // to remove the y-axis labels
+    y: {
+      ticks: {
+        display: false,
+        beginAtZero: true,
+      },
+      // to remove the y-axis grid
+      // grid: {
+      //   drawBorder: false,
+      //   display: false,
+      // },
+    },
+  },
   plugins: {
     legend: {
       display: false,
     },
+    datalabels: {
+      display: true,
+      color: "black",
+      anchor: "end",
+      align: "top",
+      formatter: (value) => value,
+    },
   },
-};
-
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-const data = {
-  labels,
-  datasets: [
-    {
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-
-const labels1 = ["January", "feb"];
-
-const data1 = {
-  labels: labels1,
-  datasets: [
-    {
-      data: [500, 600],
-      backgroundColor: ["green", "blue"],
-    },
-  ],
 };
 
 const DashboardPage = () => {
@@ -64,11 +75,13 @@ const DashboardPage = () => {
       <Header />
       <FilterComponent
         // onFinish={func.onFinish}
+        form={value.form}
         isCodeIcp
         isCodeProject
-        type="input"
+        isType
+        type="summary"
       />
-      <div className="custom-root-layout">
+      <div className="custom-root-layout root-dashboard">
         {/* <div className="root-dashboard"> */}
 
         <Row
@@ -80,20 +93,18 @@ const DashboardPage = () => {
           }}
         >
           <Col span={17}>
-            <div
-              style={{
-                marginBottom: "16px",
-              }}
-            >
-              <Typography.Text>DASHBOARD KALLA GROUP (DALAM JUTAAN)</Typography.Text>
-              <Card className="card-section">
+            <div className="mb-16">
+              <Typography.Text className="title">
+                DASHBOARD KALLA GROUP (DALAM JUTAAN)
+              </Typography.Text>
+              <Card className="mt-16 card-section-bar-dashboard">
                 {value.dataMain !== undefined ? (
                   <Bar className="bar-dashboard" options={options} data={value.dataMain} />
                 ) : null}
               </Card>
             </div>
-            <div style={{ marginBottom: "16px" }}>
-              <Typography.Text>GROWTH 2 TAHUN</Typography.Text>
+            <div className="mb-16">
+              <Typography.Text className="title">GROWTH 2 TAHUN</Typography.Text>
               <Row
                 gutter={{
                   xs: 8,
@@ -103,19 +114,57 @@ const DashboardPage = () => {
                 }}
               >
                 {value.dataGrowth.map((e, i) => (
-                  <Col key={i}>
-                    <Card className="card-section">
+                  <Col key={i} span={8}>
+                    <Card className="mt-16 card-section">
+                      <Typography.Text
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "600",
+                          lineHeight: "18.86px",
+                        }}
+                      >
+                        {e.title}
+                      </Typography.Text>
                       <Bar
+                        style={{
+                          marginTop: "16px",
+                        }}
                         className="bar-growth"
                         options={{
-                          maintainAspectRatio: false,
+                          scales: {
+                            x: {
+                              grid: {
+                                drawBorder: false,
+                                display: false,
+                              },
+                            },
+                            y: {
+                              max: e.maxValue,
+                              ticks: {
+                                display: false,
+                                beginAtZero: true,
+                              },
+
+                              grid: {
+                                drawBorder: false,
+                                display: false,
+                              },
+                            },
+                          },
                           plugins: {
                             legend: {
                               display: false,
                             },
+                            datalabels: {
+                              display: true,
+                              color: "black",
+                              anchor: "end",
+                              align: "top",
+                              formatter: (value) => value,
+                            },
                           },
                         }}
-                        data={e}
+                        data={e.data}
                       />
                     </Card>
                   </Col>
@@ -124,10 +173,10 @@ const DashboardPage = () => {
             </div>
           </Col>
           <Col span={7}>
-            <Card>
-              <div style={{ marginBottom: "16px" }}>
-                <UpSquareOutlined />
-                <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
+            <Card className="card-section-col-2">
+              <div className="mb-16">
+                <img className="icon-root" src="icon/ic_revenue.svg" alt="ic_revenue" />
+                <Typography.Text className="title">TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
               <Table
                 dataSource={value.dataTopRevenue}
@@ -135,10 +184,10 @@ const DashboardPage = () => {
                 pagination={false}
               />
             </Card>
-            <Card className="card-section">
-              <div style={{ marginBottom: "16px" }}>
-                <UpSquareOutlined />
-                <Typography.Text>TOP 4 COMPANY REVENUE</Typography.Text>
+            <Card className="mt-16 card-section-col-2">
+              <div className="mb-16">
+                <img className="icon-root" src="icon/ic_ebt.svg" alt="ic_ebt" />
+                <Typography.Text className="title">TOP 4 COMPANY REVENUE</Typography.Text>
               </div>
               <Table dataSource={value.dataTopEbt} columns={value.columns} pagination={false} />
             </Card>
