@@ -14,6 +14,8 @@ const FilterComponentLogic = ({
   type,
   typeCompany,
   typeFilter,
+  isCompanyAll,
+  formGlobal,
 }) => {
   const [state, setState] = useState({
     code_company: [],
@@ -40,6 +42,11 @@ const FilterComponentLogic = ({
       const { data } = await MainServices.get("company/list-child");
 
       if (data.responseCode === 200) {
+        if (isCompanyAll) {
+          data.data.unshift({ description: "ALL" });
+        }
+
+        log("data.data", data.data);
         setState({
           ...state,
           code_company: data.data,
@@ -141,11 +148,22 @@ const FilterComponentLogic = ({
   }, []);
 
   const onSelect = (e) => {
-    if (e === "all") {
+    log({ e });
+
+    if (e === "ALL") {
       form.setFieldsValue({
-        code_location: "all",
-        code_dept: "all",
-        code_product: "all",
+        code_product: "ALL",
+        code_location: "ALL",
+        code_dept: "ALL",
+        code_icp: "ALL",
+        code_project: "ALL",
+      });
+      formGlobal.setFieldsValue({
+        code_product: "ALL",
+        code_location: "ALL",
+        code_dept: "ALL",
+        code_icp: "ALL",
+        code_project: "ALL",
       });
     } else {
       getValueComboBox(e);
