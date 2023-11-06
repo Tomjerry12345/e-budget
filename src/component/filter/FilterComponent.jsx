@@ -127,6 +127,7 @@ const FilterComponent = ({
   type = "summary",
   typeCompany = "change",
   typeFilter,
+  isCompanyAll = false,
 }) => {
   const company = getLocal("code_company");
   const usersGroup = getLocal("user_group");
@@ -145,6 +146,7 @@ const FilterComponent = ({
     typeCompany: usersGroup === "sbu" ? "static" : typeCompany,
     codeCompany,
     typeFilter,
+    isCompanyAll,
   });
 
   return (
