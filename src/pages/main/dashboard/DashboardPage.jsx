@@ -45,19 +45,14 @@ const DashboardPage = () => {
 
         {value.dataMain !== undefined ? (
           <Row
-            gutter={{
-              xs: 8,
-              sm: 16,
-              md: 24,
-              lg: 32,
-            }}
+            gutter={24}
           >
-            <Col span={17}>
+            <Col span={16}>
               <div className="mb-16">
-                <Typography.Text className="title">
+                <Typography.Title className="title">
                   DASHBOARD KALLA GROUP (DALAM JUTAAN)
-                </Typography.Text>
-                <Card className="mt-16 card-section-bar-dashboard">
+                </Typography.Title>
+                <Card className="card-section-bar-dashboard">
                   {value.dataMain !== undefined ? (
                     <Bar
                       className="bar-dashboard"
@@ -108,18 +103,13 @@ const DashboardPage = () => {
                 </Card>
               </div>
               <div className="mb-16">
-                <Typography.Text className="title">GROWTH 2 TAHUN</Typography.Text>
+                <Typography.Title className="title">GROWTH 2 TAHUN</Typography.Title>
                 <Row
-                  gutter={{
-                    xs: 8,
-                    sm: 16,
-                    md: 24,
-                    lg: 32,
-                  }}
+                  gutter={[8,8]}
                 >
                   {value.dataGrowth.map((e, i) => (
-                    <Col key={i} span={8}>
-                      <Card className="mt-16 card-section">
+                    <Col key={i} span={6}>
+                      <Card className="card-section">
                         <div className="section-header-growth">
                           <Typography.Text
                             style={{
@@ -202,13 +192,14 @@ const DashboardPage = () => {
                 </Row>
               </div>
             </Col>
-            <Col span={7}>
+            <Col span={8}>
               <Card className="card-section-col-2">
                 <div className="mb-16">
                   <img className="icon-root" src="icon/ic_revenue.svg" alt="ic_revenue" />
-                  <Typography.Text className="title">TOP 4 COMPANY REVENUE</Typography.Text>
+                  <Typography.Text className="title-incard">TOP 4 COMPANY REVENUE</Typography.Text>
                 </div>
                 <Table
+                  size="small"
                   dataSource={value.dataTopRevenue}
                   columns={value.columns}
                   pagination={false}
@@ -217,9 +208,10 @@ const DashboardPage = () => {
               <Card className="mt-16 card-section-col-2">
                 <div className="mb-16">
                   <img className="icon-root" src="icon/ic_ebt.svg" alt="ic_ebt" />
-                  <Typography.Text className="title">TOP 4 COMPANY REVENUE</Typography.Text>
+                  <Typography.Text className="title-incard">TOP 4 COMPANY REVENUE</Typography.Text>
                 </div>
                 <Table
+                  size="small"
                   dataSource={value.dataTopEbt}
                   columns={value.columns}
                   pagination={false}

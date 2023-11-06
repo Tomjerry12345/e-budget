@@ -38,6 +38,7 @@ const Logic = () => {
       title: "Revenue",
       dataIndex: "value",
       key: "value",
+      align: "right"
     },
   ];
 

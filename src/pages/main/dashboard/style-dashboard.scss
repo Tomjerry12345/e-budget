@@ -5,11 +5,19 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .title-incard{
+    font-weight: 600;
+    font-size: 14px;
   }
 
   .card-section {
-    // height: 500px;
-    // padding-top: 24px;
+    border-radius: 8px;
+    .ant-card-body{
+      padding: 16px;
+    }
   }
 
   .card-section-bar-dashboard {
