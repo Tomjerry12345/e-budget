@@ -26,7 +26,12 @@ const LabaRugiPage = () => {
     const code_dept = getLocal("code_department");
 
     form.setFieldsValue({
-      code_company: company === "" ? null : `${company} - ${company_names}`,
+      code_company:
+        userGroup === "superadmin"
+          ? ""
+          : company === ""
+          ? null
+          : `${company} - ${company_names}`,
       code_product: "ALL",
       code_location:
         userGroup === "superadmin" ? "ALL" : code_location !== "null" ? code_location : null,
