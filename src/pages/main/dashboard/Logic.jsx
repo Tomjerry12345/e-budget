@@ -38,7 +38,7 @@ const Logic = () => {
       title: "Revenue",
       dataIndex: "value",
       key: "value",
-      align: "right"
+      align: "right",
     },
   ];
 
@@ -159,7 +159,7 @@ const Logic = () => {
   const onFormatGrowthChart = (data) => {
     const listGrowthFixChart = [];
     const growthChart = data.growth_chart;
-    growthChart.forEach((e, i) => {
+    growthChart.forEach((e) => {
       const absGrowth = e.datasets.data.map((element) => {
         if (element < 0) {
           return Math.abs(element); // Mengubah nilai negatif menjadi positif
@@ -168,15 +168,13 @@ const Logic = () => {
       });
       const maxGrowth = Math.max(...absGrowth);
       const sumGrowth = ambilAngka(maxGrowth);
-      log({ maxGrowth });
-      log({ sumGrowth });
       const growthFixChart = {
         data: {
           labels: e.labels,
           datasets: [
             {
               data: e.datasets.data,
-              backgroundColor: e.labels.map((j, i) => {
+              backgroundColor: e.labels.map((_, i) => {
                 return i % 2 === 0 ? e.datasets.background1 : e.datasets.background2;
               }),
               borderRadius: 8,
