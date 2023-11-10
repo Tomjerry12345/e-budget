@@ -15,6 +15,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import "./style-dashboard.scss";
 import Logic from "./Logic";
+import { formatRupiah } from "values/Utilitas";
 
 ChartJS.register(
   CategoryScale,
@@ -44,9 +45,7 @@ const DashboardPage = () => {
         {/* <div className="root-dashboard"> */}
 
         {value.dataMain !== undefined ? (
-          <Row
-            gutter={24}
-          >
+          <Row gutter={24}>
             <Col span={16}>
               <div className="mb-16">
                 <Typography.Title className="title">
@@ -93,7 +92,7 @@ const DashboardPage = () => {
                             color: "black",
                             anchor: "end",
                             align: "top",
-                            formatter: (value) => value,
+                            formatter: (value) => formatRupiah(value),
                           },
                         },
                       }}
@@ -104,9 +103,7 @@ const DashboardPage = () => {
               </div>
               <div className="mb-16">
                 <Typography.Title className="title">GROWTH 2 TAHUN</Typography.Title>
-                <Row
-                  gutter={[8,8]}
-                >
+                <Row gutter={[8, 8]}>
                   {value.dataGrowth.map((e, i) => (
                     <Col key={i} span={6}>
                       <Card className="card-section">
@@ -164,7 +161,6 @@ const DashboardPage = () => {
                                   display: false,
                                   beginAtZero: true,
                                 },
-
                                 grid: {
                                   drawBorder: false,
                                   display: false,
@@ -180,7 +176,7 @@ const DashboardPage = () => {
                                 color: "black",
                                 anchor: "end",
                                 align: "top",
-                                formatter: (value) => value,
+                                formatter: (value) => formatRupiah(value),
                               },
                             },
                           }}
@@ -196,7 +192,9 @@ const DashboardPage = () => {
               <Card className="card-section-col-2">
                 <div className="mb-16">
                   <img className="icon-root" src="icon/ic_revenue.svg" alt="ic_revenue" />
-                  <Typography.Text className="title-incard">TOP 4 COMPANY REVENUE</Typography.Text>
+                  <Typography.Text className="title-incard">
+                    TOP 4 COMPANY REVENUE
+                  </Typography.Text>
                 </div>
                 <Table
                   size="small"
@@ -208,7 +206,9 @@ const DashboardPage = () => {
               <Card className="mt-16 card-section-col-2">
                 <div className="mb-16">
                   <img className="icon-root" src="icon/ic_ebt.svg" alt="ic_ebt" />
-                  <Typography.Text className="title-incard">TOP 4 COMPANY REVENUE</Typography.Text>
+                  <Typography.Text className="title-incard">
+                    TOP 4 COMPANY REVENUE
+                  </Typography.Text>
                 </div>
                 <Table
                   size="small"
