@@ -1,6 +1,12 @@
 export function getColumns() {
   return [
     {
+      columnId: "action",
+      width: 50,
+      type: "id",
+      nonEditabled: false,
+    },
+    {
       columnId: "description",
       width: 300,
       type: "text",

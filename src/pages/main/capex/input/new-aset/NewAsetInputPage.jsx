@@ -5,6 +5,7 @@ import { ReactGrid } from "@silevis/reactgrid";
 import LogicNew from "./LogicNew";
 import { constantExcellFile } from "values/Constant";
 import { Button } from "antd";
+import { ActionCellTemplate } from "./ActionCellTemplate";
 
 const NewAsetInputPage = () => {
   const { value, func } = LogicNew();
@@ -69,12 +70,14 @@ const NewAsetInputPage = () => {
                 rows={value.rows}
                 columns={value.columns}
                 stickyTopRows={2}
-                stickyLeftColumns={1}
+                stickyLeftColumns={2}
+                customCellTemplates={{ id: new ActionCellTemplate() }}
                 onCellsChanged={(change) => func.onChangeTable(change, "administrasi")}
               />
             </div>
           </div>
         </div>
+        {value.contextHolder}
       </div>
     </>
   );

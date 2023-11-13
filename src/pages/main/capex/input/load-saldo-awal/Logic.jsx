@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useDispatch, useSelector } from "react-redux";
 import { actionImport, resetDataActionImport, val } from "redux/action/action.reducer";
@@ -33,13 +33,7 @@ const Logic = () => {
   const dispatch = useDispatch();
   const dataGlobalRedux = useSelector((state) => state.data);
 
-  const cellTemplate = useSelector((state) => state.cellTemplate);
-
   const ENDPOINT_URL = "detailcapex";
-
-  // useEffect(() => {
-  //   log({ cellTemplate });
-  // }, [cellTemplate]);
 
   const responseShow = (res) => {
     log({ res });

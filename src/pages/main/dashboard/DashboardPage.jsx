@@ -207,7 +207,7 @@ const DashboardPage = () => {
                 <div className="mb-16">
                   <img className="icon-root" src="icon/ic_ebt.svg" alt="ic_ebt" />
                   <Typography.Text className="title-incard">
-                    TOP 4 COMPANY REVENUE
+                    TOP 4 COMPANY EBT
                   </Typography.Text>
                 </div>
                 <Table

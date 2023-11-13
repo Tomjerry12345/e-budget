@@ -1,16 +1,15 @@
 import {
   nonEditable,
   textCell,
-  monthHeaderCell,
-  rootHeaderCell,
   numberCell,
   noSideBorders,
   totalCell,
   dropDownCell,
   headerCell,
   dropDownCustomCell,
+  customCell,
 } from "values/react-grid/cells";
-import { createArray, generateUID, log } from "values/Utilitas";
+import { createArray, log } from "values/Utilitas";
 import { getColumns } from "./getColumns";
 import { getMonthDuration } from "values/Constant";
 
@@ -29,6 +28,7 @@ export function getRootHeaderRow() {
       rowId: HEADER_ROOT_ROW_ID,
       height: ROW_HEIGHT,
       cells: [
+        headerCell({ text: "", rowspan: 1 }),
         headerCell({ text: "Description", rowspan: 1 }),
         headerCell({ text: "Qty", rowspan: 1 }),
         headerCell({ text: "Price", rowspan: 1 }),
@@ -67,6 +67,7 @@ export function getRootHeaderRow() {
         headerCell({ text: "" }),
         headerCell({ text: "" }),
         headerCell({ text: "" }),
+        headerCell({ text: "" }),
         headerCell({ text: "Month", className: "justify-content-center" }),
         headerCell({ text: "Year", className: "justify-content-center" }),
         headerCell({ text: "Month", className: "justify-content-center" }),
@@ -87,32 +88,32 @@ export function getRootHeaderRow() {
   ];
 }
 
-const firstLoadTotalRow = (data) => {
-  const list = createArray(TOTAL_DATA);
+// const firstLoadTotalRow = (data) => {
+//   const list = createArray(TOTAL_DATA);
 
-  data.forEach((e) => {
-    list[0] += e["amount"] ?? 0;
-    list[1] += e["rates"] ?? 0;
-    list[2] += e["total"] ?? 0;
-    list[3] += e["month_duration"] ?? 0;
-    list[4] += e["month_start"] ?? 0;
-    list[5] += e["grand_total"] ?? 0;
-    list[6] += e["jan_rates"] ?? 0;
-    list[7] += e["feb_rates"] ?? 0;
-    list[8] += e["mar_rates"] ?? 0;
-    list[9] += e["apr_rates"] ?? 0;
-    list[10] += e["mei_rates"] ?? 0;
-    list[11] += e["jun_rates"] ?? 0;
-    list[12] += e["jul_rates"] ?? 0;
-    list[13] += e["agu_rates"] ?? 0;
-    list[14] += e["sep_rates"] ?? 0;
-    list[15] += e["okt_rates"] ?? 0;
-    list[16] += e["nov_rates"] ?? 0;
-    list[17] += e["des_rates"] ?? 0;
-  });
+//   data.forEach((e) => {
+//     list[0] += e["amount"] ?? 0;
+//     list[1] += e["rates"] ?? 0;
+//     list[2] += e["total"] ?? 0;
+//     list[3] += e["month_duration"] ?? 0;
+//     list[4] += e["month_start"] ?? 0;
+//     list[5] += e["grand_total"] ?? 0;
+//     list[6] += e["jan_rates"] ?? 0;
+//     list[7] += e["feb_rates"] ?? 0;
+//     list[8] += e["mar_rates"] ?? 0;
+//     list[9] += e["apr_rates"] ?? 0;
+//     list[10] += e["mei_rates"] ?? 0;
+//     list[11] += e["jun_rates"] ?? 0;
+//     list[12] += e["jul_rates"] ?? 0;
+//     list[13] += e["agu_rates"] ?? 0;
+//     list[14] += e["sep_rates"] ?? 0;
+//     list[15] += e["okt_rates"] ?? 0;
+//     list[16] += e["nov_rates"] ?? 0;
+//     list[17] += e["des_rates"] ?? 0;
+//   });
 
-  return rowTotal("Total", list);
-};
+//   return rowTotal("Total", list);
+// };
 
 export const updateTotalRow = (data) => {
   const newData = data.slice(1, data.length - 1);
@@ -180,6 +181,14 @@ function getGroupRows(groups, categories) {
                     )
                   );
                 }
+              } else if (e.type === "id") {
+                return customCell({
+                  text: "",
+                  type: "id",
+                  style: {
+                    justifyContent: "center",
+                  },
+                });
               }
             }),
           ],
@@ -190,6 +199,7 @@ function getGroupRows(groups, categories) {
           // isNewRow: true,
           height: ROW_HEIGHT,
           cells: [
+            textCell("", "padding-left-lg"),
             textCell("", "padding-left-lg"),
             nonEditable(numberCell(0, "padding-left-lg", null, false)),
             nonEditable(numberCell(0, "padding-left-lg", null, false)),
@@ -257,6 +267,7 @@ export function reactgridNewRow() {
     rowId: null,
     height: ROW_HEIGHT,
     cells: [
+      textCell("", "padding-left-lg"),
       textCell("", "padding-left-lg"),
       nonEditable(numberCell(0, "padding-left-lg", null, false)),
       nonEditable(numberCell(0, "padding-left-lg", null, false)),

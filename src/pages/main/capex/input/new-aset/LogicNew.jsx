@@ -21,6 +21,8 @@ import {
   generateAttributesByNewValue,
   generateObjectAttributes,
 } from "values/react-grid/helpers";
+import { Modal } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 const LoginNew = () => {
   const [codeFilter, setCodeFilter] = useState();
@@ -144,6 +146,22 @@ const LoginNew = () => {
       console.error(`Error fetching data`, error);
     }
   };
+
+  const [modal, contextHolder] = Modal.useModal();
+  const deleteConfirm = (id) => {
+    modal.confirm({
+      title: 'Apakah benar data ini ingin dihapus?',
+      icon: <ExclamationCircleOutlined />,
+      content: null,
+      okText: 'Ya',
+      cancelText: 'Batal',
+      onOk: async() => {
+        const response = await MainServices.delete("detailcapex/delete", {id: id});
+        getData(codeFilter)
+        console.log(response)
+      }
+    })
+  }
 
   const getData = async (params) => {
     const url = `${ENDPOINT_URL}`;
@@ -345,6 +363,9 @@ const LoginNew = () => {
 
           // CHANGED: set the isOpen property to the value received.
           dataRow[key] = change.newCell.isOpen;
+        } else if (change.type === 'id'){
+          console.log(change.rowId)
+          deleteConfirm(change.rowId)
         } else {
           log("ERROR", change.type);
         }
@@ -471,6 +492,7 @@ const LoginNew = () => {
       getRootProps,
       getInputProps,
       acceptedFiles,
+      contextHolder,
     },
     func: {
       onFinish,
