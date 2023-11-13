@@ -102,6 +102,7 @@ const LoginLogic = () => {
   const handleOk = () => {
     setOpen(false);
   };
+
   const handleCancel = () => {
     setOpen(false);
   };
@@ -110,6 +111,8 @@ const LoginLogic = () => {
     const isChecked = e.target.checked;
     setChecked(isChecked);
   };
+
+  
 
   return {
     func: {

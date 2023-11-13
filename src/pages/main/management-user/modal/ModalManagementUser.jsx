@@ -10,7 +10,7 @@ import { log } from "values/Utilitas";
 
 const { Title } = Typography;
 
-const FormItem = ({ label, name, children, required = true }) => (
+const FormItem = ({ label, name, children, required = true, validator }) => (
   <Form.Item
     label={label}
     name={name}
@@ -19,7 +19,9 @@ const FormItem = ({ label, name, children, required = true }) => (
         required: required,
         message: `${label} tidak boleh kosong!`,
       },
+      { validator },
     ]}
+    
   >
     {children}
   </Form.Item>
@@ -37,8 +39,6 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
 
   useEffect(() => {
     try {
-      log({ isEdit });
-      log({ record });
 
       if (record !== undefined) {
         const rUserGroup = record.user_group;
@@ -79,6 +79,17 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
     }
   };
 
+  const validatePassword = (rule, value, callback) => {
+    // Password regex for at least one uppercase, one lowercase, one number, and one special character
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+
+    if (value && !passwordRegex.test(value)) {
+      callback('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+    } else {
+      callback();
+    }
+  };
+
   return (
     <Modal
       className="management-user"
@@ -115,13 +126,16 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
           <FormItem
             label="Password"
             name="inputpassword"
+            validator={validatePassword}
             children={
               <Input.Password
                 autoComplete="new-password"
                 aria-autocomplete="none"
                 role="presentation"
-                // placeholder="input password"
-                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                visibilityToggle={false}
+                
+              // placeholder="input password"
+              // iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
               />
             }
           />
@@ -176,13 +190,13 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
                 onSelect={
                   userGroup === "sbu"
                     ? (e) => {
-                        const code = e.split(" ");
-                        form.setFieldsValue({ code_company: e });
-                        if (userGroup === "sbu") {
-                          getListLocation(code[0]);
-                          getListDept(code[0]);
-                        }
+                      const code = e.split(" ");
+                      form.setFieldsValue({ code_company: e });
+                      if (userGroup === "sbu") {
+                        getListLocation(code[0]);
+                        getListDept(code[0]);
                       }
+                    }
                     : null
                 }
                 allowClear
@@ -255,7 +269,7 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
             className="btn-tambah"
             type="primary"
             htmlType="submit"
-            // disabled={user_group === undefined && !isEdit}
+          // disabled={user_group === undefined && !isEdit}
           >
             {isEdit ? "Save" : "Tambah"}
           </Button>

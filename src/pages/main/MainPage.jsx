@@ -1,5 +1,5 @@
 import { Button, Form, Input, Layout, List, Modal, Space, Typography } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import NavComponent from "../../component/navbar/NavComponent";
 import MainLogic from "./MainLogic";
@@ -26,6 +26,7 @@ import {
   KeyOutlined,
   LogoutOutlined,
 } from "@ant-design/icons";
+import { log } from "values/Utilitas";
 
 const { Content } = Layout;
 
@@ -122,10 +123,10 @@ const ModalProfil = ({ value, func }) => {
               <Box display="flex" flexDirection="column">
                 {value.user.fullNameCompany !== null
                   ? value.user.fullNameCompany.map((e, i) => (
-                      <Typography.Text key={i} className="txt-sub">
-                        {e}
-                      </Typography.Text>
-                    ))
+                    <Typography.Text key={i} className="txt-sub">
+                      {e}
+                    </Typography.Text>
+                  ))
                   : "-"}
               </Box>
             </Box>
@@ -175,6 +176,29 @@ const ModalProfil = ({ value, func }) => {
 };
 
 const ModalForgetPassword = ({ value, func }) => {
+
+  const [newPassword, setNewPassword] = useState("")
+
+  const validateConfirmPassword = (rule, value, callback) => {
+    if (value !== newPassword) {
+      callback('Confirm the password must be the same as input the new password');
+    } else {
+      callback();
+    }
+  }
+  
+  const validateNewPassword = (rule, value, callback) => {
+    // Password regex for at least one uppercase, one lowercase, one number, and one special character
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+
+    if (value && !passwordRegex.test(value)) {
+      callback('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+    } else {
+      setNewPassword(value)
+      callback();
+    }
+  };
+
   return (
     <Modal
       open={value.openModalForgetPassword}
@@ -192,22 +216,30 @@ const ModalForgetPassword = ({ value, func }) => {
         form={value.form}
         autoComplete="off"
       >
-        <Form.Item name="old_password" label="Password Lama" required>
+        <Form.Item name="old_password" label="Password Lama" rules={[
+          { required: true, message: 'Please input old password!' },
+        ]}>
           <Input.Password
             placeholder="Input Password Lama"
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            visibilityToggle={false}
           />
         </Form.Item>
-        <Form.Item name="password" label="Password Baru" required>
+        <Form.Item name="password" label="Password Baru" rules={[
+          { required: true, message: 'Please input new password!' },
+          { validator: validateNewPassword },
+        ]}>
           <Input.Password
             placeholder="Input Password Baru"
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            visibilityToggle={false}
           />
         </Form.Item>
-        <Form.Item name="password_confirmation" label="Konfirmasi Password baru" required>
+        <Form.Item name="password_confirmation" label="Konfirmasi Password baru" rules={[
+          { required: true, message: 'Please input confirm password!' },
+          {validator: validateConfirmPassword}
+        ]}>
           <Input.Password
             placeholder="Input Konfirmasi Password Baru"
-            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            visibilityToggle={false}
           />
         </Form.Item>
         <Form.Item className="footer">
