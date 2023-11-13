@@ -5,7 +5,6 @@ import React from "react";
 import "./LoginStyle.scss";
 import logo from "../../../assets/img/logo.png";
 import LoginLogic from "./LoginLogic";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import ilustrasi from "../../../assets/img/ilustrasi.svg";
 
 const LoginPage = () => {
@@ -93,19 +92,20 @@ const LoginPage = () => {
                   >
                     <Input.Password
                       placeholder="input password"
-                      iconRender={(visible) =>
-                        visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                      }
+                      visibilityToggle={false}
+                      // iconRender={(visible) =>
+                      //   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                      // }
                     />
                   </Form.Item>
 
-                  <Checkbox
+                  {/* <Checkbox
                     className="remember-password"
                     checked={checked}
                     onChange={func.onCheckRemember}
                   >
                     Remember password
-                  </Checkbox>
+                  </Checkbox> */}
 
                   <Form.Item>
                     <Button
@@ -115,6 +115,7 @@ const LoginPage = () => {
                         color: "white",
                         borderRadius: "8px",
                         height: "40px",
+                        marginTop: "16px"
                       }}
                       htmlType="submit"
                     >
