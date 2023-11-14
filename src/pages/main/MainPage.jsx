@@ -193,6 +193,8 @@ const ModalForgetPassword = ({ value, func }) => {
 
     if (value && !passwordRegex.test(value)) {
       callback('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+    } else if (value.length < 8) {
+      callback('Password must be at least 8 characters long.');
     } else {
       setNewPassword(value)
       callback();

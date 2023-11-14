@@ -5,7 +5,6 @@ import Modal from "antd/lib/modal/Modal";
 import "./style.scss";
 import { useEffect, useState } from "react";
 import MainServices from "services/MainServices";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { log } from "values/Utilitas";
 
 const { Title } = Typography;
@@ -85,6 +84,8 @@ const ModalManagementUser = ({ open, onCancel, onOk, form, isEdit, record }) => 
 
     if (value && !passwordRegex.test(value)) {
       callback('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.');
+    } else if (value.length < 8) {
+      callback('Password must be at least 8 characters long.');
     } else {
       callback();
     }
